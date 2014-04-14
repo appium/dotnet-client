@@ -35,6 +35,7 @@
     <Compile Include="src\AppiumDriver.cs" />
     <Compile Include="test\AppiumDriverTest.cs" />
     <Compile Include="test\FakeAppium.cs" />
+    <Compile Include="src\MJsonCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\" />

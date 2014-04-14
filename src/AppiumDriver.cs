@@ -67,11 +67,6 @@ namespace OpenQA.Selenium.Appium
 	public class AppiumDriver : RemoteWebDriver
 	{
 		/// <summary>
-		/// Command name of the Appium-specific command to execute native script in Appium.
-		/// </summary>
-		private const string CommandShakeDevice = "shakeDevice";
-
-		/// <summary>
 		/// Initializes a new instance of the AppiumDriver class. This constructor defaults proxy to http://127.0.0.1:4723/wd/hub
 		/// </summary>
 		/// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities of the browser.</param>
@@ -102,7 +97,7 @@ namespace OpenQA.Selenium.Appium
 			// Add the custom commandInfo of PhantomJSDriver
 			CommandInfo commandInfo = new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/appium/device/shake");
 			MethodInfo dynMethod = typeof(CommandInfoRepository).GetMethod("TryAddAdditionalCommand", BindingFlags.NonPublic | BindingFlags.Instance);
-			dynMethod.Invoke(CommandInfoRepository.Instance, new object[] { CommandShakeDevice, commandInfo });
+			dynMethod.Invoke(CommandInfoRepository.Instance, new object[] { MJsonCommand.ShakeDevice, commandInfo });
 		}
 
 		/// <summary>
@@ -110,7 +105,7 @@ namespace OpenQA.Selenium.Appium
 		/// </summary>
 		public void ShakeDevice()
 		{
-			this.Execute(CommandShakeDevice, null);
+			this.Execute(MJsonCommand.ShakeDevice, null);
 		}
 	}
 }
