@@ -1,4 +1,6 @@
 appium-dotnet-driver
 ====================
 
-Official dotnet driver extension
+Appium extension to the official dotnet driver. 
+
+Work in progress!
