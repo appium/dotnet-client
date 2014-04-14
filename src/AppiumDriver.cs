@@ -72,7 +72,7 @@ namespace OpenQA.Selenium.Appium
 		private const string CommandShakeDevice = "shakeDevice";
 
 		/// <summary>
-		/// Initializes a new instance of the AppiumDriver class. This constructor defaults proxy to http://127.0.0.1:4444/wd/hub
+		/// Initializes a new instance of the AppiumDriver class. This constructor defaults proxy to http://127.0.0.1:4723/wd/hub
 		/// </summary>
 		/// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities of the browser.</param>
 		public AppiumDriver(ICapabilities desiredCapabilities)
@@ -83,7 +83,7 @@ namespace OpenQA.Selenium.Appium
 		/// <summary>
 		/// Initializes a new instance of the AppiumDriver class
 		/// </summary>
-		/// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4444/wd/hub).</param>
+		/// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
 		/// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities of the browser.</param>
 		public AppiumDriver(Uri remoteAddress, ICapabilities desiredCapabilities)
 			: this(remoteAddress, desiredCapabilities, RemoteWebDriver.DefaultCommandTimeout)
@@ -93,7 +93,7 @@ namespace OpenQA.Selenium.Appium
 		/// <summary>
 		/// Initializes a new instance of the AppiumDriver class using the specified remote address, desired capabilities, and command timeout.
 		/// </summary>
-		/// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4444/wd/hub).</param>
+		/// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
 		/// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities of the browser.</param>
 		/// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
 		public AppiumDriver(Uri remoteAddress, ICapabilities desiredCapabilities, TimeSpan commandTimeout)
@@ -106,7 +106,7 @@ namespace OpenQA.Selenium.Appium
 		}
 
 		/// <summary>
-		/// Close the Browser and Dispose of WebDriver
+		/// Shakes the device.
 		/// </summary>
 		public void ShakeDevice()
 		{
