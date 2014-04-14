@@ -23,108 +23,122 @@ using System.Text;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Internal;
 using System.Reflection;
+using OpenQA.Selenium.Appium.Factory;
 
 namespace OpenQA.Selenium.Appium
 {
-	/// <summary>
-	/// Provides a way to access Appium to run your tests by creating a AppiumDriver instance
-	/// </summary>
-	/// <remarks>
-	/// When the WebDriver object has been instantiated the browser will load. The test can then navigate to the URL under test and 
-	/// start your test.
-	/// </remarks>
-	/// <example>
-	/// <code>
-	/// [TestFixture]
-	/// public class Testing
-	/// {
-	///     private IWebDriver driver;
-	///     <para></para>
-	///     [SetUp]
-	///     public void SetUp()
-	///     {
-	///         driver = new AppiumDriver();
-	///     }
-	///     <para></para>
-	///     [Test]
-	///     public void TestGoogle()
-	///     {
-	///         driver.Navigate().GoToUrl("http://www.google.co.uk");
-	///         /*
-	///         *   Rest of the test
-	///         */
-	///     }
-	///     <para></para>
-	///     [TearDown]
-	///     public void TearDown()
-	///     {
-	///         driver.Quit();
-	///         driver.Dispose();
-	///     } 
-	/// }
-	/// </code>
-	/// </example>
-	public class AppiumDriver : RemoteWebDriver
-	{
-		/// <summary>
-		/// Initializes a new instance of the AppiumDriver class. This constructor defaults proxy to http://127.0.0.1:4723/wd/hub
-		/// </summary>
-		/// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities of the browser.</param>
-		public AppiumDriver(ICapabilities desiredCapabilities)
-			: this(new Uri("http://127.0.0.1:4723/wd/hub"), desiredCapabilities)
-		{
-		}
+    /// <summary>
+    /// Provides a way to access Appium to run your tests by creating a AppiumDriver instance
+    /// </summary>
+    /// <remarks>
+    /// When the WebDriver object has been instantiated the browser will load. The test can then navigate to the URL under test and 
+    /// start your test.
+    /// </remarks>
+    /// <example>
+    /// <code>
+    /// [TestFixture]
+    /// public class Testing
+    /// {
+    ///     private IWebDriver driver;
+    ///     <para></para>
+    ///     [SetUp]
+    ///     public void SetUp()
+    ///     {
+    ///         driver = new AppiumDriver();
+    ///     }
+    ///     <para></para>
+    ///     [Test]
+    ///     public void TestGoogle()
+    ///     {
+    ///         driver.Navigate().GoToUrl("http://www.google.co.uk");
+    ///         /*
+    ///         *   Rest of the test
+    ///         */
+    ///     }
+    ///     <para></para>
+    ///     [TearDown]
+    ///     public void TearDown()
+    ///     {
+    ///         driver.Quit();
+    ///         driver.Dispose();
+    ///     } 
+    /// }
+    /// </code>
+    /// </example>
+    public class AppiumDriver : RemoteWebDriver
+    {
+        #region Constructors
 
-		/// <summary>
-		/// Initializes a new instance of the AppiumDriver class
-		/// </summary>
-		/// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
-		/// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities of the browser.</param>
-		public AppiumDriver(Uri remoteAddress, ICapabilities desiredCapabilities)
-			: this(remoteAddress, desiredCapabilities, RemoteWebDriver.DefaultCommandTimeout)
-		{
-		}
+        /// <summary>
+        /// Initializes a new instance of the RemoteWebDriver class
+        /// </summary>
+        /// <param name="commandExecutor">An <see cref="ICommandExecutor"/> object which executes commands for the driver.</param>
+        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities of the browser.</param>
+        public AppiumDriver(ICommandExecutor commandExecutor, ICapabilities desiredCapabilities)
+            : base(commandExecutor, desiredCapabilities)
+        {
+            // Add the custom commandInfo of AppiumDriver
+            MethodInfo dynMethod = typeof(CommandInfoRepository).GetMethod("TryAddAdditionalCommand", BindingFlags.NonPublic | BindingFlags.Instance);
+            // ShakeDevice
+            Dictionary<string, string> commandMapping = new Dictionary<string, string> {
+                { MJsonCommand.ShakeDevice, "/session/{sessionId}/appium/device/shake" },
+                { MJsonCommand.LockDevice, "/session/{sessionId}/appium/device/lock" }
+            };
+            foreach (KeyValuePair<string, string> entry in commandMapping)
+            {
+                CommandInfo commandInfo = new CommandInfo(CommandInfo.PostCommand, entry.Value);
+                dynMethod.Invoke(CommandInfoRepository.Instance, new object[] { entry.Key, commandInfo });
+            }
+        }
 
-		/// <summary>
-		/// Initializes a new instance of the AppiumDriver class using the specified remote address, desired capabilities, and command timeout.
-		/// </summary>
-		/// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
-		/// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities of the browser.</param>
-		/// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
-		public AppiumDriver(Uri remoteAddress, ICapabilities desiredCapabilities, TimeSpan commandTimeout)
-			: base(remoteAddress, desiredCapabilities, commandTimeout)
-		{
-			// Add the custom commandInfo of AppiumDriver
-			MethodInfo dynMethod = typeof(CommandInfoRepository).GetMethod("TryAddAdditionalCommand", BindingFlags.NonPublic | BindingFlags.Instance); 
-			// ShakeDevice
-			Dictionary<string, string> commandMapping = new Dictionary<string, string> {
-				{ MJsonCommand.ShakeDevice, "/session/{sessionId}/appium/device/shake" },
-				{ MJsonCommand.LockDevice, "/session/{sessionId}/appium/device/lock" }
-			};
-			foreach(KeyValuePair<string, string> entry in commandMapping)
-			{
-				CommandInfo commandInfo = new CommandInfo(CommandInfo.PostCommand, entry.Value);
-				dynMethod.Invoke(CommandInfoRepository.Instance, new object[] { entry.Key, commandInfo });
-			}
-		}
+        /// <summary>
+        /// Initializes a new instance of the AppiumDriver class. This constructor defaults proxy to http://127.0.0.1:4723/wd/hub
+        /// </summary>
+        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities of the browser.</param>
+        public AppiumDriver(ICapabilities desiredCapabilities)
+            : this(new Uri("http://127.0.0.1:4723/wd/hub"), desiredCapabilities)
+        {
+        }
 
-		/// <summary>
-		/// Shakes the device.
-		/// </summary>
-		public void ShakeDevice()
-		{
-			this.Execute(MJsonCommand.ShakeDevice, null);
-		}
+        /// <summary>
+        /// Initializes a new instance of the AppiumDriver class
+        /// </summary>
+        /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
+        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities of the browser.</param>
+        public AppiumDriver(Uri remoteAddress, ICapabilities desiredCapabilities)
+            : this(remoteAddress, desiredCapabilities, RemoteWebDriver.DefaultCommandTimeout)
+        {
+        }
 
-		/// <summary>
-		/// Locks the device.
-		/// </summary>
-		/// <param name="seconds">The number of seconds during which the device need to be locked for.</param>
-		public void LockDevice(int seconds)
-		{
-			Dictionary<string, object> parameters = new Dictionary<string, object>();
-			parameters.Add("seconds", seconds);
-			this.Execute(MJsonCommand.LockDevice, parameters);
-		}
-	}
+        /// <summary>
+        /// Initializes a new instance of the AppiumDriver class using the specified remote address, desired capabilities, and command timeout.
+        /// </summary>
+        /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
+        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities of the browser.</param>
+        /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
+        public AppiumDriver(Uri remoteAddress, ICapabilities desiredCapabilities, TimeSpan commandTimeout)
+            : this(CommandExecutorFactory.GetHttpCommandExecutor(remoteAddress, commandTimeout), desiredCapabilities)
+        {
+        }
+        #endregion Constructors
+
+        /// <summary>
+        /// Shakes the device.
+        /// </summary>
+        public void ShakeDevice()
+        {
+            this.Execute(MJsonCommand.ShakeDevice, null);
+        }
+
+        /// <summary>
+        /// Locks the device.
+        /// </summary>
+        /// <param name="seconds">The number of seconds during which the device need to be locked for.</param>
+        public void LockDevice(int seconds)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("seconds", seconds);
+            this.Execute(MJsonCommand.LockDevice, parameters);
+        }
+    }
 }
