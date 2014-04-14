@@ -10,3 +10,4 @@ test-results
 *.swp
 *.userprefs
 *.pidb
+packages
