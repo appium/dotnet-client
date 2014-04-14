@@ -30,6 +30,12 @@ namespace OpenQA.Selenium.Remote
 		/// Represents the Shake Device Mapping command
 		/// </summary>
 		public static readonly string ShakeDevice = "shakeDevice";
+
+		/// <summary>
+		/// Represents the Lock Device Mapping command
+		/// </summary>
+		public static readonly string LockDevice = "lockDevice";
+
 	}
 }
 	

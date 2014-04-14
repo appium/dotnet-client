@@ -4,33 +4,56 @@ using OpenQA.Selenium.Remote;
 
 namespace OpenQA.Selenium.Appium
 {
-	[TestFixture ()]
-	public class AppiumDriverTest
-	{	
-		FakeAppium server = new FakeAppium ();
-		AppiumDriver driver = null;
+	public static class Env{
+		public static FakeAppium server;
+		public static AppiumDriver driver;
+	}
+
+	[SetUpFixture]
+	public class MySetUpClass
+	{
 		[SetUp]
-		public void SetupTest()
+		public void Setup()
 		{
-			server.Start ();
-			server.respondToInit ();
+			Env.server = new FakeAppium ();
+			Env.server.Start ();
+			Env.server.respondToInit ();
 			DesiredCapabilities capabilities = new DesiredCapabilities();
-			driver = new AppiumDriver (capabilities);
-			server.clear ();
+			Env.driver = new AppiumDriver (capabilities);
+			Env.server.clear ();
+
 		}
 
 		[TearDown]
+		public void Teardown()
+		{
+			Env.server.Stop ();
+		}
+	}
+
+	[TestFixture ()]
+	public class AppiumDriverTest
+	{	
+		[TearDown]
 		public void TeardownTest()
 		{
-			server.Stop ();
+			Env.server.clear ();
 		}
 
 		[Test]
-		public void TestCase ()
+		public void ShakeDeviceTestCase ()
 		{
-			server.respondTo ("POST", "/appium/device/shake", null);
-			driver.ShakeDevice ();
+			Env.server.respondTo ("POST", "/appium/device/shake", null);
+			Env.driver.ShakeDevice ();
 		}
+
+		[Test]
+		public void LockDeviceTestCase ()
+		{
+			Env.server.respondTo ("POST", "/appium/device/lock", null);
+			Env.driver.LockDevice (3);
+		}
+
 	}
 }
 

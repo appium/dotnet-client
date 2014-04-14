@@ -94,10 +94,18 @@ namespace OpenQA.Selenium.Appium
 		public AppiumDriver(Uri remoteAddress, ICapabilities desiredCapabilities, TimeSpan commandTimeout)
 			: base(remoteAddress, desiredCapabilities, commandTimeout)
 		{
-			// Add the custom commandInfo of PhantomJSDriver
-			CommandInfo commandInfo = new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/appium/device/shake");
-			MethodInfo dynMethod = typeof(CommandInfoRepository).GetMethod("TryAddAdditionalCommand", BindingFlags.NonPublic | BindingFlags.Instance);
-			dynMethod.Invoke(CommandInfoRepository.Instance, new object[] { MJsonCommand.ShakeDevice, commandInfo });
+			// Add the custom commandInfo of AppiumDriver
+			MethodInfo dynMethod = typeof(CommandInfoRepository).GetMethod("TryAddAdditionalCommand", BindingFlags.NonPublic | BindingFlags.Instance); 
+			// ShakeDevice
+			Dictionary<string, string> commandMapping = new Dictionary<string, string> {
+				{ MJsonCommand.ShakeDevice, "/session/{sessionId}/appium/device/shake" },
+				{ MJsonCommand.LockDevice, "/session/{sessionId}/appium/device/lock" }
+			};
+			foreach(KeyValuePair<string, string> entry in commandMapping)
+			{
+				CommandInfo commandInfo = new CommandInfo(CommandInfo.PostCommand, entry.Value);
+				dynMethod.Invoke(CommandInfoRepository.Instance, new object[] { entry.Key, commandInfo });
+			}
 		}
 
 		/// <summary>
@@ -106,6 +114,17 @@ namespace OpenQA.Selenium.Appium
 		public void ShakeDevice()
 		{
 			this.Execute(MJsonCommand.ShakeDevice, null);
+		}
+
+		/// <summary>
+		/// Locks the device.
+		/// </summary>
+		/// <param name="seconds">The number of seconds during which the device need to be locked for.</param>
+		public void LockDevice(int seconds)
+		{
+			Dictionary<string, object> parameters = new Dictionary<string, object>();
+			parameters.Add("seconds", seconds);
+			this.Execute(MJsonCommand.LockDevice, parameters);
 		}
 	}
 }
