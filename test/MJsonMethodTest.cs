@@ -83,12 +83,20 @@ namespace OpenQA.Selenium.Appium
 		}
 
 		[Test]
-		public void Rotate ()
+		public void RotateTestCase ()
 		{
 			server.respondTo ("POST", "/appium/device/rotate", null);
 			Dictionary<string, int> parameters = new Dictionary<string, int> {{"x", 114}, 
 				{"y", 198}, {"duration", 5}, {"radius", 3}, {"rotation", 220}, {"touchCount", 2}};
 			driver.Rotate (parameters);
+		}
+
+		[Test]
+		public void GetCurrentActivityTestCase ()
+		{
+			server.respondTo ("GET", "/appium/device/current_activity", ".activities.PeopleActivity");
+			string activity = driver.GetCurrentActivity ();
+			Assert.AreEqual (activity, ".activities.PeopleActivity");
 		}
 
 	}

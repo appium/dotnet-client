@@ -38,6 +38,11 @@ namespace OpenQA.Selenium.Remote
 		/// </summary>
 		public const string Rotate = "rotate";
 
+		/// <summary>
+		/// Get CurrentActivity Command.
+		/// </summary>
+		public const string GetCurrentActivity = "getCurrentActivity";
+
 		#endregion Driver Mode Commands
 
         #region Context Commands

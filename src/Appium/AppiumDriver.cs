@@ -291,6 +291,15 @@ namespace OpenQA.Selenium.Appium
 			this.Execute(AppiumDriverCommand.Rotate, parameters);
 		}
 
+		/// <summary>
+		/// Gets Current Device Activity.
+		/// </summary>
+		public string GetCurrentActivity()
+		{
+			var commandResponse = this.Execute(AppiumDriverCommand.GetCurrentActivity, null);
+			return commandResponse.Value as string;
+		}
+
 		#endregion
 
         #region Context
@@ -372,6 +381,7 @@ namespace OpenQA.Selenium.Appium
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.SetContext, "/session/{sessionId}/context" ),
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.KeyEvent, "/session/{sessionId}/appium/device/keyevent"),
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.Rotate, "/session/{sessionId}/appium/device/rotate"),
+				new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetCurrentActivity, "/session/{sessionId}/appium/device/current_activity"),
             };
 
             // Add the custom commandInfo of AppiumDriver
