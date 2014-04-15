@@ -360,6 +360,14 @@ namespace OpenQA.Selenium.Appium
 			return commandResponse.Value as string;
 		}
 
+		/// <summary>
+		/// Toggles Wifi.
+		/// </summary>
+		public void ToggleWifi()
+		{
+			this.Execute(AppiumDriverCommand.ToggleWiFi, null);
+		}
+
 		#endregion
 
         #region Context
@@ -447,6 +455,7 @@ namespace OpenQA.Selenium.Appium
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.IsAppInstalled, "/session/{sessionId}/appium/device/app_installed"),
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.PushFile, "/session/{sessionId}/appium/device/push_file"),
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.PullFile, "/session/{sessionId}/appium/device/pull_file"),
+				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ToggleWiFi, "/session/{sessionId}/appium/device/toggle_wifi"),
             };
 
             // Add the custom commandInfo of AppiumDriver

@@ -68,6 +68,11 @@ namespace OpenQA.Selenium.Remote
 		/// </summary>
 		public const string PullFile = "pullFile";
 
+		/// <summary>
+		/// Toggle Wifi Command.
+		/// </summary>
+		public const string ToggleWiFi = "toggleWiFi";
+
 		#endregion Driver Mode Commands
 
         #region Context Commands

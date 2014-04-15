@@ -121,20 +121,28 @@ namespace OpenQA.Selenium.Appium
 		}
 
 		[Test]
-		public void PushFile ()
+		public void PushFileTestCase ()
 		{
 			server.respondTo ("POST", "/appium/device/push_file", null);
 			driver.PushFile ("/pictures/me.jpg", "abde433qsawe3242");
 		}
 
 		[Test]
-		public void PullFile ()
+		public void PullFileTestCase ()
 		{
 			var data = "wqewdsf232wewqqw443";
 			server.respondTo ("POST", "/appium/device/pull_file", data);
 			string result = driver.PullFile ("/pictures/me.jpg");
 			Assert.AreEqual (result, data);
 		}
+
+		[Test]
+		public void ToggleWifiTestCase ()
+		{
+			server.respondTo ("POST", "/appium/device/toggle_wifi", null);
+			driver.ToggleWifi ();
+		}
+
 
 	}
 }
