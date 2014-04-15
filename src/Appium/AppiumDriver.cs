@@ -112,125 +112,125 @@ namespace OpenQA.Selenium.Appium
         }
         #endregion Constructors
 
-		#region FindMethods
-		/// <summary>
-		/// Finds the first element in the page that matches the Ios UIAutomation selector supplied
-		/// </summary>
-		/// <param name="selector">Selector for the element.</param>
-		/// <returns>IWebElement object so that you can interact that object</returns>
-		/// <example>
-		/// <code>
-		/// IWebDriver driver = new RemoteWebDriver(DesiredCapabilities.Firefox());
-		/// IWebElement elem = driver.FindElementByIosUIAutomation('elements()'))
-		/// </code>
-		/// </example>
-		public IWebElement FindElementByIosUIAutomation(string selector)
-		{
-			return this.FindElement("-ios uiautomation", selector);
-		}
+        #region FindMethods
+        /// <summary>
+        /// Finds the first element in the page that matches the Ios UIAutomation selector supplied
+        /// </summary>
+        /// <param name="selector">Selector for the element.</param>
+        /// <returns>IWebElement object so that you can interact that object</returns>
+        /// <example>
+        /// <code>
+        /// IWebDriver driver = new RemoteWebDriver(DesiredCapabilities.Firefox());
+        /// IWebElement elem = driver.FindElementByIosUIAutomation('elements()'))
+        /// </code>
+        /// </example>
+        public IWebElement FindElementByIosUIAutomation(string selector)
+        {
+            return this.FindElement("-ios uiautomation", selector);
+        }
 
-		/// <summary>
-		/// Finds a list of elements that match the Ios UIAutomation selector supplied
-		/// </summary>
-		/// <param name="selector">Selector for the elements.</param>
-		/// <returns>ReadOnlyCollection of IWebElement object so that you can interact with those objects</returns>
-		/// <example>
-		/// <code>
-		/// IWebDriver driver = new RemoteWebDriver(DesiredCapabilities.Firefox());
-		/// ReadOnlyCollection<![CDATA[<IWebElement>]]> elem = driver.FindElementsByIosUIAutomation(elements())
-		/// </code>
-		/// </example>
-		public ReadOnlyCollection<IWebElement> FindElementsByIosUIAutomation(string selector)
-		{
-			return this.FindElements("-ios uiautomation", selector);
-		}
+        /// <summary>
+        /// Finds a list of elements that match the Ios UIAutomation selector supplied
+        /// </summary>
+        /// <param name="selector">Selector for the elements.</param>
+        /// <returns>ReadOnlyCollection of IWebElement object so that you can interact with those objects</returns>
+        /// <example>
+        /// <code>
+        /// IWebDriver driver = new RemoteWebDriver(DesiredCapabilities.Firefox());
+        /// ReadOnlyCollection<![CDATA[<IWebElement>]]> elem = driver.FindElementsByIosUIAutomation(elements())
+        /// </code>
+        /// </example>
+        public ReadOnlyCollection<IWebElement> FindElementsByIosUIAutomation(string selector)
+        {
+            return this.FindElements("-ios uiautomation", selector);
+        }
 
-		/// <summary>
-		/// Finds the first element in the page that matches the Android UIAutomator selector supplied
-		/// </summary>
-		/// <param name="selector">Selector for the element.</param>
-		/// <returns>IWebElement object so that you can interact that object</returns>
-		/// <example>
-		/// <code>
-		/// IWebDriver driver = new RemoteWebDriver(DesiredCapabilities.Firefox());
-		/// IWebElement elem = driver.FindElementByAndroidUIAutomator('elements()'))
-		/// </code>
-		/// </example>
-		public IWebElement FindElementByAndroidUIAutomator(string selector)
-		{
-			return this.FindElement("-android uiautomator", selector);
-		}
+        /// <summary>
+        /// Finds the first element in the page that matches the Android UIAutomator selector supplied
+        /// </summary>
+        /// <param name="selector">Selector for the element.</param>
+        /// <returns>IWebElement object so that you can interact that object</returns>
+        /// <example>
+        /// <code>
+        /// IWebDriver driver = new RemoteWebDriver(DesiredCapabilities.Firefox());
+        /// IWebElement elem = driver.FindElementByAndroidUIAutomator('elements()'))
+        /// </code>
+        /// </example>
+        public IWebElement FindElementByAndroidUIAutomator(string selector)
+        {
+            return this.FindElement("-android uiautomator", selector);
+        }
 
-		/// <summary>
-		/// Finds a list of elements that match the Android UIAutomator selector supplied
-		/// </summary>
-		/// <param name="selector">Selector for the elements.</param>
-		/// <returns>ReadOnlyCollection of IWebElement object so that you can interact with those objects</returns>
-		/// <example>
-		/// <code>
-		/// IWebDriver driver = new RemoteWebDriver(DesiredCapabilities.Firefox());
-		/// ReadOnlyCollection<![CDATA[<IWebElement>]]> elem = driver.FindElementsByAndroidUIAutomator(elements())
-		/// </code>
-		/// </example>
-		public ReadOnlyCollection<IWebElement> FindElementsByAndroidUIAutomator(string selector)
-		{
-			return this.FindElements("-android uiautomator", selector);
-		}
+        /// <summary>
+        /// Finds a list of elements that match the Android UIAutomator selector supplied
+        /// </summary>
+        /// <param name="selector">Selector for the elements.</param>
+        /// <returns>ReadOnlyCollection of IWebElement object so that you can interact with those objects</returns>
+        /// <example>
+        /// <code>
+        /// IWebDriver driver = new RemoteWebDriver(DesiredCapabilities.Firefox());
+        /// ReadOnlyCollection<![CDATA[<IWebElement>]]> elem = driver.FindElementsByAndroidUIAutomator(elements())
+        /// </code>
+        /// </example>
+        public ReadOnlyCollection<IWebElement> FindElementsByAndroidUIAutomator(string selector)
+        {
+            return this.FindElements("-android uiautomator", selector);
+        }
 
-		/// <summary>
-		/// Finds the first element in the page that matches the Accessibility Id selector supplied
-		/// </summary>
-		/// <param name="selector">Selector for the element.</param>
-		/// <returns>IWebElement object so that you can interact that object</returns>
-		/// <example>
-		/// <code>
-		/// IWebDriver driver = new RemoteWebDriver(DesiredCapabilities.Firefox());
-		/// IWebElement elem = driver.FindElementByAccessibilityId('elements()'))
-		/// </code>
-		/// </example>
-		public IWebElement FindElementByAccessibilityId(string selector)
-		{
-			return this.FindElement("accessibility id", selector);
-		}
+        /// <summary>
+        /// Finds the first element in the page that matches the Accessibility Id selector supplied
+        /// </summary>
+        /// <param name="selector">Selector for the element.</param>
+        /// <returns>IWebElement object so that you can interact that object</returns>
+        /// <example>
+        /// <code>
+        /// IWebDriver driver = new RemoteWebDriver(DesiredCapabilities.Firefox());
+        /// IWebElement elem = driver.FindElementByAccessibilityId('elements()'))
+        /// </code>
+        /// </example>
+        public IWebElement FindElementByAccessibilityId(string selector)
+        {
+            return this.FindElement("accessibility id", selector);
+        }
 
-		/// <summary>
-		/// Finds a list of elements that match the Accessibility Id selector supplied
-		/// </summary>
-		/// <param name="selector">Selector for the elements.</param>
-		/// <returns>ReadOnlyCollection of IWebElement object so that you can interact with those objects</returns>
-		/// <example>
-		/// <code>
-		/// IWebDriver driver = new RemoteWebDriver(DesiredCapabilities.Firefox());
-		/// ReadOnlyCollection<![CDATA[<IWebElement>]]> elem = driver.FindElementsByAccessibilityId(elements())
-		/// </code>
-		/// </example>
-		public ReadOnlyCollection<IWebElement> FindElementsByAccessibilityId(string selector)
-		{
-			return this.FindElements("accessibility id", selector);
-		}
+        /// <summary>
+        /// Finds a list of elements that match the Accessibility Id selector supplied
+        /// </summary>
+        /// <param name="selector">Selector for the elements.</param>
+        /// <returns>ReadOnlyCollection of IWebElement object so that you can interact with those objects</returns>
+        /// <example>
+        /// <code>
+        /// IWebDriver driver = new RemoteWebDriver(DesiredCapabilities.Firefox());
+        /// ReadOnlyCollection<![CDATA[<IWebElement>]]> elem = driver.FindElementsByAccessibilityId(elements())
+        /// </code>
+        /// </example>
+        public ReadOnlyCollection<IWebElement> FindElementsByAccessibilityId(string selector)
+        {
+            return this.FindElements("accessibility id", selector);
+        }
 
-		/// <summary>
-		/// Finds one or several elements depending on the selector
-		/// </summary>
-		/// <param name="selector">Selector for the element.</param>
-		/// <returns>IWebElement object so that you can interact that object</returns>
-		public object FindComplex(string selector)
-		{
-			Dictionary<string, object> parameters = new Dictionary<string, object>();
-			parameters.Add("selector", selector);
-			var commandResponse = this.Execute(AppiumDriverCommand.FindComplex, parameters);
-			if (commandResponse.Value is object[]) {
-				// several elements
-				return this.GetElementsFromResponse (commandResponse);
-			} else {
-				// one elements
-				return this.GetElementFromResponse (commandResponse);
-			}
-		}			
-		#endregion
+        /// <summary>
+        /// Finds one or several elements depending on the selector
+        /// </summary>
+        /// <param name="selector">Selector for the element.</param>
+        /// <returns>IWebElement object so that you can interact that object</returns>
+        public object FindComplex(string selector)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("selector", selector);
+            var commandResponse = this.Execute(AppiumDriverCommand.FindComplex, parameters);
+            if (commandResponse.Value is object[]) {
+                // several elements
+                return this.GetElementsFromResponse (commandResponse);
+            } else {
+                // one elements
+                return this.GetElementFromResponse (commandResponse);
+            }
+        }           
+        #endregion
 
-		#region MJsonMethod Members
-		/// <summary>
+        #region MJsonMethod Members
+        /// <summary>
         /// Shakes the device.
         /// </summary>
         public void ShakeDevice()
@@ -271,185 +271,185 @@ namespace OpenQA.Selenium.Appium
         //    }
         //}
 
-		/// <summary>
-		/// Toggles Airplane Mode.
-		/// </summary>
-		public void ToggleAirplaneMode()
+        /// <summary>
+        /// Toggles Airplane Mode.
+        /// </summary>
+        public void ToggleAirplaneMode()
         {
             this.Execute(AppiumDriverCommand.ToggleAirplaneMode, null);
         }
 
-		/// <summary>
-		/// Triggers Device Key Event.
-		/// </summary>
-		/// <param name="keyCode">an integer keycode number corresponding to a java.awt.event.KeyEvent.</param>
-		public void KeyEvent(String keyCode)
-		{
-			Dictionary<string, object> parameters = new Dictionary<string, object>();
-			parameters.Add("keycode", keyCode);
-			this.Execute(AppiumDriverCommand.KeyEvent, parameters);
-		}
+        /// <summary>
+        /// Triggers Device Key Event.
+        /// </summary>
+        /// <param name="keyCode">an integer keycode number corresponding to a java.awt.event.KeyEvent.</param>
+        public void KeyEvent(String keyCode)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("keycode", keyCode);
+            this.Execute(AppiumDriverCommand.KeyEvent, parameters);
+        }
 
-		/// <summary>
-		/// Rotates Device.
-		/// </summary>
-		/// <param name="opts">rotations options like the following:
-		/// new Dictionary<string, int> {{"x", 114}, {"y", 198}, {"duration", 5}, 
-		/// {"radius", 3}, {"rotation", 220}, {"touchCount", 2}}
-		/// </param>
-		public void Rotate(Dictionary<string, int> opts)
-		{
-			Dictionary<string, object> parameters = new Dictionary<string, object>();
-			foreach(KeyValuePair<string, int> opt in opts){
-				parameters.Add(opt.Key, opt.Value);
-			}
-			this.Execute(AppiumDriverCommand.Rotate, parameters);
-		}
+        /// <summary>
+        /// Rotates Device.
+        /// </summary>
+        /// <param name="opts">rotations options like the following:
+        /// new Dictionary<string, int> {{"x", 114}, {"y", 198}, {"duration", 5}, 
+        /// {"radius", 3}, {"rotation", 220}, {"touchCount", 2}}
+        /// </param>
+        public void Rotate(Dictionary<string, int> opts)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            foreach(KeyValuePair<string, int> opt in opts){
+                parameters.Add(opt.Key, opt.Value);
+            }
+            this.Execute(AppiumDriverCommand.Rotate, parameters);
+        }
 
-		/// <summary>
-		/// Gets Current Device Activity.
-		/// </summary>
-		public string GetCurrentActivity()
-		{
-			var commandResponse = this.Execute(AppiumDriverCommand.GetCurrentActivity, null);
-			return commandResponse.Value as string;
-		}
+        /// <summary>
+        /// Gets Current Device Activity.
+        /// </summary>
+        public string GetCurrentActivity()
+        {
+            var commandResponse = this.Execute(AppiumDriverCommand.GetCurrentActivity, null);
+            return commandResponse.Value as string;
+        }
 
-		/// <summary>
-		/// Installs an App.
-		/// </summary>
-		/// <param name="appPath">a string containing the file path or url of the app.</param>
-		public void InstallApp(string appPath)
-		{
-			Dictionary<string, object> parameters = new Dictionary<string, object>();
-			parameters.Add("appPath", appPath);
-			this.Execute(AppiumDriverCommand.InstallApp, parameters);
-		}
+        /// <summary>
+        /// Installs an App.
+        /// </summary>
+        /// <param name="appPath">a string containing the file path or url of the app.</param>
+        public void InstallApp(string appPath)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("appPath", appPath);
+            this.Execute(AppiumDriverCommand.InstallApp, parameters);
+        }
 
-		/// <summary>
-		/// Removes an App.
-		/// </summary>
-		/// <param name="appPath">a string containing the id of the app.</param>
-		public void RemoveApp(string appId)
-		{
-			Dictionary<string, object> parameters = new Dictionary<string, object>();
-			parameters.Add("appId", appId);
-			this.Execute(AppiumDriverCommand.RemoveApp, parameters);
-		}
+        /// <summary>
+        /// Removes an App.
+        /// </summary>
+        /// <param name="appPath">a string containing the id of the app.</param>
+        public void RemoveApp(string appId)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("appId", appId);
+            this.Execute(AppiumDriverCommand.RemoveApp, parameters);
+        }
 
-		/// <summary>
-		/// Checks If an App Is Installed.
-		/// </summary>
-		/// <param name="appPath">a string containing the bundle id.</param>
-		/// <return>a bol indicating if the app is installed.</return>
-		public bool IsAppInstalled(string bundleId)
-		{
-			Dictionary<string, object> parameters = new Dictionary<string, object>();
-			parameters.Add("bundleId", bundleId);
-			var commandResponse = this.Execute(AppiumDriverCommand.IsAppInstalled, parameters);
-			Console.Out.WriteLine (commandResponse.Value);
-			return Convert.ToBoolean (commandResponse.Value.ToString());
-		}
+        /// <summary>
+        /// Checks If an App Is Installed.
+        /// </summary>
+        /// <param name="appPath">a string containing the bundle id.</param>
+        /// <return>a bol indicating if the app is installed.</return>
+        public bool IsAppInstalled(string bundleId)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("bundleId", bundleId);
+            var commandResponse = this.Execute(AppiumDriverCommand.IsAppInstalled, parameters);
+            Console.Out.WriteLine (commandResponse.Value);
+            return Convert.ToBoolean (commandResponse.Value.ToString());
+        }
 
-		/// <summary>
-		/// Pushes a File.
-		/// </summary>
-		/// <param name="appPath">a string containing the id of the app.</param>
-		public void PushFile(string pathOnDevice, string base64Data)
-		{
-			Dictionary<string, object> parameters = new Dictionary<string, object>();
-			parameters.Add("path", pathOnDevice);
-			parameters.Add("data", base64Data);
-			this.Execute(AppiumDriverCommand.PushFile, parameters);
-		}
+        /// <summary>
+        /// Pushes a File.
+        /// </summary>
+        /// <param name="appPath">a string containing the id of the app.</param>
+        public void PushFile(string pathOnDevice, string base64Data)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("path", pathOnDevice);
+            parameters.Add("data", base64Data);
+            this.Execute(AppiumDriverCommand.PushFile, parameters);
+        }
 
-		/// <summary>
-		/// Pulls a File.
-		/// </summary>
-		/// <param name="appPath">a string containing the id of the app.</param>
-		public string PullFile(string pathOnDevice)
-		{
-			Dictionary<string, object> parameters = new Dictionary<string, object>();
-			parameters.Add("path", pathOnDevice);
-			var commandResponse = this.Execute(AppiumDriverCommand.PullFile, parameters);
-			return commandResponse.Value as string;
-		}
+        /// <summary>
+        /// Pulls a File.
+        /// </summary>
+        /// <param name="appPath">a string containing the id of the app.</param>
+        public string PullFile(string pathOnDevice)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("path", pathOnDevice);
+            var commandResponse = this.Execute(AppiumDriverCommand.PullFile, parameters);
+            return commandResponse.Value as string;
+        }
 
-		/// <summary>
-		/// Toggles Wifi.
-		/// </summary>
-		public void ToggleWifi()
-		{
-			this.Execute(AppiumDriverCommand.ToggleWiFi, null);
-		}
+        /// <summary>
+        /// Toggles Wifi.
+        /// </summary>
+        public void ToggleWifi()
+        {
+            this.Execute(AppiumDriverCommand.ToggleWiFi, null);
+        }
 
-		/// <summary>
-		/// Toggles Location Services.
-		/// </summary>
-		public void ToggleLocationServices()
-		{
-			this.Execute(AppiumDriverCommand.ToggleLocationServices, null);
-		}
+        /// <summary>
+        /// Toggles Location Services.
+        /// </summary>
+        public void ToggleLocationServices()
+        {
+            this.Execute(AppiumDriverCommand.ToggleLocationServices, null);
+        }
 
-		/// <summary>
-		/// Launches the current app.
-		/// </summary>
-		public void LaunchApp()
-		{
-			this.Execute(AppiumDriverCommand.LaunchApp, null);
-		}
+        /// <summary>
+        /// Launches the current app.
+        /// </summary>
+        public void LaunchApp()
+        {
+            this.Execute(AppiumDriverCommand.LaunchApp, null);
+        }
 
-		/// <summary>
-		/// Closes the current app.
-		/// </summary>
-		public void CloseApp()
-		{
-			this.Execute(AppiumDriverCommand.CloseApp, null);
-		}
+        /// <summary>
+        /// Closes the current app.
+        /// </summary>
+        public void CloseApp()
+        {
+            this.Execute(AppiumDriverCommand.CloseApp, null);
+        }
 
-		/// <summary>
-		/// Resets the current app.
-		/// </summary>
-		public void ResetApp()
-		{
-			this.Execute(AppiumDriverCommand.ResetApp, null);
-		}
+        /// <summary>
+        /// Resets the current app.
+        /// </summary>
+        public void ResetApp()
+        {
+            this.Execute(AppiumDriverCommand.ResetApp, null);
+        }
 
-		/// <summary>
-		/// Backgrounds the current app for the given number of seconds.
-		/// </summary>
-		/// <param name="seconds">a string containing the number of seconds.</param>
-		public void BackgroundApp(int seconds)
-		{
-			Dictionary<string, object> parameters = new Dictionary<string, object>();
-			parameters.Add("seconds", seconds);
-			this.Execute(AppiumDriverCommand.BackgroundApp, parameters);
-		}
+        /// <summary>
+        /// Backgrounds the current app for the given number of seconds.
+        /// </summary>
+        /// <param name="seconds">a string containing the number of seconds.</param>
+        public void BackgroundApp(int seconds)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("seconds", seconds);
+            this.Execute(AppiumDriverCommand.BackgroundApp, parameters);
+        }
 
-		/// <summary>
-		/// Pulls a File.
-		/// </summary>
-		/// <param name="intent">a string containing the intent.</param>
-		/// <param name="path">a string containing the path.</param>
-		/// <return>a base64 string containing the data</return> 
-		public string EndTestCoverage(string intent, string path)
-		{
-			Dictionary<string, object> parameters = new Dictionary<string, object>();
-			parameters.Add("intent", intent);
-			parameters.Add("path", path);
-			var commandResponse = this.Execute(AppiumDriverCommand.EndTestCoverage, parameters);
-			return commandResponse.Value as string;
-		}
+        /// <summary>
+        /// Pulls a File.
+        /// </summary>
+        /// <param name="intent">a string containing the intent.</param>
+        /// <param name="path">a string containing the path.</param>
+        /// <return>a base64 string containing the data</return> 
+        public string EndTestCoverage(string intent, string path)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("intent", intent);
+            parameters.Add("path", path);
+            var commandResponse = this.Execute(AppiumDriverCommand.EndTestCoverage, parameters);
+            return commandResponse.Value as string;
+        }
 
-		/// <summary>
-		/// Gets the App Strings.
-		/// </summary>
-		public void GetAppStrings()
-		{
-			this.Execute(AppiumDriverCommand.GetAppStrings, null);
-		}
+        /// <summary>
+        /// Gets the App Strings.
+        /// </summary>
+        public void GetAppStrings()
+        {
+            this.Execute(AppiumDriverCommand.GetAppStrings, null);
+        }
 
-		#endregion
+        #endregion
 
         #region Context
         /// <summary>
@@ -494,71 +494,71 @@ namespace OpenQA.Selenium.Appium
         }
         #endregion Context
 
-		#region Support methods
-		/// <summary>
-		/// In derived classes, the <see cref="PrepareEnvironment"/> method prepares the environment for test execution.
-		/// </summary>
-		protected virtual void PrepareEnvironment()
-		{
-			// Does nothing, but provides a hook for subclasses to do "stuff"
-		}
+        #region Support methods
+        /// <summary>
+        /// In derived classes, the <see cref="PrepareEnvironment"/> method prepares the environment for test execution.
+        /// </summary>
+        protected virtual void PrepareEnvironment()
+        {
+            // Does nothing, but provides a hook for subclasses to do "stuff"
+        }
 
-		/// <summary>
-		/// Creates a <see cref="RemoteWebElement"/> with the specified ID.
-		/// </summary>
-		/// <param name="elementId">The ID of this element.</param>
-		/// <returns>A <see cref="RemoteWebElement"/> with the specified ID. For the FirefoxDriver this will be a <see cref="FirefoxWebElement"/>.</returns>
-		protected override RemoteWebElement CreateElement(string elementId)
-		{
-			return new AppiumWebElement(this, elementId);
-		}
+        /// <summary>
+        /// Creates a <see cref="RemoteWebElement"/> with the specified ID.
+        /// </summary>
+        /// <param name="elementId">The ID of this element.</param>
+        /// <returns>A <see cref="RemoteWebElement"/> with the specified ID. For the FirefoxDriver this will be a <see cref="FirefoxWebElement"/>.</returns>
+        protected override RemoteWebElement CreateElement(string elementId)
+        {
+            return new AppiumWebElement(this, elementId);
+        }
 
-		/// <summary>
-		/// Find the element in the response
-		/// </summary>
-		/// <param name="response">Response from the browser</param>
-		/// <returns>Element from the page</returns>
-		internal IWebElement GetElementFromResponse(Response response)
-		{
-			if (response == null)
-			{
-				throw new NoSuchElementException();
-			}
+        /// <summary>
+        /// Find the element in the response
+        /// </summary>
+        /// <param name="response">Response from the browser</param>
+        /// <returns>Element from the page</returns>
+        internal IWebElement GetElementFromResponse(Response response)
+        {
+            if (response == null)
+            {
+                throw new NoSuchElementException();
+            }
 
-			RemoteWebElement element = null;
-			Dictionary<string, object> elementDictionary = response.Value as Dictionary<string, object>;
-			if (elementDictionary != null)
-			{
-				string id = (string)elementDictionary["ELEMENT"];
-				element = this.CreateElement(id);
-			}
+            RemoteWebElement element = null;
+            Dictionary<string, object> elementDictionary = response.Value as Dictionary<string, object>;
+            if (elementDictionary != null)
+            {
+                string id = (string)elementDictionary["ELEMENT"];
+                element = this.CreateElement(id);
+            }
 
-			return element;
-		}
+            return element;
+        }
 
-		/// <summary>
-		/// Finds the elements that are in the response
-		/// </summary>
-		/// <param name="response">Response from the browser</param>
-		/// <returns>Collection of elements</returns>
-		internal ReadOnlyCollection<IWebElement> GetElementsFromResponse(Response response)
-		{
-			List<IWebElement> toReturn = new List<IWebElement>();
-			object[] elements = response.Value as object[];
-			foreach (object elementObject in elements)
-			{
-				Dictionary<string, object> elementDictionary = elementObject as Dictionary<string, object>;
-				if (elementDictionary != null)
-				{
-					string id = (string)elementDictionary["ELEMENT"];
-					RemoteWebElement element = this.CreateElement(id);
-					toReturn.Add(element);
-				}
-			}
+        /// <summary>
+        /// Finds the elements that are in the response
+        /// </summary>
+        /// <param name="response">Response from the browser</param>
+        /// <returns>Collection of elements</returns>
+        internal ReadOnlyCollection<IWebElement> GetElementsFromResponse(Response response)
+        {
+            List<IWebElement> toReturn = new List<IWebElement>();
+            object[] elements = response.Value as object[];
+            foreach (object elementObject in elements)
+            {
+                Dictionary<string, object> elementDictionary = elementObject as Dictionary<string, object>;
+                if (elementDictionary != null)
+                {
+                    string id = (string)elementDictionary["ELEMENT"];
+                    RemoteWebElement element = this.CreateElement(id);
+                    toReturn.Add(element);
+                }
+            }
 
-			return toReturn.AsReadOnly();
-		}
-		#endregion
+            return toReturn.AsReadOnly();
+        }
+        #endregion
 
         #region Private Methods
         /// <summary>
@@ -574,25 +574,25 @@ namespace OpenQA.Selenium.Appium
                 new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.Contexts, "/session/{sessionId}/contexts" ),
                 new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetContext, "/session/{sessionId}/context" ),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.SetContext, "/session/{sessionId}/context" ),
-				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.KeyEvent, "/session/{sessionId}/appium/device/keyevent"),
-				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.Rotate, "/session/{sessionId}/appium/device/rotate"),
-				new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetCurrentActivity, "/session/{sessionId}/appium/device/current_activity"),
-				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.InstallApp, "/session/{sessionId}/appium/device/install_app"),
-				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.RemoveApp, "/session/{sessionId}/appium/device/remove_app"),
-				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.IsAppInstalled, "/session/{sessionId}/appium/device/app_installed"),
-				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.PushFile, "/session/{sessionId}/appium/device/push_file"),
-				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.PullFile, "/session/{sessionId}/appium/device/pull_file"),
-				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ToggleWiFi, "/session/{sessionId}/appium/device/toggle_wifi"),
-				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ToggleLocationServices, "/session/{sessionId}/appium/device/toggle_location_services"),
-				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.LaunchApp, "/session/{sessionId}/appium/app/launch"),
-				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.CloseApp, "/session/{sessionId}/appium/app/close"),
-				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ResetApp, "/session/{sessionId}/appium/app/reset"),
-				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.BackgroundApp, "/session/{sessionId}/appium/app/background"),
-				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.EndTestCoverage, "/session/{sessionId}/appium/app/end_test_coverage"),
-				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.GetAppStrings, "/session/{sessionId}/appium/app/strings"),
-				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.SetImmediateValue, "/session/{sessionId}/appium/element/{id}/value"),
-				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.FindComplex, "/session/{sessionId}/appium/app/complex_find"),
-			};
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.KeyEvent, "/session/{sessionId}/appium/device/keyevent"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.Rotate, "/session/{sessionId}/appium/device/rotate"),
+                new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetCurrentActivity, "/session/{sessionId}/appium/device/current_activity"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.InstallApp, "/session/{sessionId}/appium/device/install_app"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.RemoveApp, "/session/{sessionId}/appium/device/remove_app"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.IsAppInstalled, "/session/{sessionId}/appium/device/app_installed"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.PushFile, "/session/{sessionId}/appium/device/push_file"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.PullFile, "/session/{sessionId}/appium/device/pull_file"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ToggleWiFi, "/session/{sessionId}/appium/device/toggle_wifi"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ToggleLocationServices, "/session/{sessionId}/appium/device/toggle_location_services"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.LaunchApp, "/session/{sessionId}/appium/app/launch"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.CloseApp, "/session/{sessionId}/appium/app/close"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ResetApp, "/session/{sessionId}/appium/app/reset"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.BackgroundApp, "/session/{sessionId}/appium/app/background"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.EndTestCoverage, "/session/{sessionId}/appium/app/end_test_coverage"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.GetAppStrings, "/session/{sessionId}/appium/app/strings"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.SetImmediateValue, "/session/{sessionId}/appium/element/{id}/value"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.FindComplex, "/session/{sessionId}/appium/app/complex_find"),
+            };
 
             // Add the custom commandInfo of AppiumDriver
             var dynMethod = typeof(CommandInfoRepository).GetMethod("TryAddAdditionalCommand", BindingFlags.NonPublic | BindingFlags.Instance);

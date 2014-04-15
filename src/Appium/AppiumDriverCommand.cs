@@ -28,97 +28,97 @@ namespace OpenQA.Selenium.Appium
         [Obsolete]
         public const string AirplaneMode = "airplaneMode";
 
-		/// <summary>
-		/// Press Key Event Command.
-		/// </summary>
-		public const string KeyEvent = "keyEvent";
+        /// <summary>
+        /// Press Key Event Command.
+        /// </summary>
+        public const string KeyEvent = "keyEvent";
 
-		/// <summary>
-		/// Rotate Command.
-		/// </summary>
-		public const string Rotate = "rotate";
+        /// <summary>
+        /// Rotate Command.
+        /// </summary>
+        public const string Rotate = "rotate";
 
-		/// <summary>
-		/// Get CurrentActivity Command.
-		/// </summary>
-		public const string GetCurrentActivity = "getCurrentActivity";
+        /// <summary>
+        /// Get CurrentActivity Command.
+        /// </summary>
+        public const string GetCurrentActivity = "getCurrentActivity";
 
-		/// <summary>
-		/// Install App Command.
-		/// </summary>
-		public const string InstallApp = "installApp";
+        /// <summary>
+        /// Install App Command.
+        /// </summary>
+        public const string InstallApp = "installApp";
 
-		/// <summary>
-		/// Remove App Command.
-		/// </summary>
-		public const string RemoveApp = "removeApp";
+        /// <summary>
+        /// Remove App Command.
+        /// </summary>
+        public const string RemoveApp = "removeApp";
 
-		/// <summary>
-		/// Is App Installed Command.
-		/// </summary>
-		public const string IsAppInstalled = "isAppInstalled";
+        /// <summary>
+        /// Is App Installed Command.
+        /// </summary>
+        public const string IsAppInstalled = "isAppInstalled";
 
-		/// <summary>
-		/// Push File Command.
-		/// </summary>
-		public const string PushFile = "pushFile";
+        /// <summary>
+        /// Push File Command.
+        /// </summary>
+        public const string PushFile = "pushFile";
 
-		/// <summary>
-		/// Pull File Command.
-		/// </summary>
-		public const string PullFile = "pullFile";
+        /// <summary>
+        /// Pull File Command.
+        /// </summary>
+        public const string PullFile = "pullFile";
 
-		/// <summary>
-		/// Toggle Wifi Command.
-		/// </summary>
-		public const string ToggleWiFi = "toggleWiFi";
+        /// <summary>
+        /// Toggle Wifi Command.
+        /// </summary>
+        public const string ToggleWiFi = "toggleWiFi";
 
-		/// <summary>
-		/// Toggle Location Services Command.
-		/// </summary>
-		public const string ToggleLocationServices = "toggleLocationServices";
+        /// <summary>
+        /// Toggle Location Services Command.
+        /// </summary>
+        public const string ToggleLocationServices = "toggleLocationServices";
 
-		/// <summary>
-		/// Launch App Command.
-		/// </summary>
-		public const string LaunchApp = "launchApp";
+        /// <summary>
+        /// Launch App Command.
+        /// </summary>
+        public const string LaunchApp = "launchApp";
 
-		/// <summary>
-		/// Close App Command.
-		/// </summary>
-		public const string CloseApp = "closeApp";
+        /// <summary>
+        /// Close App Command.
+        /// </summary>
+        public const string CloseApp = "closeApp";
 
-		/// <summary>
-		/// Reset App Command.
-		/// </summary>
-		public const string ResetApp = "resetApp";
+        /// <summary>
+        /// Reset App Command.
+        /// </summary>
+        public const string ResetApp = "resetApp";
 
-		/// <summary>
-		///  Background App Command.
-		/// </summary>
-		public const string BackgroundApp = "backgroundApp";
+        /// <summary>
+        ///  Background App Command.
+        /// </summary>
+        public const string BackgroundApp = "backgroundApp";
 
-		/// <summary>
-		///  End Test Coverage Command.
-		/// </summary>
-		public const string EndTestCoverage = "endTestCoverage";
+        /// <summary>
+        ///  End Test Coverage Command.
+        /// </summary>
+        public const string EndTestCoverage = "endTestCoverage";
 
-		/// <summary>
-		///  Get App Strings Command.
-		/// </summary>
-		public const string GetAppStrings = "getAppStrings";
+        /// <summary>
+        ///  Get App Strings Command.
+        /// </summary>
+        public const string GetAppStrings = "getAppStrings";
 
-		/// <summary>
-		///  Set Immediate Value Command.
-		/// </summary>
-		public const string SetImmediateValue = "setImmediateValue";
+        /// <summary>
+        ///  Set Immediate Value Command.
+        /// </summary>
+        public const string SetImmediateValue = "setImmediateValue";
 
-		/// <summary>
-		///  Find Complex Command.
-		/// </summary>
-		public const string FindComplex = "findComplex";
+        /// <summary>
+        ///  Find Complex Command.
+        /// </summary>
+        public const string FindComplex = "findComplex";
 
-		#endregion Driver Mode Commands
+        #endregion Driver Mode Commands
 
         #region Context Commands
         /// <summary>

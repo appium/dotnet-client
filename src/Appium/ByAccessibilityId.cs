@@ -20,60 +20,60 @@
 
 namespace OpenQA.Selenium.Appium
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Collections.ObjectModel;
-	using System.Globalization;
-	using System.Text;
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Globalization;
+    using System.Text;
 
-	/// <summary>
-	/// Finds element when the Accessibility Id selector has the specified value.
-	/// </summary>
-	public class ByAccessibilityId : By
-	{
-		private string selector = string.Empty;
+    /// <summary>
+    /// Finds element when the Accessibility Id selector has the specified value.
+    /// </summary>
+    public class ByAccessibilityId : By
+    {
+        private string selector = string.Empty;
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="ByAccessibilityId"/> class.
-		/// </summary>
-		/// <param name="elementIdentifier">The selector to use in finding the element.</param>
-		public ByAccessibilityId(string selector)
-		{
-			if (string.IsNullOrEmpty(selector))
-			{
-				throw new ArgumentException("selector identifier cannot be null or the empty string", "selector");
-			}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ByAccessibilityId"/> class.
+        /// </summary>
+        /// <param name="elementIdentifier">The selector to use in finding the element.</param>
+        public ByAccessibilityId(string selector)
+        {
+            if (string.IsNullOrEmpty(selector))
+            {
+                throw new ArgumentException("selector identifier cannot be null or the empty string", "selector");
+            }
 
-			this.selector = selector;
-		}
+            this.selector = selector;
+        }
 
-		/// <summary>
-		/// Find a single element.
-		/// </summary>
-		/// <param name="context">Context used to find the element.</param>
-		/// <returns>The element that matches</returns>
-		public override IWebElement FindElement(ISearchContext context)
-		{
-			return ((AppiumDriver)context).FindElementByAccessibilityId(selector);
-		}
+        /// <summary>
+        /// Find a single element.
+        /// </summary>
+        /// <param name="context">Context used to find the element.</param>
+        /// <returns>The element that matches</returns>
+        public override IWebElement FindElement(ISearchContext context)
+        {
+            return ((AppiumDriver)context).FindElementByAccessibilityId(selector);
+        }
 
-		/// <summary>
-		/// Finds many elements
-		/// </summary>
-		/// <param name="context">Context used to find the element.</param>
-		/// <returns>A readonly collection of elements that match.</returns>
-		public override ReadOnlyCollection<IWebElement> FindElements(ISearchContext context)
-		{
-			return ((AppiumDriver)context).FindElementsByAccessibilityId(selector);
-		}
+        /// <summary>
+        /// Finds many elements
+        /// </summary>
+        /// <param name="context">Context used to find the element.</param>
+        /// <returns>A readonly collection of elements that match.</returns>
+        public override ReadOnlyCollection<IWebElement> FindElements(ISearchContext context)
+        {
+            return ((AppiumDriver)context).FindElementsByAccessibilityId(selector);
+        }
 
-		/// <summary>
-		/// Writes out a description of this By object.
-		/// </summary>
-		/// <returns>Converts the value of this instance to a <see cref="System.String"/></returns>
-		public override string ToString()
-		{
-			return string.Format(CultureInfo.InvariantCulture, "ByAccessibilityId([{0}])", this.selector);
-		}
-	}
+        /// <summary>
+        /// Writes out a description of this By object.
+        /// </summary>
+        /// <returns>Converts the value of this instance to a <see cref="System.String"/></returns>
+        public override string ToString()
+        {
+            return string.Format(CultureInfo.InvariantCulture, "ByAccessibilityId([{0}])", this.selector);
+        }
+    }
 }
