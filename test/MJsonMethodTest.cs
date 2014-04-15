@@ -106,6 +106,13 @@ namespace OpenQA.Selenium.Appium
 			driver.InstallApp ("/home/me/apps/superApp");
 		}
 
+		[Test]
+		public void RemoveAppTestCase ()
+		{
+			server.respondTo ("POST", "/appium/device/remove_app", null);
+			driver.RemoveApp ("rubbish");
+		}
+
 	}
 }
 

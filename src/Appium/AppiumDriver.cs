@@ -311,6 +311,17 @@ namespace OpenQA.Selenium.Appium
 			this.Execute(AppiumDriverCommand.InstallApp, parameters);
 		}
 
+		/// <summary>
+		/// Removes an App.
+		/// </summary>
+		/// <param name="appPath">a string containing the id of the app.</param>
+		public void RemoveApp(String appId)
+		{
+			Dictionary<string, object> parameters = new Dictionary<string, object>();
+			parameters.Add("appId", appId);
+			this.Execute(AppiumDriverCommand.RemoveApp, parameters);
+		}
+
 		#endregion
 
         #region Context
@@ -394,6 +405,7 @@ namespace OpenQA.Selenium.Appium
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.Rotate, "/session/{sessionId}/appium/device/rotate"),
 				new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetCurrentActivity, "/session/{sessionId}/appium/device/current_activity"),
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.InstallApp, "/session/{sessionId}/appium/device/install_app"),
+				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.RemoveApp, "/session/{sessionId}/appium/device/remove_app"),
             };
 
             // Add the custom commandInfo of AppiumDriver
