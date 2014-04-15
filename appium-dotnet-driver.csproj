@@ -40,6 +40,7 @@
     <Compile Include="src\Appium\CommandExecutorFactory.cs" />
     <Compile Include="src\Appium\ByIosUIAutomation.cs" />
     <Compile Include="test\SelectorTest.cs" />
+    <Compile Include="src\Appium\ByAndroidUIAutomator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
