@@ -411,6 +411,21 @@ namespace OpenQA.Selenium.Appium
 			this.Execute(AppiumDriverCommand.BackgroundApp, parameters);
 		}
 
+		/// <summary>
+		/// Pulls a File.
+		/// </summary>
+		/// <param name="intent">a string containing the intent.</param>
+		/// <param name="path">a string containing the path.</param>
+		/// <return>a base64 string containing the data</return> 
+		public string EndTestCoverage(string intent, string path)
+		{
+			Dictionary<string, object> parameters = new Dictionary<string, object>();
+			parameters.Add("intent", intent);
+			parameters.Add("path", path);
+			var commandResponse = this.Execute(AppiumDriverCommand.EndTestCoverage, parameters);
+			return commandResponse.Value as string;
+		}
+
 		#endregion
 
         #region Context
@@ -504,6 +519,7 @@ namespace OpenQA.Selenium.Appium
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.CloseApp, "/session/{sessionId}/appium/app/close"),
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ResetApp, "/session/{sessionId}/appium/app/reset"),
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.BackgroundApp, "/session/{sessionId}/appium/app/background"),
+				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.EndTestCoverage, "/session/{sessionId}/appium/app/end_test_coverage"),
             };
 
             // Add the custom commandInfo of AppiumDriver

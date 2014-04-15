@@ -98,6 +98,11 @@ namespace OpenQA.Selenium.Remote
 		/// </summary>
 		public const string BackgroundApp = "backgroundApp";
 
+		/// <summary>
+		///  End Test Coverage Command.
+		/// </summary>
+		public const string EndTestCoverage = "endTestCoverage";
+
 		#endregion Driver Mode Commands
 
         #region Context Commands

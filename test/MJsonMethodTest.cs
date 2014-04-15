@@ -178,6 +178,15 @@ namespace OpenQA.Selenium.Appium
 			driver.BackgroundApp (5);
 		}
 
+		[Test]
+		public void EndTestCoverageTestCase ()
+		{
+			var data = "21343n2312j3jw";
+			server.respondTo ("POST", "/appium/app/end_test_coverage", data);
+			var result = driver.EndTestCoverage ("android.intent.action.BOOT_COMPLETED", "/random/path");
+			Assert.AreEqual (result, data);
+		}
+
 	}
 }
 
