@@ -41,6 +41,7 @@
     <Compile Include="src\Appium\ByIosUIAutomation.cs" />
     <Compile Include="test\SelectorTest.cs" />
     <Compile Include="src\Appium\ByAndroidUIAutomator.cs" />
+    <Compile Include="src\Appium\ByAccessibilityId.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

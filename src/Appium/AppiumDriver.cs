@@ -68,7 +68,6 @@ namespace OpenQA.Selenium.Appium
 
 
         #region Constructors
-
         /// <summary>
         /// Initializes a new instance of the RemoteWebDriver class
         /// </summary>
@@ -145,7 +144,6 @@ namespace OpenQA.Selenium.Appium
 		{
 			return this.FindElements("-ios uiautomation", selector);
 		}
-
 		#endregion
 
 		#region IFindsByAndroidUIAutomator Members
@@ -180,10 +178,44 @@ namespace OpenQA.Selenium.Appium
 		{
 			return this.FindElements("-android uiautomator", selector);
 		}
-
 		#endregion
 
-        /// <summary>
+		#region IFindsByAccessibilityId Members
+		/// <summary>
+		/// Finds the first element in the page that matches the Accessibility Id selector supplied
+		/// </summary>
+		/// <param name="selector">Selector for the element.</param>
+		/// <returns>IWebElement object so that you can interact that object</returns>
+		/// <example>
+		/// <code>
+		/// IWebDriver driver = new RemoteWebDriver(DesiredCapabilities.Firefox());
+		/// IWebElement elem = driver.FindElementByAccessibilityId('elements()'))
+		/// </code>
+		/// </example>
+		public IWebElement FindElementByAccessibilityId(string selector)
+		{
+			return this.FindElement("accessibility id", selector);
+		}
+
+		/// <summary>
+		/// Finds a list of elements that match the Accessibility Id selector supplied
+		/// </summary>
+		/// <param name="selector">Selector for the elements.</param>
+		/// <returns>ReadOnlyCollection of IWebElement object so that you can interact with those objects</returns>
+		/// <example>
+		/// <code>
+		/// IWebDriver driver = new RemoteWebDriver(DesiredCapabilities.Firefox());
+		/// ReadOnlyCollection<![CDATA[<IWebElement>]]> elem = driver.FindElementsByAccessibilityId(elements())
+		/// </code>
+		/// </example>
+		public ReadOnlyCollection<IWebElement> FindElementsByAccessibilityId(string selector)
+		{
+			return this.FindElements("accessibility id", selector);
+		}
+		#endregion
+        
+		#region MJsonMethod Members
+		/// <summary>
         /// Shakes the device.
         /// </summary>
         public void ShakeDevice()
@@ -228,6 +260,7 @@ namespace OpenQA.Selenium.Appium
         {
             this.Execute(AppiumDriverCommand.ToggleAirplaneMode, null);
         }
+		#endregion
 
         #region Context
         /// <summary>
