@@ -444,9 +444,10 @@ namespace OpenQA.Selenium.Appium
         /// <summary>
         /// Gets the App Strings.
         /// </summary>
-        public void GetAppStrings()
+		public string GetAppStrings()
         {
-            this.Execute(AppiumDriverCommand.GetAppStrings, null);
+			var commandResponse = this.Execute(AppiumDriverCommand.GetAppStrings, null);
+			return commandResponse.Value as string;
         }
 
         #endregion
@@ -589,7 +590,7 @@ namespace OpenQA.Selenium.Appium
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ResetApp, "/session/{sessionId}/appium/app/reset"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.BackgroundApp, "/session/{sessionId}/appium/app/background"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.EndTestCoverage, "/session/{sessionId}/appium/app/end_test_coverage"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.GetAppStrings, "/session/{sessionId}/appium/app/strings"),
+				new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetAppStrings, "/session/{sessionId}/appium/app/strings"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.SetImmediateValue, "/session/{sessionId}/appium/element/{id}/value"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.FindComplex, "/session/{sessionId}/appium/app/complex_find"),
             };

@@ -204,8 +204,10 @@ namespace OpenQA.Selenium.Appium
 		[Test]
 		public void GetAppStringsTestCase ()
 		{
-			server.respondTo ("POST", "/appium/app/strings", null);
-			driver.GetAppStrings ();
+			var data = "21343n2312j3jw";
+			server.respondTo ("GET", "/appium/app/strings", data);
+			var result = driver.GetAppStrings ();
+			Assert.AreEqual (result, data);
 		}
 
 		[Test]
