@@ -63,16 +63,18 @@ namespace OpenQA.Selenium.Appium
 
 	public class FakeAppium
 	{
-		private const string ListenBaseAddress = "http://127.0.0.1:4723";
-
 		private Thread listenThread;
 		private HttpListener httpListener;
 		private bool listening;
+		private int port;
+		private string listenBaseAddress;
 
 		List<RequestProcessor> processors = new List<RequestProcessor>();
 
-		public FakeAppium ()
+		public FakeAppium (int port)
 		{
+			this.port = port;
+			listenBaseAddress = "http://127.0.0.1:" + port;
 		}
 
 		public void clear() {
@@ -90,7 +92,7 @@ namespace OpenQA.Selenium.Appium
 
 		public void Start() {
 			httpListener = new HttpListener();
-			httpListener.Prefixes.Add(new Uri(ListenBaseAddress).ToString());
+			httpListener.Prefixes.Add(new Uri(listenBaseAddress).ToString());
 			httpListener.Start();
 			listening = true;
 
