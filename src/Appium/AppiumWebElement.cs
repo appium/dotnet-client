@@ -52,6 +52,70 @@ namespace OpenQA.Selenium.Appium
 			: base(parent, id)
 		{
 		}
+
+		#region FindMethods
+		/// <summary>
+		/// Finds the first of elements that match the Ios UIAutomation selector supplied
+		/// </summary>
+		/// <param name="selector">an Ios UIAutomation selector</param>
+		/// <returns>IWebElement object so that you can interact that object</returns>
+		public IWebElement FindElementByIosUIAutomation(string selector)
+		{
+			return this.FindElement("-ios uiautomation", selector);
+		}
+
+		/// <summary>
+		/// Finds a list of elements that match the Ios UIAutomation selector supplied
+		/// </summary>
+		/// <param name="selector">an Ios UIAutomation selector</param>
+		/// <returns>IWebElement object so that you can interact that object</returns>
+		public ReadOnlyCollection<IWebElement> FindElementsByIosUIAutomation(string selector)
+		{
+			return this.FindElements("-ios uiautomation", selector);
+		}
+
+		/// <summary>
+		/// Finds the first of elements that match the Android UIAutomator selector supplied
+		/// </summary>
+		/// <param name="selector">an Android UIAutomator selector</param>
+		/// <returns>IWebElement object so that you can interact that object</returns>
+		public IWebElement FindElementByAndroidUIAutomator(string selector)
+		{
+			return this.FindElement("-android uiautomator", selector);
+		}
+
+		/// <summary>
+		/// Finds a list of elements that match the Android UIAutomator selector supplied
+		/// </summary>
+		/// <param name="selector">an Android UIAutomator selector</param>
+		/// <returns>IWebElement object so that you can interact that object</returns>
+		public ReadOnlyCollection<IWebElement> FindElementsByAndroidUIAutomator(string selector)
+		{
+			return this.FindElements("-android uiautomator", selector);
+		}
+			
+		/// <summary>
+		/// Finds the first of elements that match the Accessibility Id selector supplied
+		/// </summary>
+		/// <param name="selector">an Accessibility Id selector</param>
+		/// <returns>IWebElement object so that you can interact that object</returns>
+		public IWebElement FindElementByAccessibilityId(string selector)
+		{
+			return this.FindElement("accessibility id", selector);
+		}
+
+		/// <summary>
+		/// Finds a list of elements that match the Accessibility Id selector supplied
+		/// </summary>
+		/// <param name="selector">an Accessibility Id selector</param>
+		/// <returns>IWebElement object so that you can interact that object</returns>
+		public ReadOnlyCollection<IWebElement> FindElementsByAccessibilityId(string selector)
+		{
+			return this.FindElements("accessibility id", selector);
+		}
+
+		#endregion FindMethods
+
 	}
 }
 	

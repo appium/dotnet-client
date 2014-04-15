@@ -72,6 +72,25 @@ namespace OpenQA.Selenium.Appium
 			(new ByIosUIAutomation(".elements()")).FindElements(driver);
 		}
 
+		[Test]
+		public void FromElementTestCase ()
+		{	
+			server.respondTo ("POST", "/element", new Dictionary<string, object>  {
+				{"ELEMENT", '5'}
+			});
+			AppiumWebElement element = (AppiumWebElement) driver.FindElementByIosUIAutomation (".elements()");
+			server.clear ();
+			server.respondTo ("POST", "/element/5/element", new Dictionary<string, object>  {
+				{"ELEMENT", '6'}
+			});				
+			element.FindElementByIosUIAutomation (".elements()");
+			server.clear ();
+			List<object> results = new List<object>();
+			results.Add (new Dictionary<string, object> {{"ELEMENT", "4"}});
+			server.respondTo ("POST", "/element/5/elements", results);
+			element.FindElementsByIosUIAutomation (".elements()");
+		}
+
 	}
 
 	[TestFixture ()]
@@ -139,6 +158,25 @@ namespace OpenQA.Selenium.Appium
 			server.respondTo ("POST", "/elements", results);
 			driver.FindElements(new ByAndroidUIAutomator(".elements()"));
 			(new ByAndroidUIAutomator(".elements()")).FindElements(driver);
+		}
+
+		[Test]
+		public void FromElementTestCase ()
+		{	
+			server.respondTo ("POST", "/element", new Dictionary<string, object>  {
+				{"ELEMENT", '5'}
+			});
+			AppiumWebElement element = (AppiumWebElement) driver.FindElementByAndroidUIAutomator (".elements()");
+			server.clear ();
+			server.respondTo ("POST", "/element/5/element", new Dictionary<string, object>  {
+				{"ELEMENT", '6'}
+			});				
+			element.FindElementByAndroidUIAutomator (".elements()");
+			server.clear ();
+			List<object> results = new List<object>();
+			results.Add (new Dictionary<string, object> {{"ELEMENT", "4"}});
+			server.respondTo ("POST", "/element/5/elements", results);
+			element.FindElementsByAndroidUIAutomator (".elements()");
 		}
 
 	}
@@ -209,6 +247,26 @@ namespace OpenQA.Selenium.Appium
 			driver.FindElements(new ByAccessibilityId(".elements()"));
 			(new ByAccessibilityId(".elements()")).FindElements(driver);
 		}
+
+		[Test]
+		public void FromElementTestCase ()
+		{	
+			server.respondTo ("POST", "/element", new Dictionary<string, object>  {
+				{"ELEMENT", '5'}
+			});
+			AppiumWebElement element = (AppiumWebElement) driver.FindElementByAccessibilityId (".elements()");
+			server.clear ();
+			server.respondTo ("POST", "/element/5/element", new Dictionary<string, object>  {
+				{"ELEMENT", '6'}
+			});				
+			element.FindElementByAccessibilityId (".elements()");
+			server.clear ();
+			List<object> results = new List<object>();
+			results.Add (new Dictionary<string, object> {{"ELEMENT", "4"}});
+			server.respondTo ("POST", "/element/5/elements", results);
+			element.FindElementsByAccessibilityId (".elements()");
+		}
+
 
 	}
 }
