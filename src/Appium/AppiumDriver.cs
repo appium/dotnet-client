@@ -322,6 +322,19 @@ namespace OpenQA.Selenium.Appium
 			this.Execute(AppiumDriverCommand.RemoveApp, parameters);
 		}
 
+		/// <summary>
+		/// Checks If an App Is Installed.
+		/// </summary>
+		/// <param name="appPath">a string containing the bundle id.</param>
+		public bool IsAppInstalled(string bundleId)
+		{
+			Dictionary<string, object> parameters = new Dictionary<string, object>();
+			parameters.Add("bundleId", bundleId);
+			var commandResponse = this.Execute(AppiumDriverCommand.IsAppInstalled, parameters);
+			Console.Out.WriteLine (commandResponse.Value);
+			return Convert.ToBoolean (commandResponse.Value.ToString());
+		}
+
 		#endregion
 
         #region Context
@@ -406,6 +419,7 @@ namespace OpenQA.Selenium.Appium
 				new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetCurrentActivity, "/session/{sessionId}/appium/device/current_activity"),
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.InstallApp, "/session/{sessionId}/appium/device/install_app"),
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.RemoveApp, "/session/{sessionId}/appium/device/remove_app"),
+				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.IsAppInstalled, "/session/{sessionId}/appium/device/app_installed"),
             };
 
             // Add the custom commandInfo of AppiumDriver

@@ -113,6 +113,13 @@ namespace OpenQA.Selenium.Appium
 			driver.RemoveApp ("rubbish");
 		}
 
+		[Test]
+		public void IsAppInstalledTestCase ()
+		{
+			server.respondTo ("POST", "/appium/device/app_installed", true);
+			driver.IsAppInstalled ("github");
+		}
+
 	}
 }
 

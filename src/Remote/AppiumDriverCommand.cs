@@ -53,6 +53,11 @@ namespace OpenQA.Selenium.Remote
 		/// </summary>
 		public const string RemoveApp = "removeApp";
 
+		/// <summary>
+		/// Is App Installed Command.
+		/// </summary>
+		public const string IsAppInstalled = "isAppInstalled";
+
 		#endregion Driver Mode Commands
 
         #region Context Commands
