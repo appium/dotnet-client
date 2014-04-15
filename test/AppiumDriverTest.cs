@@ -54,6 +54,13 @@ namespace OpenQA.Selenium.Appium
 			Env.driver.LockDevice (3);
 		}
 
+		[Test]
+		public void ToggleAirplaneModeTestCase ()
+		{
+			Env.server.respondTo ("POST", "/appium/device/toggle_airplane_mode", null);
+			Env.driver.ToggleAirplaneMode ();
+		}
+
 	}
 }
 

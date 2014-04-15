@@ -33,11 +33,10 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Compile Include="Factory\CommandExecutorFactory.cs" />
-    <Compile Include="Remote\AppiumDriverCommand.cs" />
-    <Compile Include="src\AppiumDriver.cs" />
     <Compile Include="test\AppiumDriverTest.cs" />
     <Compile Include="test\FakeAppium.cs" />
-    <Compile Include="src\MJsonCommand.cs" />
+    <Compile Include="src\Appium\AppiumDriver.cs" />
+    <Compile Include="src\Remote\AppiumDriverCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -54,5 +53,8 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>references\Newtonsoft.Json.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\Appium\" />
   </ItemGroup>
 </Project>

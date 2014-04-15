@@ -120,7 +120,7 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public void ShakeDevice()
         {
-            this.Execute(MJsonCommand.ShakeDevice, null);
+            this.Execute(AppiumDriverCommand.ShakeDevice, null);
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace OpenQA.Selenium.Appium
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("seconds", seconds);
-            this.Execute(MJsonCommand.LockDevice, parameters);
+            this.Execute(AppiumDriverCommand.LockDevice, parameters);
         }
 
         // TODO: future implementation
@@ -169,8 +169,8 @@ namespace OpenQA.Selenium.Appium
         {
             var commandList = new List<_Commands>()
             {
-                new _Commands(CommandInfo.PostCommand, MJsonCommand.ShakeDevice, "/session/{sessionId}/appium/device/shake"),
-                new _Commands(CommandInfo.PostCommand, MJsonCommand.LockDevice, "/session/{sessionId}/appium/device/lock"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ShakeDevice, "/session/{sessionId}/appium/device/shake"),
+				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.LockDevice, "/session/{sessionId}/appium/device/lock"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ToggleAirplaneMode, "/session/{sessionId}/appium/device/toggle_airplane_mode"),
             };
 
