@@ -53,6 +53,27 @@ namespace OpenQA.Selenium.Appium
 		{
 		}
 
+		#region MJSonMethods
+
+		/// <summary>
+		/// Rotates Device.
+		/// </summary>
+		/// <param name="opts">rotations options like the following:
+		/// new Dictionary<string, int> {{"x", 114}, {"y", 198}, {"duration", 5}, 
+		/// {"radius", 3}, {"rotation", 220}, {"touchCount", 2}}
+		/// </param>
+		public void Rotate(Dictionary<string, int> opts)
+		{
+			Dictionary<string, object> parameters = new Dictionary<string, object>();
+			foreach(KeyValuePair<string, int> opt in opts){
+				parameters.Add(opt.Key, opt.Value);
+			}
+			parameters.Add ("element", this.Id);
+			this.Execute(AppiumDriverCommand.Rotate, parameters);
+		}
+
+		#endregion
+
 		#region FindMethods
 		/// <summary>
 		/// Finds the first of elements that match the Ios UIAutomation selector supplied
@@ -114,7 +135,7 @@ namespace OpenQA.Selenium.Appium
 			return this.FindElements("accessibility id", selector);
 		}
 
-		#endregion FindMethods
+		#endregion
 
 	}
 }

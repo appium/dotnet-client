@@ -92,6 +92,20 @@ namespace OpenQA.Selenium.Appium
 		}
 
 		[Test]
+		public void ElementRotateTestCase ()
+		{
+			server.respondTo ("POST", "/element", new Dictionary<string, object>  {
+				{"ELEMENT", '5'}
+			});
+			AppiumWebElement element = (AppiumWebElement) driver.FindElementByIosUIAutomation (".elements()");
+			server.clear ();
+			server.respondTo ("POST", "/appium/device/rotate", null);
+			Dictionary<string, int> parameters = new Dictionary<string, int> {{"x", 114}, 
+				{"y", 198}, {"duration", 5}, {"radius", 3}, {"rotation", 220}, {"touchCount", 2}};
+			element.Rotate (parameters);
+		}
+
+		[Test]
 		public void GetCurrentActivityTestCase ()
 		{
 			server.respondTo ("GET", "/appium/device/current_activity", ".activities.PeopleActivity");
