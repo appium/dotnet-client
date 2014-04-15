@@ -52,6 +52,28 @@ namespace OpenQA.Selenium.Appium
 			driver.ToggleAirplaneMode ();
 		}
 
+
+		[Test]
+		public void SetContextTestCase ()
+		{
+			server.respondTo ("POST", "/context", null);
+			driver.SetContext ("1234");
+		}
+
+		[Test]
+		public void GetContextTestCase ()
+		{
+			server.respondTo ("GET", "/context", "1234");
+			Assert.AreEqual( driver.GetContext (), "1234");
+		}
+
+		[Test]
+		public void GetContexstTestCase ()
+		{
+			server.respondTo ("GET", "/contexts", new string[] {"ab", "cde", "123"});
+			Assert.AreEqual( driver.GetContexts (), new string[] {"ab", "cde", "123"});
+		}
+
 	}
 }
 
