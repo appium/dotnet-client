@@ -1,6 +1,4 @@
-﻿using System;
-
-// <copyright file="ByIosUIAutomation.cs" company="WebDriver Committers">
+﻿// <copyright file="ByIosUIAutomation.cs" company="WebDriver Committers">
 // Copyright 2007-2012 WebDriver committers
 // Copyright 2007-2012 Google Inc.
 // Portions copyright 2012 Software Freedom Conservancy
@@ -18,14 +16,12 @@
 // limitations under the License.
 // </copyright>
 
+using System;
+using System.Collections.ObjectModel;
+using System.Globalization;
+
 namespace OpenQA.Selenium.Appium
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Globalization;
-    using System.Text;
-
     /// <summary>
     /// Finds element when the Ios UIAutomation selector has the specified value.
     /// </summary>
