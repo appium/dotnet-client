@@ -32,12 +32,12 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Compile Include="Factory\CommandExecutorFactory.cs" />
     <Compile Include="test\FakeAppium.cs" />
     <Compile Include="src\Appium\AppiumDriver.cs" />
     <Compile Include="src\Remote\AppiumDriverCommand.cs" />
     <Compile Include="test\MJsonMethodTest.cs" />
     <Compile Include="test\SessionTest.cs" />
+    <Compile Include="src\Factory\CommandExecutorFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
