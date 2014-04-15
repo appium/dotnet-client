@@ -426,6 +426,14 @@ namespace OpenQA.Selenium.Appium
 			return commandResponse.Value as string;
 		}
 
+		/// <summary>
+		/// Gets the App Strings.
+		/// </summary>
+		public void GetAppStrings()
+		{
+			this.Execute(AppiumDriverCommand.GetAppStrings, null);
+		}
+
 		#endregion
 
         #region Context
@@ -520,6 +528,7 @@ namespace OpenQA.Selenium.Appium
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ResetApp, "/session/{sessionId}/appium/app/reset"),
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.BackgroundApp, "/session/{sessionId}/appium/app/background"),
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.EndTestCoverage, "/session/{sessionId}/appium/app/end_test_coverage"),
+				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.GetAppStrings, "/session/{sessionId}/appium/app/strings"),
             };
 
             // Add the custom commandInfo of AppiumDriver

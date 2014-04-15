@@ -103,6 +103,11 @@ namespace OpenQA.Selenium.Remote
 		/// </summary>
 		public const string EndTestCoverage = "endTestCoverage";
 
+		/// <summary>
+		///  Get App Strings Command.
+		/// </summary>
+		public const string GetAppStrings = "getAppStrings";
+
 		#endregion Driver Mode Commands
 
         #region Context Commands

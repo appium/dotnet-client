@@ -187,6 +187,13 @@ namespace OpenQA.Selenium.Appium
 			Assert.AreEqual (result, data);
 		}
 
+		[Test]
+		public void GetAppStringsTestCase ()
+		{
+			server.respondTo ("POST", "/appium/app/strings", null);
+			driver.GetAppStrings ();
+		}
+
 	}
 }
 
