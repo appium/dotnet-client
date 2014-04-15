@@ -12,11 +12,11 @@ namespace OpenQA.Selenium.Appium
 
 		[TestFixtureSetUp]
 		public void RunBeforeAll(){
-			server = new FakeAppium (4724);			 
+			server = new FakeAppium (4733);			 
 			server.Start ();
 			server.respondToInit ();
 			DesiredCapabilities capabilities = new DesiredCapabilities();
-			driver = new AppiumDriver (new Uri("http://127.0.0.1:4724/wd/hub"), capabilities);
+			driver = new AppiumDriver (new Uri("http://127.0.0.1:4733/wd/hub"), capabilities);
 			server.clear ();	
 		}
 

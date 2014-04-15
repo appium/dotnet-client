@@ -66,14 +66,12 @@ namespace OpenQA.Selenium.Appium
 		private Thread listenThread;
 		private HttpListener httpListener;
 		private bool listening;
-		private int port;
 		private string listenBaseAddress;
 
 		List<RequestProcessor> processors = new List<RequestProcessor>();
 
 		public FakeAppium (int port)
 		{
-			this.port = port;
 			listenBaseAddress = "http://127.0.0.1:" + port;
 		}
 
