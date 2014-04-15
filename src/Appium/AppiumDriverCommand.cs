@@ -4,7 +4,7 @@ namespace OpenQA.Selenium.Appium
 {
     public class AppiumDriverCommand
     {
-        #region Driver Mode Commands
+        #region Appium Specific extensions to JSONWP Commands
 
         /// <summary>
         /// Represents the Shake Device Mapping command
@@ -118,7 +118,7 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string FindComplex = "findComplex";
 
-        #endregion Driver Mode Commands
+        #endregion Appium Specific extensions to JSONWP Commands
 
         #region Context Commands
         /// <summary>

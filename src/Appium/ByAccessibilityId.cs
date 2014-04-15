@@ -1,6 +1,4 @@
-﻿using System;
-
-// <copyright file="ByAccessibilityId.cs" company="WebDriver Committers">
+﻿// <copyright file="ByAccessibilityId.cs" company="WebDriver Committers">
 // Copyright 2007-2012 WebDriver committers
 // Copyright 2007-2012 Google Inc.
 // Portions copyright 2012 Software Freedom Conservancy
@@ -18,14 +16,12 @@
 // limitations under the License.
 // </copyright>
 
+using System;
+using System.Collections.ObjectModel;
+using System.Globalization;
+
 namespace OpenQA.Selenium.Appium
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Globalization;
-    using System.Text;
-
     /// <summary>
     /// Finds element when the Accessibility Id selector has the specified value.
     /// </summary>
@@ -36,7 +32,7 @@ namespace OpenQA.Selenium.Appium
         /// <summary>
         /// Initializes a new instance of the <see cref="ByAccessibilityId"/> class.
         /// </summary>
-        /// <param name="elementIdentifier">The selector to use in finding the element.</param>
+        /// <param name="selector">The selector to use in finding the element.</param>
         public ByAccessibilityId(string selector)
         {
             if (string.IsNullOrEmpty(selector))
