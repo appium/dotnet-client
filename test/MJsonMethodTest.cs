@@ -171,6 +171,13 @@ namespace OpenQA.Selenium.Appium
 			driver.ResetApp ();
 		}
 
+		[Test]
+		public void BackgroundAppTestCase ()
+		{
+			server.respondTo ("POST", "/appium/app/background", null);
+			driver.BackgroundApp (5);
+		}
+
 	}
 }
 

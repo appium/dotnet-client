@@ -93,6 +93,11 @@ namespace OpenQA.Selenium.Remote
 		/// </summary>
 		public const string ResetApp = "resetApp";
 
+		/// <summary>
+		///  Background App Command.
+		/// </summary>
+		public const string BackgroundApp = "backgroundApp";
+
 		#endregion Driver Mode Commands
 
         #region Context Commands

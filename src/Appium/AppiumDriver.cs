@@ -400,6 +400,17 @@ namespace OpenQA.Selenium.Appium
 			this.Execute(AppiumDriverCommand.ResetApp, null);
 		}
 
+		/// <summary>
+		/// Backgrounds the current app for the given number of seconds.
+		/// </summary>
+		/// <param name="seconds">a string containing the number of seconds.</param>
+		public void BackgroundApp(int seconds)
+		{
+			Dictionary<string, object> parameters = new Dictionary<string, object>();
+			parameters.Add("seconds", seconds);
+			this.Execute(AppiumDriverCommand.BackgroundApp, parameters);
+		}
+
 		#endregion
 
         #region Context
@@ -492,6 +503,7 @@ namespace OpenQA.Selenium.Appium
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.LaunchApp, "/session/{sessionId}/appium/app/launch"),
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.CloseApp, "/session/{sessionId}/appium/app/close"),
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ResetApp, "/session/{sessionId}/appium/app/reset"),
+				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.BackgroundApp, "/session/{sessionId}/appium/app/background"),
             };
 
             // Add the custom commandInfo of AppiumDriver
