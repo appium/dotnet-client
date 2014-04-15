@@ -127,6 +127,15 @@ namespace OpenQA.Selenium.Appium
 			driver.PushFile ("/pictures/me.jpg", "abde433qsawe3242");
 		}
 
+		[Test]
+		public void PullFile ()
+		{
+			var data = "wqewdsf232wewqqw443";
+			server.respondTo ("POST", "/appium/device/pull_file", data);
+			string result = driver.PullFile ("/pictures/me.jpg");
+			Assert.AreEqual (result, data);
+		}
+
 	}
 }
 

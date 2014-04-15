@@ -63,6 +63,11 @@ namespace OpenQA.Selenium.Remote
 		/// </summary>
 		public const string PushFile = "pushFile";
 
+		/// <summary>
+		/// Pull File Command.
+		/// </summary>
+		public const string PullFile = "pullFile";
+
 		#endregion Driver Mode Commands
 
         #region Context Commands

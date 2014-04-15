@@ -326,6 +326,7 @@ namespace OpenQA.Selenium.Appium
 		/// Checks If an App Is Installed.
 		/// </summary>
 		/// <param name="appPath">a string containing the bundle id.</param>
+		/// <return>a bol indicating if the app is installed.</return>
 		public bool IsAppInstalled(string bundleId)
 		{
 			Dictionary<string, object> parameters = new Dictionary<string, object>();
@@ -345,6 +346,18 @@ namespace OpenQA.Selenium.Appium
 			parameters.Add("path", pathOnDevice);
 			parameters.Add("data", base64Data);
 			this.Execute(AppiumDriverCommand.PushFile, parameters);
+		}
+
+		/// <summary>
+		/// Pulls a File.
+		/// </summary>
+		/// <param name="appPath">a string containing the id of the app.</param>
+		public string PullFile(string pathOnDevice)
+		{
+			Dictionary<string, object> parameters = new Dictionary<string, object>();
+			parameters.Add("path", pathOnDevice);
+			var commandResponse = this.Execute(AppiumDriverCommand.PullFile, parameters);
+			return commandResponse.Value as string;
 		}
 
 		#endregion
@@ -433,6 +446,7 @@ namespace OpenQA.Selenium.Appium
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.RemoveApp, "/session/{sessionId}/appium/device/remove_app"),
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.IsAppInstalled, "/session/{sessionId}/appium/device/app_installed"),
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.PushFile, "/session/{sessionId}/appium/device/push_file"),
+				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.PullFile, "/session/{sessionId}/appium/device/pull_file"),
             };
 
             // Add the custom commandInfo of AppiumDriver
