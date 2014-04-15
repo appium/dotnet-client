@@ -304,7 +304,7 @@ namespace OpenQA.Selenium.Appium
 		/// Installs an App.
 		/// </summary>
 		/// <param name="appPath">a string containing the file path or url of the app.</param>
-		public void InstallApp(String appPath)
+		public void InstallApp(string appPath)
 		{
 			Dictionary<string, object> parameters = new Dictionary<string, object>();
 			parameters.Add("appPath", appPath);
@@ -315,7 +315,7 @@ namespace OpenQA.Selenium.Appium
 		/// Removes an App.
 		/// </summary>
 		/// <param name="appPath">a string containing the id of the app.</param>
-		public void RemoveApp(String appId)
+		public void RemoveApp(string appId)
 		{
 			Dictionary<string, object> parameters = new Dictionary<string, object>();
 			parameters.Add("appId", appId);
@@ -333,6 +333,18 @@ namespace OpenQA.Selenium.Appium
 			var commandResponse = this.Execute(AppiumDriverCommand.IsAppInstalled, parameters);
 			Console.Out.WriteLine (commandResponse.Value);
 			return Convert.ToBoolean (commandResponse.Value.ToString());
+		}
+
+		/// <summary>
+		/// Pushes a File.
+		/// </summary>
+		/// <param name="appPath">a string containing the id of the app.</param>
+		public void PushFile(string pathOnDevice, string base64Data)
+		{
+			Dictionary<string, object> parameters = new Dictionary<string, object>();
+			parameters.Add("path", pathOnDevice);
+			parameters.Add("data", base64Data);
+			this.Execute(AppiumDriverCommand.PushFile, parameters);
 		}
 
 		#endregion
@@ -420,6 +432,7 @@ namespace OpenQA.Selenium.Appium
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.InstallApp, "/session/{sessionId}/appium/device/install_app"),
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.RemoveApp, "/session/{sessionId}/appium/device/remove_app"),
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.IsAppInstalled, "/session/{sessionId}/appium/device/app_installed"),
+				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.PushFile, "/session/{sessionId}/appium/device/push_file"),
             };
 
             // Add the custom commandInfo of AppiumDriver

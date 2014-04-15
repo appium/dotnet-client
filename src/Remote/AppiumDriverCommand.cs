@@ -58,6 +58,11 @@ namespace OpenQA.Selenium.Remote
 		/// </summary>
 		public const string IsAppInstalled = "isAppInstalled";
 
+		/// <summary>
+		/// Push File Command.
+		/// </summary>
+		public const string PushFile = "pushFile";
+
 		#endregion Driver Mode Commands
 
         #region Context Commands

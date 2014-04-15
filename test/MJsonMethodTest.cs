@@ -120,6 +120,13 @@ namespace OpenQA.Selenium.Appium
 			driver.IsAppInstalled ("github");
 		}
 
+		[Test]
+		public void PushFile ()
+		{
+			server.respondTo ("POST", "/appium/device/push_file", null);
+			driver.PushFile ("/pictures/me.jpg", "abde433qsawe3242");
+		}
+
 	}
 }
 
