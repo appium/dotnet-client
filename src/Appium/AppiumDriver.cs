@@ -392,6 +392,14 @@ namespace OpenQA.Selenium.Appium
 			this.Execute(AppiumDriverCommand.CloseApp, null);
 		}
 
+		/// <summary>
+		/// Resets the current app.
+		/// </summary>
+		public void ResetApp()
+		{
+			this.Execute(AppiumDriverCommand.ResetApp, null);
+		}
+
 		#endregion
 
         #region Context
@@ -483,6 +491,7 @@ namespace OpenQA.Selenium.Appium
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ToggleLocationServices, "/session/{sessionId}/appium/device/toggle_location_services"),
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.LaunchApp, "/session/{sessionId}/appium/app/launch"),
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.CloseApp, "/session/{sessionId}/appium/app/close"),
+				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ResetApp, "/session/{sessionId}/appium/app/reset"),
             };
 
             // Add the custom commandInfo of AppiumDriver

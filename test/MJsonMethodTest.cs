@@ -164,6 +164,13 @@ namespace OpenQA.Selenium.Appium
 			driver.CloseApp ();
 		}
 
+		[Test]
+		public void ResetAppTestCase ()
+		{
+			server.respondTo ("POST", "/appium/app/reset", null);
+			driver.ResetApp ();
+		}
+
 	}
 }
 
