@@ -150,6 +150,13 @@ namespace OpenQA.Selenium.Appium
 			driver.ToggleLocationServices ();
 		}
 
+		[Test]
+		public void LaunchAppTestCase ()
+		{
+			server.respondTo ("POST", "/appium/app/launch", null);
+			driver.LaunchApp ();
+		}
+
 	}
 }
 

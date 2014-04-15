@@ -78,6 +78,11 @@ namespace OpenQA.Selenium.Remote
 		/// </summary>
 		public const string ToggleLocationServices = "toggleLocationServices";
 
+		/// <summary>
+		/// Launch App Command.
+		/// </summary>
+		public const string LaunchApp = "launchApp";
+
 		#endregion Driver Mode Commands
 
         #region Context Commands
