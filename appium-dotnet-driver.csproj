@@ -33,6 +33,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Compile Include="Factory\CommandExecutorFactory.cs" />
+    <Compile Include="Remote\AppiumDriverCommand.cs" />
     <Compile Include="src\AppiumDriver.cs" />
     <Compile Include="test\AppiumDriverTest.cs" />
     <Compile Include="test\FakeAppium.cs" />

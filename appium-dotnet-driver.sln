@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "appium-dotnet-driver", "appium-dotnet-driver.csproj", "{FEC5A212-89D1-4D26-B545-E79B56C43C67}"
 EndProject
 Global
@@ -13,6 +15,9 @@ Global
 		{FEC5A212-89D1-4D26-B545-E79B56C43C67}.Debug|x86.Build.0 = Debug|x86
 		{FEC5A212-89D1-4D26-B545-E79B56C43C67}.Release|x86.ActiveCfg = Release|x86
 		{FEC5A212-89D1-4D26-B545-E79B56C43C67}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = appium-dotnet-driver.csproj
