@@ -368,6 +368,14 @@ namespace OpenQA.Selenium.Appium
 			this.Execute(AppiumDriverCommand.ToggleWiFi, null);
 		}
 
+		/// <summary>
+		/// Toggles Location Services.
+		/// </summary>
+		public void ToggleLocationServices()
+		{
+			this.Execute(AppiumDriverCommand.ToggleLocationServices, null);
+		}
+
 		#endregion
 
         #region Context
@@ -456,6 +464,7 @@ namespace OpenQA.Selenium.Appium
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.PushFile, "/session/{sessionId}/appium/device/push_file"),
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.PullFile, "/session/{sessionId}/appium/device/pull_file"),
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ToggleWiFi, "/session/{sessionId}/appium/device/toggle_wifi"),
+				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ToggleLocationServices, "/session/{sessionId}/appium/device/toggle_location_services"),
             };
 
             // Add the custom commandInfo of AppiumDriver

@@ -73,6 +73,11 @@ namespace OpenQA.Selenium.Remote
 		/// </summary>
 		public const string ToggleWiFi = "toggleWiFi";
 
+		/// <summary>
+		/// Toggle Location Services Command.
+		/// </summary>
+		public const string ToggleLocationServices = "toggleLocationServices";
+
 		#endregion Driver Mode Commands
 
         #region Context Commands

@@ -143,6 +143,12 @@ namespace OpenQA.Selenium.Appium
 			driver.ToggleWifi ();
 		}
 
+		[Test]
+		public void ToggleLocationServicesTestCase ()
+		{
+			server.respondTo ("POST", "/appium/device/toggle_location_services", null);
+			driver.ToggleLocationServices ();
+		}
 
 	}
 }
