@@ -157,6 +157,13 @@ namespace OpenQA.Selenium.Appium
 			driver.LaunchApp ();
 		}
 
+		[Test]
+		public void CloseAppTestCase ()
+		{
+			server.respondTo ("POST", "/appium/app/close", null);
+			driver.CloseApp ();
+		}
+
 	}
 }
 

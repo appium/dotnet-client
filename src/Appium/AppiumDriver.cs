@@ -384,6 +384,14 @@ namespace OpenQA.Selenium.Appium
 			this.Execute(AppiumDriverCommand.LaunchApp, null);
 		}
 
+		/// <summary>
+		/// Closes the current app.
+		/// </summary>
+		public void CloseApp()
+		{
+			this.Execute(AppiumDriverCommand.CloseApp, null);
+		}
+
 		#endregion
 
         #region Context
@@ -474,6 +482,7 @@ namespace OpenQA.Selenium.Appium
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ToggleWiFi, "/session/{sessionId}/appium/device/toggle_wifi"),
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ToggleLocationServices, "/session/{sessionId}/appium/device/toggle_location_services"),
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.LaunchApp, "/session/{sessionId}/appium/app/launch"),
+				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.CloseApp, "/session/{sessionId}/appium/app/close"),
             };
 
             // Add the custom commandInfo of AppiumDriver

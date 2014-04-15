@@ -83,6 +83,11 @@ namespace OpenQA.Selenium.Remote
 		/// </summary>
 		public const string LaunchApp = "launchApp";
 
+		/// <summary>
+		/// Close App Command.
+		/// </summary>
+		public const string CloseApp = "closeApp";
+
 		#endregion Driver Mode Commands
 
         #region Context Commands
