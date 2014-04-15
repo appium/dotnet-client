@@ -43,6 +43,11 @@ namespace OpenQA.Selenium.Remote
 		/// </summary>
 		public const string GetCurrentActivity = "getCurrentActivity";
 
+		/// <summary>
+		/// Get CurrentActivity Command.
+		/// </summary>
+		public const string InstallApp = "installApp";
+
 		#endregion Driver Mode Commands
 
         #region Context Commands

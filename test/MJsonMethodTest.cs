@@ -99,6 +99,13 @@ namespace OpenQA.Selenium.Appium
 			Assert.AreEqual (activity, ".activities.PeopleActivity");
 		}
 
+		[Test]
+		public void InstallAppTestCase ()
+		{
+			server.respondTo ("POST", "/appium/device/install_app", null);
+			driver.InstallApp ("/home/me/apps/superApp");
+		}
+
 	}
 }
 
