@@ -37,7 +37,7 @@
     <Compile Include="src\Remote\AppiumDriverCommand.cs" />
     <Compile Include="test\MJsonMethodTest.cs" />
     <Compile Include="test\SessionTest.cs" />
-    <Compile Include="src\Factory\CommandExecutorFactory.cs" />
+    <Compile Include="src\Appium\CommandExecutorFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

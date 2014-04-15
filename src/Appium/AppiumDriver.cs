@@ -23,7 +23,6 @@ using System.Text;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Internal;
 using System.Reflection;
-using OpenQA.Selenium.Appium.Factory;
 
 namespace OpenQA.Selenium.Appium
 {

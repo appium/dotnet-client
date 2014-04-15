@@ -2,7 +2,7 @@
 using System;
 using System.Reflection;
 
-namespace OpenQA.Selenium.Appium.Factory
+namespace OpenQA.Selenium.Appium
 {
     internal static class CommandExecutorFactory
     {
