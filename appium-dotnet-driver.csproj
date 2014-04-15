@@ -34,7 +34,6 @@
   <ItemGroup>
     <Compile Include="test\FakeAppium.cs" />
     <Compile Include="src\Appium\AppiumDriver.cs" />
-    <Compile Include="src\Remote\AppiumDriverCommand.cs" />
     <Compile Include="test\MJsonMethodTest.cs" />
     <Compile Include="test\SessionTest.cs" />
     <Compile Include="src\Appium\CommandExecutorFactory.cs" />
@@ -43,6 +42,7 @@
     <Compile Include="src\Appium\ByAndroidUIAutomator.cs" />
     <Compile Include="src\Appium\ByAccessibilityId.cs" />
     <Compile Include="src\Appium\AppiumWebElement.cs" />
+    <Compile Include="src\Appium\AppiumDriverCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

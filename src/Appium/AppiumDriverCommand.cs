@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenQA.Selenium.Remote
+namespace OpenQA.Selenium.Appium
 {
     public class AppiumDriverCommand
     {
