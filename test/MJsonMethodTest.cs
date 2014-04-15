@@ -68,10 +68,17 @@ namespace OpenQA.Selenium.Appium
 		}
 
 		[Test]
-		public void GetContexstTestCase ()
+		public void GetContextsTestCase ()
 		{
 			server.respondTo ("GET", "/contexts", new string[] {"ab", "cde", "123"});
 			Assert.AreEqual( driver.GetContexts (), new string[] {"ab", "cde", "123"});
+		}
+
+		[Test]
+		public void KeyEventTestCase ()
+		{
+			server.respondTo ("POST", "/appium/device/keyevent", null);
+			driver.KeyEvent ("5");
 		}
 
 	}

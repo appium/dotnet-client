@@ -27,7 +27,13 @@ namespace OpenQA.Selenium.Remote
         /// </summary>
         [Obsolete]
         public const string AirplaneMode = "airplaneMode";
-        #endregion Driver Mode Commands
+
+		/// <summary>
+		/// Press Key Event Command.
+		/// </summary>
+		public const string KeyEvent = "keyEvent";
+
+		#endregion Driver Mode Commands
 
         #region Context Commands
         /// <summary>

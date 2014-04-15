@@ -256,10 +256,25 @@ namespace OpenQA.Selenium.Appium
         //    }
         //}
 
-        public void ToggleAirplaneMode()
+		/// <summary>
+		/// Toggles Airplane Mode.
+		/// </summary>
+		public void ToggleAirplaneMode()
         {
             this.Execute(AppiumDriverCommand.ToggleAirplaneMode, null);
         }
+
+		/// <summary>
+		/// Trigger Device Key Event.
+		/// </summary>
+		/// <param name="keyCode">an integer keycode number corresponding to a java.awt.event.KeyEvent.</param>
+		public void KeyEvent(String keyCode)
+		{
+			Dictionary<string, object> parameters = new Dictionary<string, object>();
+			parameters.Add("keycode", keyCode);
+			this.Execute(AppiumDriverCommand.KeyEvent, null);
+		}
+
 		#endregion
 
         #region Context
@@ -319,7 +334,7 @@ namespace OpenQA.Selenium.Appium
                 new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.Contexts, "/session/{sessionId}/contexts" ),
                 new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetContext, "/session/{sessionId}/context" ),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.SetContext, "/session/{sessionId}/context" ),
-           
+				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.KeyEvent, "/session/{sessionId}/appium/device/keyevent"),
             };
 
             // Add the custom commandInfo of AppiumDriver
