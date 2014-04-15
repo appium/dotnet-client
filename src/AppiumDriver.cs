@@ -158,7 +158,7 @@ namespace OpenQA.Selenium.Appium
 
         public void ToggleAirplaneMode()
         {
-           this.Execute(AppiumDriverCommand.AirplaneMode, null);
+            this.Execute(AppiumDriverCommand.ToggleAirplaneMode, null);
         }
 
         #region Private Methods
@@ -172,7 +172,6 @@ namespace OpenQA.Selenium.Appium
                 new _Commands(CommandInfo.PostCommand, MJsonCommand.ShakeDevice, "/session/{sessionId}/appium/device/shake"),
                 new _Commands(CommandInfo.PostCommand, MJsonCommand.LockDevice, "/session/{sessionId}/appium/device/lock"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ToggleAirplaneMode, "/session/{sessionId}/appium/device/toggle_airplane_mode"),
-                new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.ToggleAirplaneMode, "/session/{sessionId}/appium/device/toggle_airplane_mode"),
             };
 
             // Add the custom commandInfo of AppiumDriver
