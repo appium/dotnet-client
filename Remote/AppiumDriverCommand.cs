@@ -26,9 +26,14 @@ namespace OpenQA.Selenium.Remote
         public const string Contexts = "contexts";
 
         /// <summary>
-        /// Represents the Context command
+        /// Represents the Get Context command
         /// </summary>
-        public const string Context = "context";
+        public const string GetContext = "getContext";
+
+        /// <summary>
+        /// Represents the Set Context command
+        /// </summary>
+        public const string SetContext = "setContext";
         #endregion Context Commands
     }
 }

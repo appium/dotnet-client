@@ -18,10 +18,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
 using OpenQA.Selenium.Remote;
-using OpenQA.Selenium.Internal;
+using System.Linq;
 using System.Reflection;
 using OpenQA.Selenium.Appium.Factory;
 
@@ -156,10 +154,58 @@ namespace OpenQA.Selenium.Appium
         //    }
         //}
 
+        /// <summary>
+        /// Toggle Airplane Mode
+        /// </summary>
         public void ToggleAirplaneMode()
         {
             this.Execute(AppiumDriverCommand.ToggleAirplaneMode, null);
         }
+
+        #region Context
+        /// <summary>
+        /// Get a list of available contexts
+        /// </summary>
+        /// <returns>a list of strings representing available contexts or an empty list if no contexts found</returns>
+        public List<string> GetContexts()
+        {
+            var commandResponse = this.Execute(AppiumDriverCommand.Contexts, null);
+            var contexts = new List<string>();
+            var objects = commandResponse.Value as object[];
+
+            if (null != objects && 0 < objects.Length)
+            {
+                contexts.AddRange(objects.Select(o => o.ToString()));
+            }
+
+            return contexts;
+        }
+
+        /// <summary>
+        /// Get the current context
+        /// </summary>
+        /// <returns>current context if available or null representing the default context ("no context")</returns>
+        public string GetContext()
+        {
+            var commandResponse = this.Execute(AppiumDriverCommand.Contexts, null);
+            return commandResponse.Value as string;
+
+        }
+
+        /// <summary>
+        /// Set the context
+        /// </summary>
+        /// <remarks>Will throw if the context is not found</remarks>
+        /// <param name="name">name of the context to set</param>
+        public void SetContext(string name)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("name", name);
+            this.Execute(AppiumDriverCommand.SetContext, parameters);
+        }
+
+
+        #endregion Context
 
         #region Private Methods
         /// <summary>
@@ -172,6 +218,9 @@ namespace OpenQA.Selenium.Appium
                 new _Commands(CommandInfo.PostCommand, MJsonCommand.ShakeDevice, "/session/{sessionId}/appium/device/shake"),
                 new _Commands(CommandInfo.PostCommand, MJsonCommand.LockDevice, "/session/{sessionId}/appium/device/lock"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ToggleAirplaneMode, "/session/{sessionId}/appium/device/toggle_airplane_mode"),
+                new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.Contexts, "/session/{sessionId}/contexts" ),
+                new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetContext, "/session/{sessionId}/context" ),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.SetContext, "/session/{sessionId}/context" ),
             };
 
             // Add the custom commandInfo of AppiumDriver
