@@ -33,6 +33,11 @@ namespace OpenQA.Selenium.Remote
 		/// </summary>
 		public const string KeyEvent = "keyEvent";
 
+		/// <summary>
+		/// Rotate Command.
+		/// </summary>
+		public const string Rotate = "rotate";
+
 		#endregion Driver Mode Commands
 
         #region Context Commands

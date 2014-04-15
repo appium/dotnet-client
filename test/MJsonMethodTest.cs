@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using OpenQA.Selenium.Remote;
+using System.Collections.Generic;
 
 namespace OpenQA.Selenium.Appium
 {
@@ -79,6 +80,15 @@ namespace OpenQA.Selenium.Appium
 		{
 			server.respondTo ("POST", "/appium/device/keyevent", null);
 			driver.KeyEvent ("5");
+		}
+
+		[Test]
+		public void Rotate ()
+		{
+			server.respondTo ("POST", "/appium/device/rotate", null);
+			Dictionary<string, int> parameters = new Dictionary<string, int> {{"x", 114}, 
+				{"y", 198}, {"duration", 5}, {"radius", 3}, {"rotation", 220}, {"touchCount", 2}};
+			driver.Rotate (parameters);
 		}
 
 	}

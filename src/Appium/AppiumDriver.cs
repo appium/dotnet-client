@@ -265,14 +265,30 @@ namespace OpenQA.Selenium.Appium
         }
 
 		/// <summary>
-		/// Trigger Device Key Event.
+		/// Triggers Device Key Event.
 		/// </summary>
 		/// <param name="keyCode">an integer keycode number corresponding to a java.awt.event.KeyEvent.</param>
 		public void KeyEvent(String keyCode)
 		{
 			Dictionary<string, object> parameters = new Dictionary<string, object>();
 			parameters.Add("keycode", keyCode);
-			this.Execute(AppiumDriverCommand.KeyEvent, null);
+			this.Execute(AppiumDriverCommand.KeyEvent, parameters);
+		}
+
+		/// <summary>
+		/// Rotates Device.
+		/// </summary>
+		/// <param name="opts">rotations options like the following:
+		/// new Dictionary<string, int> {{"x", 114}, {"y", 198}, {"duration", 5}, 
+		/// {"radius", 3}, {"rotation", 220}, {"touchCount", 2}}
+		/// </param>
+		public void Rotate(Dictionary<string, int> opts)
+		{
+			Dictionary<string, object> parameters = new Dictionary<string, object>();
+			foreach(KeyValuePair<string, int> opt in opts){
+				parameters.Add(opt.Key, opt.Value);
+			}
+			this.Execute(AppiumDriverCommand.Rotate, parameters);
 		}
 
 		#endregion
@@ -320,6 +336,26 @@ namespace OpenQA.Selenium.Appium
         }
         #endregion Context
 
+		#region Support methods
+		/// <summary>
+		/// In derived classes, the <see cref="PrepareEnvironment"/> method prepares the environment for test execution.
+		/// </summary>
+		protected virtual void PrepareEnvironment()
+		{
+			// Does nothing, but provides a hook for subclasses to do "stuff"
+		}
+
+		/// <summary>
+		/// Creates a <see cref="RemoteWebElement"/> with the specified ID.
+		/// </summary>
+		/// <param name="elementId">The ID of this element.</param>
+		/// <returns>A <see cref="RemoteWebElement"/> with the specified ID. For the FirefoxDriver this will be a <see cref="FirefoxWebElement"/>.</returns>
+		protected override RemoteWebElement CreateElement(string elementId)
+		{
+			return new AppiumWebElement(this, elementId);
+		}
+		#endregion
+
         #region Private Methods
         /// <summary>
         /// Add the set of appium commands
@@ -335,6 +371,7 @@ namespace OpenQA.Selenium.Appium
                 new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetContext, "/session/{sessionId}/context" ),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.SetContext, "/session/{sessionId}/context" ),
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.KeyEvent, "/session/{sessionId}/appium/device/keyevent"),
+				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.Rotate, "/session/{sessionId}/appium/device/rotate"),
             };
 
             // Add the custom commandInfo of AppiumDriver
