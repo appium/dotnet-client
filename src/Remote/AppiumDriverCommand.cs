@@ -6,15 +6,15 @@ namespace OpenQA.Selenium.Remote
     {
         #region Driver Mode Commands
 
-		/// <summary>
-		/// Represents the Shake Device Mapping command
-		/// </summary>
-		public const string ShakeDevice = "shakeDevice";
+        /// <summary>
+        /// Represents the Shake Device Mapping command
+        /// </summary>
+        public const string ShakeDevice = "shakeDevice";
 
-		/// <summary>
-		/// Represents the Lock Device Mapping command
-		/// </summary>
-		public const string LockDevice = "lockDevice";
+        /// <summary>
+        /// Represents the Lock Device Mapping command
+        /// </summary>
+        public const string LockDevice = "lockDevice";
 
         /// <summary>
         /// Toggle's the Airplane Mode ("Flight Safe Mode") Command
@@ -36,9 +36,14 @@ namespace OpenQA.Selenium.Remote
         public const string Contexts = "contexts";
 
         /// <summary>
-        /// Represents the Context command
+        /// Represents the Get Context command
         /// </summary>
-        public const string Context = "context";
+        public const string GetContext = "getContext";
+
+        /// <summary>
+        /// Represents the Set Context command
+        /// </summary>
+        public const string SetContext = "setContext";
         #endregion Context Commands
     }
 }
