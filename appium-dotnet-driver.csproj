@@ -38,6 +38,8 @@
     <Compile Include="test\MJsonMethodTest.cs" />
     <Compile Include="test\SessionTest.cs" />
     <Compile Include="src\Appium\CommandExecutorFactory.cs" />
+    <Compile Include="src\Appium\ByIosUIAutomation.cs" />
+    <Compile Include="test\SelectorTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -12,9 +12,9 @@ namespace OpenQA.Selenium.Appium
 	{
 		protected string httpMethod = null; 
 		protected string partialUrl = null; 
-		protected Dictionary<string, object> result = null;
+		protected object result = null;
 
-		public RequestProcessor(string httpMethod, string partialUrl, Dictionary<string, object> result){
+		public RequestProcessor(string httpMethod, string partialUrl, object result){
 			this.httpMethod = httpMethod;
 			this.partialUrl = partialUrl;
 			this.result = result;
@@ -84,7 +84,7 @@ namespace OpenQA.Selenium.Appium
 			processors.Add (new RequestProcessor("GET", "", null));
 		}
 			
-		public void respondTo(string httpMethod, string partialUrl, Dictionary<string, object> result) {
+		public void respondTo(string httpMethod, string partialUrl, object result) {
 			processors.Add (new RequestProcessor(httpMethod, partialUrl, result));
 		}
 

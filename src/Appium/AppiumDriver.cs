@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium
 {
@@ -111,6 +112,41 @@ namespace OpenQA.Selenium.Appium
         {
         }
         #endregion Constructors
+
+		#region IFindsByIosUIAutomation Members
+		/// <summary>
+		/// Finds the first element in the page that matches the Ios UIAutomation selector supplied
+		/// </summary>
+		/// <param name="selector">Selector for the element.</param>
+		/// <returns>IWebElement object so that you can interact that object</returns>
+		/// <example>
+		/// <code>
+		/// IWebDriver driver = new RemoteWebDriver(DesiredCapabilities.Firefox());
+		/// IWebElement elem = driver.FindElementByIosUIAutomation('elements()'))
+		/// </code>
+		/// </example>
+		public IWebElement FindElementByIosUIAutomation(string selector)
+		{
+			return this.FindElement("-ios uiautomation", selector);
+		}
+
+		/// <summary>
+		/// Finds a list of elements that match the Ios UIAutomation selector supplied
+		/// </summary>
+		/// <param name="selector">Selector for the elements.</param>
+		/// <returns>ReadOnlyCollection of IWebElement object so that you can interact with those objects</returns>
+		/// <example>
+		/// <code>
+		/// IWebDriver driver = new RemoteWebDriver(DesiredCapabilities.Firefox());
+		/// ReadOnlyCollection<![CDATA[<IWebElement>]]> elem = driver.FindElementsByIosUIAutomation(elements())
+		/// </code>
+		/// </example>
+		public ReadOnlyCollection<IWebElement> FindElementsByIosUIAutomation(string selector)
+		{
+			return this.FindElements("-ios uiautomation", selector);
+		}
+
+		#endregion
 
         /// <summary>
         /// Shakes the device.
