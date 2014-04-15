@@ -112,7 +112,7 @@ namespace OpenQA.Selenium.Appium
         }
         #endregion Constructors
 
-		#region IFindsByIosUIAutomation Members
+		#region FindMethods
 		/// <summary>
 		/// Finds the first element in the page that matches the Ios UIAutomation selector supplied
 		/// </summary>
@@ -144,9 +144,7 @@ namespace OpenQA.Selenium.Appium
 		{
 			return this.FindElements("-ios uiautomation", selector);
 		}
-		#endregion
 
-		#region IFindsByAndroidUIAutomator Members
 		/// <summary>
 		/// Finds the first element in the page that matches the Android UIAutomator selector supplied
 		/// </summary>
@@ -178,9 +176,7 @@ namespace OpenQA.Selenium.Appium
 		{
 			return this.FindElements("-android uiautomator", selector);
 		}
-		#endregion
 
-		#region IFindsByAccessibilityId Members
 		/// <summary>
 		/// Finds the first element in the page that matches the Accessibility Id selector supplied
 		/// </summary>
@@ -212,8 +208,27 @@ namespace OpenQA.Selenium.Appium
 		{
 			return this.FindElements("accessibility id", selector);
 		}
+
+		/// <summary>
+		/// Finds one or several elements depending on the selector
+		/// </summary>
+		/// <param name="selector">Selector for the element.</param>
+		/// <returns>IWebElement object so that you can interact that object</returns>
+		public object FindComplex(string selector)
+		{
+			Dictionary<string, object> parameters = new Dictionary<string, object>();
+			parameters.Add("selector", selector);
+			var commandResponse = this.Execute(AppiumDriverCommand.FindComplex, parameters);
+			if (commandResponse.Value is object[]) {
+				// several elements
+				return this.GetElementsFromResponse (commandResponse);
+			} else {
+				// one elements
+				return this.GetElementFromResponse (commandResponse);
+			}
+		}			
 		#endregion
-        
+
 		#region MJsonMethod Members
 		/// <summary>
         /// Shakes the device.
@@ -497,6 +512,52 @@ namespace OpenQA.Selenium.Appium
 		{
 			return new AppiumWebElement(this, elementId);
 		}
+
+		/// <summary>
+		/// Find the element in the response
+		/// </summary>
+		/// <param name="response">Response from the browser</param>
+		/// <returns>Element from the page</returns>
+		internal IWebElement GetElementFromResponse(Response response)
+		{
+			if (response == null)
+			{
+				throw new NoSuchElementException();
+			}
+
+			RemoteWebElement element = null;
+			Dictionary<string, object> elementDictionary = response.Value as Dictionary<string, object>;
+			if (elementDictionary != null)
+			{
+				string id = (string)elementDictionary["ELEMENT"];
+				element = this.CreateElement(id);
+			}
+
+			return element;
+		}
+
+		/// <summary>
+		/// Finds the elements that are in the response
+		/// </summary>
+		/// <param name="response">Response from the browser</param>
+		/// <returns>Collection of elements</returns>
+		internal ReadOnlyCollection<IWebElement> GetElementsFromResponse(Response response)
+		{
+			List<IWebElement> toReturn = new List<IWebElement>();
+			object[] elements = response.Value as object[];
+			foreach (object elementObject in elements)
+			{
+				Dictionary<string, object> elementDictionary = elementObject as Dictionary<string, object>;
+				if (elementDictionary != null)
+				{
+					string id = (string)elementDictionary["ELEMENT"];
+					RemoteWebElement element = this.CreateElement(id);
+					toReturn.Add(element);
+				}
+			}
+
+			return toReturn.AsReadOnly();
+		}
 		#endregion
 
         #region Private Methods
@@ -530,6 +591,7 @@ namespace OpenQA.Selenium.Appium
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.EndTestCoverage, "/session/{sessionId}/appium/app/end_test_coverage"),
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.GetAppStrings, "/session/{sessionId}/appium/app/strings"),
 				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.SetImmediateValue, "/session/{sessionId}/appium/element/{id}/value"),
+				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.FindComplex, "/session/{sessionId}/appium/app/complex_find"),
 			};
 
             // Add the custom commandInfo of AppiumDriver

@@ -113,6 +113,11 @@ namespace OpenQA.Selenium.Remote
 		/// </summary>
 		public const string SetImmediateValue = "setImmediateValue";
 
+		/// <summary>
+		///  Find Complex Command.
+		/// </summary>
+		public const string FindComplex = "findComplex";
+
 		#endregion Driver Mode Commands
 
         #region Context Commands
