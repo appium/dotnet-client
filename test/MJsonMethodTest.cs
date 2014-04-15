@@ -208,6 +208,18 @@ namespace OpenQA.Selenium.Appium
 			driver.GetAppStrings ();
 		}
 
+		[Test]
+		public void SetImmediateValueTestCase ()
+		{
+			server.respondTo ("POST", "/element", new Dictionary<string, object>  {
+				{"ELEMENT", '5'}
+			});
+			AppiumWebElement element = (AppiumWebElement) driver.FindElementByIosUIAutomation (".elements()");
+			server.clear ();
+			server.respondTo ("POST", "/appium/element/5/value", null);
+			element.SetImmediateValue ("123");
+		}
+
 	}
 }
 

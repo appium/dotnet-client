@@ -72,6 +72,18 @@ namespace OpenQA.Selenium.Appium
 			this.Execute(AppiumDriverCommand.Rotate, parameters);
 		}
 
+		/// <summary>
+		/// Sets Immediate Value.
+		/// </summary>
+		/// <param name="value">the value</param>
+		public void SetImmediateValue(string value)
+		{
+			Dictionary<string, object> parameters = new Dictionary<string, object>();
+			parameters.Add("value", value);
+			parameters.Add ("id", this.Id);
+			this.Execute(AppiumDriverCommand.SetImmediateValue, parameters);
+		}
+
 		#endregion
 
 		#region FindMethods

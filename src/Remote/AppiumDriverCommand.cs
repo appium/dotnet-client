@@ -108,6 +108,11 @@ namespace OpenQA.Selenium.Remote
 		/// </summary>
 		public const string GetAppStrings = "getAppStrings";
 
+		/// <summary>
+		///  Set Immediate Value Command.
+		/// </summary>
+		public const string SetImmediateValue = "setImmediateValue";
+
 		#endregion Driver Mode Commands
 
         #region Context Commands
