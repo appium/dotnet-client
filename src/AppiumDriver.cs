@@ -67,6 +67,8 @@ namespace OpenQA.Selenium.Appium
     /// </example>
     public class AppiumDriver : RemoteWebDriver
     {
+
+
         #region Constructors
 
         /// <summary>
@@ -77,19 +79,10 @@ namespace OpenQA.Selenium.Appium
         public AppiumDriver(ICommandExecutor commandExecutor, ICapabilities desiredCapabilities)
             : base(commandExecutor, desiredCapabilities)
         {
-            // Add the custom commandInfo of AppiumDriver
-            MethodInfo dynMethod = typeof(CommandInfoRepository).GetMethod("TryAddAdditionalCommand", BindingFlags.NonPublic | BindingFlags.Instance);
-            // ShakeDevice
-            Dictionary<string, string> commandMapping = new Dictionary<string, string> {
-                { MJsonCommand.ShakeDevice, "/session/{sessionId}/appium/device/shake" },
-                { MJsonCommand.LockDevice, "/session/{sessionId}/appium/device/lock" }
-            };
-            foreach (KeyValuePair<string, string> entry in commandMapping)
-            {
-                CommandInfo commandInfo = new CommandInfo(CommandInfo.PostCommand, entry.Value);
-                dynMethod.Invoke(CommandInfoRepository.Instance, new object[] { entry.Key, commandInfo });
-            }
+            _AddAppiumCommands();
         }
+
+
 
         /// <summary>
         /// Initializes a new instance of the AppiumDriver class. This constructor defaults proxy to http://127.0.0.1:4723/wd/hub
@@ -140,5 +133,95 @@ namespace OpenQA.Selenium.Appium
             parameters.Add("seconds", seconds);
             this.Execute(MJsonCommand.LockDevice, parameters);
         }
+
+        // TODO: future implementation
+        /// <summary>
+        /// set/get the Airplane mode.
+        /// true = phone is in airplane mode, false = phone is NOT in airplane mode
+        /// </summary>
+        //public bool AirplaneMode
+        //{
+        //    get
+        //    {
+        //        Response commandResponse = this.Execute(AppiumDriverCommand.AirplaneMode, null);
+        //        return (bool)commandResponse.Value;
+        //    }
+
+        //    set
+        //    {
+        //        var parameters = new Dictionary<string, object>();
+        //        // TODO: what is the key that the value needs to be set to?
+        //        parameters.Add("value", value);
+        //        this.Execute(AppiumDriverCommand.AirplaneMode, null);
+        //    }
+        //}
+
+        public void ToggleAirplaneMode()
+        {
+           this.Execute(AppiumDriverCommand.AirplaneMode, null);
+        }
+
+        #region Private Methods
+        /// <summary>
+        /// Add the set of appium commands
+        /// </summary>
+        private static void _AddAppiumCommands()
+        {
+            var commandList = new List<_Commands>()
+            {
+                new _Commands(CommandInfo.PostCommand, MJsonCommand.ShakeDevice, "/session/{sessionId}/appium/device/shake"),
+                new _Commands(CommandInfo.PostCommand, MJsonCommand.LockDevice, "/session/{sessionId}/appium/device/lock"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ToggleAirplaneMode, "/session/{sessionId}/appium/device/toggle_airplane_mode"),
+                new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.ToggleAirplaneMode, "/session/{sessionId}/appium/device/toggle_airplane_mode"),
+            };
+
+            // Add the custom commandInfo of AppiumDriver
+            var dynMethod = typeof(CommandInfoRepository).GetMethod("TryAddAdditionalCommand", BindingFlags.NonPublic | BindingFlags.Instance);
+
+            // Add each new command to the Command Info Repository
+            foreach (_Commands entry in commandList)
+            {
+                var commandInfo = new CommandInfo(entry.CommandType, entry.ApiEndpoint);
+                dynMethod.Invoke(CommandInfoRepository.Instance, new object[] { entry.Command, commandInfo });
+            }
+        }
+
+        #endregion Private Methods
+
+        #region Private Class
+        /// <summary>
+        /// Container class for the command tuple
+        /// </summary>
+        private class _Commands
+        {
+            /// <summary>
+            /// command type 
+            /// </summary>
+            internal readonly string CommandType;
+
+            /// <summary>
+            /// Command 
+            /// </summary>
+            internal readonly string Command;
+
+            /// <summary>
+            /// API Endpoint
+            /// </summary>
+            internal readonly string ApiEndpoint;
+
+            /// <summary>
+            /// Constructor
+            /// </summary>
+            /// <param name="commandType">type of command (get/post/delete)</param>
+            /// <param name="command">Command</param>
+            /// <param name="apiEndpoint">api endpoint</param>
+            internal _Commands(string commandType, string command, string apiEndpoint)
+            {
+                CommandType = commandType;
+                Command = command;
+                ApiEndpoint = apiEndpoint;
+            }
+        }
+        #endregion Private Class
     }
 }
