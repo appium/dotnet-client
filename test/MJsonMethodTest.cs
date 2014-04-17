@@ -222,6 +222,13 @@ namespace OpenQA.Selenium.Appium
 			element.SetImmediateValue ("123");
 		}
 
+		[Test]
+		public void HideKeyboardTestCase ()
+		{
+			server.respondTo ("POST", "/appium/device/hide_keyboard", null);
+			driver.HideKeyboard ("a");
+		}
+
 	}
 }
 

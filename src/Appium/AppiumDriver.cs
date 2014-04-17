@@ -450,6 +450,17 @@ namespace OpenQA.Selenium.Appium
             return commandResponse.Value as string;
         }
 
+		/// <summary>
+		/// Hides the device keyboard.
+		/// </summary>
+		/// <param name="keyName">The button pressed by the mobile driver to attempt hiding the keyboard.</param>
+		public void HideKeyboard(string keyName)
+		{
+			Dictionary<string, object> parameters = new Dictionary<string, object>();
+			parameters.Add("keyName", keyName);
+			this.Execute(AppiumDriverCommand.HideKeyboard, parameters);
+		}
+
         #endregion
 
         #region Context
@@ -592,7 +603,8 @@ namespace OpenQA.Selenium.Appium
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.EndTestCoverage, "/session/{sessionId}/appium/app/end_test_coverage"),
                 new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetAppStrings, "/session/{sessionId}/appium/app/strings"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.SetImmediateValue, "/session/{sessionId}/appium/element/{id}/value"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.FindComplex, "/session/{sessionId}/appium/app/complex_find"),
+				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.FindComplex, "/session/{sessionId}/appium/app/complex_find"),
+				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.HideKeyboard, "/session/{sessionId}/appium/device/hide_keyboard"),
             };
 
             // Add the custom commandInfo of AppiumDriver

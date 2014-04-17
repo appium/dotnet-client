@@ -118,6 +118,11 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string FindComplex = "findComplex";
 
+		/// <summary>
+		/// Represents the Hide Keyboard command
+		/// </summary>
+		public const string HideKeyboard = "hideKeyboard";
+
         #endregion Appium Specific extensions to JSONWP Commands
 
         #region Context Commands
@@ -136,5 +141,5 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string SetContext = "setContext";
         #endregion Context Commands
-    }
+	}
 }
