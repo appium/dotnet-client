@@ -11,3 +11,4 @@ test-results
 *.userprefs
 *.pidb
 packages
+*.nupkg
