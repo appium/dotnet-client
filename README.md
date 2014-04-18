@@ -20,11 +20,11 @@ Dependencies:
 
 ## Usage
 
-- You need to add the following namespace line: `using OpenQA.Selenium.Appium;`;
+- You need to add the following namespace line: `using OpenQA.Selenium.Appium;`.
 - Use the `AppiumDriver` class to construct the driver. It works the same as the Selenium Webdriver, except that
  the ports are defaulted to Appium values, and the driver does not know how to start the Appium on its own.
 - To use the Appium methods on Element, you need to cast the object returned by the finder method to 
-`AppiumWebElement`. 
+`AppiumWebElement`.
 
 
 ```c#
