@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>Appium.WebDriver</id>
+    <version>0.1</version>
+    <title>Appium Webdriver</title>
+    <authors>Appium Commiters</authors>
+    <owners>Appium Commiters</owners>
+    <licenseUrl>https://raw.githubusercontent.com/appium/appium-dotnet-driver/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/appium/appium-dotnet-driver</projectUrl>
+    <iconUrl>https://avatars1.githubusercontent.com/u/3221291?s=140</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Selenium Webdriver extension for Appium.</description>
+    <releaseNotes>Initial Release.</releaseNotes>
+    <copyright>Copyright 2014</copyright>
+    <tags>Appium Webdriver device automation</tags>
+  </metadata>
+  <files>
+    <file src="bin/Release/appium-dotnet-driver.dll" target="lib/net40/appium-dotnet-driver.dll" /> 
+  </files>
+</package>
+ 
