@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
+VisualStudioVersion = {0}
+MinimumVisualStudioVersion = {0}
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "appium-dotnet-driver", "appium-dotnet-driver.csproj", "{FEC5A212-89D1-4D26-B545-E79B56C43C67}"
+EndProject
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "Packages", "Packages.mdproj", "{65DCFF58-B2D8-4101-B1A5-439B4641A366}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +13,17 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{65DCFF58-B2D8-4101-B1A5-439B4641A366}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{65DCFF58-B2D8-4101-B1A5-439B4641A366}.Release|x86.ActiveCfg = Release|Any CPU
 		{FEC5A212-89D1-4D26-B545-E79B56C43C67}.Debug|x86.ActiveCfg = Debug|x86
 		{FEC5A212-89D1-4D26-B545-E79B56C43C67}.Debug|x86.Build.0 = Debug|x86
 		{FEC5A212-89D1-4D26-B545-E79B56C43C67}.Release|x86.ActiveCfg = Release|x86
 		{FEC5A212-89D1-4D26-B545-E79B56C43C67}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = appium-dotnet-driver.csproj
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

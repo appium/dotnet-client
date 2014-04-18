@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ItemType>PackagingProject</ItemType>
+    <ProductVersion>12.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{65DCFF58-B2D8-4101-B1A5-439B4641A366}</ProjectGuid>
+    <Packages>
+      <Packages>
+        <Package name="Linux Binaries">
+          <Builder targetFile="downloads\appium-dotnet-driver.tar.gz" platform="Linux" configuration="Release|x86" ctype="BinariesZipPackageBuilder">
+            <RootEntry path="appium-dotnet-driver.csproj" />
+          </Builder>
+        </Package>
+      </Packages>
+    </Packages>
+  </PropertyGroup>
+</Project>
