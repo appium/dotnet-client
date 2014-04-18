@@ -86,18 +86,18 @@ TODO: generate API Doc
 ## Deploy (for maintainers)
 
 Once, if using mono
-- Download [Nuget exe](http://nuget.org/nuget.exe)
-- Setup the Api Key ([see here](http://docs.nuget.org/docs/creating-packages/creating-and-publishing-a-package#api-key))
-- alias NuGet='mono <Nuget Path>/NuGet.exe'
+- Download [Nuget exe](http://nuget.org/nuget.exe).
+- Setup the Api Key ([see here](http://docs.nuget.org/docs/creating-packages/creating-and-publishing-a-package#api-key)).
+- `alias NuGet='mono <Nuget Path>/NuGet.exe'`
 
 For Nuget:
 
-- `Rebuild All` with `Release` target
-- Edit the file: `appium-dotnet-driver.nuspec` (At least bump version and change release notes.)
+- `Rebuild All` with `Release` target.
+- Edit the file: `appium-dotnet-driver.nuspec`. (At least bump version and change release notes.)
 - `NuGet pack appium-dotnet-driver.nuspec`
 - `nuget Push appium-webdriver.<version>.nupkg`
-- Commit and push changes
+- Commit and push changes.
 
 For Downloads:
-- Click on Packages/Linux Binaries in the left handside menu
-- Commit and push changes
+- Click on Packages/Linux Binaries in the left handside menu.
+- Commit and push changes.
