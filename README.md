@@ -43,10 +43,9 @@ namespace AppiumDriverDemo
 		public void beforeAll(){
 			DesiredCapabilities capabilities = new DesiredCapabilities();
 
-			capabilities.SetCapability("device", "iPhone Simulator");
 			capabilities.SetCapability("deviceName", "iPhone Retina (4-inch 64-bit)");
-			capabilities.SetCapability("platform", "ios");
-			capabilities.SetCapability("version", "7.1");
+			capabilities.SetCapability("platformName", "iOS");
+			capabilities.SetCapability("platformVersion", "7.1");
 			capabilities.SetCapability("app", "<Path to your app>");
 			driver = new AppiumDriver(new Uri("http://127.0.0.1:4723/wd/hub"), capabilities);		
 		}
