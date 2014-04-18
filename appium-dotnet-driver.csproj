@@ -48,16 +48,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework">
-      <HintPath>packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Net" />
     <Reference Include="WebDriver">
-      <HintPath>references\WebDriver.dll</HintPath>
+      <HintPath>packages\Selenium.WebDriver.2.41.0\lib\net40\WebDriver.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="Newtonsoft.Json">
-      <HintPath>references\Newtonsoft.Json.dll</HintPath>
+      <HintPath>packages\Newtonsoft.Json.6.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
