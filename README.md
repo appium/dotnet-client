@@ -79,8 +79,8 @@ TODO: generate API Doc
 
 ## Dev Build+Test 
 
-- Open with Xamarin
-- `Rebuild Ull`
+- Open with [Xamarin](http://xamarin.com/)
+- `Rebuild all`
 - `Run Unit Tests`
 
 ## Deploy (for maintainers)
@@ -93,7 +93,7 @@ Once, if using mono
 For Nuget:
 
 - `Rebuild All` with `Release` target
-- Update appium-dotnet-driver.nuspec (At least bump version and change release notes.)
+- Edit the file: `appium-dotnet-driver.nuspec` (At least bump version and change release notes.)
 - `NuGet pack appium-dotnet-driver.nuspec`
 - `nuget Push appium-webdriver.<version>.nupkg`
 - Commit and push changes
