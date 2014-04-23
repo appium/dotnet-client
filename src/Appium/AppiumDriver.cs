@@ -16,6 +16,10 @@
 // limitations under the License.
 // </copyright>
 
+using System.Drawing;
+using OpenQA.Selenium.Appium.MultiTouch;
+using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Internal;
 using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
@@ -63,10 +67,8 @@ namespace OpenQA.Selenium.Appium
     /// }
     /// </code>
     /// </example>
-    public class AppiumDriver : RemoteWebDriver
+    public class AppiumDriver : RemoteWebDriver, IHasTouchScreen
     {
-
-
         #region Constructors
         /// <summary>
         /// Initializes a new instance of the RemoteWebDriver class
@@ -111,6 +113,8 @@ namespace OpenQA.Selenium.Appium
         {
         }
         #endregion Constructors
+
+        #region Public Methods
 
         #region FindMethods
         /// <summary>
@@ -219,14 +223,17 @@ namespace OpenQA.Selenium.Appium
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("selector", selector);
             var commandResponse = this.Execute(AppiumDriverCommand.FindComplex, parameters);
-            if (commandResponse.Value is object[]) {
+            if (commandResponse.Value is object[])
+            {
                 // several elements
-                return this.GetElementsFromResponse (commandResponse);
-            } else {
-                // one elements
-                return this.GetElementFromResponse (commandResponse);
+                return this.GetElementsFromResponse(commandResponse);
             }
-        }           
+            else
+            {
+                // one elements
+                return this.GetElementFromResponse(commandResponse);
+            }
+        }
         #endregion
 
         #region MJsonMethod Members
@@ -300,7 +307,8 @@ namespace OpenQA.Selenium.Appium
         public void Rotate(Dictionary<string, int> opts)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
-            foreach(KeyValuePair<string, int> opt in opts){
+            foreach (KeyValuePair<string, int> opt in opts)
+            {
                 parameters.Add(opt.Key, opt.Value);
             }
             this.Execute(AppiumDriverCommand.Rotate, parameters);
@@ -347,8 +355,8 @@ namespace OpenQA.Selenium.Appium
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("bundleId", bundleId);
             var commandResponse = this.Execute(AppiumDriverCommand.IsAppInstalled, parameters);
-            Console.Out.WriteLine (commandResponse.Value);
-            return Convert.ToBoolean (commandResponse.Value.ToString());
+            Console.Out.WriteLine(commandResponse.Value);
+            return Convert.ToBoolean(commandResponse.Value.ToString());
         }
 
         /// <summary>
@@ -450,16 +458,16 @@ namespace OpenQA.Selenium.Appium
             return commandResponse.Value as string;
         }
 
-		/// <summary>
-		/// Hides the device keyboard.
-		/// </summary>
-		/// <param name="keyName">The button pressed by the mobile driver to attempt hiding the keyboard.</param>
-		public void HideKeyboard(string keyName)
-		{
-			Dictionary<string, object> parameters = new Dictionary<string, object>();
-			parameters.Add("keyName", keyName);
-			this.Execute(AppiumDriverCommand.HideKeyboard, parameters);
-		}
+        /// <summary>
+        /// Hides the device keyboard.
+        /// </summary>
+        /// <param name="keyName">The button pressed by the mobile driver to attempt hiding the keyboard.</param>
+        public void HideKeyboard(string keyName)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("keyName", keyName);
+            this.Execute(AppiumDriverCommand.HideKeyboard, parameters);
+        }
 
         #endregion
 
@@ -505,6 +513,83 @@ namespace OpenQA.Selenium.Appium
             this.Execute(AppiumDriverCommand.SetContext, parameters);
         }
         #endregion Context
+
+        #region Multi Touch Actions
+
+        #region Pinch
+        /// <summary>
+        /// Pinch at the specified region
+        /// </summary>
+        /// <param name="x">x screen location</param>
+        /// <param name="y">y screen location</param>
+        public void Pinch(int x, int y)
+        {
+            var touchAction1 = new TouchActions(this);
+            touchAction1.Down(x, y - 100).Move(x, y).Up(x, y);
+
+            var touchAction2 = new TouchActions(this);
+            touchAction2.Down(x, y + 100).Move(x, y).Up(x, y);
+
+            var multiTouchAction = new MultiTouchAction(this);
+            multiTouchAction.Add(touchAction1);
+            multiTouchAction.Add(touchAction2);
+
+            PerformMultiTouchAction(multiTouchAction);
+        }
+        #endregion Pinch
+
+        #region Zoom
+        /// <summary>
+        /// Zoom at the specified point
+        /// </summary>
+        /// <param name="x">x screen location</param>
+        /// <param name="y">y screen location</param>
+        public void Zoom(int x, int y)
+        {
+            var touchAction1 = new TouchActions(this);
+            touchAction1.Down(x, y).Move(x, y - 100).Up(x, y - 100);
+
+            var touchAction2 = new TouchActions(this);
+            touchAction2.Down(x, y).Move(x, y + 100).Up(x, y + 100);
+
+            var multiTouchAction = new MultiTouchAction(this);
+            multiTouchAction.Add(touchAction1);
+            multiTouchAction.Add(touchAction2);
+            PerformMultiTouchAction(multiTouchAction);
+        }
+        #endregion Zoom
+
+        /// <summary>
+        /// Perform the multi touch action
+        /// </summary>
+        /// <param name="multiTouchAction">mluti touch action to perform</param>
+        public void PerformMultiTouchAction(MultiTouchAction multiTouchAction)
+        {
+            if (null == multiTouchAction)
+            {
+                return; // do nothing
+            }
+
+            var parameters = multiTouchAction.GetParameters();
+            this.Execute(AppiumDriverCommand.TouchMultiPerform, parameters);
+        }
+
+
+        #endregion Multi Touch Actions
+        #endregion Public Methods
+
+        #region Internal Methods
+        /// <summary>
+        /// Executes commands with the driver 
+        /// </summary>
+        /// <param name="driverCommandToExecute">Command that needs executing</param>
+        /// <param name="parameters">Parameters needed for the command</param>
+        /// <returns>WebDriver Response</returns>
+        internal Response InternalExecute(string driverCommandToExecute, Dictionary<string, object> parameters)
+        {
+            return this.Execute(driverCommandToExecute, parameters);
+        }
+        #endregion Internal Methods
 
         #region Support methods
         /// <summary>
@@ -580,12 +665,15 @@ namespace OpenQA.Selenium.Appium
         {
             var commandList = new List<_Commands>()
             {
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ShakeDevice, "/session/{sessionId}/appium/device/shake"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.LockDevice, "/session/{sessionId}/appium/device/lock"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ToggleAirplaneMode, "/session/{sessionId}/appium/device/toggle_airplane_mode"),
+                #region Context Commands
                 new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.Contexts, "/session/{sessionId}/contexts" ),
                 new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetContext, "/session/{sessionId}/context" ),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.SetContext, "/session/{sessionId}/context" ),
+                #endregion Context Commands
+                #region Appium Commands
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ShakeDevice, "/session/{sessionId}/appium/device/shake"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.LockDevice, "/session/{sessionId}/appium/device/lock"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ToggleAirplaneMode, "/session/{sessionId}/appium/device/toggle_airplane_mode"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.KeyEvent, "/session/{sessionId}/appium/device/keyevent"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.Rotate, "/session/{sessionId}/appium/device/rotate"),
                 new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetCurrentActivity, "/session/{sessionId}/appium/device/current_activity"),
@@ -603,8 +691,12 @@ namespace OpenQA.Selenium.Appium
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.EndTestCoverage, "/session/{sessionId}/appium/app/end_test_coverage"),
                 new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetAppStrings, "/session/{sessionId}/appium/app/strings"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.SetImmediateValue, "/session/{sessionId}/appium/element/{id}/value"),
-				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.FindComplex, "/session/{sessionId}/appium/app/complex_find"),
-				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.HideKeyboard, "/session/{sessionId}/appium/device/hide_keyboard"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.FindComplex, "/session/{sessionId}/appium/app/complex_find"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.HideKeyboard, "/session/{sessionId}/appium/device/hide_keyboard"),
+                #endregion Appium Commands
+                #region Touch Commands
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.TouchMultiPerform, "/session/{sessionId}/touch/multi/perform"),
+                #endregion Touch Commands
             };
 
             // Add the custom commandInfo of AppiumDriver
@@ -655,5 +747,29 @@ namespace OpenQA.Selenium.Appium
             }
         }
         #endregion Private Class
+
+        #region IHasTouchScreen Members
+        // TODO: this might not belong here - need to figure out where this belongs
+        private ITouchScreen _TouchScreen;
+        /// <summary>
+        /// Touch Screen
+        /// </summary>
+        public ITouchScreen TouchScreen
+        {
+            get
+            {
+                if (null == _TouchScreen)
+                {
+                    _TouchScreen = new RemoteMultiTouchScreen(this);
+                }
+                return _TouchScreen;
+            }
+        }
+        #endregion IHasTouchScreen Members
+
+        public IWebDriver WrappedDriver
+        {
+            get { throw new NotImplementedException(); }
+        }
     }
 }

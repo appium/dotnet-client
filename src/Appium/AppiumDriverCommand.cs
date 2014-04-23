@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System; 
 
 namespace OpenQA.Selenium.Appium
 {
@@ -118,12 +118,19 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string FindComplex = "findComplex";
 
-		/// <summary>
-		/// Represents the Hide Keyboard command
-		/// </summary>
-		public const string HideKeyboard = "hideKeyboard";
+        /// <summary>
+        /// Represents the Hide Keyboard command
+        /// </summary>
+        public const string HideKeyboard = "hideKeyboard";
 
         #endregion Appium Specific extensions to JSONWP Commands
+
+        #region MultiTouchActions
+        /// <summary>
+        /// Perform multi touch action
+        /// </summary>
+        public const string TouchMultiPerform = "touchMultiPerform";
+        #endregion MultiTouchActions
 
         #region Context Commands
         /// <summary>
@@ -141,5 +148,5 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string SetContext = "setContext";
         #endregion Context Commands
-	}
+    }
 }
