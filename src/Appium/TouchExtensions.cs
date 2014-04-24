@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using OpenQA.Selenium.Appium.MultiTouch;
 using OpenQA.Selenium.Interactions;
 
 namespace OpenQA.Selenium.Appium
@@ -26,6 +27,7 @@ namespace OpenQA.Selenium.Appium
         //private static readonly Lazy<Type> _TouchActionType = new Lazy<Type>(() => _GetClassType("Internal.WebDriverAction"));
         #endregion Class Types
 
+        #region Field Info List
         //private static readonly Lazy<List<FieldInfo>> _TouchFieldInfoList = new Lazy<List<FieldInfo>>(() => _GetFieldInfoList(_TouchActionType.Value));
         private static readonly Lazy<List<FieldInfo>> _ScreenPressFieldInfoList = new Lazy<List<FieldInfo>>(() => _GetFieldInfoList(_ScreenPressActionType.Value));
         //private static readonly Lazy<List<FieldInfo>> _SingleTapFieldInfoList = new Lazy<List<FieldInfo>>(() => _GetFieldInfoList(_SingleTapActionType.Value));
@@ -35,6 +37,7 @@ namespace OpenQA.Selenium.Appium
         //private static readonly Lazy<List<FieldInfo>> _DoubleTapFieldInfoList = new Lazy<List<FieldInfo>>(() => _GetFieldInfoList(_DoubleTapActionType.Value));
         //private static readonly Lazy<List<FieldInfo>> _LongPressFieldInfoList = new Lazy<List<FieldInfo>>(() => _GetFieldInfoList(_LongPressActionType.Value));
         //private static readonly Lazy<List<FieldInfo>> _FlickFieldInfoList = new Lazy<List<FieldInfo>>(() => _GetFieldInfoList(_FlickActionType.Value));
+        #endregion Field Info List
 
         #region Field Info
         private static readonly Lazy<FieldInfo> _ActionsListFieldInfo = new Lazy<FieldInfo>(() => _GetFieldInfo("CompositeAction", "actionsList"));
@@ -76,6 +79,31 @@ namespace OpenQA.Selenium.Appium
             return actionsList;
         }
 
+        /// <summary>
+        /// Pause execution of action chain for the given number of milliseconds.
+        /// Defaults to zero so that it can be used for synchronizing actions
+        /// </summary>
+        /// <param name="touchAction">touch action chain to pause</param>
+        /// <param name="ms">number of milliseconds to pause the action chain for</param>
+        /// <returns></returns>
+        public static TouchActions Wait(this TouchActions touchAction, int ms=0)
+        {
+            if (null == touchAction)
+            {
+                throw new ArgumentNullException("touchAction");
+            }
+
+            // use reflection to find the AddAction() to add the wait action into the action chain
+            var mi = typeof(TouchActions).GetMethod("AddAction", BindingFlags.NonPublic | BindingFlags.Instance);
+
+            if (null != mi)
+            {
+                mi.Invoke(touchAction, new object[] { new WaitAction(ms)} ); 
+            }
+
+            return touchAction;
+        }
+
         #endregion Public Methods
 
         #region Private Methods
@@ -109,11 +137,17 @@ namespace OpenQA.Selenium.Appium
             }
             else if (actionType == _ScreenMoveActionType.Value)
             {
-                actionParameter = new ActionParameter("moveTo");
                 var x = _ScreenMoveFieldInfoList.Value.Find(s => s.Name == "x").GetValue(action);
                 var y = _ScreenMoveFieldInfoList.Value.Find(s => s.Name == "y").GetValue(action);
+
+                actionParameter = new ActionParameter("moveTo");
                 actionParameter.AddParameter("x", x);
                 actionParameter.AddParameter("y", y);
+            }
+            else if (actionType == typeof(WaitAction))
+            {
+                actionParameter = new ActionParameter("wait");
+                actionParameter.AddParameter("ms", ((WaitAction)action).Duration);
             }
 
             if (null == actionParameter)
@@ -180,7 +214,7 @@ namespace OpenQA.Selenium.Appium
         /// <returns>List of field info objects for the given class (Public | Non Public | Instance)</returns>
         private static List<FieldInfo> _GetFieldInfoList(Type classType)
         {
-            return classType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetProperty).ToList();
+            return classType.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).ToList();
         }
         #endregion Private Methods
 
@@ -233,7 +267,7 @@ namespace OpenQA.Selenium.Appium
                 var retVal = new Dictionary<string, object> { { "action", _ActionName }, { "options", _Options } };
                 return retVal;
             }
-            #endregion Public Methods          
+            #endregion Public Methods
         }
         #endregion Private class
 
