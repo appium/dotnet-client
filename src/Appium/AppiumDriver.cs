@@ -573,9 +573,8 @@ namespace OpenQA.Selenium.Appium
             var parameters = multiTouchAction.GetParameters();
             this.Execute(AppiumDriverCommand.TouchMultiPerform, parameters);
         }
-
-
         #endregion Multi Touch Actions
+
         #endregion Public Methods
 
         #region Internal Methods

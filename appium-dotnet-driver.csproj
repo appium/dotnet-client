@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="src\Appium\MultiTouch\MultiTouchAction.cs" />
     <Compile Include="src\Appium\MultiTouch\RemoteMultiTouchScreen.cs" />
+    <Compile Include="src\Appium\MultiTouch\WaitAction.cs" />
     <Compile Include="src\Appium\TouchExtensions.cs" />
     <Compile Include="test\FakeAppium.cs" />
     <Compile Include="src\Appium\AppiumDriver.cs" />
