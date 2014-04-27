@@ -94,7 +94,7 @@ For Nuget:
 - `Rebuild All` with `Release` target.
 - Edit the file: `appium-dotnet-driver.nuspec`. (At least bump version and change release notes.)
 - `NuGet pack appium-dotnet-driver.nuspec`
-- `nuget Push appium-webdriver.<version>.nupkg`
+- `NuGet push Appium.WebDriver.<version>.nupkg`
 - Commit and push changes.
 
 For Downloads:
