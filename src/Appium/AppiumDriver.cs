@@ -16,16 +16,14 @@
 // limitations under the License.
 // </copyright>
 
-using System.Drawing;
 using OpenQA.Selenium.Appium.MultiTouch;
 using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Internal;
 using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
-using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium
 {
@@ -469,7 +467,7 @@ namespace OpenQA.Selenium.Appium
             this.Execute(AppiumDriverCommand.HideKeyboard, parameters);
         }
 
-        #endregion
+        #endregion MJsonMethod Members
 
         #region Context
         /// <summary>
@@ -498,9 +496,7 @@ namespace OpenQA.Selenium.Appium
         {
             var commandResponse = this.Execute(AppiumDriverCommand.GetContext, null);
             return commandResponse.Value as string;
-
         }
-
         /// <summary>
         /// Set the context
         /// </summary>
@@ -513,6 +509,33 @@ namespace OpenQA.Selenium.Appium
             this.Execute(AppiumDriverCommand.SetContext, parameters);
         }
         #endregion Context
+
+        #region Orientation
+        /// <summary>
+        /// Return the Screen Orientation of the device 
+        /// </summary>
+        /// <returns>Screen Orientation</returns>
+        /// <remarks>
+        /// Throws Null exception if not valid server response. 
+        /// Throws ArgumentOutOfRangeException if server response is not a valid Orientation.
+        /// </remarks>
+        public ScreenOrientation GetOrientation()
+        {
+            var commandResponse = this.Execute(AppiumDriverCommand.GetOrientation, null);
+            return (commandResponse.Value as string).ConvertToScreenOrientation();
+        }
+
+        /// <summary>
+        /// Set the orientation
+        /// </summary>
+        /// <param name="orientation">orientation to set</param>
+        public void SetOrientation(ScreenOrientation orientation)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("orientation", orientation.JSONWireProtocolString());
+            this.Execute(AppiumDriverCommand.SetOrientation, parameters);
+        }
+        #endregion Orientation
 
         #region Multi Touch Actions
 
@@ -696,6 +719,12 @@ namespace OpenQA.Selenium.Appium
                 #region Touch Commands
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.TouchMultiPerform, "/session/{sessionId}/touch/multi/perform"),
                 #endregion Touch Commands
+                
+                #region JSON Wire Protocol Commands
+                new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetOrientation, "/session/{sessionId}/orientation"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.SetOrientation, "/session/{sessionId}/orientation"),
+                #endregion JSON Wire Protocol Commands
+                
             };
 
             // Add the custom commandInfo of AppiumDriver
