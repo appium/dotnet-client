@@ -148,5 +148,17 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string SetContext = "setContext";
         #endregion Context Commands
+
+        #region JSON Wire Protocol
+        /// <summary>
+        /// Represents the Get Orientation Command
+        /// </summary>
+        public const string GetOrientation = "getOrientation";
+
+        /// <summary>
+        /// Represents the Set Orientation Command
+        /// </summary>
+        public const string SetOrientation = "setOrientation";
+        #endregion JSON Wire Protocol
     }
 }
