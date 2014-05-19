@@ -79,7 +79,7 @@ namespace OpenQA.Selenium.Appium
 		public void KeyEventTestCase ()
 		{
 			server.respondTo ("POST", "/appium/device/keyevent", null);
-			driver.KeyEvent ("5");
+			driver.KeyEvent(5);
 		}
 
 		[Test]

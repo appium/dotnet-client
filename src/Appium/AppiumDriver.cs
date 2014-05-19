@@ -288,9 +288,9 @@ namespace OpenQA.Selenium.Appium
         /// Triggers Device Key Event.
         /// </summary>
         /// <param name="keyCode">an integer keycode number corresponding to a java.awt.event.KeyEvent.</param>
-        public void KeyEvent(String keyCode)
+        public void KeyEvent(int keyCode)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            var parameters = new Dictionary<string, object>();
             parameters.Add("keycode", keyCode);
             this.Execute(AppiumDriverCommand.KeyEvent, parameters);
         }
