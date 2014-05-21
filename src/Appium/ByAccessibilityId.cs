@@ -19,6 +19,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using OpenQA.Selenium.Appium.Interfaces;
 
 namespace OpenQA.Selenium.Appium
 {
@@ -50,7 +51,12 @@ namespace OpenQA.Selenium.Appium
         /// <returns>The element that matches</returns>
         public override IWebElement FindElement(ISearchContext context)
         {
-            return ((AppiumDriver)context).FindElementByAccessibilityId(selector);
+            var tmpContext = context as IFindByAccessibilityId;
+            if (null == tmpContext)
+            {
+                throw new InvalidCastException("Unable to cast ISearchContext to IFindByAccessibilityId");
+            }
+            return tmpContext.FindElementByAccessibilityId(selector);
         }
 
         /// <summary>
@@ -60,7 +66,12 @@ namespace OpenQA.Selenium.Appium
         /// <returns>A readonly collection of elements that match.</returns>
         public override ReadOnlyCollection<IWebElement> FindElements(ISearchContext context)
         {
-            return ((AppiumDriver)context).FindElementsByAccessibilityId(selector);
+            var tmpContext = context as IFindByAccessibilityId;
+            if (null == tmpContext)
+            {
+                throw new InvalidCastException("Unable to cast ISearchContext to IFindByAccessibilityId");
+            }
+            return tmpContext.FindElementsByAccessibilityId(selector);
         }
 
         /// <summary>

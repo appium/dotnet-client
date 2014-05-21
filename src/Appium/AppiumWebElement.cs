@@ -18,6 +18,7 @@
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Remote;
 
 namespace OpenQA.Selenium.Appium
@@ -38,7 +39,7 @@ namespace OpenQA.Selenium.Appium
     /// }
     /// </code>
     /// </example>
-    public class AppiumWebElement : RemoteWebElement
+    public class AppiumWebElement : RemoteWebElement, IFindByAccessibilityId
     {
         /// <summary>
         /// Initializes a new instance of the AppiumWebElement class.
@@ -123,7 +124,8 @@ namespace OpenQA.Selenium.Appium
         {
             return this.FindElements("-android uiautomator", selector);
         }
-            
+
+        #region IFindByAccessibilityId Members
         /// <summary>
         /// Finds the first of elements that match the Accessibility Id selector supplied
         /// </summary>
@@ -143,6 +145,7 @@ namespace OpenQA.Selenium.Appium
         {
             return this.FindElements("accessibility id", selector);
         }
+        #endregion IFindByAccessibilityId Members
 
         #endregion
 
