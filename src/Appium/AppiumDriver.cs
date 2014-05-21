@@ -16,6 +16,7 @@
 // limitations under the License.
 // </copyright>
 
+using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.MultiTouch;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Remote;
@@ -65,7 +66,7 @@ namespace OpenQA.Selenium.Appium
     /// }
     /// </code>
     /// </example>
-    public class AppiumDriver : RemoteWebDriver, IHasTouchScreen
+    public class AppiumDriver : RemoteWebDriver, IHasTouchScreen, IFindByAccessibilityId
     {
         #region Constructors
         /// <summary>
@@ -179,6 +180,7 @@ namespace OpenQA.Selenium.Appium
             return this.FindElements("-android uiautomator", selector);
         }
 
+        #region IFindByAccessibilityId Members
         /// <summary>
         /// Finds the first element in the page that matches the Accessibility Id selector supplied
         /// </summary>
@@ -210,6 +212,7 @@ namespace OpenQA.Selenium.Appium
         {
             return this.FindElements("accessibility id", selector);
         }
+        #endregion IFindByAccessibilityId Members
 
         /// <summary>
         /// Finds one or several elements depending on the selector
