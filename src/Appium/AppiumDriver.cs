@@ -66,7 +66,7 @@ namespace OpenQA.Selenium.Appium
     /// }
     /// </code>
     /// </example>
-    public class AppiumDriver : RemoteWebDriver, IHasTouchScreen, IFindByAccessibilityId
+    public class AppiumDriver : RemoteWebDriver, IHasTouchScreen, IFindByAndroidUIAutomator, IFindByAccessibilityId
     {
         #region Constructors
         /// <summary>
@@ -148,6 +148,7 @@ namespace OpenQA.Selenium.Appium
             return this.FindElements("-ios uiautomation", selector);
         }
 
+        #region IFindByAndroidUIAutomator Members
         /// <summary>
         /// Finds the first element in the page that matches the Android UIAutomator selector supplied
         /// </summary>
@@ -179,6 +180,7 @@ namespace OpenQA.Selenium.Appium
         {
             return this.FindElements("-android uiautomator", selector);
         }
+        #endregion IFindByAndroidUIAutomator Members
 
         #region IFindByAccessibilityId Members
         /// <summary>
