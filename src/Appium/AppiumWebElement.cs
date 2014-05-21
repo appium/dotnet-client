@@ -19,6 +19,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using OpenQA.Selenium.Appium.Interfaces;
+using OpenQA.Selenium.Appium.src.Appium.Interfaces;
 using OpenQA.Selenium.Remote;
 
 namespace OpenQA.Selenium.Appium
@@ -39,7 +40,7 @@ namespace OpenQA.Selenium.Appium
     /// }
     /// </code>
     /// </example>
-    public class AppiumWebElement : RemoteWebElement, IFindByAndroidUIAutomator, IFindByAccessibilityId
+    public class AppiumWebElement : RemoteWebElement, IFindByAndroidUIAutomator, IFindByIosUIAutomation, IFindByAccessibilityId
     {
         /// <summary>
         /// Initializes a new instance of the AppiumWebElement class.
@@ -85,6 +86,8 @@ namespace OpenQA.Selenium.Appium
         #endregion
 
         #region FindMethods
+
+        #region IFindByIosUIAutomation Members
         /// <summary>
         /// Finds the first of elements that match the Ios UIAutomation selector supplied
         /// </summary>
@@ -104,6 +107,7 @@ namespace OpenQA.Selenium.Appium
         {
             return this.FindElements("-ios uiautomation", selector);
         }
+        #endregion IFindByIosUIAutomation Members
 
         #region IFindByAndroidUIAutomator Members
         /// <summary>
