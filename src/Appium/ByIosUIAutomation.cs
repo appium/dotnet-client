@@ -19,6 +19,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using OpenQA.Selenium.Appium.src.Appium.Interfaces;
 
 namespace OpenQA.Selenium.Appium
 {
@@ -27,7 +28,8 @@ namespace OpenQA.Selenium.Appium
     /// </summary>
     public class ByIosUIAutomation : By
     {
-        private string selector = string.Empty;
+        private string _Selector = string.Empty;
+        private const string _UnableToCast = "Unable to cast ISearchContext to IFindByIosUIAutomation";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ByIosUIAutomation"/> class.
@@ -40,7 +42,7 @@ namespace OpenQA.Selenium.Appium
                 throw new ArgumentException("selector identifier cannot be null or the empty string", "selector");
             }
 
-            this.selector = selector;
+            this._Selector = selector;
         }
 
         /// <summary>
@@ -50,7 +52,12 @@ namespace OpenQA.Selenium.Appium
         /// <returns>The element that matches</returns>
         public override IWebElement FindElement(ISearchContext context)
         {
-            return ((AppiumDriver)context).FindElementByIosUIAutomation(selector);
+            var tmpContext = context as IFindByIosUIAutomation;
+            if (null == tmpContext)
+            {
+                throw new InvalidCastException(_UnableToCast);
+            }
+            return tmpContext.FindElementByIosUIAutomation(_Selector);
         }
 
         /// <summary>
@@ -60,7 +67,12 @@ namespace OpenQA.Selenium.Appium
         /// <returns>A readonly collection of elements that match.</returns>
         public override ReadOnlyCollection<IWebElement> FindElements(ISearchContext context)
         {
-            return ((AppiumDriver)context).FindElementsByIosUIAutomation(selector);
+            var tmpContext = context as IFindByIosUIAutomation;
+            if (null == tmpContext)
+            {
+                throw new InvalidCastException(_UnableToCast);
+            }
+            return tmpContext.FindElementsByIosUIAutomation(_Selector);
         }
 
         /// <summary>
@@ -69,7 +81,7 @@ namespace OpenQA.Selenium.Appium
         /// <returns>Converts the value of this instance to a <see cref="System.String"/></returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture, "ByIosUIAutomation([{0}])", this.selector);
+            return string.Format(CultureInfo.InvariantCulture, "ByIosUIAutomation([{0}])", this._Selector);
         }
     }
 }

@@ -36,6 +36,7 @@
   <ItemGroup>
     <Compile Include="src\Appium\Interfaces\IFindByAccessibilityId.cs" />
     <Compile Include="src\Appium\Interfaces\IFindByAndroidUIAutomator.cs" />
+    <Compile Include="src\Appium\Interfaces\IFindByIosUIAutomation.cs" />
     <Compile Include="src\Appium\MultiTouch\MultiTouchAction.cs" />
     <Compile Include="src\Appium\MultiTouch\RemoteMultiTouchScreen.cs" />
     <Compile Include="src\Appium\MultiTouch\WaitAction.cs" />

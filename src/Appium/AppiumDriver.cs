@@ -18,6 +18,7 @@
 
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.MultiTouch;
+using OpenQA.Selenium.Appium.src.Appium.Interfaces;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Remote;
 using System;
@@ -66,7 +67,7 @@ namespace OpenQA.Selenium.Appium
     /// }
     /// </code>
     /// </example>
-    public class AppiumDriver : RemoteWebDriver, IHasTouchScreen, IFindByAndroidUIAutomator, IFindByAccessibilityId
+    public class AppiumDriver : RemoteWebDriver, IHasTouchScreen, IFindByAndroidUIAutomator, IFindByIosUIAutomation, IFindByAccessibilityId
     {
         #region Constructors
         /// <summary>
@@ -116,6 +117,8 @@ namespace OpenQA.Selenium.Appium
         #region Public Methods
 
         #region FindMethods
+
+        #region IFindByIosUIAutomation Members
         /// <summary>
         /// Finds the first element in the page that matches the Ios UIAutomation selector supplied
         /// </summary>
@@ -147,6 +150,7 @@ namespace OpenQA.Selenium.Appium
         {
             return this.FindElements("-ios uiautomation", selector);
         }
+        #endregion IFindByIosUIAutomation Members
 
         #region IFindByAndroidUIAutomator Members
         /// <summary>
