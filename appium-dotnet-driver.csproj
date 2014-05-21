@@ -35,6 +35,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Compile Include="src\Appium\Interfaces\IFindByAccessibilityId.cs" />
+    <Compile Include="src\Appium\Interfaces\IFindByAndroidUIAutomator.cs" />
     <Compile Include="src\Appium\MultiTouch\MultiTouchAction.cs" />
     <Compile Include="src\Appium\MultiTouch\RemoteMultiTouchScreen.cs" />
     <Compile Include="src\Appium\MultiTouch\WaitAction.cs" />

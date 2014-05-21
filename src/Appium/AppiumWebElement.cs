@@ -39,7 +39,7 @@ namespace OpenQA.Selenium.Appium
     /// }
     /// </code>
     /// </example>
-    public class AppiumWebElement : RemoteWebElement, IFindByAccessibilityId
+    public class AppiumWebElement : RemoteWebElement, IFindByAndroidUIAutomator, IFindByAccessibilityId
     {
         /// <summary>
         /// Initializes a new instance of the AppiumWebElement class.
@@ -105,6 +105,7 @@ namespace OpenQA.Selenium.Appium
             return this.FindElements("-ios uiautomation", selector);
         }
 
+        #region IFindByAndroidUIAutomator Members
         /// <summary>
         /// Finds the first of elements that match the Android UIAutomator selector supplied
         /// </summary>
@@ -124,6 +125,7 @@ namespace OpenQA.Selenium.Appium
         {
             return this.FindElements("-android uiautomator", selector);
         }
+        #endregion IFindByAndroidUIAutomator Members
 
         #region IFindByAccessibilityId Members
         /// <summary>
@@ -148,7 +150,6 @@ namespace OpenQA.Selenium.Appium
         #endregion IFindByAccessibilityId Members
 
         #endregion
-
     }
 }
     
