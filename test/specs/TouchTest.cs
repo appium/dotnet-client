@@ -4,8 +4,9 @@ using OpenQA.Selenium.Remote;
 using System.Collections.Generic;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Appium.MultiTouch;
+using OpenQA.Selenium.Appium.Test.Helpers;
 
-namespace OpenQA.Selenium.Appium
+namespace OpenQA.Selenium.Appium.Test.Specs
 {
 	[TestFixture ()]
 	public class TouchTest

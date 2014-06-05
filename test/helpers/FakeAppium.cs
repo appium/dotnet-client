@@ -5,7 +5,7 @@ using System.Text;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace OpenQA.Selenium.Appium
+namespace OpenQA.Selenium.Appium.Test.Helpers
 {
 
 	public class RequestProcessor
