@@ -554,49 +554,6 @@ namespace OpenQA.Selenium.Appium
 
         #region Multi Actions
 
-//        #region Pinch
-//        /// <summary>
-//        /// Pinch at the specified region
-//        /// </summary>
-//        /// <param name="x">x screen location</param>
-//        /// <param name="y">y screen location</param>
-//        public void Pinch(int x, int y)
-//        {
-//            var touchAction1 = new TouchActions(this);
-//            touchAction1.Down(x, y - 100).Move(x, y).Up(x, y);
-//
-//            var touchAction2 = new TouchActions(this);
-//            touchAction2.Down(x, y + 100).Move(x, y).Up(x, y);
-//
-//            var multiTouchAction = new MultiTouchAction(this);
-//            multiTouchAction.Add(touchAction1);
-//            multiTouchAction.Add(touchAction2);
-//
-//            PerformMultiAction(multiTouchAction);
-//        }
-//        #endregion Pinch
-
-//        #region Zoom
-//        /// <summary>
-//        /// Zoom at the specified point
-//        /// </summary>
-//        /// <param name="x">x screen location</param>
-//        /// <param name="y">y screen location</param>
-//        public void Zoom(int x, int y)
-//        {
-//            var touchAction1 = new TouchActions(this);
-//            touchAction1.Down(x, y).Move(x, y - 100).Up(x, y - 100);
-//
-//            var touchAction2 = new TouchActions(this);
-//            touchAction2.Down(x, y).Move(x, y + 100).Up(x, y + 100);
-//
-//            var multiTouchAction = new MultiTouchAction(this);
-//            multiTouchAction.Add(touchAction1);
-//            multiTouchAction.Add(touchAction2);
-//            PerformMultiAction(multiTouchAction);
-//        }
-//        #endregion Zoom
-
         /// <summary>
         /// Perform the multi action
         /// </summary>
