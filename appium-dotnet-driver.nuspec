@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Appium.WebDriver</id>
-    <version>0.2</version>
+    <version>1.0.0</version>
     <title>Appium Webdriver</title>
     <authors>Appium Commiters</authors>
     <owners>Appium Commiters</owners>
@@ -11,12 +11,15 @@
     <iconUrl>https://avatars1.githubusercontent.com/u/3221291?s=140</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Selenium Webdriver extension for Appium.</description>
-    <releaseNotes>Updated dependencies.</releaseNotes>
+    <releaseNotes>
+    	TouchAction + multiActions rewriting,
+    	Project structure overhaul. 
+    </releaseNotes>
     <copyright>Copyright 2014</copyright>
     <tags>Appium Webdriver device automation</tags>
 	<dependencies>
-	  <dependency id="Newtonsoft.Json" version="6.0.2"/>
-	  <dependency id="Selenium.WebDriver" version="2.41.0"/>
+	  <dependency id="Newtonsoft.Json" version="6.0.3"/>
+	  <dependency id="Selenium.WebDriver" version="2.42.0"/>
 	</dependencies>
   </metadata>
   <files>
