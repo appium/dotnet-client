@@ -125,11 +125,16 @@ namespace OpenQA.Selenium.Appium
 
         #endregion Appium Specific extensions to JSONWP Commands
 
-        #region MultiTouchActions
-        /// <summary>
+        #region TouchActions
+		/// <summary>
+		/// Perform touch action
+		/// </summary>
+		public const string TouchActionV2Perform = "touchActionV2Perform";
+
+		/// <summary>
         /// Perform multi touch action
         /// </summary>
-        public const string TouchMultiPerform = "touchMultiPerform";
+		public const string MultiActionV2Perform = "multiActionV2Perform";
         #endregion MultiTouchActions
 
         #region Context Commands

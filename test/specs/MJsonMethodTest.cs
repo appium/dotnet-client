@@ -2,8 +2,9 @@
 using System;
 using OpenQA.Selenium.Remote;
 using System.Collections.Generic;
+using OpenQA.Selenium.Appium.Test.Helpers;
 
-namespace OpenQA.Selenium.Appium
+namespace OpenQA.Selenium.Appium.Test.Specs
 {
 	[TestFixture ()]
 	public class MJsonMethodTest
@@ -205,7 +206,7 @@ namespace OpenQA.Selenium.Appium
 		public void GetAppStringsTestCase ()
 		{
 			var data = "21343n2312j3jw";
-			server.respondTo ("GET", "/appium/app/strings", data);
+			server.respondTo ("POST", "/appium/app/strings", data);
 			var result = driver.GetAppStrings ();
 			Assert.AreEqual (result, data);
 		}

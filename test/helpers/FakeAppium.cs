@@ -5,7 +5,7 @@ using System.Text;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace OpenQA.Selenium.Appium
+namespace OpenQA.Selenium.Appium.Test.Helpers
 {
 
 	public class RequestProcessor
@@ -13,6 +13,8 @@ namespace OpenQA.Selenium.Appium
 		protected string httpMethod = null; 
 		protected string partialUrl = null; 
 		protected object result = null;
+		public String inputData = null;
+		public object inputJson = null;
 
 		public RequestProcessor(string httpMethod, string partialUrl, object result){
 			this.httpMethod = httpMethod;
@@ -23,6 +25,8 @@ namespace OpenQA.Selenium.Appium
 		public virtual bool process(HttpListenerRequest request, HttpListenerResponse response) {
 			string rawUrl = "/wd/hub/session/1234" + partialUrl;
 			if(request.HttpMethod == httpMethod && request.RawUrl == rawUrl ) {
+				this.inputData = new System.IO.StreamReader(request.InputStream).ReadToEnd();
+				this.inputJson  = JsonConvert.DeserializeObject<object>(inputData);
 				var data = result;
 				if(data == null) { data = new Dictionary<string, object>(); }
 				response.StatusCode = (int) HttpStatusCode.OK;
@@ -84,8 +88,10 @@ namespace OpenQA.Selenium.Appium
 			processors.Add (new RequestProcessor("GET", "", null));
 		}
 			
-		public void respondTo(string httpMethod, string partialUrl, object result) {
-			processors.Add (new RequestProcessor(httpMethod, partialUrl, result));
+		public RequestProcessor respondTo(string httpMethod, string partialUrl, object result) {
+			RequestProcessor requestProcessor = new RequestProcessor (httpMethod, partialUrl, result);
+			processors.Add (requestProcessor);
+			return requestProcessor;
 		}
 
 		public void Start() {

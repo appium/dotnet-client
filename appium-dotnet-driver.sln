@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
+# Visual Studio 2012
 VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "appium-dotnet-driver", "appium-dotnet-driver.csproj", "{FEC5A212-89D1-4D26-B545-E79B56C43C67}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lib", "lib\lib.csproj", "{A54D6086-3606-4E81-8B89-5C0F61638DCF}"
 EndProject
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "Packages", "Packages.mdproj", "{65DCFF58-B2D8-4101-B1A5-439B4641A366}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test", "test\test.csproj", "{30AA6918-DE94-4FBB-9C99-FF821BBD6B37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "samples", "samples\samples.csproj", "{0D4A1C2F-D180-4293-AB38-41F685F60B43}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,17 +15,25 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FEC5A212-89D1-4D26-B545-E79B56C43C67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FEC5A212-89D1-4D26-B545-E79B56C43C67}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FEC5A212-89D1-4D26-B545-E79B56C43C67}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FEC5A212-89D1-4D26-B545-E79B56C43C67}.Release|Any CPU.Build.0 = Release|Any CPU
-		{65DCFF58-B2D8-4101-B1A5-439B4641A366}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{65DCFF58-B2D8-4101-B1A5-439B4641A366}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D4A1C2F-D180-4293-AB38-41F685F60B43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D4A1C2F-D180-4293-AB38-41F685F60B43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D4A1C2F-D180-4293-AB38-41F685F60B43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D4A1C2F-D180-4293-AB38-41F685F60B43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30AA6918-DE94-4FBB-9C99-FF821BBD6B37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30AA6918-DE94-4FBB-9C99-FF821BBD6B37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30AA6918-DE94-4FBB-9C99-FF821BBD6B37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30AA6918-DE94-4FBB-9C99-FF821BBD6B37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A54D6086-3606-4E81-8B89-5C0F61638DCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A54D6086-3606-4E81-8B89-5C0F61638DCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A54D6086-3606-4E81-8B89-5C0F61638DCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A54D6086-3606-4E81-8B89-5C0F61638DCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47EDFB48-D621-46DD-8645-C374E5B0ADA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47EDFB48-D621-46DD-8645-C374E5B0ADA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = lib\lib.csproj
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = appium-dotnet-driver.csproj
 	EndGlobalSection
 EndGlobal

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A54D6086-3606-4E81-8B89-5C0F61638DCF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>OpenQA.Selenium.Appium</RootNamespace>
+    <AssemblyName>lib</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="WebDriver">
+      <HintPath>..\packages\Selenium.WebDriver.2.42.0\lib\net40\WebDriver.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Appium\AppiumDriver.cs" />
+    <Compile Include="Appium\AppiumDriverCommand.cs" />
+    <Compile Include="Appium\AppiumWebElement.cs" />
+    <Compile Include="Appium\ByAccessibilityId.cs" />
+    <Compile Include="Appium\ByAndroidUIAutomator.cs" />
+    <Compile Include="Appium\ByIosUIAutomation.cs" />
+    <Compile Include="Appium\CommandExecutorFactory.cs" />
+    <Compile Include="Appium\Interfaces\IFindByAccessibilityId.cs" />
+    <Compile Include="Appium\Interfaces\IFindByAndroidUIAutomator.cs" />
+    <Compile Include="Appium\Interfaces\IFindByIosUIAutomation.cs" />
+    <Compile Include="Appium\ScreenOrientationExtensions.cs" />
+    <Compile Include="Appium\Interfaces\IMultiAction.cs" />
+    <Compile Include="Appium\MultiAction\MultiAction.cs" />
+    <Compile Include="Appium\MultiAction\TouchAction.cs" />
+    <Compile Include="Appium\Interfaces\ITouchAction.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

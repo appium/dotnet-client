@@ -3,9 +3,7 @@
 This driver is an extension of the [Selenium](http://docs.seleniumhq.org/) C# client. It has 
 all the functionalities of the regular driver, but add Appium specific methods on top of this.
 
-## Install
-
-### NuGet
+## NuGet
 
 NuGet Package: [](http://www.nuget.org/packages/Appium.WebDriver/)
 
@@ -14,10 +12,6 @@ Dependencies:
 - [Selenium.WebDriver](http://www.nuget.org/packages/Selenium.WebDriver/)
 - [Newtonsoft.Json](http://www.nuget.org/packages/Newtonsoft.Json/)
  
-### Downloads
-
-[appium-dotnet-driver.tar.gz](https://github.com/appium/appium-dotnet-driver/raw/master/downloads/appium-dotnet-driver.tar.gz)
-
 ## Usage
 
 - You need to add the following namespace line: `using OpenQA.Selenium.Appium;`.
@@ -72,31 +66,23 @@ namespace AppiumDriverDemo
 
 [Full Project Here](https://github.com/appium/appium/tree/1.0-beta/sample-code/examples/dotnet/AppiumDriverDemo)
 
-## API Doc
-
-TODO: generate API Doc
-
 ## Dev Build+Test 
 
 - Open with [Xamarin](http://xamarin.com/)
 - `Rebuild all`
-- `Run Unit Tests`
+- `Run tests in test/specs`
 
-## Deploy (for maintainers)
+## Nuget Deployment (form maintainers)
 
-Once, if using mono
+### To Setup Nuget 
 - Download [Nuget exe](http://nuget.org/nuget.exe).
 - Setup the Api Key ([see here](http://docs.nuget.org/docs/creating-packages/creating-and-publishing-a-package#api-key)).
 - `alias NuGet='mono <Nuget Path>/NuGet.exe'`
 
-For Nuget:
 
+### To Release a New Version
 - `Rebuild All` with `Release` target.
 - Edit the file: `appium-dotnet-driver.nuspec`. (At least bump version and change release notes.)
 - `NuGet pack appium-dotnet-driver.nuspec`
 - `NuGet push Appium.WebDriver.<version>.nupkg`
-- Commit and push changes.
-
-For Downloads:
-- Click on Packages/Linux Binaries in the left handside menu.
 - Commit and push changes.

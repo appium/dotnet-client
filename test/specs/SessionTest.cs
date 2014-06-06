@@ -1,8 +1,9 @@
 ﻿using NUnit.Framework;
 using System;
 using OpenQA.Selenium.Remote;
+using OpenQA.Selenium.Appium.Test.Helpers;
 
-namespace OpenQA.Selenium.Appium
+namespace OpenQA.Selenium.Appium.Test.Specs
 {
 	[TestFixture]
 	public class InitSessionTest
