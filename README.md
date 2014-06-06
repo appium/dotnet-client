@@ -126,7 +126,8 @@ m.Perform();
 
 
 ### To Release a New Version
-
+- update the assemblyInfo.cs file for the assembly with the new version and check it in
+- pull new code
 - git tag <version number>
 - `Rebuild All` with `Release` target.
 - Edit the file: `appium-dotnet-driver.nuspec`. (At least bump version and change release notes.)
