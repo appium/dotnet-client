@@ -126,6 +126,8 @@ m.Perform();
 
 
 ### To Release a New Version
+
+- git tag <version number>
 - `Rebuild All` with `Release` target.
 - Edit the file: `appium-dotnet-driver.nuspec`. (At least bump version and change release notes.)
 - `NuGet pack appium-dotnet-driver.nuspec`
