@@ -18,7 +18,6 @@
 
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.MultiTouch;
-using OpenQA.Selenium.Appium.src.Appium.Interfaces;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Remote;
 using System;
@@ -26,6 +25,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
+using OpenQA.Selenium.Appium.src.Appium.Interfaces;
 
 namespace OpenQA.Selenium.Appium
 {
@@ -67,7 +67,7 @@ namespace OpenQA.Selenium.Appium
     /// }
     /// </code>
     /// </example>
-    public class AppiumDriver : RemoteWebDriver, IHasTouchScreen, IFindByAndroidUIAutomator, IFindByIosUIAutomation, IFindByAccessibilityId
+    public class AppiumDriver : RemoteWebDriver, IFindByAndroidUIAutomator, IFindByIosUIAutomation, IFindByAccessibilityId
     {
         #region Constructors
         /// <summary>
@@ -552,66 +552,83 @@ namespace OpenQA.Selenium.Appium
         }
         #endregion Orientation
 
-        #region Multi Touch Actions
+        #region Multi Actions
 
-        #region Pinch
+//        #region Pinch
+//        /// <summary>
+//        /// Pinch at the specified region
+//        /// </summary>
+//        /// <param name="x">x screen location</param>
+//        /// <param name="y">y screen location</param>
+//        public void Pinch(int x, int y)
+//        {
+//            var touchAction1 = new TouchActions(this);
+//            touchAction1.Down(x, y - 100).Move(x, y).Up(x, y);
+//
+//            var touchAction2 = new TouchActions(this);
+//            touchAction2.Down(x, y + 100).Move(x, y).Up(x, y);
+//
+//            var multiTouchAction = new MultiTouchAction(this);
+//            multiTouchAction.Add(touchAction1);
+//            multiTouchAction.Add(touchAction2);
+//
+//            PerformMultiAction(multiTouchAction);
+//        }
+//        #endregion Pinch
+
+//        #region Zoom
+//        /// <summary>
+//        /// Zoom at the specified point
+//        /// </summary>
+//        /// <param name="x">x screen location</param>
+//        /// <param name="y">y screen location</param>
+//        public void Zoom(int x, int y)
+//        {
+//            var touchAction1 = new TouchActions(this);
+//            touchAction1.Down(x, y).Move(x, y - 100).Up(x, y - 100);
+//
+//            var touchAction2 = new TouchActions(this);
+//            touchAction2.Down(x, y).Move(x, y + 100).Up(x, y + 100);
+//
+//            var multiTouchAction = new MultiTouchAction(this);
+//            multiTouchAction.Add(touchAction1);
+//            multiTouchAction.Add(touchAction2);
+//            PerformMultiAction(multiTouchAction);
+//        }
+//        #endregion Zoom
+
         /// <summary>
-        /// Pinch at the specified region
+        /// Perform the multi action
         /// </summary>
-        /// <param name="x">x screen location</param>
-        /// <param name="y">y screen location</param>
-        public void Pinch(int x, int y)
+		/// <param name="multiAction">multi action to perform</param>
+        public void PerformMultiAction(MultiAction multiAction)
         {
-            var touchAction1 = new TouchActions(this);
-            touchAction1.Down(x, y - 100).Move(x, y).Up(x, y);
-
-            var touchAction2 = new TouchActions(this);
-            touchAction2.Down(x, y + 100).Move(x, y).Up(x, y);
-
-            var multiTouchAction = new MultiTouchAction(this);
-            multiTouchAction.Add(touchAction1);
-            multiTouchAction.Add(touchAction2);
-
-            PerformMultiTouchAction(multiTouchAction);
-        }
-        #endregion Pinch
-
-        #region Zoom
-        /// <summary>
-        /// Zoom at the specified point
-        /// </summary>
-        /// <param name="x">x screen location</param>
-        /// <param name="y">y screen location</param>
-        public void Zoom(int x, int y)
-        {
-            var touchAction1 = new TouchActions(this);
-            touchAction1.Down(x, y).Move(x, y - 100).Up(x, y - 100);
-
-            var touchAction2 = new TouchActions(this);
-            touchAction2.Down(x, y).Move(x, y + 100).Up(x, y + 100);
-
-            var multiTouchAction = new MultiTouchAction(this);
-            multiTouchAction.Add(touchAction1);
-            multiTouchAction.Add(touchAction2);
-            PerformMultiTouchAction(multiTouchAction);
-        }
-        #endregion Zoom
-
-        /// <summary>
-        /// Perform the multi touch action
-        /// </summary>
-        /// <param name="multiTouchAction">mluti touch action to perform</param>
-        public void PerformMultiTouchAction(MultiTouchAction multiTouchAction)
-        {
-            if (null == multiTouchAction)
+            if (null == multiAction)
             {
                 return; // do nothing
             }
 
-            var parameters = multiTouchAction.GetParameters();
-            this.Execute(AppiumDriverCommand.TouchMultiPerform, parameters);
+            var parameters = multiAction.GetParameters();
+            this.Execute(AppiumDriverCommand.MultiActionV2Perform, parameters);
         }
-        #endregion Multi Touch Actions
+
+		/// <summary>
+		/// Perform the touch action
+		/// </summary>
+		/// <param name="touchAction">touch action to perform</param>
+		public void PerformTouchAction(TouchAction touchAction)
+		{
+			if (null == touchAction)
+			{
+				return; // do nothing
+			}
+				
+			var parameters = new Dictionary<string, object> ();
+			parameters.Add ("actions", touchAction.GetParameters());
+			this.Execute(AppiumDriverCommand.TouchActionV2Perform, parameters);
+		}
+
+		#endregion Multi Actions
 
         #endregion Public Methods
 
@@ -732,8 +749,9 @@ namespace OpenQA.Selenium.Appium
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.HideKeyboard, "/session/{sessionId}/appium/device/hide_keyboard"),
                 #endregion Appium Commands
                 #region Touch Commands
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.TouchMultiPerform, "/session/{sessionId}/touch/multi/perform"),
-                #endregion Touch Commands
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.MultiActionV2Perform, "/session/{sessionId}/touch/multi/perform"),
+				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.TouchActionV2Perform, "/session/{sessionId}/touch/perform"),
+				#endregion Touch Commands
                 
                 #region JSON Wire Protocol Commands
                 new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetOrientation, "/session/{sessionId}/orientation"),
@@ -790,25 +808,6 @@ namespace OpenQA.Selenium.Appium
             }
         }
         #endregion Private Class
-
-        #region IHasTouchScreen Members
-        // TODO: this might not belong here - need to figure out where this belongs
-        private ITouchScreen _TouchScreen;
-        /// <summary>
-        /// Touch Screen
-        /// </summary>
-        public ITouchScreen TouchScreen
-        {
-            get
-            {
-                if (null == _TouchScreen)
-                {
-                    _TouchScreen = new RemoteMultiTouchScreen(this);
-                }
-                return _TouchScreen;
-            }
-        }
-        #endregion IHasTouchScreen Members
 
         public IWebDriver WrappedDriver
         {

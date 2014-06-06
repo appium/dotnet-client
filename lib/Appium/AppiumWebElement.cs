@@ -52,6 +52,7 @@ namespace OpenQA.Selenium.Appium
         {
         }
 
+
         #region MJSonMethods
 
         /// <summary>

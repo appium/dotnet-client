@@ -45,11 +45,11 @@
     <Compile Include="Appium\Interfaces\IFindByAccessibilityId.cs" />
     <Compile Include="Appium\Interfaces\IFindByAndroidUIAutomator.cs" />
     <Compile Include="Appium\Interfaces\IFindByIosUIAutomation.cs" />
-    <Compile Include="Appium\MultiTouch\MultiTouchAction.cs" />
-    <Compile Include="Appium\MultiTouch\RemoteMultiTouchScreen.cs" />
-    <Compile Include="Appium\MultiTouch\WaitAction.cs" />
     <Compile Include="Appium\ScreenOrientationExtensions.cs" />
-    <Compile Include="Appium\TouchExtensions.cs" />
+    <Compile Include="Appium\Interfaces\IMultiAction.cs" />
+    <Compile Include="Appium\MultiAction\MultiAction.cs" />
+    <Compile Include="Appium\MultiAction\TouchAction.cs" />
+    <Compile Include="Appium\Interfaces\ITouchAction.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
