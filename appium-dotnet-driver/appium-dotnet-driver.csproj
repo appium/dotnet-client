@@ -6,8 +6,7 @@
     <ProjectGuid>{A54D6086-3606-4E81-8B89-5C0F61638DCF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>OpenQA.Selenium.Appium</RootNamespace>
-    <AssemblyName>lib</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <AssemblyName>appium-dotnet-driver</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,7 +19,6 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>

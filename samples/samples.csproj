@@ -52,9 +52,9 @@
     <Folder Include="helpers\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\lib\lib.csproj">
+    <ProjectReference Include="..\appium-dotnet-driver\appium-dotnet-driver.csproj">
       <Project>{A54D6086-3606-4E81-8B89-5C0F61638DCF}</Project>
-      <Name>lib</Name>
+      <Name>appium-dotnet-driver</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

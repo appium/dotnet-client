@@ -46,15 +46,15 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\lib\lib.csproj">
-      <Project>{A54D6086-3606-4E81-8B89-5C0F61638DCF}</Project>
-      <Name>lib</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="helpers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\appium-dotnet-driver\appium-dotnet-driver.csproj">
+      <Project>{A54D6086-3606-4E81-8B89-5C0F61638DCF}</Project>
+      <Name>appium-dotnet-driver</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
