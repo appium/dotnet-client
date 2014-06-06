@@ -3,6 +3,12 @@
 This driver is an extension of the [Selenium](http://docs.seleniumhq.org/) C# client. It has 
 all the functionalities of the regular driver, but add Appium specific methods on top of this.
 
+## v1.0.0
+
+Breaking Changes: The TouchAction/MultiAction functionalities has been rewritten according
+to the spec [here](https://dvcs.w3.org/hg/webdriver/raw-file/default/webdriver-spec.html#touch-gestures).
+Please refer to doc below and sample for more information.
+
 ## NuGet
 
 NuGet Package: [](http://www.nuget.org/packages/Appium.WebDriver/)
@@ -13,6 +19,8 @@ Dependencies:
 - [Newtonsoft.Json](http://www.nuget.org/packages/Newtonsoft.Json/)
  
 ## Usage
+
+### basics
 
 - You need to add the following namespace line: `using OpenQA.Selenium.Appium;`.
 - Use the `AppiumDriver` class to construct the driver. It works the same as the Selenium Webdriver, except that
@@ -65,6 +73,43 @@ namespace AppiumDriverDemo
 ```
 
 [Full Project Here](https://github.com/appium/appium/tree/1.0-beta/sample-code/examples/dotnet/AppiumDriverDemo)
+
+### TouchAction
+```c#
+...
+TouchAction a1 = new TouchAction (driver);
+a1
+	.Press (element, 100, 100)
+	.Wait (1000)
+	.Release ();
+a1.Perform();
+...
+
+```
+
+### MultiAction
+
+```c#
+...
+TouchAction a1 = new TouchAction (driver);
+MultiAction m = new MultiAction(driver);
+
+	a1
+	.Press (element, 100, 100)
+	.Wait (1000)
+	.Release ();
+m.Add(a1);
+
+	TouchAction a2 = new TouchAction ();
+a2
+	.Tap (100, 100)
+	.MoveTo (element);
+m.Add (a2);
+
+m.Perform();
+...
+
+```
 
 ## Dev Build+Test 
 
