@@ -76,39 +76,33 @@ namespace AppiumDriverDemo
 
 ### TouchAction
 ```c#
-...
 TouchAction a1 = new TouchAction (driver);
 a1
-	.Press (element, 100, 100)
-	.Wait (1000)
-	.Release ();
+  .Press (element, 100, 100)
+  .Wait (1000)
+  .Release ();
 a1.Perform();
-...
-
 ```
 
 ### MultiAction
 
 ```c#
-...
-TouchAction a1 = new TouchAction (driver);
 MultiAction m = new MultiAction(driver);
 
-	a1
-	.Press (element, 100, 100)
-	.Wait (1000)
-	.Release ();
+TouchAction a1 = new TouchAction (driver);
+a1
+  .Press (element, 100, 100)
+  .Wait (1000)
+  .Release ();
 m.Add(a1);
 
-	TouchAction a2 = new TouchAction ();
+TouchAction a2 = new TouchAction ();
 a2
-	.Tap (100, 100)
-	.MoveTo (element);
+  .Tap (100, 100)
+  .MoveTo (element);
 m.Add (a2);
 
 m.Perform();
-...
-
 ```
 
 ## Dev Build+Test 
