@@ -44,7 +44,11 @@
     <Compile Include="helpers\Caps.cs" />
     <Compile Include="helpers\AppiumServers.cs" />
     <Compile Include="IosSimpleTest.cs" />
-    <Compile Include="helpers\MyActions.cs" />
+    <Compile Include="helpers\Actions.cs" />
+    <Compile Include="IosActionsTest.cs" />
+    <Compile Include="helpers\Env.cs" />
+    <Compile Include="IosComplexTest.cs" />
+    <Compile Include="helpers\Filters.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

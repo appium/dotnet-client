@@ -6,23 +6,16 @@ using OpenQA.Selenium.Appium.Interfaces;
 
 namespace Appium.Samples
 {
-	public class MyActions
+	public class Actions
 	{
-		private AppiumDriver driver;
-
-		public MyActions (AppiumDriver driver) {
-			this.driver = driver;
-		}
-
-		public void Swipe(int startX, int startY, int endX, int endY, 
+		public static ITouchAction Swipe(AppiumDriver driver, int startX, int startY, int endX, int endY, 
 				int duration) {
 			ITouchAction touchAction = new TouchAction(driver) 
 				.Press (startX, startY)
 				.Wait (duration)
 				.MoveTo (endX, endY)
 				.Release ();
-
-			touchAction.Perform();
+			return touchAction;
 		}
 	}
 }
