@@ -18,7 +18,7 @@ This sample uses the nunit test framework.
 - Start appium: `node .`
 - Run the tests in nunit.
 
-## RUN ON Sauce Labs
+## Run on Sauce Labs
 
 - `cp samples/env.json.sample samples/env.json`
 - Update `samples/env.json` set SAUCE=true, and configure your sauce credentials.
