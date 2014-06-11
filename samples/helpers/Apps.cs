@@ -11,6 +11,8 @@ namespace Appium.Samples.Helpers
 			{ "iosUICatalogApp", "sample-code/apps/UICatalog/build/Release-iphonesimulator/UICatalog.app" },
 			{ "androidApiDemos", "sample-code/apps/ApiDemos/bin/ApiDemos-debug.apk" },
 			{ "selendroidTestApp", "sample-code/apps/selendroid-test-app.apk" },
+			{ "iosWebviewAppLocal", "sample-code/apps/WebViewApp/build/Release-iphonesimulator/WebViewApp.app" },
+			{ "androidApiDemosLocal", "sample-code/apps/ApiDemos/bin/ApiDemos-debug.apk" }
 		};
 
 		static Dictionary<string, string> DEFAULT = new Dictionary<string, string> {
