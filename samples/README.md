@@ -1,7 +1,5 @@
 #appium-dotnet-driver samples
 
-This sample uses the NUnit test framework.
-
 ## Run locally
 
 ### App download (DEFAULT)
