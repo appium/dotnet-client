@@ -1,13 +1,13 @@
 #appium-dotnet-driver samples
 
-This sample uses the nunit test framework.
+This sample uses the NUnit test framework.
 
 ## Run locally
 
 ### App download (DEFAULT)
 
 - Start appium.
-- Run the tests in nunit.
+- Run the tests in NUnit.
 
 ### DEV
 
@@ -16,10 +16,10 @@ This sample uses the nunit test framework.
 - `cp samples/env.json.sample samples/env.json`
 - Update `samples/env.json` set DEV=true
 - Start appium: `node .`
-- Run the tests in nunit.
+- Run the tests in NUnit.
 
 ## Run on Sauce Labs
 
 - `cp samples/env.json.sample samples/env.json`
-- Update `samples/env.json` set SAUCE=true, and configure your sauce credentials.
-- Run the tests in nunit.
+- Update `samples/env.json` set SAUCE=true, and configure your Sauce credentials.
+- Run the tests in NUnit.
