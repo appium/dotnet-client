@@ -2,14 +2,14 @@
 
 ## Run locally
 
-### App download (DEFAULT)
+### Download apps (default)
 
-- Start appium.
+- Start Appium.
 - Run the tests in NUnit.
 
-### DEV
+### Use Appium dev apps 
 
-- Clone appium.
+- Clone Appium.
 - Build dev version of appium `./reset.sh --android --ios --dev --hardcore`
 - `cp samples/env.json.sample samples/env.json`
 - Update `samples/env.json` set DEV=true
