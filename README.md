@@ -3,8 +3,6 @@
 This driver is an extension of the [Selenium](http://docs.seleniumhq.org/) C# client. It has 
 all the functionalities of the regular driver, but add Appium specific methods on top of this.
 
-Note: we will NOT publish a signed version of this assembly since the dependencies we access through NuGet do not have a signed version - thus breaking the chain and causing us headaches. With that said, you are more than welcome to download the code and build a signed version yourself.
-
 ## v1.0.0
 
 Breaking Changes: The TouchAction/MultiAction functionalities has been rewritten according
@@ -19,6 +17,8 @@ Dependencies:
 
 - [Selenium.WebDriver](http://www.nuget.org/packages/Selenium.WebDriver/)
 - [Newtonsoft.Json](http://www.nuget.org/packages/Newtonsoft.Json/)
+
+Note: we will NOT publish a signed version of this assembly since the dependencies we access through NuGet do not have a signed version - thus breaking the chain and causing us headaches. With that said, you are more than welcome to download the code and build a signed version yourself.
  
 ## Usage
 

@@ -88,8 +88,14 @@ namespace OpenQA.Selenium.Appium.Interfaces
 		/// <returns>A self-reference to this <see cref="ITouchAction"/>.</returns>
 		ITouchAction Wait (long? ms = null);
 
+		/// <summary>
+		/// Cancels the Multi Action
+		/// </summary>
 		void Cancel();
 
+		/// <summary>
+		/// Performs the Multi Action
+		/// </summary>
 		void Perform();
 	}
 }
