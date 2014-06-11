@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Appium.Samples
+namespace Appium.Samples.Helpers
 {
 	public class AppiumServers
 	{

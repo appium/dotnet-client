@@ -4,7 +4,7 @@ using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.MultiTouch;
 using OpenQA.Selenium.Appium.Interfaces;
 
-namespace Appium.Samples
+namespace Appium.Samples.Helpers
 {
 	public class Actions
 	{

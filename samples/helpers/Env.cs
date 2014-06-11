@@ -4,10 +4,10 @@ using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.MultiTouch;
 using OpenQA.Selenium.Appium.Interfaces;
 using System.IO;
-using System.Web.Script.Serialization;
 using System.Reflection;
+using System.Web.Script.Serialization;
 
-namespace Appium.Samples
+namespace Appium.Samples.Helpers
 {
 	public class Env
 	{

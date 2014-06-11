@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.IO;
-using OpenQA.Selenium.Appium.Test.Helpers;
+using Appium.Samples.Helpers;
 
 namespace Appium.Samples.Helpers
 {
@@ -15,15 +15,9 @@ namespace Appium.Samples.Helpers
 		private bool listening;
 		private string listenBaseAddress;
 
-		List<RequestProcessor> processors = new List<RequestProcessor>();
-
 		public LocalServer (int port)
 		{
 			listenBaseAddress = "http://localhost:" + port;
-		}
-
-		public void clear() {
-			processors.RemoveAll (item => true);
 		}
 			
 		public void Start() {
