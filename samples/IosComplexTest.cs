@@ -17,27 +17,28 @@ namespace Appium.Samples
 	public class IosComplexTest
 	{
 		private AppiumDriver driver;
-		private bool onePassed;
 		private bool allPassed = true;
 
 		[TestFixtureSetUp]
 		public void beforeAll(){
 			DesiredCapabilities capabilities = Caps.getIos71Caps (Apps.get("iosUICatalogApp")); 
 			if (Env.isSauce ()) {
-				capabilities.SetCapability("username", Environment.GetEnvironmentVariable("SAUCE_USERNAME")); 
-				capabilities.SetCapability("accessKey", Environment.GetEnvironmentVariable("SAUCE_ACCESS_KEY"));
+				capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME")); 
+				capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
 				capabilities.SetCapability("name", "ios - complex");
 				capabilities.SetCapability("tags", new string[]{"sample"});
 			}
 			Uri serverUri = Env.isSauce () ? AppiumServers.sauceURI : AppiumServers.localURI;
-			driver = new AppiumDriver(serverUri, capabilities);	
+			driver = new AppiumDriver(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);	
+			driver.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
 		}
 
 		[TestFixtureTearDown]
 		public void afterAll(){
 			try
 			{
-				((IJavaScriptExecutor)driver).ExecuteScript("sauce:job-result=" + (allPassed ? "passed" : "failed"));
+				if(Env.isSauce())
+					((IJavaScriptExecutor)driver).ExecuteScript("sauce:job-result=" + (allPassed ? "passed" : "failed"));
 			}
 			finally
 			{
@@ -45,14 +46,9 @@ namespace Appium.Samples
 			}
 		}
 
-		[SetUp]
-		public void BeforeEach(){
-			onePassed = false;
-		}
-
 		[TearDown]
 		public void AfterEach(){
-			allPassed = allPassed && onePassed;
+			allPassed = allPassed && (TestContext.CurrentContext.Result.State == TestState.Success);
 		}
 
 		private void ClickMenuItem(string name) 
@@ -66,6 +62,7 @@ namespace Appium.Samples
 				el = Filters.FirstWithName (els, name);
 			}
 			el.Click();
+			Thread.Sleep (1000);
 		}
 
 		[Test ()]
@@ -77,7 +74,6 @@ namespace Appium.Samples
 			{
 				Console.WriteLine (els [i].GetAttribute ("name"));
 			}
-			onePassed = true;
 		}
 
 		[Test ()]
@@ -90,11 +86,9 @@ namespace Appium.Samples
 			IList<IWebElement> els = el.FindElements (By.ClassName ("UIATableCell"));
 			els = Filters.FilterDisplayed (els);
 			Assert.Greater (els.Count, 6);
-			onePassed = true;
 			// various checks
 			Assert.IsNotNull (els[0].GetAttribute("name"));
 			Assert.IsNotNull (driver.FindElementByClassName ("UIANavigationBar"));
-			onePassed = true;
 		}
 
 		[Test ()]
@@ -114,7 +108,6 @@ namespace Appium.Samples
 			Assert.IsNotNull(driver.FindElementByClassName ("UIAScrollView"));
 
 			driver.Navigate().Back ();
-			onePassed = true;
 		}
 
 		[Test ()]
@@ -125,7 +118,6 @@ namespace Appium.Samples
 			var loc = els [2].Location;
 			Assert.AreEqual (loc.X, 0);
 			Assert.Greater (loc.Y, 100);
-			onePassed = true;
 		}
 
 		[Test ()]
@@ -133,7 +125,6 @@ namespace Appium.Samples
 		{
 			Screenshot screenshot = driver.GetScreenshot ();
 			Assert.IsNotNull (screenshot);
-			onePassed = true;
 		}
 
 		[Test ()]
@@ -152,7 +143,6 @@ namespace Appium.Samples
 			Assert.AreEqual(el.GetAttribute("value"), defaultValue);
 
 			driver.Navigate().Back ();
-			onePassed = true;
 		}
 
 		[Test ()]
@@ -175,7 +165,6 @@ namespace Appium.Samples
 			}
 
 			driver.Navigate().Back ();
-			onePassed = true;
 		}
 
 		[Test ()]
@@ -190,7 +179,6 @@ namespace Appium.Samples
 			Assert.AreEqual (slider.GetAttribute("value"), "0%");
 
 			driver.Navigate().Back ();
-			onePassed = true;
 		}
 
 		[Test ()]
@@ -200,7 +188,6 @@ namespace Appium.Samples
 			var s2 = driver.FindElementByClassName ("UIATableCell").Size;
 			Assert.AreEqual (s1.Width, s2.Width);
 			Assert.AreNotEqual (s1.Height, s2.Height);
-			onePassed = true;
 		}
 
 		[Test ()]
@@ -211,14 +198,13 @@ namespace Appium.Samples
 			Assert.IsTrue (mainMenuSource.Contains("UIAStaticText"));
 			Assert.IsTrue (mainMenuSource.Contains("Text Fields"));
 			// text fields section source
-			ClickMenuItem ("Sliders, AAPLSliderViewController");
+			ClickMenuItem ("Text Fields, AAPLTextFieldViewController");
 			var textFieldSectionSource = driver.PageSource;
 			Assert.IsTrue (textFieldSectionSource.Contains("UIAStaticText"));
 			Assert.IsTrue (textFieldSectionSource.Contains("Text Fields"));
 			Assert.AreNotEqual (textFieldSectionSource, mainMenuSource);
 
 			driver.Navigate().Back ();
-			onePassed = true;
 		}
 
 	}

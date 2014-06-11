@@ -12,3 +12,5 @@ test-results
 *.pidb
 packages
 *.nupkg
+samples/env.json
+

@@ -16,27 +16,28 @@ namespace Appium.Samples
 	public class IosActionsTest
 	{
 		private AppiumDriver driver;
-		private bool onePassed;
 		private bool allPassed = true;
 
 		[TestFixtureSetUp]
 		public void BeforeAll(){
 			DesiredCapabilities capabilities = Caps.getIos71Caps (Apps.get("iosTestApp")); 
 			if (Env.isSauce ()) {
-				capabilities.SetCapability("username", Environment.GetEnvironmentVariable("SAUCE_USERNAME")); 
-				capabilities.SetCapability("accessKey", Environment.GetEnvironmentVariable("SAUCE_ACCESS_KEY"));
+				capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME")); 
+				capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
 				capabilities.SetCapability("name", "ios - actions");
 				capabilities.SetCapability("tags", new string[]{"sample"});
 			}
 			Uri serverUri = Env.isSauce () ? AppiumServers.sauceURI : AppiumServers.localURI;
-			driver = new AppiumDriver(serverUri, capabilities);	
+			driver = new AppiumDriver(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);	
+			driver.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
 		}
 
 		[TestFixtureTearDown]
 		public void AfterAll(){
 			try
 			{
-				((IJavaScriptExecutor)driver).ExecuteScript("sauce:job-result=" + (allPassed ? "passed" : "failed"));
+				if(Env.isSauce())
+					((IJavaScriptExecutor)driver).ExecuteScript("sauce:job-result=" + (allPassed ? "passed" : "failed"));
 			}
 			finally
 			{
@@ -44,14 +45,9 @@ namespace Appium.Samples
 			}
 		}
 
-		[SetUp]
-		public void BeforeEach(){
-			onePassed = false;
-		}
-
 		[TearDown]
 		public void AfterEach(){
-			allPassed = allPassed && onePassed;
+			allPassed = allPassed && (TestContext.CurrentContext.Result.State == TestState.Success);
 		}
 
 		[Test ()]
@@ -61,7 +57,6 @@ namespace Appium.Samples
 			ITouchAction action = new TouchAction(driver);
 			action.Press(el, 10, 10).Release();
 			action.Perform ();
-			onePassed = true;
 		}
 
 		[Test ()]
@@ -75,7 +70,6 @@ namespace Appium.Samples
 			IMultiAction m = new MultiAction (driver);
 			m.Add (a1).Add (a2);
 			m.Perform ();
-			onePassed = true;
 		}
 
 		[Test ()]
@@ -90,7 +84,6 @@ namespace Appium.Samples
 			Point loc = driver.FindElementByXPath ("//UIAMapView[1]").Location;
 			ITouchAction swipe = Actions.Swipe (driver, loc.X, loc.Y, loc.X + 150, loc.Y, 800);
 			swipe.Perform ();
-			onePassed = true;
 		}
 	}
 }

@@ -30,7 +30,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="nunit.framework" />
     <Reference Include="Newtonsoft.Json">
       <HintPath>$(SolutionDir)\packages\Newtonsoft.Json.6.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -38,6 +37,10 @@
       <HintPath>$(SolutionDir)\packages\Selenium.WebDriver.2.42.0\lib\net40\WebDriver.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="helpers\Apps.cs" />
@@ -49,6 +52,13 @@
     <Compile Include="helpers\Env.cs" />
     <Compile Include="IosComplexTest.cs" />
     <Compile Include="helpers\Filters.cs" />
+    <Compile Include="IosWebviewTest.cs" />
+    <Compile Include="helpers\LocalServer.cs" />
+    <Compile Include="IosLocalServerTest.cs" />
+    <Compile Include="AndroidSimpleTest.cs" />
+    <Compile Include="AndroidWebviewTest.cs" />
+    <Compile Include="AndroidComplexTest.cs" />
+    <Compile Include="AndroidLocalServerTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -60,6 +70,10 @@
       <Project>{A54D6086-3606-4E81-8B89-5C0F61638DCF}</Project>
       <Name>appium-dotnet-driver</Name>
     </ProjectReference>
+    <ProjectReference Include="..\test\test.csproj">
+      <Project>{30AA6918-DE94-4FBB-9C99-FF821BBD6B37}</Project>
+      <Name>test</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -68,4 +82,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <ItemGroup>
+    <Folder Include="assets\" />
+  </ItemGroup>
 </Project>

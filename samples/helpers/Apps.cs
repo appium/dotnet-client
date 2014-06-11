@@ -20,7 +20,7 @@ namespace Appium.Samples.Helpers
 			{ "androidApiDemos", "http://appium.github.io/appium/assets/ApiDemos-debug.apk" },
 			{ "selendroidTestApp", "http://appium.github.io/appium/assets/selendroid-test-app-0.10.0.apk" },
 			{ "iosWebviewAppLocal", "http://localhost:3000/WebViewApp7.1.app.zip" },
-			{ "androidApiDemosLocal", "http://localhost:3000/ApiDemos-debug.apk" }
+			{ "androidApiDemosLocal", "http://localhost:3001/ApiDemos-debug.apk" }
 		};
 			
 		public static string get(string appKey) {

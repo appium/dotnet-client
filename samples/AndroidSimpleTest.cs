@@ -11,20 +11,20 @@ using System.Drawing;
 namespace Appium.Samples
 {
 	[TestFixture ()]
-	public class IosSimpleTest
+	public class AndroidSimpleTest
 	{
 		private AppiumDriver driver;
 		private bool allPassed = true;
 
-		private Random rnd = new Random();
-
 		[TestFixtureSetUp]
 		public void BeforeAll(){
-			DesiredCapabilities capabilities = Caps.getIos71Caps (Apps.get("iosTestApp")); 
+			DesiredCapabilities capabilities = Env.isSauce () ? 
+				Caps.getAndroid18Caps (Apps.get ("androidApiDemos")) :
+				Caps.getAndroid19Caps (Apps.get ("androidApiDemos"));
 			if (Env.isSauce ()) {
 				capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME")); 
 				capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
-				capabilities.SetCapability("name", "ios - simple");
+				capabilities.SetCapability("name", "android - simple");
 				capabilities.SetCapability("tags", new string[]{"sample"});
 			}
 			Uri serverUri = Env.isSauce () ? AppiumServers.sauceURI : AppiumServers.localURI;
@@ -50,34 +50,19 @@ namespace Appium.Samples
 			allPassed = allPassed && (TestContext.CurrentContext.Result.State == TestState.Success);
 		}
 
-		private int Populate() {
-			IList<string> fields = new List<string> ();
-			fields.Add ("IntegerA");
-			fields.Add ("IntegerB");
-			int sum = 0;
-			for (int i = 0; i < fields.Count; i++) {
-				IWebElement el = driver.FindElementByName (fields[i]);
-				int x = rnd.Next (1, 10);
-				el.SendKeys("" + x);
-				sum += x;
-			}
-			return sum;
-		}
-
 		[Test ()]
-		public void ComputeSumTestCase ()
+		public void FindElementTestCase ()
 		{
-			// fill form with random data
-			int sumIn = Populate ();
-
-			// compute and check the sum
-			driver.FindElementByAccessibilityId ("ComputeSumButton").Click ();
-			Thread.Sleep (1000);
-			IWebElement sumEl = driver.FindElementByIosUIAutomation ("elements().withName(\"Answer\");");
-			int sumOut = Convert.ToInt32 (sumEl.Text);
-			Assert.AreEqual (sumIn, sumOut);
+			driver.FindElementByAccessibilityId ("Graphics").Click ();
+			Assert.IsNotNull (driver.FindElementByAccessibilityId ("Arcs"));
+			driver.Navigate ().Back ();
+			Assert.IsNotNull (driver.FindElementByName ("App"));
+			var els = driver.FindElementsByAndroidUIAutomator ("new UiSelector().clickable(true)");
+			Assert.AreEqual (els.Count, 12);
+			els = driver.FindElementsByAndroidUIAutomator ("new UiSelector().enabled(true)");
+			Assert.GreaterOrEqual (els.Count, 20);
+			Assert.IsNotNull (driver.FindElementByXPath ("//android.widget.TextView[@text='API Demos']"));
 		}
-
 	}
 }
 

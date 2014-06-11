@@ -7,24 +7,24 @@ using System.Collections.Generic;
 using OpenQA.Selenium;
 using System.Threading;
 using System.Drawing;
+using OpenQA.Selenium.Appium.Interfaces;
+using OpenQA.Selenium.Appium.MultiTouch;
 
 namespace Appium.Samples
 {
 	[TestFixture ()]
-	public class IosSimpleTest
+	public class IosWebviewTest
 	{
 		private AppiumDriver driver;
 		private bool allPassed = true;
 
-		private Random rnd = new Random();
-
 		[TestFixtureSetUp]
 		public void BeforeAll(){
-			DesiredCapabilities capabilities = Caps.getIos71Caps (Apps.get("iosTestApp")); 
+			DesiredCapabilities capabilities = Caps.getIos71Caps (Apps.get("iosWebviewApp")); 
 			if (Env.isSauce ()) {
 				capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME")); 
 				capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
-				capabilities.SetCapability("name", "ios - simple");
+				capabilities.SetCapability("name", "ios - webview");
 				capabilities.SetCapability("tags", new string[]{"sample"});
 			}
 			Uri serverUri = Env.isSauce () ? AppiumServers.sauceURI : AppiumServers.localURI;
@@ -50,34 +50,20 @@ namespace Appium.Samples
 			allPassed = allPassed && (TestContext.CurrentContext.Result.State == TestState.Success);
 		}
 
-		private int Populate() {
-			IList<string> fields = new List<string> ();
-			fields.Add ("IntegerA");
-			fields.Add ("IntegerB");
-			int sum = 0;
-			for (int i = 0; i < fields.Count; i++) {
-				IWebElement el = driver.FindElementByName (fields[i]);
-				int x = rnd.Next (1, 10);
-				el.SendKeys("" + x);
-				sum += x;
-			}
-			return sum;
-		}
-
 		[Test ()]
-		public void ComputeSumTestCase ()
+		public void GetPageTestCase ()
 		{
-			// fill form with random data
-			int sumIn = Populate ();
-
-			// compute and check the sum
-			driver.FindElementByAccessibilityId ("ComputeSumButton").Click ();
+			driver.FindElementByXPath("//UIATextField[@value='Enter URL']")
+				.SendKeys("https://www.google.com");
+			driver.FindElementByName ("Go").Click ();
+			driver.FindElementByClassName ("UIAWebView").Click (); // dismissing keyboard
+			driver.SetContext ("WEBVIEW");
+			Thread.Sleep (3000);
+			var el = driver.FindElementByName ("q");
+			el.SendKeys ("sauce labs");
+			el.SendKeys(Keys.Return);
 			Thread.Sleep (1000);
-			IWebElement sumEl = driver.FindElementByIosUIAutomation ("elements().withName(\"Answer\");");
-			int sumOut = Convert.ToInt32 (sumEl.Text);
-			Assert.AreEqual (sumIn, sumOut);
+			Assert.IsTrue (driver.Title.Contains("sauce labs"));
 		}
-
 	}
 }
-
