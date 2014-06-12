@@ -482,6 +482,14 @@ namespace OpenQA.Selenium.Appium
             this.Execute(AppiumDriverCommand.HideKeyboard, parameters);
         }
 
+        /// <summary>
+        /// Open the notifications 
+        /// </summary>
+        public void OpenNotifications()
+        {
+            this.Execute(AppiumDriverCommand.OpenNotifications, null);
+        }
+
         #endregion MJsonMethod Members
 
         #region Context
@@ -557,7 +565,7 @@ namespace OpenQA.Selenium.Appium
         /// <summary>
         /// Perform the multi action
         /// </summary>
-		/// <param name="multiAction">multi action to perform</param>
+        /// <param name="multiAction">multi action to perform</param>
         public void PerformMultiAction(MultiAction multiAction)
         {
             if (null == multiAction)
@@ -569,23 +577,23 @@ namespace OpenQA.Selenium.Appium
             this.Execute(AppiumDriverCommand.MultiActionV2Perform, parameters);
         }
 
-		/// <summary>
-		/// Perform the touch action
-		/// </summary>
-		/// <param name="touchAction">touch action to perform</param>
-		public void PerformTouchAction(TouchAction touchAction)
-		{
-			if (null == touchAction)
-			{
-				return; // do nothing
-			}
-				
-			var parameters = new Dictionary<string, object> ();
-			parameters.Add ("actions", touchAction.GetParameters());
-			this.Execute(AppiumDriverCommand.TouchActionV2Perform, parameters);
-		}
+        /// <summary>
+        /// Perform the touch action
+        /// </summary>
+        /// <param name="touchAction">touch action to perform</param>
+        public void PerformTouchAction(TouchAction touchAction)
+        {
+            if (null == touchAction)
+            {
+                return; // do nothing
+            }
+                
+            var parameters = new Dictionary<string, object> ();
+            parameters.Add ("actions", touchAction.GetParameters());
+            this.Execute(AppiumDriverCommand.TouchActionV2Perform, parameters);
+        }
 
-		#endregion Multi Actions
+        #endregion Multi Actions
 
         #endregion Public Methods
 
@@ -704,11 +712,12 @@ namespace OpenQA.Selenium.Appium
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.SetImmediateValue, "/session/{sessionId}/appium/element/{id}/value"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.FindComplex, "/session/{sessionId}/appium/app/complex_find"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.HideKeyboard, "/session/{sessionId}/appium/device/hide_keyboard"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.OpenNotifications, "/session/{sessionId}/appium/device/open_notifications"),
                 #endregion Appium Commands
                 #region Touch Commands
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.MultiActionV2Perform, "/session/{sessionId}/touch/multi/perform"),
-				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.TouchActionV2Perform, "/session/{sessionId}/touch/perform"),
-				#endregion Touch Commands
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.TouchActionV2Perform, "/session/{sessionId}/touch/perform"),
+                #endregion Touch Commands
                 
                 #region JSON Wire Protocol Commands
                 new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetOrientation, "/session/{sessionId}/orientation"),

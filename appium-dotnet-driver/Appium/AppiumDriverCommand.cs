@@ -123,18 +123,22 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string HideKeyboard = "hideKeyboard";
 
+        /// <summary>
+        ///  Open Notifications Command
+        /// </summary>
+        public const string OpenNotifications = "openNotifications";
         #endregion Appium Specific extensions to JSONWP Commands
 
         #region TouchActions
-		/// <summary>
-		/// Perform touch action
-		/// </summary>
-		public const string TouchActionV2Perform = "touchActionV2Perform";
+        /// <summary>
+        /// Perform touch action
+        /// </summary>
+        public const string TouchActionV2Perform = "touchActionV2Perform";
 
-		/// <summary>
+        /// <summary>
         /// Perform multi touch action
         /// </summary>
-		public const string MultiActionV2Perform = "multiActionV2Perform";
+        public const string MultiActionV2Perform = "multiActionV2Perform";
         #endregion MultiTouchActions
 
         #region Context Commands
