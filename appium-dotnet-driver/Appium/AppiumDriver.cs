@@ -475,10 +475,11 @@ namespace OpenQA.Selenium.Appium
         /// Hides the device keyboard.
         /// </summary>
         /// <param name="keyName">The button pressed by the mobile driver to attempt hiding the keyboard.</param>
-        public void HideKeyboard(string keyName)
-        {
+        public void HideKeyboard(string strategy = null, string key = null)
+        {       
             Dictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters.Add("keyName", keyName);
+            if(strategy != null) parameters.Add("strategy", strategy);
+            if(key != null) parameters.Add("keyName", key);
             this.Execute(AppiumDriverCommand.HideKeyboard, parameters);
         }
 

@@ -226,8 +226,24 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void HideKeyboardTestCase ()
 		{
-			server.respondTo ("POST", "/appium/device/hide_keyboard", null);
-			driver.HideKeyboard ("a");
+			{
+				server.clear ();
+				RequestProcessor re = server.respondTo ("POST", "/appium/device/hide_keyboard", null);
+				driver.HideKeyboard (key: "Done");
+				Assert.AreEqual (re.inputData, "{\"keyName\":\"Done\"}");
+			}
+			{
+				server.clear ();
+				RequestProcessor re = server.respondTo ("POST", "/appium/device/hide_keyboard", null);
+				driver.HideKeyboard ("pressKey", "Done");
+				Assert.AreEqual (re.inputData, "{\"strategy\":\"pressKey\",\"keyName\":\"Done\"}");
+			}
+			{
+				server.clear ();
+				RequestProcessor re = server.respondTo ("POST", "/appium/device/hide_keyboard", null);
+				driver.HideKeyboard ("tapOutside");
+				Assert.AreEqual (re.inputData, "{\"strategy\":\"tapOutside\"}");
+			}
 		}
 
 	}
