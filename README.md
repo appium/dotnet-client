@@ -74,7 +74,7 @@ namespace AppiumDriverDemo
 
 ```
 
-[Full Project Here](https://github.com/appium/appium/tree/1.0-beta/sample-code/examples/dotnet/AppiumDriverDemo)
+[See samples here](/samples)
 
 ### TouchAction
 ```c#
