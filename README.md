@@ -113,7 +113,7 @@ m.Perform();
 - `Rebuild all`
 - `Run tests in test/specs`
 
-## Nuget Deployment (form maintainers)
+## Nuget Deployment (for maintainers)
 
 ### To Setup Nuget 
 - Download [Nuget exe](http://nuget.org/nuget.exe).
