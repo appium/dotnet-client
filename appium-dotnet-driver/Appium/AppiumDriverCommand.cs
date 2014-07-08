@@ -179,6 +179,31 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string SetConnectionType = "setConnectionType";
 
+        /// <summary>
+        /// Represents the Get Available Engines Command
+        /// </summary>
+        public const string GetAvailableEngines = "getAvailableEngines";
+
+        /// <summary>
+        /// Represents the Get Active Engine Command
+        /// </summary>
+        public const string GetActiveEngine = "getActiveEngine";
+
+        /// <summary>
+        /// Represents the is IME active Command
+        /// </summary>
+        public const string IsIMEActive = "isIMEActive";
+
+        /// <summary>
+        /// Represents the Activate Engine Command
+        /// </summary>
+        public const string ActivateEngine = "activateEngine";
+
+        /// <summary>
+        /// Represents the Deactivate Engine Command
+        /// </summary>
+        public const string DeactivateEngine = "deactivateEngine";
+
         #endregion JSON Wire Protocol
     }
 }

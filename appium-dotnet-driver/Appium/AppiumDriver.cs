@@ -586,6 +586,63 @@ namespace OpenQA.Selenium.Appium
         }
         #endregion Connection Type
 
+        #region Input Method (IME)
+        /// <summary>
+        /// Get a list of IME engines available on the device
+        /// </summary>
+        /// <returns>List of available </returns>
+        public List<string> GetIMEAvailableEngines()
+        {
+            var retVal = new List<string>();
+            var commandResponse = this.Execute(AppiumDriverCommand.GetAvailableEngines, null);
+            var objectArr = commandResponse.Value as object[];
+            if (null != objectArr)
+            {
+                retVal.AddRange(objectArr.Select(val => val.ToString()));
+            }
+            return retVal;
+        }
+
+        /// <summary>
+        /// Get the currently active IME Engine on the device
+        /// </summary>
+        /// <returns>Active IME Engine</returns>
+        public string GetIMEActiveEngine()
+        {
+            var commandResponse = this.Execute(AppiumDriverCommand.GetActiveEngine, null);
+            return commandResponse.Value as string;
+        }
+
+        /// <summary>
+        /// Is the IME active on the device (NOTE: on Android, this is always true)
+        /// </summary>
+        /// <returns>true if IME is active, false otherwise</returns>
+        public bool IsIMEActive()
+        {
+            var commandResponse = this.Execute(AppiumDriverCommand.IsIMEActive, null);
+            return (bool)(commandResponse.Value);
+        }
+
+        /// <summary>
+        /// Activate the given IME on Device
+        /// </summary>
+        /// <param name="imeEngine">IME to activate</param>
+        public void ActivateIMEEngine(string imeEngine)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("engine", imeEngine);
+            this.Execute(AppiumDriverCommand.ActivateEngine, parameters);
+        }
+
+        /// <summary>
+        /// Deactivate the currently Active IME Engine on device
+        /// </summary>
+        public void DeactiveIMEEngine()
+        {
+            this.Execute(AppiumDriverCommand.DeactivateEngine, null);
+        }
+        #endregion Input Method (IME)
+
         #region Multi Actions
 
         /// <summary>
@@ -750,6 +807,15 @@ namespace OpenQA.Selenium.Appium
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.SetOrientation, "/session/{sessionId}/orientation"),
                 new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetConnectionType, "/session/{sessionId}/network_connection"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.SetConnectionType, "/session/{sessionId}/network_connection"),
+
+                #region Input Method (IME)
+                new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetAvailableEngines, "/session/{sessionId}/ime/available_engines"),
+                new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetActiveEngine, "/session/{sessionId}/ime/active_engine"),
+                new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.IsIMEActive, "/session/{sessionId}/ime/activated"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ActivateEngine, "/session/{sessionId}/ime/activate"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.DeactivateEngine, "/session/{sessionId}/ime/deactivate"),
+                #endregion Input Method (IME) 
+
                 #endregion JSON Wire Protocol Commands
                 
             };
