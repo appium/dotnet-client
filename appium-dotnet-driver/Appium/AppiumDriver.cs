@@ -370,7 +370,8 @@ namespace OpenQA.Selenium.Appium
         /// <summary>
         /// Pushes a File.
         /// </summary>
-        /// <param name="appPath">a string containing the id of the app.</param>
+        /// <param name="pathOnDevice">path on device to store file to</param>
+        /// <param name="base64Data">base 64 data to store as the file</param>
         public void PushFile(string pathOnDevice, string base64Data)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
@@ -382,13 +383,26 @@ namespace OpenQA.Selenium.Appium
         /// <summary>
         /// Pulls a File.
         /// </summary>
-        /// <param name="appPath">a string containing the id of the app.</param>
+        /// <param name="pathOnDevice">path on device to pull</param>
         public string PullFile(string pathOnDevice)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("path", pathOnDevice);
             var commandResponse = this.Execute(AppiumDriverCommand.PullFile, parameters);
             return commandResponse.Value as string;
+        }
+
+        /// <summary>
+        /// Pulls a Folder
+        /// </summary>
+        /// <param name="remotePath">remote path to the folder to return</param>
+        /// <returns>a base64 encoded string representing a zip file of the contents of the folder</returns>
+        public byte[] PullFolder(string remotePath)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("path", remotePath);
+            var commandResponse = this.Execute(AppiumDriverCommand.PullFolder, parameters);
+            return Convert.FromBase64String(commandResponse.Value.ToString());
         }
 
         /// <summary>
@@ -784,6 +798,7 @@ namespace OpenQA.Selenium.Appium
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.IsAppInstalled, "/session/{sessionId}/appium/device/app_installed"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.PushFile, "/session/{sessionId}/appium/device/push_file"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.PullFile, "/session/{sessionId}/appium/device/pull_file"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.PullFolder, "/session/{sessionId}/appium/device/pull_folder"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ToggleWiFi, "/session/{sessionId}/appium/device/toggle_wifi"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ToggleLocationServices, "/session/{sessionId}/appium/device/toggle_location_services"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.LaunchApp, "/session/{sessionId}/appium/app/launch"),

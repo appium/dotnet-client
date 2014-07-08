@@ -69,6 +69,11 @@ namespace OpenQA.Selenium.Appium
         public const string PullFile = "pullFile";
 
         /// <summary>
+        /// Pull Folder Command.
+        /// </summary>
+        public const string PullFolder = "pullFolder";
+
+        /// <summary>
         /// Toggle Wifi Command.
         /// </summary>
         public const string ToggleWiFi = "toggleWiFi";
