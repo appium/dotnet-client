@@ -35,6 +35,7 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Appium\Enums\ConnectionType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Appium\AppiumDriver.cs" />
     <Compile Include="Appium\AppiumDriverCommand.cs" />

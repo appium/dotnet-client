@@ -168,6 +168,17 @@ namespace OpenQA.Selenium.Appium
         /// Represents the Set Orientation Command
         /// </summary>
         public const string SetOrientation = "setOrientation";
+
+        /// <summary>
+        /// Represents the Get Network Connection Command
+        /// </summary>
+        public const string GetConnectionType = "getConnectionType";
+
+        /// <summary>
+        /// Represents the Set Network Connection Command
+        /// </summary>
+        public const string SetConnectionType = "setConnectionType";
+
         #endregion JSON Wire Protocol
     }
 }
