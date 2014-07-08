@@ -16,6 +16,7 @@
 // limitations under the License.
 // </copyright>
 
+using OpenQA.Selenium.Appium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.MultiTouch;
 using OpenQA.Selenium.Interactions;
@@ -464,7 +465,7 @@ namespace OpenQA.Selenium.Appium
             Dictionary<string, object> parameters = null;
             if (null != language)
             {
-                parameters = new Dictionary<string, object> { {"language", language} };
+                parameters = new Dictionary<string, object> { { "language", language } };
             }
 
             var commandResponse = this.Execute(AppiumDriverCommand.GetAppStrings, parameters);
@@ -476,10 +477,10 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <param name="keyName">The button pressed by the mobile driver to attempt hiding the keyboard.</param>
         public void HideKeyboard(string strategy = null, string key = null)
-        {       
+        {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
-            if(strategy != null) parameters.Add("strategy", strategy);
-            if(key != null) parameters.Add("keyName", key);
+            if (strategy != null) parameters.Add("strategy", strategy);
+            if (key != null) parameters.Add("keyName", key);
             this.Execute(AppiumDriverCommand.HideKeyboard, parameters);
         }
 
@@ -561,6 +562,30 @@ namespace OpenQA.Selenium.Appium
         }
         #endregion Orientation
 
+        #region Connection Type
+        /// <summary>
+        /// Get the Connection Type
+        /// </summary>
+        /// <returns>Connection Type of device</returns>
+        /// <exception cref="System.InvalidCastException">Thrown when object return was not able to be converted to a ConnectionType Enum</exception>
+        public ConnectionType GetConnectionType()
+        {
+            var commandResponse = this.Execute(AppiumDriverCommand.GetConnectionType, null);
+            return commandResponse.Value.ConvertToConnectionType();
+        }
+
+        /// <summary>
+        /// Set the connection type
+        /// </summary>
+        /// <param name="connectionType"></param>
+        public void SetConnectionType(ConnectionType connectionType)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("type", (int)connectionType);
+            this.Execute(AppiumDriverCommand.SetConnectionType, parameters);
+        }
+        #endregion Connection Type
+
         #region Multi Actions
 
         /// <summary>
@@ -588,9 +613,9 @@ namespace OpenQA.Selenium.Appium
             {
                 return; // do nothing
             }
-                
-            var parameters = new Dictionary<string, object> ();
-            parameters.Add ("actions", touchAction.GetParameters());
+
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("actions", touchAction.GetParameters());
             this.Execute(AppiumDriverCommand.TouchActionV2Perform, parameters);
         }
 
@@ -723,6 +748,8 @@ namespace OpenQA.Selenium.Appium
                 #region JSON Wire Protocol Commands
                 new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetOrientation, "/session/{sessionId}/orientation"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.SetOrientation, "/session/{sessionId}/orientation"),
+                new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetConnectionType, "/session/{sessionId}/network_connection"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.SetConnectionType, "/session/{sessionId}/network_connection"),
                 #endregion JSON Wire Protocol Commands
                 
             };
