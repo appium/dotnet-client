@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Appium.WebDriver</id>
-    <version>1.0.0</version>
+    <version>1.2.0.1</version>
     <title>Appium Webdriver</title>
     <authors>Appium Commiters</authors>
     <owners>Appium Commiters</owners>
@@ -12,8 +12,11 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Selenium Webdriver extension for Appium.</description>
     <releaseNotes>
-    	TouchAction + multiActions rewriting,
-    	Project structure overhaul. 
+    	1.2.0.1
+    		Add Pull Folder, Android Input Methods (IME), and Network Connection Methods for use with Appium 1.2
+    	1.0.0
+    		TouchAction + multiActions rewriting,
+    		Project structure overhaul. 
     </releaseNotes>
     <copyright>Copyright 2014</copyright>
     <tags>Appium Webdriver device automation</tags>
