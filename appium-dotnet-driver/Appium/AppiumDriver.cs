@@ -576,6 +576,18 @@ namespace OpenQA.Selenium.Appium
         }
         #endregion Orientation
 
+        #region Screenshot
+        /// <summary>
+        /// Return a screenshot of the session
+        /// </summary>
+        /// <returns>Screenshot</returns>
+        new public Screenshot GetScreenshot()
+        {
+            var commandResponse = this.Execute(AppiumDriverCommand.GetScreenshot, null);
+            return new Screenshot(commandResponse.Value.ToString());
+        }
+        #endregion
+
         #region Connection Type
         /// <summary>
         /// Get the Connection Type
