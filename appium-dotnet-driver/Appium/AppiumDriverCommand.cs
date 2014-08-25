@@ -209,6 +209,11 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string DeactivateEngine = "deactivateEngine";
 
+        /// <summary>
+        /// Represents the Screenshot Command
+        /// </summary>
+        public const string GetScreenshot = "screenshot";
+
         #endregion JSON Wire Protocol
     }
 }
