@@ -3,7 +3,7 @@
 This driver is an extension of the [Selenium](http://docs.seleniumhq.org/) C# client. It has 
 all the functionalities of the regular driver, but add Appium specific methods on top of this.
 
-## v1.0.0
+## v1.2.0.1
 
 Breaking Changes: The TouchAction/MultiAction functionalities has been rewritten according
 to the spec [here](https://dvcs.w3.org/hg/webdriver/raw-file/default/webdriver-spec.html#touch-gestures).
