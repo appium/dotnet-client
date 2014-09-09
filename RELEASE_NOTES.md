@@ -7,7 +7,6 @@
 - Add network connection methods
 - Add android input methods
 - Add PullFolder command
-- 
 
 ## 1.0.0
 
