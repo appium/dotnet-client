@@ -132,6 +132,12 @@ namespace OpenQA.Selenium.Appium
         ///  Open Notifications Command
         /// </summary>
         public const string OpenNotifications = "openNotifications";
+
+        /// <summary>
+        /// The Start Activity command
+        /// </summary>
+        public const string StartActivity = "startActivity";
+
         #endregion Appium Specific extensions to JSONWP Commands
 
         #region TouchActions
