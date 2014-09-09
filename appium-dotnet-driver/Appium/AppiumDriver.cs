@@ -27,6 +27,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using OpenQA.Selenium.Appium.src.Appium.Interfaces;
+using System.Diagnostics.Contracts;
 
 namespace OpenQA.Selenium.Appium
 {
@@ -365,6 +366,32 @@ namespace OpenQA.Selenium.Appium
             var commandResponse = this.Execute(AppiumDriverCommand.IsAppInstalled, parameters);
             Console.Out.WriteLine(commandResponse.Value);
             return Convert.ToBoolean(commandResponse.Value.ToString());
+        }
+
+        /// <summary>
+        /// Opens an arbitrary activity during a test. If the activity belongs to
+        /// another application, that application is started and the activity is opened.
+        ///
+        /// This is an Android-only method.
+        /// </summary>
+        /// <param name="appPackage">The package containing the activity to start.</param>
+        /// <param name="appActivity">The activity to start.</param>
+        /// <param name="appWaitPackage">Begin automation after this package starts. Can be null or empty.</param>
+        /// <param name="appWaitActivity">Begin automation after this activity starts. Can be null or empty.</param>
+        /// <example>
+        /// driver.StartActivity("com.foo.bar", ".MyActivity");
+        /// </example>
+        public void StartActivity(string appPackage, string appActivity, string appWaitPackage = "", string appWaitActivity = "")
+        {
+        	Contract.Requires(!String.IsNullOrWhiteSpace(appPackage));
+        	Contract.Requires(!String.IsNullOrWhiteSpace(appActivity));
+
+        	Dictionary<string, object> parameters = new Dictionary<string, object>() { {"appPackage", appPackage},
+        																			   {"appActivity", appActivity},
+        																			   {"appWaitPackage", appWaitPackage},
+        																			   {"appWaitActivity", appWaitActivity} };
+
+        	this.Execute(AppiumDriverCommand.StartActivity, parameters);
         }
 
         /// <summary>
@@ -823,12 +850,13 @@ namespace OpenQA.Selenium.Appium
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.FindComplex, "/session/{sessionId}/appium/app/complex_find"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.HideKeyboard, "/session/{sessionId}/appium/device/hide_keyboard"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.OpenNotifications, "/session/{sessionId}/appium/device/open_notifications"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.StartActivity, "/session/{sessionId}/appium/device/start_activity"),
                 #endregion Appium Commands
                 #region Touch Commands
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.MultiActionV2Perform, "/session/{sessionId}/touch/multi/perform"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.TouchActionV2Perform, "/session/{sessionId}/touch/perform"),
                 #endregion Touch Commands
-                
+
                 #region JSON Wire Protocol Commands
                 new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetOrientation, "/session/{sessionId}/orientation"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.SetOrientation, "/session/{sessionId}/orientation"),
