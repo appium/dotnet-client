@@ -265,6 +265,16 @@ namespace OpenQA.Selenium.Appium
             this.Execute(AppiumDriverCommand.LockDevice, parameters);
         }
 
+        /// <summary>
+        /// Check if the device is locked
+        /// </summary>
+        /// <returns>true if device is locked, false otherwise</returns>
+        public bool IsLocked()
+        {
+            var commandResponse = this.Execute(AppiumDriverCommand.IsLocked, null);
+            return (bool)commandResponse.Value;
+        }
+
         // TODO: future implementation
         /// <summary>
         /// set/get the Airplane mode.
@@ -828,6 +838,7 @@ namespace OpenQA.Selenium.Appium
                 #region Appium Commands
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ShakeDevice, "/session/{sessionId}/appium/device/shake"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.LockDevice, "/session/{sessionId}/appium/device/lock"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.IsLocked, "/session/{sessionId}/appium/device/is_locked"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ToggleAirplaneMode, "/session/{sessionId}/appium/device/toggle_airplane_mode"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.KeyEvent, "/session/{sessionId}/appium/device/keyevent"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.Rotate, "/session/{sessionId}/appium/device/rotate"),

@@ -17,6 +17,11 @@ namespace OpenQA.Selenium.Appium
         public const string LockDevice = "lockDevice";
 
         /// <summary>
+        /// Represents the Is Device Locked Mapping command
+        /// </summary>
+        public const string IsLocked = "isLocked";
+
+        /// <summary>
         /// Toggle's the Airplane Mode ("Flight Safe Mode") Command
         /// </summary>
         public const string ToggleAirplaneMode = "toggleAirplaneMode";
