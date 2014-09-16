@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
 VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "appium-dotnet-driver", "appium-dotnet-driver\appium-dotnet-driver.csproj", "{A54D6086-3606-4E81-8B89-5C0F61638DCF}"
@@ -15,18 +15,21 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0D4A1C2F-D180-4293-AB38-41F685F60B43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0D4A1C2F-D180-4293-AB38-41F685F60B43}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0D4A1C2F-D180-4293-AB38-41F685F60B43}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0D4A1C2F-D180-4293-AB38-41F685F60B43}.Release|Any CPU.Build.0 = Release|Any CPU
-		{30AA6918-DE94-4FBB-9C99-FF821BBD6B37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{30AA6918-DE94-4FBB-9C99-FF821BBD6B37}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{30AA6918-DE94-4FBB-9C99-FF821BBD6B37}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{30AA6918-DE94-4FBB-9C99-FF821BBD6B37}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A54D6086-3606-4E81-8B89-5C0F61638DCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A54D6086-3606-4E81-8B89-5C0F61638DCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A54D6086-3606-4E81-8B89-5C0F61638DCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A54D6086-3606-4E81-8B89-5C0F61638DCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30AA6918-DE94-4FBB-9C99-FF821BBD6B37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30AA6918-DE94-4FBB-9C99-FF821BBD6B37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30AA6918-DE94-4FBB-9C99-FF821BBD6B37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30AA6918-DE94-4FBB-9C99-FF821BBD6B37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D4A1C2F-D180-4293-AB38-41F685F60B43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D4A1C2F-D180-4293-AB38-41F685F60B43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D4A1C2F-D180-4293-AB38-41F685F60B43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D4A1C2F-D180-4293-AB38-41F685F60B43}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = appium-dotnet-driver\appium-dotnet-driver.csproj
@@ -34,7 +37,7 @@ Global
 		$0.DotNetNamingPolicy = $1
 		$1.DirectoryNamespaceAssociation = None
 		$1.ResourceNamePolicy = FileFormatDefault
-		$0.TextStylePolicy = $2
+		$0.TextStylePolicy = $9
 		$2.FileWidth = 120
 		$2.EolMarker = Windows
 		$2.inheritsSet = VisualStudio
@@ -45,30 +48,25 @@ Global
 		$3.inheritsSet = Mono
 		$3.inheritsScope = text/x-csharp
 		$3.scope = text/x-csharp
-		$0.TextStylePolicy = $4
 		$4.FileWidth = 120
 		$4.TabsToSpaces = False
 		$4.EolMarker = Windows
 		$4.inheritsSet = VisualStudio
 		$4.inheritsScope = text/plain
 		$4.scope = text/plain
-		$0.TextStylePolicy = $5
 		$5.inheritsSet = null
 		$5.scope = application/config+xml
-		$0.XmlFormattingPolicy = $6
+		$0.XmlFormattingPolicy = $8
 		$6.inheritsSet = null
 		$6.scope = application/config+xml
-		$0.TextStylePolicy = $7
 		$7.FileWidth = 120
 		$7.EolMarker = Windows
 		$7.inheritsSet = VisualStudio
 		$7.inheritsScope = text/plain
 		$7.scope = application/xml
-		$0.XmlFormattingPolicy = $8
 		$8.inheritsSet = Mono
 		$8.inheritsScope = application/xml
 		$8.scope = application/xml
-		$0.TextStylePolicy = $9
 		$9.FileWidth = 120
 		$9.EolMarker = Windows
 		$9.inheritsSet = VisualStudio
@@ -79,21 +77,19 @@ Global
 		$10.IncludeInNewFiles = True
 		$0.NameConventionPolicy = $11
 		$11.Rules = $12
-		$12.NamingRule = $13
+		$12.NamingRule = $32
 		$13.Name = Namespaces
 		$13.AffectedEntity = Namespace
 		$13.VisibilityMask = VisibilityMask
 		$13.NamingStyle = PascalCase
 		$13.IncludeInstanceMembers = True
 		$13.IncludeStaticEntities = True
-		$12.NamingRule = $14
 		$14.Name = Types
 		$14.AffectedEntity = Class, Struct, Enum, Delegate
 		$14.VisibilityMask = Public
 		$14.NamingStyle = PascalCase
 		$14.IncludeInstanceMembers = True
 		$14.IncludeStaticEntities = True
-		$12.NamingRule = $15
 		$15.Name = Interfaces
 		$15.RequiredPrefixes = $16
 		$16.String = I
@@ -102,7 +98,6 @@ Global
 		$15.NamingStyle = PascalCase
 		$15.IncludeInstanceMembers = True
 		$15.IncludeStaticEntities = True
-		$12.NamingRule = $17
 		$17.Name = Attributes
 		$17.RequiredSuffixes = $18
 		$18.String = Attribute
@@ -111,7 +106,6 @@ Global
 		$17.NamingStyle = PascalCase
 		$17.IncludeInstanceMembers = True
 		$17.IncludeStaticEntities = True
-		$12.NamingRule = $19
 		$19.Name = Event Arguments
 		$19.RequiredSuffixes = $20
 		$20.String = EventArgs
@@ -120,7 +114,6 @@ Global
 		$19.NamingStyle = PascalCase
 		$19.IncludeInstanceMembers = True
 		$19.IncludeStaticEntities = True
-		$12.NamingRule = $21
 		$21.Name = Exceptions
 		$21.RequiredSuffixes = $22
 		$22.String = Exception
@@ -129,70 +122,60 @@ Global
 		$21.NamingStyle = PascalCase
 		$21.IncludeInstanceMembers = True
 		$21.IncludeStaticEntities = True
-		$12.NamingRule = $23
 		$23.Name = Methods
 		$23.AffectedEntity = Methods
 		$23.VisibilityMask = Protected, Public
 		$23.NamingStyle = PascalCase
 		$23.IncludeInstanceMembers = True
 		$23.IncludeStaticEntities = True
-		$12.NamingRule = $24
 		$24.Name = Static Readonly Fields
 		$24.AffectedEntity = ReadonlyField
 		$24.VisibilityMask = Protected, Public
 		$24.NamingStyle = PascalCase
 		$24.IncludeInstanceMembers = False
 		$24.IncludeStaticEntities = True
-		$12.NamingRule = $25
 		$25.Name = Fields
 		$25.AffectedEntity = Field
 		$25.VisibilityMask = Protected, Public
 		$25.NamingStyle = PascalCase
 		$25.IncludeInstanceMembers = True
 		$25.IncludeStaticEntities = True
-		$12.NamingRule = $26
 		$26.Name = ReadOnly Fields
 		$26.AffectedEntity = ReadonlyField
 		$26.VisibilityMask = Protected, Public
 		$26.NamingStyle = PascalCase
 		$26.IncludeInstanceMembers = True
 		$26.IncludeStaticEntities = False
-		$12.NamingRule = $27
 		$27.Name = Constant Fields
 		$27.AffectedEntity = ConstantField
 		$27.VisibilityMask = Protected, Public
 		$27.NamingStyle = PascalCase
 		$27.IncludeInstanceMembers = True
 		$27.IncludeStaticEntities = True
-		$12.NamingRule = $28
 		$28.Name = Properties
 		$28.AffectedEntity = Property
 		$28.VisibilityMask = Protected, Public
 		$28.NamingStyle = PascalCase
 		$28.IncludeInstanceMembers = True
 		$28.IncludeStaticEntities = True
-		$12.NamingRule = $29
 		$29.Name = Events
 		$29.AffectedEntity = Event
 		$29.VisibilityMask = Protected, Public
 		$29.NamingStyle = PascalCase
 		$29.IncludeInstanceMembers = True
 		$29.IncludeStaticEntities = True
-		$12.NamingRule = $30
 		$30.Name = Enum Members
 		$30.AffectedEntity = EnumMember
 		$30.VisibilityMask = VisibilityMask
 		$30.NamingStyle = PascalCase
 		$30.IncludeInstanceMembers = True
 		$30.IncludeStaticEntities = True
-		$12.NamingRule = $31
 		$31.Name = Parameters
 		$31.AffectedEntity = Parameter
 		$31.VisibilityMask = VisibilityMask
 		$31.NamingStyle = CamelCase
 		$31.IncludeInstanceMembers = True
 		$31.IncludeStaticEntities = True
-		$12.NamingRule = $32
 		$32.Name = Type Parameters
 		$32.RequiredPrefixes = $33
 		$33.String = T
@@ -201,8 +184,5 @@ Global
 		$32.NamingStyle = PascalCase
 		$32.IncludeInstanceMembers = True
 		$32.IncludeStaticEntities = True
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
