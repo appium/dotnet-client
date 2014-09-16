@@ -1,5 +1,10 @@
 #Release Notes
 
+## 1.2.0.2
+- Update Newtonsoft.Json and WebDriver packages
+- Add IsLocked Method
+- Add Start Activity 
+
 ## 1.2.0.1
 
 - Update for new Selenium version
