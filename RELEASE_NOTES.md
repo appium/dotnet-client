@@ -1,5 +1,8 @@
 #Release Notes
 
+## 1.2.0.3
+- Needed to update version due to mismanaged NuGet Package.
+
 ## 1.2.0.2
 - Update Newtonsoft.Json and WebDriver packages
 - Add IsLocked Method
