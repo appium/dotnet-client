@@ -12,6 +12,8 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Selenium Webdriver extension for Appium.</description>
     <releaseNotes>
+      1.2.0.2
+        Update NuGet packages. Add IsLocked() and Start Activity.
     	1.2.0.1
     		Add Pull Folder, Android Input Methods (IME), and Network Connection Methods for use with Appium 1.2
     	1.0.0
