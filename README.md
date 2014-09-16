@@ -3,8 +3,13 @@
 This driver is an extension of the [Selenium](http://docs.seleniumhq.org/) C# client. It has 
 all the functionalities of the regular driver, but add Appium specific methods on top of this.
 
+## v1.2.0.3
+Update version just for NuGet package.
+
 ## v1.2.0.2
 Add IsLocked method.
+Update Packages.
+Add Start Activity.
 
 ## v1.2.0.1
 

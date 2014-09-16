@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Appium.WebDriver</id>
-    <version>1.2.0.1</version>
+    <version>1.2.0.3</version>
     <title>Appium Webdriver</title>
     <authors>Appium Commiters</authors>
     <owners>Appium Commiters</owners>
@@ -12,20 +12,22 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Selenium Webdriver extension for Appium.</description>
     <releaseNotes>
+      1.2.0.3 
+        Update version due to NuGet Package mismanagement.
       1.2.0.2
         Update NuGet packages. Add IsLocked() and Start Activity.
-    	1.2.0.1
-    		Add Pull Folder, Android Input Methods (IME), and Network Connection Methods for use with Appium 1.2
-    	1.0.0
-    		TouchAction + multiActions rewriting,
-    		Project structure overhaul. 
+      1.2.0.1
+        Add Pull Folder, Android Input Methods (IME), and Network Connection Methods for use with Appium 1.2
+      1.0.0
+        TouchAction + multiActions rewriting,
+        Project structure overhaul. 
     </releaseNotes>
     <copyright>Copyright 2014</copyright>
     <tags>Appium Webdriver device automation</tags>
-	<dependencies>
-	  <dependency id="Newtonsoft.Json" version="6.0.3"/>
-	  <dependency id="Selenium.WebDriver" version="2.42.0"/>
-	</dependencies>
+  <dependencies>
+    <dependency id="Newtonsoft.Json" version="6.0.5"/>
+    <dependency id="Selenium.WebDriver" version="2.43.0"/>
+  </dependencies>
   </metadata>
   <files>
     <file src="bin/Release/appium-dotnet-driver.dll" target="lib/net40/appium-dotnet-driver.dll" /> 
