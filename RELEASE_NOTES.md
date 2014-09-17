@@ -1,5 +1,7 @@
 #Release Notes
 
+## 1.2.0.4
+- Update version to match assembly and NuGet package
 ## 1.2.0.3
 - Needed to update version due to mismanaged NuGet Package.
 
