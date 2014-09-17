@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Appium.WebDriver</id>
-    <version>1.2.0.3</version>
+    <version>1.2.0.4</version>
     <title>Appium Webdriver</title>
     <authors>Appium Commiters</authors>
     <owners>Appium Commiters</owners>
@@ -12,13 +12,13 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Selenium Webdriver extension for Appium.</description>
     <releaseNotes>
-      1.0.2.4
+      1.2.0.4
         Update version due to assembly not matching NuGet.
-      1.0.2.3 
+      1.2.0.3 
         Update version due to NuGet Package mismanagement.
-      1.0.2.2
+      1.2.0.2
         Update NuGet packages. Add IsLocked() and Start Activity.
-      1.0.2.1
+      1.2.0.1
         Add Pull Folder, Android Input Methods (IME), and Network Connection Methods for use with Appium 1.2
       1.0.0
         TouchAction + multiActions rewriting,
