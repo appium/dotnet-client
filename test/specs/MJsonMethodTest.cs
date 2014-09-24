@@ -246,6 +246,24 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 			}
 		}
 
+		[Test]
+		public void SettingsTestCase ()
+		{
+			{
+				var data = "{\"setting\": true}";
+				Dictionary<String, Object> simpleDict = new Dictionary<string, object> ();
+				simpleDict.Add ("setting", true);
+				server.respondTo ("GET", "/appium/settings", data);
+				var result = driver.GetSettings ();
+				Assert.AreEqual (result, simpleDict);
+			}
+			{
+				RequestProcessor re = server.respondTo ("POST", "/appium/settings", null);
+				driver.IgnoreUnimportantViews (true);
+				Assert.AreEqual (re.inputData, "{\"settings\":{\"ignoreUnimportantViews\":true}}");
+			}
+		}
+
 	}
 }
 
