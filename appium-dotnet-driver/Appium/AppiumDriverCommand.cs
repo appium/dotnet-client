@@ -225,6 +225,16 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string GetScreenshot = "screenshot";
 
+		/// <summary>
+		/// Represents the GetSettings Command
+		/// </summary>
+		public const string GetSettings = "getSettings";
+
+		/// <summary>
+		/// Represents the UpdateSettings Command
+		/// </summary>
+		public const string UpdateSettings = "updateSettings";
+
         #endregion JSON Wire Protocol
     }
 }

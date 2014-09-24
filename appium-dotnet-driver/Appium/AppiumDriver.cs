@@ -28,6 +28,7 @@ using System.Linq;
 using System.Reflection;
 using OpenQA.Selenium.Appium.src.Appium.Interfaces;
 using System.Diagnostics.Contracts;
+using Newtonsoft.Json;
 
 namespace OpenQA.Selenium.Appium
 {
@@ -741,6 +742,40 @@ namespace OpenQA.Selenium.Appium
 
         #endregion Multi Actions
 
+		#region Settings
+
+		/// <summary>
+		/// Get appium settings currently set for the session
+		/// See: https://github.com/appium/appium/blob/master/docs/en/advanced-concepts/settings.md
+		/// </summary>
+		public Dictionary<String, Object> GetSettings()
+		{
+			var commandResponse = this.Execute(AppiumDriverCommand.GetSettings, null);
+			return JsonConvert.DeserializeObject<Dictionary<String, Object>>((String) commandResponse.Value);
+		}
+
+		/// <summary>
+		/// Set "ignoreUnimportantViews" setting.
+		/// See: https://github.com/appium/appium/blob/master/docs/en/advanced-concepts/settings.md
+		/// </summary>
+		public void IgnoreUnimportantViews(bool value)
+		{
+			this.UpdateSetting ("ignoreUnimportantViews", value);
+		}
+
+		/// <summary>
+		/// Update an appium Setting, on the session
+		/// </summary>
+		private void UpdateSetting(String setting, Object value)
+		{
+			var parameters = new Dictionary<string, object>();
+			var settings = new Dictionary<string, object>();
+			settings.Add(setting, value);
+			parameters.Add("settings", settings);
+			this.Execute(AppiumDriverCommand.UpdateSettings, parameters);
+		}
+		#endregion Settings
+
         #endregion Public Methods
 
         #region Internal Methods
@@ -862,7 +897,9 @@ namespace OpenQA.Selenium.Appium
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.HideKeyboard, "/session/{sessionId}/appium/device/hide_keyboard"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.OpenNotifications, "/session/{sessionId}/appium/device/open_notifications"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.StartActivity, "/session/{sessionId}/appium/device/start_activity"),
-                #endregion Appium Commands
+				new _Commands(CommandInfo.GetCommand,  AppiumDriverCommand.GetSettings, "/session/{sessionId}/appium/settings"),
+				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.UpdateSettings, "/session/{sessionId}/appium/settings"),
+				#endregion Appium Commands
                 #region Touch Commands
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.MultiActionV2Perform, "/session/{sessionId}/touch/multi/perform"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.TouchActionV2Perform, "/session/{sessionId}/touch/perform"),
