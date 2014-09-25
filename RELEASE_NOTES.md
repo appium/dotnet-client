@@ -1,5 +1,8 @@
 #Release Notes
 
+## 1.2.0.5
+- Add GetSettings and IgnoreUnimportantViews methods.
+
 ## 1.2.0.4
 - Update version to match assembly and NuGet package
  
