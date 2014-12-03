@@ -4,7 +4,7 @@ This driver is an extension of the [Selenium](http://docs.seleniumhq.org/) C# cl
 all the functionalities of the regular driver, but add Appium specific methods on top of this.
 
 ## v1.2.0.6
-Update Selenium Driver version - fixes a locator strategy bug.
+Update NuGet packages - fixes a locator strategy bug.
 
 ## v1.2.0.5
 Add GetSettings().
