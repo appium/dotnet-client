@@ -3,6 +3,9 @@
 This driver is an extension of the [Selenium](http://docs.seleniumhq.org/) C# client. It has 
 all the functionalities of the regular driver, but add Appium specific methods on top of this.
 
+## v1.2.0.6
+Update NuGet packages - fixes a locator strategy bug.
+
 ## v1.2.0.5
 Add GetSettings().
 Add IgnoreUnimportantViews();
