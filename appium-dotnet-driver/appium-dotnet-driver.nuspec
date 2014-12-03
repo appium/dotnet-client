@@ -12,6 +12,8 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Selenium Webdriver extension for Appium.</description>
     <releaseNotes>
+      1.2.0.6
+        Update Selenium NuGet Package to get fix for locator strategy.
       1.2.0.5
         Add GetSettings and IgnoreUnimportantViews methods.
       1.2.0.4

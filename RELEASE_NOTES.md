@@ -1,5 +1,8 @@
 #Release Notes
 
+## 1.2.0.6
+- Update Selenium package to fix locator strategy bug.
+
 ## 1.2.0.5
 - Add GetSettings and IgnoreUnimportantViews methods.
 
