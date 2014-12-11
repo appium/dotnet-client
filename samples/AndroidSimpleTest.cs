@@ -58,7 +58,7 @@ namespace Appium.Samples
 			driver.Navigate ().Back ();
 			Assert.IsNotNull (driver.FindElementByName ("App"));
 			var els = driver.FindElementsByAndroidUIAutomator ("new UiSelector().clickable(true)");
-			Assert.AreEqual (els.Count, 12);
+            Assert.GreaterOrEqual(els.Count, 12);
 			els = driver.FindElementsByAndroidUIAutomator ("new UiSelector().enabled(true)");
 			Assert.GreaterOrEqual (els.Count, 20);
 			Assert.IsNotNull (driver.FindElementByXPath ("//android.widget.TextView[@text='API Demos']"));
