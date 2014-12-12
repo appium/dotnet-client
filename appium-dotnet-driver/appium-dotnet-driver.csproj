@@ -40,7 +40,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Appium\Android\Enums\AndroidKeyCode.cs" />
+    <Compile Include="Appium\Enums\MobilePlatform.cs" />
+    <Compile Include="Appium\Enums\MobileBrowserType.cs" />
+    <Compile Include="Appium\Enums\MobileCapabilityType.cs" />
     <Compile Include="Appium\Enums\ConnectionType.cs" />
+    <Compile Include="Appium\iOS\Enums\IOSKeyCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Appium\AppiumDriver.cs" />
     <Compile Include="Appium\AppiumDriverCommand.cs" />
