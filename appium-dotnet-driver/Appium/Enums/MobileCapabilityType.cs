@@ -52,7 +52,7 @@ namespace OpenQA.Selenium.Appium.Appium.Enums
         public static readonly string AutomationName = "automationName";
 
         /// <summary>
-        /// Capability name used for the automation name (e.g. Appium, Selendroid and so on) setting.
+        /// Capability name used for the setting up of the required appium version.
         /// </summary>
         public static readonly string AppiumVersion = "appium-version";
 

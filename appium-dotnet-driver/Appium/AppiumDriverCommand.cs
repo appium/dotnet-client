@@ -124,11 +124,6 @@ namespace OpenQA.Selenium.Appium
         public const string SetImmediateValue = "setImmediateValue";
 
         /// <summary>
-        ///  Find Complex Command.
-        /// </summary>
-        public const string FindComplex = "findComplex";
-
-        /// <summary>
         /// Represents the Hide Keyboard command
         /// </summary>
         public const string HideKeyboard = "hideKeyboard";
