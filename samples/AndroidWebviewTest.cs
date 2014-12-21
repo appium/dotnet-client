@@ -58,7 +58,7 @@ namespace Appium.Samples
 			Thread.Sleep (5000);
 			if (!Env.isSauce ()) {
 				// Contexts don't work in android 4.3.3
-				var contexts = driver.GetContexts ();
+				var contexts = driver.Contexts;
 				string webviewContext = null;
 				for (int i = 0; i < contexts.Count; i++) {
 					Console.WriteLine (contexts [i]);
@@ -67,7 +67,7 @@ namespace Appium.Samples
 					}
 				}
 				Assert.IsNotNull (webviewContext);
-				driver.SetContext (webviewContext);
+				driver.Context = webviewContext;
 				var el = driver.FindElementById ("name_input");
                 el.Click();
 				el.Clear ();

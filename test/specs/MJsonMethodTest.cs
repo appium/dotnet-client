@@ -50,21 +50,13 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 			driver.LockDevice (3);
 		}
 
-		[Test]
-		public void ToggleAirplaneModeTestCase ()
-		{
-            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
-			server.respondTo ("POST", "/appium/device/toggle_airplane_mode", null);
-			driver.ToggleAirplaneMode ();
-		}
-
 
 		[Test]
 		public void SetContextTestCase ()
 		{
             IOSDriver driver = new IOSDriver(defaultUri, capabilities);
 			server.respondTo ("POST", "/context", null);
-			driver.SetContext ("1234");
+			driver.Context = "1234";
 		}
 
 		[Test]
@@ -72,7 +64,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		{
             IOSDriver driver = new IOSDriver(defaultUri, capabilities);
 			server.respondTo ("GET", "/context", "1234");
-			Assert.AreEqual( driver.GetContext (), "1234");
+			Assert.AreEqual( driver.Context, "1234");
 		}
 
 		[Test]
@@ -80,7 +72,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		{
             IOSDriver driver = new IOSDriver(defaultUri, capabilities);
 			server.respondTo ("GET", "/contexts", new string[] {"ab", "cde", "123"});
-			Assert.AreEqual( driver.GetContexts (), new string[] {"ab", "cde", "123"});
+			Assert.AreEqual( driver.Contexts, new string[] {"ab", "cde", "123"});
 		}
 
 		[Test]
@@ -121,7 +113,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		{
             AndroidDriver driver = new AndroidDriver(defaultUri, capabilities);
 			server.respondTo ("GET", "/appium/device/current_activity", ".activities.PeopleActivity");
-			string activity = driver.GetCurrentActivity ();
+			string activity = driver.CurrentActivity;
 			Assert.AreEqual (activity, ".activities.PeopleActivity");
 		}
 
@@ -165,14 +157,6 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 			server.respondTo ("POST", "/appium/device/pull_file", data);
 			byte[] result = driver.PullFile ("/pictures/me.jpg");
 			Assert.AreEqual (result, Convert.FromBase64String(data));
-		}
-
-		[Test]
-		public void ToggleWifiTestCase ()
-		{
-            AndroidDriver driver = new AndroidDriver(defaultUri, capabilities);
-			server.respondTo ("POST", "/appium/device/toggle_wifi", null);
-			driver.ToggleWifi ();
 		}
 
 		[Test]

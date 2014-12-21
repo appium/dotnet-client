@@ -38,6 +38,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(SolutionDir)\packages\Selenium.WebDriver.2.44.0\lib\net40\WebDriver.dll</HintPath>
     </Reference>
+    <Reference Include="WebDriver.Support">
+      <HintPath>..\packages\Selenium.Support.2.44.0\lib\net40\WebDriver.Support.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Appium\Android\AndroidDriver.cs" />
@@ -52,6 +55,7 @@
     <Compile Include="Appium\Enums\MobileBrowserType.cs" />
     <Compile Include="Appium\Enums\MobileCapabilityType.cs" />
     <Compile Include="Appium\Android\Enums\ConnectionType.cs" />
+    <Compile Include="Appium\Interfaces\IContextAware.cs" />
     <Compile Include="Appium\Interfaces\IDeviceActionShortcuts.cs" />
     <Compile Include="Appium\Interfaces\IInteractsWithApps.cs" />
     <Compile Include="Appium\Interfaces\IInteractsWithFiles.cs" />

@@ -9,16 +9,10 @@ namespace OpenQA.Selenium.Appium.Appium.Android.Interfaces
     public interface IHasNetworkConnection
     {
         /// <summary>
-        /// Get the Connection Type
+        /// Get/set the Connection Type
         /// </summary>
         /// <returns>Connection Type of device</returns>
         /// <exception cref="System.InvalidCastException">Thrown when object return was not able to be converted to a ConnectionType Enum</exception>
-        ConnectionType GetConnectionType();
-
-        /// <summary>
-        /// Set the connection type
-        /// </summary>
-        /// <param name="connectionType"></param>
-        void SetConnectionType(ConnectionType connectionType);
+        ConnectionType ConnectionType { get; set; }
     }
 }

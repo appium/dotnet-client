@@ -58,7 +58,7 @@ namespace Appium.Samples
 				.SendKeys("https://www.google.com");
 			driver.FindElementByName ("Go").Click ();
 			driver.FindElementByClassName ("UIAWebView").Click (); // dismissing keyboard
-			driver.SetContext ("WEBVIEW");
+			driver.Context = "WEBVIEW";
 			Thread.Sleep (3000);
 			var el = driver.FindElementByName ("q");
 			el.SendKeys ("sauce labs");

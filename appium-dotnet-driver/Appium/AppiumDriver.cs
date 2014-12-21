@@ -72,7 +72,7 @@ namespace OpenQA.Selenium.Appium
     /// </code>
     /// </example>
     public abstract class AppiumDriver : RemoteWebDriver, IFindByAccessibilityId, IDeviceActionShortcuts, IInteractsWithFiles,
-        IInteractsWithApps, IPerformsTouchActions
+        IInteractsWithApps, IPerformsTouchActions, IRotatable, IContextAware
     {
         #region Constructors
         /// <summary>
@@ -170,36 +170,6 @@ namespace OpenQA.Selenium.Appium
             this.Execute(AppiumDriverCommand.LockDevice, parameters);
         }
 
-        // TODO: future implementation
-        /// <summary>
-        /// set/get the Airplane mode.
-        /// true = phone is in airplane mode, false = phone is NOT in airplane mode
-        /// </summary>
-        //public bool AirplaneMode
-        //{
-        //    get
-        //    {
-        //        Response commandResponse = this.Execute(AppiumDriverCommand.AirplaneMode, null);
-        //        return (bool)commandResponse.Value;
-        //    }
-
-        //    set
-        //    {
-        //        var parameters = new Dictionary<string, object>();
-        //        // TODO: what is the key that the value needs to be set to?
-        //        parameters.Add("value", value);
-        //        this.Execute(AppiumDriverCommand.AirplaneMode, null);
-        //    }
-        //}
-
-        /// <summary>
-        /// Toggles Airplane Mode.
-        /// </summary>
-        public void ToggleAirplaneMode()
-        {
-            this.Execute(AppiumDriverCommand.ToggleAirplaneMode, null);
-        }
-
         /// <summary>
         /// Triggers Device Key Event.
         /// </summary>
@@ -290,14 +260,6 @@ namespace OpenQA.Selenium.Appium
         }
 
         /// <summary>
-        /// Toggles Wifi.
-        /// </summary>
-        public void ToggleWifi()
-        {
-            this.Execute(AppiumDriverCommand.ToggleWiFi, null);
-        }
-
-        /// <summary>
         /// Launches the current app.
         /// </summary>
         public void LaunchApp()
@@ -369,70 +331,52 @@ namespace OpenQA.Selenium.Appium
         #endregion MJsonMethod Members
 
         #region Context
-        /// <summary>
-        /// Get a list of available contexts
-        /// </summary>
-        /// <returns>a list of strings representing available contexts or an empty list if no contexts found</returns>
-        public List<string> GetContexts()
+        public string Context
         {
-            var commandResponse = this.Execute(AppiumDriverCommand.Contexts, null);
-            var contexts = new List<string>();
-            var objects = commandResponse.Value as object[];
-
-            if (null != objects && 0 < objects.Length)
+            get
             {
-                contexts.AddRange(objects.Select(o => o.ToString()));
+                var commandResponse = this.Execute(AppiumDriverCommand.GetContext, null);
+                return commandResponse.Value as string;
             }
-
-            return contexts;
+            set
+            {
+                var parameters = new Dictionary<string, object>();
+                parameters.Add("name", value);
+                this.Execute(AppiumDriverCommand.SetContext, parameters);
+            }
         }
 
-        /// <summary>
-        /// Get the current context
-        /// </summary>
-        /// <returns>current context if available or null representing the default context ("no context")</returns>
-        public string GetContext()
+        public ReadOnlyCollection<string> Contexts
         {
-            var commandResponse = this.Execute(AppiumDriverCommand.GetContext, null);
-            return commandResponse.Value as string;
-        }
-        /// <summary>
-        /// Set the context
-        /// </summary>
-        /// <remarks>Will throw if the context is not found</remarks>
-        /// <param name="name">name of the context to set</param>
-        public void SetContext(string name)
-        {
-            var parameters = new Dictionary<string, object>();
-            parameters.Add("name", name);
-            this.Execute(AppiumDriverCommand.SetContext, parameters);
+            get {
+                var commandResponse = this.Execute(AppiumDriverCommand.Contexts, null);
+                var contexts = new List<string>();
+                var objects = commandResponse.Value as object[];
+
+                if (null != objects && 0 < objects.Length)
+                {
+                    contexts.AddRange(objects.Select(o => o.ToString()));
+                }
+
+                return contexts.AsReadOnly();
+            }
         }
         #endregion Context
 
         #region Orientation
-        /// <summary>
-        /// Return the Screen Orientation of the device 
-        /// </summary>
-        /// <returns>Screen Orientation</returns>
-        /// <remarks>
-        /// Throws Null exception if not valid server response. 
-        /// Throws ArgumentOutOfRangeException if server response is not a valid Orientation.
-        /// </remarks>
-        public ScreenOrientation GetOrientation()
+        public ScreenOrientation Orientation
         {
-            var commandResponse = this.Execute(AppiumDriverCommand.GetOrientation, null);
-            return (commandResponse.Value as string).ConvertToScreenOrientation();
-        }
-
-        /// <summary>
-        /// Set the orientation
-        /// </summary>
-        /// <param name="orientation">orientation to set</param>
-        public void SetOrientation(ScreenOrientation orientation)
-        {
-            var parameters = new Dictionary<string, object>();
-            parameters.Add("orientation", orientation.JSONWireProtocolString());
-            this.Execute(AppiumDriverCommand.SetOrientation, parameters);
+            get
+            {
+                var commandResponse = this.Execute(AppiumDriverCommand.GetOrientation, null);
+                return (commandResponse.Value as string).ConvertToScreenOrientation();
+            }
+            set
+            {
+                var parameters = new Dictionary<string, object>();
+                parameters.Add("orientation", value.JSONWireProtocolString());
+                this.Execute(AppiumDriverCommand.SetOrientation, parameters);
+            }
         }
         #endregion Orientation
 
@@ -549,7 +493,7 @@ namespace OpenQA.Selenium.Appium
 			var settings = new Dictionary<string, object>();
 			settings.Add(setting, value);
 			parameters.Add("settings", settings);
-			this.Execute(AppiumDriverCommand.UpdateSettings, parameters);
+			this.Execute(AppiumDriverCommand.UpdateSettings, parameters);          
 		}
 		#endregion Settings
 
@@ -743,10 +687,5 @@ namespace OpenQA.Selenium.Appium
             }
         }
         #endregion Private Class
-
-        public IWebDriver WrappedDriver
-        {
-            get { throw new NotImplementedException(); }
-        }
     }
 }

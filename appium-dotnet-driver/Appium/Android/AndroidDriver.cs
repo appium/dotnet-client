@@ -117,26 +117,20 @@ namespace OpenQA.Selenium.Appium.Appium.Android
         }
 
         #region Connection Type
-        /// <summary>
-        /// Get the Connection Type
-        /// </summary>
-        /// <returns>Connection Type of device</returns>
-        /// <exception cref="System.InvalidCastException">Thrown when object return was not able to be converted to a ConnectionType Enum</exception>
-        public ConnectionType GetConnectionType()
-        {
-            var commandResponse = this.Execute(AppiumDriverCommand.GetConnectionType, null);
-            return commandResponse.Value.ConvertToConnectionType();
-        }
 
-        /// <summary>
-        /// Set the connection type
-        /// </summary>
-        /// <param name="connectionType"></param>
-        public void SetConnectionType(ConnectionType connectionType)
+        public ConnectionType ConnectionType
         {
-            var parameters = new Dictionary<string, object>();
-            parameters.Add("type", (int)connectionType);
-            this.Execute(AppiumDriverCommand.SetConnectionType, parameters);
+            get
+            {
+                var commandResponse = this.Execute(AppiumDriverCommand.GetConnectionType, null);
+                return commandResponse.Value.ConvertToConnectionType();
+            }
+            set
+            {
+                var parameters = new Dictionary<string, object>();
+                parameters.Add("type", value);
+                this.Execute(AppiumDriverCommand.SetConnectionType, parameters);
+            }
         }
         #endregion Connection Type
 
@@ -175,10 +169,14 @@ namespace OpenQA.Selenium.Appium.Appium.Android
         /// <summary>
         /// Gets Current Device Activity.
         /// </summary>
-        public string GetCurrentActivity()
+        /// 
+        public string CurrentActivity
         {
-            var commandResponse = this.Execute(AppiumDriverCommand.GetCurrentActivity, null);
-            return commandResponse.Value as string;
+            get
+            {
+                var commandResponse = this.Execute(AppiumDriverCommand.GetCurrentActivity, null);
+                return commandResponse.Value as string;
+            }
         }
 
         /// <summary>

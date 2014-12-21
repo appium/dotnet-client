@@ -62,7 +62,7 @@ namespace Appium.Samples
 			driver.FindElementByName ("Go").Click ();
 			driver.FindElementByClassName ("UIAWebView").Click (); // dismissing keyboard
 			Thread.Sleep (3000);
-			driver.SetContext ("WEBVIEW");
+			driver.Context = "WEBVIEW";
 			Thread.Sleep (1000);
 			var wowEl = driver.FindElementById ("wow");
 			Assert.IsTrue (wowEl.Text.Contains("so cool"));

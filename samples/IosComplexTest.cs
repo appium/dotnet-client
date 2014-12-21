@@ -97,14 +97,14 @@ namespace Appium.Samples
 		{
 			ClickMenuItem ("Web View, AAPLWebViewController");
 			// get the contexts and switch to webview
-			Assert.AreEqual(driver.GetContexts(), 
+			Assert.AreEqual(driver.Contexts, 
 				new List<string> {"NATIVE_APP", "WEBVIEW_1"});
-			driver.SetContext ("WEBVIEW_1");
+			driver.Context = "WEBVIEW_1";
 			// find the store link
 			Thread.Sleep (1000);
 			Assert.IsNotNull(driver.FindElementById ("gn-apple"));
 			// leave the webview
-			driver.SetContext ("NATIVE_APP");
+			driver.Context = "NATIVE_APP";
 			//Verify we are out of the webview
 			Assert.IsNotNull(driver.FindElementByClassName ("UIAScrollView"));
 

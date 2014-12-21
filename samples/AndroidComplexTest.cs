@@ -107,7 +107,7 @@ namespace Appium.Samples
 		{
 			Contract.Requires(!String.IsNullOrWhiteSpace(activityName));
 
-            String activity = ((AndroidDriver) driver).GetCurrentActivity();
+            String activity = ((AndroidDriver) driver).CurrentActivity;
 			Debug.WriteLine (activity);
 
 			Assert.IsNotNullOrEmpty(activity);
