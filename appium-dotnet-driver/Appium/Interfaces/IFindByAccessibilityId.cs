@@ -2,7 +2,7 @@
 
 namespace OpenQA.Selenium.Appium.Interfaces
 {
-    internal interface IFindByAccessibilityId
+    public interface IFindByAccessibilityId
     {
         /// <summary>
         /// Finds the first of elements that match the Accessibility Id selector supplied

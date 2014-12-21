@@ -6,7 +6,7 @@ using System.Text;
 
 namespace OpenQA.Selenium.Appium.Appium.Android.Interfaces
 {
-    interface IAndroidDeviceActionShortcuts : IDeviceActionShortcuts
+    public interface IAndroidDeviceActionShortcuts : IDeviceActionShortcuts
     {
         /// <summary>
         /// Triggers device key event with metastate for the keypress

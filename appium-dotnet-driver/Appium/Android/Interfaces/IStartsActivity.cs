@@ -5,7 +5,7 @@ using System.Text;
 
 namespace OpenQA.Selenium.Appium.Appium.Android
 {
-    interface IStartsActivity
+    public interface IStartsActivity
     {
         void StartActivity(string appPackage, string appActivity, string appWaitPackage = "", string appWaitActivity = "");
     }

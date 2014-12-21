@@ -6,7 +6,7 @@ using System.Text;
 
 namespace OpenQA.Selenium.Appium.Appium.Android.Interfaces
 {
-    interface IHasNetworkConnection
+    public interface IHasNetworkConnection
     {
         /// <summary>
         /// Get the Connection Type

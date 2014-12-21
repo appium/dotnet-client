@@ -71,7 +71,8 @@ namespace OpenQA.Selenium.Appium
     /// }
     /// </code>
     /// </example>
-    public abstract class AppiumDriver : RemoteWebDriver, IFindByIosUIAutomation, IFindByAccessibilityId, IDeviceActionShortcuts, IInteractsWithFiles, IInteractsWithApps
+    public abstract class AppiumDriver : RemoteWebDriver, IFindByAccessibilityId, IDeviceActionShortcuts, IInteractsWithFiles,
+        IInteractsWithApps, IPerformsTouchActions
     {
         #region Constructors
         /// <summary>
@@ -122,40 +123,6 @@ namespace OpenQA.Selenium.Appium
 
         #region FindMethods
 
-        #region IFindByIosUIAutomation Members
-        /// <summary>
-        /// Finds the first element in the page that matches the Ios UIAutomation selector supplied
-        /// </summary>
-        /// <param name="selector">Selector for the element.</param>
-        /// <returns>IWebElement object so that you can interact that object</returns>
-        /// <example>
-        /// <code>
-        /// IWebDriver driver = new RemoteWebDriver(DesiredCapabilities.Firefox());
-        /// IWebElement elem = driver.FindElementByIosUIAutomation('elements()'))
-        /// </code>
-        /// </example>
-        public IWebElement FindElementByIosUIAutomation(string selector)
-        {
-            return this.FindElement("-ios uiautomation", selector);
-        }
-
-        /// <summary>
-        /// Finds a list of elements that match the Ios UIAutomation selector supplied
-        /// </summary>
-        /// <param name="selector">Selector for the elements.</param>
-        /// <returns>ReadOnlyCollection of IWebElement object so that you can interact with those objects</returns>
-        /// <example>
-        /// <code>
-        /// IWebDriver driver = new RemoteWebDriver(DesiredCapabilities.Firefox());
-        /// ReadOnlyCollection<![CDATA[<IWebElement>]]> elem = driver.FindElementsByIosUIAutomation(elements())
-        /// </code>
-        /// </example>
-        public ReadOnlyCollection<IWebElement> FindElementsByIosUIAutomation(string selector)
-        {
-            return this.FindElements("-ios uiautomation", selector);
-        }
-        #endregion IFindByIosUIAutomation Members
-
         #region IFindByAccessibilityId Members
         /// <summary>
         /// Finds the first element in the page that matches the Accessibility Id selector supplied
@@ -192,14 +159,6 @@ namespace OpenQA.Selenium.Appium
         #endregion
 
         #region MJsonMethod Members
-        /// <summary>
-        /// Shakes the device.
-        /// </summary>
-        public void ShakeDevice()
-        {
-            this.Execute(AppiumDriverCommand.ShakeDevice, null);
-        }
-
         /// <summary>
         /// Locks the device.
         /// </summary>
@@ -477,18 +436,6 @@ namespace OpenQA.Selenium.Appium
         }
         #endregion Orientation
 
-        #region Screenshot
-        /// <summary>
-        /// Return a screenshot of the session
-        /// </summary>
-        /// <returns>Screenshot</returns>
-        new public Screenshot GetScreenshot()
-        {
-            var commandResponse = this.Execute(AppiumDriverCommand.GetScreenshot, null);
-            return new Screenshot(commandResponse.Value.ToString());
-        }
-        #endregion
-
         #region Input Method (IME)
         /// <summary>
         /// Get a list of IME engines available on the device
@@ -594,18 +541,9 @@ namespace OpenQA.Selenium.Appium
 		}
 
 		/// <summary>
-		/// Set "ignoreUnimportantViews" setting.
-		/// See: https://github.com/appium/appium/blob/master/docs/en/advanced-concepts/settings.md
-		/// </summary>
-		public void IgnoreUnimportantViews(bool value)
-		{
-			this.UpdateSetting ("ignoreUnimportantViews", value);
-		}
-
-		/// <summary>
 		/// Update an appium Setting, on the session
 		/// </summary>
-		private void UpdateSetting(String setting, Object value)
+		protected void UpdateSetting(String setting, Object value)
 		{
 			var parameters = new Dictionary<string, object>();
 			var settings = new Dictionary<string, object>();
@@ -660,6 +598,12 @@ namespace OpenQA.Selenium.Appium
             }
 
             return element;
+        }
+
+        internal static DesiredCapabilities SetPlatformToCapabilities(DesiredCapabilities dc, string desiredPlatform)
+        {
+            dc.SetCapability(MobileCapabilityType.PlatformName, desiredPlatform);
+            return dc;
         }
 
         /// <summary>

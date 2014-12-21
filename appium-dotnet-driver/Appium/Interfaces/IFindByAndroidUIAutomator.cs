@@ -2,7 +2,7 @@
 
 namespace OpenQA.Selenium.Appium.Interfaces
 {
-    interface IFindByAndroidUIAutomator
+    public interface IFindByAndroidUIAutomator
     {
         /// <summary>
         /// Finds the first element in the page that matches the Android UIAutomator selector supplied

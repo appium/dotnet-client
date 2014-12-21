@@ -3,6 +3,8 @@ using System;
 using OpenQA.Selenium.Remote;
 using System.Collections.Generic;
 using OpenQA.Selenium.Appium.Test.Helpers;
+using OpenQA.Selenium.Appium.Appium.iOS;
+using OpenQA.Selenium.Appium.Appium.Android;
 
 namespace OpenQA.Selenium.Appium.Test.Specs
 {
@@ -10,15 +12,14 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 	public class MJsonMethodTest
 	{	
 		public FakeAppium server;
-		public AppiumDriver driver;
+        public readonly Uri defaultUri = new Uri("http://127.0.0.1:4733/wd/hub");
+        public readonly DesiredCapabilities capabilities = new DesiredCapabilities();
 
 		[TestFixtureSetUp]
 		public void RunBeforeAll(){
 			server = new FakeAppium (4733);			 
 			server.Start ();
 			server.respondToInit ();
-			DesiredCapabilities capabilities = new DesiredCapabilities();
-			driver = new AppiumDriver (new Uri("http://127.0.0.1:4733/wd/hub"), capabilities);
 			server.clear ();	
 		}
 
@@ -36,6 +37,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void ShakeDeviceTestCase ()
 		{
+            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
 			server.respondTo ("POST", "/appium/device/shake", null);
 			driver.ShakeDevice ();
 		}
@@ -43,6 +45,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void LockDeviceTestCase ()
 		{
+            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
 			server.respondTo ("POST", "/appium/device/lock", null);
 			driver.LockDevice (3);
 		}
@@ -50,6 +53,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void ToggleAirplaneModeTestCase ()
 		{
+            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
 			server.respondTo ("POST", "/appium/device/toggle_airplane_mode", null);
 			driver.ToggleAirplaneMode ();
 		}
@@ -58,6 +62,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void SetContextTestCase ()
 		{
+            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
 			server.respondTo ("POST", "/context", null);
 			driver.SetContext ("1234");
 		}
@@ -65,6 +70,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void GetContextTestCase ()
 		{
+            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
 			server.respondTo ("GET", "/context", "1234");
 			Assert.AreEqual( driver.GetContext (), "1234");
 		}
@@ -72,6 +78,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void GetContextsTestCase ()
 		{
+            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
 			server.respondTo ("GET", "/contexts", new string[] {"ab", "cde", "123"});
 			Assert.AreEqual( driver.GetContexts (), new string[] {"ab", "cde", "123"});
 		}
@@ -79,6 +86,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void KeyEventTestCase ()
 		{
+            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
 			server.respondTo ("POST", "/appium/device/keyevent", null);
 			driver.KeyEvent(5);
 		}
@@ -86,6 +94,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void RotateTestCase ()
 		{
+            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
 			server.respondTo ("POST", "/appium/device/rotate", null);
 			Dictionary<string, int> parameters = new Dictionary<string, int> {{"x", 114}, 
 				{"y", 198}, {"duration", 5}, {"radius", 3}, {"rotation", 220}, {"touchCount", 2}};
@@ -95,6 +104,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void ElementRotateTestCase ()
 		{
+            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
 			server.respondTo ("POST", "/element", new Dictionary<string, object>  {
 				{"ELEMENT", '5'}
 			});
@@ -109,6 +119,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void GetCurrentActivityTestCase ()
 		{
+            AndroidDriver driver = new AndroidDriver(defaultUri, capabilities);
 			server.respondTo ("GET", "/appium/device/current_activity", ".activities.PeopleActivity");
 			string activity = driver.GetCurrentActivity ();
 			Assert.AreEqual (activity, ".activities.PeopleActivity");
@@ -117,6 +128,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void InstallAppTestCase ()
 		{
+            AndroidDriver driver = new AndroidDriver(defaultUri, capabilities);
 			server.respondTo ("POST", "/appium/device/install_app", null);
 			driver.InstallApp ("/home/me/apps/superApp");
 		}
@@ -124,6 +136,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void RemoveAppTestCase ()
 		{
+            AndroidDriver driver = new AndroidDriver(defaultUri, capabilities);
 			server.respondTo ("POST", "/appium/device/remove_app", null);
 			driver.RemoveApp ("rubbish");
 		}
@@ -131,6 +144,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void IsAppInstalledTestCase ()
 		{
+            AndroidDriver driver = new AndroidDriver(defaultUri, capabilities);
 			server.respondTo ("POST", "/appium/device/app_installed", true);
 			driver.IsAppInstalled ("github");
 		}
@@ -138,6 +152,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void PushFileTestCase ()
 		{
+            AndroidDriver driver = new AndroidDriver(defaultUri, capabilities);
 			server.respondTo ("POST", "/appium/device/push_file", null);
 			driver.PushFile ("/pictures/me.jpg", "abde433qsawe3242");
 		}
@@ -145,15 +160,17 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void PullFileTestCase ()
 		{
+            AndroidDriver driver = new AndroidDriver(defaultUri, capabilities);
 			var data = "wqewdsf232wewqqw443";
 			server.respondTo ("POST", "/appium/device/pull_file", data);
-			string result = driver.PullFile ("/pictures/me.jpg");
-			Assert.AreEqual (result, data);
+			byte[] result = driver.PullFile ("/pictures/me.jpg");
+			Assert.AreEqual (result, Convert.FromBase64String(data));
 		}
 
 		[Test]
 		public void ToggleWifiTestCase ()
 		{
+            AndroidDriver driver = new AndroidDriver(defaultUri, capabilities);
 			server.respondTo ("POST", "/appium/device/toggle_wifi", null);
 			driver.ToggleWifi ();
 		}
@@ -161,6 +178,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void ToggleLocationServicesTestCase ()
 		{
+            AndroidDriver driver = new AndroidDriver(defaultUri, capabilities);
 			server.respondTo ("POST", "/appium/device/toggle_location_services", null);
 			driver.ToggleLocationServices ();
 		}
@@ -168,6 +186,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void LaunchAppTestCase ()
 		{
+            AndroidDriver driver = new AndroidDriver(defaultUri, capabilities);
 			server.respondTo ("POST", "/appium/app/launch", null);
 			driver.LaunchApp ();
 		}
@@ -175,6 +194,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void CloseAppTestCase ()
 		{
+            AndroidDriver driver = new AndroidDriver(defaultUri, capabilities);
 			server.respondTo ("POST", "/appium/app/close", null);
 			driver.CloseApp ();
 		}
@@ -182,6 +202,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void ResetAppTestCase ()
 		{
+            AndroidDriver driver = new AndroidDriver(defaultUri, capabilities);
 			server.respondTo ("POST", "/appium/app/reset", null);
 			driver.ResetApp ();
 		}
@@ -189,6 +210,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void BackgroundAppTestCase ()
 		{
+            AndroidDriver driver = new AndroidDriver(defaultUri, capabilities);
 			server.respondTo ("POST", "/appium/app/background", null);
 			driver.BackgroundApp (5);
 		}
@@ -196,6 +218,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void EndTestCoverageTestCase ()
 		{
+            AndroidDriver driver = new AndroidDriver(defaultUri, capabilities);
 			var data = "21343n2312j3jw";
 			server.respondTo ("POST", "/appium/app/end_test_coverage", data);
 			var result = driver.EndTestCoverage ("android.intent.action.BOOT_COMPLETED", "/random/path");
@@ -205,6 +228,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void GetAppStringsTestCase ()
 		{
+            AndroidDriver driver = new AndroidDriver(defaultUri, capabilities);
 			var data = "21343n2312j3jw";
 			server.respondTo ("POST", "/appium/app/strings", data);
 			var result = driver.GetAppStrings ();
@@ -214,6 +238,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void SetImmediateValueTestCase ()
 		{
+            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
 			server.respondTo ("POST", "/element", new Dictionary<string, object>  {
 				{"ELEMENT", '5'}
 			});
@@ -226,6 +251,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void HideKeyboardTestCase ()
 		{
+            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
 			{
 				server.clear ();
 				RequestProcessor re = server.respondTo ("POST", "/appium/device/hide_keyboard", null);
@@ -249,6 +275,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void SettingsTestCase ()
 		{
+            AndroidDriver driver = new AndroidDriver(defaultUri, capabilities);
 			{
 				var data = "{\"setting\": true}";
 				Dictionary<String, Object> simpleDict = new Dictionary<string, object> ();

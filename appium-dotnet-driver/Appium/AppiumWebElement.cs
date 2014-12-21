@@ -40,7 +40,7 @@ namespace OpenQA.Selenium.Appium
     /// }
     /// </code>
     /// </example>
-    public abstract class AppiumWebElement : RemoteWebElement, IFindByIosUIAutomation, IFindByAccessibilityId
+    public abstract class AppiumWebElement : RemoteWebElement, IFindByAccessibilityId
     {
         /// <summary>
         /// Initializes a new instance of the AppiumWebElement class.
@@ -87,28 +87,6 @@ namespace OpenQA.Selenium.Appium
         #endregion
 
         #region FindMethods
-
-        #region IFindByIosUIAutomation Members
-        /// <summary>
-        /// Finds the first of elements that match the Ios UIAutomation selector supplied
-        /// </summary>
-        /// <param name="selector">an Ios UIAutomation selector</param>
-        /// <returns>IWebElement object so that you can interact that object</returns>
-        public IWebElement FindElementByIosUIAutomation(string selector)
-        {
-            return this.FindElement("-ios uiautomation", selector);
-        }
-
-        /// <summary>
-        /// Finds a list of elements that match the Ios UIAutomation selector supplied
-        /// </summary>
-        /// <param name="selector">an Ios UIAutomation selector</param>
-        /// <returns>IWebElement object so that you can interact that object</returns>
-        public ReadOnlyCollection<IWebElement> FindElementsByIosUIAutomation(string selector)
-        {
-            return this.FindElements("-ios uiautomation", selector);
-        }
-        #endregion IFindByIosUIAutomation Members
 
         #region IFindByAccessibilityId Members
         /// <summary>

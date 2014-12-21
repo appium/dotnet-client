@@ -6,7 +6,7 @@ using System.Text;
 
 namespace OpenQA.Selenium.Appium.Appium.Android.Interfaces
 {
-    interface IPushesFiles: IInteractsWithFiles
+    public interface IPushesFiles : IInteractsWithFiles
     {
         /// <summary>
         /// Pushes a File.

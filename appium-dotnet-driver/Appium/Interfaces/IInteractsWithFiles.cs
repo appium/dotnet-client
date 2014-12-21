@@ -5,7 +5,7 @@ using System.Text;
 
 namespace OpenQA.Selenium.Appium.Appium.Interfaces
 {
-    interface IInteractsWithFiles
+    public interface IInteractsWithFiles
     {
         /// <summary>
         /// Pulls a File.

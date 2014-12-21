@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium.Appium.Appium.Android.Interfaces;
+using OpenQA.Selenium.Appium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Remote;
 using System;
@@ -10,34 +11,48 @@ using System.Text;
 
 namespace OpenQA.Selenium.Appium.Appium.Android
 {
-    class AndroidDriver : AppiumDriver, IFindByAndroidUIAutomator, IStartsActivity, IHasNetworkConnection, IAndroidDeviceActionShortcuts, IPushesFiles
+    public class AndroidDriver : AppiumDriver, IFindByAndroidUIAutomator, IStartsActivity, IHasNetworkConnection, 
+        IAndroidDeviceActionShortcuts, IPushesFiles
     {
+        private static readonly string Platform = MobilePlatform.Android;
+
         /// <summary>
-        /// Initializes a new instance of the RemoteWebDriver class
+        /// Initializes a new instance of the AndroidDriver class
         /// </summary>
         /// <param name="commandExecutor">An <see cref="ICommandExecutor"/> object which executes commands for the driver.</param>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities of the browser.</param>
-        public AndroidDriver(ICommandExecutor commandExecutor, ICapabilities desiredCapabilities)
-            : base(commandExecutor, desiredCapabilities)
+        /// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities of the browser.</param>
+        public AndroidDriver(ICommandExecutor commandExecutor, DesiredCapabilities desiredCapabilities)
+            : base(commandExecutor, SetPlatformToCapabilities(desiredCapabilities, Platform))
         {
         }
         
         /// <summary>
         /// Initializes a new instance of the AndroidDriver class. This constructor defaults proxy to http://127.0.0.1:4723/wd/hub
         /// </summary>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities of the browser.</param>
-        public AndroidDriver(ICapabilities desiredCapabilities)
-            : base(desiredCapabilities)
+        /// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities of the browser.</param>
+        public AndroidDriver(DesiredCapabilities desiredCapabilities)
+            : base(SetPlatformToCapabilities(desiredCapabilities, Platform))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the AppiumDriver class
+        /// Initializes a new instance of the AndroidDriver class
         /// </summary>
         /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities of the browser.</param>
-        public AndroidDriver(Uri remoteAddress, ICapabilities desiredCapabilities)
-            : base(remoteAddress, desiredCapabilities)
+        /// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities of the browser.</param>
+        public AndroidDriver(Uri remoteAddress, DesiredCapabilities desiredCapabilities)
+            : base(remoteAddress, SetPlatformToCapabilities(desiredCapabilities, Platform))
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the AndroidDriver class using the specified remote address, desired capabilities, and command timeout.
+        /// </summary>
+        /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
+        /// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities of the browser.</param>
+        /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
+        public AndroidDriver(Uri remoteAddress, DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
+            : base(remoteAddress, SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
         {
         }
 
@@ -206,6 +221,15 @@ namespace OpenQA.Selenium.Appium.Appium.Android
         protected override RemoteWebElement CreateElement(string elementId)
         {
             return new AndroidElement(this, elementId);
+        }
+
+        /// <summary>
+        /// Set "ignoreUnimportantViews" setting.
+        /// See: https://github.com/appium/appium/blob/master/docs/en/advanced-concepts/settings.md
+        /// </summary>
+        public void IgnoreUnimportantViews(bool value)
+        {
+            base.UpdateSetting("ignoreUnimportantViews", value);
         }
 
     }

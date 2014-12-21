@@ -2,7 +2,7 @@
 
 namespace OpenQA.Selenium.Appium.src.Appium.Interfaces
 {
-    interface IFindByIosUIAutomation
+    public interface IFindByIosUIAutomation
     {
         /// <summary>
         /// Finds the first of elements that match the Ios UIAutomation selector supplied

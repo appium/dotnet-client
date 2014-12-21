@@ -5,7 +5,7 @@ using System.Text;
 
 namespace OpenQA.Selenium.Appium.Appium.Interfaces
 {
-    interface IInteractsWithApps
+    public interface IInteractsWithApps
     {
         /// <summary>
         /// Installs an App.

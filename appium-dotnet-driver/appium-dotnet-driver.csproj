@@ -55,7 +55,12 @@
     <Compile Include="Appium\Interfaces\IDeviceActionShortcuts.cs" />
     <Compile Include="Appium\Interfaces\IInteractsWithApps.cs" />
     <Compile Include="Appium\Interfaces\IInteractsWithFiles.cs" />
+    <Compile Include="Appium\Interfaces\IPerformsTouchActions.cs" />
+    <Compile Include="Appium\iOS\Enums\HideKeyboardStrategy.cs" />
     <Compile Include="Appium\iOS\Enums\IOSKeyCode.cs" />
+    <Compile Include="Appium\iOS\Interfaces\IIOSDeviceActionShortcuts.cs" />
+    <Compile Include="Appium\iOS\IOSDriver.cs" />
+    <Compile Include="Appium\iOS\IOSElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Appium\AppiumDriver.cs" />
     <Compile Include="Appium\AppiumDriverCommand.cs" />

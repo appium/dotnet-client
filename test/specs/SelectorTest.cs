@@ -3,6 +3,8 @@ using System;
 using OpenQA.Selenium.Remote;
 using System.Collections.Generic;
 using OpenQA.Selenium.Appium.Test.Helpers;
+using OpenQA.Selenium.Appium.Appium.iOS;
+using OpenQA.Selenium.Appium.Appium.Android;
 
 namespace OpenQA.Selenium.Appium.Test.Specs
 {
@@ -10,15 +12,14 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 	public class ByIosUIAutomationTest
 	{	
 		public FakeAppium server;
-		public AppiumDriver driver;
+        public readonly Uri defaultUri = new Uri("http://127.0.0.1:4743/wd/hub");
+        public readonly DesiredCapabilities capabilities = new DesiredCapabilities();
 
 		[TestFixtureSetUp]
 		public void RunBeforeAll(){
 			server = new FakeAppium (4743);			 
 			server.Start ();
 			server.respondToInit ();
-			DesiredCapabilities capabilities = new DesiredCapabilities();
-			driver = new AppiumDriver (new Uri("http://127.0.0.1:4743/wd/hub"), capabilities);
 			server.clear ();
 		}
 
@@ -35,7 +36,8 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 
 		[Test]
 		public void FindElementByIosUIAutomationTestCase ()
-		{			 
+		{
+            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
 			server.respondTo ("POST", "/element", new Dictionary<string, object>  {
 				{"ELEMENT", '5'}
 			});
@@ -47,7 +49,8 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 			
 		[Test]
 		public void FindElementsByIosUIAutomationTestCase ()
-		{		
+		{
+            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
 			List<object> results = new List<object>();
 			results.Add (new Dictionary<string, object> {{"ELEMENT", "4"}});
 			results.Add (new Dictionary<string, object> {{"ELEMENT", "6"}});
@@ -59,7 +62,8 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 
 		[Test]
 		public void ByIosUIAutomationTestCase ()
-		{			 
+		{
+            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
 			server.respondTo ("POST", "/element", new Dictionary<string, object>  {
 				{"ELEMENT", '5'}
 			});
@@ -75,11 +79,12 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 
 		[Test]
 		public void FromElementTestCase ()
-		{	
+		{
+            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
 			server.respondTo ("POST", "/element", new Dictionary<string, object>  {
 				{"ELEMENT", '5'}
 			});
-			AppiumWebElement element = (AppiumWebElement) driver.FindElementByIosUIAutomation (".elements()");
+			IOSElement element = (IOSElement) driver.FindElementByIosUIAutomation (".elements()");
 			server.clear ();
 			server.respondTo ("POST", "/element/5/element", new Dictionary<string, object>  {
 				{"ELEMENT", '6'}
@@ -98,15 +103,14 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 	public class ByAndroidUIAutomatorTest
 	{	
 		public FakeAppium server;
-		public AppiumDriver driver;
+        public readonly Uri defaultUri = new Uri("http://127.0.0.1:4744/wd/hub");
+        public readonly DesiredCapabilities capabilities = new DesiredCapabilities();
 
 		[TestFixtureSetUp]
 		public void RunBeforeAll(){
 			server = new FakeAppium (4744);			 
 			server.Start ();
-			server.respondToInit ();
-			DesiredCapabilities capabilities = new DesiredCapabilities();
-			driver = new AppiumDriver (new Uri("http://127.0.0.1:4744/wd/hub"), capabilities);
+            server.respondToInit();
 			server.clear ();
 		}
 
@@ -123,7 +127,8 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 
 		[Test]
 		public void FindElementByAndroidUIAutomatorTestCase ()
-		{			 
+		{
+            AndroidDriver driver = new AndroidDriver(defaultUri, capabilities);
 			server.respondTo ("POST", "/element", new Dictionary<string, object>  {
 				{"ELEMENT", '5'}
 			});
@@ -135,7 +140,8 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 
 		[Test]
 		public void FindElementsByAndroidUIAutomatorTestCase ()
-		{		
+		{
+            AndroidDriver driver = new AndroidDriver(defaultUri, capabilities);
 			List<object> results = new List<object>();
 			results.Add (new Dictionary<string, object> {{"ELEMENT", "4"}});
 			results.Add (new Dictionary<string, object> {{"ELEMENT", "6"}});
@@ -147,7 +153,8 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 
 		[Test]
 		public void ByAndroidUIAutomatorTestCase ()
-		{			 
+		{
+            AndroidDriver driver = new AndroidDriver(defaultUri, capabilities);
 			server.respondTo ("POST", "/element", new Dictionary<string, object>  {
 				{"ELEMENT", '5'}
 			});
@@ -163,11 +170,12 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 
 		[Test]
 		public void FromElementTestCase ()
-		{	
+		{
+            AndroidDriver driver = new AndroidDriver(defaultUri, capabilities);
 			server.respondTo ("POST", "/element", new Dictionary<string, object>  {
 				{"ELEMENT", '5'}
 			});
-			AppiumWebElement element = (AppiumWebElement) driver.FindElementByAndroidUIAutomator (".elements()");
+			AndroidElement element = (AndroidElement) driver.FindElementByAndroidUIAutomator (".elements()");
 			server.clear ();
 			server.respondTo ("POST", "/element/5/element", new Dictionary<string, object>  {
 				{"ELEMENT", '6'}
@@ -186,15 +194,14 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 	public class ByAccessibilityIdTest
 	{	
 		public FakeAppium server;
-		public AppiumDriver driver;
+        public readonly Uri defaultUri = new Uri("http://127.0.0.1:4745/wd/hub");
+        public readonly DesiredCapabilities capabilities = new DesiredCapabilities();
 
 		[TestFixtureSetUp]
 		public void RunBeforeAll(){
 			server = new FakeAppium (4745);			 
 			server.Start ();
 			server.respondToInit ();
-			DesiredCapabilities capabilities = new DesiredCapabilities();
-			driver = new AppiumDriver (new Uri("http://127.0.0.1:4745/wd/hub"), capabilities);
 			server.clear ();
 		}
 
@@ -211,7 +218,8 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 
 		[Test]
 		public void FindElementByAccessibilityIdTestCase ()
-		{			 
+		{
+            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
 			server.respondTo ("POST", "/element", new Dictionary<string, object>  {
 				{"ELEMENT", '5'}
 			});
@@ -223,7 +231,8 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 
 		[Test]
 		public void FindElementsByAccessibilityIdTestCase ()
-		{		
+		{
+            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
 			List<object> results = new List<object>();
 			results.Add (new Dictionary<string, object> {{"ELEMENT", "4"}});
 			results.Add (new Dictionary<string, object> {{"ELEMENT", "6"}});
@@ -235,7 +244,8 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 
 		[Test]
 		public void ByAccessibilityIdTestCase ()
-		{			 
+		{
+            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
 			server.respondTo ("POST", "/element", new Dictionary<string, object>  {
 				{"ELEMENT", '5'}
 			});
@@ -251,7 +261,8 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 
 		[Test]
 		public void FromElementTestCase ()
-		{	
+		{
+            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
 			server.respondTo ("POST", "/element", new Dictionary<string, object>  {
 				{"ELEMENT", '5'}
 			});
@@ -270,56 +281,5 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 
 
 	}
-		
-	[TestFixture ()]
-	public class ByComplex
-	{	
-		public FakeAppium server;
-		public AppiumDriver driver;
-
-		[TestFixtureSetUp]
-		public void RunBeforeAll(){
-			server = new FakeAppium (4746);			 
-			server.Start ();
-			server.respondToInit ();
-			DesiredCapabilities capabilities = new DesiredCapabilities();
-			driver = new AppiumDriver (new Uri("http://127.0.0.1:4746/wd/hub"), capabilities);
-			server.clear ();
-		}
-
-		[TestFixtureTearDown]
-		public void RunAfterAll(){
-			server.Stop ();
-		}
-
-		[TearDown]
-		public void RunAfterEach()
-		{
-			server.clear ();
-		}
-
-		[Test]
-		public void FindOneElementTestCase ()
-		{			 
-			server.respondTo ("POST", "/appium/app/complex_find", new Dictionary<string, object>  {
-				{"ELEMENT", '5'}
-			});
-			driver.FindComplex ("abc");
-		}
-
-		[Test]
-		public void FindseveralElementsTestCase ()
-		{
-			List<object> results = new List<object>();
-			results.Add (new Dictionary<string, object> {{"ELEMENT", "4"}});
-			results.Add (new Dictionary<string, object> {{"ELEMENT", "6"}});
-			results.Add (new Dictionary<string, object> {{"ELEMENT", "8"}});
-			server.respondTo ("POST", "/appium/app/complex_find", results);
-			ICollection<IWebElement> elements = (ICollection<IWebElement>) driver.FindComplex ("abc");
-			Assert.AreEqual (elements.Count, 3); 
-		}
-	
-	}
-
 }
 
