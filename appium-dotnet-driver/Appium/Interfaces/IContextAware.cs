@@ -16,7 +16,7 @@ namespace OpenQA.Selenium.Appium.Appium.Interfaces
     /// to switch between the native and web-based contexts. This can be achieved by using this
     /// interface.
     /// </summary>
-    interface IContextAware
+    public interface IContextAware
     {
 
         /// <summary>
