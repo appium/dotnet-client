@@ -22,7 +22,7 @@ namespace Appium.Samples
 		private AppiumDriver driver;
 		private bool allPassed = true;
 
-		[TestFixtureSetUp]
+		[SetUp]
 		public void BeforeAll(){
 			DesiredCapabilities capabilities = Env.isSauce () ? 
 				Caps.getAndroid18Caps (Apps.get ("androidApiDemos")) :
@@ -38,22 +38,12 @@ namespace Appium.Samples
 			driver.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
 		}
 
-		[TestFixtureTearDown]
-		public void AfterAll(){
-			try
-			{
-				if(Env.isSauce())
-					((IJavaScriptExecutor)driver).ExecuteScript("sauce:job-result=" + (allPassed ? "passed" : "failed"));
-			}
-			finally
-			{
-				driver.Quit();
-			}
-		}
-
 		[TearDown]
 		public void AfterEach(){
 			allPassed = allPassed && (TestContext.CurrentContext.Result.State == TestState.Success);
+            if (Env.isSauce())
+                ((IJavaScriptExecutor)driver).ExecuteScript("sauce:job-result=" + (allPassed ? "passed" : "failed"));
+            driver.Quit();
 		}
 
 		[Test ()]

@@ -52,8 +52,8 @@ namespace Appium.Samples
         public void OrientationTest()
         {
             IRotatable rotatable =  ((IRotatable) driver);
-            rotatable.Orientation = ScreenOrientation.Portrait;
-            Assert.AreEqual(ScreenOrientation.Portrait, rotatable.Orientation);
+            rotatable.Orientation = ScreenOrientation.Landscape;
+            Assert.AreEqual(ScreenOrientation.Landscape, rotatable.Orientation);
         }
     }
 }

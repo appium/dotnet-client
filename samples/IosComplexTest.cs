@@ -20,7 +20,7 @@ namespace Appium.Samples
 		private AppiumDriver driver;
 		private bool allPassed = true;
 
-		[TestFixtureSetUp]
+		[SetUp]
 		public void beforeAll(){
 			DesiredCapabilities capabilities = Caps.getIos71Caps (Apps.get("iosUICatalogApp")); 
 			if (Env.isSauce ()) {
@@ -34,22 +34,12 @@ namespace Appium.Samples
 			driver.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
 		}
 
-		[TestFixtureTearDown]
-		public void afterAll(){
-			try
-			{
-				if(Env.isSauce())
-					((IJavaScriptExecutor)driver).ExecuteScript("sauce:job-result=" + (allPassed ? "passed" : "failed"));
-			}
-			finally
-			{
-				driver.Quit();
-			}
-		}
-
 		[TearDown]
 		public void AfterEach(){
 			allPassed = allPassed && (TestContext.CurrentContext.Result.State == TestState.Success);
+            if (Env.isSauce())
+                ((IJavaScriptExecutor)driver).ExecuteScript("sauce:job-result=" + (allPassed ? "passed" : "failed"));
+            driver.Quit();
 		}
 
 		private void ClickMenuItem(string name) 
@@ -57,12 +47,13 @@ namespace Appium.Samples
 			IWebElement el;
 			try {
 				el = driver.FindElementByName (name);
+                el.Click();
 			} catch {
 				var els = driver.FindElementByClassName ("UIATableView")
 					.FindElements(By.ClassName ("UIATableCell"));
 				el = Filters.FirstWithName (els, name);
+                el.Click();
 			}
-			el.Click();
 			Thread.Sleep (1000);
 		}
 
@@ -102,13 +93,11 @@ namespace Appium.Samples
 			driver.Context = "WEBVIEW_1";
 			// find the store link
 			Thread.Sleep (1000);
-			Assert.IsNotNull(driver.FindElementById ("gn-apple"));
+			Assert.IsNotNull(driver.FindElementByTagName ("a"));
 			// leave the webview
 			driver.Context = "NATIVE_APP";
 			//Verify we are out of the webview
 			Assert.IsNotNull(driver.FindElementByClassName ("UIAScrollView"));
-
-			driver.Navigate().Back ();
 		}
 
 		[Test ()]
@@ -142,8 +131,6 @@ namespace Appium.Samples
 			Thread.Sleep (1000);
 			el.Clear ();
 			Assert.AreEqual(el.GetAttribute("value"), defaultValue);
-
-			driver.Navigate().Back ();
 		}
 
 		[Test ()]
@@ -164,8 +151,6 @@ namespace Appium.Samples
 				Assert.IsTrue (alert.Text.Contains ("A Short Title Is Best"));
 				alert.Accept ();
 			}
-
-			driver.Navigate().Back ();
 		}
 
 		[Test ()]
@@ -178,8 +163,6 @@ namespace Appium.Samples
 			// change value
 			slider.SetImmediateValue ("0%");
 			Assert.AreEqual (slider.GetAttribute("value"), "0%");
-
-			driver.Navigate().Back ();
 		}
 
 		[Test ()]
@@ -204,8 +187,6 @@ namespace Appium.Samples
 			Assert.IsTrue (textFieldSectionSource.Contains("UIAStaticText"));
 			Assert.IsTrue (textFieldSectionSource.Contains("Text Fields"));
 			Assert.AreNotEqual (textFieldSectionSource, mainMenuSource);
-
-			driver.Navigate().Back ();
 		}
 
 	}

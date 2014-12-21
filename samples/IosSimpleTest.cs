@@ -74,7 +74,7 @@ namespace Appium.Samples
 			// compute and check the sum
 			driver.FindElementByAccessibilityId ("ComputeSumButton").Click ();
 			Thread.Sleep (1000);
-			IWebElement sumEl = ((IOSDriver) driver).FindElementByIosUIAutomation ("elements().withName(\"Answer\");");
+			IWebElement sumEl = ((IOSDriver) driver).FindElementByIosUIAutomation (".elements().withName(\"Answer\")");
 			int sumOut = Convert.ToInt32 (sumEl.Text);
 			Assert.AreEqual (sumIn, sumOut);
 		}

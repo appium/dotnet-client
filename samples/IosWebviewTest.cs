@@ -55,7 +55,7 @@ namespace Appium.Samples
 		public void GetPageTestCase ()
 		{
 			driver.FindElementByXPath("//UIATextField[@value='Enter URL']")
-				.SendKeys("https://www.google.com");
+				.SendKeys("www.google.com");
 			driver.FindElementByName ("Go").Click ();
 			driver.FindElementByClassName ("UIAWebView").Click (); // dismissing keyboard
 			driver.Context = "WEBVIEW";
