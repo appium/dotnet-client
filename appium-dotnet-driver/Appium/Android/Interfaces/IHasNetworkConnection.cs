@@ -1,10 +1,10 @@
-﻿using OpenQA.Selenium.Appium.Appium.Android.Enums;
+﻿using OpenQA.Selenium.Appium.Android.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace OpenQA.Selenium.Appium.Appium.Android.Interfaces
+namespace OpenQA.Selenium.Appium.Android.Interfaces
 {
     public interface IHasNetworkConnection
     {

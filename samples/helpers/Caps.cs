@@ -1,5 +1,5 @@
 ﻿using System;
-using OpenQA.Selenium.Appium.Appium.Enums;
+using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Remote;
 
 namespace Appium.Samples.Helpers

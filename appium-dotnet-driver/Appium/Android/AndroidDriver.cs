@@ -1,5 +1,5 @@
-﻿using OpenQA.Selenium.Appium.Appium.Android.Interfaces;
-using OpenQA.Selenium.Appium.Appium.Enums;
+﻿using OpenQA.Selenium.Appium.Android.Interfaces;
+using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Remote;
 using System;
@@ -9,7 +9,7 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 
-namespace OpenQA.Selenium.Appium.Appium.Android
+namespace OpenQA.Selenium.Appium.Android
 {
     public class AndroidDriver : AppiumDriver, IFindByAndroidUIAutomator, IStartsActivity, IHasNetworkConnection, 
         IAndroidDeviceActionShortcuts, IPushesFiles

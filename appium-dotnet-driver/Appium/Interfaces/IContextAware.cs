@@ -9,7 +9,7 @@ using System.Text;
 ///https://github.com/SeleniumHQ/selenium/pull/301
 ///is merged and new Webdriver for .Net is published.
 ///
-namespace OpenQA.Selenium.Appium.Appium.Interfaces
+namespace OpenQA.Selenium.Appium.Interfaces
 {
     /// <summary>
     /// Some implementations of WebDriver, notably those that support native testing, need the ability

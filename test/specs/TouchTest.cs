@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using OpenQA.Selenium.Appium.MultiTouch;
 using OpenQA.Selenium.Appium.Test.Helpers;
 using OpenQA.Selenium.Appium.Interfaces;
-using OpenQA.Selenium.Appium.Appium.iOS;
+using OpenQA.Selenium.Appium.iOS;
 
 namespace OpenQA.Selenium.Appium.Test.Specs
 {

@@ -1,6 +1,6 @@
-﻿using OpenQA.Selenium.Appium.Appium.Enums;
-using OpenQA.Selenium.Appium.Appium.iOS.Interfaces;
-using OpenQA.Selenium.Appium.src.Appium.Interfaces;
+﻿using OpenQA.Selenium.Appium.Enums;
+using OpenQA.Selenium.Appium.iOS.Interfaces;
+using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
-namespace OpenQA.Selenium.Appium.Appium.iOS
+namespace OpenQA.Selenium.Appium.iOS
 {
     public class IOSDriver : AppiumDriver, IFindByIosUIAutomation, IIOSDeviceActionShortcuts
     {

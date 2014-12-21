@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace OpenQA.Selenium.Appium.Appium.Interfaces
+namespace OpenQA.Selenium.Appium.Interfaces
 {
     public interface IPerformsTouchActions
     {

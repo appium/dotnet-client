@@ -1,7 +1,7 @@
 ﻿using Appium.Samples.Helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Appium.Appium.iOS;
+using OpenQA.Selenium.Appium.iOS;
 using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;

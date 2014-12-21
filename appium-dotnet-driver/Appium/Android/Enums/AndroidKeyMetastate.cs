@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace OpenQA.Selenium.Appium.Appium.Android.Enums
+namespace OpenQA.Selenium.Appium.Android.Enums
 {
     public sealed class AndroidKeyMetastate
     {

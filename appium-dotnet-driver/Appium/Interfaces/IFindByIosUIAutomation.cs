@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace OpenQA.Selenium.Appium.src.Appium.Interfaces
+namespace OpenQA.Selenium.Appium.Interfaces
 {
     public interface IFindByIosUIAutomation
     {

@@ -16,7 +16,7 @@
 // limitations under the License.
 // </copyright>
 
-using OpenQA.Selenium.Appium.Appium.Enums;
+using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.MultiTouch;
 using OpenQA.Selenium.Interactions;
@@ -26,10 +26,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
-using OpenQA.Selenium.Appium.src.Appium.Interfaces;
 using System.Diagnostics.Contracts;
 using Newtonsoft.Json;
-using OpenQA.Selenium.Appium.Appium.Interfaces;
 
 namespace OpenQA.Selenium.Appium
 {

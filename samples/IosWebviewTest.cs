@@ -9,7 +9,7 @@ using System.Threading;
 using System.Drawing;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.MultiTouch;
-using OpenQA.Selenium.Appium.Appium.iOS;
+using OpenQA.Selenium.Appium.iOS;
 
 namespace Appium.Samples
 {

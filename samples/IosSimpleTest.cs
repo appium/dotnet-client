@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using OpenQA.Selenium;
 using System.Threading;
 using System.Drawing;
-using OpenQA.Selenium.Appium.Appium.iOS;
+using OpenQA.Selenium.Appium.iOS;
 
 namespace Appium.Samples
 {

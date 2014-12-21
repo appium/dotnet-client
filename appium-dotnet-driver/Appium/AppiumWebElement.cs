@@ -19,7 +19,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using OpenQA.Selenium.Appium.Interfaces;
-using OpenQA.Selenium.Appium.src.Appium.Interfaces;
+using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Remote;
 
 namespace OpenQA.Selenium.Appium

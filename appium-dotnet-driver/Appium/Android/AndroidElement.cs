@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
-namespace OpenQA.Selenium.Appium.Appium.Android
+namespace OpenQA.Selenium.Appium.Android
 {
     public class AndroidElement : AppiumWebElement, IFindByAndroidUIAutomator
     {

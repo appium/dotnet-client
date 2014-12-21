@@ -19,7 +19,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using OpenQA.Selenium.Appium.src.Appium.Interfaces;
+using OpenQA.Selenium.Appium.Interfaces;
 
 namespace OpenQA.Selenium.Appium
 {

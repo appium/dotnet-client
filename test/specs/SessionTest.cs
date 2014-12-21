@@ -2,7 +2,7 @@
 using System;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Appium.Test.Helpers;
-using OpenQA.Selenium.Appium.Appium.Android;
+using OpenQA.Selenium.Appium.Android;
 
 namespace OpenQA.Selenium.Appium.Test.Specs
 {

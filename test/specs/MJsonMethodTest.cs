@@ -3,8 +3,8 @@ using System;
 using OpenQA.Selenium.Remote;
 using System.Collections.Generic;
 using OpenQA.Selenium.Appium.Test.Helpers;
-using OpenQA.Selenium.Appium.Appium.iOS;
-using OpenQA.Selenium.Appium.Appium.Android;
+using OpenQA.Selenium.Appium.iOS;
+using OpenQA.Selenium.Appium.Android;
 
 namespace OpenQA.Selenium.Appium.Test.Specs
 {

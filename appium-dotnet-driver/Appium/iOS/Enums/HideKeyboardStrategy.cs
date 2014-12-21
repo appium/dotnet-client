@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace OpenQA.Selenium.Appium.Appium.iOS.Enums
+namespace OpenQA.Selenium.Appium.iOS.Enums
 {
     public sealed class HideKeyboardStrategy
     {

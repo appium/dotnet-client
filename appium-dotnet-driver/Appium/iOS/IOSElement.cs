@@ -1,11 +1,11 @@
-﻿using OpenQA.Selenium.Appium.src.Appium.Interfaces;
+﻿using OpenQA.Selenium.Appium.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
-namespace OpenQA.Selenium.Appium.Appium.iOS
+namespace OpenQA.Selenium.Appium.iOS
 {
     public class IOSElement : AppiumWebElement, IFindByIosUIAutomation
     {
