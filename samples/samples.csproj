@@ -44,6 +44,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AndroidConnectionTest.cs" />
+    <Compile Include="IosOrientationTest.cs" />
+    <Compile Include="AndroidOrientationTest.cs" />
     <Compile Include="helpers\Apps.cs" />
     <Compile Include="helpers\Caps.cs" />
     <Compile Include="helpers\AppiumServers.cs" />

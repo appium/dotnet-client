@@ -8,6 +8,7 @@ using OpenQA.Selenium;
 using System.Threading;
 using System.Drawing;
 using System.Collections;
+using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.MultiTouch;
 using OpenQA.Selenium.Appium.Interfaces;
 using System.Diagnostics.Contracts;
@@ -21,7 +22,7 @@ namespace Appium.Samples
 		private AppiumDriver driver;
 		private bool allPassed = true;
 
-		[TestFixtureSetUp]
+		[SetUp]
 		public void BeforeAll(){
 			DesiredCapabilities capabilities = Env.isSauce () ? 
 				Caps.getAndroid18Caps (Apps.get ("androidApiDemos")) :
@@ -33,26 +34,16 @@ namespace Appium.Samples
 				capabilities.SetCapability("tags", new string[]{"sample"});
 			}
 			Uri serverUri = Env.isSauce () ? AppiumServers.sauceURI : AppiumServers.localURI;
-			driver = new AppiumDriver(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);	
+			driver = new AndroidDriver(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);	
 			driver.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
-		}
-
-		[TestFixtureTearDown]
-		public void AfterAll(){
-			try
-			{
-				if(Env.isSauce())
-					((IJavaScriptExecutor)driver).ExecuteScript("sauce:job-result=" + (allPassed ? "passed" : "failed"));
-			}
-			finally
-			{
-				driver.Quit();
-			}
 		}
 
 		[TearDown]
 		public void AfterEach(){
 			allPassed = allPassed && (TestContext.CurrentContext.Result.State == TestState.Success);
+            if (Env.isSauce())
+                ((IJavaScriptExecutor)driver).ExecuteScript("sauce:job-result=" + (allPassed ? "passed" : "failed"));
+            driver.Quit();
 		}
 
 		[Test ()]
@@ -68,7 +59,7 @@ namespace Appium.Samples
 			}
 			driver.FindElementByName ("App").Click();
 			Thread.Sleep (3000);
-			els = driver.FindElementsByAndroidUIAutomator ("new UiSelector().clickable(true)");
+			els = ((AndroidDriver) driver).FindElementsByAndroidUIAutomator ("new UiSelector().clickable(true)");
 			Assert.GreaterOrEqual (els.Count, 10);
 			Assert.IsNotNull (
 				driver.FindElementByXPath("//android.widget.TextView[@text='Action Bar']"));
@@ -79,25 +70,25 @@ namespace Appium.Samples
 		}
 
 		[Test]
-		public void OpenActivityInThisAppTestCase()
+		public void StartActivityInThisAppTestCase()
 		{
-			driver.StartActivity("io.appium.android.apis", ".ApiDemos");
+            ((AndroidDriver) driver).StartActivity("io.appium.android.apis", ".ApiDemos");
 
 			_AssertActivityNameContains("Demos");
 
-			driver.StartActivity("io.appium.android.apis", ".accessibility.AccessibilityNodeProviderActivity");
+            ((AndroidDriver) driver).StartActivity("io.appium.android.apis", ".accessibility.AccessibilityNodeProviderActivity");
 
 			_AssertActivityNameContains("Node");
 		}
 		
 		[Test]
-		public void OpenActivityInNewAppTestCase()
+		public void StartActivityInNewAppTestCase()
 		{
-			driver.StartActivity("io.appium.android.apis", ".ApiDemos");
+            ((AndroidDriver) driver).StartActivity("io.appium.android.apis", ".ApiDemos");
 
 			_AssertActivityNameContains("Demos");
 
-			driver.StartActivity("com.android.contacts", ".ContactsListActivity");
+            ((AndroidDriver) driver).StartActivity("com.android.contacts", ".ContactsListActivity");
 
 			_AssertActivityNameContains("Contact");
 		}
@@ -106,7 +97,7 @@ namespace Appium.Samples
 		{
 			Contract.Requires(!String.IsNullOrWhiteSpace(activityName));
 
-			String activity = driver.GetCurrentActivity();
+            String activity = ((AndroidDriver) driver).CurrentActivity;
 			Debug.WriteLine (activity);
 
 			Assert.IsNotNullOrEmpty(activity);
@@ -116,8 +107,8 @@ namespace Appium.Samples
 		[Test ()]
 		public void ScrollTestCase ()
 		{
-			driver.FindElementByXPath ("//android.widget.TextView[@text='Animation']");
-			IList<IWebElement> els = driver.FindElementsByXPath ("//android.widget.TextView");
+			driver.FindElementByXPath (".//android.widget.TextView[@text='Animation']");
+			IList<IWebElement> els = driver.FindElementsByXPath (".//android.widget.TextView");
 			var loc1 = els [7].Location;
 			var loc2 = els [3].Location;
 			var swipe = Actions.Swipe (driver, loc1.X, loc1.Y, loc2.X, loc2.Y, 800);
@@ -219,6 +210,7 @@ namespace Appium.Samples
 			Thread.Sleep (1000);
 			driver.Navigate ().Back ();
 			Thread.Sleep (1000);
+            driver.GetScreenshot();
 		}
 	}
 }

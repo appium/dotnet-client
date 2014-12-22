@@ -16,7 +16,7 @@
 // limitations under the License.
 // </copyright>
 
-using OpenQA.Selenium.Appium.Appium.Enums;
+using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.MultiTouch;
 using OpenQA.Selenium.Interactions;
@@ -26,7 +26,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
-using OpenQA.Selenium.Appium.src.Appium.Interfaces;
 using System.Diagnostics.Contracts;
 using Newtonsoft.Json;
 
@@ -70,7 +69,8 @@ namespace OpenQA.Selenium.Appium
     /// }
     /// </code>
     /// </example>
-    public class AppiumDriver : RemoteWebDriver, IFindByAndroidUIAutomator, IFindByIosUIAutomation, IFindByAccessibilityId
+    public abstract class AppiumDriver : RemoteWebDriver, IFindByAccessibilityId, IDeviceActionShortcuts, IInteractsWithFiles,
+        IInteractsWithApps, IPerformsTouchActions, IRotatable, IContextAware
     {
         #region Constructors
         /// <summary>
@@ -121,74 +121,6 @@ namespace OpenQA.Selenium.Appium
 
         #region FindMethods
 
-        #region IFindByIosUIAutomation Members
-        /// <summary>
-        /// Finds the first element in the page that matches the Ios UIAutomation selector supplied
-        /// </summary>
-        /// <param name="selector">Selector for the element.</param>
-        /// <returns>IWebElement object so that you can interact that object</returns>
-        /// <example>
-        /// <code>
-        /// IWebDriver driver = new RemoteWebDriver(DesiredCapabilities.Firefox());
-        /// IWebElement elem = driver.FindElementByIosUIAutomation('elements()'))
-        /// </code>
-        /// </example>
-        public IWebElement FindElementByIosUIAutomation(string selector)
-        {
-            return this.FindElement("-ios uiautomation", selector);
-        }
-
-        /// <summary>
-        /// Finds a list of elements that match the Ios UIAutomation selector supplied
-        /// </summary>
-        /// <param name="selector">Selector for the elements.</param>
-        /// <returns>ReadOnlyCollection of IWebElement object so that you can interact with those objects</returns>
-        /// <example>
-        /// <code>
-        /// IWebDriver driver = new RemoteWebDriver(DesiredCapabilities.Firefox());
-        /// ReadOnlyCollection<![CDATA[<IWebElement>]]> elem = driver.FindElementsByIosUIAutomation(elements())
-        /// </code>
-        /// </example>
-        public ReadOnlyCollection<IWebElement> FindElementsByIosUIAutomation(string selector)
-        {
-            return this.FindElements("-ios uiautomation", selector);
-        }
-        #endregion IFindByIosUIAutomation Members
-
-        #region IFindByAndroidUIAutomator Members
-        /// <summary>
-        /// Finds the first element in the page that matches the Android UIAutomator selector supplied
-        /// </summary>
-        /// <param name="selector">Selector for the element.</param>
-        /// <returns>IWebElement object so that you can interact that object</returns>
-        /// <example>
-        /// <code>
-        /// IWebDriver driver = new RemoteWebDriver(DesiredCapabilities.Firefox());
-        /// IWebElement elem = driver.FindElementByAndroidUIAutomator('elements()'))
-        /// </code>
-        /// </example>
-        public IWebElement FindElementByAndroidUIAutomator(string selector)
-        {
-            return this.FindElement("-android uiautomator", selector);
-        }
-
-        /// <summary>
-        /// Finds a list of elements that match the Android UIAutomator selector supplied
-        /// </summary>
-        /// <param name="selector">Selector for the elements.</param>
-        /// <returns>ReadOnlyCollection of IWebElement object so that you can interact with those objects</returns>
-        /// <example>
-        /// <code>
-        /// IWebDriver driver = new RemoteWebDriver(DesiredCapabilities.Firefox());
-        /// ReadOnlyCollection<![CDATA[<IWebElement>]]> elem = driver.FindElementsByAndroidUIAutomator(elements())
-        /// </code>
-        /// </example>
-        public ReadOnlyCollection<IWebElement> FindElementsByAndroidUIAutomator(string selector)
-        {
-            return this.FindElements("-android uiautomator", selector);
-        }
-        #endregion IFindByAndroidUIAutomator Members
-
         #region IFindByAccessibilityId Members
         /// <summary>
         /// Finds the first element in the page that matches the Accessibility Id selector supplied
@@ -222,39 +154,9 @@ namespace OpenQA.Selenium.Appium
             return this.FindElements("accessibility id", selector);
         }
         #endregion IFindByAccessibilityId Members
-
-        /// <summary>
-        /// Finds one or several elements depending on the selector
-        /// </summary>
-        /// <param name="selector">Selector for the element.</param>
-        /// <returns>IWebElement object so that you can interact that object</returns>
-        public object FindComplex(string selector)
-        {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters.Add("selector", selector);
-            var commandResponse = this.Execute(AppiumDriverCommand.FindComplex, parameters);
-            if (commandResponse.Value is object[])
-            {
-                // several elements
-                return this.GetElementsFromResponse(commandResponse);
-            }
-            else
-            {
-                // one elements
-                return this.GetElementFromResponse(commandResponse);
-            }
-        }
         #endregion
 
         #region MJsonMethod Members
-        /// <summary>
-        /// Shakes the device.
-        /// </summary>
-        public void ShakeDevice()
-        {
-            this.Execute(AppiumDriverCommand.ShakeDevice, null);
-        }
-
         /// <summary>
         /// Locks the device.
         /// </summary>
@@ -264,46 +166,6 @@ namespace OpenQA.Selenium.Appium
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("seconds", seconds);
             this.Execute(AppiumDriverCommand.LockDevice, parameters);
-        }
-
-        /// <summary>
-        /// Check if the device is locked
-        /// </summary>
-        /// <returns>true if device is locked, false otherwise</returns>
-        public bool IsLocked()
-        {
-            var commandResponse = this.Execute(AppiumDriverCommand.IsLocked, null);
-            return (bool)commandResponse.Value;
-        }
-
-        // TODO: future implementation
-        /// <summary>
-        /// set/get the Airplane mode.
-        /// true = phone is in airplane mode, false = phone is NOT in airplane mode
-        /// </summary>
-        //public bool AirplaneMode
-        //{
-        //    get
-        //    {
-        //        Response commandResponse = this.Execute(AppiumDriverCommand.AirplaneMode, null);
-        //        return (bool)commandResponse.Value;
-        //    }
-
-        //    set
-        //    {
-        //        var parameters = new Dictionary<string, object>();
-        //        // TODO: what is the key that the value needs to be set to?
-        //        parameters.Add("value", value);
-        //        this.Execute(AppiumDriverCommand.AirplaneMode, null);
-        //    }
-        //}
-
-        /// <summary>
-        /// Toggles Airplane Mode.
-        /// </summary>
-        public void ToggleAirplaneMode()
-        {
-            this.Execute(AppiumDriverCommand.ToggleAirplaneMode, null);
         }
 
         /// <summary>
@@ -332,15 +194,6 @@ namespace OpenQA.Selenium.Appium
                 parameters.Add(opt.Key, opt.Value);
             }
             this.Execute(AppiumDriverCommand.Rotate, parameters);
-        }
-
-        /// <summary>
-        /// Gets Current Device Activity.
-        /// </summary>
-        public string GetCurrentActivity()
-        {
-            var commandResponse = this.Execute(AppiumDriverCommand.GetCurrentActivity, null);
-            return commandResponse.Value as string;
         }
 
         /// <summary>
@@ -380,54 +233,15 @@ namespace OpenQA.Selenium.Appium
         }
 
         /// <summary>
-        /// Opens an arbitrary activity during a test. If the activity belongs to
-        /// another application, that application is started and the activity is opened.
-        ///
-        /// This is an Android-only method.
-        /// </summary>
-        /// <param name="appPackage">The package containing the activity to start.</param>
-        /// <param name="appActivity">The activity to start.</param>
-        /// <param name="appWaitPackage">Begin automation after this package starts. Can be null or empty.</param>
-        /// <param name="appWaitActivity">Begin automation after this activity starts. Can be null or empty.</param>
-        /// <example>
-        /// driver.StartActivity("com.foo.bar", ".MyActivity");
-        /// </example>
-        public void StartActivity(string appPackage, string appActivity, string appWaitPackage = "", string appWaitActivity = "")
-        {
-        	Contract.Requires(!String.IsNullOrWhiteSpace(appPackage));
-        	Contract.Requires(!String.IsNullOrWhiteSpace(appActivity));
-
-        	Dictionary<string, object> parameters = new Dictionary<string, object>() { {"appPackage", appPackage},
-        																			   {"appActivity", appActivity},
-        																			   {"appWaitPackage", appWaitPackage},
-        																			   {"appWaitActivity", appWaitActivity} };
-
-        	this.Execute(AppiumDriverCommand.StartActivity, parameters);
-        }
-
-        /// <summary>
-        /// Pushes a File.
-        /// </summary>
-        /// <param name="pathOnDevice">path on device to store file to</param>
-        /// <param name="base64Data">base 64 data to store as the file</param>
-        public void PushFile(string pathOnDevice, string base64Data)
-        {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters.Add("path", pathOnDevice);
-            parameters.Add("data", base64Data);
-            this.Execute(AppiumDriverCommand.PushFile, parameters);
-        }
-
-        /// <summary>
         /// Pulls a File.
         /// </summary>
         /// <param name="pathOnDevice">path on device to pull</param>
-        public string PullFile(string pathOnDevice)
+        public byte[] PullFile(string pathOnDevice)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("path", pathOnDevice);
             var commandResponse = this.Execute(AppiumDriverCommand.PullFile, parameters);
-            return commandResponse.Value as string;
+            return Convert.FromBase64String(commandResponse.Value.ToString());
         }
 
         /// <summary>
@@ -441,22 +255,6 @@ namespace OpenQA.Selenium.Appium
             parameters.Add("path", remotePath);
             var commandResponse = this.Execute(AppiumDriverCommand.PullFolder, parameters);
             return Convert.FromBase64String(commandResponse.Value.ToString());
-        }
-
-        /// <summary>
-        /// Toggles Wifi.
-        /// </summary>
-        public void ToggleWifi()
-        {
-            this.Execute(AppiumDriverCommand.ToggleWiFi, null);
-        }
-
-        /// <summary>
-        /// Toggles Location Services.
-        /// </summary>
-        public void ToggleLocationServices()
-        {
-            this.Execute(AppiumDriverCommand.ToggleLocationServices, null);
         }
 
         /// <summary>
@@ -494,20 +292,6 @@ namespace OpenQA.Selenium.Appium
             this.Execute(AppiumDriverCommand.BackgroundApp, parameters);
         }
 
-        /// <summary>
-        /// Pulls a File.
-        /// </summary>
-        /// <param name="intent">a string containing the intent.</param>
-        /// <param name="path">a string containing the path.</param>
-        /// <return>a base64 string containing the data</return> 
-        public string EndTestCoverage(string intent, string path)
-        {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters.Add("intent", intent);
-            parameters.Add("path", path);
-            var commandResponse = this.Execute(AppiumDriverCommand.EndTestCoverage, parameters);
-            return commandResponse.Value as string;
-        }
 
         /// <summary>
         /// Gets the App Strings.
@@ -524,11 +308,8 @@ namespace OpenQA.Selenium.Appium
             return commandResponse.Value as string;
         }
 
-        /// <summary>
-        /// Hides the device keyboard.
-        /// </summary>
-        /// <param name="keyName">The button pressed by the mobile driver to attempt hiding the keyboard.</param>
-        public void HideKeyboard(string strategy = null, string key = null)
+ 
+        protected void HideKeyboard(string strategy = null, string key = null)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             if (strategy != null) parameters.Add("strategy", strategy);
@@ -537,118 +318,65 @@ namespace OpenQA.Selenium.Appium
         }
 
         /// <summary>
-        /// Open the notifications 
+        /// Hides the device keyboard.
         /// </summary>
-        public void OpenNotifications()
+        /// <param name="keyName">The button pressed by the mobile driver to attempt hiding the keyboard.</param>
+        public void HideKeyboard()
         {
-            this.Execute(AppiumDriverCommand.OpenNotifications, null);
+            this.HideKeyboard();
         }
 
         #endregion MJsonMethod Members
 
         #region Context
-        /// <summary>
-        /// Get a list of available contexts
-        /// </summary>
-        /// <returns>a list of strings representing available contexts or an empty list if no contexts found</returns>
-        public List<string> GetContexts()
+        public string Context
         {
-            var commandResponse = this.Execute(AppiumDriverCommand.Contexts, null);
-            var contexts = new List<string>();
-            var objects = commandResponse.Value as object[];
-
-            if (null != objects && 0 < objects.Length)
+            get
             {
-                contexts.AddRange(objects.Select(o => o.ToString()));
+                var commandResponse = this.Execute(AppiumDriverCommand.GetContext, null);
+                return commandResponse.Value as string;
             }
-
-            return contexts;
+            set
+            {
+                var parameters = new Dictionary<string, object>();
+                parameters.Add("name", value);
+                this.Execute(AppiumDriverCommand.SetContext, parameters);
+            }
         }
 
-        /// <summary>
-        /// Get the current context
-        /// </summary>
-        /// <returns>current context if available or null representing the default context ("no context")</returns>
-        public string GetContext()
+        public ReadOnlyCollection<string> Contexts
         {
-            var commandResponse = this.Execute(AppiumDriverCommand.GetContext, null);
-            return commandResponse.Value as string;
-        }
-        /// <summary>
-        /// Set the context
-        /// </summary>
-        /// <remarks>Will throw if the context is not found</remarks>
-        /// <param name="name">name of the context to set</param>
-        public void SetContext(string name)
-        {
-            var parameters = new Dictionary<string, object>();
-            parameters.Add("name", name);
-            this.Execute(AppiumDriverCommand.SetContext, parameters);
+            get {
+                var commandResponse = this.Execute(AppiumDriverCommand.Contexts, null);
+                var contexts = new List<string>();
+                var objects = commandResponse.Value as object[];
+
+                if (null != objects && 0 < objects.Length)
+                {
+                    contexts.AddRange(objects.Select(o => o.ToString()));
+                }
+
+                return contexts.AsReadOnly();
+            }
         }
         #endregion Context
 
         #region Orientation
-        /// <summary>
-        /// Return the Screen Orientation of the device 
-        /// </summary>
-        /// <returns>Screen Orientation</returns>
-        /// <remarks>
-        /// Throws Null exception if not valid server response. 
-        /// Throws ArgumentOutOfRangeException if server response is not a valid Orientation.
-        /// </remarks>
-        public ScreenOrientation GetOrientation()
+        public ScreenOrientation Orientation
         {
-            var commandResponse = this.Execute(AppiumDriverCommand.GetOrientation, null);
-            return (commandResponse.Value as string).ConvertToScreenOrientation();
-        }
-
-        /// <summary>
-        /// Set the orientation
-        /// </summary>
-        /// <param name="orientation">orientation to set</param>
-        public void SetOrientation(ScreenOrientation orientation)
-        {
-            var parameters = new Dictionary<string, object>();
-            parameters.Add("orientation", orientation.JSONWireProtocolString());
-            this.Execute(AppiumDriverCommand.SetOrientation, parameters);
+            get
+            {
+                var commandResponse = this.Execute(AppiumDriverCommand.GetOrientation, null);
+                return (commandResponse.Value as string).ConvertToScreenOrientation();
+            }
+            set
+            {
+                var parameters = new Dictionary<string, object>();
+                parameters.Add("orientation", value.JSONWireProtocolString());
+                this.Execute(AppiumDriverCommand.SetOrientation, parameters);
+            }
         }
         #endregion Orientation
-
-        #region Screenshot
-        /// <summary>
-        /// Return a screenshot of the session
-        /// </summary>
-        /// <returns>Screenshot</returns>
-        new public Screenshot GetScreenshot()
-        {
-            var commandResponse = this.Execute(AppiumDriverCommand.GetScreenshot, null);
-            return new Screenshot(commandResponse.Value.ToString());
-        }
-        #endregion
-
-        #region Connection Type
-        /// <summary>
-        /// Get the Connection Type
-        /// </summary>
-        /// <returns>Connection Type of device</returns>
-        /// <exception cref="System.InvalidCastException">Thrown when object return was not able to be converted to a ConnectionType Enum</exception>
-        public ConnectionType GetConnectionType()
-        {
-            var commandResponse = this.Execute(AppiumDriverCommand.GetConnectionType, null);
-            return commandResponse.Value.ConvertToConnectionType();
-        }
-
-        /// <summary>
-        /// Set the connection type
-        /// </summary>
-        /// <param name="connectionType"></param>
-        public void SetConnectionType(ConnectionType connectionType)
-        {
-            var parameters = new Dictionary<string, object>();
-            parameters.Add("type", (int)connectionType);
-            this.Execute(AppiumDriverCommand.SetConnectionType, parameters);
-        }
-        #endregion Connection Type
 
         #region Input Method (IME)
         /// <summary>
@@ -755,24 +483,15 @@ namespace OpenQA.Selenium.Appium
 		}
 
 		/// <summary>
-		/// Set "ignoreUnimportantViews" setting.
-		/// See: https://github.com/appium/appium/blob/master/docs/en/advanced-concepts/settings.md
-		/// </summary>
-		public void IgnoreUnimportantViews(bool value)
-		{
-			this.UpdateSetting ("ignoreUnimportantViews", value);
-		}
-
-		/// <summary>
 		/// Update an appium Setting, on the session
 		/// </summary>
-		private void UpdateSetting(String setting, Object value)
+		protected void UpdateSetting(String setting, Object value)
 		{
 			var parameters = new Dictionary<string, object>();
 			var settings = new Dictionary<string, object>();
 			settings.Add(setting, value);
 			parameters.Add("settings", settings);
-			this.Execute(AppiumDriverCommand.UpdateSettings, parameters);
+			this.Execute(AppiumDriverCommand.UpdateSettings, parameters);          
 		}
 		#endregion Settings
 
@@ -801,16 +520,6 @@ namespace OpenQA.Selenium.Appium
         }
 
         /// <summary>
-        /// Creates a <see cref="RemoteWebElement"/> with the specified ID.
-        /// </summary>
-        /// <param name="elementId">The ID of this element.</param>
-        /// <returns>A <see cref="RemoteWebElement"/> with the specified ID. For the FirefoxDriver this will be a <see cref="FirefoxWebElement"/>.</returns>
-        protected override RemoteWebElement CreateElement(string elementId)
-        {
-            return new AppiumWebElement(this, elementId);
-        }
-
-        /// <summary>
         /// Find the element in the response
         /// </summary>
         /// <param name="response">Response from the browser</param>
@@ -831,6 +540,12 @@ namespace OpenQA.Selenium.Appium
             }
 
             return element;
+        }
+
+        internal static DesiredCapabilities SetPlatformToCapabilities(DesiredCapabilities dc, string desiredPlatform)
+        {
+            dc.SetCapability(MobileCapabilityType.PlatformName, desiredPlatform);
+            return dc;
         }
 
         /// <summary>
@@ -893,7 +608,6 @@ namespace OpenQA.Selenium.Appium
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.EndTestCoverage, "/session/{sessionId}/appium/app/end_test_coverage"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.GetAppStrings, "/session/{sessionId}/appium/app/strings"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.SetImmediateValue, "/session/{sessionId}/appium/element/{id}/value"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.FindComplex, "/session/{sessionId}/appium/app/complex_find"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.HideKeyboard, "/session/{sessionId}/appium/device/hide_keyboard"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.OpenNotifications, "/session/{sessionId}/appium/device/open_notifications"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.StartActivity, "/session/{sessionId}/appium/device/start_activity"),
@@ -971,10 +685,5 @@ namespace OpenQA.Selenium.Appium
             }
         }
         #endregion Private Class
-
-        public IWebDriver WrappedDriver
-        {
-            get { throw new NotImplementedException(); }
-        }
     }
 }

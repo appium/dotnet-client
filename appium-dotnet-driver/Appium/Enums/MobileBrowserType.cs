@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace OpenQA.Selenium.Appium.Appium.Enums
+namespace OpenQA.Selenium.Appium.Enums
 {
     public sealed class MobileBrowserType
     {

@@ -38,14 +38,33 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(SolutionDir)\packages\Selenium.WebDriver.2.44.0\lib\net40\WebDriver.dll</HintPath>
     </Reference>
+    <Reference Include="WebDriver.Support">
+      <HintPath>..\packages\Selenium.Support.2.44.0\lib\net40\WebDriver.Support.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Appium\Android\AndroidDriver.cs" />
+    <Compile Include="Appium\Android\AndroidElement.cs" />
     <Compile Include="Appium\Android\Enums\AndroidKeyCode.cs" />
+    <Compile Include="Appium\Android\Enums\AndroidKeyMetastate.cs" />
+    <Compile Include="Appium\Android\Interfaces\IAndroidDeviceActionShortcuts.cs" />
+    <Compile Include="Appium\Android\Interfaces\IHasNetworkConnection.cs" />
+    <Compile Include="Appium\Android\Interfaces\IPushesFiles.cs" />
+    <Compile Include="Appium\Android\Interfaces\IStartsActivity.cs" />
     <Compile Include="Appium\Enums\MobilePlatform.cs" />
     <Compile Include="Appium\Enums\MobileBrowserType.cs" />
     <Compile Include="Appium\Enums\MobileCapabilityType.cs" />
-    <Compile Include="Appium\Enums\ConnectionType.cs" />
+    <Compile Include="Appium\Android\Enums\ConnectionType.cs" />
+    <Compile Include="Appium\Interfaces\IContextAware.cs" />
+    <Compile Include="Appium\Interfaces\IDeviceActionShortcuts.cs" />
+    <Compile Include="Appium\Interfaces\IInteractsWithApps.cs" />
+    <Compile Include="Appium\Interfaces\IInteractsWithFiles.cs" />
+    <Compile Include="Appium\Interfaces\IPerformsTouchActions.cs" />
+    <Compile Include="Appium\iOS\Enums\HideKeyboardStrategy.cs" />
     <Compile Include="Appium\iOS\Enums\IOSKeyCode.cs" />
+    <Compile Include="Appium\iOS\Interfaces\IIOSDeviceActionShortcuts.cs" />
+    <Compile Include="Appium\iOS\IOSDriver.cs" />
+    <Compile Include="Appium\iOS\IOSElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Appium\AppiumDriver.cs" />
     <Compile Include="Appium\AppiumDriverCommand.cs" />

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using OpenQA.Selenium.Appium.MultiTouch;
 using OpenQA.Selenium.Appium.Test.Helpers;
 using OpenQA.Selenium.Appium.Interfaces;
+using OpenQA.Selenium.Appium.iOS;
 
 namespace OpenQA.Selenium.Appium.Test.Specs
 {
@@ -12,15 +13,14 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 	public class TouchTest
 	{	
 		public FakeAppium server;
-		public AppiumDriver driver;
+        public readonly Uri defaultUri = new Uri("http://127.0.0.1:4753/wd/hub");
+        public readonly DesiredCapabilities capabilities = new DesiredCapabilities();
 
 		[TestFixtureSetUp]
 		public void RunBeforeAll(){
 			server = new FakeAppium (4753);			 
 			server.Start ();
 			server.respondToInit ();
-			DesiredCapabilities capabilities = new DesiredCapabilities();
-			driver = new AppiumDriver (new Uri("http://127.0.0.1:4753/wd/hub"), capabilities);
 			server.clear ();	
 		}
 
@@ -45,6 +45,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void LongPressTestCase ()
 		{
+            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
 			RequestProcessor re = setupTouchAction ();
 			IWebElement element = driver.FindElementByIosUIAutomation (".elements()");
 
@@ -74,6 +75,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void MoveToTestCase ()
 		{
+            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
 			RequestProcessor re = setupTouchAction ();
 			IWebElement element = driver.FindElementByIosUIAutomation (".elements()");
 
@@ -103,6 +105,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void PressTestCase ()
 		{
+            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
 			RequestProcessor re = setupTouchAction ();
 			IWebElement element = driver.FindElementByIosUIAutomation (".elements()");
 
@@ -132,6 +135,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void ReleaseTestCase ()
 		{
+            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
 			RequestProcessor re = setupTouchAction ();
 			ITouchAction a;
 
@@ -144,6 +148,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void TapTestCase ()
 		{
+            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
 			RequestProcessor re = setupTouchAction ();
 			IWebElement element = driver.FindElementByIosUIAutomation (".elements()");
 
@@ -189,6 +194,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void WaitTestCase ()
 		{
+            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
 			RequestProcessor re = setupTouchAction ();
 			ITouchAction a;
 
@@ -213,6 +219,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void MultiActionTestCase ()
 		{
+            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
 			RequestProcessor re = setupMultiAction ();
 			IWebElement element = driver.FindElementByIosUIAutomation (".elements()");
 

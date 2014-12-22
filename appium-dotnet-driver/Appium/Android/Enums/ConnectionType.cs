@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OpenQA.Selenium.Appium.Appium.Enums
+namespace OpenQA.Selenium.Appium.Android
 {
     /// <summary>
     /// Connection Type as described in the JSON Wire Protocol

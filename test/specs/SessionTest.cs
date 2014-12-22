@@ -2,6 +2,7 @@
 using System;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Appium.Test.Helpers;
+using OpenQA.Selenium.Appium.Android;
 
 namespace OpenQA.Selenium.Appium.Test.Specs
 {
@@ -9,6 +10,8 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 	public class InitSessionTest
 	{	
 		public FakeAppium server;
+        public readonly Uri defaultUri = new Uri("http://127.0.0.1:4733/wd/hub");
+        public readonly DesiredCapabilities capabilities = new DesiredCapabilities();
 
 		[TestFixtureSetUp]
 		public void RunBeforeAll(){
@@ -32,7 +35,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		{
 			server.respondToInit ();
 			DesiredCapabilities capabilities = new DesiredCapabilities();
-			new AppiumDriver (capabilities);
+			new AndroidDriver (capabilities);
 		}
 	}
 
@@ -40,7 +43,8 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 	public class EndSessionTest
 	{	
 		public FakeAppium server;
-		public AppiumDriver driver;
+        public readonly Uri defaultUri = new Uri("http://127.0.0.1:4724/wd/hub");
+        public readonly DesiredCapabilities capabilities = new DesiredCapabilities();
 
 		[TestFixtureSetUp]
 		public void RunBeforeAll(){
@@ -58,7 +62,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		{
 			server.respondToInit ();
 			DesiredCapabilities capabilities = new DesiredCapabilities();
-			driver = new AppiumDriver (new Uri("http://127.0.0.1:4724/wd/hub"), capabilities);
+            AndroidDriver driver = new AndroidDriver(defaultUri, capabilities);
 			server.clear ();
 		}
 
@@ -72,6 +76,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void CloseTestCase ()
 		{
+            AndroidDriver driver = new AndroidDriver(defaultUri, capabilities);
 			server.respondTo ("DELETE", "/window", null);
 			driver.Close ();
 		}
@@ -79,6 +84,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
 		[Test]
 		public void QuitTestCase ()
 		{
+            AndroidDriver driver = new AndroidDriver(defaultUri, capabilities);
 			server.respondTo ("DELETE", "/", null);
 			driver.Quit ();
 		}

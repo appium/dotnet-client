@@ -1,5 +1,5 @@
 ﻿using System;
-using OpenQA.Selenium.Appium.Appium.Enums;
+using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Remote;
 
 namespace Appium.Samples.Helpers
@@ -10,7 +10,6 @@ namespace Appium.Samples.Helpers
 			DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.SetCapability(CapabilityType.BrowserName, "");
 			capabilities.SetCapability(MobileCapabilityType.AppiumVersion, "1.0");
-			capabilities.SetCapability(MobileCapabilityType.PlatformName, MobilePlatform.IOS);
 			capabilities.SetCapability(MobileCapabilityType.PlatformVersion, "7.1");
 			capabilities.SetCapability(MobileCapabilityType.DeviceName, "iPhone Simulator");
 			capabilities.SetCapability(MobileCapabilityType.App, app);
@@ -21,8 +20,9 @@ namespace Appium.Samples.Helpers
 			DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.SetCapability(CapabilityType.BrowserName, "");
             capabilities.SetCapability(MobileCapabilityType.AppiumVersion, "1.0");
-			capabilities.SetCapability(MobileCapabilityType.PlatformName, MobilePlatform.Android);
             capabilities.SetCapability(MobileCapabilityType.PlatformVersion, "4.3");
+            capabilities.SetCapability(MobileCapabilityType.AppPackage, "io.appium.android.apis");
+            capabilities.SetCapability(MobileCapabilityType.AppActivity, ".Apidemos");
             capabilities.SetCapability(MobileCapabilityType.DeviceName, "Android Emulator");
             capabilities.SetCapability(MobileCapabilityType.App, app);
 			return capabilities;
@@ -32,7 +32,6 @@ namespace Appium.Samples.Helpers
 			DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.SetCapability(CapabilityType.BrowserName, "");
             capabilities.SetCapability(MobileCapabilityType.AppiumVersion, "1.0");
-            capabilities.SetCapability(MobileCapabilityType.PlatformName, MobilePlatform.Android);
             capabilities.SetCapability(MobileCapabilityType.PlatformVersion, "4.4.2");
             capabilities.SetCapability(MobileCapabilityType.DeviceName, "Android Emulator");
             capabilities.SetCapability(MobileCapabilityType.App, app);
@@ -43,7 +42,6 @@ namespace Appium.Samples.Helpers
 			DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.SetCapability(CapabilityType.BrowserName, "");
 			capabilities.SetCapability(MobileCapabilityType.AppiumVersion, "1.0");
-            capabilities.SetCapability(MobileCapabilityType.PlatformName, "Android");
             capabilities.SetCapability(MobileCapabilityType.PlatformVersion, "4.1");
 			capabilities.SetCapability(MobileCapabilityType.AutomationName, "selendroid");
             capabilities.SetCapability(MobileCapabilityType.DeviceName, "Android Emulator");
