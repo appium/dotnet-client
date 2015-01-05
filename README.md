@@ -3,6 +3,12 @@
 This driver is an extension of the [Selenium](http://docs.seleniumhq.org/) C# client. It has 
 all the functionalities of the regular driver, but add Appium specific methods on top of this.
 
+## v1.2.0.7
+Improved namespaces.
+Tests fixed.
+Redesigned methods and interfaces.
+Separate android and ios drivers.
+
 ## v1.2.0.6
 Update NuGet packages - fixes a locator strategy bug.
 
@@ -140,11 +146,8 @@ m.Perform();
 
 
 ### To Release a New Version
-- update the assemblyInfo.cs file for the assembly with the new version and check it in
+- update assemblyInfo.cs, README.md, RELEASE_NOTES.md, and appium-dotnet-driver.nuspec with new new version number and release details, then check it in
 - pull new code
-- git tag <version number>
 - `Rebuild All` with `Release` target.
-- Edit the file: `appium-dotnet-driver.nuspec`. (At least bump version and change release notes.)
 - `NuGet pack appium-dotnet-driver.nuspec`
 - `NuGet push Appium.WebDriver.<version>.nupkg`
-- Commit and push changes.
