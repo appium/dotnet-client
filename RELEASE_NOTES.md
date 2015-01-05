@@ -1,5 +1,11 @@
 #Release Notes
 
+## 1.2.0.7
+- Improved namespaces.
+- Fixed Tests
+- Redesigned methods and interfaces.
+- Separate android and ios drivers.
+
 ## 1.2.0.6
 - Update NuGet packages  - fixes locator strategy bug.
 
