@@ -11,6 +11,7 @@ using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.MultiTouch;
 using System.Collections.ObjectModel;
 using OpenQA.Selenium.Appium.iOS;
+using OpenQA.Selenium.Appium.iOS.Enums;
 
 namespace Appium.Samples
 {
@@ -188,6 +189,19 @@ namespace Appium.Samples
 			Assert.IsTrue (textFieldSectionSource.Contains("Text Fields"));
 			Assert.AreNotEqual (textFieldSectionSource, mainMenuSource);
 		}
+
+        [Test()]
+        public void HideKeyBoardTestCase()
+        {
+            ClickMenuItem("Text Fields, AAPLTextFieldViewController");
+            IWebElement e = driver.FindElementByAccessibilityId("DEFAULT");
+            e.Click();
+            driver.HideKeyboard();
+            e.Click();
+            ((IOSDriver) driver).HideKeyboard("Done");
+            e.Click();
+            ((IOSDriver)driver).HideKeyboard("Done", HideKeyboardStrategy.Tap_outside);
+        }
 
 	}
 }
