@@ -212,6 +212,14 @@ namespace Appium.Samples
 			Thread.Sleep (1000);
             driver.GetScreenshot();
 		}
+
+        [Test()]
+        public void HideKeyBoardTestCase()
+        {
+            ((AndroidDriver)driver).StartActivity("io.appium.android.apis", ".app.CustomTitle");
+            driver.FindElement(By.Id("io.appium.android.apis:id/left_text_edit")).Clear();
+            driver.HideKeyboard();
+        }
 	}
 }
 

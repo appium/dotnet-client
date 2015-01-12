@@ -320,10 +320,9 @@ namespace OpenQA.Selenium.Appium
         /// <summary>
         /// Hides the device keyboard.
         /// </summary>
-        /// <param name="keyName">The button pressed by the mobile driver to attempt hiding the keyboard.</param>
         public void HideKeyboard()
         {
-            this.HideKeyboard();
+            this.HideKeyboard(null, null);
         }
 
         #endregion MJsonMethod Members
