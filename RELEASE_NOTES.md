@@ -1,8 +1,11 @@
 #Release Notes
 
+## 1.2.0.8
+- Fix and add tests for Hide Keyboard
+
 ## 1.2.0.7
 - Improved namespaces.
-- Fixed Tests
+- Fixed tests
 - Redesigned methods and interfaces.
 - Separate android and ios drivers.
 
