@@ -3,36 +3,6 @@
 This driver is an extension of the [Selenium](http://docs.seleniumhq.org/) C# client. It has 
 all the functionalities of the regular driver, but add Appium specific methods on top of this.
 
-## v1.2.0.7
-Improved namespaces.
-Tests fixed.
-Redesigned methods and interfaces.
-Separate android and ios drivers.
-
-## v1.2.0.6
-Update NuGet packages - fixes a locator strategy bug.
-
-## v1.2.0.5
-Add GetSettings().
-Add IgnoreUnimportantViews();
-
-## v1.2.0.4
-Update version since mismatch between NuGet and assembly.
-
-## v1.2.0.3
-Update version just for NuGet package.
-
-## v1.2.0.2
-Add IsLocked method.
-Update Packages.
-Add Start Activity.
-
-## v1.2.0.1
-
-Breaking Changes: The TouchAction/MultiAction functionalities has been rewritten according
-to the spec [here](https://dvcs.w3.org/hg/webdriver/raw-file/default/webdriver-spec.html#touch-gestures).
-Please refer to doc below and sample for more information.
-
 ## NuGet
 
 NuGet Package: [](http://www.nuget.org/packages/Appium.WebDriver/)
@@ -146,7 +116,7 @@ m.Perform();
 
 
 ### To Release a New Version
-- update assemblyInfo.cs, README.md, RELEASE_NOTES.md, and appium-dotnet-driver.nuspec with new new version number and release details, then check it in
+- update assemblyInfo.cs, RELEASE_NOTES.md, and appium-dotnet-driver.nuspec with new new version number and release details, then check it in
 - pull new code
 - `Rebuild All` with `Release` target.
 - `NuGet pack appium-dotnet-driver.nuspec`
