@@ -19,8 +19,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using OpenQA.Selenium.Appium.Interfaces;
-using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Remote;
+using Appium.Interfaces.Generic.SearchContext;
 
 namespace OpenQA.Selenium.Appium
 {
@@ -40,14 +40,18 @@ namespace OpenQA.Selenium.Appium
     /// }
     /// </code>
     /// </example>
-    public abstract class AppiumWebElement : RemoteWebElement, IFindByAccessibilityId
+    public abstract class AppiumWebElement : RemoteWebElement, IFindByAccessibilityId<AppiumWebElement>, IGenericSearchContext<AppiumWebElement>,
+        IGenericFindsByClassName<AppiumWebElement>,
+        IGenericFindsById<AppiumWebElement>, IGenericFindsByCssSelector<AppiumWebElement>, IGenericFindsByLinkText<AppiumWebElement>, 
+        IGenericFindsByName<AppiumWebElement>,
+        IGenericFindsByPartialLinkText<AppiumWebElement>, IGenericFindsByTagName<AppiumWebElement>, IGenericFindsByXPath<AppiumWebElement>
     {
         /// <summary>
         /// Initializes a new instance of the AppiumWebElement class.
         /// </summary>
         /// <param name="parent">Driver in use.</param>
         /// <param name="id">ID of the element.</param>
-        public AppiumWebElement(AppiumDriver parent, string id)
+        public AppiumWebElement(RemoteWebDriver parent, string id)
             : base(parent, id)
         {
         }
@@ -89,26 +93,122 @@ namespace OpenQA.Selenium.Appium
         #region FindMethods
 
         #region IFindByAccessibilityId Members
-        /// <summary>
-        /// Finds the first of elements that match the Accessibility Id selector supplied
-        /// </summary>
-        /// <param name="selector">an Accessibility Id selector</param>
-        /// <returns>IWebElement object so that you can interact that object</returns>
-        public IWebElement FindElementByAccessibilityId(string selector)
+
+        public AppiumWebElement FindElementByAccessibilityId(string selector)
         {
-            return this.FindElement("accessibility id", selector);
+            return (AppiumWebElement) this.FindElement("accessibility id", selector);
         }
 
-        /// <summary>
-        /// Finds a list of elements that match the Accessibility Id selector supplied
-        /// </summary>
-        /// <param name="selector">an Accessibility Id selector</param>
-        /// <returns>IWebElement object so that you can interact that object</returns>
-        public ReadOnlyCollection<IWebElement> FindElementsByAccessibilityId(string selector)
+        public ReadOnlyCollection<AppiumWebElement> FindElementsByAccessibilityId(string selector)
         {
-            return this.FindElements("accessibility id", selector);
+            return CollectionConverterUnility.
+                            ConvertToExtendedWebElementCollection<AppiumWebElement>(this.FindElements("accessibility id", selector));
         }
+
         #endregion IFindByAccessibilityId Members
+
+        public AppiumWebElement FindElement(By by)
+        {
+            return (AppiumWebElement) base.FindElement(by);
+        }
+
+        public ReadOnlyCollection<AppiumWebElement> FindElements(By by)
+        {
+            return CollectionConverterUnility.
+                ConvertToExtendedWebElementCollection<AppiumWebElement>(base.FindElements(by));
+        }
+
+        public AppiumWebElement FindElementByClassName(string className)
+        {
+            return (AppiumWebElement) base.FindElementByClassName(className);
+        }
+
+        public ReadOnlyCollection<AppiumWebElement> FindElementsByClassName(string className)
+        {
+            return CollectionConverterUnility.
+                ConvertToExtendedWebElementCollection<AppiumWebElement>(base.FindElementsByClassName(className));
+        }
+
+        public AppiumWebElement FindElementById(string id)
+        {
+            return (AppiumWebElement) base.FindElementById(id);
+        }
+
+
+        public ReadOnlyCollection<AppiumWebElement> FindElementsById(string id)
+        {
+            return CollectionConverterUnility.
+                            ConvertToExtendedWebElementCollection<AppiumWebElement>(base.FindElementsById(id));
+        }
+
+        public AppiumWebElement FindElementByCssSelector(string cssSelector)
+        {
+            return (AppiumWebElement) base.FindElementByCssSelector(cssSelector);
+        }
+
+
+        public ReadOnlyCollection<AppiumWebElement> FindElementsByCssSelector(string cssSelector)
+        {
+            return CollectionConverterUnility.
+                            ConvertToExtendedWebElementCollection<AppiumWebElement>(base.FindElementsByCssSelector(cssSelector));
+        }
+
+        public AppiumWebElement FindElementByLinkText(string linkText)
+        {
+            return (AppiumWebElement) base.FindElementByLinkText(linkText);
+        }
+
+        public ReadOnlyCollection<AppiumWebElement> FindElementsByLinkText(string linkText)
+        {
+            return CollectionConverterUnility.
+                            ConvertToExtendedWebElementCollection<AppiumWebElement>(base.FindElementsByLinkText(linkText));
+        }
+
+        public AppiumWebElement FindElementByName(string name)
+        {
+            return (AppiumWebElement) base.FindElementByName(name);
+        }
+
+        public ReadOnlyCollection<AppiumWebElement> FindElementsByName(string name)
+        {
+            return CollectionConverterUnility.
+                            ConvertToExtendedWebElementCollection<AppiumWebElement>(base.FindElementsByName(name));
+        }
+
+        public AppiumWebElement FindElementByPartialLinkText(string partialLinkText)
+        {
+            return (AppiumWebElement) base.FindElementByPartialLinkText(partialLinkText);
+        }
+
+        public ReadOnlyCollection<AppiumWebElement> FindElementsByPartialLinkText(string partialLinkText)
+        {
+            return CollectionConverterUnility.
+                            ConvertToExtendedWebElementCollection<AppiumWebElement>(base.FindElementsByPartialLinkText(partialLinkText));
+        }
+
+        public AppiumWebElement FindElementByTagName(string tagName)
+        {
+            return (AppiumWebElement) base.FindElementByTagName(tagName);
+        }
+
+        public ReadOnlyCollection<AppiumWebElement> FindElementsByTagName(string tagName)
+        {
+            return CollectionConverterUnility.
+                            ConvertToExtendedWebElementCollection<AppiumWebElement>(base.FindElementsByTagName(tagName));
+        }
+
+        public AppiumWebElement FindElementByXPath(string xpath)
+        {
+            return (AppiumWebElement)base.FindElementByXPath(xpath);
+        }
+
+        public ReadOnlyCollection<AppiumWebElement> FindElementsByXPath(string xpath)
+        {
+            return CollectionConverterUnility.
+                            ConvertToExtendedWebElementCollection<AppiumWebElement>(base.FindElementsByXPath(xpath));
+        }
+
+
 
         #endregion
     }

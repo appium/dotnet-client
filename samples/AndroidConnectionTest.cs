@@ -14,7 +14,7 @@ namespace Appium.Samples
     [TestFixture()]
     class AndroidConnectionTest
     {
-        private AppiumDriver driver;
+        private AppiumDriver<IWebElement> driver;
         private bool allPassed = true;
 
         [TestFixtureSetUp]
@@ -31,7 +31,7 @@ namespace Appium.Samples
                 capabilities.SetCapability("tags", new string[] { "sample" });
             }
             Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.localURI;
-            driver = new AndroidDriver(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
+            driver = new AndroidDriver<IWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
             driver.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
         }
 
@@ -58,11 +58,11 @@ namespace Appium.Samples
         [Test]
         public void ConnectionTest()
         {
-            ((AndroidDriver)driver).ConnectionType = ConnectionType.AirplaneMode;
-            Assert.AreEqual(ConnectionType.AirplaneMode, ((AndroidDriver)driver).ConnectionType);
+            ((AndroidDriver<IWebElement>)driver).ConnectionType = ConnectionType.AirplaneMode;
+            Assert.AreEqual(ConnectionType.AirplaneMode, ((AndroidDriver<IWebElement>)driver).ConnectionType);
 
-            ((AndroidDriver)driver).ConnectionType = ConnectionType.WifiOnly;
-            Assert.AreEqual(ConnectionType.WifiOnly, ((AndroidDriver)driver).ConnectionType);
+            ((AndroidDriver<IWebElement>)driver).ConnectionType = ConnectionType.WifiOnly;
+            Assert.AreEqual(ConnectionType.WifiOnly, ((AndroidDriver<IWebElement>)driver).ConnectionType);
         }
     }
 }

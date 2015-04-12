@@ -20,6 +20,8 @@ using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using OpenQA.Selenium.Appium.Interfaces;
+using System.Reflection;
+using System.Collections;
 
 namespace OpenQA.Selenium.Appium
 {
@@ -29,6 +31,7 @@ namespace OpenQA.Selenium.Appium
     public class ByAccessibilityId : By
     {
         private string selector = string.Empty;
+        private readonly string InterfaceNameRegExp = "IFindByAccessibilityId`1";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ByAccessibilityId"/> class.
@@ -51,12 +54,14 @@ namespace OpenQA.Selenium.Appium
         /// <returns>The element that matches</returns>
         public override IWebElement FindElement(ISearchContext context)
         {
-            var tmpContext = context as IFindByAccessibilityId;
-            if (null == tmpContext)
+            Type contextType = context.GetType();
+            Type findByAccessibilityId = contextType.GetInterface(InterfaceNameRegExp, false);
+            if (null == findByAccessibilityId)
             {
-                throw new InvalidCastException("Unable to cast ISearchContext to IFindByAccessibilityId");
+                throw new InvalidCastException("Unable to cast " + contextType.ToString() + " to IFindByAccessibilityId");
             }
-            return tmpContext.FindElementByAccessibilityId(selector);
+            MethodInfo m = findByAccessibilityId.GetMethod("FindElementByAccessibilityId", new Type[] { typeof(string) });
+            return (IWebElement) m.Invoke(context, new object[] { selector });
         }
 
         /// <summary>
@@ -66,12 +71,15 @@ namespace OpenQA.Selenium.Appium
         /// <returns>A readonly collection of elements that match.</returns>
         public override ReadOnlyCollection<IWebElement> FindElements(ISearchContext context)
         {
-            var tmpContext = context as IFindByAccessibilityId;
-            if (null == tmpContext)
+            Type contextType = context.GetType();
+            Type findByAccessibilityId = contextType.GetInterface(InterfaceNameRegExp, false);
+            if (null == findByAccessibilityId)
             {
-                throw new InvalidCastException("Unable to cast ISearchContext to IFindByAccessibilityId");
+                throw new InvalidCastException("Unable to cast " + contextType.ToString() + " to IFindByAccessibilityId");
             }
-            return tmpContext.FindElementsByAccessibilityId(selector);
+            MethodInfo m = findByAccessibilityId.GetMethod("FindElementsByAccessibilityId", new Type[] { typeof(string) });
+            return CollectionConverterUnility.
+                            ConvertToExtendedWebElementCollection<IWebElement>((IList) m.Invoke(context, new object[] { selector }));
         }
 
         /// <summary>

@@ -4,11 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
-/// <summary>
-/// This interface is temporary. Let it be here till 
-///https://github.com/SeleniumHQ/selenium/pull/301
-///is merged and new Webdriver for .Net is published.
-///
+
 namespace OpenQA.Selenium.Appium.Interfaces
 {
     /// <summary>

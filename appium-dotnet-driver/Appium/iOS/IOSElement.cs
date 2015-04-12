@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium.Appium.Interfaces;
+using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,38 +8,30 @@ using System.Text;
 
 namespace OpenQA.Selenium.Appium.iOS
 {
-    public class IOSElement : AppiumWebElement, IFindByIosUIAutomation
+    public class IOSElement : AppiumWebElement, IFindByIosUIAutomation<AppiumWebElement>
     {
         /// <summary>
         /// Initializes a new instance of the IOSElement class.
         /// </summary>
         /// <param name="parent">Driver in use.</param>
         /// <param name="id">ID of the element.</param>
-        public IOSElement(AppiumDriver parent, string id)
+        public IOSElement(RemoteWebDriver parent, string id)
             : base(parent, id)
         {
         }
 
 
         #region IFindByIosUIAutomation Members
-        /// <summary>
-        /// Finds the first of elements that match the Ios UIAutomation selector supplied
-        /// </summary>
-        /// <param name="selector">an Ios UIAutomation selector</param>
-        /// <returns>IWebElement object so that you can interact that object</returns>
-        public IWebElement FindElementByIosUIAutomation(string selector)
+
+        public AppiumWebElement FindElementByIosUIAutomation(string selector)
         {
-            return this.FindElement("-ios uiautomation", selector);
+            return (AppiumWebElement) this.FindElement("-ios uiautomation", selector);
         }
 
-        /// <summary>
-        /// Finds a list of elements that match the Ios UIAutomation selector supplied
-        /// </summary>
-        /// <param name="selector">an Ios UIAutomation selector</param>
-        /// <returns>IWebElement object so that you can interact that object</returns>
-        public ReadOnlyCollection<IWebElement> FindElementsByIosUIAutomation(string selector)
+        public ReadOnlyCollection<AppiumWebElement> FindElementsByIosUIAutomation(string selector)
         {
-            return this.FindElements("-ios uiautomation", selector);
+            return CollectionConverterUnility.
+                            ConvertToExtendedWebElementCollection<AppiumWebElement>(this.FindElements("-ios uiautomation", selector));
         }
         #endregion IFindByIosUIAutomation Members
     }

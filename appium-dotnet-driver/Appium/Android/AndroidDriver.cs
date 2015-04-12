@@ -6,15 +6,16 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
 
 namespace OpenQA.Selenium.Appium.Android
 {
-    public class AndroidDriver : AppiumDriver, IFindByAndroidUIAutomator, IStartsActivity, IHasNetworkConnection, 
-        IAndroidDeviceActionShortcuts, IPushesFiles
+    public class AndroidDriver<W> : AppiumDriver<W>, IFindByAndroidUIAutomator<W>, IStartsActivity, 
+        IHasNetworkConnection, 
+        IAndroidDeviceActionShortcuts, 
+        IPushesFiles where W : IWebElement
     {
         private static readonly string Platform = MobilePlatform.Android;
+
 
         /// <summary>
         /// Initializes a new instance of the AndroidDriver class
@@ -57,37 +58,18 @@ namespace OpenQA.Selenium.Appium.Android
         }
 
         #region IFindByAndroidUIAutomator Members
-        /// <summary>
-        /// Finds the first element in the page that matches the Android UIAutomator selector supplied
-        /// </summary>
-        /// <param name="selector">Selector for the element.</param>
-        /// <returns>IWebElement object so that you can interact that object</returns>
-        /// <example>
-        /// <code>
-        /// IWebDriver driver = new RemoteWebDriver(DesiredCapabilities.Firefox());
-        /// IWebElement elem = driver.FindElementByAndroidUIAutomator('elements()'))
-        /// </code>
-        /// </example>
-        public IWebElement FindElementByAndroidUIAutomator(string selector)
+
+        public W FindElementByAndroidUIAutomator(string selector)
         {
-            return this.FindElement("-android uiautomator", selector);
+            return (W) this.FindElement("-android uiautomator", selector);
         }
 
-        /// <summary>
-        /// Finds a list of elements that match the Android UIAutomator selector supplied
-        /// </summary>
-        /// <param name="selector">Selector for the elements.</param>
-        /// <returns>ReadOnlyCollection of IWebElement object so that you can interact with those objects</returns>
-        /// <example>
-        /// <code>
-        /// IWebDriver driver = new RemoteWebDriver(DesiredCapabilities.Firefox());
-        /// ReadOnlyCollection<![CDATA[<IWebElement>]]> elem = driver.FindElementsByAndroidUIAutomator(elements())
-        /// </code>
-        /// </example>
-        public ReadOnlyCollection<IWebElement> FindElementsByAndroidUIAutomator(string selector)
+        public ReadOnlyCollection<W> FindElementsByAndroidUIAutomator(string selector)
         {
-            return this.FindElements("-android uiautomator", selector);
+            return CollectionConverterUnility.
+                            ConvertToExtendedWebElementCollection<W>(this.FindElements("-android uiautomator", selector));
         }
+
         #endregion IFindByAndroidUIAutomator Members
 
         /// <summary>
