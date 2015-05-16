@@ -325,6 +325,20 @@ namespace OpenQA.Selenium.Appium
             this.HideKeyboard(null, null);
         }
 
+        /// <sumary>
+        /// GPS Location
+        /// </summary>
+        public Location Location { 
+                get {
+                        var commandResponse = this.Execute(AppiumDriverCommand.GetLocation, null);
+                        return JsonConvert.DeserializeObject<Location>((String) commandResponse.Value);
+                }
+                set {
+                        var location = value ?? new Location();
+                        Execute(AppiumDriverCommand.SetLocation, location.ToDictionary());
+                }
+        }
+
         #endregion MJsonMethod Members
 
         #region Context
@@ -623,6 +637,8 @@ namespace OpenQA.Selenium.Appium
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.SetOrientation, "/session/{sessionId}/orientation"),
                 new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetConnectionType, "/session/{sessionId}/network_connection"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.SetConnectionType, "/session/{sessionId}/network_connection"),
+                new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetLocation, "/session/{sessionId}/location"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.SetLocation, "/session/{sessionId}/location"),
 
                 #region Input Method (IME)
                 new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetAvailableEngines, "/session/{sessionId}/ime/available_engines"),
