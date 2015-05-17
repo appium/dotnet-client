@@ -28,7 +28,9 @@ namespace OpenQA.Selenium.Appium
                         parameters.Add("latitude", Latitude);
                         parameters.Add("longitude", Longitude);
                         parameters.Add("altitude", Altitude);
-                        return parameters;
+			Dictionary<string, object> location = new Dictionary<string, object> ();
+			location.Add("location", parameters);
+                        return location;
                 }
         }
 }
