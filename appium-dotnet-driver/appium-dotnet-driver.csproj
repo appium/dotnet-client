@@ -81,6 +81,7 @@
     <Compile Include="Appium\MultiAction\MultiAction.cs" />
     <Compile Include="Appium\MultiAction\TouchAction.cs" />
     <Compile Include="Appium\Interfaces\ITouchAction.cs" />
+    <Compile Include="Appium\Location.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

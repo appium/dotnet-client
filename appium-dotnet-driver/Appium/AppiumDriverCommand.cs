@@ -138,6 +138,16 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string StartActivity = "startActivity";
 
+        /// <summary>
+        /// Set GPS Location Command.
+        /// </summary>
+        public const string SetLocation = "setLocation"; 
+
+        /// <summary>
+        /// Get GPS Location Command.
+        /// </summary>
+        public const string GetLocation = "getLocation";
+
         #endregion Appium Specific extensions to JSONWP Commands
 
         #region TouchActions
