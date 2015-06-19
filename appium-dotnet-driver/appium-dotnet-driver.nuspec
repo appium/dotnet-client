@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Appium.WebDriver</id>
-    <version>1.2.0.8</version>
+    <version>1.3.0.1</version>
     <title>Appium Webdriver</title>
     <authors>Appium Commiters</authors>
     <owners>Appium Commiters</owners>
@@ -37,8 +37,9 @@
     <copyright>Copyright 2014</copyright>
     <tags>Appium Webdriver device automation</tags>
   <dependencies>
-    <dependency id="Newtonsoft.Json" version="6.0.6"/>
-    <dependency id="Selenium.WebDriver" version="2.44.0"/>
+    <dependency id="Newtonsoft.Json" version="6.0.8"/>
+    <dependency id="Selenium.WebDriver" version="2.46.0"/>
+    <dependency id="Selenium.Support" version="2.46.0"/>
   </dependencies>
   </metadata>
   <files>
