@@ -5,16 +5,13 @@ using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.iOS;
 using OpenQA.Selenium.Remote;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Appium.Samples
 {
     [TestFixture()]
-    class IOSLocatoinTest
+    class IOSLocationTest
     {
-        private AppiumDriver driver;
+        private AppiumDriver<IOSElement> driver;
         private bool allPassed = true;
 
         [TestFixtureSetUp]
@@ -29,7 +26,7 @@ namespace Appium.Samples
                 capabilities.SetCapability("tags", new string[] { "sample" });
             }
             Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.localURI;
-            driver = new IOSDriver(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
+            driver = new IOSDriver<IOSElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
             driver.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
         }
 
@@ -56,7 +53,7 @@ namespace Appium.Samples
         [Test()]
         public void setLocationTest()
         {
-            Location l = new Location();
+            var l = new Location();
             l.Altitude = 10;
             l.Longitude = 10;
             l.Latitude = 10;
