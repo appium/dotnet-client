@@ -2,20 +2,20 @@
 
 namespace OpenQA.Selenium.Appium.Interfaces
 {
-    public interface IFindByAccessibilityId
+    public interface IFindByAccessibilityId<W> where W : IWebElement
     {
         /// <summary>
         /// Finds the first of elements that match the Accessibility Id selector supplied
         /// </summary>
         /// <param name="selector">an Accessibility Id selector</param>
         /// <returns>IWebElement object so that you can interact that object</returns>
-        IWebElement FindElementByAccessibilityId(string selector);
+        W FindElementByAccessibilityId(string selector);
 
         /// <summary>
         /// Finds a list of elements that match the Accessibility Id selector supplied
         /// </summary>
         /// <param name="selector">an Accessibility Id selector</param>
         /// <returns>IWebElement object so that you can interact that object</returns>
-        ReadOnlyCollection<IWebElement> FindElementsByAccessibilityId(string selector);
+        ReadOnlyCollection<W> FindElementsByAccessibilityId(string selector);
     }
 }

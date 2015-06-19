@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using OpenQA.Selenium.Appium.Interfaces;
 using System.Reflection;
+using OpenQA.Selenium.Remote;
 
 namespace OpenQA.Selenium.Appium.MultiTouch
 {
@@ -10,7 +11,7 @@ namespace OpenQA.Selenium.Appium.MultiTouch
     {
 		private IList<ITouchAction> actions = new List<ITouchAction>();
 
-		private AppiumDriver driver;
+		private IPerformsTouchActions TouchActionPerformer;
 		private IWebElement element;
 
 		private string getIdForElement(IWebElement el) {
@@ -22,9 +23,9 @@ namespace OpenQA.Selenium.Appium.MultiTouch
 		/// </summary>
 		/// <param name="driver">The <see cref="IWebDriver"/> the driver to be used.</param>
 		/// <param name="element">The <see cref="IWebDriver"/> the element on which the actions built will be performed.</param>
-		public MultiAction(AppiumDriver driver, IWebElement element)
+        public MultiAction(IPerformsTouchActions touchActionPerformer, IWebElement element)
+            :this(touchActionPerformer)
 		{
-			this.driver = driver;
 			this.element = element;
 		}
 
@@ -32,9 +33,9 @@ namespace OpenQA.Selenium.Appium.MultiTouch
 		/// Initializes a new instance of the <see cref="MultiTouchAction"/> class.
 		/// </summary>
 		/// <param name="driver">The <see cref="IWebDriver"/> the driver to be used.</param>
-		public MultiAction(AppiumDriver driver)
+        public MultiAction(IPerformsTouchActions touchActionPerformer)
 		{
-			this.driver = driver;
+            this.TouchActionPerformer = touchActionPerformer;
 		}
 
 		/// <summary>
@@ -53,13 +54,6 @@ namespace OpenQA.Selenium.Appium.MultiTouch
 		{
 		}
 			
-		/// <summary>
-		/// Sets the driver.
-		/// </summary>
-		/// <param name="driver">The <see cref="IWebDriver"/> the driver to be used.</param>
-		public void setDriver (AppiumDriver driver) {
-			this.driver = driver;
-		}
 
 		/// <summary>
 		/// Sets the element.
@@ -107,8 +101,6 @@ namespace OpenQA.Selenium.Appium.MultiTouch
 		/// </summary>
 		public void Cancel()
 		{
-			this.driver = null;
-			this.element = null;
 			actions.Clear ();
 		}
 
@@ -117,7 +109,7 @@ namespace OpenQA.Selenium.Appium.MultiTouch
         /// </summary>
         public void Perform()
         {
-			this.driver.PerformMultiAction (this);
+			TouchActionPerformer.PerformMultiAction (this);
         }
     }
 }

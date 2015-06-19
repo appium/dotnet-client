@@ -18,7 +18,7 @@ namespace Appium.Samples
 	[TestFixture ()]
 	public class IosComplexTest
 	{
-		private AppiumDriver driver;
+		private AppiumDriver<IWebElement> driver;
 		private bool allPassed = true;
 
 		[SetUp]
@@ -31,7 +31,7 @@ namespace Appium.Samples
 				capabilities.SetCapability("tags", new string[]{"sample"});
 			}
 			Uri serverUri = Env.isSauce () ? AppiumServers.sauceURI : AppiumServers.localURI;
-            driver = new IOSDriver(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);	
+            driver = new IOSDriver<IWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);	
 			driver.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
 		}
 
@@ -198,9 +198,9 @@ namespace Appium.Samples
             e.Click();
             driver.HideKeyboard();
             e.Click();
-            ((IOSDriver) driver).HideKeyboard("Done");
+            ((IOSDriver<IWebElement>) driver).HideKeyboard("Done");
             e.Click();
-            ((IOSDriver)driver).HideKeyboard("Done", HideKeyboardStrategy.Tap_outside);
+            ((IOSDriver<IWebElement>) driver).HideKeyboard("Done", HideKeyboardStrategy.Tap_outside);
         }
 
 	}

@@ -9,241 +9,241 @@ using OpenQA.Selenium.Appium.iOS;
 
 namespace OpenQA.Selenium.Appium.Test.Specs
 {
-	[TestFixture ()]
-	public class TouchTest
-	{	
-		public FakeAppium server;
+    [TestFixture()]
+    public class TouchTest
+    {
+        public FakeAppium server;
         public readonly Uri defaultUri = new Uri("http://127.0.0.1:4753/wd/hub");
         public readonly DesiredCapabilities capabilities = new DesiredCapabilities();
 
-		[TestFixtureSetUp]
-		public void RunBeforeAll(){
-			server = new FakeAppium (4753);			 
-			server.Start ();
-			server.respondToInit ();
-			server.clear ();	
-		}
+        [TestFixtureSetUp]
+        public void RunBeforeAll()
+        {
+            server = new FakeAppium(4753);
+            server.Start();
+            server.respondToInit();
+            server.clear();
+        }
 
-		[TestFixtureTearDown]
-		public void RunAfterAll(){
-			server.Stop ();
-		}
-			
-		[TearDown]
-		public void RunAfterEach()
-		{
-			server.clear ();
-		}
+        [TestFixtureTearDown]
+        public void RunAfterAll()
+        {
+            server.Stop();
+        }
 
-		private RequestProcessor setupTouchAction() {
-			server.respondTo ("POST", "/element", new Dictionary<string, object>  {
-				{"ELEMENT", '5'}
-			});
-			return server.respondTo ("POST", "/touch/perform", null);
-		}
+        [TearDown]
+        public void RunAfterEach()
+        {
+            server.clear();
+        }
 
-		[Test]
-		public void LongPressTestCase ()
-		{
-            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
-			RequestProcessor re = setupTouchAction ();
-			IWebElement element = driver.FindElementByIosUIAutomation (".elements()");
+        private RequestProcessor setupTouchAction()
+        {
+            server.respondTo("POST", "/element", new Dictionary<string, object>  { 				{"ELEMENT", '5'} 			});
+            return server.respondTo("POST", "/touch/perform", null);
+        }
 
-			ITouchAction a;
+        [Test]
+        public void LongPressTestCase()
+        {
+            IOSDriver<IWebElement> driver = new IOSDriver<IWebElement>(defaultUri, capabilities);
+            RequestProcessor re = setupTouchAction();
+            IWebElement element = driver.FindElementByIosUIAutomation(".elements()");
 
-			a = new TouchAction (driver)
-				.LongPress (element, 50, 75);
-			a.Perform ();
-			Assert.AreEqual (re.inputData, "{\"actions\":[{\"action\":\"longpress\",\"options\":{\"element\":\"5\",\"x\":50,\"y\":75}}]}");
+            ITouchAction a;
 
-			a = new TouchAction (driver)
-				.LongPress (element, 0.5, 75);
-			a.Perform ();
-			Assert.AreEqual (re.inputData, "{\"actions\":[{\"action\":\"longpress\",\"options\":{\"element\":\"5\",\"x\":0.5,\"y\":75}}]}");
+            a = new TouchAction(driver)
+                .LongPress(element, 50, 75);
+            a.Perform();
+            Assert.AreEqual(re.inputData, "{\"actions\":[{\"action\":\"longpress\",\"options\":{\"element\":\"5\",\"x\":50,\"y\":75}}]}");
 
-			a = new TouchAction (driver)
-				.LongPress (0.5, 75);
-			a.Perform ();
-			Assert.AreEqual (re.inputData, "{\"actions\":[{\"action\":\"longpress\",\"options\":{\"x\":0.5,\"y\":75}}]}");
+            a = new TouchAction(driver)
+                .LongPress(element, 0.5, 75);
+            a.Perform();
+            Assert.AreEqual(re.inputData, "{\"actions\":[{\"action\":\"longpress\",\"options\":{\"element\":\"5\",\"x\":0.5,\"y\":75}}]}");
 
-			a = new TouchAction (driver)
-				.LongPress (element);
-			a.Perform ();
-			Assert.AreEqual (re.inputData, "{\"actions\":[{\"action\":\"longpress\",\"options\":{\"element\":\"5\"}}]}");
-		}
+            a = new TouchAction(driver)
+                .LongPress(0.5, 75);
+            a.Perform();
+            Assert.AreEqual(re.inputData, "{\"actions\":[{\"action\":\"longpress\",\"options\":{\"x\":0.5,\"y\":75}}]}");
 
-		[Test]
-		public void MoveToTestCase ()
-		{
-            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
-			RequestProcessor re = setupTouchAction ();
-			IWebElement element = driver.FindElementByIosUIAutomation (".elements()");
+            a = new TouchAction(driver)
+                .LongPress(element);
+            a.Perform();
+            Assert.AreEqual(re.inputData, "{\"actions\":[{\"action\":\"longpress\",\"options\":{\"element\":\"5\"}}]}");
+        }
 
-			ITouchAction a;
+        [Test]
+        public void MoveToTestCase()
+        {
+            IOSDriver<IWebElement> driver = new IOSDriver<IWebElement>(defaultUri, capabilities);
+            RequestProcessor re = setupTouchAction();
+            IWebElement element = driver.FindElementByIosUIAutomation(".elements()");
 
-			a = new TouchAction (driver)
-				.MoveTo (element, 50, 75);
-			a.Perform ();
-			Assert.AreEqual (re.inputData, "{\"actions\":[{\"action\":\"moveTo\",\"options\":{\"element\":\"5\",\"x\":50,\"y\":75}}]}");
+            ITouchAction a;
 
-			a = new TouchAction (driver)
-				.MoveTo (element, 0.5, 75);
-			a.Perform ();
-			Assert.AreEqual (re.inputData, "{\"actions\":[{\"action\":\"moveTo\",\"options\":{\"element\":\"5\",\"x\":0.5,\"y\":75}}]}");
+            a = new TouchAction(driver)
+                .MoveTo(element, 50, 75);
+            a.Perform();
+            Assert.AreEqual(re.inputData, "{\"actions\":[{\"action\":\"moveTo\",\"options\":{\"element\":\"5\",\"x\":50,\"y\":75}}]}");
 
-			a = new TouchAction (driver)
-				.MoveTo (0.5, 75);
-			a.Perform ();
-			Assert.AreEqual (re.inputData, "{\"actions\":[{\"action\":\"moveTo\",\"options\":{\"x\":0.5,\"y\":75}}]}");
+            a = new TouchAction(driver)
+                .MoveTo(element, 0.5, 75);
+            a.Perform();
+            Assert.AreEqual(re.inputData, "{\"actions\":[{\"action\":\"moveTo\",\"options\":{\"element\":\"5\",\"x\":0.5,\"y\":75}}]}");
 
-			a = new TouchAction (driver)
-				.MoveTo (element);
-			a.Perform ();
-			Assert.AreEqual (re.inputData, "{\"actions\":[{\"action\":\"moveTo\",\"options\":{\"element\":\"5\"}}]}");
-		}
+            a = new TouchAction(driver)
+                .MoveTo(0.5, 75);
+            a.Perform();
+            Assert.AreEqual(re.inputData, "{\"actions\":[{\"action\":\"moveTo\",\"options\":{\"x\":0.5,\"y\":75}}]}");
 
-		[Test]
-		public void PressTestCase ()
-		{
-            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
-			RequestProcessor re = setupTouchAction ();
-			IWebElement element = driver.FindElementByIosUIAutomation (".elements()");
+            a = new TouchAction(driver)
+                .MoveTo(element);
+            a.Perform();
+            Assert.AreEqual(re.inputData, "{\"actions\":[{\"action\":\"moveTo\",\"options\":{\"element\":\"5\"}}]}");
+        }
 
-			ITouchAction a;
+        [Test]
+        public void PressTestCase()
+        {
+            IOSDriver<IWebElement> driver = new IOSDriver<IWebElement>(defaultUri, capabilities);
+            RequestProcessor re = setupTouchAction();
+            IWebElement element = driver.FindElementByIosUIAutomation(".elements()");
 
-			a = new TouchAction (driver)
-				.Press (element, 50, 75);
-			a.Perform ();
-			Assert.AreEqual (re.inputData, "{\"actions\":[{\"action\":\"press\",\"options\":{\"element\":\"5\",\"x\":50,\"y\":75}}]}");
+            ITouchAction a;
 
-			a = new TouchAction (driver)
-				.Press (element, 0.5, 75);
-			a.Perform ();
-			Assert.AreEqual (re.inputData, "{\"actions\":[{\"action\":\"press\",\"options\":{\"element\":\"5\",\"x\":0.5,\"y\":75}}]}");
+            a = new TouchAction(driver)
+                .Press(element, 50, 75);
+            a.Perform();
+            Assert.AreEqual(re.inputData, "{\"actions\":[{\"action\":\"press\",\"options\":{\"element\":\"5\",\"x\":50,\"y\":75}}]}");
 
-			a = new TouchAction (driver)
-				.Press (0.5, 75);
-			a.Perform ();
-			Assert.AreEqual (re.inputData, "{\"actions\":[{\"action\":\"press\",\"options\":{\"x\":0.5,\"y\":75}}]}");
+            a = new TouchAction(driver)
+                .Press(element, 0.5, 75);
+            a.Perform();
+            Assert.AreEqual(re.inputData, "{\"actions\":[{\"action\":\"press\",\"options\":{\"element\":\"5\",\"x\":0.5,\"y\":75}}]}");
 
-			a = new TouchAction (driver)
-				.Press (element);
-			a.Perform ();
-			Assert.AreEqual (re.inputData, "{\"actions\":[{\"action\":\"press\",\"options\":{\"element\":\"5\"}}]}");
-		}
+            a = new TouchAction(driver)
+                .Press(0.5, 75);
+            a.Perform();
+            Assert.AreEqual(re.inputData, "{\"actions\":[{\"action\":\"press\",\"options\":{\"x\":0.5,\"y\":75}}]}");
 
-		[Test]
-		public void ReleaseTestCase ()
-		{
-            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
-			RequestProcessor re = setupTouchAction ();
-			ITouchAction a;
+            a = new TouchAction(driver)
+                .Press(element);
+            a.Perform();
+            Assert.AreEqual(re.inputData, "{\"actions\":[{\"action\":\"press\",\"options\":{\"element\":\"5\"}}]}");
+        }
 
-			a = new TouchAction (driver)
-				.Release ();
-			a.Perform ();
-			Assert.AreEqual (re.inputData, "{\"actions\":[{\"action\":\"release\"}]}");
-		}
+        [Test]
+        public void ReleaseTestCase()
+        {
+            IOSDriver<IWebElement> driver = new IOSDriver<IWebElement>(defaultUri, capabilities);
+            RequestProcessor re = setupTouchAction();
+            ITouchAction a;
 
-		[Test]
-		public void TapTestCase ()
-		{
-            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
-			RequestProcessor re = setupTouchAction ();
-			IWebElement element = driver.FindElementByIosUIAutomation (".elements()");
+            a = new TouchAction(driver)
+                .Release();
+            a.Perform();
+            Assert.AreEqual(re.inputData, "{\"actions\":[{\"action\":\"release\"}]}");
+        }
 
-			ITouchAction a;
+        [Test]
+        public void TapTestCase()
+        {
+            IOSDriver<IWebElement> driver = new IOSDriver<IWebElement>(defaultUri, capabilities);
+            RequestProcessor re = setupTouchAction();
+            IWebElement element = driver.FindElementByIosUIAutomation(".elements()");
 
-			a = new TouchAction (driver)
-				.Tap (element, 50, 75);
-			a.Perform ();
-			Assert.AreEqual (re.inputData, "{\"actions\":[{\"action\":\"tap\",\"options\":{\"element\":\"5\",\"x\":50,\"y\":75}}]}");
+            ITouchAction a;
 
-			a = new TouchAction (driver)
-				.Tap (element, 50, 75, 10);
-			a.Perform ();
-			Assert.AreEqual (re.inputData, "{\"actions\":[{\"action\":\"tap\",\"options\":{\"element\":\"5\",\"x\":50,\"y\":75,\"count\":10}}]}");
+            a = new TouchAction(driver)
+                .Tap(element, 50, 75);
+            a.Perform();
+            Assert.AreEqual(re.inputData, "{\"actions\":[{\"action\":\"tap\",\"options\":{\"element\":\"5\",\"x\":50,\"y\":75}}]}");
 
-			a = new TouchAction (driver)
-				.Tap (element, 0.5, 75);
-			a.Perform ();
-			Assert.AreEqual (re.inputData, "{\"actions\":[{\"action\":\"tap\",\"options\":{\"element\":\"5\",\"x\":0.5,\"y\":75}}]}");
+            a = new TouchAction(driver)
+                .Tap(element, 50, 75, 10);
+            a.Perform();
+            Assert.AreEqual(re.inputData, "{\"actions\":[{\"action\":\"tap\",\"options\":{\"element\":\"5\",\"x\":50,\"y\":75,\"count\":10}}]}");
 
-			a = new TouchAction (driver)
-				.Tap (0.5, 75);
-			a.Perform ();
-			Assert.AreEqual (re.inputData, "{\"actions\":[{\"action\":\"tap\",\"options\":{\"x\":0.5,\"y\":75}}]}");
+            a = new TouchAction(driver)
+                .Tap(element, 0.5, 75);
+            a.Perform();
+            Assert.AreEqual(re.inputData, "{\"actions\":[{\"action\":\"tap\",\"options\":{\"element\":\"5\",\"x\":0.5,\"y\":75}}]}");
 
-			a = new TouchAction (driver)
-				.Tap (0.5, 75, 10);
-			a.Perform ();
-			Assert.AreEqual (re.inputData, "{\"actions\":[{\"action\":\"tap\",\"options\":{\"x\":0.5,\"y\":75,\"count\":10}}]}");
+            a = new TouchAction(driver)
+                .Tap(0.5, 75);
+            a.Perform();
+            Assert.AreEqual(re.inputData, "{\"actions\":[{\"action\":\"tap\",\"options\":{\"x\":0.5,\"y\":75}}]}");
 
-			a = new TouchAction (driver)
-				.Tap (element);
-			a.Perform ();
-			Assert.AreEqual (re.inputData, "{\"actions\":[{\"action\":\"tap\",\"options\":{\"element\":\"5\"}}]}");
+            a = new TouchAction(driver)
+                .Tap(0.5, 75, 10);
+            a.Perform();
+            Assert.AreEqual(re.inputData, "{\"actions\":[{\"action\":\"tap\",\"options\":{\"x\":0.5,\"y\":75,\"count\":10}}]}");
 
-			a = new TouchAction (driver)
-				.Tap (element, count: 10);
-			a.Perform ();
-			Assert.AreEqual (re.inputData, "{\"actions\":[{\"action\":\"tap\",\"options\":{\"element\":\"5\",\"count\":10}}]}");
-				
-		}
+            a = new TouchAction(driver)
+                .Tap(element);
+            a.Perform();
+            Assert.AreEqual(re.inputData, "{\"actions\":[{\"action\":\"tap\",\"options\":{\"element\":\"5\"}}]}");
 
-		[Test]
-		public void WaitTestCase ()
-		{
-            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
-			RequestProcessor re = setupTouchAction ();
-			ITouchAction a;
+            a = new TouchAction(driver)
+                .Tap(element, count: 10);
+            a.Perform();
+            Assert.AreEqual(re.inputData, "{\"actions\":[{\"action\":\"tap\",\"options\":{\"element\":\"5\",\"count\":10}}]}");
 
-			a = new TouchAction (driver)
-				.Wait (1000);
-			a.Perform ();
-			Assert.AreEqual (re.inputData, "{\"actions\":[{\"action\":\"wait\",\"options\":{\"ms\":1000}}]}");
+        }
 
-			a = new TouchAction (driver)
-				.Wait ();
-			a.Perform ();
-			Assert.AreEqual (re.inputData, "{\"actions\":[{\"action\":\"wait\"}]}");
-		}
+        [Test]
+        public void WaitTestCase()
+        {
+            IOSDriver<IWebElement> driver = new IOSDriver<IWebElement>(defaultUri, capabilities);
+            RequestProcessor re = setupTouchAction();
+            ITouchAction a;
 
-		private RequestProcessor setupMultiAction() {
-			server.respondTo ("POST", "/element", new Dictionary<string, object>  {
-				{"ELEMENT", '5'}
-			});
-			return server.respondTo ("POST", "/touch/multi/perform", null);
-		}
+            a = new TouchAction(driver)
+                .Wait(1000);
+            a.Perform();
+            Assert.AreEqual(re.inputData, "{\"actions\":[{\"action\":\"wait\",\"options\":{\"ms\":1000}}]}");
 
-		[Test]
-		public void MultiActionTestCase ()
-		{
-            IOSDriver driver = new IOSDriver(defaultUri, capabilities);
-			RequestProcessor re = setupMultiAction ();
-			IWebElement element = driver.FindElementByIosUIAutomation (".elements()");
+            a = new TouchAction(driver)
+                .Wait();
+            a.Perform();
+            Assert.AreEqual(re.inputData, "{\"actions\":[{\"action\":\"wait\"}]}");
+        }
 
-			MultiAction m = new MultiAction(driver);
-			m.Perform ();
-			Assert.AreEqual (re.inputData, "");
+        private RequestProcessor setupMultiAction()
+        {
+            server.respondTo("POST", "/element", new Dictionary<string, object>  { 				{"ELEMENT", '5'} 			});
+            return server.respondTo("POST", "/touch/multi/perform", null);
+        }
 
-			TouchAction a1 = new TouchAction ();
-			a1
-				.Press (element, 100, 100)
-				.Wait (1000)
-				.Release ();
-			m.Add (a1);
-			m.Perform ();
-			Assert.AreEqual (re.inputData, "{\"actions\":[[{\"action\":\"press\",\"options\":{\"element\":\"5\",\"x\":100,\"y\":100}},{\"action\":\"wait\",\"options\":{\"ms\":1000}},{\"action\":\"release\"}]]}");
+        [Test]
+        public void MultiActionTestCase()
+        {
+            IOSDriver<IWebElement> driver = new IOSDriver<IWebElement>(defaultUri, capabilities);
+            RequestProcessor re = setupMultiAction();
+            IWebElement element = driver.FindElementByIosUIAutomation(".elements()");
 
-			TouchAction a2 = new TouchAction ();
-			a2
-				.Tap (100, 100)
-				.MoveTo (element);
-			m.Add (a2);
-			m.Perform ();
-			Assert.AreEqual (re.inputData, "{\"actions\":[[{\"action\":\"press\",\"options\":{\"element\":\"5\",\"x\":100,\"y\":100}},{\"action\":\"wait\",\"options\":{\"ms\":1000}},{\"action\":\"release\"}],[{\"action\":\"tap\",\"options\":{\"x\":100,\"y\":100}},{\"action\":\"moveTo\",\"options\":{\"element\":\"5\"}}]]}");
-		}
-	}
+            MultiAction m = new MultiAction(driver);
+            m.Perform();
+            Assert.AreEqual(re.inputData, "");
+
+            TouchAction a1 = new TouchAction();
+            a1
+                .Press(element, 100, 100)
+                .Wait(1000)
+                .Release();
+            m.Add(a1);
+            m.Perform();
+            Assert.AreEqual(re.inputData, "{\"actions\":[[{\"action\":\"press\",\"options\":{\"element\":\"5\",\"x\":100,\"y\":100}},{\"action\":\"wait\",\"options\":{\"ms\":1000}},{\"action\":\"release\"}]]}");
+
+            TouchAction a2 = new TouchAction();
+            a2
+                .Tap(100, 100)
+                .MoveTo(element);
+            m.Add(a2);
+            m.Perform();
+            Assert.AreEqual(re.inputData, "{\"actions\":[[{\"action\":\"press\",\"options\":{\"element\":\"5\",\"x\":100,\"y\":100}},{\"action\":\"wait\",\"options\":{\"ms\":1000}},{\"action\":\"release\"}],[{\"action\":\"tap\",\"options\":{\"x\":100,\"y\":100}},{\"action\":\"moveTo\",\"options\":{\"element\":\"5\"}}]]}");
+        }
+    }
 }
 

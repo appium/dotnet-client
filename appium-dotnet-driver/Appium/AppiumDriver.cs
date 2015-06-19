@@ -28,6 +28,7 @@ using System.Linq;
 using System.Reflection;
 using System.Diagnostics.Contracts;
 using Newtonsoft.Json;
+using Appium.Interfaces.Generic.SearchContext;
 
 namespace OpenQA.Selenium.Appium
 {
@@ -69,8 +70,10 @@ namespace OpenQA.Selenium.Appium
     /// }
     /// </code>
     /// </example>
-    public abstract class AppiumDriver : RemoteWebDriver, IFindByAccessibilityId, IDeviceActionShortcuts, IInteractsWithFiles,
-        IInteractsWithApps, IPerformsTouchActions, IRotatable, IContextAware
+    public abstract class AppiumDriver<W> : RemoteWebDriver, IFindByAccessibilityId<W>, IDeviceActionShortcuts, IInteractsWithFiles,
+        IInteractsWithApps, IPerformsTouchActions, IRotatable, IContextAware, IGenericSearchContext<W>, IGenericFindsByClassName<W>,
+        IGenericFindsById<W>, IGenericFindsByCssSelector<W>, IGenericFindsByLinkText<W>, IGenericFindsByName<W>,
+        IGenericFindsByPartialLinkText<W>, IGenericFindsByTagName<W>, IGenericFindsByXPath<W> where W : IWebElement
     {
         #region Constructors
         /// <summary>
@@ -117,44 +120,127 @@ namespace OpenQA.Selenium.Appium
         }
         #endregion Constructors
 
-        #region Public Methods
+        #region Generic FindMethods
+        public W FindElement(By by)
+        {
+            return (W)base.FindElement(by);
+        }
 
-        #region FindMethods
+        public ReadOnlyCollection<W> FindElements(By by)
+        {
+            return CollectionConverterUnility.
+                ConvertToExtendedWebElementCollection<W>(base.FindElements(by));
+        }
+
+        public W FindElementByClassName(string className)
+        {
+            return (W)base.FindElementByClassName(className);
+        }
+
+        public ReadOnlyCollection<W> FindElementsByClassName(string className)
+        {
+            return CollectionConverterUnility.
+                ConvertToExtendedWebElementCollection<W>(base.FindElementsByClassName(className));
+        }
+
+        public W FindElementById(string id)
+        {
+            return (W) base.FindElementById(id);
+        }
+
+
+        public ReadOnlyCollection<W> FindElementsById(string id)
+        {
+            return CollectionConverterUnility.
+                            ConvertToExtendedWebElementCollection<W>(base.FindElementsById(id));
+        }
+
+        public W FindElementByCssSelector(string cssSelector)
+        {
+            return (W)base.FindElementByCssSelector(cssSelector); 
+        }
+
+
+        public ReadOnlyCollection<W> FindElementsByCssSelector(string cssSelector)
+        {
+            return CollectionConverterUnility.
+                            ConvertToExtendedWebElementCollection<W>(base.FindElementsByCssSelector(cssSelector));
+        }
+
+        public W FindElementByLinkText(string linkText)
+        {
+            return (W) base.FindElementByLinkText(linkText); 
+        }
+
+        public ReadOnlyCollection<W> FindElementsByLinkText(string linkText)
+        {
+            return CollectionConverterUnility.
+                            ConvertToExtendedWebElementCollection<W>(base.FindElementsByLinkText(linkText));
+        }
+
+        public W FindElementByName(string name)
+        {
+            return (W)base.FindElementByName(name); 
+        }
+
+        public ReadOnlyCollection<W> FindElementsByName(string name)
+        {
+            return CollectionConverterUnility.
+                            ConvertToExtendedWebElementCollection<W>(base.FindElementsByName(name));
+        }
+
+        public W FindElementByPartialLinkText(string partialLinkText)
+        {
+            return (W) base.FindElementByPartialLinkText(partialLinkText); 
+        }
+
+        public ReadOnlyCollection<W> FindElementsByPartialLinkText(string partialLinkText)
+        {
+            return CollectionConverterUnility.
+                            ConvertToExtendedWebElementCollection<W>(base.FindElementsByPartialLinkText(partialLinkText));
+        }
+
+        public W FindElementByTagName(string tagName)
+        {
+            return (W) base.FindElementByTagName(tagName); 
+        }
+
+        public ReadOnlyCollection<W> FindElementsByTagName(string tagName)
+        {
+            return CollectionConverterUnility.
+                            ConvertToExtendedWebElementCollection<W>(base.FindElementsByTagName(tagName));
+        }
+
+        public W FindElementByXPath(string xpath)
+        {
+            return (W) base.FindElementByXPath(xpath); 
+        }
+
+        public ReadOnlyCollection<W> FindElementsByXPath(string xpath)
+        {
+            return CollectionConverterUnility.
+                            ConvertToExtendedWebElementCollection<W>(base.FindElementsByXPath(xpath));
+        }
 
         #region IFindByAccessibilityId Members
-        /// <summary>
-        /// Finds the first element in the page that matches the Accessibility Id selector supplied
-        /// </summary>
-        /// <param name="selector">Selector for the element.</param>
-        /// <returns>IWebElement object so that you can interact that object</returns>
-        /// <example>
-        /// <code>
-        /// IWebDriver driver = new RemoteWebDriver(DesiredCapabilities.Firefox());
-        /// IWebElement elem = driver.FindElementByAccessibilityId('elements()'))
-        /// </code>
-        /// </example>
-        public IWebElement FindElementByAccessibilityId(string selector)
+
+        public W FindElementByAccessibilityId(string selector)
         {
-            return this.FindElement("accessibility id", selector);
+            return (W) this.FindElement("accessibility id", selector);
         }
 
-        /// <summary>
-        /// Finds a list of elements that match the Accessibility Id selector supplied
-        /// </summary>
-        /// <param name="selector">Selector for the elements.</param>
-        /// <returns>ReadOnlyCollection of IWebElement object so that you can interact with those objects</returns>
-        /// <example>
-        /// <code>
-        /// IWebDriver driver = new RemoteWebDriver(DesiredCapabilities.Firefox());
-        /// ReadOnlyCollection<![CDATA[<IWebElement>]]> elem = driver.FindElementsByAccessibilityId(elements())
-        /// </code>
-        /// </example>
-        public ReadOnlyCollection<IWebElement> FindElementsByAccessibilityId(string selector)
+        public ReadOnlyCollection<W> FindElementsByAccessibilityId(string selector)
         {
-            return this.FindElements("accessibility id", selector);
+            return CollectionConverterUnility.
+                            ConvertToExtendedWebElementCollection<W>(base.FindElements("accessibility id", selector));
         }
+
         #endregion IFindByAccessibilityId Members
+
         #endregion
+
+        #region Public Methods
+
 
         #region MJsonMethod Members
         /// <summary>
@@ -320,6 +406,7 @@ namespace OpenQA.Selenium.Appium
         /// <summary>
         /// Hides the device keyboard.
         /// </summary>
+        /// <param name="keyName">The button pressed by the mobile driver to attempt hiding the keyboard.</param>
         public void HideKeyboard()
         {
             this.HideKeyboard(null, null);

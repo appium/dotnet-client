@@ -2,6 +2,7 @@
 using OpenQA.Selenium.Appium.Interfaces;
 using System.Collections.Generic;
 using System.Reflection;
+using OpenQA.Selenium.Remote;
 
 namespace OpenQA.Selenium.Appium.MultiTouch
 {
@@ -47,16 +48,16 @@ namespace OpenQA.Selenium.Appium.MultiTouch
 			}
 		}
 
-		private AppiumDriver driver;
+		private IPerformsTouchActions TouchActionPerformer;
 		private List<Step> steps = new List<Step>();
 
 		public TouchAction ()
 		{
 		}
 
-		public TouchAction (AppiumDriver driver)
+        public TouchAction(IPerformsTouchActions touchActionPerformer)
 		{
-			this.driver = driver;
+            this.TouchActionPerformer = touchActionPerformer;
 		}
 
 		/// <summary>
@@ -238,7 +239,7 @@ namespace OpenQA.Selenium.Appium.MultiTouch
 		/// </summary>
 		public void Cancel()
 		{
-			this.driver = null;
+            this.TouchActionPerformer = null;
 			steps.Clear ();
 		}
 
@@ -247,7 +248,7 @@ namespace OpenQA.Selenium.Appium.MultiTouch
 		/// </summary>
 		public void Perform()
 		{
-			this.driver.PerformTouchAction (this);
+            this.TouchActionPerformer.PerformTouchAction(this);
 		}
 
 	}

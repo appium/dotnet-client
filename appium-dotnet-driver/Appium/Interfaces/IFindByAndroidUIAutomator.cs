@@ -2,7 +2,7 @@
 
 namespace OpenQA.Selenium.Appium.Interfaces
 {
-    public interface IFindByAndroidUIAutomator
+    public interface IFindByAndroidUIAutomator<W> where W : IWebElement
     {
         /// <summary>
         /// Finds the first element in the page that matches the Android UIAutomator selector supplied
@@ -15,7 +15,7 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// IWebElement elem = driver.FindElementByAndroidUIAutomator('elements()'))
         /// </code>
         /// </example>
-        IWebElement FindElementByAndroidUIAutomator(string selector);
+        W FindElementByAndroidUIAutomator(string selector);
 
         /// <summary>
         /// Finds a list of elements that match the Android UIAutomator selector supplied
@@ -28,6 +28,6 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// ReadOnlyCollection<![CDATA[<IWebElement>]]> elem = driver.FindElementsByAndroidUIAutomator(elements())
         /// </code>
         /// </example>
-        ReadOnlyCollection<IWebElement> FindElementsByAndroidUIAutomator(string selector);
+        ReadOnlyCollection<W> FindElementsByAndroidUIAutomator(string selector);
     }
 }

@@ -20,6 +20,8 @@ using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using OpenQA.Selenium.Appium.Interfaces;
+using System.Reflection;
+using System.Collections;
 
 namespace OpenQA.Selenium.Appium
 {
@@ -29,7 +31,7 @@ namespace OpenQA.Selenium.Appium
     public class ByIosUIAutomation : By
     {
         private string _Selector = string.Empty;
-        private const string _UnableToCast = "Unable to cast ISearchContext to IFindByIosUIAutomation";
+        private readonly string InterfaceNameRegExp = "IFindByIosUIAutomation`1";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ByIosUIAutomation"/> class.
@@ -52,12 +54,14 @@ namespace OpenQA.Selenium.Appium
         /// <returns>The element that matches</returns>
         public override IWebElement FindElement(ISearchContext context)
         {
-            var tmpContext = context as IFindByIosUIAutomation;
-            if (null == tmpContext)
+            Type contextType = context.GetType();
+            Type findByAccessibilityId = contextType.GetInterface(InterfaceNameRegExp, false);
+            if (null == findByAccessibilityId)
             {
-                throw new InvalidCastException(_UnableToCast);
+                throw new InvalidCastException("Unable to cast " + contextType.ToString() + " to IFindByIosUIAutomation");
             }
-            return tmpContext.FindElementByIosUIAutomation(_Selector);
+            MethodInfo m = findByAccessibilityId.GetMethod("FindElementByIosUIAutomation", new Type[] { typeof(string) });
+            return (IWebElement)m.Invoke(context, new object[] { _Selector });
         }
 
         /// <summary>
@@ -67,12 +71,15 @@ namespace OpenQA.Selenium.Appium
         /// <returns>A readonly collection of elements that match.</returns>
         public override ReadOnlyCollection<IWebElement> FindElements(ISearchContext context)
         {
-            var tmpContext = context as IFindByIosUIAutomation;
-            if (null == tmpContext)
+            Type contextType = context.GetType();
+            Type findByAccessibilityId = contextType.GetInterface(InterfaceNameRegExp, false);
+            if (null == findByAccessibilityId)
             {
-                throw new InvalidCastException(_UnableToCast);
+                throw new InvalidCastException("Unable to cast " + contextType.ToString() + " to IFindByIosUIAutomation");
             }
-            return tmpContext.FindElementsByIosUIAutomation(_Selector);
+            MethodInfo m = findByAccessibilityId.GetMethod("FindElementsByIosUIAutomation", new Type[] { typeof(string) });
+            return CollectionConverterUnility.
+                            ConvertToExtendedWebElementCollection<IWebElement>((IList) m.Invoke(context, new object[] { _Selector }));
         }
 
         /// <summary>
