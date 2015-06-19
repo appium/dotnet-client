@@ -9,7 +9,7 @@ using System;
 namespace Appium.Samples
 {
     [TestFixture()]
-    class IOSLocatoinTest
+    class IOSLocationTest
     {
         private AppiumDriver<IOSElement> driver;
         private bool allPassed = true;

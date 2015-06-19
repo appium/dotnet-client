@@ -9,7 +9,7 @@ using System;
 namespace Appium.Samples
 {
     [TestFixture()]
-    class AndroidLocatoinTest
+    class AndroidLocationTest
     {
         private AppiumDriver<AndroidElement> driver;
         private bool allPassed = true;
