@@ -1,5 +1,9 @@
 #Release Notes
 
+## 1.3.0.1
+- Generic AppiumDriver class and subclasses
+- Fixes for backward compatabliltiy for TryAddCommand
+
 ## 1.2.0.8
 - Fix and add tests for Hide Keyboard
 
