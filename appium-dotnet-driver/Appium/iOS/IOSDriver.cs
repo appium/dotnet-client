@@ -1,12 +1,9 @@
 ﻿using OpenQA.Selenium.Appium.Enums;
-using OpenQA.Selenium.Appium.iOS.Interfaces;
 using OpenQA.Selenium.Appium.Interfaces;
+using OpenQA.Selenium.Appium.iOS.Interfaces;
 using OpenQA.Selenium.Remote;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 
 namespace OpenQA.Selenium.Appium.iOS
 {
@@ -54,11 +51,21 @@ namespace OpenQA.Selenium.Appium.iOS
         }
 
         #region IFindByIosUIAutomation Members
+        /// <summary>
+        /// Finds the first element that matches the iOS UIAutomation selector
+        /// </summary>
+        /// <param name="selector">UIAutomation selector</param>
+        /// <returns>First element found</returns>
         public W FindElementByIosUIAutomation(string selector)
         {
             return (W) this.FindElement("-ios uiautomation", selector);
         }
 
+        /// <summary>
+        /// Finds a list of elements that match the iOS UIAutomation selector
+        /// </summary>
+        /// <param name="selector">UIAutomation selector</param>
+        /// <returns>ReadOnlyCollection of elements found</returns>
         public ReadOnlyCollection<W> FindElementsByIosUIAutomation(string selector)
         {
             return CollectionConverterUnility.
@@ -74,12 +81,21 @@ namespace OpenQA.Selenium.Appium.iOS
             this.Execute(AppiumDriverCommand.ShakeDevice, null);
         }
 
-        public void HideKeyboard(string key, string strategy = null)
+        /// <summary>
+        /// Hides the keyboard
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="strategy"></param>
+        public new void HideKeyboard(string key, string strategy = null)
         {
             base.HideKeyboard(strategy, key);
         }
 
-
+        /// <summary>
+        /// Create an iOS Element
+        /// </summary>
+        /// <param name="elementId">element to create</param>
+        /// <returns>IOSElement</returns>
         protected override RemoteWebElement CreateElement(string elementId)
         {
             return new IOSElement(this, elementId);

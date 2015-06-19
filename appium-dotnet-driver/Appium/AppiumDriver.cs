@@ -16,19 +16,17 @@
 // limitations under the License.
 // </copyright>
 
+using Appium.Interfaces.Generic.SearchContext;
+using Newtonsoft.Json;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.MultiTouch;
-using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
-using System.Diagnostics.Contracts;
-using Newtonsoft.Json;
-using Appium.Interfaces.Generic.SearchContext;
 
 namespace OpenQA.Selenium.Appium
 {
@@ -121,102 +119,190 @@ namespace OpenQA.Selenium.Appium
         #endregion Constructors
 
         #region Generic FindMethods
-        public W FindElement(By by)
+        /// <summary>
+        /// Finds the first element in the page that matches the OpenQA.Selenium.By object 
+        /// </summary>
+        /// <param name="by">Mechanism to find element</param>
+        /// <returns>first element found</returns>
+        public new W FindElement(By by)
         {
             return (W)base.FindElement(by);
         }
 
-        public ReadOnlyCollection<W> FindElements(By by)
+        /// <summary>
+        /// Find the elements on the page by using the <see cref="T:OpenQA.Selenium.By"/> object and returns a ReadonlyCollection of the Elements on the page 
+        /// </summary>
+        /// <param name="by">Mechanism to find element</param>
+        /// <returns>ReadOnlyCollection of elements found</returns>
+        public new ReadOnlyCollection<W> FindElements(By by)
         {
             return CollectionConverterUnility.
                 ConvertToExtendedWebElementCollection<W>(base.FindElements(by));
         }
 
-        public W FindElementByClassName(string className)
+        /// <summary>
+        /// Finds the first element in the page that matches the class name supplied
+        /// </summary>
+        /// <param name="className">CSS class name on the element</param>
+        /// <returns>first element found</returns>
+        public new W FindElementByClassName(string className)
         {
             return (W)base.FindElementByClassName(className);
         }
 
-        public ReadOnlyCollection<W> FindElementsByClassName(string className)
+        /// <summary>
+        /// Finds a list of elements that match the class name supplied
+        /// </summary>
+        /// <param name="className">CSS class name on the element</param>
+        /// <returns>ReadOnlyCollection of elements found</returns>
+        public new ReadOnlyCollection<W> FindElementsByClassName(string className)
         {
             return CollectionConverterUnility.
                 ConvertToExtendedWebElementCollection<W>(base.FindElementsByClassName(className));
         }
 
-        public W FindElementById(string id)
+        /// <summary>
+        /// Finds the first element in the page that matches the ID supplied
+        /// </summary>
+        /// <param name="id">ID of the element</param>
+        /// <returns>First element found</returns>
+        public new W FindElementById(string id)
         {
-            return (W) base.FindElementById(id);
+            return (W)base.FindElementById(id);
         }
 
-
-        public ReadOnlyCollection<W> FindElementsById(string id)
+        /// <summary>
+        /// Finds a list of elements that match the ID supplied
+        /// </summary>
+        /// <param name="id">ID of the element</param>
+        /// <returns>ReadOnlyCollection of elements found</returns>
+        public new ReadOnlyCollection<W> FindElementsById(string id)
         {
             return CollectionConverterUnility.
                             ConvertToExtendedWebElementCollection<W>(base.FindElementsById(id));
         }
 
-        public W FindElementByCssSelector(string cssSelector)
+        /// <summary>
+        /// Finds the first element matching the specified CSS selector
+        /// </summary>
+        /// <param name="cssSelector">The CSS selector to match</param>
+        /// <returns>First element found</returns>
+        public new W FindElementByCssSelector(string cssSelector)
         {
-            return (W)base.FindElementByCssSelector(cssSelector); 
+            return (W)base.FindElementByCssSelector(cssSelector);
         }
 
-
-        public ReadOnlyCollection<W> FindElementsByCssSelector(string cssSelector)
+        /// <summary>
+        /// Finds a list of elements that match the CSS selector
+        /// </summary>
+        /// <param name="cssSelector">The CSS selector to match</param>
+        /// <returns>ReadOnlyCollection of elements found</returns>
+        public new ReadOnlyCollection<W> FindElementsByCssSelector(string cssSelector)
         {
             return CollectionConverterUnility.
                             ConvertToExtendedWebElementCollection<W>(base.FindElementsByCssSelector(cssSelector));
         }
 
-        public W FindElementByLinkText(string linkText)
+        /// <summary>
+        /// Finds the first of elements that match the link text supplied
+        /// </summary>
+        /// <param name="linkText">Link text of element</param>
+        /// <returns>First element found</returns>
+        public new W FindElementByLinkText(string linkText)
         {
-            return (W) base.FindElementByLinkText(linkText); 
+            return (W)base.FindElementByLinkText(linkText);
         }
 
-        public ReadOnlyCollection<W> FindElementsByLinkText(string linkText)
+        /// <summary>
+        /// Finds a list of elements that match the link text supplied
+        /// </summary>
+        /// <param name="linkText">Link text of element</param>
+        /// <returns>ReadOnlyCollection of elements found</returns>
+        public new ReadOnlyCollection<W> FindElementsByLinkText(string linkText)
         {
             return CollectionConverterUnility.
                             ConvertToExtendedWebElementCollection<W>(base.FindElementsByLinkText(linkText));
         }
 
-        public W FindElementByName(string name)
+        /// <summary>
+        /// Finds the first of elements that match the name supplied
+        /// </summary>
+        /// <param name="name">Name of the element on the page</param>
+        /// <returns>First element found</returns>
+        public new W FindElementByName(string name)
         {
-            return (W)base.FindElementByName(name); 
+            return (W)base.FindElementByName(name);
         }
 
-        public ReadOnlyCollection<W> FindElementsByName(string name)
+        /// <summary>
+        /// Finds a list of elements that match the name supplied
+        /// </summary>
+        /// <param name="name">Name of the element on the page</param>
+        /// <returns>ReadOnlyCollection of elements found</returns>
+        public new ReadOnlyCollection<W> FindElementsByName(string name)
         {
             return CollectionConverterUnility.
                             ConvertToExtendedWebElementCollection<W>(base.FindElementsByName(name));
         }
 
-        public W FindElementByPartialLinkText(string partialLinkText)
+        /// <summary>
+        /// Finds the first of elements that match the part of the link text supplied
+        /// </summary>
+        /// <param name="partialLinkText">Part of the link text</param>
+        /// <returns>First element found</returns>
+        public new W FindElementByPartialLinkText(string partialLinkText)
         {
-            return (W) base.FindElementByPartialLinkText(partialLinkText); 
+            return (W)base.FindElementByPartialLinkText(partialLinkText);
         }
 
-        public ReadOnlyCollection<W> FindElementsByPartialLinkText(string partialLinkText)
+        /// <summary>
+        /// Finds a list of elements that match the part of the link text supplied
+        /// </summary>
+        /// <param name="partialLinkText">Part of the link text</param>
+        /// <returns>ReadOnlyCollection of elements found</returns>
+        public new ReadOnlyCollection<W> FindElementsByPartialLinkText(string partialLinkText)
         {
             return CollectionConverterUnility.
                             ConvertToExtendedWebElementCollection<W>(base.FindElementsByPartialLinkText(partialLinkText));
         }
 
-        public W FindElementByTagName(string tagName)
+        /// <summary>
+        /// Finds the first of elements that match the DOM Tag supplied
+        /// </summary>
+        /// <param name="tagName">DOM tag name of the element being searched</param>
+        /// <returns>First element found</returns>
+        public new W FindElementByTagName(string tagName)
         {
-            return (W) base.FindElementByTagName(tagName); 
+            return (W)base.FindElementByTagName(tagName);
         }
 
-        public ReadOnlyCollection<W> FindElementsByTagName(string tagName)
+        /// <summary>
+        /// Finds a list of elements that match the DOM Tag supplied
+        /// </summary>
+        /// <param name="tagName">DOM tag name of the element being searched</param>
+        /// <returns>ReadOnlyCollection of elements found</returns>
+        public new ReadOnlyCollection<W> FindElementsByTagName(string tagName)
         {
             return CollectionConverterUnility.
                             ConvertToExtendedWebElementCollection<W>(base.FindElementsByTagName(tagName));
         }
 
-        public W FindElementByXPath(string xpath)
+        /// <summary>
+        /// Finds the first of elements that match the XPath supplied
+        /// </summary>
+        /// <param name="xpath">xpath to the element</param>
+        /// <returns>First element found</returns>
+        public new W FindElementByXPath(string xpath)
         {
-            return (W) base.FindElementByXPath(xpath); 
+            return (W)base.FindElementByXPath(xpath);
         }
 
-        public ReadOnlyCollection<W> FindElementsByXPath(string xpath)
+        /// <summary>
+        /// Finds a list of elements that match the XPath supplied
+        /// </summary>
+        /// <param name="xpath">xpath to the element</param>
+        /// <returns>ReadOnlyCollection of elements found</returns>
+        public new ReadOnlyCollection<W> FindElementsByXPath(string xpath)
         {
             return CollectionConverterUnility.
                             ConvertToExtendedWebElementCollection<W>(base.FindElementsByXPath(xpath));
@@ -224,11 +310,21 @@ namespace OpenQA.Selenium.Appium
 
         #region IFindByAccessibilityId Members
 
+        /// <summary>
+        /// Finds the first element that match the accessibility id supplied
+        /// </summary>
+        /// <param name="selector">accessibility id</param>
+        /// <returns>First element found</returns>
         public W FindElementByAccessibilityId(string selector)
         {
-            return (W) this.FindElement("accessibility id", selector);
+            return (W)this.FindElement("accessibility id", selector);
         }
 
+        /// <summary>
+        /// Finds a list of elements that match the accessibillity id supplied
+        /// </summary>
+        /// <param name="selector">accessibility id</param>
+        /// <returns>ReadOnlyCollection of elements found</returns>
         public ReadOnlyCollection<W> FindElementsByAccessibilityId(string selector)
         {
             return CollectionConverterUnility.
@@ -394,7 +490,11 @@ namespace OpenQA.Selenium.Appium
             return commandResponse.Value as string;
         }
 
- 
+        /// <summary>
+        /// Hide the keyboard
+        /// </summary>
+        /// <param name="strategy"></param>
+        /// <param name="key"></param>
         protected void HideKeyboard(string strategy = null, string key = null)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
@@ -415,15 +515,18 @@ namespace OpenQA.Selenium.Appium
         /// <sumary>
         /// GPS Location
         /// </summary>
-        public Location Location { 
-                get {
-                        var commandResponse = this.Execute(AppiumDriverCommand.GetLocation, null);
-                        return JsonConvert.DeserializeObject<Location>((String) commandResponse.Value);
-                }
-                set {
-                        var location = value ?? new Location();
-                        Execute(AppiumDriverCommand.SetLocation, location.ToDictionary());
-                }
+        public Location Location
+        {
+            get
+            {
+                var commandResponse = this.Execute(AppiumDriverCommand.GetLocation, null);
+                return JsonConvert.DeserializeObject<Location>((String)commandResponse.Value);
+            }
+            set
+            {
+                var location = value ?? new Location();
+                Execute(AppiumDriverCommand.SetLocation, location.ToDictionary());
+            }
         }
 
         #endregion MJsonMethod Members
@@ -446,7 +549,8 @@ namespace OpenQA.Selenium.Appium
 
         public ReadOnlyCollection<string> Contexts
         {
-            get {
+            get
+            {
                 var commandResponse = this.Execute(AppiumDriverCommand.Contexts, null);
                 var contexts = new List<string>();
                 var objects = commandResponse.Value as object[];
@@ -462,6 +566,9 @@ namespace OpenQA.Selenium.Appium
         #endregion Context
 
         #region Orientation
+        /// <summary>
+        /// Sets/Gets the Orientation
+        /// </summary>
         public ScreenOrientation Orientation
         {
             get
@@ -570,30 +677,30 @@ namespace OpenQA.Selenium.Appium
 
         #endregion Multi Actions
 
-		#region Settings
+        #region Settings
 
-		/// <summary>
-		/// Get appium settings currently set for the session
-		/// See: https://github.com/appium/appium/blob/master/docs/en/advanced-concepts/settings.md
-		/// </summary>
-		public Dictionary<String, Object> GetSettings()
-		{
-			var commandResponse = this.Execute(AppiumDriverCommand.GetSettings, null);
-			return JsonConvert.DeserializeObject<Dictionary<String, Object>>((String) commandResponse.Value);
-		}
+        /// <summary>
+        /// Get appium settings currently set for the session
+        /// See: https://github.com/appium/appium/blob/master/docs/en/advanced-concepts/settings.md
+        /// </summary>
+        public Dictionary<String, Object> GetSettings()
+        {
+            var commandResponse = this.Execute(AppiumDriverCommand.GetSettings, null);
+            return JsonConvert.DeserializeObject<Dictionary<String, Object>>((String)commandResponse.Value);
+        }
 
-		/// <summary>
-		/// Update an appium Setting, on the session
-		/// </summary>
-		protected void UpdateSetting(String setting, Object value)
-		{
-			var parameters = new Dictionary<string, object>();
-			var settings = new Dictionary<string, object>();
-			settings.Add(setting, value);
-			parameters.Add("settings", settings);
-			this.Execute(AppiumDriverCommand.UpdateSettings, parameters);          
-		}
-		#endregion Settings
+        /// <summary>
+        /// Update an appium Setting, on the session
+        /// </summary>
+        protected void UpdateSetting(String setting, Object value)
+        {
+            var parameters = new Dictionary<string, object>();
+            var settings = new Dictionary<string, object>();
+            settings.Add(setting, value);
+            parameters.Add("settings", settings);
+            this.Execute(AppiumDriverCommand.UpdateSettings, parameters);
+        }
+        #endregion Settings
 
         #endregion Public Methods
 
@@ -711,9 +818,9 @@ namespace OpenQA.Selenium.Appium
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.HideKeyboard, "/session/{sessionId}/appium/device/hide_keyboard"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.OpenNotifications, "/session/{sessionId}/appium/device/open_notifications"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.StartActivity, "/session/{sessionId}/appium/device/start_activity"),
-				new _Commands(CommandInfo.GetCommand,  AppiumDriverCommand.GetSettings, "/session/{sessionId}/appium/settings"),
-				new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.UpdateSettings, "/session/{sessionId}/appium/settings"),
-				#endregion Appium Commands
+                new _Commands(CommandInfo.GetCommand,  AppiumDriverCommand.GetSettings, "/session/{sessionId}/appium/settings"),
+                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.UpdateSettings, "/session/{sessionId}/appium/settings"),
+                #endregion Appium Commands
                 #region Touch Commands
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.MultiActionV2Perform, "/session/{sessionId}/touch/multi/perform"),
                 new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.TouchActionV2Perform, "/session/{sessionId}/touch/perform"),
@@ -741,11 +848,11 @@ namespace OpenQA.Selenium.Appium
 
             // Add the custom commandInfo of AppiumDriver
             var dynMethod = typeof(CommandInfoRepository).GetMethod("TryAddAdditionalCommand", BindingFlags.NonPublic | BindingFlags.Instance);
-			if (dynMethod == null)
-			{
-				//In Selenium 2.46.0 'TryAddAdditionalCommand' method renamed to 'TryAddCommand' and changed to public. Fixes Google Code issue #8594
-				dynMethod = typeof(CommandInfoRepository).GetMethod("TryAddCommand", BindingFlags.Public | BindingFlags.Instance);
-			}
+            if (dynMethod == null)
+            {
+                //In Selenium 2.46.0 'TryAddAdditionalCommand' method renamed to 'TryAddCommand' and changed to public. Fixes Google Code issue #8594
+                dynMethod = typeof(CommandInfoRepository).GetMethod("TryAddCommand", BindingFlags.Public | BindingFlags.Instance);
+            }
 
             // Add each new command to the Command Info Repository
             foreach (_Commands entry in commandList)
