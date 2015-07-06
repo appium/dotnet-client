@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium.Appium.Interfaces;
+﻿using OpenQA.Selenium.Appium.Appium.Interfaces;
+using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,9 @@ using System.Text;
 
 namespace OpenQA.Selenium.Appium.iOS
 {
-    public class IOSElement : AppiumWebElement, IFindByIosUIAutomation<AppiumWebElement>
+    public class IOSElement : AppiumWebElement, 
+        IFindByIosUIAutomation<AppiumWebElement>, 
+        IScrollsTo<AppiumWebElement>
     {
         /// <summary>
         /// Initializes a new instance of the IOSElement class.
@@ -34,5 +37,29 @@ namespace OpenQA.Selenium.Appium.iOS
                             ConvertToExtendedWebElementCollection<AppiumWebElement>(this.FindElements("-ios uiautomation", selector));
         }
         #endregion IFindByIosUIAutomation Members
+
+        #region IScrollsTo Members
+
+        /// <summary>
+        /// Scroll to the element whose 'text' attribute contains the input text.
+        /// Scrolling happens within this element
+        /// </summary>
+        /// <param name="text">input text contained in text attribute</param>
+        public AppiumWebElement ScrollTo(string text)
+        {
+            return (IOSElement) FindElementByIosUIAutomation(".scrollToElementWithPredicate(\"name CONTAINS '" + text + "'\")");
+        }
+
+        /// <summary>
+        /// Scroll to the element whose 'text' attribute matches the input text.
+        /// Scrolling happens within this element
+        /// </summary>
+        /// <param name="text">input text contained in text attribute</param>
+        public AppiumWebElement ScrollToExact(string text)
+        {
+            return (IOSElement) FindElementByIosUIAutomation(".scrollToElementWithName(\"" + text + "\")");
+        }
+
+        #endregion
     }
 }

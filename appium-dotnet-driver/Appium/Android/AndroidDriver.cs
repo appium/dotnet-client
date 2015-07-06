@@ -16,6 +16,14 @@ namespace OpenQA.Selenium.Appium.Android
     {
         private static readonly string Platform = MobilePlatform.Android;
 
+        private const string METASTATE_PARAM = "metastate";
+        private const string CONNECTION_NAME_PARAM = "name";
+        private const string CONNECTION_PARAM_PARAM = "parameters";
+        private const string DATA_PARAM = "data";
+        private const string INTENT_PARAM = "intent";
+
+        private const string CONNECTION_NAME_VALUE = "network_connection";
+
 
         /// <summary>
         /// Initializes a new instance of the AndroidDriver class
@@ -212,5 +220,115 @@ namespace OpenQA.Selenium.Appium.Android
             base.UpdateSetting("ignoreUnimportantViews", value);
         }
 
+        #region scrollTo, scrollToExact
+
+        /// <summary>
+        /// Scroll forward to the element which has a description or name which contains the input text.
+        /// The scrolling is performed on the first scrollView present on the UI.
+        /// </summary>
+        public override W ScrollTo(String text)
+        {
+            String uiScrollables = UiScrollable("new UiSelector().descriptionContains(\"" + text + "\")") +
+                                   UiScrollable("new UiSelector().textContains(\"" + text + "\")");
+
+            return FindElementByAndroidUIAutomator(uiScrollables);
+        }
+
+        /// <summary>
+        /// Scroll forward to the element which has a description or name which exactly matches the input text.
+        /// The scrolling is performed on the first scrollView present on the UI
+        /// </summary>
+        public override W ScrollToExact(String text)
+        {
+            String uiScrollables = UiScrollable("new UiSelector().description(\"" + text + "\")") +
+                                   UiScrollable("new UiSelector().text(\"" + text + "\")");
+            return FindElementByAndroidUIAutomator(uiScrollables);
+        }
+
+        /// <summary>
+        /// Scroll forward to the element which has a description or name which contains the input text.
+        /// The scrolling is performed on the first scrollView present on the UI.
+        /// </summary>
+        public W ScrollTo(String text, String resId)
+        {
+            String uiScrollables = UiScrollable("new UiSelector().descriptionContains(\"" + text + "\")", resId) +
+                                   UiScrollable("new UiSelector().textContains(\"" + text + "\")", resId);
+
+            return FindElementByAndroidUIAutomator(uiScrollables);
+        }
+
+        /// <summary>
+        /// Scroll forward to the element which has a description or name which exactly matches the input text.
+        /// The scrolling is performed on the first scrollView present on the UI
+        /// </summary>
+        public W ScrollToExact(String text, String resId)
+        {
+            String uiScrollables = UiScrollable("new UiSelector().description(\"" + text + "\")", resId) +
+                                   UiScrollable("new UiSelector().text(\"" + text + "\")", resId);
+            return FindElementByAndroidUIAutomator(uiScrollables);
+        }
+
+        private static string UiScrollable(string uiSelector, string resId)
+        {
+            return "new UiScrollable(new UiSelector().scrollable(true).resourceId(\"" + resId + "\")).scrollIntoView(" + uiSelector + ".instance(0));";
+        }
+
+        private static string UiScrollable(string uiSelector)
+        {
+            return "new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(" + uiSelector + ".instance(0));";
+        }
+
+        #endregion
+
+
+        protected Response Execute(string driverCommandToExecute)
+        {
+            return base.Execute(driverCommandToExecute, null);
+        }
+
+        public NetworkConnectionSetting GetNetworkConnection()
+        {
+            Response response = Execute(AppiumDriverCommand.GetConnectionType);
+            return new NetworkConnectionSetting(Int32.Parse(response.Value.ToString()));
+        }
+
+
+        public void SetNetworkConnection(NetworkConnectionSetting connection)
+        {
+            // the new version of the webdriver protocol is going forward with
+            // sending JSON message which look like
+            // {name: "name of endpoint", parameters: "JSON parameters"}
+            // this is for webdrivers which run on protocols besides HTTP (like TCP)
+            // we're implementing that pattern here, for this new method, but
+            // haven't translated it to all other commands yet
+            string[] parameters = new string[] { CONNECTION_NAME_PARAM, CONNECTION_PARAM_PARAM };
+
+            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+            dictionary.Add("type", connection.Value);
+            object[] values = new object[] { CONNECTION_NAME_VALUE, dictionary }; // ImmutableDictionary.of("type", connection.Value) };
+
+            Execute(AppiumDriverCommand.SetConnectionType, GetCommandImmutableMap(parameters, values));
+        }
+
+        protected static Dictionary<string, object> GetCommandImmutableMap(string[] param, object[] values)
+        {
+            Dictionary<string, object> builder = new Dictionary<string, object>();
+
+            for (int i = 0; i < param.Length; i++)
+            {
+                if (NotNullOrEmpty(param[i]) && NotNullOrEmpty(values[i]))
+                {
+                    builder.Add(param[i], values[i]);
+                }
+            }
+
+            return builder;
+        }
+
+        protected static bool NotNullOrEmpty(object thing)
+        {
+            bool notNull = thing != null;
+            return notNull && thing is string ? thing.ToString().Trim().Length > 0 : notNull;
+        }
     }
 }
