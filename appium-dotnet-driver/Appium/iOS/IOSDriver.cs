@@ -1,5 +1,4 @@
-﻿using OpenQA.Selenium.Appium.Appium.Interfaces;
-using OpenQA.Selenium.Appium.Enums;
+﻿using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.iOS.Interfaces;
 using OpenQA.Selenium.Remote;

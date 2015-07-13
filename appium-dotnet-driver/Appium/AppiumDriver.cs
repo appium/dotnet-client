@@ -18,7 +18,6 @@
 
 using Appium.Interfaces.Generic.SearchContext;
 using Newtonsoft.Json;
-using OpenQA.Selenium.Appium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.MultiTouch;
@@ -724,9 +723,12 @@ namespace OpenQA.Selenium.Appium
             return tap.Press(x, y).Wait(duration).Release();
         }
 
-        ///
-        /// @see TouchShortcuts#tap(int, WebElement, int)
-        ///
+        /// <summary>
+        /// Convenience method for tapping the center of an element on the screen
+        /// </summary>
+        /// <param name="fingers">number of fingers/appendages to tap with</param>
+        /// <param name="element">element to tap</param>
+        /// <param name="duration">how long between pressing down, and lifting fingers/appendages</param>
         public void Tap(int fingers, W element, int duration)
         {
             MultiAction multiTouch = new MultiAction(this);
@@ -739,6 +741,13 @@ namespace OpenQA.Selenium.Appium
             multiTouch.Perform();
         }
 
+        /// <summary>
+        /// Convenience method for tapping a position on the screen
+        /// </summary>
+        /// <param name="fingers">number of fingers/appendages to tap with</param>
+        /// <param name="x">x coordinate</param>
+        /// <param name="y">y coordinate</param>
+        /// <param name="duration">how long between pressing down, and lifting fingers/appendages</param>
         public void Tap(int fingers, int x, int y, int duration)
         {
             MultiAction multiTouch = new MultiAction(this);
@@ -751,6 +760,14 @@ namespace OpenQA.Selenium.Appium
             multiTouch.Perform();
         }
 
+        /// <summary>
+        /// Convenience method for swiping across the screen
+        /// </summary>
+        /// <param name="startx">starting x coordinate</param>
+        /// <param name="starty">starting y coordinate</param>
+        /// <param name="endx">ending x coordinate</param>
+        /// <param name="endy">ending y coordinate</param>
+        /// <param name="duration">amount of time in milliseconds for the entire swipe action to take</param>
         public void Swipe(int startx, int starty, int endx, int endy, int duration)
         {
             TouchAction touchAction = new TouchAction(this);
@@ -1047,8 +1064,11 @@ namespace OpenQA.Selenium.Appium
         }
         #endregion Private Class
 
-        public abstract W ScrollTo(string text);
+        #region abstract scrolling methods
 
+        public abstract W ScrollTo(string text);
         public abstract W ScrollToExact(string text);
+
+        #endregion
     }
 }

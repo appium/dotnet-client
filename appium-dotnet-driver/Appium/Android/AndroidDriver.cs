@@ -19,12 +19,10 @@ namespace OpenQA.Selenium.Appium.Android
         private const string METASTATE_PARAM = "metastate";
         private const string CONNECTION_NAME_PARAM = "name";
         private const string CONNECTION_PARAM_PARAM = "parameters";
+        private const string CONNECTION_NAME_VALUE = "network_connection";
         private const string DATA_PARAM = "data";
         private const string INTENT_PARAM = "intent";
-
-        private const string CONNECTION_NAME_VALUE = "network_connection";
-
-
+        
         /// <summary>
         /// Initializes a new instance of the AndroidDriver class
         /// </summary>
@@ -113,13 +111,27 @@ namespace OpenQA.Selenium.Appium.Android
             get
             {
                 var commandResponse = this.Execute(AppiumDriverCommand.GetConnectionType, null);
-                return commandResponse.Value.ConvertToConnectionType();
+                if (commandResponse.Status == WebDriverResult.Success)
+                {
+                    return (ConnectionType)(long)commandResponse.Value;
+                }
+                else
+                {
+                    throw new WebDriverException("The request to get the ConnectionType has failed.");
+                }
             }
             set
             {
-                var parameters = new Dictionary<string, object>();
-                parameters.Add("type", value);
-                this.Execute(AppiumDriverCommand.SetConnectionType, parameters);
+                Dictionary<string, object> values = new Dictionary<string, object>(){
+                    {"type", value}
+                };
+
+                Dictionary<string, object> dictionary = new Dictionary<string, object>(){
+                    {CONNECTION_NAME_PARAM, CONNECTION_NAME_VALUE},
+                    {CONNECTION_PARAM_PARAM, values}
+                };
+
+                Execute(AppiumDriverCommand.SetConnectionType, dictionary);
             }
         }
         #endregion Connection Type
@@ -226,6 +238,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// Scroll forward to the element which has a description or name which contains the input text.
         /// The scrolling is performed on the first scrollView present on the UI.
         /// </summary>
+        /// <param name="text">text to look out for while scrolling</param>
         public override W ScrollTo(String text)
         {
             String uiScrollables = UiScrollable("new UiSelector().descriptionContains(\"" + text + "\")") +
@@ -238,6 +251,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// Scroll forward to the element which has a description or name which exactly matches the input text.
         /// The scrolling is performed on the first scrollView present on the UI
         /// </summary>
+        /// <param name="text">text to look out for while scrolling</param>
         public override W ScrollToExact(String text)
         {
             String uiScrollables = UiScrollable("new UiSelector().description(\"" + text + "\")") +
@@ -247,8 +261,10 @@ namespace OpenQA.Selenium.Appium.Android
 
         /// <summary>
         /// Scroll forward to the element which has a description or name which contains the input text.
-        /// The scrolling is performed on the first scrollView present on the UI.
+        /// The scrolling is performed on the first scrollView with the given resource ID.
         /// </summary>
+        /// <param name="text">text to look out for while scrolling</param>
+        /// <param name="resId">resource ID of the scrollable View</param>
         public W ScrollTo(String text, String resId)
         {
             String uiScrollables = UiScrollable("new UiSelector().descriptionContains(\"" + text + "\")", resId) +
@@ -261,6 +277,8 @@ namespace OpenQA.Selenium.Appium.Android
         /// Scroll forward to the element which has a description or name which exactly matches the input text.
         /// The scrolling is performed on the first scrollView present on the UI
         /// </summary>
+        /// <param name="text">text to look out for while scrolling</param>
+        /// <param name="resId">resource ID of the scrollable View</param>
         public W ScrollToExact(String text, String resId)
         {
             String uiScrollables = UiScrollable("new UiSelector().description(\"" + text + "\")", resId) +
@@ -268,67 +286,30 @@ namespace OpenQA.Selenium.Appium.Android
             return FindElementByAndroidUIAutomator(uiScrollables);
         }
 
+        /// <summary>
+        /// Creates a new UiScrollable-string to scroll on a View to move through it until a visible item that matches
+        /// the selector is found.
+        /// </summary>
+        /// <param name="uiSelector">UiSelector-string to tell what to search for while scrolling</param>
+        /// <param name="resId">Resource-ID of a scrollable View</param>
+        /// <returns>UiScrollable-string that can be executed with FindElementByAndroidUIAutomator()</returns>
         private static string UiScrollable(string uiSelector, string resId)
         {
             return "new UiScrollable(new UiSelector().scrollable(true).resourceId(\"" + resId + "\")).scrollIntoView(" + uiSelector + ".instance(0));";
         }
 
+        /// <summary>
+        /// Creates a new UiScrollable-string to scroll on the first scrollable View in the layout to move through it until a visible item 
+        /// that matches the selector is found.
+        /// </summary>
+        /// <param name="uiSelector">UiSelector-string to tell what to search for while scrolling</param>
+        /// <returns>UiScrollable-string that can be executed with FindElementByAndroidUIAutomator()</returns>
         private static string UiScrollable(string uiSelector)
         {
             return "new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(" + uiSelector + ".instance(0));";
         }
 
         #endregion
-
-
-        protected Response Execute(string driverCommandToExecute)
-        {
-            return base.Execute(driverCommandToExecute, null);
-        }
-
-        public NetworkConnectionSetting GetNetworkConnection()
-        {
-            Response response = Execute(AppiumDriverCommand.GetConnectionType);
-            return new NetworkConnectionSetting(Int32.Parse(response.Value.ToString()));
-        }
-
-
-        public void SetNetworkConnection(NetworkConnectionSetting connection)
-        {
-            // the new version of the webdriver protocol is going forward with
-            // sending JSON message which look like
-            // {name: "name of endpoint", parameters: "JSON parameters"}
-            // this is for webdrivers which run on protocols besides HTTP (like TCP)
-            // we're implementing that pattern here, for this new method, but
-            // haven't translated it to all other commands yet
-            string[] parameters = new string[] { CONNECTION_NAME_PARAM, CONNECTION_PARAM_PARAM };
-
-            Dictionary<string, object> dictionary = new Dictionary<string, object>();
-            dictionary.Add("type", connection.Value);
-            object[] values = new object[] { CONNECTION_NAME_VALUE, dictionary }; // ImmutableDictionary.of("type", connection.Value) };
-
-            Execute(AppiumDriverCommand.SetConnectionType, GetCommandImmutableMap(parameters, values));
-        }
-
-        protected static Dictionary<string, object> GetCommandImmutableMap(string[] param, object[] values)
-        {
-            Dictionary<string, object> builder = new Dictionary<string, object>();
-
-            for (int i = 0; i < param.Length; i++)
-            {
-                if (NotNullOrEmpty(param[i]) && NotNullOrEmpty(values[i]))
-                {
-                    builder.Add(param[i], values[i]);
-                }
-            }
-
-            return builder;
-        }
-
-        protected static bool NotNullOrEmpty(object thing)
-        {
-            bool notNull = thing != null;
-            return notNull && thing is string ? thing.ToString().Trim().Length > 0 : notNull;
-        }
+        
     }
 }
