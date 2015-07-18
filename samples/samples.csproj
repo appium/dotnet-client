@@ -69,16 +69,20 @@
     <Compile Include="AndroidWebviewTest.cs" />
     <Compile Include="AndroidComplexTest.cs" />
     <Compile Include="AndroidLocalServerTest.cs" />
+    <Compile Include="PageObjects\IOSPageObjectChecksAttributeMixOnNativeApp.cs" />
+    <Compile Include="PageObjects\IOSPageObjectChecksAttributesForNativeIOSApp.cs" />
     <Compile Include="PageObjects\AndroidPageObjectChecksSelendroidModeOnNativeApp.cs" />
     <Compile Include="PageObjects\AndroidPageObjectChecksAttributeMixOnNativeApp2.cs" />
     <Compile Include="PageObjects\AndroidPageObjectChecksAttributeMixOnNativeApp1.cs" />
-    <Compile Include="PageObjects\AndroidPageObjectChecksAppributesForNativeAndroidApp.cs" />
+    <Compile Include="PageObjects\AndroidPageObjectChecksAttributesForNativeAndroidApp.cs" />
     <Compile Include="PageObjects\AndroidPageObjectChecksSeleniumFindsByCompatibility.cs" />
     <Compile Include="PageObjectTests\Android\AndroidTestThatChecksAttributeMix3SelendroidMode.cs" />
     <Compile Include="PageObjectTests\Android\AndroidTestThatChecksAttributeMix2.cs" />
     <Compile Include="PageObjectTests\Android\AndroidTestThatChecksAttributeMix1.cs" />
     <Compile Include="PageObjectTests\Android\AndroidNativeAppAttributesTest.cs" />
     <Compile Include="PageObjectTests\Android\SeleniumAttributesCompatipilityTest.cs" />
+    <Compile Include="PageObjectTests\IOS\IOSTestThatChecksAttributeMix.cs" />
+    <Compile Include="PageObjectTests\IOS\IOSNativeAppAttributesTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

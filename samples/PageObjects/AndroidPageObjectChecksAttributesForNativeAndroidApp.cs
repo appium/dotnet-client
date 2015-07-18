@@ -10,7 +10,7 @@ using System.Text;
 
 namespace Appium.Samples.PageObjects
 {
-    public class AndroidPageObjectChecksAppributesForNativeAndroidApp
+    public class AndroidPageObjectChecksAttributesForNativeAndroidApp
     {
         /////////////////////////////////////////////////////////////////
         private object testMobileElementProperty;

@@ -50,7 +50,7 @@ namespace Appium.Samples.PageObjects
         }
 
         [FindsBySelendroid(ID = "fake_content", Priority = 1)]
-        [FindsBySelendroid(ClassName = "android.widget.FakeSelendroidClass", Priority = 2)]
+        [FindsBySelendroid(ClassName = "android.webkit.WebView", Priority = 2)] //There is no Webview at the screen
         [FindsBySelendroid(ID = "waitingButtonTest", Priority = 3)]
 
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/fakeId\")", Priority = 1)]
@@ -59,7 +59,7 @@ namespace Appium.Samples.PageObjects
         private IWebElement testMultipleElement;
 
         [FindsBySelendroid(ID = "fake_content", Priority = 1)]
-        [FindsBySelendroid(ClassName = "fakeSelendroidClass", Priority = 2)]
+        [FindsBySelendroid(ClassName = "android.webkit.WebView", Priority = 2)] //There is no Webview at the screen
         [FindsBySelendroid(LinkText = "Press to throw unhandled exception", Priority = 3)]
 
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/fakeId\")", Priority = 1)]
@@ -74,7 +74,7 @@ namespace Appium.Samples.PageObjects
         /////////////////////////////////////////////////////////////////
 
         [FindsBySelendroid(ID = "fake_content", Priority = 1)]
-        [FindsBySelendroid(ClassName = "fakeSelendroidClass", Priority = 2)]
+        [FindsBySelendroid(ClassName = "android.webkit.WebView", Priority = 2)] //There is no Webview at the screen
         [FindsBySelendroid(LinkText = "Press to throw unhandled exception", Priority = 3)]
         private IWebElement TestMultipleFindByElementProperty
         {
@@ -89,7 +89,7 @@ namespace Appium.Samples.PageObjects
         }
 
         [FindsBySelendroid(ID = "fake_content", Priority = 1)]
-        [FindsBySelendroid(ClassName = "fakeSelendroidClass", Priority = 2)]
+        [FindsBySelendroid(ClassName = "android.webkit.WebView", Priority = 2)] //There is no Webview at the screen
         [FindsBySelendroid(LinkText = "Press to throw unhandled exception", Priority = 3)]
         private IList<IWebElement> MultipleFindByElementsProperty
         {

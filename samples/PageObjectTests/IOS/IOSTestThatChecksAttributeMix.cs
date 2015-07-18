@@ -3,7 +3,7 @@ using Appium.Samples.PageObjects;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
-using OpenQA.Selenium.Appium.Android;
+using OpenQA.Selenium.Appium.iOS;
 using OpenQA.Selenium.Appium.PageObjects;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.PageObjects;
@@ -12,32 +12,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Appium.Samples.PageObjectTests.Android
+namespace Appium.Samples.PageObjectTests.IOS
 {
     [TestFixture()]
-    public class AndroidNativeAppAttributesTest
+    public class IOSTestThatChecksAttributeMix
     {
-        private AndroidDriver<AppiumWebElement> driver;
+        private IOSDriver<AppiumWebElement> driver;
         private bool allPassed = true;
-        private AndroidPageObjectChecksAttributesForNativeAndroidApp pageObject;
+        private IOSPageObjectChecksAttributeMixOnNativeApp pageObject;
 
         [SetUp]
         public void BeforeAll()
         {
-            DesiredCapabilities capabilities = Env.isSauce() ?
-                Caps.getAndroid18Caps(Apps.get("androidApiDemos")) :
-                Caps.getAndroid19Caps(Apps.get("androidApiDemos"));
+            DesiredCapabilities capabilities = Caps.getIos71Caps(Apps.get("iosTestApp"));
             if (Env.isSauce())
             {
                 capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
                 capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
-                capabilities.SetCapability("name", "android - complex");
+                capabilities.SetCapability("name", "ios - actions");
                 capabilities.SetCapability("tags", new string[] { "sample" });
             }
             Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.localURI;
-            driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
+            driver = new IOSDriver<AppiumWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);	
             TimeSpan timeSpan = new TimeSpan(0, 0, 0, 5, 0);
-            pageObject = new AndroidPageObjectChecksAttributesForNativeAndroidApp();
+            pageObject = new IOSPageObjectChecksAttributeMixOnNativeApp();
             PageFactory.InitElements(driver, pageObject, new AppiumPageObjectMemberDecorator(timeSpan));
         }
 
@@ -96,30 +94,6 @@ namespace Appium.Samples.PageObjectTests.Android
         public void CheckElementsFoundUsingMultipleLocatorssProperty()
         {
             Assert.GreaterOrEqual(pageObject.GetMultipleFindByElementPropertySize(), 1);
-        }
-
-        [Test()]
-        public void CheckElementFoundByChainedSearch()
-        {
-            Assert.NotNull(pageObject.GetFoundByChainedSearchElementText());
-        }
-
-        [Test()]
-        public void CheckElementsFoundByChainedSearch()
-        {
-            Assert.GreaterOrEqual(pageObject.GetFoundByChainedSearchElementSize(), 1);
-        }
-
-        [Test()]
-        public void CheckFoundByChainedSearchElementProperty()
-        {
-            Assert.NotNull(pageObject.GetFoundByChainedSearchElementPropertyText());
-        }
-
-        [Test()]
-        public void CheckFoundByChainedSearchElementsProperty()
-        {
-            Assert.GreaterOrEqual(pageObject.GetFoundByChainedSearchElementPropertySize(), 1);
         }
 
         [Test()]
