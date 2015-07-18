@@ -38,9 +38,13 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>$(SolutionDir)\packages\Newtonsoft.Json.6.0.5\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="WebDriver, Version=2.44.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="WebDriver, Version=2.46.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(SolutionDir)\packages\Selenium.WebDriver.2.44.0\lib\net40\WebDriver.dll</HintPath>
+      <HintPath>$(SolutionDir)\packages\Selenium.WebDriver.2.46.0\lib\net40\WebDriver.dll</HintPath>
+    </Reference>
+    <Reference Include="WebDriver.Support, Version=2.46.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(SolutionDir)\packages\Selenium.Support.2.46.0\lib\net40\WebDriver.Support.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -65,6 +69,16 @@
     <Compile Include="AndroidWebviewTest.cs" />
     <Compile Include="AndroidComplexTest.cs" />
     <Compile Include="AndroidLocalServerTest.cs" />
+    <Compile Include="PageObjects\AndroidPageObjectChecksSelendroidModeOnNativeApp.cs" />
+    <Compile Include="PageObjects\AndroidPageObjectChecksAttributeMixOnNativeApp2.cs" />
+    <Compile Include="PageObjects\AndroidPageObjectChecksAttributeMixOnNativeApp1.cs" />
+    <Compile Include="PageObjects\AndroidPageObjectChecksAppributesForNativeAndroidApp.cs" />
+    <Compile Include="PageObjects\AndroidPageObjectChecksSeleniumFindsByCompatibility.cs" />
+    <Compile Include="PageObjectTests\Android\AndroidTestThatChecksAttributeMix3SelendroidMode.cs" />
+    <Compile Include="PageObjectTests\Android\AndroidTestThatChecksAttributeMix2.cs" />
+    <Compile Include="PageObjectTests\Android\AndroidTestThatChecksAttributeMix1.cs" />
+    <Compile Include="PageObjectTests\Android\AndroidNativeAppAttributesTest.cs" />
+    <Compile Include="PageObjectTests\Android\SeleniumAttributesCompatipilityTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

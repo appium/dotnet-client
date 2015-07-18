@@ -40,11 +40,8 @@ namespace OpenQA.Selenium.Appium
     /// }
     /// </code>
     /// </example>
-    public abstract class AppiumWebElement : RemoteWebElement, IFindByAccessibilityId<AppiumWebElement>, IGenericSearchContext<AppiumWebElement>,
-        IGenericFindsByClassName<AppiumWebElement>,
-        IGenericFindsById<AppiumWebElement>, IGenericFindsByCssSelector<AppiumWebElement>, IGenericFindsByLinkText<AppiumWebElement>,
-        IGenericFindsByName<AppiumWebElement>,
-        IGenericFindsByPartialLinkText<AppiumWebElement>, IGenericFindsByTagName<AppiumWebElement>, IGenericFindsByXPath<AppiumWebElement>
+    public abstract class AppiumWebElement : RemoteWebElement, 
+        IMobileElement<AppiumWebElement>
     {
         /// <summary>
         /// Initializes a new instance of the AppiumWebElement class.
