@@ -13,7 +13,7 @@ namespace OpenQA.Selenium.Appium.PageFactory.Interceptors
 {
     class ElementListInterceptor : SearchingInterceptor
     {
-        public ElementListInterceptor(IEnumerable<By> bys, IElementLocator locator, TimeSpan waitingTimeSpan, bool shouldCache)
+        public ElementListInterceptor(IEnumerable<By> bys, IElementLocator locator, TimeOutDuration waitingTimeSpan, bool shouldCache)
             :base(bys, locator, waitingTimeSpan, shouldCache)
         {}
 
@@ -45,6 +45,7 @@ namespace OpenQA.Selenium.Appium.PageFactory.Interceptors
             try
             {
                 timeOuts.ImplicitlyWait(zeroTimeSpan);
+                waitingForElementList.Timeout = waitingTimeSpan.WaitingDuration;                    
                 ReadOnlyCollection<IWebElement> found = waitingForElementList.Until(ReturnWaitingFunction(locator, bys));
                 result = convert(found, genericParameter);
             }
@@ -52,7 +53,7 @@ namespace OpenQA.Selenium.Appium.PageFactory.Interceptors
             {}
             finally
             {
-                timeOuts.ImplicitlyWait(waitingTimeSpan);
+                timeOuts.ImplicitlyWait(waitingTimeSpan.WaitingDuration);
             }
 
             if (shouldCache && cached == null)

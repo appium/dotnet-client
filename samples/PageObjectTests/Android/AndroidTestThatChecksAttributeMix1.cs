@@ -21,7 +21,7 @@ namespace Appium.Samples.PageObjectTests.Android
         private bool allPassed = true;
         private AndroidPageObjectChecksAttributeMixOnNativeApp1 pageObject;
 
-        [SetUp]
+        [TestFixtureSetUp]
         public void BeforeAll()
         {
             DesiredCapabilities capabilities = Env.isSauce() ?
@@ -36,12 +36,12 @@ namespace Appium.Samples.PageObjectTests.Android
             }
             Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.localURI;
             driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
-            TimeSpan timeSpan = new TimeSpan(0, 0, 0, 5, 0);
+            TimeOutDuration timeSpan = new TimeOutDuration(new TimeSpan(0, 0, 0, 5, 0));
             pageObject = new AndroidPageObjectChecksAttributeMixOnNativeApp1();
             PageFactory.InitElements(driver, pageObject, new AppiumPageObjectMemberDecorator(timeSpan));
         }
 
-        [TearDown]
+        [TestFixtureTearDown]
         public void AfterEach()
         {
             allPassed = allPassed && (TestContext.CurrentContext.Result.State == TestState.Success);

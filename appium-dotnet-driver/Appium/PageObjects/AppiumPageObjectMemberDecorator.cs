@@ -20,7 +20,7 @@ namespace OpenQA.Selenium.Appium.PageObjects
     public class AppiumPageObjectMemberDecorator : IPageObjectMemberDecorator
     {
         private static readonly TimeSpan defaultTimeSpan = new TimeSpan(0, 0, 1);
-        private readonly TimeSpan timeForWaitingForElements;
+        private readonly TimeOutDuration timeForWaitingForElements;
 
         private static List<Type> listAvailableElementTypes;
 
@@ -115,10 +115,10 @@ namespace OpenQA.Selenium.Appium.PageObjects
         }
 
         public AppiumPageObjectMemberDecorator()
-            :this(defaultTimeSpan)
+            :this(new TimeOutDuration(defaultTimeSpan))
         {}
 
-        public AppiumPageObjectMemberDecorator(TimeSpan timeForWaitingForElements)
+        public AppiumPageObjectMemberDecorator(TimeOutDuration timeForWaitingForElements)
         {
             this.timeForWaitingForElements = timeForWaitingForElements;
         }
@@ -135,15 +135,15 @@ namespace OpenQA.Selenium.Appium.PageObjects
             return null;
         }
 
-        private TimeSpan GetTimeWaitingForElements(MemberInfo member)
+        private TimeOutDuration GetTimeWaitingForElements(MemberInfo member)
         {
             WithTimeSpanAttribute customTimeSpan = (WithTimeSpanAttribute) Attribute.
                 GetCustomAttribute(member, typeof(WithTimeSpanAttribute), true);
             if (customTimeSpan != null)
                 try
                 {
-                    return new TimeSpan(0, customTimeSpan.Hours, customTimeSpan.Minutes, 
-                        customTimeSpan.Seconds, customTimeSpan.Milliseconds);
+                    return new TimeOutDuration(new TimeSpan(0, customTimeSpan.Hours, customTimeSpan.Minutes, 
+                        customTimeSpan.Seconds, customTimeSpan.Milliseconds));
                 }
                 catch (Exception e) 
                 {
@@ -195,7 +195,7 @@ namespace OpenQA.Selenium.Appium.PageObjects
             IEnumerable<By> bys = ByFactory.CreateBys(platform, automation, member);
 
             ProxyGenerator generator = new ProxyGenerator();
-            TimeSpan span = GetTimeWaitingForElements(member);
+            TimeOutDuration span = GetTimeWaitingForElements(member);
             bool shouldCache = (Attribute.
                 GetCustomAttribute(member, typeof(CacheLookupAttribute), true) != null);
 

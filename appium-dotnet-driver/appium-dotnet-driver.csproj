@@ -93,6 +93,7 @@
     <Compile Include="Appium\PageObjects\Interceptors\ElementInterceptor.cs" />
     <Compile Include="Appium\PageObjects\Interceptors\ElementListInterceptor.cs" />
     <Compile Include="Appium\PageObjects\Interceptors\SearchingInterceptor.cs" />
+    <Compile Include="Appium\PageObjects\TimeOutDuration.cs" />
     <Compile Include="Appium\PageObjects\WebDriverUnpackUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Appium\AppiumDriver.cs" />

@@ -13,7 +13,7 @@ namespace OpenQA.Selenium.Appium.PageObjects.Interceptors
     {
         private readonly IWebDriver driver;
 
-        public ElementInterceptor(IEnumerable<By> bys, IElementLocator locator, TimeSpan waitingTimeSpan, bool shouldCache)
+        public ElementInterceptor(IEnumerable<By> bys, IElementLocator locator, TimeOutDuration waitingTimeSpan, bool shouldCache)
             :base(bys, locator, waitingTimeSpan, shouldCache)
         {
             driver = WebDriverUnpackUtility.UnpackWebdriver(locator.SearchContext);
@@ -28,6 +28,7 @@ namespace OpenQA.Selenium.Appium.PageObjects.Interceptors
             try
             {
                 timeOuts.ImplicitlyWait(zeroTimeSpan);
+                waitingForElementList.Timeout = waitingTimeSpan.WaitingDuration;
                 var result = waitingForElementList.Until(ReturnWaitingFunction(locator, bys))[0];
                 if (shouldCache && cached == null)
                     cached = result;
@@ -35,11 +36,14 @@ namespace OpenQA.Selenium.Appium.PageObjects.Interceptors
             }
             catch (WebDriverTimeoutException e)
             {
-                throw new NoSuchElementException("Can't locate an element by this strategies: " + bys.ToString());
+                String bysString = "";
+                foreach (var by in bys)
+                    bysString = bysString + by.ToString() + " ";
+                throw new NoSuchElementException("Couldn't locate an element by these strategies: " + bysString);
             }
             finally
             {
-                timeOuts.ImplicitlyWait(waitingTimeSpan);
+                timeOuts.ImplicitlyWait(waitingTimeSpan.WaitingDuration);
             }
         }
 

@@ -159,14 +159,19 @@ namespace OpenQA.Selenium.Appium.PageObjects
             }
 
             IEnumerable<By> defaultBys = CreateDefaultLocatorList(member, useSequence, useAll);
+            ReadOnlyCollection<By> defaultByList = new List<By>(defaultBys).AsReadOnly();
+
             IEnumerable<By> nativeBys = CreateNativeContextLocatorList(member, useSequence, useAll, platform, automation);
+            IList<By> nativeByList = null;
 
             if (nativeBys == null)
-                nativeBys = defaultBys;
+                nativeByList = defaultByList;
+            else
+                nativeByList = new List<By>(nativeBys).AsReadOnly();
 
             Dictionary<ContentTypes, IEnumerable<By>> map = new Dictionary<ContentTypes, IEnumerable<By>>();
-            map.Add(ContentTypes.HTML, new List<By>(defaultBys).AsReadOnly());
-            map.Add(ContentTypes.NATIVE, new List<By>(nativeBys).AsReadOnly());
+            map.Add(ContentTypes.HTML, defaultByList);
+            map.Add(ContentTypes.NATIVE, nativeByList);
             ContentMappedBy by = new ContentMappedBy(map);
             List<By> bys = new List<By>();
             bys.Add(by);

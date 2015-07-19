@@ -21,7 +21,7 @@ namespace Appium.Samples.PageObjectTests.IOS
         private bool allPassed = true;
         private IOSPageObjectChecksAttributesForNativeIOSApp pageObject;
 
-        [SetUp]
+        [TestFixtureSetUp]
         public void BeforeAll()
         {
             DesiredCapabilities capabilities = Caps.getIos71Caps(Apps.get("iosTestApp"));
@@ -33,13 +33,13 @@ namespace Appium.Samples.PageObjectTests.IOS
                 capabilities.SetCapability("tags", new string[] { "sample" });
             }
             Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.localURI;
-            driver = new IOSDriver<AppiumWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);	
-            TimeSpan timeSpan = new TimeSpan(0, 0, 0, 5, 0);
+            driver = new IOSDriver<AppiumWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
+            TimeOutDuration timeSpan = new TimeOutDuration(new TimeSpan(0, 0, 0, 5, 0));
             pageObject = new IOSPageObjectChecksAttributesForNativeIOSApp();
             PageFactory.InitElements(driver, pageObject, new AppiumPageObjectMemberDecorator(timeSpan));
         }
 
-        [TearDown]
+        [TestFixtureTearDown]
         public void AfterEach()
         {
             allPassed = allPassed && (TestContext.CurrentContext.Result.State == TestState.Success);

@@ -46,6 +46,15 @@ namespace OpenQA.Selenium.Appium.PageObjects
             return result.AsReadOnly();
         }
 
+        private static string ReturnByString(IEnumerable<By> bys)
+        {
+            String result = "";
+            foreach (var by in bys)
+            {
+                result = result + by.ToString() + "; ";
+            }
+            return result;
+        }
         
         public override string ToString()
         {
@@ -53,11 +62,11 @@ namespace OpenQA.Selenium.Appium.PageObjects
             IEnumerable<By> nativeBy = map[ContentTypes.NATIVE];
 
             if (defaultBy.Equals(nativeBy))
-                return defaultBy.ToString();
+                return ReturnByString(defaultBy);
 
             return "Locator map: " + "\n" +
-                    "- native content: \"" + nativeBy.ToString() + "\" \n" +
-                    "- html content: \"" + defaultBy.ToString() + "\"";
+                    "- native content: \"" + ReturnByString(nativeBy) + "\" \n" +
+                    "- html content: \"" + ReturnByString(defaultBy) + "\"";
         }
     }
 }
