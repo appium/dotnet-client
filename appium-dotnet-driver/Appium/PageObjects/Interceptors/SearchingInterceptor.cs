@@ -53,20 +53,26 @@ namespace OpenQA.Selenium.Appium.PageObjects.Interceptors
         {
             return (IElementLocator) => {
                 List<IWebElement> result = new List<IWebElement>();
-                try
-                {
-                    result.AddRange(locator.LocateElements(bys));
-                }
-                catch (NoSuchElementException e)
-                {
-                    return null;
-                }
-                catch (Exception e)
-                {
-                    if (!IsInvalidSelectorRootCause(e))
-                        throw e;
-                }
 
+                foreach (var by in bys) {
+                    try
+                    {
+                        List<By> listOfSingleBy = new List<By>();
+                        listOfSingleBy.Add(by);
+                        result.AddRange(locator.LocateElements(listOfSingleBy));
+                    }
+                    catch (NoSuchElementException e)
+                    {
+                        continue;
+                    }
+                    catch (Exception e)
+                    {
+                        if (!IsInvalidSelectorRootCause(e))
+                            throw e;
+                        continue;
+                    }
+
+                }
                 if (result.Count > 0)
                     return result.AsReadOnly();
 
