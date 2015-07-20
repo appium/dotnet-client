@@ -1,22 +1,14 @@
-﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Appium.Interfaces;
+﻿using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.iOS;
 using OpenQA.Selenium.Appium.PageObjects.Attributes;
 using OpenQA.Selenium.Support.PageObjects;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Appium.Samples.PageObjects
 {
     public class IOSPageObjectChecksAttributeMixOnNativeApp
     {
         /////////////////////////////////////////////////////////////////
-        private object testMobileElementProperty;
-        private object testMobileElementsProperty;
-        /////////////////////////////////////////////////////////////////
-
         [FindsBy(How = How.Id, Using = "FakeHTMLid", Priority = 1)]
         [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[0]")]
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/text1\")")]
@@ -32,14 +24,7 @@ namespace Appium.Samples.PageObjects
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/text1\")")]
         private IMobileElement<IOSElement> TestMobileElement
         {
-            set
-            {
-                testMobileElementProperty = value;
-            }
-            get
-            {
-                return (IMobileElement<IOSElement>)testMobileElementProperty;
-            }
+            set; get;
         }
 
         [FindsBy(How = How.Id, Using = "FakeHTMLid", Priority = 1)]
@@ -47,14 +32,7 @@ namespace Appium.Samples.PageObjects
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/text1\")")]
         private IList<IOSElement> TestMobileElements
         {
-            set
-            {
-                testMobileElementsProperty = value;
-            }
-            get
-            {
-                return (IList<IOSElement>)testMobileElementsProperty;
-            }
+            set; get;
         }
 
         [FindsBy(How = How.Id, Using = "FakeHTMLid", Priority = 1)]
@@ -85,9 +63,6 @@ namespace Appium.Samples.PageObjects
 
 
         /////////////////////////////////////////////////////////////////
-        private object testMultipleFindByElementProperty;
-        private object testMultipleFindByElementsProperty;
-        /////////////////////////////////////////////////////////////////
 
         [FindsBy(How = How.Id, Using = "FakeHTMLid", Priority = 1)]
         [FindsBy(How = How.ClassName, Using = "FakeHTMLClass", Priority = 2)]
@@ -102,14 +77,7 @@ namespace Appium.Samples.PageObjects
         [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 3)]
         private IMobileElement<IOSElement> TestMultipleFindByElementProperty
         {
-            set
-            {
-                testMultipleFindByElementProperty = value;
-            }
-            get
-            {
-                return (IMobileElement<IOSElement>)testMultipleFindByElementProperty;
-            }
+            set; get;
         }
 
         [FindsBy(How = How.Id, Using = "FakeHTMLid", Priority = 1)]
@@ -125,17 +93,11 @@ namespace Appium.Samples.PageObjects
         [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 3)]
         private IList<IOSElement> MultipleFindByElementsProperty
         {
-            set
-            {
-                testMultipleFindByElementsProperty = value;
-            }
-            get
-            {
-                return (IList<IOSElement>)testMultipleFindByElementsProperty;
-            }
+            set; get;
         }
 
         [FindsByAll]
+        [MobileFindsByAll(Android = true, IOS = true)]
         [FindsBy(How = How.Id, Using = "FakeHTMLid", Priority = 1)]
         [FindsBy(How = How.ClassName, Using = "FakeHTMLClass", Priority = 2)]
         [FindsBy(How = How.XPath, Using = ".//fakeTag", Priority = 3)]
@@ -149,6 +111,7 @@ namespace Appium.Samples.PageObjects
         private IMobileElement<IOSElement> matchedToAllLocatorsElement;
 
         [FindsByAll]
+        [MobileFindsByAll(Android = true, IOS = true)]
         [FindsBy(How = How.Id, Using = "FakeHTMLid", Priority = 1)]
         [FindsBy(How = How.ClassName, Using = "FakeHTMLClass", Priority = 2)]
         [FindsBy(How = How.XPath, Using = ".//fakeTag", Priority = 3)]
@@ -162,11 +125,8 @@ namespace Appium.Samples.PageObjects
         private IList<IOSElement> matchedToAllLocatorsElements;
 
         /////////////////////////////////////////////////////////////////
-        private object matchedToAllLocatorsElementProperty;
-        private object matchedToAllLocatorsElementsProperty;
-        /////////////////////////////////////////////////////////////////
-
         [FindsByAll]
+        [MobileFindsByAll(Android = true, IOS = true)]
         [FindsBy(How = How.Id, Using = "FakeHTMLid", Priority = 1)]
         [FindsBy(How = How.ClassName, Using = "FakeHTMLClass", Priority = 2)]
         [FindsBy(How = How.XPath, Using = ".//fakeTag", Priority = 3)]
@@ -179,17 +139,11 @@ namespace Appium.Samples.PageObjects
         [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 1)]
         private IMobileElement<IOSElement> TestMatchedToAllLocatorsElementProperty
         {
-            set
-            {
-                matchedToAllLocatorsElementProperty = value;
-            }
-            get
-            {
-                return (IMobileElement<IOSElement>)matchedToAllLocatorsElementProperty;
-            }
+            set; get;
         }
 
         [FindsByAll]
+        [MobileFindsByAll(Android = true, IOS = true)]
         [FindsBy(How = How.Id, Using = "FakeHTMLid", Priority = 1)]
         [FindsBy(How = How.ClassName, Using = "FakeHTMLClass", Priority = 2)]
         [FindsBy(How = How.XPath, Using = ".//fakeTag", Priority = 3)]
@@ -202,14 +156,7 @@ namespace Appium.Samples.PageObjects
         [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 1)]
         private IList<IOSElement> TestMatchedToAllLocatorsElementsProperty
         {
-            set
-            {
-                matchedToAllLocatorsElementsProperty = value;
-            }
-            get
-            {
-                return (IList<IOSElement>)matchedToAllLocatorsElementsProperty;
-            }
+            set; get;
         }
 
         //////////////////////////////////////////////////////////////////////////

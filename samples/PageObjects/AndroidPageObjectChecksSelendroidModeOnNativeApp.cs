@@ -1,20 +1,12 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.PageObjects.Attributes;
-using OpenQA.Selenium.Support.PageObjects;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Appium.Samples.PageObjects
 {
     public class AndroidPageObjectChecksSelendroidModeOnNativeApp
     {
-        /////////////////////////////////////////////////////////////////
-        private object testMobileElementProperty;
-        private object testMobileElementsProperty;
         /////////////////////////////////////////////////////////////////
 
         [FindsBySelendroid(ID = "my_text_field")]
@@ -26,27 +18,13 @@ namespace Appium.Samples.PageObjects
         [FindsBySelendroid(ID = "my_text_field")]
         private IWebElement TestMobileElement
         {
-            set
-            {
-                testMobileElementProperty = value;
-            }
-            get
-            {
-                return (IWebElement) testMobileElementProperty;
-            }
+            set; get;
         }
 
         [FindsBySelendroid(ID = "my_text_field")]
         private IList<IWebElement> TestMobileElements
         {
-            set
-            {
-                testMobileElementsProperty = value;
-            }
-            get
-            {
-                return (IList<IWebElement>) testMobileElementsProperty;
-            }
+            set; get;
         }
 
         [FindsBySelendroid(ID = "fake_content", Priority = 1)]
@@ -69,23 +47,13 @@ namespace Appium.Samples.PageObjects
 
 
         /////////////////////////////////////////////////////////////////
-        private object testMultipleFindByElementProperty;
-        private object testMultipleFindByElementsProperty;
-        /////////////////////////////////////////////////////////////////
 
         [FindsBySelendroid(ID = "fake_content", Priority = 1)]
         [FindsBySelendroid(ClassName = "android.webkit.WebView", Priority = 2)] //There is no Webview at the screen
         [FindsBySelendroid(LinkText = "Press to throw unhandled exception", Priority = 3)]
         private IWebElement TestMultipleFindByElementProperty
         {
-            set
-            {
-                testMultipleFindByElementProperty = value;
-            }
-            get
-            {
-                return (IWebElement) testMultipleFindByElementProperty;
-            }
+            set; get;
         }
 
         [FindsBySelendroid(ID = "fake_content", Priority = 1)]
@@ -93,17 +61,10 @@ namespace Appium.Samples.PageObjects
         [FindsBySelendroid(LinkText = "Press to throw unhandled exception", Priority = 3)]
         private IList<IWebElement> MultipleFindByElementsProperty
         {
-            set
-            {
-                testMultipleFindByElementsProperty = value;
-            }
-            get
-            {
-                return (IList<IWebElement>)testMultipleFindByElementsProperty;
-            }
+            set; get;
         }
 
-        [FindsBySequence]
+        [MobileFindsBySequence(Android = true, Selendroid = true)]
         [FindsBySelendroid(ID = "content", Priority = 1)]
         [FindsBySelendroid(ClassName = "android.widget.FrameLayout", Priority = 2)]
         [FindsBySelendroid(LinkText = "Press to throw unhandled exception", Priority = 3)]
@@ -113,7 +74,7 @@ namespace Appium.Samples.PageObjects
         [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 3)]
         private IWebElement foundByChainedSearchElement;
 
-        [FindsBySequence]
+        [MobileFindsBySequence(Android = true, Selendroid = true)]
         [FindsBySelendroid(ID = "content", Priority = 1)]
         [FindsBySelendroid(ClassName = "android.widget.FrameLayout", Priority = 2)]
         [FindsBySelendroid(LinkText = "Press to throw unhandled exception", Priority = 3)]
@@ -124,11 +85,8 @@ namespace Appium.Samples.PageObjects
         private IList<IWebElement> foundByChainedSearchElements;
 
         /////////////////////////////////////////////////////////////////
-        private object foundByChainedSearchElementProperty;
-        private object foundByChainedSearchElementsProperty;
-        /////////////////////////////////////////////////////////////////
 
-        [FindsBySequence]
+        [MobileFindsBySequence(Android = true, Selendroid = true)]
         [FindsBySelendroid(ID = "content", Priority = 1)]
         [FindsBySelendroid(ClassName = "android.widget.FrameLayout", Priority = 2)]
         [FindsBySelendroid(PartialLinkText = "Press to throw unhandled exception", Priority = 3)]
@@ -138,17 +96,10 @@ namespace Appium.Samples.PageObjects
         [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 3)]
         private IWebElement TestFoundByChainedSearchElementProperty
         {
-            set
-            {
-                foundByChainedSearchElementProperty = value;
-            }
-            get
-            {
-                return (IWebElement)foundByChainedSearchElementProperty;
-            }
+            set; get;
         }
 
-        [FindsBySequence]
+        [MobileFindsBySequence(Android = true, Selendroid = true)]
         [FindsBySelendroid(ID = "content", Priority = 1)]
         [FindsBySelendroid(ClassName = "android.widget.FrameLayout", Priority = 2)]
         [FindsBySelendroid(PartialLinkText = "Press to throw unhandled exception", Priority = 3)]
@@ -158,24 +109,17 @@ namespace Appium.Samples.PageObjects
         [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 3)]
         private IList<IWebElement> TestFoundByChainedSearchElementsProperty
         {
-            set
-            {
-                foundByChainedSearchElementsProperty = value;
-            }
-            get
-            {
-                return (IList<IWebElement>)foundByChainedSearchElementsProperty;
-            }
+            set; get;
         }
 
-        [FindsByAll]
+        [MobileFindsByAll(Selendroid = true)]
         [FindsBySelendroid(LinkText = "Press to throw unhandled exception", Priority = 1)]
         //[FindsByAndroidUIAutomator(ID = "waitingButtonTest", Priority = 2)]
         //Equals method of RemoteWebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
         private IMobileElement<IWebElement> matchedToAllLocatorsElement;
 
-        [FindsByAll]
+        [MobileFindsByAll(Selendroid = true)]
         [FindsBySelendroid(LinkText = "Press to throw unhandled exception", Priority = 1)]
         //[FindsByAndroidUIAutomator(ID = "waitingButtonTest", Priority = 2)]
         //Equals method of RemoteWebElement is not consistent for mobile apps
@@ -183,42 +127,25 @@ namespace Appium.Samples.PageObjects
         private IList<IWebElement> matchedToAllLocatorsElements;
 
         /////////////////////////////////////////////////////////////////
-        private object matchedToAllLocatorsElementProperty;
-        private object matchedToAllLocatorsElementsProperty;
-        /////////////////////////////////////////////////////////////////
 
-        [FindsByAll]
+        [MobileFindsByAll(Selendroid = true)]
         [FindsBySelendroid(LinkText = "Press to throw unhandled exception", Priority = 1)]
         //[FindsByAndroidUIAutomator(ID = "waitingButtonTest", Priority = 2)]
         //Equals method of RemoteWebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
         private IWebElement TestMatchedToAllLocatorsElementProperty
         {
-            set
-            {
-                matchedToAllLocatorsElementProperty = value;
-            }
-            get
-            {
-                return (IWebElement) matchedToAllLocatorsElementProperty;
-            }
+            set; get;
         }
 
-        [FindsByAll]
+        [MobileFindsByAll(Selendroid = true)]
         [FindsBySelendroid(LinkText = "Press to throw unhandled exception", Priority = 1)]
         //[FindsByAndroidUIAutomator(ID = "waitingButtonTest", Priority = 2)]
         //Equals method of RemoteWebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
         private IList<IWebElement> TestMatchedToAllLocatorsElementsProperty
         {
-            set
-            {
-                matchedToAllLocatorsElementsProperty = value;
-            }
-            get
-            {
-                return (IList<IWebElement>)matchedToAllLocatorsElementsProperty;
-            }
+            set; get;
         }
 
         //////////////////////////////////////////////////////////////////////////

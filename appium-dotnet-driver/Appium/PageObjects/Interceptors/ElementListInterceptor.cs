@@ -9,7 +9,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
-namespace OpenQA.Selenium.Appium.PageFactory.Interceptors
+namespace OpenQA.Selenium.Appium.PageObjects.Interceptors
 {
     class ElementListInterceptor : SearchingInterceptor
     {
@@ -20,7 +20,8 @@ namespace OpenQA.Selenium.Appium.PageFactory.Interceptors
         private IList convert(ReadOnlyCollection<IWebElement> original, Type genericParameter)
         {
             Type generic = typeof(List<>).MakeGenericType(genericParameter);
-            object result = generic.GetConstructor(new Type[] { }).Invoke(new object[] { });
+            object result = GenericsUtility.CraeteInstanceOfSomeGeneric(typeof(List<>), genericParameter, new Type[] { }, 
+                new object[] { });
             IList list = result as IList;
 
             foreach (var elem in original)
@@ -37,9 +38,8 @@ namespace OpenQA.Selenium.Appium.PageFactory.Interceptors
                 return cached;
 
             Type genericParameter = invocation.Method.DeclaringType.GetGenericArguments()[0];
-            IList result = typeof(List<>).MakeGenericType(genericParameter).
-                GetConstructor(new Type[] { }).Invoke(new object[] { }) as IList;
-
+            IList result = GenericsUtility.CraeteInstanceOfSomeGeneric(typeof(List<>), genericParameter, new Type[] { },
+                new object[] { }) as IList;
 
             ITimeouts timeOuts = WebDriverUnpackUtility.UnpackWebdriver(locator.SearchContext).Manage().Timeouts();
             try

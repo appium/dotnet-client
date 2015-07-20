@@ -86,10 +86,13 @@
     <Compile Include="Appium\PageObjects\Attributes\FindsBySelendroidAttribute.cs" />
     <Compile Include="Appium\PageObjects\Attributes\FindsByAndroidUIAutomatorAttribute.cs" />
     <Compile Include="Appium\PageObjects\Attributes\Abstract\FindsByUIAutomatorsAttribute.cs" />
+    <Compile Include="Appium\PageObjects\Attributes\MobileFindsByAllAttribute.cs" />
+    <Compile Include="Appium\PageObjects\Attributes\MobileFindsBySequenceAttribute.cs" />
     <Compile Include="Appium\PageObjects\Attributes\WithTimeSpanAttribute.cs" />
     <Compile Include="Appium\PageObjects\ByFactory.cs" />
     <Compile Include="Appium\PageObjects\ContentMappedBy.cs" />
     <Compile Include="Appium\PageObjects\ContentTypes.cs" />
+    <Compile Include="Appium\PageObjects\GenericsUtility.cs" />
     <Compile Include="Appium\PageObjects\Interceptors\ElementInterceptor.cs" />
     <Compile Include="Appium\PageObjects\Interceptors\ElementListInterceptor.cs" />
     <Compile Include="Appium\PageObjects\Interceptors\SearchingInterceptor.cs" />

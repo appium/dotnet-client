@@ -1,22 +1,12 @@
-﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Appium.Android;
+﻿using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.PageObjects.Attributes;
-using OpenQA.Selenium.Support.PageObjects;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Appium.Samples.PageObjects
 {
     public class AndroidPageObjectChecksAttributesForNativeAndroidApp
     {
-        /////////////////////////////////////////////////////////////////
-        private object testMobileElementProperty;
-        private object testMobileElementsProperty;
-        /////////////////////////////////////////////////////////////////
-
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/text1\")")]
         private IMobileElement<AndroidElement> testMobileElement;
 
@@ -26,27 +16,13 @@ namespace Appium.Samples.PageObjects
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/text1\")")]
         private IMobileElement<AndroidElement> TestMobileElement
         {
-            set
-            {
-                testMobileElementProperty = value;
-            }
-            get
-            {
-                return (IMobileElement<AndroidElement>) testMobileElementProperty;
-            }
+            set;get;
         }
 
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/text1\")")]
         private IList<AndroidElement> TestMobileElements
         {
-            set
-            {
-                testMobileElementsProperty = value;
-            }
-            get
-            {
-                return (IList<AndroidElement>) testMobileElementsProperty;
-            }
+            set;get;
         }
 
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/fakeId\")", Priority = 1)]
@@ -95,13 +71,13 @@ namespace Appium.Samples.PageObjects
             }
         }
 
-        [FindsBySequence]
+        [MobileFindsBySequence(Android = true)]
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/content\")", Priority = 1)]
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/list\")", Priority = 2)]
         [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 3)]
         private IMobileElement<AndroidElement> foundByChainedSearchElement;
 
-        [FindsBySequence]
+        [MobileFindsBySequence(Android = true)]
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/content\")", Priority = 1)]
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/list\")", Priority = 2)]
         [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 3)]
@@ -112,7 +88,7 @@ namespace Appium.Samples.PageObjects
         private object foundByChainedSearchElementsProperty;
         /////////////////////////////////////////////////////////////////
 
-        [FindsBySequence]
+        [MobileFindsBySequence(Android = true)]
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/content\")", Priority = 1)]
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/list\")", Priority = 2)]
         [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 3)]
@@ -128,7 +104,7 @@ namespace Appium.Samples.PageObjects
             }
         }
 
-        [FindsBySequence]
+        [MobileFindsBySequence(Android = true)]
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/content\")", Priority = 1)]
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/list\")", Priority = 2)]
         [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 3)]
@@ -144,14 +120,14 @@ namespace Appium.Samples.PageObjects
             }
         }
 
-        [FindsByAll]
+        [MobileFindsByAll(Android = true)]
         [FindsByAndroidUIAutomator(ID = "android:id/text1", Priority = 1)]
         //[FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 2)]
         //Equals method of RemoteWebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
         private IMobileElement<AndroidElement> matchedToAllLocatorsElement;
 
-        [FindsByAll]
+        [MobileFindsByAll(Android = true)]
         [FindsByAndroidUIAutomator(ID = "android:id/text1", Priority = 1)]
         //[FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 2)]
         //Equals method of RemoteWebElement is not consistent for mobile apps
@@ -163,7 +139,7 @@ namespace Appium.Samples.PageObjects
         private object matchedToAllLocatorsElementsProperty;
         /////////////////////////////////////////////////////////////////
 
-        [FindsByAll]
+        [MobileFindsByAll(Android = true)]
         [FindsByAndroidUIAutomator(ID = "android:id/text1", Priority = 1)]
         //[FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 2)]
         //Equals method of RemoteWebElement is not consistent for mobile apps
@@ -180,7 +156,7 @@ namespace Appium.Samples.PageObjects
             }
         }
 
-        [FindsByAll]
+        [MobileFindsByAll(Android = true)]
         [FindsByAndroidUIAutomator(ID = "android:id/text1", Priority = 1)]
         //[FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 2)]
         //Equals method of RemoteWebElement is not consistent for mobile apps

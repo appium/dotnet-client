@@ -13,9 +13,6 @@ namespace Appium.Samples.PageObjects
     public class IOSPageObjectChecksAttributesForNativeIOSApp
     {
         /////////////////////////////////////////////////////////////////
-        private object testMobileElementProperty;
-        private object testMobileElementsProperty;
-        /////////////////////////////////////////////////////////////////
 
         [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[0]")]
         private IMobileElement<IOSElement> testMobileElement;
@@ -26,27 +23,13 @@ namespace Appium.Samples.PageObjects
         [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[0]")]
         private IMobileElement<IOSElement> TestMobileElement
         {
-            set
-            {
-                testMobileElementProperty = value;
-            }
-            get
-            {
-                return (IMobileElement<IOSElement>)testMobileElementProperty;
-            }
+            set; get;
         }
 
         [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[0]")]
         private IList<IOSElement> TestMobileElements
         {
-            set
-            {
-                testMobileElementsProperty = value;
-            }
-            get
-            {
-                return (IList<IOSElement>)testMobileElementsProperty;
-            }
+            set; get;
         }
 
         [FindsByIOSUIAutomation(ID = "FakeID", Priority = 1)]
@@ -61,23 +44,13 @@ namespace Appium.Samples.PageObjects
 
 
         /////////////////////////////////////////////////////////////////
-        private object testMultipleFindByElementProperty;
-        private object testMultipleFindByElementsProperty;
-        /////////////////////////////////////////////////////////////////
 
         [FindsByIOSUIAutomation(ID = "FakeID", Priority = 1)]
         [FindsByIOSUIAutomation(ClassName = "UIAUAIFakeClass", Priority = 2)]
         [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 3)]
         private IMobileElement<IOSElement> TestMultipleFindByElementProperty
         {
-            set
-            {
-                testMultipleFindByElementProperty = value;
-            }
-            get
-            {
-                return (IMobileElement<IOSElement>)testMultipleFindByElementProperty;
-            }
+            set; get;
         }
 
         [FindsByIOSUIAutomation(ID = "FakeID", Priority = 1)]
@@ -85,63 +58,39 @@ namespace Appium.Samples.PageObjects
         [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 3)]
         private IList<IOSElement> MultipleFindByElementsProperty
         {
-            set
-            {
-                testMultipleFindByElementsProperty = value;
-            }
-            get
-            {
-                return (IList<IOSElement>)testMultipleFindByElementsProperty;
-            }
+            set; get;
         }
 
-        [FindsByAll]
+        [MobileFindsByAll(IOS = true)]
         [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 1)]
         //Equals method of RemoteWebElement is not consistent for mobile apps
         //The second selector won't be added till the problem is worked out
         private IMobileElement<IOSElement> matchedToAllLocatorsElement;
 
-        [FindsByAll]
+        [MobileFindsByAll(IOS = true)]
         [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 1)]
         //Equals method of RemoteWebElement is not consistent for mobile apps
         //The second selector won't be added till the problem is worked out
         private IList<IOSElement> matchedToAllLocatorsElements;
 
         /////////////////////////////////////////////////////////////////
-        private object matchedToAllLocatorsElementProperty;
-        private object matchedToAllLocatorsElementsProperty;
-        /////////////////////////////////////////////////////////////////
 
-        [FindsByAll]
+        [MobileFindsByAll(IOS = true)]
         [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 1)]
         //Equals method of RemoteWebElement is not consistent for mobile apps
         //The second selector won't be added till the problem is worked out
         private IMobileElement<IOSElement> TestMatchedToAllLocatorsElementProperty
         {
-            set
-            {
-                matchedToAllLocatorsElementProperty = value;
-            }
-            get
-            {
-                return (IMobileElement<IOSElement>)matchedToAllLocatorsElementProperty;
-            }
+            set; get;
         }
 
-        [FindsByAll]
+        [MobileFindsByAll(IOS = true)]
         [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 1)]
         //Equals method of RemoteWebElement is not consistent for mobile apps
         //The second selector won't be added till the problem is worked out
         private IList<IOSElement> TestMatchedToAllLocatorsElementsProperty
         {
-            set
-            {
-                matchedToAllLocatorsElementsProperty = value;
-            }
-            get
-            {
-                return (IList<IOSElement>)matchedToAllLocatorsElementsProperty;
-            }
+            set; get;
         }
 
         //////////////////////////////////////////////////////////////////////////

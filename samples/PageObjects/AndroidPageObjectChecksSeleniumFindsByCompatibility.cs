@@ -15,21 +15,11 @@ namespace Appium.Samples.PageObjects
         private IWebElement testElement;
 
         /////////////////////////////////////////////////////////////////
-        private object propertyElement;
-        private object propertyElements;
-        /////////////////////////////////////////////////////////////////
 
         [FindsBy(How = How.ClassName, Using = "android.widget.TextView")]
         private IWebElement TestElement
         {
-            set
-            {
-                propertyElement = value;
-            }
-            get
-            {
-                return (IWebElement) propertyElement;
-            }
+            set; get;
         }
 
         [FindsBy(How = How.ClassName, Using = "android.widget.TextView")]
@@ -38,19 +28,9 @@ namespace Appium.Samples.PageObjects
         [FindsBy(How = How.ClassName, Using = "android.widget.TextView")]
         private IList<IWebElement> TestElements
         {
-            set
-            {
-                propertyElements = value;
-            }
-            get
-            {
-                return (IList< IWebElement >) propertyElements;
-            }
+            set; get;
         }
 
-        /////////////////////////////////////////////////////////////////
-        private object testMobileElementProperty;
-        private object testMobileElementsProperty;
         /////////////////////////////////////////////////////////////////
 
         [FindsBy(How = How.ClassName, Using = "android.widget.TextView")]
@@ -62,27 +42,13 @@ namespace Appium.Samples.PageObjects
         [FindsBy(How = How.ClassName, Using = "android.widget.TextView")]
         private IMobileElement<AndroidElement> TestMobileElement
         {
-            set
-            {
-                testMobileElementProperty = value;
-            }
-            get
-            {
-                return (IMobileElement<AndroidElement>) testMobileElementProperty;
-            }
+            set; get;
         }
 
         [FindsBy(How = How.ClassName, Using = "android.widget.TextView")]
         private IList<AndroidElement> TestMobileElements
         {
-            set
-            {
-                testMobileElementsProperty = value;
-            }
-            get
-            {
-                return (IList<AndroidElement>) testMobileElementsProperty;
-            }
+            set; get;
         }
 
         [FindsBy(How = How.Name, Using = "FakeName", Priority = 1)]
@@ -97,23 +63,13 @@ namespace Appium.Samples.PageObjects
 
 
         /////////////////////////////////////////////////////////////////
-        private object testMultipleFindByElementProperty;
-        private object testMultipleFindByElementsProperty;
-        /////////////////////////////////////////////////////////////////
 
         [FindsBy(How = How.Name, Using = "FakeName", Priority = 1)]
         [FindsBy(How = How.Id, Using = "FakeId", Priority = 2)]
         [FindsBy(How = How.ClassName, Using = "android.widget.TextView", Priority = 3)]
         private IMobileElement<AndroidElement> TestMultipleFindByElementProperty
         {
-            set
-            {
-                testMultipleFindByElementProperty = value;
-            }
-            get
-            {
-                return (IMobileElement<AndroidElement>) testMultipleFindByElementProperty;
-            }
+            set; get;
         }
 
         [FindsBy(How = How.Name, Using = "FakeName", Priority = 1)]
@@ -121,14 +77,7 @@ namespace Appium.Samples.PageObjects
         [FindsBy(How = How.ClassName, Using = "android.widget.TextView", Priority = 3)]
         private IList<AndroidElement> MultipleFindByElementsProperty
         {
-            set
-            {
-                testMultipleFindByElementsProperty = value;
-            }
-            get
-            {
-                return (IList<AndroidElement>) testMultipleFindByElementsProperty;
-            }
+            set; get;
         }
 
         [FindsBySequence]
@@ -144,9 +93,6 @@ namespace Appium.Samples.PageObjects
         private IList<AndroidElement> foundByChainedSearchElements;
 
         /////////////////////////////////////////////////////////////////
-        private object foundByChainedSearchElementProperty;
-        private object foundByChainedSearchElementsProperty;
-        /////////////////////////////////////////////////////////////////
 
         [FindsBySequence]
         [FindsBy(How = How.Id, Using = "android:id/content", Priority = 1)]
@@ -154,14 +100,7 @@ namespace Appium.Samples.PageObjects
         [FindsBy(How = How.ClassName, Using = "android.widget.TextView", Priority = 3)]
         private IMobileElement<AndroidElement> TestFoundByChainedSearchElementProperty
         {
-            set
-            {
-                foundByChainedSearchElementProperty = value;
-            }
-            get
-            {
-                return (IMobileElement<AndroidElement>) foundByChainedSearchElementProperty;
-            }
+            set; get;
         }
 
         [FindsBySequence]
@@ -170,14 +109,7 @@ namespace Appium.Samples.PageObjects
         [FindsBy(How = How.ClassName, Using = "android.widget.TextView", Priority = 3)]
         private IList<AndroidElement> TestFoundByChainedSearchElementsProperty
         {
-            set
-            {
-                foundByChainedSearchElementsProperty = value;
-            }
-            get
-            {
-                return (IList<AndroidElement>) foundByChainedSearchElementsProperty;
-            }
+            set; get;
         }
 
         [FindsByAll]
@@ -195,10 +127,6 @@ namespace Appium.Samples.PageObjects
         private IList<AndroidElement> matchedToAllLocatorsElements;
 
         /////////////////////////////////////////////////////////////////
-        private object matchedToAllLocatorsElementProperty;
-        private object matchedToAllLocatorsElementsProperty;
-        /////////////////////////////////////////////////////////////////
-
         [FindsByAll]
         [FindsBy(How = How.Id, Using = "android:id/text1", Priority = 1)]
         //[FindsBy(How = How.ClassName, Using = "android.widget.TextView", Priority = 2)]
@@ -206,14 +134,7 @@ namespace Appium.Samples.PageObjects
         //The second selector will be commented till the problem is worked out
         private IMobileElement<AndroidElement> TestMatchedToAllLocatorsElementProperty
         {
-            set
-            {
-                matchedToAllLocatorsElementProperty = value;
-            }
-            get
-            {
-                return (IMobileElement<AndroidElement>) matchedToAllLocatorsElementProperty;
-            }
+            set;get;
         }
 
         [FindsByAll]
@@ -223,14 +144,7 @@ namespace Appium.Samples.PageObjects
         //The second selector will be commented till the problem is worked out
         private IList<AndroidElement> TestMatchedToAllLocatorsElementsProperty
         {
-            set
-            {
-                matchedToAllLocatorsElementsProperty = value;
-            }
-            get
-            {
-                return (IList<AndroidElement>) matchedToAllLocatorsElementsProperty;
-            }
+            set;get;
         }
 
         public string GetElementText()

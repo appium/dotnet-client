@@ -1,6 +1,9 @@
-﻿using OpenQA.Selenium.Appium.Enums;
+﻿using OpenQA.Selenium.Appium.Android;
+using OpenQA.Selenium.Appium.Enums;
+using OpenQA.Selenium.Appium.iOS;
 using OpenQA.Selenium.Appium.PageObjects.Attributes;
 using OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract;
+using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.PageObjects;
 using System;
 using System.Collections.Generic;
@@ -14,8 +17,6 @@ namespace OpenQA.Selenium.Appium.PageObjects
 {
     internal class ByFactory
     {
-
-
         private static By From(FindsByAttribute attribute)
         {
             var how = attribute.How;
@@ -62,8 +63,16 @@ namespace OpenQA.Selenium.Appium.PageObjects
             throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "Did not know how to construct How from how {0}, using {1}", how, usingValue));
         }
 
-        private static ReadOnlyCollection<By> CreateDefaultLocatorList(MemberInfo member, bool useSequence, bool useAll)
+        private static ReadOnlyCollection<By> CreateDefaultLocatorList(MemberInfo member)
         {
+            bool useSequence = (Attribute.GetCustomAttribute(member, typeof(FindsBySequenceAttribute), true) != null);
+            bool useAll = (Attribute.GetCustomAttribute(member, typeof(FindsByAllAttribute), true) != null);
+
+            if (useSequence && useAll)
+            {
+                throw new ArgumentException("Cannot specify FindsBySequence and FindsByAll on the same member");
+            }
+
             List<By> bys = new List<By>();
             var attributes = Attribute.GetCustomAttributes(member, typeof(FindsByAttribute), true);
 
@@ -102,13 +111,21 @@ namespace OpenQA.Selenium.Appium.PageObjects
             return bys;
         }
 
-        private static ReadOnlyCollection<By> CreateNativeContextLocatorList(MemberInfo member, bool useSequence, bool useAll, string platform, string automation)
+        private static ReadOnlyCollection<By> CreateNativeContextLocatorList(MemberInfo member, string platform, string automation)
         {
             if (platform == null)
                 return null;
 
             string upperPlatform = platform.ToUpper();
             string upperAutomation = null;
+
+            bool useSequence = false;
+            bool useAll = false;
+
+            MobileFindsBySequenceAttribute sequence = Attribute.GetCustomAttribute(member, typeof(MobileFindsBySequenceAttribute), true) as
+                MobileFindsBySequenceAttribute;
+            MobileFindsByAllAttribute all = Attribute.GetCustomAttribute(member, typeof(MobileFindsByAllAttribute), true) as
+                MobileFindsByAllAttribute;
 
             if (automation != null)
                 upperAutomation = automation.ToUpper();
@@ -120,16 +137,36 @@ namespace OpenQA.Selenium.Appium.PageObjects
             if (upperPlatform.Equals(MobilePlatform.Android.ToUpper()) & (upperAutomation != null && 
                 upperAutomation.Equals(AutomationName.Selendroid.ToUpper()))){
                 attributes = Attribute.GetCustomAttributes(member, typeof(FindsBySelendroidAttribute), true);
+                if (sequence != null)
+                    useSequence = sequence.Selendroid;
+                if (all != null)
+                    useAll = all.Selendroid;
             }
-                
+
 
 
             if (upperPlatform.Equals(MobilePlatform.Android.ToUpper()) & (upperAutomation == null || !
-                upperAutomation.Equals(AutomationName.Selendroid.ToUpper())))
+                upperAutomation.Equals(AutomationName.Selendroid.ToUpper()))) {
                 attributes = Attribute.GetCustomAttributes(member, typeof(FindsByAndroidUIAutomatorAttribute), true);
+                if (sequence != null)
+                    useSequence = sequence.Android;
+                if (all != null)
+                    useAll = all.Android;
+            }
 
-            if (upperPlatform.Equals(MobilePlatform.IOS.ToUpper()))
+            if (upperPlatform.Equals(MobilePlatform.IOS.ToUpper())) {
                 attributes = Attribute.GetCustomAttributes(member, typeof(FindsByIOSUIAutomationAttribute), true);
+                if (sequence != null)
+                    useSequence = sequence.IOS;
+                if (all != null)
+                    useAll = all.IOS;
+            }
+
+            if (useSequence && useAll)
+            {
+                throw new ArgumentException("Cannot specify MobileFindsBySequence(DesiredAutomation = true) and MobileFindsByAll(DesiredAutomation = true) " +
+                    "on the same member and the same automation");
+            }
 
             if (attributes == null || attributes.Length == 0)
                 return null;
@@ -148,20 +185,15 @@ namespace OpenQA.Selenium.Appium.PageObjects
         }
 
 
-        internal static IEnumerable<By> CreateBys(string platform, string automation, MemberInfo member)
+        internal static IEnumerable<By> CreateBys(ISearchContext context, MemberInfo member)
         {
-            bool useSequence = (Attribute.GetCustomAttribute(member, typeof(FindsBySequenceAttribute), true) != null);
-            bool useAll = (Attribute.GetCustomAttribute(member, typeof(FindsByAllAttribute), true) != null);
-
-            if (useSequence && useAll)
-            {
-                throw new ArgumentException("Cannot specify FindsBySequence and FindsByAll on the same member");
-            }
-
-            IEnumerable<By> defaultBys = CreateDefaultLocatorList(member, useSequence, useAll);
+            string platform = GetPlatform(context);
+            string automation = GetAutomation(context);
+                        
+            IEnumerable<By> defaultBys = CreateDefaultLocatorList(member);
             ReadOnlyCollection<By> defaultByList = new List<By>(defaultBys).AsReadOnly();
 
-            IEnumerable<By> nativeBys = CreateNativeContextLocatorList(member, useSequence, useAll, platform, automation);
+            IEnumerable<By> nativeBys = CreateNativeContextLocatorList(member, platform, automation);
             IList<By> nativeByList = null;
 
             if (nativeBys == null)
@@ -179,5 +211,61 @@ namespace OpenQA.Selenium.Appium.PageObjects
             return bys.AsReadOnly();
         }
 
+        private static string GetPlatform(ISearchContext context)
+        {
+            IWebDriver driver = WebDriverUnpackUtility.UnpackWebdriver(context);
+
+            if (driver == null)
+                return null;
+
+            Type driverType = driver.GetType();
+
+            if (GenericsUtility.MatchGenerics(typeof(AndroidDriver<>), AppiumPageObjectMemberDecorator.ListOfAvailableElementTypes, driverType))
+                return MobilePlatform.Android;
+
+            if (GenericsUtility.MatchGenerics(typeof(IOSDriver<>), AppiumPageObjectMemberDecorator.ListOfAvailableElementTypes, driverType))
+                return MobilePlatform.IOS;
+
+            if (typeof(IHasCapabilities).IsAssignableFrom(driverType))
+            {
+                IHasCapabilities hasCapabilities = (IHasCapabilities)driver;
+                object platform = hasCapabilities.
+                    Capabilities.GetCapability(MobileCapabilityType.PlatformName);
+
+                if (platform == null || String.IsNullOrEmpty(Convert.ToString(platform)))
+                    platform = hasCapabilities.Capabilities.GetCapability(CapabilityType.Platform);
+
+                string convertedPlatform = Convert.ToString(platform);
+                if (platform != null && !String.IsNullOrEmpty(convertedPlatform))
+                    return convertedPlatform;
+            }
+            return null;
+        }
+
+
+        private static string GetAutomation(ISearchContext context)
+        {
+            IWebDriver driver = WebDriverUnpackUtility.
+                 UnpackWebdriver(context);
+
+            if (driver == null)
+                return null;
+
+            if (typeof(IHasCapabilities).IsAssignableFrom(driver.GetType()))
+            {
+
+                IHasCapabilities hasCapabilities = (IHasCapabilities)driver;
+                object automation = hasCapabilities.
+                    Capabilities.GetCapability(MobileCapabilityType.AutomationName);
+
+                if (automation == null || String.IsNullOrEmpty(Convert.ToString(automation)))
+                    automation = hasCapabilities.Capabilities.GetCapability(CapabilityType.BrowserName);
+
+                string convertedAutomation = Convert.ToString(automation);
+                if (automation != null && !String.IsNullOrEmpty(convertedAutomation))
+                    return convertedAutomation;
+            }
+            return null;
+        }
     }
 }

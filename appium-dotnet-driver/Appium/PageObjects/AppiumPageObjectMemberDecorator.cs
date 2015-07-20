@@ -3,9 +3,8 @@ using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.iOS;
-using OpenQA.Selenium.Appium.PageFactory.Interceptors;
-using OpenQA.Selenium.Appium.PageObjects.Attributes;
 using OpenQA.Selenium.Appium.PageObjects.Interceptors;
+using OpenQA.Selenium.Appium.PageObjects.Attributes;
 using OpenQA.Selenium.Internal;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.PageObjects;
@@ -26,7 +25,7 @@ namespace OpenQA.Selenium.Appium.PageObjects
 
 
 
-        private static List<Type> ListAvailableElementTypes
+        internal static List<Type> ListOfAvailableElementTypes
         {
             get
             {
@@ -44,76 +43,6 @@ namespace OpenQA.Selenium.Appium.PageObjects
             }
         }
 
-
-        private static bool MatchGenerics(Type generalType, List<Type> possibleParameters, Type targetType)
-        {
-            foreach (var type in possibleParameters)
-            {
-                Type fullType = generalType.MakeGenericType(type);
-                if (fullType.Equals(targetType))
-                    return true;
-            }
-
-            return false;
-        }
-
-
-        private static string GetPlatform(ISearchContext context)
-        {
-            IWebDriver driver = WebDriverUnpackUtility.UnpackWebdriver(context);
-
-            if (driver == null)
-                return null;
-
-            Type driverType = driver.GetType();
-
-            if (MatchGenerics(typeof(AndroidDriver<>), ListAvailableElementTypes, driverType))
-                return MobilePlatform.Android;
-
-            if (MatchGenerics(typeof(IOSDriver<>), ListAvailableElementTypes, driverType))
-                return MobilePlatform.IOS;
-
-            if (typeof(IHasCapabilities).IsAssignableFrom(driverType))
-            {
-                IHasCapabilities hasCapabilities = (IHasCapabilities) driver;
-                object platform = hasCapabilities.
-                    Capabilities.GetCapability(MobileCapabilityType.PlatformName);
-
-                if (platform == null || String.IsNullOrEmpty(Convert.ToString(platform)))
-                    platform = hasCapabilities.Capabilities.GetCapability(CapabilityType.Platform);
-
-                string convertedPlatform = Convert.ToString(platform);
-                if (platform != null && !String.IsNullOrEmpty(convertedPlatform))
-                    return convertedPlatform;
-            }
-            return null;
-        }
-
-
-        private static string GetAutomation(ISearchContext context)
-        {
-           IWebDriver driver = WebDriverUnpackUtility.
-                UnpackWebdriver(context);
-
-            if (driver == null)
-                return null;
-
-            if (typeof(IHasCapabilities).IsAssignableFrom(driver.GetType())) {
-
-                IHasCapabilities hasCapabilities = (IHasCapabilities) driver;
-                object automation = hasCapabilities.
-                    Capabilities.GetCapability(MobileCapabilityType.AutomationName);
-
-                if (automation == null || String.IsNullOrEmpty(Convert.ToString(automation)))
-                    automation = hasCapabilities.Capabilities.GetCapability(CapabilityType.BrowserName);
-
-                string convertedAutomation = Convert.ToString(automation);
-                if (automation != null && !String.IsNullOrEmpty(convertedAutomation))
-                    return convertedAutomation;                
-            }
-            return null;
-        }
-
         public AppiumPageObjectMemberDecorator()
             :this(new TimeOutDuration(defaultTimeSpan))
         {}
@@ -129,7 +58,7 @@ namespace OpenQA.Selenium.Appium.PageObjects
             if (typeof(IWebElement).Equals(targetType))
                 return targetType;
             else
-                if (MatchGenerics(typeof(IMobileElement<>), ListAvailableElementTypes, targetType))
+                if (GenericsUtility.MatchGenerics(typeof(IMobileElement<>), ListOfAvailableElementTypes, targetType))
                     return targetType;
 
             return null;
@@ -182,17 +111,14 @@ namespace OpenQA.Selenium.Appium.PageObjects
             Type aSingleElementType = GetTypeOfASingleElement(targetType, member);
 
             Type aListOfElementsType = null;
-            if (MatchGenerics(typeof(IList<>), ListAvailableElementTypes, targetType))
+            if (GenericsUtility.MatchGenerics(typeof(IList<>), ListOfAvailableElementTypes, targetType))
                 aListOfElementsType = targetType;
 
             if (aSingleElementType == null & aListOfElementsType == null)
                 return null;
 
-            ISearchContext context = locator.SearchContext;
-            string platform = GetPlatform(context);
-            string automation = GetAutomation(context);
-            
-            IEnumerable<By> bys = ByFactory.CreateBys(platform, automation, member);
+            ISearchContext context = locator.SearchContext;            
+            IEnumerable<By> bys = ByFactory.CreateBys(context, member);
 
             ProxyGenerator generator = new ProxyGenerator();
             TimeOutDuration span = GetTimeWaitingForElements(member);
