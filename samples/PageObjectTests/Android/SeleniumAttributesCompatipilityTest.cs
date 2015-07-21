@@ -107,7 +107,8 @@ namespace Appium.Samples.PageObjectTests.Android
         [Test()]
         public void CheckElementsFoundUsingMultipleLocators()
         {
-            Assert.GreaterOrEqual(pageObject.GetMultipleFindByElementSize(), 1);
+            Assert.GreaterOrEqual(pageObject.GetMultipleFindByElementSize(), 10);
+            Assert.LessOrEqual(pageObject.GetMultipleFindByElementSize(), 14);
         }
 
         [Test()]
@@ -119,7 +120,8 @@ namespace Appium.Samples.PageObjectTests.Android
         [Test()]
         public void CheckElementsFoundUsingMultipleLocatorssProperty()
         {
-            Assert.GreaterOrEqual(pageObject.GetMultipleFindByElementPropertySize(), 1);
+            Assert.GreaterOrEqual(pageObject.GetMultipleFindByElementPropertySize(), 10);
+            Assert.LessOrEqual(pageObject.GetMultipleFindByElementSize(), 14);
         }
 
         [Test()]
@@ -131,7 +133,8 @@ namespace Appium.Samples.PageObjectTests.Android
         [Test()]
         public void CheckElementsFoundByChainedSearch()
         {
-            Assert.GreaterOrEqual(pageObject.GetFoundByChainedSearchElementSize(), 1);
+            Assert.GreaterOrEqual(pageObject.GetFoundByChainedSearchElementSize(), 10);
+            Assert.LessOrEqual(pageObject.GetMultipleFindByElementSize(), 14);
         }
 
         [Test()]
@@ -143,7 +146,8 @@ namespace Appium.Samples.PageObjectTests.Android
         [Test()]
         public void CheckFoundByChainedSearchElementsProperty()
         {
-            Assert.GreaterOrEqual(pageObject.GetFoundByChainedSearchElementPropertySize(), 1);
+            Assert.GreaterOrEqual(pageObject.GetFoundByChainedSearchElementPropertySize(), 10);
+            Assert.LessOrEqual(pageObject.GetMultipleFindByElementSize(), 14);
         }
 
         [Test()]
