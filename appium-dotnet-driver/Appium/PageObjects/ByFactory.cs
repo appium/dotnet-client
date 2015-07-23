@@ -15,7 +15,7 @@ using System.Text;
 
 namespace OpenQA.Selenium.Appium.PageObjects
 {
-    internal class ByFactory
+    public class ByFactory
     {
         private static By From(FindsByAttribute attribute)
         {
@@ -185,7 +185,7 @@ namespace OpenQA.Selenium.Appium.PageObjects
         }
 
 
-        internal static IEnumerable<By> CreateBys(ISearchContext context, MemberInfo member)
+        public static IEnumerable<By> CreateBys(ISearchContext context, MemberInfo member)
         {
             string platform = GetPlatform(context);
             string automation = GetAutomation(context);

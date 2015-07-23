@@ -6,7 +6,7 @@ using System.Text;
 namespace OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract
 {
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Class, AllowMultiple = true)]
-    public class FindsByUIAutomatorsAttribute: FindsByMobileAttribute
+    public abstract class FindsByUIAutomatorsAttribute : FindsByMobileAttribute
     {
         /// <summary>
         /// Sets the target accessibility

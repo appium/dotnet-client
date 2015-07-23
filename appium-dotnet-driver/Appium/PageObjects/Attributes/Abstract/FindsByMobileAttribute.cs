@@ -128,7 +128,6 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract
                 throw new ArgumentException("Object to compare must be a FindsByAttribute", "obj");
             }
 
-            // TODO(JimEvans): Construct an algorithm to sort on more than just Priority.
             if (this.Priority != other.Priority)
             {
                 return this.Priority - other.Priority;
