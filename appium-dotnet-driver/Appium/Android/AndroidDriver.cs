@@ -16,7 +16,13 @@ namespace OpenQA.Selenium.Appium.Android
     {
         private static readonly string Platform = MobilePlatform.Android;
 
-
+        private const string METASTATE_PARAM = "metastate";
+        private const string CONNECTION_NAME_PARAM = "name";
+        private const string CONNECTION_PARAM_PARAM = "parameters";
+        private const string CONNECTION_NAME_VALUE = "network_connection";
+        private const string DATA_PARAM = "data";
+        private const string INTENT_PARAM = "intent";
+        
         /// <summary>
         /// Initializes a new instance of the AndroidDriver class
         /// </summary>
@@ -105,13 +111,27 @@ namespace OpenQA.Selenium.Appium.Android
             get
             {
                 var commandResponse = this.Execute(AppiumDriverCommand.GetConnectionType, null);
-                return commandResponse.Value.ConvertToConnectionType();
+                if (commandResponse.Status == WebDriverResult.Success)
+                {
+                    return (ConnectionType)(long)commandResponse.Value;
+                }
+                else
+                {
+                    throw new WebDriverException("The request to get the ConnectionType has failed.");
+                }
             }
             set
             {
-                var parameters = new Dictionary<string, object>();
-                parameters.Add("type", value);
-                this.Execute(AppiumDriverCommand.SetConnectionType, parameters);
+                Dictionary<string, object> values = new Dictionary<string, object>(){
+                    {"type", value}
+                };
+
+                Dictionary<string, object> dictionary = new Dictionary<string, object>(){
+                    {CONNECTION_NAME_PARAM, CONNECTION_NAME_VALUE},
+                    {CONNECTION_PARAM_PARAM, values}
+                };
+
+                Execute(AppiumDriverCommand.SetConnectionType, dictionary);
             }
         }
         #endregion Connection Type
@@ -212,5 +232,84 @@ namespace OpenQA.Selenium.Appium.Android
             base.UpdateSetting("ignoreUnimportantViews", value);
         }
 
+        #region scrollTo, scrollToExact
+
+        /// <summary>
+        /// Scroll forward to the element which has a description or name which contains the input text.
+        /// The scrolling is performed on the first scrollView present on the UI.
+        /// </summary>
+        /// <param name="text">text to look out for while scrolling</param>
+        public override W ScrollTo(String text)
+        {
+            String uiScrollables = UiScrollable("new UiSelector().descriptionContains(\"" + text + "\")") +
+                                   UiScrollable("new UiSelector().textContains(\"" + text + "\")");
+
+            return FindElementByAndroidUIAutomator(uiScrollables);
+        }
+
+        /// <summary>
+        /// Scroll forward to the element which has a description or name which exactly matches the input text.
+        /// The scrolling is performed on the first scrollView present on the UI
+        /// </summary>
+        /// <param name="text">text to look out for while scrolling</param>
+        public override W ScrollToExact(String text)
+        {
+            String uiScrollables = UiScrollable("new UiSelector().description(\"" + text + "\")") +
+                                   UiScrollable("new UiSelector().text(\"" + text + "\")");
+            return FindElementByAndroidUIAutomator(uiScrollables);
+        }
+
+        /// <summary>
+        /// Scroll forward to the element which has a description or name which contains the input text.
+        /// The scrolling is performed on the first scrollView with the given resource ID.
+        /// </summary>
+        /// <param name="text">text to look out for while scrolling</param>
+        /// <param name="resId">resource ID of the scrollable View</param>
+        public W ScrollTo(String text, String resId)
+        {
+            String uiScrollables = UiScrollable("new UiSelector().descriptionContains(\"" + text + "\")", resId) +
+                                   UiScrollable("new UiSelector().textContains(\"" + text + "\")", resId);
+
+            return FindElementByAndroidUIAutomator(uiScrollables);
+        }
+
+        /// <summary>
+        /// Scroll forward to the element which has a description or name which exactly matches the input text.
+        /// The scrolling is performed on the first scrollView present on the UI
+        /// </summary>
+        /// <param name="text">text to look out for while scrolling</param>
+        /// <param name="resId">resource ID of the scrollable View</param>
+        public W ScrollToExact(String text, String resId)
+        {
+            String uiScrollables = UiScrollable("new UiSelector().description(\"" + text + "\")", resId) +
+                                   UiScrollable("new UiSelector().text(\"" + text + "\")", resId);
+            return FindElementByAndroidUIAutomator(uiScrollables);
+        }
+
+        /// <summary>
+        /// Creates a new UiScrollable-string to scroll on a View to move through it until a visible item that matches
+        /// the selector is found.
+        /// </summary>
+        /// <param name="uiSelector">UiSelector-string to tell what to search for while scrolling</param>
+        /// <param name="resId">Resource-ID of a scrollable View</param>
+        /// <returns>UiScrollable-string that can be executed with FindElementByAndroidUIAutomator()</returns>
+        private static string UiScrollable(string uiSelector, string resId)
+        {
+            return "new UiScrollable(new UiSelector().scrollable(true).resourceId(\"" + resId + "\")).scrollIntoView(" + uiSelector + ".instance(0));";
+        }
+
+        /// <summary>
+        /// Creates a new UiScrollable-string to scroll on the first scrollable View in the layout to move through it until a visible item 
+        /// that matches the selector is found.
+        /// </summary>
+        /// <param name="uiSelector">UiSelector-string to tell what to search for while scrolling</param>
+        /// <returns>UiScrollable-string that can be executed with FindElementByAndroidUIAutomator()</returns>
+        private static string UiScrollable(string uiSelector)
+        {
+            return "new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(" + uiSelector + ".instance(0));";
+        }
+
+        #endregion
+        
     }
 }

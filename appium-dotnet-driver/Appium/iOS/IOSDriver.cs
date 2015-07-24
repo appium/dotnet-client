@@ -100,5 +100,24 @@ namespace OpenQA.Selenium.Appium.iOS
         {
             return new IOSElement(this, elementId);
         }
+
+        public override W ScrollTo(string text)
+        {
+            return (W) ((IScrollsTo<W>) FindElementByClassName("UIATableView")).ScrollTo(text);
+        }
+
+        public override W ScrollToExact(string text)
+        {
+            return (W)((IScrollsTo<W>)FindElementByClassName("UIATableView")).ScrollToExact(text);
+        }
+        
+        public W GetNamedTextField(String name) 
+        {
+		    W element = FindElementByAccessibilityId(name);
+		    if (element.TagName != "TextField") {
+			    return (W) ((IFindByAccessibilityId<W>) element).FindElementByAccessibilityId(name);
+		    }
+		    return element;
+	    }
     }
 }
