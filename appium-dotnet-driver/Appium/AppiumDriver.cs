@@ -797,8 +797,8 @@ namespace OpenQA.Selenium.Appium
             Point center = new Point(upperLeft.X + dimensions.Width / 2, upperLeft.Y + dimensions.Height / 2);
             int yOffset = center.Y - upperLeft.Y;
 
-            ITouchAction action0 = new TouchAction(this).Press(el, center.X, center.Y - yOffset).MoveTo(el).Release();
-            ITouchAction action1 = new TouchAction(this).Press(el, center.X, center.Y + yOffset).MoveTo(el).Release();
+            ITouchAction action0 = new TouchAction(this).Press(el, center.X, center.Y - yOffset)MoveTo(el).Release();
+            ITouchAction action1 = new TouchAction(this).Press(el, center.X, center.Y + yOffset)MoveTo(el).Release();
 
             multiTouch.Add(action0).Add(action1);
 
@@ -846,7 +846,42 @@ namespace OpenQA.Selenium.Appium
         /// driver convenience method slides touches away from the element, if driver would happen to place one of them
         /// off the screen, appium will return an outOfBounds error. In driver case, revert to using the MultiAction api
         /// instead of driver method.
+        /// <param name="x">x coordinate to terminate the zoom on</param>
+        /// <param name="y">y coordinate to terminate the zoom on></param>
+        /// </summary>
+        public void Zoom(int x, int y)
+        {
+            MultiAction multiTouch = new MultiAction(this);
+
+            int scrHeight = Manage().Window.Size.Height;
+            int yOffset = 100;
+
+            if (y - 100 < 0)
+            {
+                yOffset = y;
+            }
+            else if (y + 100 > scrHeight)
+            {
+                yOffset = scrHeight - y;
+            }
+
+            ITouchAction action0 = new TouchAction(this).Press(x, y).MoveTo(x, y - yOffset).Release();
+            ITouchAction action1 = new TouchAction(this).Press(x, y).MoveTo(x, y + yOffset).Release();
+
+            multiTouch.Add(action0).Add(action1);
+
+            multiTouch.Perform();
+        }
+
+        /// <summary>
+        /// Convenience method for "zooming in" on an element on the screen.
+        /// "zooming in" refers to the action of two appendages Pressing the screen and sliding away from each other.
+        /// NOTE:
+        /// driver convenience method slides touches away from the element, if driver would happen to place one of them
+        /// off the screen, appium will return an outOfBounds error. In driver case, revert to using the MultiAction api
+        /// instead of driver method.
         /// <param name="el">The element to pinch</param>
+        /// </summary>
         public void Zoom(W el)
         {
             MultiAction multiTouch = new MultiAction(this);

@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AndroidConnectionTest.cs" />
+    <Compile Include="AndroidGestureTest.cs" />
     <Compile Include="IOSLocationTest.cs" />
     <Compile Include="AndroidLocationTest.cs" />
     <Compile Include="IosOrientationTest.cs" />
