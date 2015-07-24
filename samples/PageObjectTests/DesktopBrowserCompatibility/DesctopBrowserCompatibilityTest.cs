@@ -70,12 +70,28 @@ namespace Appium.Samples.PageObjectTests.DesktopBrowserCompatibility
             Assert.GreaterOrEqual(10, links.Links.Count);
             Assert.AreNotEqual(ires, null);
             Assert.AreNotEqual(((IWrapsElement) ires).WrappedElement, null);
+
+            //this checking notices that element is found once and cached
+            Assert.AreEqual(((IWrapsElement)ires).WrappedElement.GetHashCode(), ((IWrapsElement)ires).WrappedElement.GetHashCode());
+
+            //this checking notices that element are found once and cached
+            IList<IWebElement> cachedList = links.Links;
+            Assert.GreaterOrEqual(10, cachedList.Count);
+            Assert.AreEqual(links.Links.Count, cachedList.Count);
+
+            int i = 0;
+            foreach (var element in cachedList)
+            {
+                Assert.AreEqual(element.GetHashCode(), links.Links[i].GetHashCode());
+                i++;
+            }
         }
     }
 
 
     class FoundLinks
     {
+        [CacheLookup]
         [FindsBySequence]
         [FindsBy(How = How.ClassName, Using = "r", Priority = 1)]
         [FindsBy(How = How.TagName, Using = "a", Priority = 2)]
