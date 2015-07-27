@@ -45,7 +45,7 @@ namespace Appium.Samples
         [Test()]
         public void GestureTestCase()
         {
-            IOSElement e = driver.FindElementByClassName("TextField1");
+            IOSElement e = driver.FindElementByName("TextField1");
             driver.Tap(1, e, 2000);
             driver.Zoom(e);
             driver.Pinch(e);
