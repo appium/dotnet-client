@@ -36,7 +36,7 @@ namespace AppiumDriverDemo
 	[TestFixture ()]
 	public class ProgramTest
 	{
-		private AppiumDriver<AndroidElement> driver;
+		private AppiumDriver<AppiumWebElement> driver;
 
 		[TestFixtureSetUp]
 		public void beforeAll(){
@@ -45,7 +45,7 @@ namespace AppiumDriverDemo
 			capabilities.SetCapability("deviceName", "Ansroid Emulator");
 			capabilities.SetCapability("platformName", "Android");
 			capabilities.SetCapability("app", "<Path to your app>");
-			driver = new AndroidDriver<AndroidElement>(new Uri("http://127.0.0.1:4723/wd/hub"), capabilities);		
+			driver = new AndroidDriver<AppiumWebElement>(new Uri("http://127.0.0.1:4723/wd/hub"), capabilities);		
 		}
 
 		[TestFixtureTearDown]
@@ -58,9 +58,9 @@ namespace AppiumDriverDemo
 		public void AppiumDriverMethodsTestCase ()
 		{
 			// Using appium extension methods
-			AppiumWebElement el = (AppiumWebElement) driver.FindElementByIosUIAutomation(".elements()");
-			el.SetImmediateValue ("abc");
-			Assert.False (driver.IsAppInstalled("RamdomApp"));
+			AppiumWebElement el = driver.FindElementsByAndroidUIAutomator ("new UiSelector().enabled(true)");
+			el.SendKeys ("abc");
+			Assert.AreEqual (el.Text, "abc");
 		}
 	}
 
