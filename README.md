@@ -23,6 +23,7 @@ Note: we will NOT publish a signed version of this assembly since the dependenci
  the ports are defaulted to Appium values, and the driver does not know how to start the Appium on its own.
 - To use the Appium methods on Element, you need to specify the parameter of `AppiumDriver` or its subclasses.
 
+Here is the example for Android:
 
 ```c#
 ...
