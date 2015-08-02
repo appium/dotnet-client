@@ -19,23 +19,23 @@ Note: we will NOT publish a signed version of this assembly since the dependenci
 ### basics
 
 - You need to add the following namespace line: `using OpenQA.Selenium.Appium;`.
-- Use the `AppiumDriver` class to construct the driver. It works the same as the Selenium Webdriver, except that
+- Use the `AppiumDriver` class/subclass to construct the driver. It works the same as the Selenium Webdriver, except that
  the ports are defaulted to Appium values, and the driver does not know how to start the Appium on its own.
-- To use the Appium methods on Element, you need to cast the object returned by the finder method to 
-`AppiumWebElement`.
+- To use the Appium methods on Element, you need to specify the parameter of `AppiumDriver` or its subclasses.
 
 
 ```c#
 ...
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Appium;
+using OpenQA.Selenium.Appium.Android;
 
 namespace AppiumDriverDemo
 {
 	[TestFixture ()]
 	public class ProgramTest
 	{
-		private AppiumDriver driver;
+		private AppiumDriver<AndroidElement> driver;
 
 		[TestFixtureSetUp]
 		public void beforeAll(){
@@ -45,7 +45,7 @@ namespace AppiumDriverDemo
 			capabilities.SetCapability("platformName", "iOS");
 			capabilities.SetCapability("platformVersion", "7.1");
 			capabilities.SetCapability("app", "<Path to your app>");
-			driver = new AppiumDriver(new Uri("http://127.0.0.1:4723/wd/hub"), capabilities);		
+			driver = new AndroidDriver<AndroidElement>(new Uri("http://127.0.0.1:4723/wd/hub"), capabilities);		
 		}
 
 		[TestFixtureTearDown]
