@@ -1,5 +1,28 @@
 #Release Notes
 
+## 1.4.0.0
+
+- features ported from the Java-Appium-Driver
+	AppiumDriver:
+
+		Tap
+		Swipe
+		Pinch
+		Zoom
+		ScrollTo
+		ScrollToExact
+	
+	IOSDriver
+
+		GetNamedTextField
+		
+	IOSElement
+
+		also ScrollTo & ScrollToExact implementations with extra parameter for a resource ID to scroll on a particular View.
+		
+- Integration with Selenium PageFactory. Now it is possible to develop UI tests using Page Object design pattern
+
+
 ## 1.3.0.1
 - Generic AppiumDriver class and subclasses
 - Fixes for backward compatabliltiy for TryAddCommand
