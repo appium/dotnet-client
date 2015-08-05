@@ -1,6 +1,6 @@
 #Release Notes
 
-## 1.4.0.0
+## 1.4.0.2
 
 - features ported from the Java-Appium-Driver
 	AppiumDriver:
@@ -18,7 +18,8 @@
 		
 	IOSElement
 
-		also ScrollTo & ScrollToExact implementations with extra parameter for a resource ID to scroll on a particular View.
+		also ScrollTo & ScrollToExact implementations with extra parameter for a resource ID to 
+		scroll on a particular View.
 		
 - Integration with Selenium PageFactory. Now it is possible to develop UI tests using Page Object design pattern
 
