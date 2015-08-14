@@ -3,6 +3,7 @@ using OpenQA.Selenium.Appium.Interfaces;
 using System.Collections.Generic;
 using System.Reflection;
 using OpenQA.Selenium.Remote;
+using OpenQA.Selenium.Internal;
 
 namespace OpenQA.Selenium.Appium.MultiTouch
 {
@@ -12,9 +13,18 @@ namespace OpenQA.Selenium.Appium.MultiTouch
 		internal class Step {
 			private Dictionary<string, object> parameters = new Dictionary<string, object>();
 
-			private string getIdForElement(IWebElement el) {
-				return (string) typeof(OpenQA.Selenium.Remote.RemoteWebElement).GetField("elementId", 
-					BindingFlags.NonPublic | BindingFlags.Instance).GetValue(el);
+			private string GetIdForElement(IWebElement el) {
+
+                RemoteWebElement remoteWebElement = el as RemoteWebElement;
+                if (remoteWebElement != null)
+                    return (string) typeof(OpenQA.Selenium.Remote.RemoteWebElement).GetField("elementId", 
+					    BindingFlags.NonPublic | BindingFlags.Instance).GetValue(el);
+
+                IWrapsElement elementWrapper = el as IWrapsElement;
+                if (elementWrapper != null)
+                    return GetIdForElement(elementWrapper.WrappedElement);
+
+                return null;
 			}
 
 			public Step(string action) {
@@ -25,7 +35,7 @@ namespace OpenQA.Selenium.Appium.MultiTouch
 				if (value != null) {
 					if(!parameters.ContainsKey("options")) parameters.Add("options", new Dictionary<string, object> ());
 					if (value is IWebElement) {
-						string id = getIdForElement ((IWebElement)value);
+						string id = GetIdForElement ((IWebElement)value);
 						((Dictionary<string, object>)this.parameters ["options"]).Add (name, id);
 					} else if (value is double) {
 						double doubleValue = (double) value;

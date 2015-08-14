@@ -1,5 +1,9 @@
 #Release Notes
 
+## 1.4.0.3
+- the bug which prevented the using of TouchAction/MultiTouchActions with IWebElement was fixed. This problem is reproduced with 
+IWebElement instances created via Selenium PageFactory.
+
 ## 1.4.0.2
 
 - features ported from the Java-Appium-Driver

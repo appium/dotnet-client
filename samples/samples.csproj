@@ -71,6 +71,8 @@
     <Compile Include="AndroidWebviewTest.cs" />
     <Compile Include="AndroidComplexTest.cs" />
     <Compile Include="AndroidLocalServerTest.cs" />
+    <Compile Include="PageObjects\AndroidJavaScriptTestPageObject.cs" />
+    <Compile Include="PageObjects\AndroidPageObjectThatChecksTouchActions.cs" />
     <Compile Include="PageObjects\AndroidWebView.cs" />
     <Compile Include="PageObjects\IOSPageObjectChecksAttributeMixOnNativeApp.cs" />
     <Compile Include="PageObjects\IOSPageObjectChecksAttributesForNativeIOSApp.cs" />
@@ -89,6 +91,8 @@
     <Compile Include="PageObjectTests\IOS\IOSTestThatChecksAttributeMix.cs" />
     <Compile Include="PageObjectTests\IOS\IOSNativeAppAttributesTest.cs" />
     <Compile Include="PageObjectTests\NegativeTests\NoSuchElementTestOnAndroid.cs" />
+    <Compile Include="PageObjectTests\Other\AndroidJSWebViewTest.cs" />
+    <Compile Include="PageObjectTests\Other\AndroidTouchActionTest.cs" />
     <Compile Include="PageObjectTests\TimeOutManagement\TimeOutManagementTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

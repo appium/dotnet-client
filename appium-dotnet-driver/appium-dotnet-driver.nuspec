@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Appium.WebDriver</id>
-    <version>1.4.0.2</version>
+    <version>1.4.0.3</version>
     <title>Appium Webdriver</title>
     <authors>Appium Commiters</authors>
     <owners>Appium Commiters</owners>
@@ -12,6 +12,9 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Selenium Webdriver extension for Appium.</description>
     <releaseNotes>
+	  1.4.0.3
+	    the bug which prevented the using of TouchAction/MultiTouchActions with IWebElement was fixed. This problem is reproduced
+		with IWebElement instances created via Selenium PageFactory.
 	  1.4.0.2
         features ported from the Java-Appium-Driver. Integration with Selenium PageFactory.
       1.3.0.1
