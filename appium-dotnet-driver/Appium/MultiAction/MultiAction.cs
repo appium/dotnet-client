@@ -4,6 +4,7 @@ using System.Linq;
 using OpenQA.Selenium.Appium.Interfaces;
 using System.Reflection;
 using OpenQA.Selenium.Remote;
+using OpenQA.Selenium.Internal;
 
 namespace OpenQA.Selenium.Appium.MultiTouch
 {
@@ -14,9 +15,17 @@ namespace OpenQA.Selenium.Appium.MultiTouch
 		private IPerformsTouchActions TouchActionPerformer;
 		private IWebElement element;
 
-		private string getIdForElement(IWebElement el) {
-			return (string) typeof(AppiumWebElement).GetField("elementId", 
-				BindingFlags.NonPublic | BindingFlags.Instance).GetValue(el);
+		private string GetIdForElement(IWebElement el) {
+            RemoteWebElement remoteWebElement = el as RemoteWebElement;
+            if (remoteWebElement != null)
+                return (string)typeof(OpenQA.Selenium.Remote.RemoteWebElement).GetField("elementId",
+                    BindingFlags.NonPublic | BindingFlags.Instance).GetValue(el);
+
+            IWrapsElement elementWrapper = el as IWrapsElement;
+            if (elementWrapper != null)
+                return GetIdForElement(elementWrapper.WrappedElement);
+
+            return null;
 		}
 		/// <summary>
 		/// Initializes a new instance of the <see cref="MultiTouchAction"/> class.
@@ -86,7 +95,7 @@ namespace OpenQA.Selenium.Appium.MultiTouch
         {
 			Dictionary<string, object> parameters = new Dictionary<string, object> ();
 			if (this.element != null) {
-				parameters.Add ("elementId", getIdForElement(this.element));
+				parameters.Add ("elementId", GetIdForElement(this.element));
 			}
 			for (int i = 0; i < actions.Count; i++) {
 				if (i == 0)

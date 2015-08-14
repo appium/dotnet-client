@@ -69,10 +69,10 @@ namespace Appium.Samples
             Assert.GreaterOrEqual(els.Count, 12); 
 
             var els2 = driver.FindElements(new ByAndroidUIAutomator("new UiSelector().enabled(true)"));
-            Assert.GreaterOrEqual(els2.Count, 20);
+            Assert.GreaterOrEqual(els2.Count, 12);
 
             els = driver.FindElementsByAndroidUIAutomator("new UiSelector().enabled(true)");
-			Assert.GreaterOrEqual (els.Count, 20);
+			Assert.GreaterOrEqual (els.Count, 12);
 			Assert.IsNotNull (driver.FindElementByXPath ("//android.widget.TextView[@text='API Demos']"));
 		}
 	}
