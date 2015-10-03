@@ -116,6 +116,7 @@
     <Compile Include="Appium\MultiAction\TouchAction.cs" />
     <Compile Include="Appium\Interfaces\ITouchAction.cs" />
     <Compile Include="Appium\Location.cs" />
+    <Compile Include="Appium\Interfaces\ITouchShortcuts.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

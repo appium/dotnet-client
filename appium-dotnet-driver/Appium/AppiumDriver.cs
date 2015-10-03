@@ -69,10 +69,10 @@ namespace OpenQA.Selenium.Appium
     /// }
     /// </code>
     /// </example>
-    public abstract class AppiumDriver<W> : RemoteWebDriver, IFindByAccessibilityId<W>, IDeviceActionShortcuts, IInteractsWithFiles,
+	public abstract class AppiumDriver<W> : RemoteWebDriver, ITouchShortcuts, IFindByAccessibilityId<W>, IDeviceActionShortcuts, IInteractsWithFiles,
         IInteractsWithApps, IPerformsTouchActions, IRotatable, IContextAware, IGenericSearchContext<W>, IGenericFindsByClassName<W>,
         IGenericFindsById<W>, IGenericFindsByCssSelector<W>, IGenericFindsByLinkText<W>, IGenericFindsByName<W>,
-        IGenericFindsByPartialLinkText<W>, IGenericFindsByTagName<W>, IGenericFindsByXPath<W>, IScrollsTo<W> where W : IWebElement
+	IGenericFindsByPartialLinkText<W>, IGenericFindsByTagName<W>, IGenericFindsByXPath<W>, IScrollsTo<W> where W : IWebElement
     {
         #region Constructors
         /// <summary>
@@ -708,7 +708,7 @@ namespace OpenQA.Selenium.Appium
         /// <summary>
         /// Creates a tap on an element for a given time
         /// </summary>
-        private ITouchAction CreateTap(W element, int duration)
+		private ITouchAction CreateTap(IWebElement element, int duration)
         {
             TouchAction tap = new TouchAction(this);
             return tap.Press(element).Wait(duration).Release();
@@ -729,7 +729,7 @@ namespace OpenQA.Selenium.Appium
         /// <param name="fingers">number of fingers/appendages to tap with</param>
         /// <param name="element">element to tap</param>
         /// <param name="duration">how long between pressing down, and lifting fingers/appendages</param>
-        public void Tap(int fingers, W element, int duration)
+        public void Tap(int fingers, IWebElement element, int duration)
         {
             MultiAction multiTouch = new MultiAction(this);
 
@@ -788,7 +788,7 @@ namespace OpenQA.Selenium.Appium
         /// instead of driver method.
         /// </summary>
         /// <param name="el">The element to pinch</param>
-        public void Pinch(W el)
+		public void Pinch(IWebElement el)
         {
             MultiAction multiTouch = new MultiAction(this);
 
@@ -882,7 +882,7 @@ namespace OpenQA.Selenium.Appium
         /// instead of driver method.
         /// <param name="el">The element to pinch</param>
         /// </summary>
-        public void Zoom(W el)
+		public void Zoom(IWebElement el)
         {
             MultiAction multiTouch = new MultiAction(this);
 
