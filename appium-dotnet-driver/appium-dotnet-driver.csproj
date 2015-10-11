@@ -119,6 +119,7 @@
     <Compile Include="Appium\Interfaces\ITouchShortcuts.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="appium-dotnet-driver.licenseheader" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
