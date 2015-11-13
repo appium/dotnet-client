@@ -36,16 +36,7 @@ namespace OpenQA.Selenium.Appium.Android
         private const string DATA_PARAM = "data";
         private const string INTENT_PARAM = "intent";
         
-        /// <summary>
-        /// Initializes a new instance of the AndroidDriver class
-        /// </summary>
-        /// <param name="commandExecutor">An <see cref="ICommandExecutor"/> object which executes commands for the driver.</param>
-        /// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities of the browser.</param>
-        public AndroidDriver(ICommandExecutor commandExecutor, DesiredCapabilities desiredCapabilities)
-            : base(commandExecutor, SetPlatformToCapabilities(desiredCapabilities, Platform))
-        {
-        }
-        
+                
         /// <summary>
         /// Initializes a new instance of the AndroidDriver class. This constructor defaults proxy to http://127.0.0.1:4723/wd/hub
         /// </summary>

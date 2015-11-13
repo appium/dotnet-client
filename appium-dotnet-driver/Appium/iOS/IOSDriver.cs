@@ -23,15 +23,6 @@ namespace OpenQA.Selenium.Appium.iOS
     public class IOSDriver<W> : AppiumDriver<W>, IFindByIosUIAutomation<W>, IIOSDeviceActionShortcuts where W : IWebElement 
     {
         private static readonly string Platform = MobilePlatform.IOS;
-         /// <summary>
-        /// Initializes a new instance of the IOSDriver class
-        /// </summary>
-        /// <param name="commandExecutor">An <see cref="ICommandExecutor"/> object which executes commands for the driver.</param>
-        /// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities of the browser.</param>
-        public IOSDriver(ICommandExecutor commandExecutor, DesiredCapabilities desiredCapabilities)
-            : base(commandExecutor, SetPlatformToCapabilities(desiredCapabilities, Platform))
-        {
-        }
         
         /// <summary>
         /// Initializes a new instance of the IOSDriver class. This constructor defaults proxy to http://127.0.0.1:4723/wd/hub

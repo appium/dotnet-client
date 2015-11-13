@@ -76,10 +76,10 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <param name="commandExecutor">An <see cref="ICommandExecutor"/> object which executes commands for the driver.</param>
         /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities of the browser.</param>
-        public AppiumDriver(ICommandExecutor commandExecutor, ICapabilities desiredCapabilities)
+        private AppiumDriver(ICommandExecutor commandExecutor, ICapabilities desiredCapabilities)
             : base(commandExecutor, desiredCapabilities)
         {
-            _AddAppiumCommands();
+            _AddAppiumCommands(commandExecutor.CommandInfoRepository);
         }
 
 
@@ -978,7 +978,7 @@ namespace OpenQA.Selenium.Appium
         /// <summary>
         /// Add the set of appium commands
         /// </summary>
-        private static void _AddAppiumCommands()
+        private static void _AddAppiumCommands(CommandInfoRepository repo)
         {
             var commandList = new List<_Commands>()
             {
@@ -1041,19 +1041,10 @@ namespace OpenQA.Selenium.Appium
                 
             };
 
-            // Add the custom commandInfo of AppiumDriver
-            var dynMethod = typeof(CommandInfoRepository).GetMethod("TryAddAdditionalCommand", BindingFlags.NonPublic | BindingFlags.Instance);
-            if (dynMethod == null)
-            {
-                //In Selenium 2.46.0 'TryAddAdditionalCommand' method renamed to 'TryAddCommand' and changed to public. Fixes Google Code issue #8594
-                dynMethod = typeof(CommandInfoRepository).GetMethod("TryAddCommand", BindingFlags.Public | BindingFlags.Instance);
-            }
-
-            // Add each new command to the Command Info Repository
             foreach (_Commands entry in commandList)
             {
                 var commandInfo = new CommandInfo(entry.CommandType, entry.ApiEndpoint);
-                dynMethod.Invoke(CommandInfoRepository.Instance, new object[] { entry.Command, commandInfo });
+                repo.TryAddCommand(entry.Command, commandInfo);
             }
         }
 
