@@ -29,8 +29,9 @@ namespace OpenQA.Selenium.Appium.MultiTouch
 
                 RemoteWebElement remoteWebElement = el as RemoteWebElement;
                 if (remoteWebElement != null)
-                    return (string) typeof(OpenQA.Selenium.Remote.RemoteWebElement).GetField("elementId", 
-					    BindingFlags.NonPublic | BindingFlags.Instance).GetValue(el);
+                    return (string) typeof(OpenQA.Selenium.Remote.RemoteWebElement).GetProperty("Id", 
+					    BindingFlags.NonPublic | 
+                        BindingFlags.Instance).GetValue(el, null);
 
                 IWrapsElement elementWrapper = el as IWrapsElement;
                 if (elementWrapper != null)
@@ -73,9 +74,6 @@ namespace OpenQA.Selenium.Appium.MultiTouch
 		private IPerformsTouchActions TouchActionPerformer;
 		private List<Step> steps = new List<Step>();
 
-		public TouchAction ()
-		{
-		}
 
         public TouchAction(IPerformsTouchActions touchActionPerformer)
 		{
@@ -261,7 +259,6 @@ namespace OpenQA.Selenium.Appium.MultiTouch
 		/// </summary>
 		public void Cancel()
 		{
-            this.TouchActionPerformer = null;
 			steps.Clear ();
 		}
 

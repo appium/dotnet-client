@@ -14,9 +14,6 @@
 using System;
 using System.Collections.Generic;
 using OpenQA.Selenium.Appium.Interfaces;
-using System.Reflection;
-using OpenQA.Selenium.Remote;
-using OpenQA.Selenium.Internal;
 
 namespace OpenQA.Selenium.Appium.MultiTouch
 {
@@ -25,30 +22,6 @@ namespace OpenQA.Selenium.Appium.MultiTouch
 		private IList<ITouchAction> actions = new List<ITouchAction>();
 
 		private IPerformsTouchActions TouchActionPerformer;
-		private IWebElement element;
-
-		private string GetIdForElement(IWebElement el) {
-            RemoteWebElement remoteWebElement = el as RemoteWebElement;
-            if (remoteWebElement != null)
-                return (string)typeof(OpenQA.Selenium.Remote.RemoteWebElement).GetField("elementId",
-                    BindingFlags.NonPublic | BindingFlags.Instance).GetValue(el);
-
-            IWrapsElement elementWrapper = el as IWrapsElement;
-            if (elementWrapper != null)
-                return GetIdForElement(elementWrapper.WrappedElement);
-
-            return null;
-		}
-		/// <summary>
-		/// Initializes a new instance of the <see cref="MultiTouchAction"/> class.
-		/// </summary>
-		/// <param name="driver">The <see cref="IWebDriver"/> the driver to be used.</param>
-		/// <param name="element">The <see cref="IWebDriver"/> the element on which the actions built will be performed.</param>
-        public MultiAction(IPerformsTouchActions touchActionPerformer, IWebElement element)
-            :this(touchActionPerformer)
-		{
-			this.element = element;
-		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="MultiTouchAction"/> class.
@@ -58,31 +31,7 @@ namespace OpenQA.Selenium.Appium.MultiTouch
 		{
             this.TouchActionPerformer = touchActionPerformer;
 		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="MultiTouchAction"/> class.
-		/// </summary>
-		/// <param name="element">The <see cref="IWebDriver"/> the element on which the actions built will be performed.</param>
-		public MultiAction(IWebElement element)
-		{
-			this.element = element;
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="MultiTouchAction"/> class.
-		/// </summary>
-		public MultiAction()
-		{
-		}
 			
-
-		/// <summary>
-		/// Sets the element.
-		/// </summary>
-		/// <param name="element">The <see cref="IWebDriver"/> the element on which the actions built will be performed.</param>
-		public void setElement (IWebElement element) {
-			this.element = element;
-		}
 
         /// <summary>
         /// Add touch actions to be performed
@@ -106,9 +55,6 @@ namespace OpenQA.Selenium.Appium.MultiTouch
         public Dictionary<string, object> GetParameters()
         {
 			Dictionary<string, object> parameters = new Dictionary<string, object> ();
-			if (this.element != null) {
-				parameters.Add ("elementId", GetIdForElement(this.element));
-			}
 			for (int i = 0; i < actions.Count; i++) {
 				if (i == 0)
 					parameters.Add ("actions", new List<object> ());
