@@ -26,6 +26,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <DocumentationFile>bin\Release\appium-dotnet-driver.XML</DocumentationFile>    
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Castle.Core">
