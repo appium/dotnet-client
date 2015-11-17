@@ -227,7 +227,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
             m.Perform();
             Assert.AreEqual(re.inputData, "");
 
-            TouchAction a1 = new TouchAction();
+            TouchAction a1 = new TouchAction(driver);
             a1
                 .Press(element, 100, 100)
                 .Wait(1000)
@@ -236,7 +236,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
             m.Perform();
             Assert.AreEqual(re.inputData, "{\"actions\":[[{\"action\":\"press\",\"options\":{\"element\":\"5\",\"x\":100,\"y\":100}},{\"action\":\"wait\",\"options\":{\"ms\":1000}},{\"action\":\"release\"}]]}");
 
-            TouchAction a2 = new TouchAction();
+            TouchAction a2 = new TouchAction(driver);
             a2
                 .Tap(100, 100)
                 .MoveTo(element);

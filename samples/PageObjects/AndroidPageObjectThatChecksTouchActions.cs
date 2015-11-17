@@ -27,7 +27,7 @@ namespace Appium.Samples.PageObjects
             t.Perform();
 
             MultiAction m = new MultiAction(performer);
-            m.Add(new TouchAction().Tap(customView));
+            m.Add(new TouchAction(performer).Tap(customView));
             m.Add(new TouchAction(performer).Tap(clickable));
             m.Perform();
         }
