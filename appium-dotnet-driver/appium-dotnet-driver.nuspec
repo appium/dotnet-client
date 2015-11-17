@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Appium.WebDriver</id>
-    <version>1.4.0.3</version>
+    <version>1.4.1.1</version>
     <title>Appium Webdriver</title>
     <authors>Appium Commiters</authors>
     <owners>Appium Commiters</owners>
@@ -12,6 +12,11 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Selenium Webdriver extension for Appium.</description>
     <releaseNotes>
+	  1.4.1.1
+	    Update to Selenium.Webdriver v2.48.1 and Selenium.Support v2.48.1
+	    .Net client is completely following the Apache 2.0 license now.
+	    IMobileElement implementations are able to perform gestures such as Pinch, Tap and Zoom.	
+		Constructor set of MultiAction and TouchAction was improved. Redundant constructors were removed.
 	  1.4.0.3
 	    the bug which prevented the using of TouchAction/MultiTouchActions with IWebElement was fixed. This problem is reproduced
 		with IWebElement instances created via Selenium PageFactory.
@@ -43,8 +48,8 @@
     <tags>Appium Webdriver device automation</tags>
   <dependencies>
     <dependency id="Newtonsoft.Json" version="7.0.1"/>
-    <dependency id="Selenium.WebDriver" version="2.47.0"/>
-    <dependency id="Selenium.Support" version="2.47.0"/>
+    <dependency id="Selenium.WebDriver" version="2.48.1"/>
+    <dependency id="Selenium.Support" version="2.48.1"/>
 	<dependency id="Castle.Core" version="3.3.3"/>
   </dependencies>
   </metadata>

@@ -1,5 +1,11 @@
 #Release Notes
 
+##1.4.1.1
+- Update to Selenium.Webdriver v2.48.1 and Selenium.Support v2.48.1
+- .Net client is completely following the Apache 2.0 license now.
+- IMobileElement implementations are able to perform gestures such as Pinch, Tap and Zoom.	
+- Constructor set of MultiAction and TouchAction was improved. Redundant constructors were removed.
+
 ## 1.4.0.3
 - the bug which prevented the using of TouchAction/MultiTouchActions with IWebElement was fixed. This problem is reproduced with 
 IWebElement instances created via Selenium PageFactory.
