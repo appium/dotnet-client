@@ -2,10 +2,6 @@
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.MultiTouch;
 using OpenQA.Selenium.Appium.PageObjects.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Appium.Samples.PageObjects
 {

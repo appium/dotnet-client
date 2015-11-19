@@ -6,8 +6,6 @@ using OpenQA.Selenium.Remote;
 using System.Collections.Generic;
 using OpenQA.Selenium;
 using System.Threading;
-using System.Drawing;
-using System.Collections;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.MultiTouch;
 using OpenQA.Selenium.Appium.Interfaces;

@@ -9,8 +9,6 @@ using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.PageObjects;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Appium.Samples.PageObjectTests.NegativeTests
 {

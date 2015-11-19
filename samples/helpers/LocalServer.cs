@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.IO;
-using Appium.Samples.Helpers;
 
 namespace Appium.Samples.Helpers
 {
-	public class LocalServer
+    public class LocalServer
 	{
 		private string rootDirectory = Env.ASSETS_ROOT_DIR;
 		private Thread listenThread;

@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using OpenQA.Selenium.Appium;
-using OpenQA.Selenium.Appium.MultiTouch;
-using OpenQA.Selenium.Appium.Interfaces;
 using System.IO;
-using System.Reflection;
 using System.Web.Script.Serialization;
 
 namespace Appium.Samples.Helpers

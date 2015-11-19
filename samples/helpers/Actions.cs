@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using OpenQA.Selenium.Appium;
-using OpenQA.Selenium.Appium.MultiTouch;
+﻿using OpenQA.Selenium.Appium.MultiTouch;
 using OpenQA.Selenium.Appium.Interfaces;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Remote;
 
 namespace Appium.Samples.Helpers
 {
