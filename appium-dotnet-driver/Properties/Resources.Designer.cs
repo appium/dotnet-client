@@ -73,9 +73,10 @@ namespace OpenQA.Selenium.Properties {
         /// <summary>
         ///   Ищет локализованную строку, похожую на npm root -g.
         /// </summary>
-        internal static string npm_script_win {
+        internal static byte[] npm_script_win {
             get {
-                return ResourceManager.GetString("npm_script_win", resourceCulture);
+                object obj = ResourceManager.GetObject("npm_script_win", resourceCulture);
+                return ((byte[])(obj));
             }
         }
     }
