@@ -15,7 +15,7 @@
 using System;
 using OpenQA.Selenium.Remote;
 
-namespace OpenQA.Selenium.Appium.Appium.Service
+namespace OpenQA.Selenium.Appium.Service
 {
     public class AppiumLocalService : ICommandServer
     {
