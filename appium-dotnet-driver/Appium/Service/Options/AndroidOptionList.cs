@@ -321,7 +321,6 @@ namespace OpenQA.Selenium.Appium.Service.Options
         ///<summary>
         /// If set, prevents Appium from killing the adb server
         /// instance<br/>
-        /// Default: false<br/>
         ///</summary>
         public static KeyValuePair<string, string> SuppressAdbKillServer()
         {

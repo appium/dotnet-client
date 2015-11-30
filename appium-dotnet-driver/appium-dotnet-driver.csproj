@@ -103,6 +103,7 @@
     <Compile Include="Appium\PageObjects\WebDriverUnpackUtility.cs" />
     <Compile Include="Appium\Service\AppiumLocalService.cs" />
     <Compile Include="Appium\Service\Options\AndroidOptionList.cs" />
+    <Compile Include="Appium\Service\Options\IOSOptionList.cs" />
     <Compile Include="Appium\Service\Options\GeneralOptionList.cs" />
     <Compile Include="Appium\Service\Options\OptionCollector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
