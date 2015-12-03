@@ -44,7 +44,7 @@ namespace AppiumDriverDemo
 		public void beforeAll(){
 			DesiredCapabilities capabilities = new DesiredCapabilities();
 
-			capabilities.SetCapability("deviceName", "Ansroid Emulator");
+			capabilities.SetCapability("deviceName", "Android Emulator");
 			capabilities.SetCapability("platformName", "Android");
 			capabilities.SetCapability("app", "<Path to your app>");
 			driver = new AndroidDriver<AppiumWebElement>(new Uri("http://127.0.0.1:4723/wd/hub"), capabilities);		
