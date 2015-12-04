@@ -18,6 +18,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
 
 namespace OpenQA.Selenium.Appium.Service
 {
@@ -46,6 +48,8 @@ namespace OpenQA.Selenium.Appium.Service
         private string IpAddress = DefaultLocalIPAddress;
         private int Port = DefaultAppiumPort;
         private TimeSpan StartUpTimeout = new TimeSpan(0, 2, 0);
+        private FileInfo NodeJS;
+        private IDictionary<string, string> EnvironmentForAProcess;
 
 
         private static Process StartSearchingProcess(string file, string arguments)
@@ -284,7 +288,7 @@ namespace OpenQA.Selenium.Appium.Service
         {
             if (startUpTimeout == null)
             {
-                throw new ArgumentException("Startup timeout should not be NULL");
+                throw new ArgumentNullException("A startup timeout should not be NULL");
             }
             this.StartUpTimeout = startUpTimeout;
             return this;
@@ -308,6 +312,109 @@ namespace OpenQA.Selenium.Appium.Service
             }
 
             this.AppiumJS = findNodeInCurrentFileSystem();
+        }
+
+        /// <summary>
+        /// Sets which Node.js the builder will use.
+        /// </summary>
+        /// <param name="nodeJSExecutable">The executable Node.js to use.</param>
+        /// <returns>self-reference</returns>
+        public AppiumServiceBuilder UsingDriverExecutable(FileInfo nodeJS)
+        {
+            if (nodeJS == null)
+            {
+                throw new ArgumentNullException("The nodeJS parameter should not be NULL");
+            }
+
+            if (!nodeJS.Exists)
+            {
+                throw new ArgumentException("The given nodeJS file doesn't exist. Given path " + nodeJS.FullName);
+            }
+
+            this.NodeJS = nodeJS;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets which port the appium server should be started on. A value of 0 indicates that any
+        /// free port may be used.
+        /// </summary>
+        /// <param name="port">The port to use; must be non-negative.</param>
+        /// <returns>self-reference</returns>
+        public AppiumServiceBuilder UsingPort(int port)
+        {
+            if (port < 0 )
+            {
+                throw new ArgumentException("The port parameter should not be negative");
+            }
+
+            if (port == 0)
+            {
+                return UsingAnyFreePort();
+            }
+
+            this.Port = port;
+            return this;
+        }
+
+        /// <summary>
+        /// Configures the appium server to start on any available port.
+        /// </summary>
+        /// <returns>self-reference</returns>
+        public AppiumServiceBuilder UsingAnyFreePort()
+        {
+            Socket sock = null;
+
+            try
+            {
+                sock = new Socket(AddressFamily.InterNetwork,
+                         SocketType.Stream, ProtocolType.Tcp);
+                sock.Bind(new IPEndPoint(IPAddress.Any, 0));
+                this.Port = ((IPEndPoint)sock.LocalEndPoint).Port;
+                return this;
+            }
+            finally
+            {
+                if (sock != null)
+                {
+                    sock.Dispose();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Defines the environment for the launched appium server.
+        /// </summary>
+        /// <param name="environment">A dictionary of the environment variables to launch the
+        ///     appium server with.</param>
+        /// <returns>self-reference</returns>
+        public AppiumServiceBuilder WithEnvironment(IDictionary<string, string> environment)
+        {
+            if (environment == null)
+            {
+                throw new ArgumentNullException("The environment parameter should not be NULL");
+            }
+
+            var keys = environment.Keys;
+            foreach (var key in keys)
+            {
+                if (String.IsNullOrEmpty(key))
+                {
+                    throw new ArgumentNullException("The given environment parameter contains an empty or null key");
+                }
+            }
+
+            var values = environment.Values;
+            foreach (var value in values)
+            {
+                if (String.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentNullException("The given environment parameter contains an empty or null value");
+                }
+            }
+
+            this.EnvironmentForAProcess = environment;
+            return this;
         }
     }
 }
