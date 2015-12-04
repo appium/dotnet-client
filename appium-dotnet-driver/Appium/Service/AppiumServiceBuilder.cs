@@ -45,6 +45,7 @@ namespace OpenQA.Selenium.Appium.Service
         private FileInfo AppiumJS;
         private string IpAddress = DefaultLocalIPAddress;
         private int Port = DefaultAppiumPort;
+        private TimeSpan StartUpTimeout = new TimeSpan(0, 2, 0);
 
 
         private static Process StartSearchingProcess(string file, string arguments)
@@ -218,7 +219,7 @@ namespace OpenQA.Selenium.Appium.Service
                 {
                     p.Close();
                 }
-                throw new Exception("Node.js is not installed!", e);
+                throw new InvalidNodeJSInstanceException("Node.js is not installed!", e);
             }
 
             String filePath;
@@ -249,6 +250,64 @@ namespace OpenQA.Selenium.Appium.Service
             {
                 p.Close();
             }
+        }
+
+        /// <summary>
+        /// This method specifies Appium server options
+        /// </summary>
+        /// <param name="serverOptions">A collection of Appium server options</param>
+        /// <returns>Self reference</returns>
+        public AppiumServiceBuilder WithArguments(OptionCollector serverOptions)
+        {
+            this.ServerOptions = serverOptions;
+            return this;
+        }
+
+        public AppiumServiceBuilder WithAppiumJS(FileInfo appiumJS)
+        {
+            this.AppiumJS = appiumJS;
+            return this;
+        }
+
+        public AppiumServiceBuilder withIPAddress(string ipAddress)
+        {
+            this.IpAddress = ipAddress;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets time value for the service starting up
+        /// </summary>
+        /// <param name="startUpTimeout">a time value for the service starting up</param>
+        /// <returns>self-reference</returns>
+        public AppiumServiceBuilder withStartUpTimeOut(TimeSpan startUpTimeout)
+        {
+            if (startUpTimeout == null)
+            {
+                throw new ArgumentException("Startup timeout should not be NULL");
+            }
+            this.StartUpTimeout = startUpTimeout;
+            return this;
+        }
+
+        private void checkAppiumJS()
+        {
+            if (AppiumJS != null)
+            {
+                ValidateNodeStructure(AppiumJS);
+                return;
+            }
+
+            string appiumJS = Environment.GetEnvironmentVariable(AppiumNodeProperty);
+            if (appiumJS != null)
+            {
+                FileInfo node = new FileInfo(appiumJS);
+                ValidateNodeStructure(node);
+                this.AppiumJS = node;
+                return;
+            }
+
+            this.AppiumJS = findNodeInCurrentFileSystem();
         }
     }
 }
