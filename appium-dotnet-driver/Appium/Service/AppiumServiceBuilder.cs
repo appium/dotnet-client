@@ -50,6 +50,7 @@ namespace OpenQA.Selenium.Appium.Service
         private TimeSpan StartUpTimeout = new TimeSpan(0, 2, 0);
         private FileInfo NodeJS;
         private IDictionary<string, string> EnvironmentForAProcess;
+        private string PathToLogFile;
 
 
         private static Process StartSearchingProcess(string file, string arguments)
@@ -98,37 +99,40 @@ namespace OpenQA.Selenium.Appium.Service
             return result;
         }
 
-        private static FileInfo GetNPMFile()
+        private static FileInfo NPMScript
         {
-            bool isWindows = Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows);
-            string extension;
-
-            if (isWindows)
+            get
             {
-                extension = ".cmd";
-            }
-            else
-            {
-                extension = ".sh";
-            }
+                bool isWindows = Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows);
+                string extension;
 
-            Guid guid = Guid.NewGuid();
-            string guidStr = guid.ToString();
+                if (isWindows)
+                {
+                    extension = ".cmd";
+                }
+                else
+                {
+                    extension = ".sh";
+                }
 
-            string path = Path.ChangeExtension(Path.GetTempFileName(), guidStr + extension);
+                Guid guid = Guid.NewGuid();
+                string guidStr = guid.ToString();
 
-            byte[] bytes;
-            if (isWindows)
-            {
-                bytes = Properties.Resources.npm_script_win;
+                string path = Path.ChangeExtension(Path.GetTempFileName(), guidStr + extension);
+
+                byte[] bytes;
+                if (isWindows)
+                {
+                    bytes = Properties.Resources.npm_script_win;
+                }
+                else
+                {
+                    bytes = Properties.Resources.npm_script_unix;
+                }
+
+                File.WriteAllBytes(path, bytes);
+                return new FileInfo(path);
             }
-            else
-            {
-                bytes = Properties.Resources.npm_script_unix;
-            }
-
-            File.WriteAllBytes(path, bytes);
-            return new FileInfo(path);
         }
 
         private static void ValidateNodeStructure(FileInfo node)
@@ -148,111 +152,117 @@ namespace OpenQA.Selenium.Appium.Service
             }
         }
 
-        private FileInfo findNodeInCurrentFileSystem()
+        private FileInfo InstalledNodeInCurrentFileSystem
         {
-            String instancePath;
-            Process p = null;
-            string pathToScript = GetNPMFile().FullName;
-            try
+            get
             {
-                if (Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows))
+                String instancePath;
+                Process p = null;
+                string pathToScript =NPMScript.FullName;
+                try
                 {
-                    p = StartSearchingProcess(CmdExe, pathToScript);
+                    if (Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows))
+                    {
+                        p = StartSearchingProcess(CmdExe, pathToScript);
+                    }
+                    else
+                    {
+                        p = StartSearchingProcess(Bash, "-l " + pathToScript);
+                    }
                 }
-                else
+                catch (Exception e)
                 {
-                    p = StartSearchingProcess(Bash, "-l " + pathToScript);
+                    if (p != null)
+                    {
+                        p.Close();
+                    }
+                    if (File.Exists(pathToScript))
+                    {
+                        File.Delete(pathToScript);
+                    }
+                    throw e;
                 }
-            }
-            catch (Exception e)
-            {
-                if (p != null)
+
+                instancePath = GetTheLastStringFromsOutput(p.StandardOutput);
+
+                try
+                {
+                    FileInfo result;
+                    if (String.IsNullOrEmpty(instancePath) || !(result = new FileInfo(instancePath + Path.PathSeparator +
+                            AppiumNodeMask)).Exists)
+                    {
+                        String errorOutput = ReadErrorStream(p);
+                        throw new InvalidServerInstanceException("There is no installed nodes! Please install " +
+                                " node via NPM (https://www.npmjs.com/package/appium#using-node-js) or download and " +
+                                "install Appium app (http://appium.io/downloads.html)",
+                                new IOException(errorOutput));
+                    }
+                    return result;
+                }
+                finally
                 {
                     p.Close();
-                }
-                if (File.Exists(pathToScript))
-                {
-                    File.Delete(pathToScript);
-                }
-                throw e;
-            }
-
-            instancePath = GetTheLastStringFromsOutput(p.StandardOutput);
-
-            try
-            {
-                FileInfo result;
-                if (String.IsNullOrEmpty(instancePath) || !(result = new FileInfo(instancePath + Path.PathSeparator +
-                        AppiumNodeMask)).Exists)
-                {
-                    String errorOutput = ReadErrorStream(p);
-                    throw new InvalidServerInstanceException("There is no installed nodes! Please install " +
-                            " node via NPM (https://www.npmjs.com/package/appium#using-node-js) or download and " +
-                            "install Appium app (http://appium.io/downloads.html)",
-                            new IOException(errorOutput));
-                }
-                return result;
-            }
-            finally
-            {
-                p.Close();
-                if (File.Exists(pathToScript))
-                {
-                    File.Delete(pathToScript);
+                    if (File.Exists(pathToScript))
+                    {
+                        File.Delete(pathToScript);
+                    }
                 }
             }
         }
 
-        private FileInfo findDefaultExecutable()
+        private FileInfo DefaultExecutable
         {
-            Process p = null;
-            try
+            get
             {
-                if (Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows))
+                Process p = null;
+                try
                 {
-                    p = StartSearchingProcess(CmdExe, Node);
+                    if (Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows))
+                    {
+                        p = StartSearchingProcess(CmdExe, Node);
+                    }
+                    else
+                    {
+                        p = StartSearchingProcess(Bash, "-l -c " + Node);
+                    }
                 }
-                else
+                catch (Exception e)
                 {
-                    p = StartSearchingProcess(Bash, "-l -c " + Node);
+                    if (p != null)
+                    {
+                        p.Close();
+                    }
+                    throw new InvalidNodeJSInstanceException("Node.js is not installed!", e);
                 }
-            }
-            catch (Exception e)
-            {
-                if (p != null)
+
+                String filePath;
+                try
+                {
+                    StreamWriter writer = p.StandardInput;
+                    writer.WriteLine("console.log(process.execPath);");
+                    writer.Close();
+                    filePath = GetTheLastStringFromsOutput(p.StandardOutput);
+                }
+                catch (Exception e)
+                {
+                    p.Close();
+                    throw e;
+                }
+
+                try
+                {
+                    if (String.IsNullOrEmpty(filePath))
+                    {
+                        String errorOutput = ReadErrorStream(p);
+                        String errorMessage = "Can't get a path to the default Node.js instance";
+                        throw new InvalidNodeJSInstanceException(errorMessage, new IOException(errorOutput));
+                    }
+                    return new FileInfo(filePath);
+                }
+                finally
                 {
                     p.Close();
                 }
-                throw new InvalidNodeJSInstanceException("Node.js is not installed!", e);
-            }
-
-            String filePath;
-            try
-            {
-                StreamWriter writer = p.StandardInput;
-                writer.WriteLine("console.log(process.execPath);");
-                writer.Close();
-                filePath = GetTheLastStringFromsOutput(p.StandardOutput);
-            }
-            catch (Exception e)
-            {
-                p.Close();
-                throw e;
-            }
-
-            try
-            {
-                if (String.IsNullOrEmpty(filePath))
-                {
-                    String errorOutput = ReadErrorStream(p);
-                    String errorMessage = "Can't get a path to the default Node.js instance";
-                    throw new InvalidNodeJSInstanceException(errorMessage, new IOException(errorOutput));
-                }
-                return new FileInfo(filePath);
-            }
-            finally
-            {
-                p.Close();
             }
         }
 
@@ -273,7 +283,7 @@ namespace OpenQA.Selenium.Appium.Service
             return this;
         }
 
-        public AppiumServiceBuilder withIPAddress(string ipAddress)
+        public AppiumServiceBuilder WithIPAddress(string ipAddress)
         {
             this.IpAddress = ipAddress;
             return this;
@@ -284,7 +294,7 @@ namespace OpenQA.Selenium.Appium.Service
         /// </summary>
         /// <param name="startUpTimeout">a time value for the service starting up</param>
         /// <returns>self-reference</returns>
-        public AppiumServiceBuilder withStartUpTimeOut(TimeSpan startUpTimeout)
+        public AppiumServiceBuilder WithStartUpTimeOut(TimeSpan startUpTimeout)
         {
             if (startUpTimeout == null)
             {
@@ -294,7 +304,7 @@ namespace OpenQA.Selenium.Appium.Service
             return this;
         }
 
-        private void checkAppiumJS()
+        private void CheckAppiumJS()
         {
             if (AppiumJS != null)
             {
@@ -311,7 +321,7 @@ namespace OpenQA.Selenium.Appium.Service
                 return;
             }
 
-            this.AppiumJS = findNodeInCurrentFileSystem();
+            this.AppiumJS = InstalledNodeInCurrentFileSystem;
         }
 
         /// <summary>
@@ -415,6 +425,69 @@ namespace OpenQA.Selenium.Appium.Service
 
             this.EnvironmentForAProcess = environment;
             return this;
+        }
+
+        /// <summary>
+        /// Configures the appium server to write log to the given file.
+        /// </summary>
+        /// <param name="logFile">A file to write log to.</param>
+        /// <returns>self-reference</returns>
+        public AppiumServiceBuilder WithLogFile(FileInfo logFile)
+        {
+            if (logFile == null)
+            {
+                throw new ArgumentNullException("The logFile parameter should not be NULL");
+            }
+            this.PathToLogFile = logFile.FullName;
+            return this;
+        }
+
+        private string Args
+        {
+            get
+            {
+                List<string> argList = new List<string>();
+                CheckAppiumJS();
+                argList.Add(this.AppiumJS.FullName);
+                argList.Add("--port");
+                argList.Add(Convert.ToString(this.Port));
+
+                argList.Add("--address");
+                argList.Add(IpAddress);
+
+                if (this.PathToLogFile != null)
+                {
+                    argList.Add("--log");
+                    argList.Add(this.PathToLogFile);
+                }
+
+                if (this.ServerOptions != null)
+                {
+                    argList.AddRange(this.ServerOptions.Argiments);
+                }
+
+                string result = string.Empty;
+
+                foreach (var value in argList)
+                {
+                    result = result + value + " ";
+                }
+
+                return result.Trim();
+            }
+        }
+
+        public AppiumLocalService Build()
+        {
+            if (NodeJS == null)
+            {
+                NodeJS = DefaultExecutable;
+            }
+            AppiumLocalService service = 
+                new AppiumLocalService(NodeJS.Directory.FullName, this.IpAddress, this.Port, NodeJS.Name);
+            service.InitializationTimeout = StartUpTimeout;
+            service.CommandLineArguments = Args;
+            return service;
         }
     }
 }

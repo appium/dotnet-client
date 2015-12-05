@@ -14,19 +14,45 @@
 
 using System;
 using OpenQA.Selenium.Remote;
+using OpenQA.Selenium.Appium.Service.Exceptions;
 
 namespace OpenQA.Selenium.Appium.Service
 {
-    public class AppiumLocalService : ICommandServer
+    public class AppiumLocalService : DriverService
     {
-        public void Dispose()
+        private readonly string IP;
+
+        internal AppiumLocalService(string servicePath, string ip, int port, string driverServiceExecutableName)
+            :base(servicePath, port, driverServiceExecutableName, null)
         {
-            throw new NotImplementedException();
+            this.IP = ip;
+        }
+        
+        public Uri ServiceUrl
+        {
+            get { return new Uri("http://" + IP + ":" + Convert.ToString(Port) + "/wd/hub"); }
+        }
+
+        internal string CommandLineArguments
+        {
+            set; get;
+        }
+
+        internal TimeSpan InitializationTimeout
+        {
+            set;  get;
         }
 
         public void Start()
         {
-            throw new NotImplementedException();
+            try
+            {
+                base.Start();
+            }
+            catch (Exception e)
+            {
+                new AppiumServerHasNotBeenStartedLocallyException("Appium local server has not been started", e);
+            }
         }
     }
 }
