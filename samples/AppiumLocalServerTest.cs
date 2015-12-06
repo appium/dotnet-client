@@ -7,18 +7,19 @@ using System.IO;
 
 namespace Appium.Samples
 {
-	[TestFixture ()]
-	public class AppiumLocalServerTest
-	{
-        private string PathToCustomizedAppiumJS; 
+    [TestFixture()]
+    public class AppiumLocalServerTest
+    {
+        private string PathToCustomizedAppiumJS;
 
-		[TestFixtureSetUp]
-		public void BeforeAll(){
+        [TestFixtureSetUp]
+        public void BeforeAll()
+        {
             byte[] bytes = null;
 
             bool isWindows = Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows);
-            bool isMacOS   = Platform.CurrentPlatform.IsPlatformType(PlatformType.Mac);
-            bool isLinux   = Platform.CurrentPlatform.IsPlatformType(PlatformType.Linux);
+            bool isMacOS = Platform.CurrentPlatform.IsPlatformType(PlatformType.Mac);
+            bool isLinux = Platform.CurrentPlatform.IsPlatformType(PlatformType.Linux);
 
             if (isWindows)
             {
@@ -49,7 +50,6 @@ namespace Appium.Samples
             {
                 string definedNode = PathToCustomizedAppiumJS;
                 Environment.SetEnvironmentVariable(AppiumServiceBuilder.AppiumNodeProperty, definedNode);
-
                 OptionCollector args = new OptionCollector().AddArguments(GeneralOptionList.OverrideSession());
                 new AppiumServiceBuilder().WithIPAddress("127.0.0.1").UsingPort(4000).WithArguments(args).Build();
             }

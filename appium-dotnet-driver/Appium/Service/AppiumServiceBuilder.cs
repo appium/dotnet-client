@@ -70,7 +70,7 @@ namespace OpenQA.Selenium.Appium.Service
             return proc;
         }
 
-        private static string GetTheLastStringFromsOutput(StreamReader processOutput) 
+        private static string GetTheLastStringFromsOutput(StreamReader processOutput)
         {
             string result = string.Empty;
             while (!processOutput.EndOfStream)
@@ -349,7 +349,7 @@ namespace OpenQA.Selenium.Appium.Service
         /// <returns>self-reference</returns>
         public AppiumServiceBuilder UsingPort(int port)
         {
-            if (port < 0 )
+            if (port < 0)
             {
                 throw new ArgumentException("The port parameter should not be negative");
             }
@@ -479,7 +479,7 @@ namespace OpenQA.Selenium.Appium.Service
             {
                 NodeJS = DefaultExecutable;
             }
-            AppiumLocalService service = 
+            AppiumLocalService service =
                 new AppiumLocalService(NodeJS.Directory.FullName, this.IpAddress, this.Port, NodeJS.Name);
             service.InitializationTimeout = StartUpTimeout;
             service.CommandLineArguments = Args;
