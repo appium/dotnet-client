@@ -26,7 +26,7 @@ namespace OpenQA.Selenium.Appium.Service
     /// <summary>
     /// This thing accepts parameters and builds instances of AppiumLocalService
     /// </summary>
-    class AppiumServiceBuilder
+    public class AppiumServiceBuilder
     {
         private readonly static string Bash = "bash";
         private readonly static string CmdExe = "cmd.exe";
@@ -39,8 +39,8 @@ namespace OpenQA.Selenium.Appium.Service
         private static readonly string AppiumFolder = "appium";
         private static readonly string BinFolder = "bin";
         private static readonly string AppiumJSName = "appium.js";
-        private static readonly string AppiumNodeMask = Path.PathSeparator +
-            AppiumFolder + Path.PathSeparator + BinFolder + Path.PathSeparator + AppiumJSName;
+        private static readonly string AppiumNodeMask = Path.DirectorySeparatorChar +
+            AppiumFolder + Path.DirectorySeparatorChar + BinFolder + Path.DirectorySeparatorChar + AppiumJSName;
 
 
         private OptionCollector ServerOptions;
@@ -61,7 +61,10 @@ namespace OpenQA.Selenium.Appium.Service
             {
                 proc.StartInfo.Arguments = arguments;
             }
+            proc.StartInfo.RedirectStandardOutput = true;
+            proc.StartInfo.RedirectStandardError = true;
             proc.StartInfo.UseShellExecute = false;
+            proc.StartInfo.CreateNoWindow = true;
             proc.Start();
             proc.WaitForExit();
             return proc;
@@ -99,40 +102,15 @@ namespace OpenQA.Selenium.Appium.Service
             return result;
         }
 
-        private static FileInfo NPMScript
+        private static FileInfo GetTempFile(string extension, byte[] bytes)
         {
-            get
-            {
-                bool isWindows = Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows);
-                string extension;
+            Guid guid = Guid.NewGuid();
+            string guidStr = guid.ToString();
 
-                if (isWindows)
-                {
-                    extension = ".cmd";
-                }
-                else
-                {
-                    extension = ".sh";
-                }
+            string path = Path.ChangeExtension(Path.GetTempFileName(), guidStr + extension);
 
-                Guid guid = Guid.NewGuid();
-                string guidStr = guid.ToString();
-
-                string path = Path.ChangeExtension(Path.GetTempFileName(), guidStr + extension);
-
-                byte[] bytes;
-                if (isWindows)
-                {
-                    bytes = Properties.Resources.npm_script_win;
-                }
-                else
-                {
-                    bytes = Properties.Resources.npm_script_unix;
-                }
-
-                File.WriteAllBytes(path, bytes);
-                return new FileInfo(path);
-            }
+            File.WriteAllBytes(path, bytes);
+            return new FileInfo(path);
         }
 
         private static void ValidateNodeStructure(FileInfo node)
@@ -156,14 +134,39 @@ namespace OpenQA.Selenium.Appium.Service
         {
             get
             {
-                String instancePath;
+                string instancePath;
                 Process p = null;
-                string pathToScript =NPMScript.FullName;
+
+                bool isWindows = Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows);
+
+                string extension;
+
+                if (isWindows)
+                {
+                    extension = ".cmd";
+                }
+                else
+                {
+                    extension = ".sh";
+                }
+
+                byte[] bytes;
+                if (isWindows)
+                {
+                    bytes = Properties.Resources.npm_script_win;
+                }
+                else
+                {
+                    bytes = Properties.Resources.npm_script_unix;
+                }
+
+                string pathToScript = GetTempFile(extension, bytes).FullName;
+
                 try
                 {
-                    if (Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows))
+                    if (isWindows)
                     {
-                        p = StartSearchingProcess(CmdExe, pathToScript);
+                        p = StartSearchingProcess(CmdExe, "/C " + pathToScript);
                     }
                     else
                     {
@@ -188,7 +191,7 @@ namespace OpenQA.Selenium.Appium.Service
                 try
                 {
                     FileInfo result;
-                    if (String.IsNullOrEmpty(instancePath) || !(result = new FileInfo(instancePath + Path.PathSeparator +
+                    if (String.IsNullOrEmpty(instancePath) || !(result = new FileInfo(instancePath + Path.DirectorySeparatorChar +
                             AppiumNodeMask)).Exists)
                     {
                         String errorOutput = ReadErrorStream(p);
@@ -215,15 +218,19 @@ namespace OpenQA.Selenium.Appium.Service
             get
             {
                 Process p = null;
+                byte[] bytes = Properties.Resources.getExe;
+                string extension = ".js";
+                string pathToScript = GetTempFile(extension, bytes).FullName;
+
                 try
                 {
                     if (Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows))
                     {
-                        p = StartSearchingProcess(CmdExe, Node);
+                        p = StartSearchingProcess(CmdExe, "/C " + Node + " " + pathToScript);
                     }
                     else
                     {
-                        p = StartSearchingProcess(Bash, "-l -c " + Node);
+                        p = StartSearchingProcess(Bash, "-l -c " + Node + " " + pathToScript);
                     }
                 }
                 catch (Exception e)
@@ -232,23 +239,11 @@ namespace OpenQA.Selenium.Appium.Service
                     {
                         p.Close();
                     }
+                    File.Delete(pathToScript);
                     throw new InvalidNodeJSInstanceException("Node.js is not installed!", e);
                 }
 
-                String filePath;
-                try
-                {
-                    StreamWriter writer = p.StandardInput;
-                    writer.WriteLine("console.log(process.execPath);");
-                    writer.Close();
-                    filePath = GetTheLastStringFromsOutput(p.StandardOutput);
-                }
-                catch (Exception e)
-                {
-                    p.Close();
-                    throw e;
-                }
-
+                string filePath = GetTheLastStringFromsOutput(p.StandardOutput);
                 try
                 {
                     if (String.IsNullOrEmpty(filePath))
@@ -262,6 +257,7 @@ namespace OpenQA.Selenium.Appium.Service
                 finally
                 {
                     p.Close();
+                    File.Delete(pathToScript);
                 }
             }
         }
@@ -313,7 +309,7 @@ namespace OpenQA.Selenium.Appium.Service
             }
 
             string appiumJS = Environment.GetEnvironmentVariable(AppiumNodeProperty);
-            if (appiumJS != null)
+            if (!String.IsNullOrEmpty(appiumJS))
             {
                 FileInfo node = new FileInfo(appiumJS);
                 ValidateNodeStructure(node);

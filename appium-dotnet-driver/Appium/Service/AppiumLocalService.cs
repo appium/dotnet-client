@@ -13,7 +13,6 @@
 //limitations under the License.
 
 using System;
-using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Appium.Service.Exceptions;
 
 namespace OpenQA.Selenium.Appium.Service
@@ -53,6 +52,11 @@ namespace OpenQA.Selenium.Appium.Service
             {
                 new AppiumServerHasNotBeenStartedLocallyException("Appium local server has not been started", e);
             }
+        }
+
+        public static AppiumLocalService BuildDefaultService()
+        {
+            return new AppiumServiceBuilder().Build();
         }
     }
 }

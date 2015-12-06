@@ -14,6 +14,7 @@
 
 namespace OpenQA.Selenium.Properties {
     
+    
     [global::System.CodeDom.Compiler.GeneratedCode("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCode()]
     [global::System.Runtime.CompilerServices.CompilerGenerated()]
@@ -38,13 +39,20 @@ namespace OpenQA.Selenium.Properties {
             }
         }
         
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Advanced)]
+        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        internal static byte[] getExe {
+            get {
+                object obj = ResourceManager.GetObject("getExe", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
