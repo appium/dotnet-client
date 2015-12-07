@@ -479,11 +479,7 @@ namespace OpenQA.Selenium.Appium.Service
             {
                 NodeJS = DefaultExecutable;
             }
-            AppiumLocalService service =
-                new AppiumLocalService(NodeJS.Directory.FullName, this.IpAddress, this.Port, NodeJS.Name);
-            service.InitializationTimeout = StartUpTimeout;
-            service.CommandLineArguments = Args;
-            return service;
+            return new AppiumLocalService(NodeJS, Args, this.IpAddress, this.Port, StartUpTimeout);
         }
     }
 }

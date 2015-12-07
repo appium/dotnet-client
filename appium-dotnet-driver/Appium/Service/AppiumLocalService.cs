@@ -14,49 +14,55 @@
 
 using System;
 using OpenQA.Selenium.Appium.Service.Exceptions;
+using OpenQA.Selenium.Remote;
+using System.IO;
 
 namespace OpenQA.Selenium.Appium.Service
 {
-    public class AppiumLocalService : DriverService
+    public class AppiumLocalService : ICommandServer
     {
+        private readonly FileInfo NodeJS;
+        private readonly string Arguments;
         private readonly string IP;
+        private readonly int Port;
+        private readonly TimeSpan InitializationTimeout;
 
-        internal AppiumLocalService(string servicePath, string ip, int port, string driverServiceExecutableName)
-            :base(servicePath, port, driverServiceExecutableName, null)
+
+        public static AppiumLocalService BuildDefaultService()
         {
-            this.IP = ip;
+            return new AppiumServiceBuilder().Build();
         }
-        
+
+        internal AppiumLocalService(FileInfo nodeJS, string arguments, string ip, int port, TimeSpan initializationTimeout)
+        {
+            this.NodeJS = nodeJS;
+            this.IP = ip;
+            this.Arguments = arguments;
+            this.Port = port;
+            this.InitializationTimeout = initializationTimeout;
+        }
+
         public Uri ServiceUrl
         {
             get { return new Uri("http://" + IP + ":" + Convert.ToString(Port) + "/wd/hub"); }
         }
 
-        internal string CommandLineArguments
-        {
-            set; get;
-        }
-
-        internal TimeSpan InitializationTimeout
-        {
-            set;  get;
-        }
-
         public void Start()
         {
-            try
-            {
-                base.Start();
-            }
-            catch (Exception e)
-            {
-                new AppiumServerHasNotBeenStartedLocallyException("Appium local server has not been started", e);
-            }
+            throw new NotImplementedException();
         }
 
-        public static AppiumLocalService BuildDefaultService()
+        public void Dispose()
         {
-            return new AppiumServiceBuilder().Build();
+            throw new NotImplementedException();
+        }
+
+        public bool IsRunning
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

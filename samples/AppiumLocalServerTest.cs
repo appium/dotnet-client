@@ -67,6 +67,73 @@ namespace Appium.Samples
             new AppiumServiceBuilder().WithAppiumJS(new FileInfo(PathToCustomizedAppiumJS)).WithIPAddress("127.0.0.1").
                     UsingPort(4000).WithArguments(args).Build();
         }
+
+        [Test]
+        public void CheckStartingOfDefaultService()
+        {
+            AppiumLocalService service = AppiumLocalService.BuildDefaultService();
+            service.Start();
+            Assert.IsTrue(service.IsRunning);
+            service.Dispose();
+        }
+
+        [Test]
+        public void CheckAbilityToStartServiceOnAFreePort()
+        {
+            AppiumLocalService service = new AppiumServiceBuilder().UsingAnyFreePort().Build();
+            service.Start();
+            Assert.IsTrue(service.IsRunning);
+            service.Dispose();
+        }
+
+        [Test]
+        public void CheckStartingOfAServiceWithNonDefaultArguments()
+        {
+            OptionCollector args = new OptionCollector().AddArguments(GeneralOptionList.LogNoColors());
+            AppiumLocalService service = new AppiumServiceBuilder().WithIPAddress("127.0.0.1").UsingPort(4000).Build();
+            service.Start();
+            Assert.IsTrue(service.IsRunning);
+            service.Dispose();
+        }
+
+        [Test]
+        public void CheckStartingOfTheServiceDefinedByProperty()
+        {
+            try
+            {
+                string definedNode = PathToCustomizedAppiumJS;
+                Environment.SetEnvironmentVariable(AppiumServiceBuilder.AppiumNodeProperty, definedNode);
+                AppiumLocalService service = new AppiumServiceBuilder().Build();
+
+                service.Start();
+                Assert.IsTrue(service.IsRunning);
+                service.Dispose();
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable(AppiumServiceBuilder.AppiumNodeProperty, string.Empty);
+            }
+        }
+
+        [Test]
+        public void CheckStartingOfTheServiceDefinedExternally()
+        {
+            AppiumLocalService service = new AppiumServiceBuilder().WithAppiumJS(new FileInfo(PathToCustomizedAppiumJS)).Build();
+            service.Start();
+            Assert.IsTrue(service.IsRunning);
+            service.Dispose();
+        }
+
+        [Test]
+        public void CheckStartingOfTheServiceDefinedExternallyWithNonDefaultArguments()
+        {
+            OptionCollector args = new OptionCollector().AddArguments(GeneralOptionList.LogNoColors());
+            AppiumLocalService service = new AppiumServiceBuilder().WithAppiumJS(new FileInfo(PathToCustomizedAppiumJS)).
+                WithIPAddress("127.0.0.1").UsingPort(4000).Build();
+            service.Start();
+            Assert.IsTrue(service.IsRunning);
+            service.Dispose();
+        }
     }
 }
 
