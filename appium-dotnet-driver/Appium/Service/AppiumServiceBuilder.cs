@@ -28,12 +28,14 @@ namespace OpenQA.Selenium.Appium.Service
     /// </summary>
     public class AppiumServiceBuilder
     {
+        public static readonly string AppiumNodeProperty = "appium.node.path";
+        public static readonly string AppiumNodeJSExecutableProperty = "appium.node.js.exec.path";
+
         private readonly static string Bash = "bash";
         private readonly static string CmdExe = "cmd.exe";
         private readonly static string Node = "node";
 
         private static readonly string DefaultLocalIPAddress = "0.0.0.0";
-        public static readonly string AppiumNodeProperty = "appium.node.path";
         private static readonly int DefaultAppiumPort = 4723;
 
         private static readonly string AppiumFolder = "appium";
@@ -151,22 +153,18 @@ namespace OpenQA.Selenium.Appium.Service
                 }
 
                 byte[] bytes;
-                if (isWindows)
-                {
-                    bytes = Properties.Resources.npm_script_win;
-                }
-                else
+                string pathToScript = null;
+                if (!isWindows)
                 {
                     bytes = Properties.Resources.npm_script_unix;
+                    pathToScript = GetTempFile(extension, bytes).FullName;
                 }
-
-                string pathToScript = GetTempFile(extension, bytes).FullName;
 
                 try
                 {
                     if (isWindows)
                     {
-                        p = StartSearchingProcess(CmdExe, "/C " + pathToScript);
+                        p = StartSearchingProcess(CmdExe, "/C npm root -g");
                     }
                     else
                     {
@@ -179,7 +177,7 @@ namespace OpenQA.Selenium.Appium.Service
                     {
                         p.Close();
                     }
-                    if (File.Exists(pathToScript))
+                    if (pathToScript != null && File.Exists(pathToScript))
                     {
                         File.Delete(pathToScript);
                     }
@@ -205,7 +203,7 @@ namespace OpenQA.Selenium.Appium.Service
                 finally
                 {
                     p.Close();
-                    if (File.Exists(pathToScript))
+                    if (pathToScript != null && File.Exists(pathToScript))
                     {
                         File.Delete(pathToScript);
                     }
@@ -217,20 +215,29 @@ namespace OpenQA.Selenium.Appium.Service
         {
             get
             {
+                string appiumJS = Environment.GetEnvironmentVariable(AppiumNodeJSExecutableProperty);
+                if (!String.IsNullOrEmpty(appiumJS))
+                {
+                    FileInfo result = new FileInfo(appiumJS);
+                    if (result.Exists)
+                    {
+                        return result;
+                    }
+                }
+
                 Process p = null;
                 byte[] bytes = Properties.Resources.getExe;
-                string extension = ".js";
-                string pathToScript = GetTempFile(extension, bytes).FullName;
+                string pathToScript = GetTempFile(".js", bytes).FullName;
 
                 try
                 {
                     if (Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows))
                     {
-                        p = StartSearchingProcess(CmdExe, "/C " + Node + " " + pathToScript);
+                        p = StartSearchingProcess(Node + ".exe", pathToScript);
                     }
                     else
                     {
-                        p = StartSearchingProcess(Bash, "-l -c " + Node + " " + pathToScript);
+                        p = StartSearchingProcess(Node, pathToScript);
                     }
                 }
                 catch (Exception e)
@@ -444,7 +451,7 @@ namespace OpenQA.Selenium.Appium.Service
             {
                 List<string> argList = new List<string>();
                 CheckAppiumJS();
-                argList.Add(this.AppiumJS.FullName);
+                argList.Add(string.Format("\"{0}\"", this.AppiumJS.FullName));
                 argList.Add("--port");
                 argList.Add(Convert.ToString(this.Port));
 

@@ -124,7 +124,4 @@
   <data name="npm_script_unix" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Appium\Service\get_path_to_default_node.sh;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="npm_script_win" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Appium\Service\get_path_to_default_node.cmd;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1251</value>
-  </data>
 </root>

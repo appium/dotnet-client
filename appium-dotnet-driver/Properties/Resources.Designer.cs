@@ -13,7 +13,7 @@
 //limitations under the License.
 
 namespace OpenQA.Selenium.Properties {
-    
+   
     
     [global::System.CodeDom.Compiler.GeneratedCode("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCode()]
@@ -39,7 +39,7 @@ namespace OpenQA.Selenium.Properties {
             }
         }
         
-        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
@@ -59,13 +59,6 @@ namespace OpenQA.Selenium.Properties {
         internal static byte[] npm_script_unix {
             get {
                 object obj = ResourceManager.GetObject("npm_script_unix", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        internal static byte[] npm_script_win {
-            get {
-                object obj = ResourceManager.GetObject("npm_script_win", resourceCulture);
                 return ((byte[])(obj));
             }
         }

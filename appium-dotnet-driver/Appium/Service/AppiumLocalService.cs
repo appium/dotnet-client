@@ -16,6 +16,9 @@ using System;
 using OpenQA.Selenium.Appium.Service.Exceptions;
 using OpenQA.Selenium.Remote;
 using System.IO;
+using System.Diagnostics;
+using System.Net;
+using System.Runtime.CompilerServices;
 
 namespace OpenQA.Selenium.Appium.Service
 {
@@ -26,6 +29,7 @@ namespace OpenQA.Selenium.Appium.Service
         private readonly string IP;
         private readonly int Port;
         private readonly TimeSpan InitializationTimeout;
+        private Process Service;
 
 
         public static AppiumLocalService BuildDefaultService()
@@ -47,22 +51,96 @@ namespace OpenQA.Selenium.Appium.Service
             get { return new Uri("http://" + IP + ":" + Convert.ToString(Port) + "/wd/hub"); }
         }
 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Start()
         {
-            throw new NotImplementedException();
+            this.Service = new Process();
+            this.Service.StartInfo.FileName = this.NodeJS.FullName;
+            this.Service.StartInfo.Arguments = this.Arguments;
+            this.Service.StartInfo.UseShellExecute = false;
+            this.Service.StartInfo.CreateNoWindow = true;
+
+            bool isLaunced = false;
+            string msgTxt = "The local appium server has not been started. " +
+                    "The given Node.js executable: " + this.NodeJS.FullName + " Arguments: " + this.Arguments + " " + "\n";
+            try
+            {
+                this.Service.Start();
+                isLaunced = Ping(this.InitializationTimeout);
+            }
+            catch (Exception e)
+            {
+                DestroyProcess();
+                throw new AppiumServerHasNotBeenStartedLocallyException(msgTxt, e);
+            }
+
+            if (!isLaunced)
+            {
+                DestroyProcess();
+                throw new AppiumServerHasNotBeenStartedLocallyException(msgTxt);
+            }
+
         }
 
+        private void DestroyProcess()
+        {
+            if (this.Service == null)
+            {
+                return;
+            }
+
+            if (!this.Service.HasExited)
+            {
+                this.Service.Kill();
+                this.Service.Close();
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void Dispose()
         {
-            throw new NotImplementedException();
+            DestroyProcess();
+            GC.SuppressFinalize(this);
         }
 
         public bool IsRunning
         {
+            [MethodImpl(MethodImplOptions.Synchronized)]
             get
             {
-                throw new NotImplementedException();
+                return this.Service != null && !this.Service.HasExited && Ping(new TimeSpan(0, 0, 0, 0, 500));
             }
+        }
+
+        private bool Ping(TimeSpan span)
+        {
+            bool pinged = false;
+            Uri status = new Uri("http://localhost:" + Convert.ToString(Port) + "/wd/hub/status");
+            DateTime endTime = DateTime.Now.Add(this.InitializationTimeout);
+            while (!pinged & DateTime.Now < endTime)
+            {
+                HttpWebRequest request = (HttpWebRequest) HttpWebRequest.Create(status);
+                HttpWebResponse response = null;
+                try
+                {
+                    using (response = (HttpWebResponse) request.GetResponse())
+                    {
+                        pinged = true;
+                    }
+                }
+                catch (Exception e)
+                {
+                    pinged = false;
+                }
+                finally
+                {
+                    if (response != null)
+                    {
+                        response.Close();
+                    }
+                }
+            }
+            return pinged;
         }
     }
 }
