@@ -102,6 +102,7 @@
     <Compile Include="Appium\PageObjects\TimeOutDuration.cs" />
     <Compile Include="Appium\PageObjects\WebDriverUnpackUtility.cs" />
     <Compile Include="Appium\Service\AppiumLocalService.cs" />
+    <Compile Include="Appium\Service\AppiumServiceConstants.cs" />
     <Compile Include="Appium\Service\Exceptions\AppiumServerHasNotBeenStartedLocallyException.cs" />
     <Compile Include="Appium\Service\AppiumServiceBuilder.cs" />
     <Compile Include="Appium\Service\Exceptions\InvalidNodeJSInstanceException.cs" />

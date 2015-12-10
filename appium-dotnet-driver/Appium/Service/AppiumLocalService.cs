@@ -122,7 +122,7 @@ namespace OpenQA.Selenium.Appium.Service
             Uri status;
 
             Uri service = ServiceUrl;
-            if (service.IsLoopback || IP.ToString().Equals(AppiumServiceBuilder.DefaultLocalIPAddress))
+            if (service.IsLoopback || IP.ToString().Equals(AppiumServiceConstants.DefaultLocalIPAddress))
             {
                 status = new Uri("http://localhost:" + Convert.ToString(Port) + "/wd/hub/status");
             }

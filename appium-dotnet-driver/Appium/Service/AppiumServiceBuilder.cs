@@ -28,27 +28,10 @@ namespace OpenQA.Selenium.Appium.Service
     /// </summary>
     public class AppiumServiceBuilder
     {
-        public static readonly string AppiumNodeProperty = "appium.node.path";
-        public static readonly string AppiumNodeJSExecutableProperty = "appium.node.js.exec.path";
-
-        private readonly static string Bash = "bash";
-        private readonly static string CmdExe = "cmd.exe";
-        private readonly static string Node = "node";
-
-        internal static readonly string DefaultLocalIPAddress = "0.0.0.0";
-        private static readonly int DefaultAppiumPort = 4723;
-
-        private static readonly string AppiumFolder = "appium";
-        private static readonly string BinFolder = "bin";
-        private static readonly string AppiumJSName = "appium.js";
-        private static readonly string AppiumNodeMask = Path.DirectorySeparatorChar +
-            AppiumFolder + Path.DirectorySeparatorChar + BinFolder + Path.DirectorySeparatorChar + AppiumJSName;
-
-
         private OptionCollector ServerOptions;
         private FileInfo AppiumJS;
-        private string IpAddress = DefaultLocalIPAddress;
-        private int Port = DefaultAppiumPort;
+        private string IpAddress = AppiumServiceConstants.DefaultLocalIPAddress;
+        private int Port = AppiumServiceConstants.DefaultAppiumPort;
         private TimeSpan StartUpTimeout = new TimeSpan(0, 2, 0);
         private FileInfo NodeJS;
         private IDictionary<string, string> EnvironmentForAProcess;
@@ -126,10 +109,10 @@ namespace OpenQA.Selenium.Appium.Service
                         new IOException("The node " + absoluteNodePath + "doesn't exist"));
             }
 
-            if (!absoluteNodePath.EndsWith(AppiumNodeMask))
+            if (!absoluteNodePath.EndsWith(AppiumServiceConstants.AppiumNodeMask))
             {
                 throw new InvalidServerInstanceException("It is probably there is the corrupted appium server installation. Path " +
-                        absoluteNodePath + "doesn't match " + AppiumNodeMask);
+                        absoluteNodePath + "doesn't match " + AppiumServiceConstants.AppiumNodeMask);
             }
         }
 
@@ -165,11 +148,11 @@ namespace OpenQA.Selenium.Appium.Service
                 {
                     if (isWindows)
                     {
-                        p = StartSearchingProcess(CmdExe, "/C npm root -g");
+                        p = StartSearchingProcess(AppiumServiceConstants.CmdExe, "/C npm root -g");
                     }
                     else
                     {
-                        p = StartSearchingProcess(Bash, "-l " + pathToScript);
+                        p = StartSearchingProcess(AppiumServiceConstants.Bash, "-l " + pathToScript);
                     }
                 }
                 catch (Exception e)
@@ -191,7 +174,7 @@ namespace OpenQA.Selenium.Appium.Service
                 {
                     FileInfo result;
                     if (String.IsNullOrEmpty(instancePath) || !(result = new FileInfo(instancePath + Path.DirectorySeparatorChar +
-                            AppiumNodeMask)).Exists)
+                            AppiumServiceConstants.AppiumNodeMask)).Exists)
                     {
                         String errorOutput = ReadErrorStream(p);
                         throw new InvalidServerInstanceException("There is no installed nodes! Please install " +
@@ -216,7 +199,7 @@ namespace OpenQA.Selenium.Appium.Service
         {
             get
             {
-                string appiumJS = Environment.GetEnvironmentVariable(AppiumNodeJSExecutableProperty);
+                string appiumJS = Environment.GetEnvironmentVariable(AppiumServiceConstants.AppiumNodeJSExecutableProperty);
                 if (!String.IsNullOrEmpty(appiumJS))
                 {
                     FileInfo result = new FileInfo(appiumJS);
@@ -234,11 +217,11 @@ namespace OpenQA.Selenium.Appium.Service
                 {
                     if (Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows))
                     {
-                        p = StartSearchingProcess(Node + ".exe", pathToScript);
+                        p = StartSearchingProcess(AppiumServiceConstants.Node + ".exe", pathToScript);
                     }
                     else
                     {
-                        p = StartSearchingProcess(Node, pathToScript);
+                        p = StartSearchingProcess(AppiumServiceConstants.Node, pathToScript);
                     }
                 }
                 catch (Exception e)
@@ -316,7 +299,7 @@ namespace OpenQA.Selenium.Appium.Service
                 return;
             }
 
-            string appiumJS = Environment.GetEnvironmentVariable(AppiumNodeProperty);
+            string appiumJS = Environment.GetEnvironmentVariable(AppiumServiceConstants.AppiumNodeProperty);
             if (!String.IsNullOrEmpty(appiumJS))
             {
                 FileInfo node = new FileInfo(appiumJS);
