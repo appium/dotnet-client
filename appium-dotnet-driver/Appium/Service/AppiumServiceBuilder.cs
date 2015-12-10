@@ -35,7 +35,7 @@ namespace OpenQA.Selenium.Appium.Service
         private readonly static string CmdExe = "cmd.exe";
         private readonly static string Node = "node";
 
-        private static readonly string DefaultLocalIPAddress = "0.0.0.0";
+        internal static readonly string DefaultLocalIPAddress = "0.0.0.0";
         private static readonly int DefaultAppiumPort = 4723;
 
         private static readonly string AppiumFolder = "appium";
@@ -53,6 +53,7 @@ namespace OpenQA.Selenium.Appium.Service
         private FileInfo NodeJS;
         private IDictionary<string, string> EnvironmentForAProcess;
         private string PathToLogFile;
+        private bool OpenNodeJS;
 
 
         private static Process StartSearchingProcess(string file, string arguments)
@@ -445,6 +446,17 @@ namespace OpenQA.Selenium.Appium.Service
             return this;
         }
 
+        /// <summary>
+        /// Should NodeJS window be opened or not
+        /// </summary>
+        /// <param name="toBeOpened">means necessity of an opened NodeJS window</param>
+        /// <returns>self-reference</returns>
+        public AppiumServiceBuilder WithOpenedWindow(bool toBeOpened)
+        {
+            this.OpenNodeJS = toBeOpened;
+            return this;
+        }
+
         private string Args
         {
             get
@@ -486,7 +498,7 @@ namespace OpenQA.Selenium.Appium.Service
             {
                 NodeJS = DefaultExecutable;
             }
-            return new AppiumLocalService(NodeJS, Args, this.IpAddress, this.Port, StartUpTimeout);
+            return new AppiumLocalService(NodeJS, Args, IPAddress.Parse(this.IpAddress), this.Port, StartUpTimeout, OpenNodeJS);
         }
     }
 }

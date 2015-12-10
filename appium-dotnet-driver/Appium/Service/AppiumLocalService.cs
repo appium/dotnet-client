@@ -26,10 +26,11 @@ namespace OpenQA.Selenium.Appium.Service
     {
         private readonly FileInfo NodeJS;
         private readonly string Arguments;
-        private readonly string IP;
+        private readonly IPAddress IP;
         private readonly int Port;
         private readonly TimeSpan InitializationTimeout;
         private Process Service;
+        private readonly bool NeedsToBeOpened;
 
 
         public static AppiumLocalService BuildDefaultService()
@@ -37,18 +38,19 @@ namespace OpenQA.Selenium.Appium.Service
             return new AppiumServiceBuilder().Build();
         }
 
-        internal AppiumLocalService(FileInfo nodeJS, string arguments, string ip, int port, TimeSpan initializationTimeout)
+        internal AppiumLocalService(FileInfo nodeJS, string arguments, IPAddress ip, int port, TimeSpan initializationTimeout, bool createNoWindow)
         {
             this.NodeJS = nodeJS;
             this.IP = ip;
             this.Arguments = arguments;
             this.Port = port;
             this.InitializationTimeout = initializationTimeout;
+            this.NeedsToBeOpened = !createNoWindow;
         }
 
         public Uri ServiceUrl
         {
-            get { return new Uri("http://" + IP + ":" + Convert.ToString(Port) + "/wd/hub"); }
+            get { return new Uri("http://" + IP.ToString() + ":" + Convert.ToString(Port) + "/wd/hub"); }
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -58,15 +60,14 @@ namespace OpenQA.Selenium.Appium.Service
             this.Service.StartInfo.FileName = this.NodeJS.FullName;
             this.Service.StartInfo.Arguments = this.Arguments;
             this.Service.StartInfo.UseShellExecute = false;
-            this.Service.StartInfo.CreateNoWindow = true;
+            this.Service.StartInfo.CreateNoWindow = this.NeedsToBeOpened;
 
             bool isLaunced = false;
             string msgTxt = "The local appium server has not been started. " +
-                    "The given Node.js executable: " + this.NodeJS.FullName + " Arguments: " + this.Arguments + " " + "\n";
+                    "The given Node.js executable: " + this.NodeJS.FullName + " Arguments: " + this.Arguments + ". " + "\n";
             try
             {
                 this.Service.Start();
-                isLaunced = Ping(this.InitializationTimeout);
             }
             catch (Exception e)
             {
@@ -74,10 +75,12 @@ namespace OpenQA.Selenium.Appium.Service
                 throw new AppiumServerHasNotBeenStartedLocallyException(msgTxt, e);
             }
 
+            isLaunced = Ping(this.InitializationTimeout);
             if (!isLaunced)
             {
                 DestroyProcess();
-                throw new AppiumServerHasNotBeenStartedLocallyException(msgTxt);
+                throw new AppiumServerHasNotBeenStartedLocallyException(msgTxt + "Time " + this.InitializationTimeout.TotalMilliseconds + 
+                    " ms for the service starting has been expired!");
             }
 
         }
@@ -115,7 +118,19 @@ namespace OpenQA.Selenium.Appium.Service
         private bool Ping(TimeSpan span)
         {
             bool pinged = false;
-            Uri status = new Uri("http://localhost:" + Convert.ToString(Port) + "/wd/hub/status");
+
+            Uri status;
+
+            Uri service = ServiceUrl;
+            if (service.IsLoopback || IP.ToString().Equals(AppiumServiceBuilder.DefaultLocalIPAddress))
+            {
+                status = new Uri("http://localhost:" + Convert.ToString(Port) + "/wd/hub/status");
+            }
+            else
+            {
+                status = new Uri(service.ToString() + "/status");
+            }
+
             DateTime endTime = DateTime.Now.Add(this.InitializationTimeout);
             while (!pinged & DateTime.Now < endTime)
             {
