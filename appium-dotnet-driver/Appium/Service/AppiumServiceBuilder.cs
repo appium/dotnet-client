@@ -108,12 +108,6 @@ namespace OpenQA.Selenium.Appium.Service
                 throw new InvalidServerInstanceException("The invalid appium node " + absoluteNodePath + " has been defined",
                         new IOException("The node " + absoluteNodePath + "doesn't exist"));
             }
-
-            if (!absoluteNodePath.EndsWith(AppiumServiceConstants.AppiumNodeMask))
-            {
-                throw new InvalidServerInstanceException("It is probably there is the corrupted appium server installation. Path " +
-                        absoluteNodePath + "doesn't match " + AppiumServiceConstants.AppiumNodeMask);
-            }
         }
 
         private FileInfo InstalledNodeInCurrentFileSystem
@@ -199,7 +193,7 @@ namespace OpenQA.Selenium.Appium.Service
         {
             get
             {
-                string appiumJS = Environment.GetEnvironmentVariable(AppiumServiceConstants.AppiumNodeJSExecutableProperty);
+                string appiumJS = Environment.GetEnvironmentVariable(AppiumServiceConstants.NodeBinaryPath);
                 if (!String.IsNullOrEmpty(appiumJS))
                 {
                     FileInfo result = new FileInfo(appiumJS);
@@ -299,7 +293,7 @@ namespace OpenQA.Selenium.Appium.Service
                 return;
             }
 
-            string appiumJS = Environment.GetEnvironmentVariable(AppiumServiceConstants.AppiumNodeProperty);
+            string appiumJS = Environment.GetEnvironmentVariable(AppiumServiceConstants.AppiumBinaryPath);
             if (!String.IsNullOrEmpty(appiumJS))
             {
                 FileInfo node = new FileInfo(appiumJS);

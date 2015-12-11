@@ -50,14 +50,14 @@ namespace Appium.Samples
             try
             {
                 string definedNode = PathToCustomizedAppiumJS;
-                Environment.SetEnvironmentVariable(AppiumServiceConstants.AppiumNodeProperty, definedNode);
+                Environment.SetEnvironmentVariable(AppiumServiceConstants.AppiumBinaryPath, definedNode);
                 OptionCollector args = new OptionCollector().AddArguments(GeneralOptionList.OverrideSession());
                 new AppiumServiceBuilder().WithIPAddress("127.0.0.1").UsingPort(4000).WithArguments(args).Build();
             }
             finally
             {
 
-                Environment.SetEnvironmentVariable(AppiumServiceConstants.AppiumNodeProperty, string.Empty);
+                Environment.SetEnvironmentVariable(AppiumServiceConstants.AppiumBinaryPath, string.Empty);
             }
         }
 
@@ -104,7 +104,7 @@ namespace Appium.Samples
             try
             {
                 string definedNode = PathToCustomizedAppiumJS;
-                Environment.SetEnvironmentVariable(AppiumServiceConstants.AppiumNodeProperty, definedNode);
+                Environment.SetEnvironmentVariable(AppiumServiceConstants.AppiumBinaryPath, definedNode);
                 AppiumLocalService service = new AppiumServiceBuilder().WithOpenedWindow(true).Build();
 
                 service.Start();
@@ -113,7 +113,7 @@ namespace Appium.Samples
             }
             finally
             {
-                Environment.SetEnvironmentVariable(AppiumServiceConstants.AppiumNodeProperty, string.Empty);
+                Environment.SetEnvironmentVariable(AppiumServiceConstants.AppiumBinaryPath, string.Empty);
             }
         }
 

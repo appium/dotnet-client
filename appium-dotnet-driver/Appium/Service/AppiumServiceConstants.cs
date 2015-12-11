@@ -22,8 +22,8 @@ namespace OpenQA.Selenium.Appium.Service
 {
     public sealed class AppiumServiceConstants
     {
-        public static readonly string AppiumNodeProperty = "appium.node.path";
-        public static readonly string AppiumNodeJSExecutableProperty = "appium.node.js.exec.path";
+        public static readonly string AppiumBinaryPath = "APPIUM_BINARY_PATH";
+        public static readonly string NodeBinaryPath = "NODE_BINARY_PATH";
 
         internal readonly static string Bash = "bash";
         internal readonly static string CmdExe = "cmd.exe";
