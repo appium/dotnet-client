@@ -17,54 +17,16 @@ using Newtonsoft.Json;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.MultiTouch;
+using OpenQA.Selenium.Appium.Service;
 using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
-using System.Reflection;
 
 namespace OpenQA.Selenium.Appium
 {
-    /// <summary>
-    /// Provides a way to access Appium to run your tests by creating a AppiumDriver instance
-    /// </summary>
-    /// <remarks>
-    /// When the WebDriver object has been instantiated the browser will load. The test can then navigate to the URL under test and 
-    /// start your test.
-    /// </remarks>
-    /// <example>
-    /// <code>
-    /// [TestFixture]
-    /// public class Testing
-    /// {
-    ///     private IWebDriver driver;
-    ///     <para></para>
-    ///     [SetUp]
-    ///     public void SetUp()
-    ///     {
-    ///         driver = new AppiumDriver();
-    ///     }
-    ///     <para></para>
-    ///     [Test]
-    ///     public void TestGoogle()
-    ///     {
-    ///         driver.Navigate().GoToUrl("http://www.google.co.uk");
-    ///         /*
-    ///         *   Rest of the test
-    ///         */
-    ///     }
-    ///     <para></para>
-    ///     [TearDown]
-    ///     public void TearDown()
-    ///     {
-    ///         driver.Quit();
-    ///         driver.Dispose();
-    ///     } 
-    /// }
-    /// </code>
-    /// </example>
 	public abstract class AppiumDriver<W> : RemoteWebDriver, ITouchShortcuts, IFindByAccessibilityId<W>, IDeviceActionShortcuts, IInteractsWithFiles,
         IInteractsWithApps, IPerformsTouchActions, IRotatable, IContextAware, IGenericSearchContext<W>, IGenericFindsByClassName<W>,
         IGenericFindsById<W>, IGenericFindsByCssSelector<W>, IGenericFindsByLinkText<W>, IGenericFindsByName<W>,
@@ -72,34 +34,73 @@ namespace OpenQA.Selenium.Appium
     {
         #region Constructors
         /// <summary>
-        /// Initializes a new instance of the RemoteWebDriver class
+        /// Initializes a new instance of the AppiumDriver class
         /// </summary>
         /// <param name="commandExecutor">An <see cref="ICommandExecutor"/> object which executes commands for the driver.</param>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities of the browser.</param>
+        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
         private AppiumDriver(ICommandExecutor commandExecutor, ICapabilities desiredCapabilities)
             : base(commandExecutor, desiredCapabilities)
         {
-            _AddAppiumCommands(commandExecutor.CommandInfoRepository);
+            AppiumCommand.Merge(commandExecutor.CommandInfoRepository);
         }
 
-
-
         /// <summary>
-        /// Initializes a new instance of the AppiumDriver class. This constructor defaults proxy to http://127.0.0.1:4723/wd/hub
+        /// Initializes a new instance of the AppiumDriver class using desired capabilities
         /// </summary>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities of the browser.</param>
+        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
         public AppiumDriver(ICapabilities desiredCapabilities)
-            : this(new Uri("http://127.0.0.1:4723/wd/hub"), desiredCapabilities)
+            : this(AppiumLocalService.BuildDefaultService(), desiredCapabilities)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the AppiumDriver class
+        /// Initializes a new instance of the AppiumDriver class using desired capabilities and command timeout
+        /// </summary>
+        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
+        /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
+        public AppiumDriver(ICapabilities desiredCapabilities, TimeSpan commandTimeout)
+            : this(AppiumLocalService.BuildDefaultService(), desiredCapabilities, commandTimeout)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the AppiumDriver class using the AppiumServiceBuilder instance and desired capabilities
+        /// </summary>
+        /// <param name="builder"> object containing settings of the Appium local service which is going to be started</param>
+        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
+        public AppiumDriver(AppiumServiceBuilder builder, ICapabilities desiredCapabilities)
+            : this(builder.Build(), desiredCapabilities)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the AppiumDriver class using the AppiumServiceBuilder instance, desired capabilities and command timeout
+        /// </summary>
+        /// <param name="builder"> object containing settings of the Appium local service which is going to be started</param>
+        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
+        /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
+        public AppiumDriver(AppiumServiceBuilder builder, ICapabilities desiredCapabilities, TimeSpan commandTimeout)
+            : this(builder.Build(), desiredCapabilities, commandTimeout)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the AppiumDriver class using the specified remote address and desired capabilities
         /// </summary>
         /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities of the browser.</param>
+        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
         public AppiumDriver(Uri remoteAddress, ICapabilities desiredCapabilities)
             : this(remoteAddress, desiredCapabilities, RemoteWebDriver.DefaultCommandTimeout)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the AppiumDriver class using the specified Appium local service and desired capabilities
+        /// </summary>
+        /// <param name="service">the specified Appium local service</param>
+        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
+        public AppiumDriver(AppiumLocalService service, ICapabilities desiredCapabilities)
+            : this(service, desiredCapabilities, RemoteWebDriver.DefaultCommandTimeout)
         {
         }
 
@@ -107,10 +108,21 @@ namespace OpenQA.Selenium.Appium
         /// Initializes a new instance of the AppiumDriver class using the specified remote address, desired capabilities, and command timeout.
         /// </summary>
         /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities of the browser.</param>
+        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
         public AppiumDriver(Uri remoteAddress, ICapabilities desiredCapabilities, TimeSpan commandTimeout)
-            : this(CommandExecutorFactory.GetHttpCommandExecutor(remoteAddress, commandTimeout), desiredCapabilities)
+            : this(new AppiumCommandExecutor(remoteAddress, commandTimeout), desiredCapabilities)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the AppiumDriver class using the specified Appium local service, desired capabilities, and command timeout.
+        /// </summary>
+        /// <param name="service">the specified Appium local service</param>
+        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
+        /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
+        public AppiumDriver(AppiumLocalService service, ICapabilities desiredCapabilities, TimeSpan commandTimeout)
+            : this(new AppiumCommandExecutor(service, commandTimeout), desiredCapabilities)
         {
         }
         #endregion Constructors
@@ -973,118 +985,6 @@ namespace OpenQA.Selenium.Appium
             return toReturn.AsReadOnly();
         }
         #endregion
-
-        #region Private Methods
-        /// <summary>
-        /// Add the set of appium commands
-        /// </summary>
-        private static void _AddAppiumCommands(CommandInfoRepository repo)
-        {
-            var commandList = new List<_Commands>()
-            {
-                #region Context Commands
-                new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.Contexts, "/session/{sessionId}/contexts" ),
-                new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetContext, "/session/{sessionId}/context" ),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.SetContext, "/session/{sessionId}/context" ),
-                #endregion Context Commands
-                #region Appium Commands
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ShakeDevice, "/session/{sessionId}/appium/device/shake"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.LockDevice, "/session/{sessionId}/appium/device/lock"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.IsLocked, "/session/{sessionId}/appium/device/is_locked"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ToggleAirplaneMode, "/session/{sessionId}/appium/device/toggle_airplane_mode"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.KeyEvent, "/session/{sessionId}/appium/device/keyevent"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.Rotate, "/session/{sessionId}/appium/device/rotate"),
-                new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetCurrentActivity, "/session/{sessionId}/appium/device/current_activity"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.InstallApp, "/session/{sessionId}/appium/device/install_app"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.RemoveApp, "/session/{sessionId}/appium/device/remove_app"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.IsAppInstalled, "/session/{sessionId}/appium/device/app_installed"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.PushFile, "/session/{sessionId}/appium/device/push_file"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.PullFile, "/session/{sessionId}/appium/device/pull_file"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.PullFolder, "/session/{sessionId}/appium/device/pull_folder"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ToggleWiFi, "/session/{sessionId}/appium/device/toggle_wifi"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ToggleLocationServices, "/session/{sessionId}/appium/device/toggle_location_services"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.LaunchApp, "/session/{sessionId}/appium/app/launch"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.CloseApp, "/session/{sessionId}/appium/app/close"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ResetApp, "/session/{sessionId}/appium/app/reset"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.BackgroundApp, "/session/{sessionId}/appium/app/background"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.EndTestCoverage, "/session/{sessionId}/appium/app/end_test_coverage"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.GetAppStrings, "/session/{sessionId}/appium/app/strings"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.SetImmediateValue, "/session/{sessionId}/appium/element/{id}/value"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.HideKeyboard, "/session/{sessionId}/appium/device/hide_keyboard"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.OpenNotifications, "/session/{sessionId}/appium/device/open_notifications"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.StartActivity, "/session/{sessionId}/appium/device/start_activity"),
-                new _Commands(CommandInfo.GetCommand,  AppiumDriverCommand.GetSettings, "/session/{sessionId}/appium/settings"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.UpdateSettings, "/session/{sessionId}/appium/settings"),
-                #endregion Appium Commands
-                #region Touch Commands
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.MultiActionV2Perform, "/session/{sessionId}/touch/multi/perform"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.TouchActionV2Perform, "/session/{sessionId}/touch/perform"),
-                #endregion Touch Commands
-
-                #region JSON Wire Protocol Commands
-                new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetOrientation, "/session/{sessionId}/orientation"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.SetOrientation, "/session/{sessionId}/orientation"),
-                new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetConnectionType, "/session/{sessionId}/network_connection"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.SetConnectionType, "/session/{sessionId}/network_connection"),
-                new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetLocation, "/session/{sessionId}/location"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.SetLocation, "/session/{sessionId}/location"),
-
-                #region Input Method (IME)
-                new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetAvailableEngines, "/session/{sessionId}/ime/available_engines"),
-                new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.GetActiveEngine, "/session/{sessionId}/ime/active_engine"),
-                new _Commands(CommandInfo.GetCommand, AppiumDriverCommand.IsIMEActive, "/session/{sessionId}/ime/activated"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.ActivateEngine, "/session/{sessionId}/ime/activate"),
-                new _Commands(CommandInfo.PostCommand, AppiumDriverCommand.DeactivateEngine, "/session/{sessionId}/ime/deactivate"),
-                #endregion Input Method (IME) 
-
-                #endregion JSON Wire Protocol Commands
-                
-            };
-
-            foreach (_Commands entry in commandList)
-            {
-                var commandInfo = new CommandInfo(entry.CommandType, entry.ApiEndpoint);
-                repo.TryAddCommand(entry.Command, commandInfo);
-            }
-        }
-
-        #endregion Private Methods
-
-        #region Private Class
-        /// <summary>
-        /// Container class for the command tuple
-        /// </summary>
-        private class _Commands
-        {
-            /// <summary>
-            /// command type 
-            /// </summary>
-            internal readonly string CommandType;
-
-            /// <summary>
-            /// Command 
-            /// </summary>
-            internal readonly string Command;
-
-            /// <summary>
-            /// API Endpoint
-            /// </summary>
-            internal readonly string ApiEndpoint;
-
-            /// <summary>
-            /// Constructor
-            /// </summary>
-            /// <param name="commandType">type of command (get/post/delete)</param>
-            /// <param name="command">Command</param>
-            /// <param name="apiEndpoint">api endpoint</param>
-            internal _Commands(string commandType, string command, string apiEndpoint)
-            {
-                CommandType = commandType;
-                Command = command;
-                ApiEndpoint = apiEndpoint;
-            }
-        }
-        #endregion Private Class
 
         #region abstract scrolling methods
 

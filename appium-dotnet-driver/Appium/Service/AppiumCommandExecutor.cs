@@ -24,14 +24,19 @@ namespace OpenQA.Selenium.Appium.Service
         private readonly AppiumLocalService Service;
         private readonly Uri URL;
         private readonly ICommandExecutor RealExecutor;
-        private static readonly TimeSpan TimeForTheServerResponding = new TimeSpan(0, 0, 30);
 
-        private static ICommandExecutor CreateRealExecutor(Uri url)
+        private static ICommandExecutor CreateRealExecutor(Uri remoteAddress, TimeSpan commandTimeout)
         {
-            Assembly assembly = Assembly.LoadFrom("WebDriver.dll");
-            Type realExecutorType = assembly.GetType("OpenQA.Selenium.Remote.HttpCommandExecutor");
-            ConstructorInfo constructor = realExecutorType.GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, null, new Type[] { typeof(Uri), typeof(TimeSpan) }, null);
-            return (constructor.Invoke(realExecutorType, new object[] { url, TimeForTheServerResponding }) as ICommandExecutor);
+            var seleniumAssembly = Assembly.Load("WebDriver");
+            var commandType = seleniumAssembly.GetType("OpenQA.Selenium.Remote.HttpCommandExecutor");
+            ICommandExecutor commandExecutor = null;
+
+            if (null != commandType)
+            {
+                commandExecutor = Activator.CreateInstance(commandType, new object[] { remoteAddress, commandTimeout }) as ICommandExecutor;
+            }
+
+            return commandExecutor;
         }
 
         private AppiumCommandExecutor(Uri url, ICommandExecutor realExecutor)
@@ -40,14 +45,14 @@ namespace OpenQA.Selenium.Appium.Service
             this.RealExecutor = realExecutor;
         }
 
-        internal AppiumCommandExecutor(Uri url)
-            : this(url, CreateRealExecutor(url))
+        internal AppiumCommandExecutor(Uri url, TimeSpan timeForTheServerResponding)
+            : this(url, CreateRealExecutor(url, timeForTheServerResponding))
         {
             this.Service = null;
         }
 
-        internal AppiumCommandExecutor(AppiumLocalService service)
-            :this(service.ServiceUrl, CreateRealExecutor(service.ServiceUrl))
+        internal AppiumCommandExecutor(AppiumLocalService service, TimeSpan timeForTheServerResponding)
+            :this(service.ServiceUrl, CreateRealExecutor(service.ServiceUrl, timeForTheServerResponding))
         {
             this.Service = service;
         }

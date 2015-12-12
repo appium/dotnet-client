@@ -56,6 +56,7 @@
     <Compile Include="Appium\Android\Interfaces\IHasNetworkConnection.cs" />
     <Compile Include="Appium\Android\Interfaces\IPushesFiles.cs" />
     <Compile Include="Appium\Android\Interfaces\IStartsActivity.cs" />
+    <Compile Include="Appium\AppiumCommand.cs" />
     <Compile Include="Appium\Enums\AutomationName.cs" />
     <Compile Include="Appium\Enums\MobilePlatform.cs" />
     <Compile Include="Appium\Enums\MobileBrowserType.cs" />
@@ -119,7 +120,6 @@
     <Compile Include="Appium\ByAccessibilityId.cs" />
     <Compile Include="Appium\ByAndroidUIAutomator.cs" />
     <Compile Include="Appium\ByIosUIAutomation.cs" />
-    <Compile Include="Appium\CommandExecutorFactory.cs" />
     <Compile Include="Appium\Interfaces\IFindByAccessibilityId.cs" />
     <Compile Include="Appium\Interfaces\IFindByAndroidUIAutomator.cs" />
     <Compile Include="Appium\Interfaces\IFindByIosUIAutomation.cs" />
