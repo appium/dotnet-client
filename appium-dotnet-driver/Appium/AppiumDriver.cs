@@ -68,7 +68,7 @@ namespace OpenQA.Selenium.Appium
 	public abstract class AppiumDriver<W> : RemoteWebDriver, ITouchShortcuts, IFindByAccessibilityId<W>, IDeviceActionShortcuts, IInteractsWithFiles,
         IInteractsWithApps, IPerformsTouchActions, IRotatable, IContextAware, IGenericSearchContext<W>, IGenericFindsByClassName<W>,
         IGenericFindsById<W>, IGenericFindsByCssSelector<W>, IGenericFindsByLinkText<W>, IGenericFindsByName<W>,
-	IGenericFindsByPartialLinkText<W>, IGenericFindsByTagName<W>, IGenericFindsByXPath<W>, IScrollsTo<W> where W : IWebElement
+        IGenericFindsByPartialLinkText<W>, IGenericFindsByTagName<W>, IGenericFindsByXPath<W>, IScrollsTo<W> where W : IWebElement
     {
         #region Constructors
         /// <summary>
@@ -896,7 +896,7 @@ namespace OpenQA.Selenium.Appium
         }
 
         #endregion
-        
+
         #endregion Public Methods
 
         #region Internal Methods

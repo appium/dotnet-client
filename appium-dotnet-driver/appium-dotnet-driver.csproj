@@ -101,6 +101,7 @@
     <Compile Include="Appium\PageObjects\Interceptors\SearchingInterceptor.cs" />
     <Compile Include="Appium\PageObjects\TimeOutDuration.cs" />
     <Compile Include="Appium\PageObjects\WebDriverUnpackUtility.cs" />
+    <Compile Include="Appium\Service\AppiumCommandExecutor.cs" />
     <Compile Include="Appium\Service\AppiumLocalService.cs" />
     <Compile Include="Appium\Service\AppiumServiceConstants.cs" />
     <Compile Include="Appium\Service\Exceptions\AppiumServerHasNotBeenStartedLocallyException.cs" />

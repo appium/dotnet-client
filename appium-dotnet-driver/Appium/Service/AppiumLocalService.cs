@@ -56,6 +56,11 @@ namespace OpenQA.Selenium.Appium.Service
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void Start()
         {
+            if (IsRunning)
+            {
+                return;
+            }
+
             this.Service = new Process();
             this.Service.StartInfo.FileName = this.NodeJS.FullName;
             this.Service.StartInfo.Arguments = this.Arguments;
@@ -108,7 +113,6 @@ namespace OpenQA.Selenium.Appium.Service
 
         public bool IsRunning
         {
-            [MethodImpl(MethodImplOptions.Synchronized)]
             get
             {
                 return this.Service != null && !this.Service.HasExited && Ping(new TimeSpan(0, 0, 0, 0, 500));

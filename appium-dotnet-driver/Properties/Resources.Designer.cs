@@ -12,7 +12,7 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-namespace OpenQA.Selenium.Properties {
+namespace OpenQA.Selenium.Appium.Properties {
    
     
     [global::System.CodeDom.Compiler.GeneratedCode("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
