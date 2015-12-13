@@ -29,7 +29,7 @@ namespace Appium.Samples.PageObjectTests.IOS
                 capabilities.SetCapability("name", "ios - actions");
                 capabilities.SetCapability("tags", new string[] { "sample" });
             }
-            Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.localURI;
+            Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIForIOS;
             driver = new IOSDriver<AppiumWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
             TimeOutDuration timeSpan = new TimeOutDuration(new TimeSpan(0, 0, 0, 5, 0));
             pageObject = new IOSPageObjectChecksAttributesForNativeIOSApp();
@@ -43,6 +43,10 @@ namespace Appium.Samples.PageObjectTests.IOS
             if (Env.isSauce())
                 ((IJavaScriptExecutor)driver).ExecuteScript("sauce:job-result=" + (allPassed ? "passed" : "failed"));
             driver.Quit();
+            if (!Env.isSauce())
+            {
+                AppiumServers.StopLocalService();
+            }
         }
 
         [Test()]

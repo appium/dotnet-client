@@ -1,11 +1,62 @@
-﻿using System;
+﻿using OpenQA.Selenium.Appium.Service;
+using OpenQA.Selenium.Appium.Service.Options;
+using System;
 
 namespace Appium.Samples.Helpers
 {
 	public class AppiumServers
 	{
-		public static Uri localURI = new Uri("http://127.0.0.1:4723/wd/hub");
+        private static AppiumLocalService LocalService;
+
 		public static Uri sauceURI = new Uri("http://ondemand.saucelabs.com:80/wd/hub");
+
+        public static Uri LocalServiceURIAndroid
+        {
+            get
+            {
+                if (LocalService == null)
+                {
+                    LocalService = AppiumLocalService.BuildDefaultService();
+                }
+
+                if (!LocalService.IsRunning)
+                {
+                    LocalService.Start();
+                }
+
+                return LocalService.ServiceUrl;
+            }
+        }
+
+        public static Uri LocalServiceURIForIOS
+        {
+            get
+            {
+                if (LocalService == null)
+                {
+                    AppiumServiceBuilder builder = new AppiumServiceBuilder();
+                    OptionCollector collector = new OptionCollector().AddArguments(IOSOptionList.LaunchTimeout("500000")).
+                        AddArguments(IOSOptionList.BackEndRetries("10"));
+                    LocalService = builder.WithArguments(collector).Build();
+                }
+
+                if (!LocalService.IsRunning)
+                {
+                    LocalService.Start();
+                }
+
+                return LocalService.ServiceUrl;
+            }
+        }
+
+        public static void StopLocalService()
+        {
+            if (LocalService != null && LocalService.IsRunning)
+            {
+                LocalService.Dispose();
+                LocalService = null;
+            }
+        }
 	}
 }
 

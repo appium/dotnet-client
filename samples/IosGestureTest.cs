@@ -25,7 +25,7 @@ namespace Appium.Samples
                 capabilities.SetCapability("name", "ios - complex");
                 capabilities.SetCapability("tags", new string[] { "sample" });
             }
-            Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.localURI;
+            Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIForIOS;
             driver = new IOSDriver<IOSElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
             driver.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
         }
@@ -37,6 +37,10 @@ namespace Appium.Samples
             if (Env.isSauce())
                 ((IJavaScriptExecutor)driver).ExecuteScript("sauce:job-result=" + (allPassed ? "passed" : "failed"));
             driver.Quit();
+            if (!Env.isSauce())
+            {
+                AppiumServers.StopLocalService();
+            }
         }
 
         [Test()]

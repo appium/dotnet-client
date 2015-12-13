@@ -52,7 +52,7 @@ namespace Appium.Samples
                 string definedNode = PathToCustomizedAppiumJS;
                 Environment.SetEnvironmentVariable(AppiumServiceConstants.AppiumBinaryPath, definedNode);
                 OptionCollector args = new OptionCollector().AddArguments(GeneralOptionList.OverrideSession());
-                new AppiumServiceBuilder().WithIPAddress("127.0.0.1").UsingPort(4000).WithArguments(args).Build();
+                new AppiumServiceBuilder().UsingPort(4000).WithArguments(args).Build();
             }
             finally
             {
@@ -65,7 +65,7 @@ namespace Appium.Samples
         public void CheckAbilityToBuildServiceWithDefinedParametersAndExternallyDefinedNode()
         {
             OptionCollector args = new OptionCollector().AddArguments(GeneralOptionList.OverrideSession());
-            new AppiumServiceBuilder().WithAppiumJS(new FileInfo(PathToCustomizedAppiumJS)).WithIPAddress("127.0.0.1").
+            new AppiumServiceBuilder().WithAppiumJS(new FileInfo(PathToCustomizedAppiumJS)).
                     UsingPort(4000).WithArguments(args).Build();
         }
 
@@ -91,7 +91,7 @@ namespace Appium.Samples
         public void CheckStartingOfAServiceWithNonDefaultArguments()
         {
             OptionCollector args = new OptionCollector().AddArguments(GeneralOptionList.LogNoColors());
-            AppiumLocalService service = new AppiumServiceBuilder().WithIPAddress("127.0.0.1").UsingPort(4000).WithArguments(args).
+            AppiumLocalService service = new AppiumServiceBuilder().UsingPort(4000).WithArguments(args).
                 WithOpenedWindow(true).Build();
             service.Start();
             Assert.IsTrue(service.IsRunning);
@@ -132,7 +132,7 @@ namespace Appium.Samples
         {
             OptionCollector args = new OptionCollector().AddArguments(GeneralOptionList.LogNoColors());
             AppiumLocalService service = new AppiumServiceBuilder().WithAppiumJS(new FileInfo(PathToCustomizedAppiumJS)).
-                WithIPAddress("127.0.0.1").UsingPort(4000).WithArguments(args).WithOpenedWindow(true).Build();
+                UsingPort(4000).WithArguments(args).WithOpenedWindow(true).Build();
             service.Start();
             Assert.IsTrue(service.IsRunning);
             service.Dispose();

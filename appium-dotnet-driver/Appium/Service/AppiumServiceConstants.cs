@@ -29,7 +29,7 @@ namespace OpenQA.Selenium.Appium.Service
         internal readonly static string CmdExe = "cmd.exe";
         internal readonly static string Node = "node";
 
-        internal static readonly string DefaultLocalIPAddress = "0.0.0.0";
+        internal static readonly string DefaultLocalIPAddress = "127.0.0.1";
         internal static readonly int DefaultAppiumPort = 4723;
 
         internal static readonly string AppiumFolder = "appium";
