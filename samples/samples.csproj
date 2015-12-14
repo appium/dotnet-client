@@ -107,9 +107,6 @@
     <None Include="packages.config" />
     <None Include="env.json.sample" />
     <None Include="README.md" />
-    <None Include="assets\ApiDemos-debug.apk" />
-    <None Include="assets\WebViewApp7.1.app.zip" />
-    <None Include="assets\index.html" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

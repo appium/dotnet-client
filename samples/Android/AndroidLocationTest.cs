@@ -48,7 +48,6 @@ namespace Appium.Samples.Android
         [Test()]
         public void setLocationTest()
         {
-            ((AndroidDriver<AndroidElement>)driver).ToggleLocationServices();
             var l = new Location();
             l.Altitude = 10;
             l.Longitude = 10;
