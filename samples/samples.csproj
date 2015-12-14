@@ -48,27 +48,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AndroidConnectionTest.cs" />
-    <Compile Include="AndroidGestureTest.cs" />
-    <Compile Include="IosGestureTest.cs" />
-    <Compile Include="IOSLocationTest.cs" />
-    <Compile Include="AndroidLocationTest.cs" />
-    <Compile Include="IosOrientationTest.cs" />
-    <Compile Include="AndroidOrientationTest.cs" />
+    <Compile Include="Android\AndroidConnectionTest.cs" />
+    <Compile Include="Android\AndroidGestureTest.cs" />
+    <Compile Include="iOS\IosGestureTest.cs" />
+    <Compile Include="iOS\IOSLocationTest.cs" />
+    <Compile Include="Android\AndroidLocationTest.cs" />
+    <Compile Include="iOS\IosOrientationTest.cs" />
+    <Compile Include="Android\AndroidOrientationTest.cs" />
     <Compile Include="helpers\Apps.cs" />
     <Compile Include="helpers\Caps.cs" />
     <Compile Include="helpers\AppiumServers.cs" />
-    <Compile Include="IosSimpleTest.cs" />
+    <Compile Include="iOS\IosSimpleTest.cs" />
     <Compile Include="helpers\Actions.cs" />
-    <Compile Include="IosActionsTest.cs" />
+    <Compile Include="iOS\IosActionsTest.cs" />
     <Compile Include="helpers\Env.cs" />
-    <Compile Include="IosComplexTest.cs" />
+    <Compile Include="iOS\IosComplexTest.cs" />
     <Compile Include="helpers\Filters.cs" />
-    <Compile Include="IosWebviewTest.cs" />
-    <Compile Include="AndroidSimpleTest.cs" />
-    <Compile Include="AndroidWebviewTest.cs" />
-    <Compile Include="AndroidComplexTest.cs" />
-    <Compile Include="AppiumLocalServerTest.cs" />
+    <Compile Include="iOS\IosWebviewTest.cs" />
+    <Compile Include="Android\AndroidSimpleTest.cs" />
+    <Compile Include="Android\AndroidWebviewTest.cs" />
+    <Compile Include="Android\AndroidComplexTest.cs" />
+    <Compile Include="ServerTests\AppiumLocalServerLaunchingTest.cs" />
     <Compile Include="PageObjects\AndroidJavaScriptTestPageObject.cs" />
     <Compile Include="PageObjects\AndroidPageObjectThatChecksTouchActions.cs" />
     <Compile Include="PageObjects\AndroidWebView.cs" />
@@ -97,6 +97,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ServerTests\StartingAppLocallyTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

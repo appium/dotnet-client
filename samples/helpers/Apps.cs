@@ -6,13 +6,13 @@ namespace Appium.Samples.Helpers
 	public class Apps
 	{
 		static Dictionary<string, string> DEV = new Dictionary<string, string> {
-			{ "iosTestApp", "sample-code/apps/TestApp/build/Release-iphonesimulator/TestApp.app" },
-			{ "iosWebviewApp", "sample-code/apps/WebViewApp/build/Release-iphonesimulator/WebViewApp.app" },
-			{ "iosUICatalogApp", "sample-code/apps/UICatalog/build/Release-iphonesimulator/UICatalog.app" },
-			{ "androidApiDemos", "sample-code/apps/ApiDemos/bin/ApiDemos-debug.apk" },
-			{ "selendroidTestApp", "sample-code/apps/selendroid-test-app.apk" },
-			{ "iosWebviewAppLocal", "sample-code/apps/WebViewApp/build/Release-iphonesimulator/WebViewApp.app" },
-			{ "androidApiDemosLocal", "sample-code/apps/ApiDemos/bin/ApiDemos-debug.apk" }
+			{ "iosTestApp", "../../assets/TestApp7.1.app.zip" },
+			{ "iosWebviewApp", "../../assets/WebViewApp7.1.app.zip" },
+			{ "iosUICatalogApp", "../../assets/UICatalog7.1.app.zip" },
+			{ "androidApiDemos", "../../assets/ApiDemos-debug.apk" },
+			{ "selendroidTestApp", "../../assets/selendroid-test-app-0.10.0.apk" },
+			{ "iosWebviewAppLocal", "../../assets/TestApp7.1.app.zip" },
+			{ "androidApiDemosLocal", "../../assets/ApiDemos-debug.apk" }
 		};
 
 		static Dictionary<string, string> DEFAULT = new Dictionary<string, string> {
