@@ -25,7 +25,7 @@ namespace OpenQA.Selenium.Appium.Service
         public static readonly string AppiumBinaryPath = "APPIUM_BINARY_PATH";
         public static readonly string NodeBinaryPath = "NODE_BINARY_PATH";
 
-        internal readonly static string Bash = "bash";
+        internal readonly static string Bash = "/bin/bash";
         internal readonly static string CmdExe = "cmd.exe";
         internal readonly static string Node = "node";
 

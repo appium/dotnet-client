@@ -215,7 +215,7 @@ namespace OpenQA.Selenium.Appium.Service
                     }
                     else
                     {
-                        p = StartSearchingProcess(AppiumServiceConstants.Node, pathToScript);
+                        p = StartSearchingProcess(AppiumServiceConstants.Bash, "-l -c " + AppiumServiceConstants.Node + " " + pathToScript);
                     }
                 }
                 catch (Exception e)
