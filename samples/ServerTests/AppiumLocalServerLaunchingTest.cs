@@ -25,17 +25,21 @@ namespace Appium.Samples.ServerTests
             if (isWindows)
             {
                 bytes = Properties.Resources.PathToWindowsNode;
+				PathToCustomizedAppiumJS = System.Text.Encoding.UTF8.GetString(bytes);
+				return;			
             }
             if (isMacOS)
             {
                 bytes = Properties.Resources.PathToMacOSNode;
+				PathToCustomizedAppiumJS = System.Text.Encoding.UTF8.GetString(bytes);
+				return;
             }
             if (isLinux)
             {
                 bytes = Properties.Resources.PathToLinuxNode;
+				PathToCustomizedAppiumJS = System.Text.Encoding.UTF8.GetString(bytes);
+				return;
             }
-
-            PathToCustomizedAppiumJS = System.Text.Encoding.UTF8.GetString(bytes);
         }
 
         [Test]

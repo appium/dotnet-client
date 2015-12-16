@@ -112,9 +112,16 @@ namespace OpenQA.Selenium.Appium.Service
         private static string FindAFileInPATH(string shortName)
         {
             string path = Environment.GetEnvironmentVariable("PATH");
+			string expandedPath = null;
             if (!string.IsNullOrEmpty(path))
             {
-                string expandedPath = Environment.ExpandEnvironmentVariables(path);
+                expandedPath = Environment.ExpandEnvironmentVariables(path);
+				if (!Platform.CurrentPlatform.IsPlatformType (PlatformType.Windows) &&
+				    !expandedPath.Contains ("/usr/local/bin")) 
+				{
+					expandedPath = expandedPath + Path.PathSeparator + "/usr/local/bin";
+				}
+
                 string[] dirs = expandedPath.Split(Path.PathSeparator);
                 foreach (string dir in dirs)
                 {
@@ -131,7 +138,6 @@ namespace OpenQA.Selenium.Appium.Service
                         throw new IOException("Can not parse environmental variable PATH because the directory name \"" + dir + "\" contains invalid characters!");
                     }
                 }
-                return null;
             }
             return null;
         }
@@ -211,10 +217,14 @@ namespace OpenQA.Selenium.Appium.Service
                 if (!String.IsNullOrEmpty(appiumJS))
                 {
                     FileInfo result = new FileInfo(appiumJS);
-                    if (result.Exists)
-                    {
-                        return result;
-                    }
+					if (result.Exists) {
+						return result;
+					} 
+					else 
+					{
+						throw new InvalidNodeJSInstanceException("The defined value " + result.FullName + " of the " + 
+							AppiumServiceConstants.NodeBinaryPath + " refers to unexisting file!");
+					}
                 }
                 
                 string filePath;
@@ -237,8 +247,9 @@ namespace OpenQA.Selenium.Appium.Service
                 if (String.IsNullOrEmpty(filePath))
                 {
 
-                    String errorMessage = "Can't get a path to the default Node.js instance from the PATH environmental variable. It seems Node.js is not " +
-                        "installed on this computer";
+                    String errorMessage = "Couldn't find a path to the default Node.js instance from the PATH environmental variable. It seems Node.js is not " +
+						"installed on this computer. Please check the PATH environmental variable or define the " + AppiumServiceConstants.NodeBinaryPath + " " +
+						"environmental variable value.";
                     throw new InvalidNodeJSInstanceException(errorMessage);
                 }
                 return new FileInfo(filePath);
