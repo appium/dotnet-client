@@ -30,22 +30,19 @@ namespace OpenQA.Selenium.Appium.Service
         private readonly int Port;
         private readonly TimeSpan InitializationTimeout;
         private Process Service;
-        private readonly bool NeedsToBeOpened;
-
 
         public static AppiumLocalService BuildDefaultService()
         {
             return new AppiumServiceBuilder().Build();
         }
 
-        internal AppiumLocalService(FileInfo nodeJS, string arguments, IPAddress ip, int port, TimeSpan initializationTimeout, bool createNoWindow)
+        internal AppiumLocalService(FileInfo nodeJS, string arguments, IPAddress ip, int port, TimeSpan initializationTimeout)
         {
             this.NodeJS = nodeJS;
             this.IP = ip;
             this.Arguments = arguments;
             this.Port = port;
             this.InitializationTimeout = initializationTimeout;
-            this.NeedsToBeOpened = !createNoWindow;
         }
 
         public Uri ServiceUrl
@@ -65,7 +62,7 @@ namespace OpenQA.Selenium.Appium.Service
             this.Service.StartInfo.FileName = this.NodeJS.FullName;
             this.Service.StartInfo.Arguments = this.Arguments;
             this.Service.StartInfo.UseShellExecute = false;
-            this.Service.StartInfo.CreateNoWindow = this.NeedsToBeOpened;
+            this.Service.StartInfo.CreateNoWindow = true;
 
             bool isLaunced = false;
             string msgTxt = "The local appium server has not been started. " +

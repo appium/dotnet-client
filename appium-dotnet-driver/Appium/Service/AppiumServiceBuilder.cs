@@ -36,7 +36,6 @@ namespace OpenQA.Selenium.Appium.Service
         private FileInfo NodeJS;
         private IDictionary<string, string> EnvironmentForAProcess;
         private string PathToLogFile;
-        private bool OpenNodeJS;
 
 
         private static Process StartSearchingProcess(string file, string arguments)
@@ -110,6 +109,33 @@ namespace OpenQA.Selenium.Appium.Service
             }
         }
 
+        private static string FindAFileInPATH(string shortName)
+        {
+            string path = Environment.GetEnvironmentVariable("PATH");
+            if (!string.IsNullOrEmpty(path))
+            {
+                string expandedPath = Environment.ExpandEnvironmentVariables(path);
+                string[] dirs = expandedPath.Split(Path.PathSeparator);
+                foreach (string dir in dirs)
+                {
+                    if (dir.IndexOfAny(Path.GetInvalidPathChars()) < 0)
+                    {
+                        string fullPath = Path.Combine(dir, shortName);
+                        if (File.Exists(fullPath))
+                        {
+                            return fullPath;
+                        }
+                    }
+                    else
+                    {
+                        throw new IOException("Can not parse environmental variable PATH because the directory name \"" + dir + "\" contains invalid characters!");
+                    }
+                }
+                return null;
+            }
+            return null;
+        }
+
         private FileInfo InstalledNodeInCurrentFileSystem
         {
             get
@@ -118,24 +144,12 @@ namespace OpenQA.Selenium.Appium.Service
                 Process p = null;
 
                 bool isWindows = Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows);
-
-                string extension;
-
-                if (isWindows)
-                {
-                    extension = ".cmd";
-                }
-                else
-                {
-                    extension = ".sh";
-                }
-
                 byte[] bytes;
                 string pathToScript = null;
                 if (!isWindows)
                 {
                     bytes = Properties.Resources.npm_script_unix;
-                    pathToScript = GetTempFile(extension, bytes).FullName;
+                    pathToScript = GetTempFile(".sh", bytes).FullName;
                 }
 
                 try
@@ -202,48 +216,32 @@ namespace OpenQA.Selenium.Appium.Service
                         return result;
                     }
                 }
-
-                Process p = null;
-                byte[] bytes = Properties.Resources.getExe;
-                string pathToScript = GetTempFile(".js", bytes).FullName;
-
+                
+                string filePath;
                 try
                 {
                     if (Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows))
                     {
-                        p = StartSearchingProcess(AppiumServiceConstants.Node + ".exe", pathToScript);
+                        filePath = FindAFileInPATH(AppiumServiceConstants.Node + ".exe");
                     }
                     else
                     {
-                        p = StartSearchingProcess(AppiumServiceConstants.Bash, "-l -c " + AppiumServiceConstants.Node + " " + pathToScript);
+                        filePath = FindAFileInPATH(AppiumServiceConstants.Node);
                     }
                 }
                 catch (Exception e)
                 {
-                    if (p != null)
-                    {
-                        p.Close();
-                    }
-                    File.Delete(pathToScript);
                     throw new InvalidNodeJSInstanceException("Node.js is not installed!", e);
                 }
 
-                string filePath = GetTheLastStringFromsOutput(p.StandardOutput);
-                try
+                if (String.IsNullOrEmpty(filePath))
                 {
-                    if (String.IsNullOrEmpty(filePath))
-                    {
-                        String errorOutput = ReadErrorStream(p);
-                        String errorMessage = "Can't get a path to the default Node.js instance";
-                        throw new InvalidNodeJSInstanceException(errorMessage, new IOException(errorOutput));
-                    }
-                    return new FileInfo(filePath);
+
+                    String errorMessage = "Can't get a path to the default Node.js instance from the PATH environmental variable. It seems Node.js is not " +
+                        "installed on this computer";
+                    throw new InvalidNodeJSInstanceException(errorMessage);
                 }
-                finally
-                {
-                    p.Close();
-                    File.Delete(pathToScript);
-                }
+                return new FileInfo(filePath);
             }
         }
 
@@ -423,17 +421,6 @@ namespace OpenQA.Selenium.Appium.Service
             return this;
         }
 
-        /// <summary>
-        /// Should NodeJS window be opened or not
-        /// </summary>
-        /// <param name="toBeOpened">means necessity of an opened NodeJS window</param>
-        /// <returns>self-reference</returns>
-        public AppiumServiceBuilder WithOpenedWindow(bool toBeOpened)
-        {
-            this.OpenNodeJS = toBeOpened;
-            return this;
-        }
-
         private string Args
         {
             get
@@ -475,7 +462,7 @@ namespace OpenQA.Selenium.Appium.Service
             {
                 NodeJS = DefaultExecutable;
             }
-            return new AppiumLocalService(NodeJS, Args, IPAddress.Parse(this.IpAddress), this.Port, StartUpTimeout, OpenNodeJS);
+            return new AppiumLocalService(NodeJS, Args, IPAddress.Parse(this.IpAddress), this.Port, StartUpTimeout);
         }
     }
 }

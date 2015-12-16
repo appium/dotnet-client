@@ -81,7 +81,7 @@ namespace Appium.Samples.ServerTests
         [Test]
         public void CheckAbilityToStartServiceOnAFreePort()
         {
-            AppiumLocalService service = new AppiumServiceBuilder().UsingAnyFreePort().WithOpenedWindow(true).Build();
+            AppiumLocalService service = new AppiumServiceBuilder().UsingAnyFreePort().Build();
             service.Start();
             Assert.IsTrue(service.IsRunning);
             service.Dispose();
@@ -91,8 +91,7 @@ namespace Appium.Samples.ServerTests
         public void CheckStartingOfAServiceWithNonDefaultArguments()
         {
             OptionCollector args = new OptionCollector().AddArguments(GeneralOptionList.LogNoColors());
-            AppiumLocalService service = new AppiumServiceBuilder().UsingPort(4000).WithArguments(args).
-                WithOpenedWindow(true).Build();
+            AppiumLocalService service = new AppiumServiceBuilder().UsingPort(4000).WithArguments(args).Build();
             service.Start();
             Assert.IsTrue(service.IsRunning);
             service.Dispose();
@@ -105,7 +104,7 @@ namespace Appium.Samples.ServerTests
             {
                 string definedNode = PathToCustomizedAppiumJS;
                 Environment.SetEnvironmentVariable(AppiumServiceConstants.AppiumBinaryPath, definedNode);
-                AppiumLocalService service = new AppiumServiceBuilder().WithOpenedWindow(true).Build();
+                AppiumLocalService service = new AppiumServiceBuilder().Build();
 
                 service.Start();
                 Assert.IsTrue(service.IsRunning);
@@ -120,8 +119,7 @@ namespace Appium.Samples.ServerTests
         [Test]
         public void CheckStartingOfTheServiceDefinedExternally()
         {
-            AppiumLocalService service = new AppiumServiceBuilder().WithAppiumJS(new FileInfo(PathToCustomizedAppiumJS)).
-                WithOpenedWindow(true).Build();
+            AppiumLocalService service = new AppiumServiceBuilder().WithAppiumJS(new FileInfo(PathToCustomizedAppiumJS)).Build();
             service.Start();
             Assert.IsTrue(service.IsRunning);
             service.Dispose();
@@ -132,7 +130,7 @@ namespace Appium.Samples.ServerTests
         {
             OptionCollector args = new OptionCollector().AddArguments(GeneralOptionList.LogNoColors());
             AppiumLocalService service = new AppiumServiceBuilder().WithAppiumJS(new FileInfo(PathToCustomizedAppiumJS)).
-                UsingPort(4000).WithArguments(args).WithOpenedWindow(true).Build();
+                UsingPort(4000).WithArguments(args).Build();
             service.Start();
             Assert.IsTrue(service.IsRunning);
             service.Dispose();
@@ -157,7 +155,6 @@ namespace Appium.Samples.ServerTests
             Console.WriteLine(localIp);
 
             AppiumLocalService service = new AppiumServiceBuilder().WithIPAddress(localIp).UsingPort(4000).
-                WithOpenedWindow(true).
                 Build();
             service.Start();
             Assert.IsTrue(service.IsRunning);

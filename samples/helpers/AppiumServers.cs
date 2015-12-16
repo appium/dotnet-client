@@ -36,6 +36,7 @@ namespace Appium.Samples.Helpers
                 {
                     AppiumServiceBuilder builder = new AppiumServiceBuilder();
                     OptionCollector collector = new OptionCollector().AddArguments(IOSOptionList.LaunchTimeout("500000")).
+                        //I use MAC OS X VMWare image. Sometimes it is very slow. 
                         AddArguments(IOSOptionList.BackEndRetries("10"));
                     LocalService = builder.WithArguments(collector).Build();
                 }

@@ -12,9 +12,9 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+
 namespace OpenQA.Selenium.Appium.Properties {
-   
-    
+        
     [global::System.CodeDom.Compiler.GeneratedCode("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCode()]
     [global::System.Runtime.CompilerServices.CompilerGenerated()]
@@ -48,14 +48,7 @@ namespace OpenQA.Selenium.Appium.Properties {
                 resourceCulture = value;
             }
         }
-        
-        internal static byte[] getExe {
-            get {
-                object obj = ResourceManager.GetObject("getExe", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
+
         internal static byte[] npm_script_unix {
             get {
                 object obj = ResourceManager.GetObject("npm_script_unix", resourceCulture);

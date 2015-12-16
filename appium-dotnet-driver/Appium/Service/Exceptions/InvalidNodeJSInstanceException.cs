@@ -22,5 +22,10 @@ namespace OpenQA.Selenium.Appium.Service.Exceptions
             :base(message, cause)
         {
         }
+
+        public InvalidNodeJSInstanceException(string message)
+            : base(message)
+        {
+        }
     }
 }
