@@ -66,7 +66,7 @@ namespace Appium.Samples.ServerTests
         {
             string app = Apps.get("iosTestApp");
             DesiredCapabilities capabilities =
-                Caps.getIos71Caps(app);
+                Caps.getIos82Caps(app);
 
             IOSDriver<AppiumWebElement> driver = null;
             try

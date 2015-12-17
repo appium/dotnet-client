@@ -6,11 +6,9 @@ namespace Appium.Samples.Helpers
 {
 	public class Caps
 	{
-		public static DesiredCapabilities getIos71Caps (string app) {
+		public static DesiredCapabilities getIos82Caps (string app) {
 			DesiredCapabilities capabilities = new DesiredCapabilities();
-            capabilities.SetCapability(CapabilityType.BrowserName, "");
-			capabilities.SetCapability(MobileCapabilityType.AppiumVersion, "1.0");
-			capabilities.SetCapability(MobileCapabilityType.PlatformVersion, "7.1");
+			capabilities.SetCapability(MobileCapabilityType.PlatformVersion, "8.2");
 			capabilities.SetCapability(MobileCapabilityType.DeviceName, "iPhone Simulator");
 			capabilities.SetCapability(MobileCapabilityType.App, app);
 			return capabilities;
