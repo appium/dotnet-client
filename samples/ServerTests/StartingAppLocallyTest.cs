@@ -93,7 +93,7 @@ namespace Appium.Samples.ServerTests
 
             OptionCollector argCollector = new OptionCollector().AddArguments(GeneralOptionList.App(app))
                 .AddArguments(GeneralOptionList.AutomationName(AutomationName.Appium)).
-                AddArguments(GeneralOptionList.PlatformVersion("7.1"));
+                AddArguments(GeneralOptionList.PlatformVersion("8.2"));
 
             AppiumServiceBuilder builder = new AppiumServiceBuilder().WithArguments(argCollector);
             IOSDriver<AppiumWebElement> driver = null;
