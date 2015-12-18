@@ -76,12 +76,18 @@ namespace OpenQA.Selenium.Appium.Service
             {
                 return RealExecutor.Execute(commandToExecute);
             }
-            finally
+            catch (Exception e)
             {
-                if (commandToExecute.Name == DriverCommand.Quit && this.Service != null)
+                if ((commandToExecute.Name == DriverCommand.NewSession) && (this.Service != null))
                 {
                     this.Service.Dispose();
                 }
+                throw e;
+            }
+
+            if (commandToExecute.Name == DriverCommand.Quit && this.Service != null)
+            {
+                this.Service.Dispose();
             }
         }
     }
