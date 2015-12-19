@@ -117,9 +117,11 @@ namespace OpenQA.Selenium.Appium.Service
             {
                 expandedPath = Environment.ExpandEnvironmentVariables(path);
 				if (!Platform.CurrentPlatform.IsPlatformType (PlatformType.Windows) &&
-				    !expandedPath.Contains ("/usr/local/bin")) 
+				    !expandedPath.Contains (Path.DirectorySeparatorChar + "usr" + Path.DirectorySeparatorChar + 
+                    "local" + Path.DirectorySeparatorChar + "bin")) 
 				{
-					expandedPath = expandedPath + Path.PathSeparator + "/usr/local/bin";
+					expandedPath = expandedPath + Path.PathSeparator + Path.DirectorySeparatorChar + "usr" + Path.DirectorySeparatorChar +
+                    "local" + Path.DirectorySeparatorChar + "bin";
 				}
 
                 string[] dirs = expandedPath.Split(Path.PathSeparator);
