@@ -67,6 +67,7 @@ namespace OpenQA.Selenium.Appium.Service
 
         public Response Execute(Command commandToExecute)
         {
+            Response result = null; 
             if (commandToExecute.Name == DriverCommand.NewSession && this.Service != null)
             {
                 this.Service.Start();
@@ -74,7 +75,8 @@ namespace OpenQA.Selenium.Appium.Service
 
             try
             {
-                return RealExecutor.Execute(commandToExecute);
+                result = RealExecutor.Execute(commandToExecute);
+                return result;
             }
             catch (Exception e)
             {
@@ -84,11 +86,18 @@ namespace OpenQA.Selenium.Appium.Service
                 }
                 throw e;
             }
+			finally 
+			{
+                if (result != null && result.Status != WebDriverResult.Success && commandToExecute.Name == DriverCommand.NewSession)
+                {
+                    this.Service.Dispose();
+                } 
 
-            if (commandToExecute.Name == DriverCommand.Quit && this.Service != null)
-            {
-                this.Service.Dispose();
-            }
+				if (commandToExecute.Name == DriverCommand.Quit && this.Service != null)
+				{
+					this.Service.Dispose();
+				}
+			}
         }
     }
 }

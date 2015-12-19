@@ -77,18 +77,30 @@ namespace Appium.Samples.ServerTests
         public void CheckStartingOfDefaultService()
         {
             AppiumLocalService service = AppiumLocalService.BuildDefaultService();
-            service.Start();
-            Assert.IsTrue(service.IsRunning);
-            service.Dispose();
+            try
+            {
+                service.Start();
+                Assert.IsTrue(service.IsRunning);
+            }
+            finally
+            {
+                service.Dispose();
+            }
         }
 
         [Test]
         public void CheckAbilityToStartServiceOnAFreePort()
         {
             AppiumLocalService service = new AppiumServiceBuilder().UsingAnyFreePort().Build();
-            service.Start();
-            Assert.IsTrue(service.IsRunning);
-            service.Dispose();
+            try
+            {
+                service.Start();
+                Assert.IsTrue(service.IsRunning);
+            }
+            finally
+            {
+                service.Dispose();
+            }
         }
 
         [Test]
@@ -96,9 +108,15 @@ namespace Appium.Samples.ServerTests
         {
             OptionCollector args = new OptionCollector().AddArguments(GeneralOptionList.LogNoColors());
             AppiumLocalService service = new AppiumServiceBuilder().UsingPort(4000).WithArguments(args).Build();
-            service.Start();
-            Assert.IsTrue(service.IsRunning);
-            service.Dispose();
+            try
+            {
+                service.Start();
+                Assert.IsTrue(service.IsRunning);
+            }
+            finally
+            {
+                service.Dispose();
+            }
         }
 
         [Test]
@@ -110,9 +128,15 @@ namespace Appium.Samples.ServerTests
                 Environment.SetEnvironmentVariable(AppiumServiceConstants.AppiumBinaryPath, definedNode);
                 AppiumLocalService service = new AppiumServiceBuilder().Build();
 
-                service.Start();
-                Assert.IsTrue(service.IsRunning);
-                service.Dispose();
+                try
+                {
+                    service.Start();
+                    Assert.IsTrue(service.IsRunning);
+                }
+                finally
+                {
+                    service.Dispose();
+                }
             }
             finally
             {
@@ -124,9 +148,15 @@ namespace Appium.Samples.ServerTests
         public void CheckStartingOfTheServiceDefinedExternally()
         {
             AppiumLocalService service = new AppiumServiceBuilder().WithAppiumJS(new FileInfo(PathToCustomizedAppiumJS)).Build();
-            service.Start();
-            Assert.IsTrue(service.IsRunning);
-            service.Dispose();
+            try
+            {
+                service.Start();
+                Assert.IsTrue(service.IsRunning);
+            }
+            finally
+            {
+                service.Dispose();
+            }
         }
 
         [Test]
@@ -135,9 +165,15 @@ namespace Appium.Samples.ServerTests
             OptionCollector args = new OptionCollector().AddArguments(GeneralOptionList.LogNoColors());
             AppiumLocalService service = new AppiumServiceBuilder().WithAppiumJS(new FileInfo(PathToCustomizedAppiumJS)).
                 UsingPort(4000).WithArguments(args).Build();
-            service.Start();
-            Assert.IsTrue(service.IsRunning);
-            service.Dispose();
+            try
+            {
+                service.Start();
+                Assert.IsTrue(service.IsRunning);
+            }
+            finally
+            {
+                service.Dispose();
+            }
         }
 
         [Test]
@@ -160,9 +196,36 @@ namespace Appium.Samples.ServerTests
 
             AppiumLocalService service = new AppiumServiceBuilder().WithIPAddress(localIp).UsingPort(4000).
                 Build();
-            service.Start();
-            Assert.IsTrue(service.IsRunning);
-            service.Dispose();
+            try
+            {
+                service.Start();
+                Assert.IsTrue(service.IsRunning);
+            }
+            finally
+            {
+                service.Dispose();
+            }
+        }
+
+        [Test]
+        public void CheckTheAbilityToDefineTheDesiredLogFile()
+        {
+            FileInfo log = new FileInfo("Log");
+            AppiumLocalService service = new AppiumServiceBuilder().WithLogFile(log).Build();
+            try
+            {
+                service.Start();
+                Assert.IsTrue(log.Exists);
+                Assert.IsTrue(log.Length > 0); //There should be Appium greeting messages
+            }
+            finally
+            {
+                service.Dispose();
+                if (log.Exists)
+                {
+                    File.Delete(log.FullName);
+                }
+            }
         }
     }
 }

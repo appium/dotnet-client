@@ -94,9 +94,14 @@ namespace OpenQA.Selenium.Appium.Service
                 return;
             }
 
-            if (!this.Service.HasExited)
+            try
             {
                 this.Service.Kill();
+            }
+            catch (Exception ignored)
+            {}
+            finally
+            {
                 this.Service.Close();
             }
         }
@@ -112,7 +117,21 @@ namespace OpenQA.Selenium.Appium.Service
         {
             get
             {
-                return this.Service != null && !this.Service.HasExited && Ping(new TimeSpan(0, 0, 0, 0, 500));
+                if (this.Service == null)
+                {
+                    return false;
+                }
+
+                try
+                {
+                    var pid = this.Service.Id;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+
+                return Ping(new TimeSpan(0, 0, 0, 0, 500));
             }
         }
 
