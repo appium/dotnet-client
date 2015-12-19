@@ -88,7 +88,8 @@ namespace OpenQA.Selenium.Appium.Service
             }
 			finally 
 			{
-                if (result != null && result.Status != WebDriverResult.Success && commandToExecute.Name == DriverCommand.NewSession)
+                if (result != null && result.Status != WebDriverResult.Success && 
+                    commandToExecute.Name == DriverCommand.NewSession && this.Service != null)
                 {
                     this.Service.Dispose();
                 } 

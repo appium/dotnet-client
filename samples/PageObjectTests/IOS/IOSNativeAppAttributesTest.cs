@@ -40,9 +40,12 @@ namespace Appium.Samples.PageObjectTests.IOS
         public void AfterEach()
         {
             allPassed = allPassed && (TestContext.CurrentContext.Result.State == TestState.Success);
-            if (Env.isSauce())
-                ((IJavaScriptExecutor)driver).ExecuteScript("sauce:job-result=" + (allPassed ? "passed" : "failed"));
-            driver.Quit();
+            if (driver != null)
+            {
+                if (Env.isSauce())
+                    ((IJavaScriptExecutor)driver).ExecuteScript("sauce:job-result=" + (allPassed ? "passed" : "failed"));
+                driver.Quit();
+            }
             if (!Env.isSauce())
             {
                 AppiumServers.StopLocalService();

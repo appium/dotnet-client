@@ -34,18 +34,16 @@ namespace Appium.Samples.Android
         [TestFixtureTearDown]
         public void AfterAll()
         {
-            try
+            allPassed = allPassed && (TestContext.CurrentContext.Result.State == TestState.Success);
+            if (driver != null)
             {
                 if (Env.isSauce())
                     ((IJavaScriptExecutor)driver).ExecuteScript("sauce:job-result=" + (allPassed ? "passed" : "failed"));
-            }
-            finally
-            {
                 driver.Quit();
-                if (!Env.isSauce())
-                {
-                    AppiumServers.StopLocalService();
-                }
+            }
+            if (!Env.isSauce())
+            {
+                AppiumServers.StopLocalService();
             }
         }
 

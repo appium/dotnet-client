@@ -29,20 +29,18 @@ namespace Appium.Samples.iOS
 
 		[TestFixtureTearDown]
 		public void afterAll(){
-			try
-			{
-				if(Env.isSauce())
-					((IJavaScriptExecutor)driver).ExecuteScript("sauce:job-result=" + (allPassed ? "passed" : "failed"));
-			}
-			finally
-			{
-				driver.Quit();
-                if (!Env.isSauce())
-                {
-                    AppiumServers.StopLocalService();
-                }
+            allPassed = allPassed && (TestContext.CurrentContext.Result.State == TestState.Success);
+            if (driver != null)
+            {
+                if (Env.isSauce())
+                    ((IJavaScriptExecutor)driver).ExecuteScript("sauce:job-result=" + (allPassed ? "passed" : "failed"));
+                driver.Quit();
             }
-		}
+            if (!Env.isSauce())
+            {
+                AppiumServers.StopLocalService();
+            }
+        }
 
 		[TearDown]
 		public void AfterEach(){
