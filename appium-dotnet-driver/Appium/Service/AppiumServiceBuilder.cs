@@ -269,12 +269,22 @@ namespace OpenQA.Selenium.Appium.Service
             return this;
         }
 
+        /// <summary>
+        /// This method defines the desired Appium server binary
+        /// </summary>
+        /// <param name="appiumJS">Is a file path to the desired appium.js file</param>
+        /// <returns>Self-reference</returns>
         public AppiumServiceBuilder WithAppiumJS(FileInfo appiumJS)
         {
             this.AppiumJS = appiumJS;
             return this;
         }
 
+        /// <summary>
+        /// This method defines the IP Address to listen on
+        /// </summary>
+        /// <param name="ipAddress">the IP Address to listen on</param>
+        /// <returns>Self-reference</returns>
         public AppiumServiceBuilder WithIPAddress(string ipAddress)
         {
             this.IpAddress = ipAddress;
@@ -469,6 +479,10 @@ namespace OpenQA.Selenium.Appium.Service
             }
         }
 
+        /// <summary>
+        /// This method builds an instance of AppiumLocalService using defined parameters
+        /// </summary>
+        /// <returns>an instance of AppiumLocalService built using defined parameters</returns>
         public AppiumLocalService Build()
         {
             if (NodeJS == null)

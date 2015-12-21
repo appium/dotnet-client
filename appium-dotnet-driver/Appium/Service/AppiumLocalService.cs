@@ -31,6 +31,10 @@ namespace OpenQA.Selenium.Appium.Service
         private readonly TimeSpan InitializationTimeout;
         private Process Service;
 
+        /// <summary>
+        /// Creates an instance of AppiumLocalService without special settings
+        /// </summary>
+        /// <returns>An instance of AppiumLocalService without special settings</returns>
         public static AppiumLocalService BuildDefaultService()
         {
             return new AppiumServiceBuilder().Build();
@@ -45,11 +49,17 @@ namespace OpenQA.Selenium.Appium.Service
             this.InitializationTimeout = initializationTimeout;
         }
 
+        /// <summary>
+        /// The base URL for the managed appium server.
+        /// </summary>
         public Uri ServiceUrl
         {
             get { return new Uri("http://" + IP.ToString() + ":" + Convert.ToString(Port) + "/wd/hub"); }
         }
 
+        /// <summary>
+        /// Starts the defined appium server
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void Start()
         {
@@ -106,6 +116,9 @@ namespace OpenQA.Selenium.Appium.Service
             }
         }
 
+        /// <summary>
+        /// Stops this service if it is currently running.
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void Dispose()
         {
@@ -113,6 +126,9 @@ namespace OpenQA.Selenium.Appium.Service
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Is the defined appium server being run or not
+        /// </summary>
         public bool IsRunning
         {
             get
