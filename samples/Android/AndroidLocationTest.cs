@@ -2,52 +2,50 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
-using OpenQA.Selenium.Appium.iOS;
+using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Remote;
 using System;
 
-namespace Appium.Samples
+namespace Appium.Samples.Android
 {
     [TestFixture()]
-    class IOSLocationTest
+    class AndroidLocationTest
     {
-        private AppiumDriver<IOSElement> driver;
+        private AppiumDriver<AndroidElement> driver;
         private bool allPassed = true;
 
-        [TestFixtureSetUp]
-        public void beforeAll()
+        [SetUp]
+        public void BeforeAll()
         {
-            DesiredCapabilities capabilities = Caps.getIos71Caps(Apps.get("iosUICatalogApp"));
+            DesiredCapabilities capabilities = Env.isSauce() ?
+                Caps.getAndroid18Caps(Apps.get("androidApiDemos")) :
+                Caps.getAndroid19Caps(Apps.get("androidApiDemos"));
             if (Env.isSauce())
             {
                 capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
                 capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
-                capabilities.SetCapability("name", "ios - complex");
+                capabilities.SetCapability("name", "android - complex");
                 capabilities.SetCapability("tags", new string[] { "sample" });
             }
-            Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.localURI;
-            driver = new IOSDriver<IOSElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
+            Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIAndroid;
+            driver = new AndroidDriver<AndroidElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
             driver.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
-        }
-
-        [TestFixtureTearDown]
-        public void afterAll()
-        {
-            try
-            {
-                if (Env.isSauce())
-                    ((IJavaScriptExecutor)driver).ExecuteScript("sauce:job-result=" + (allPassed ? "passed" : "failed"));
-            }
-            finally
-            {
-                driver.Quit();
-            }
         }
 
         [TearDown]
         public void AfterEach()
         {
             allPassed = allPassed && (TestContext.CurrentContext.Result.State == TestState.Success);
+            if (driver != null)
+            {
+                if (Env.isSauce())
+                    ((IJavaScriptExecutor)driver).ExecuteScript("sauce:job-result=" + (allPassed ? "passed" : "failed"));
+                driver.Quit();
+            }
+            if (!Env.isSauce())
+            {
+                AppiumServers.StopLocalService();
+            }
         }
 
         [Test()]

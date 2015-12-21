@@ -10,7 +10,7 @@ using System.Drawing;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Interfaces;
 
-namespace Appium.Samples
+namespace Appium.Samples.Android
 {
 	[TestFixture ()]
 	public class AndroidWebviewTest
@@ -29,23 +29,25 @@ namespace Appium.Samples
 				capabilities.SetCapability("name", "android - webview");
 				capabilities.SetCapability("tags", new string[]{"sample"});
 			}
-			Uri serverUri = Env.isSauce () ? AppiumServers.sauceURI : AppiumServers.localURI;
+			Uri serverUri = Env.isSauce () ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIAndroid;
             driver = new AndroidDriver<IWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);	
 			driver.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
 		}
 
 		[TestFixtureTearDown]
 		public void AfterAll(){
-			try
-			{
-				if(Env.isSauce())
-					((IJavaScriptExecutor)driver).ExecuteScript("sauce:job-result=" + (allPassed ? "passed" : "failed"));
-			}
-			finally
-			{
-				driver.Quit();
-			}
-		}
+            allPassed = allPassed && (TestContext.CurrentContext.Result.State == TestState.Success);
+            if (driver != null)
+            {
+                if (Env.isSauce())
+                    ((IJavaScriptExecutor)driver).ExecuteScript("sauce:job-result=" + (allPassed ? "passed" : "failed"));
+                driver.Quit();
+            }
+            if (!Env.isSauce())
+            {
+                AppiumServers.StopLocalService();
+            }
+        }
 
 		[TearDown]
 		public void AfterEach(){
@@ -53,7 +55,7 @@ namespace Appium.Samples
 		}
 
 		[Test ()]
-		public void FindElementTestCase ()
+		public void WebViewTestCase ()
 		{
 			driver.FindElement(By.Name("buttonStartWebviewCD")).Click ();
 			Thread.Sleep (5000);
@@ -69,13 +71,7 @@ namespace Appium.Samples
 				}
 				Assert.IsNotNull (webviewContext);
                 ((IContextAware) driver).Context = webviewContext;
-				var el = driver.FindElement(By.Id ("name_input"));
-                el.Click();
-				el.Clear ();
-				el.SendKeys ("Appium User");
-				el.SendKeys (Keys.Return);
-				Assert.IsTrue (driver.PageSource.Contains ("This is my way of saying hello"));
-				Assert.IsTrue (driver.PageSource.Contains ("Appium User"));
+				Assert.IsTrue (driver.PageSource.Contains ("Hello, can you please tell me your name?"));
 			}
 		}
 	}

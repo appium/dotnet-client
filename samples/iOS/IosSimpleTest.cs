@@ -7,7 +7,7 @@ using OpenQA.Selenium;
 using System.Threading;
 using OpenQA.Selenium.Appium.iOS;
 
-namespace Appium.Samples
+namespace Appium.Samples.iOS
 {
 	[TestFixture ()]
 	public class IosSimpleTest
@@ -19,30 +19,32 @@ namespace Appium.Samples
 
 		[TestFixtureSetUp]
 		public void BeforeAll(){
-			DesiredCapabilities capabilities = Caps.getIos71Caps (Apps.get("iosTestApp")); 
+			DesiredCapabilities capabilities = Caps.getIos82Caps (Apps.get("iosTestApp")); 
 			if (Env.isSauce ()) {
 				capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME")); 
 				capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
 				capabilities.SetCapability("name", "ios - simple");
 				capabilities.SetCapability("tags", new string[]{"sample"});
 			}
-			Uri serverUri = Env.isSauce () ? AppiumServers.sauceURI : AppiumServers.localURI;
+			Uri serverUri = Env.isSauce () ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIForIOS;
             driver = new IOSDriver<IOSElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);	
 			driver.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
 		}
 
 		[TestFixtureTearDown]
 		public void AfterAll(){
-			try
-			{
-				if(Env.isSauce())
-					((IJavaScriptExecutor)driver).ExecuteScript("sauce:job-result=" + (allPassed ? "passed" : "failed"));
-			}
-			finally
-			{
-				driver.Quit();
-			}
-		}
+            allPassed = allPassed && (TestContext.CurrentContext.Result.State == TestState.Success);
+            if (driver != null)
+            {
+                if (Env.isSauce())
+                    ((IJavaScriptExecutor)driver).ExecuteScript("sauce:job-result=" + (allPassed ? "passed" : "failed"));
+                driver.Quit();
+            }
+            if (!Env.isSauce())
+            {
+                AppiumServers.StopLocalService();
+            }
+        }
 
 		[TearDown]
 		public void AfterEach(){

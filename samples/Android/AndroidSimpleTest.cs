@@ -6,7 +6,7 @@ using OpenQA.Selenium.Remote;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.Android;
 
-namespace Appium.Samples
+namespace Appium.Samples.Android
 {
 	[TestFixture ()]
 	public class AndroidSimpleTest
@@ -25,23 +25,25 @@ namespace Appium.Samples
 				capabilities.SetCapability("name", "android - simple");
 				capabilities.SetCapability("tags", new string[]{"sample"});
 			}
-			Uri serverUri = Env.isSauce () ? AppiumServers.sauceURI : AppiumServers.localURI;
+			Uri serverUri = Env.isSauce () ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIAndroid;
             driver = new AndroidDriver<AndroidElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);	
 			driver.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
 		}
 
 		[TestFixtureTearDown]
 		public void AfterAll(){
-			try
-			{
-				if(Env.isSauce())
-					((IJavaScriptExecutor)driver).ExecuteScript("sauce:job-result=" + (allPassed ? "passed" : "failed"));
-			}
-			finally
-			{
-				driver.Quit();
-			}
-		}
+            allPassed = allPassed && (TestContext.CurrentContext.Result.State == TestState.Success);
+            if (driver != null)
+            {
+                if (Env.isSauce())
+                    ((IJavaScriptExecutor)driver).ExecuteScript("sauce:job-result=" + (allPassed ? "passed" : "failed"));
+                driver.Quit();
+            }
+            if (!Env.isSauce())
+            {
+                AppiumServers.StopLocalService();
+            }
+        }
 
 		[TearDown]
 		public void AfterEach(){

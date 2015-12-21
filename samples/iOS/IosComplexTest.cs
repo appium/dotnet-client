@@ -9,7 +9,7 @@ using System.Threading;
 using OpenQA.Selenium.Appium.iOS;
 using OpenQA.Selenium.Appium.iOS.Enums;
 
-namespace Appium.Samples
+namespace Appium.Samples.iOS
 {
 	[TestFixture ()]
 	public class IosComplexTest
@@ -19,25 +19,32 @@ namespace Appium.Samples
 
 		[SetUp]
 		public void beforeAll(){
-			DesiredCapabilities capabilities = Caps.getIos71Caps (Apps.get("iosUICatalogApp")); 
+			DesiredCapabilities capabilities = Caps.getIos82Caps (Apps.get("iosUICatalogApp")); 
 			if (Env.isSauce ()) {
 				capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME")); 
 				capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
 				capabilities.SetCapability("name", "ios - complex");
 				capabilities.SetCapability("tags", new string[]{"sample"});
 			}
-			Uri serverUri = Env.isSauce () ? AppiumServers.sauceURI : AppiumServers.localURI;
+			Uri serverUri = Env.isSauce () ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIForIOS;
             driver = new IOSDriver<IWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);	
 			driver.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
 		}
 
 		[TearDown]
 		public void AfterEach(){
-			allPassed = allPassed && (TestContext.CurrentContext.Result.State == TestState.Success);
-            if (Env.isSauce())
-                ((IJavaScriptExecutor)driver).ExecuteScript("sauce:job-result=" + (allPassed ? "passed" : "failed"));
-            driver.Quit();
-		}
+            allPassed = allPassed && (TestContext.CurrentContext.Result.State == TestState.Success);
+            if (driver != null)
+            {
+                if (Env.isSauce())
+                    ((IJavaScriptExecutor)driver).ExecuteScript("sauce:job-result=" + (allPassed ? "passed" : "failed"));
+                driver.Quit();
+            }
+            if (!Env.isSauce())
+            {
+                AppiumServers.StopLocalService();
+            }
+        }
 
 		private void ClickMenuItem(string name) 
 		{

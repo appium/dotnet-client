@@ -1,17 +1,16 @@
 ﻿using Appium.Samples.Helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Remote;
 using System;
 
-namespace Appium.Samples
+namespace Appium.Samples.Android
 {
     [TestFixture()]
-    class AndroidConnectionTest
+    class AndroidOrientationTest
     {
-        private AppiumDriver<IWebElement> driver;
+        private IWebDriver driver;
         private bool allPassed = true;
 
         [TestFixtureSetUp]
@@ -27,7 +26,7 @@ namespace Appium.Samples
                 capabilities.SetCapability("name", "android - complex");
                 capabilities.SetCapability("tags", new string[] { "sample" });
             }
-            Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.localURI;
+            Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIAndroid;
             driver = new AndroidDriver<IWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
             driver.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
         }
@@ -35,14 +34,16 @@ namespace Appium.Samples
         [TestFixtureTearDown]
         public void AfterAll()
         {
-            try
+            allPassed = allPassed && (TestContext.CurrentContext.Result.State == TestState.Success);
+            if (driver != null)
             {
                 if (Env.isSauce())
                     ((IJavaScriptExecutor)driver).ExecuteScript("sauce:job-result=" + (allPassed ? "passed" : "failed"));
-            }
-            finally
-            {
                 driver.Quit();
+            }
+            if (!Env.isSauce())
+            {
+                AppiumServers.StopLocalService();
             }
         }
 
@@ -53,13 +54,11 @@ namespace Appium.Samples
         }
 
         [Test]
-        public void ConnectionTest()
+        public void OrientationTest()
         {
-            ((AndroidDriver<IWebElement>)driver).ConnectionType = ConnectionType.AirplaneMode;
-            Assert.AreEqual(ConnectionType.AirplaneMode, ((AndroidDriver<IWebElement>)driver).ConnectionType);
-
-            ((AndroidDriver<IWebElement>)driver).ConnectionType = ConnectionType.WifiOnly;
-            Assert.AreEqual(ConnectionType.WifiOnly, ((AndroidDriver<IWebElement>)driver).ConnectionType);
+            IRotatable rotatable =  ((IRotatable) driver);
+            rotatable.Orientation = ScreenOrientation.Portrait;
+            Assert.AreEqual(ScreenOrientation.Portrait, rotatable.Orientation);
         }
     }
 }

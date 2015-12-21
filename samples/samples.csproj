@@ -39,38 +39,36 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="WebDriver, Version=2.48.1.0, Culture=neutral, processorArchitecture=MSIL">
-	  <SpecificVersion>False</SpecificVersion>
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>$(SolutionDir)\packages\Selenium.WebDriver.2.48.1\lib\net40\WebDriver.dll</HintPath>
     </Reference>
     <Reference Include="WebDriver.Support, Version=2.48.1.0, Culture=neutral, processorArchitecture=MSIL">
-	  <SpecificVersion>False</SpecificVersion>
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>$(SolutionDir)\packages\Selenium.Support.2.48.1\lib\net40\WebDriver.Support.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AndroidConnectionTest.cs" />
-    <Compile Include="AndroidGestureTest.cs" />
-    <Compile Include="IosGestureTest.cs" />
-    <Compile Include="IOSLocationTest.cs" />
-    <Compile Include="AndroidLocationTest.cs" />
-    <Compile Include="IosOrientationTest.cs" />
-    <Compile Include="AndroidOrientationTest.cs" />
+    <Compile Include="Android\AndroidConnectionTest.cs" />
+    <Compile Include="Android\AndroidGestureTest.cs" />
+    <Compile Include="iOS\IosGestureTest.cs" />
+    <Compile Include="iOS\IOSLocationTest.cs" />
+    <Compile Include="Android\AndroidLocationTest.cs" />
+    <Compile Include="iOS\IosOrientationTest.cs" />
+    <Compile Include="Android\AndroidOrientationTest.cs" />
     <Compile Include="helpers\Apps.cs" />
     <Compile Include="helpers\Caps.cs" />
     <Compile Include="helpers\AppiumServers.cs" />
-    <Compile Include="IosSimpleTest.cs" />
+    <Compile Include="iOS\IosSimpleTest.cs" />
     <Compile Include="helpers\Actions.cs" />
-    <Compile Include="IosActionsTest.cs" />
+    <Compile Include="iOS\IosActionsTest.cs" />
     <Compile Include="helpers\Env.cs" />
-    <Compile Include="IosComplexTest.cs" />
+    <Compile Include="iOS\IosComplexTest.cs" />
     <Compile Include="helpers\Filters.cs" />
-    <Compile Include="IosWebviewTest.cs" />
-    <Compile Include="helpers\LocalServer.cs" />
-    <Compile Include="IosLocalServerTest.cs" />
-    <Compile Include="AndroidSimpleTest.cs" />
-    <Compile Include="AndroidWebviewTest.cs" />
-    <Compile Include="AndroidComplexTest.cs" />
-    <Compile Include="AndroidLocalServerTest.cs" />
+    <Compile Include="iOS\IosWebviewTest.cs" />
+    <Compile Include="Android\AndroidSimpleTest.cs" />
+    <Compile Include="Android\AndroidWebviewTest.cs" />
+    <Compile Include="Android\AndroidComplexTest.cs" />
+    <Compile Include="ServerTests\AppiumLocalServerLaunchingTest.cs" />
     <Compile Include="PageObjects\AndroidJavaScriptTestPageObject.cs" />
     <Compile Include="PageObjects\AndroidPageObjectThatChecksTouchActions.cs" />
     <Compile Include="PageObjects\AndroidWebView.cs" />
@@ -94,17 +92,28 @@
     <Compile Include="PageObjectTests\Other\AndroidJSWebViewTest.cs" />
     <Compile Include="PageObjectTests\Other\AndroidTouchActionTest.cs" />
     <Compile Include="PageObjectTests\TimeOutManagement\TimeOutManagementTest.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ServerTests\StartingAppLocallyTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <None Include="helpers\PathToLinuxNode" />
+    <None Include="helpers\PathToMacOSNode" />
+    <None Include="helpers\PathToWindowsNode" />
     <None Include="packages.config" />
     <None Include="env.json.sample" />
     <None Include="README.md" />
-    <None Include="assets\ApiDemos-debug.apk" />
-    <None Include="assets\WebViewApp7.1.app.zip" />
-    <None Include="assets\index.html" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\appium-dotnet-driver\appium-dotnet-driver.csproj">
       <Project>{A54D6086-3606-4E81-8B89-5C0F61638DCF}</Project>

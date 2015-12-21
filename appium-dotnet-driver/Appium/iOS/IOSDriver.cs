@@ -14,6 +14,7 @@
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.iOS.Interfaces;
+using OpenQA.Selenium.Appium.Service;
 using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.ObjectModel;
@@ -23,9 +24,9 @@ namespace OpenQA.Selenium.Appium.iOS
     public class IOSDriver<W> : AppiumDriver<W>, IFindByIosUIAutomation<W>, IIOSDeviceActionShortcuts where W : IWebElement 
     {
         private static readonly string Platform = MobilePlatform.IOS;
-        
+
         /// <summary>
-        /// Initializes a new instance of the IOSDriver class. This constructor defaults proxy to http://127.0.0.1:4723/wd/hub
+        /// Initializes a new instance of the IOSDriver class using desired capabilities
         /// </summary>
         /// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities of the browser.</param>
         public IOSDriver(DesiredCapabilities desiredCapabilities)
@@ -34,12 +35,53 @@ namespace OpenQA.Selenium.Appium.iOS
         }
 
         /// <summary>
-        /// Initializes a new instance of the IOSDriver class
+        /// Initializes a new instance of the IOSDriver class using desired capabilities and command timeout
+        /// </summary>
+        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
+        /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
+        public IOSDriver(DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
+            : base(SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the IOSDriver class using the AppiumServiceBuilder instance and desired capabilities
+        /// </summary>
+        /// <param name="builder"> object containing settings of the Appium local service which is going to be started</param>
+        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
+        public IOSDriver(AppiumServiceBuilder builder, DesiredCapabilities desiredCapabilities)
+            : base(builder, SetPlatformToCapabilities(desiredCapabilities, Platform))
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the IOSDriver class using the AppiumServiceBuilder instance, desired capabilities and command timeout
+        /// </summary>
+        /// <param name="builder"> object containing settings of the Appium local service which is going to be started</param>
+        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
+        /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
+        public IOSDriver(AppiumServiceBuilder builder, DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
+            : base(builder, SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the IOSDriver class using the specified remote address and desired capabilities
         /// </summary>
         /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
-        /// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities of the browser.</param>
+        /// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities.</param>
         public IOSDriver(Uri remoteAddress, DesiredCapabilities desiredCapabilities)
             : base(remoteAddress, SetPlatformToCapabilities(desiredCapabilities, Platform))
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the IOSDriver class using the specified Appium local service and desired capabilities
+        /// </summary>
+        /// <param name="service">the specified Appium local service</param>
+        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities of the browser.</param>
+        public IOSDriver(AppiumLocalService service, DesiredCapabilities desiredCapabilities)
+            : base(service, SetPlatformToCapabilities(desiredCapabilities, Platform))
         {
         }
 
@@ -47,10 +89,21 @@ namespace OpenQA.Selenium.Appium.iOS
         /// Initializes a new instance of the IOSDriver class using the specified remote address, desired capabilities, and command timeout.
         /// </summary>
         /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
-        /// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities of the browser.</param>
+        /// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
         public IOSDriver(Uri remoteAddress, DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
             : base(remoteAddress, SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the IOSDriver class using the specified Appium local service, desired capabilities, and command timeout.
+        /// </summary>
+        /// <param name="service">the specified Appium local service</param>
+        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
+        /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
+        public IOSDriver(AppiumLocalService service, DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
+            : base(service, SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
         {
         }
 
