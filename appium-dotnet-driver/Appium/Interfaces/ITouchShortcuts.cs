@@ -13,7 +13,7 @@
 //limitations under the License.
 namespace OpenQA.Selenium.Appium
 {
-    public interface ITouchShortcuts
+	public interface ITouchShortcuts
 	{
 		/// <summary>
 		/// Convenience method for tapping the center of an element on the screen

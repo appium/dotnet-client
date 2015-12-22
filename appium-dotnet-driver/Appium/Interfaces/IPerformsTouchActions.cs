@@ -15,19 +15,19 @@ using OpenQA.Selenium.Appium.MultiTouch;
 
 namespace OpenQA.Selenium.Appium.Interfaces
 {
-    public interface IPerformsTouchActions
-    {
-        /// <summary>
-        /// Perform the multi action
-        /// </summary>
-        /// <param name="multiAction">multi action to perform</param>
-        void PerformMultiAction(MultiAction multiAction);
+	public interface IPerformsTouchActions
+	{
+		/// <summary>
+		/// Perform the multi action
+		/// </summary>
+		/// <param name="multiAction">multi action to perform</param>
+		void PerformMultiAction(MultiAction multiAction);
 
-        /// <summary>
-        /// Perform the touch action
-        /// </summary>
-        /// <param name="touchAction">touch action to perform</param>
-       void PerformTouchAction(TouchAction touchAction);
+		/// <summary>
+		/// Perform the touch action
+		/// </summary>
+		/// <param name="touchAction">touch action to perform</param>
+		void PerformTouchAction(TouchAction touchAction);
 
-    }
+	}
 }

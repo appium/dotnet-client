@@ -74,7 +74,7 @@ namespace OpenQA.Selenium.Appium
             }
             MethodInfo m = findByAccessibilityId.GetMethod("FindElementsByIosUIAutomation", new Type[] { typeof(string) });
             return CollectionConverterUnility.
-                            ConvertToExtendedWebElementCollection<IWebElement>((IList) m.Invoke(context, new object[] { _Selector }));
+                            ConvertToExtendedWebElementCollection<IWebElement>((IList)m.Invoke(context, new object[] { _Selector }));
         }
 
         /// <summary>

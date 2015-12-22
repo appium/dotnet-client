@@ -24,7 +24,7 @@ namespace OpenQA.Selenium.Appium
             List<T> result = new List<T>();
             foreach (var element in list)
             {
-                result.Add((T) element);
+                result.Add((T)element);
             }
             return result.AsReadOnly();
         }

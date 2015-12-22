@@ -15,13 +15,13 @@ using OpenQA.Selenium.Appium.Interfaces;
 
 namespace OpenQA.Selenium.Appium.iOS.Interfaces
 {
-    public interface IIOSDeviceActionShortcuts : IDeviceActionShortcuts
-    {
-        void HideKeyboard(string key, string strategy = null);
+	public interface IIOSDeviceActionShortcuts : IDeviceActionShortcuts
+	{
+		void HideKeyboard(string key, string strategy = null);
 
-        /// <summary>
-        /// Shakes the device.
-        /// </summary>
-        void ShakeDevice();
-    }
+		/// <summary>
+		/// Shakes the device.
+		/// </summary>
+		void ShakeDevice();
+	}
 }

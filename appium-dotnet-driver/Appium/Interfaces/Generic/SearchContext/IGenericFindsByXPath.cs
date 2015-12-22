@@ -17,24 +17,24 @@ using System.Collections.ObjectModel;
 
 namespace Appium.Interfaces.Generic.SearchContext
 {
-    /// <summary>
-    /// Defines the interface through which the user finds elements by XPath.
-    /// </summary>
-    public interface IGenericFindsByXPath<W> where W : IWebElement
-    {
-        /// <summary>
-        /// Finds the first element matching the specified XPath query.
-        /// </summary>
-        /// <param name="xpath">The XPath query to match.</param>
-        /// <returns>The first <see cref="IWebElement"/> matching the criteria.</returns>
-        W FindElementByXPath(string xpath);
+	/// <summary>
+	/// Defines the interface through which the user finds elements by XPath.
+	/// </summary>
+	public interface IGenericFindsByXPath<W> where W : IWebElement
+	{
+		/// <summary>
+		/// Finds the first element matching the specified XPath query.
+		/// </summary>
+		/// <param name="xpath">The XPath query to match.</param>
+		/// <returns>The first <see cref="IWebElement"/> matching the criteria.</returns>
+		W FindElementByXPath(string xpath);
 
-        /// <summary>
-        /// Finds all elements matching the specified XPath query.
-        /// </summary>
-        /// <param name="xpath">The XPath query to match.</param>
-        /// <returns>A <see cref="ReadOnlyCollection{T}"/> containing all
-        /// <see cref="IWebElement">IWebElements</see> matching the criteria.</returns>
-        ReadOnlyCollection<W> FindElementsByXPath(string xpath);
-    }
+		/// <summary>
+		/// Finds all elements matching the specified XPath query.
+		/// </summary>
+		/// <param name="xpath">The XPath query to match.</param>
+		/// <returns>A <see cref="ReadOnlyCollection{T}"/> containing all
+		/// <see cref="IWebElement">IWebElements</see> matching the criteria.</returns>
+		ReadOnlyCollection<W> FindElementsByXPath(string xpath);
+	}
 }

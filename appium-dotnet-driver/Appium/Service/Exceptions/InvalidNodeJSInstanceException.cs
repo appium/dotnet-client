@@ -16,16 +16,16 @@ using System;
 
 namespace OpenQA.Selenium.Appium.Service.Exceptions
 {
-    public class InvalidNodeJSInstanceException: Exception
-    {
-        public InvalidNodeJSInstanceException(string message, Exception cause)
-            :base(message, cause)
-        {
-        }
+	public class InvalidNodeJSInstanceException: Exception
+	{
+		public InvalidNodeJSInstanceException(string message, Exception cause)
+			:base(message, cause)
+		{
+		}
 
-        public InvalidNodeJSInstanceException(string message)
-            : base(message)
-        {
-        }
-    }
+		public InvalidNodeJSInstanceException(string message)
+			: base(message)
+		{
+		}
+	}
 }

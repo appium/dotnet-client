@@ -17,24 +17,24 @@ using System.Collections.ObjectModel;
 
 namespace Appium.Interfaces.Generic.SearchContext
 {
-    /// <summary>
-    /// Defines the interface through which the user finds elements by a partial match on their link text.
-    /// </summary>
-    public interface IGenericFindsByPartialLinkText<W> where W : IWebElement
-    {
-        /// <summary>
-        /// Finds the first element matching the specified partial link text.
-        /// </summary>
-        /// <param name="partialLinkText">The partial link text to match.</param>
-        /// <returns>The first <see cref="IWebElement"/> matching the criteria.</returns>
-        W FindElementByPartialLinkText(string partialLinkText);
+	/// <summary>
+	/// Defines the interface through which the user finds elements by a partial match on their link text.
+	/// </summary>
+	public interface IGenericFindsByPartialLinkText<W> where W : IWebElement
+	{
+		/// <summary>
+		/// Finds the first element matching the specified partial link text.
+		/// </summary>
+		/// <param name="partialLinkText">The partial link text to match.</param>
+		/// <returns>The first <see cref="IWebElement"/> matching the criteria.</returns>
+		W FindElementByPartialLinkText(string partialLinkText);
 
-        /// <summary>
-        /// Finds all elements matching the specified partial link text.
-        /// </summary>
-        /// <param name="partialLinkText">The partial link text to match.</param>
-        /// <returns>A <see cref="ReadOnlyCollection{T}"/> containing all
-        /// <see cref="IWebElement">IWebElements</see> matching the criteria.</returns>
-        ReadOnlyCollection<W> FindElementsByPartialLinkText(string partialLinkText);
-    }
+		/// <summary>
+		/// Finds all elements matching the specified partial link text.
+		/// </summary>
+		/// <param name="partialLinkText">The partial link text to match.</param>
+		/// <returns>A <see cref="ReadOnlyCollection{T}"/> containing all
+		/// <see cref="IWebElement">IWebElements</see> matching the criteria.</returns>
+		ReadOnlyCollection<W> FindElementsByPartialLinkText(string partialLinkText);
+	}
 }

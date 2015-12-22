@@ -13,7 +13,7 @@
 //limitations under the License.
 namespace OpenQA.Selenium.Appium.Interfaces
 {
-    public interface IMultiAction
+	public interface IMultiAction
 	{
 		/// <summary>
 		/// Add touch actions to be performed

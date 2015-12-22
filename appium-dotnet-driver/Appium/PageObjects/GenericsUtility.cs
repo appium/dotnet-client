@@ -16,25 +16,25 @@ using System.Collections.Generic;
 
 namespace OpenQA.Selenium.Appium.PageObjects
 {
-    internal class GenericsUtility
-    {
-        public static bool MatchGenerics(Type generalType, List<Type> possibleParameters, Type targetType)
-        {
-            foreach (var type in possibleParameters)
-            {
-                Type fullType = generalType.MakeGenericType(type);
-                if (fullType.Equals(targetType))
-                    return true;
-            }
+	internal class GenericsUtility
+	{
+		public static bool MatchGenerics(Type generalType, List<Type> possibleParameters, Type targetType)
+		{
+			foreach (var type in possibleParameters)
+			{
+				Type fullType = generalType.MakeGenericType(type);
+				if (fullType.Equals(targetType))
+					return true;
+			}
 
-            return false;
-        }
+			return false;
+		}
 
-        public static object CraeteInstanceOfSomeGeneric(Type generalType, Type genericParameter, 
-            Type[] argTypes, object[] argValues)
-        {
-            Type generic = generalType.MakeGenericType(genericParameter);
-            return generic.GetConstructor(argTypes).Invoke(argValues);
-        }
-    }
+		public static object CraeteInstanceOfSomeGeneric(Type generalType, Type genericParameter,
+			Type[] argTypes, object[] argValues)
+		{
+			Type generic = generalType.MakeGenericType(genericParameter);
+			return generic.GetConstructor(argTypes).Invoke(argValues);
+		}
+	}
 }

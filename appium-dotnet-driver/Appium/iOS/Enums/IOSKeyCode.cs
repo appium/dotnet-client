@@ -13,11 +13,11 @@
 //limitations under the License.
 namespace OpenQA.Selenium.Appium.iOS
 {
-    public sealed class IOSKeyCode
-    {
-        public static readonly int Backspace = 8;
-        public static readonly int Enter = 13;
-        public static readonly int ReturnTo = 13;
-        public static readonly int Space = 32;
-    }
+	public sealed class IOSKeyCode
+	{
+		public static readonly int Backspace = 8;
+		public static readonly int Enter = 13;
+		public static readonly int ReturnTo = 13;
+		public static readonly int Space = 32;
+	}
 }

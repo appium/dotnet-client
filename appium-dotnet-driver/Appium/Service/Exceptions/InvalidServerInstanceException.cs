@@ -16,20 +16,20 @@ using System;
 
 namespace OpenQA.Selenium.Appium.Service.Exceptions
 {
-    public class InvalidServerInstanceException: Exception
-    {
-        private readonly static string Prefix = "Invalid server instance exception has occurred: ";
+	public class InvalidServerInstanceException : Exception
+	{
+		private readonly static string Prefix = "Invalid server instance exception has occurred: ";
 
-        public InvalidServerInstanceException (string message, Exception cause)
-            :base(Prefix + message, cause)
-        {
+		public InvalidServerInstanceException(string message, Exception cause)
+			: base(Prefix + message, cause)
+		{
 
-        }
+		}
 
-        public InvalidServerInstanceException(string message)
-            : base(Prefix + message)
-        {
+		public InvalidServerInstanceException(string message)
+			: base(Prefix + message)
+		{
 
-        }
-    }
+		}
+	}
 }

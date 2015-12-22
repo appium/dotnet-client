@@ -56,7 +56,7 @@ namespace OpenQA.Selenium.Appium
                 throw new InvalidCastException("Unable to cast " + contextType.ToString() + " to IFindByAccessibilityId");
             }
             MethodInfo m = findByAccessibilityId.GetMethod("FindElementByAccessibilityId", new Type[] { typeof(string) });
-            return (IWebElement) m.Invoke(context, new object[] { selector });
+            return (IWebElement)m.Invoke(context, new object[] { selector });
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace OpenQA.Selenium.Appium
             }
             MethodInfo m = findByAccessibilityId.GetMethod("FindElementsByAccessibilityId", new Type[] { typeof(string) });
             return CollectionConverterUnility.
-                            ConvertToExtendedWebElementCollection<IWebElement>((IList) m.Invoke(context, new object[] { selector }));
+                            ConvertToExtendedWebElementCollection<IWebElement>((IList)m.Invoke(context, new object[] { selector }));
         }
 
         /// <summary>

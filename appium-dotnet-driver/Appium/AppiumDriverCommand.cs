@@ -11,7 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
-using System; 
+using System;
 
 namespace OpenQA.Selenium.Appium
 {
@@ -154,7 +154,7 @@ namespace OpenQA.Selenium.Appium
         /// <summary>
         /// Set GPS Location Command.
         /// </summary>
-        public const string SetLocation = "setLocation"; 
+        public const string SetLocation = "setLocation";
 
         /// <summary>
         /// Get GPS Location Command.
@@ -243,15 +243,15 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string GetScreenshot = "screenshot";
 
-		/// <summary>
-		/// Represents the GetSettings Command
-		/// </summary>
-		public const string GetSettings = "getSettings";
+        /// <summary>
+        /// Represents the GetSettings Command
+        /// </summary>
+        public const string GetSettings = "getSettings";
 
-		/// <summary>
-		/// Represents the UpdateSettings Command
-		/// </summary>
-		public const string UpdateSettings = "updateSettings";
+        /// <summary>
+        /// Represents the UpdateSettings Command
+        /// </summary>
+        public const string UpdateSettings = "updateSettings";
 
         #endregion JSON Wire Protocol
     }

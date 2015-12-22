@@ -13,8 +13,8 @@
 //limitations under the License.
 namespace OpenQA.Selenium.Appium.Android
 {
-    public interface IStartsActivity
-    {
-        void StartActivity(string appPackage, string appActivity, string appWaitPackage = "", string appWaitActivity = "");
-    }
+	public interface IStartsActivity
+	{
+		void StartActivity(string appPackage, string appActivity, string appWaitPackage = "", string appWaitActivity = "");
+	}
 }

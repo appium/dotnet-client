@@ -16,26 +16,26 @@ using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium.Interfaces
 {
-    /// <summary>
-    /// Some implementations of WebDriver, notably those that support native testing, need the ability
-    /// to switch between the native and web-based contexts. This can be achieved by using this
-    /// interface.
-    /// </summary>
-    public interface IContextAware
-    {
+	/// <summary>
+	/// Some implementations of WebDriver, notably those that support native testing, need the ability
+	/// to switch between the native and web-based contexts. This can be achieved by using this
+	/// interface.
+	/// </summary>
+	public interface IContextAware
+	{
 
-        /// <summary>
-        /// Switches the focus of future commands for this driver to the context with the given name
-        /// AND
-        /// returns an opaque handle to this context that uniquely identifies it within this driver
-        /// instance.
-        /// </summary>
-        string Context { get; set; }
+		/// <summary>
+		/// Switches the focus of future commands for this driver to the context with the given name
+		/// AND
+		/// returns an opaque handle to this context that uniquely identifies it within this driver
+		/// instance.
+		/// </summary>
+		string Context { get; set; }
 
-        /// <summary>
-        /// Return a list of context handles which can be used to iterate over all contexts of this
-        /// WebDriver instance
-        /// </summary>       
-        ReadOnlyCollection<string> Contexts { get;}
-    }
+		/// <summary>
+		/// Return a list of context handles which can be used to iterate over all contexts of this
+		/// WebDriver instance
+		/// </summary>       
+		ReadOnlyCollection<string> Contexts { get; }
+	}
 }

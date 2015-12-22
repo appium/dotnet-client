@@ -21,160 +21,161 @@ using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium.iOS
 {
-    public class IOSDriver<W> : AppiumDriver<W>, IFindByIosUIAutomation<W>, IIOSDeviceActionShortcuts where W : IWebElement 
-    {
-        private static readonly string Platform = MobilePlatform.IOS;
+	public class IOSDriver<W> : AppiumDriver<W>, IFindByIosUIAutomation<W>, IIOSDeviceActionShortcuts where W : IWebElement
+	{
+		private static readonly string Platform = MobilePlatform.IOS;
 
-        /// <summary>
-        /// Initializes a new instance of the IOSDriver class using desired capabilities
-        /// </summary>
-        /// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities of the browser.</param>
-        public IOSDriver(DesiredCapabilities desiredCapabilities)
-            : base(SetPlatformToCapabilities(desiredCapabilities, Platform))
-        {
-        }
+		/// <summary>
+		/// Initializes a new instance of the IOSDriver class using desired capabilities
+		/// </summary>
+		/// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities of the browser.</param>
+		public IOSDriver(DesiredCapabilities desiredCapabilities)
+			: base(SetPlatformToCapabilities(desiredCapabilities, Platform))
+		{
+		}
 
-        /// <summary>
-        /// Initializes a new instance of the IOSDriver class using desired capabilities and command timeout
-        /// </summary>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
-        /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
-        public IOSDriver(DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
-            : base(SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
-        {
-        }
+		/// <summary>
+		/// Initializes a new instance of the IOSDriver class using desired capabilities and command timeout
+		/// </summary>
+		/// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
+		/// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
+		public IOSDriver(DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
+			: base(SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
+		{
+		}
 
-        /// <summary>
-        /// Initializes a new instance of the IOSDriver class using the AppiumServiceBuilder instance and desired capabilities
-        /// </summary>
-        /// <param name="builder"> object containing settings of the Appium local service which is going to be started</param>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
-        public IOSDriver(AppiumServiceBuilder builder, DesiredCapabilities desiredCapabilities)
-            : base(builder, SetPlatformToCapabilities(desiredCapabilities, Platform))
-        {
-        }
+		/// <summary>
+		/// Initializes a new instance of the IOSDriver class using the AppiumServiceBuilder instance and desired capabilities
+		/// </summary>
+		/// <param name="builder"> object containing settings of the Appium local service which is going to be started</param>
+		/// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
+		public IOSDriver(AppiumServiceBuilder builder, DesiredCapabilities desiredCapabilities)
+			: base(builder, SetPlatformToCapabilities(desiredCapabilities, Platform))
+		{
+		}
 
-        /// <summary>
-        /// Initializes a new instance of the IOSDriver class using the AppiumServiceBuilder instance, desired capabilities and command timeout
-        /// </summary>
-        /// <param name="builder"> object containing settings of the Appium local service which is going to be started</param>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
-        /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
-        public IOSDriver(AppiumServiceBuilder builder, DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
-            : base(builder, SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
-        {
-        }
+		/// <summary>
+		/// Initializes a new instance of the IOSDriver class using the AppiumServiceBuilder instance, desired capabilities and command timeout
+		/// </summary>
+		/// <param name="builder"> object containing settings of the Appium local service which is going to be started</param>
+		/// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
+		/// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
+		public IOSDriver(AppiumServiceBuilder builder, DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
+			: base(builder, SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
+		{
+		}
 
-        /// <summary>
-        /// Initializes a new instance of the IOSDriver class using the specified remote address and desired capabilities
-        /// </summary>
-        /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
-        /// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities.</param>
-        public IOSDriver(Uri remoteAddress, DesiredCapabilities desiredCapabilities)
-            : base(remoteAddress, SetPlatformToCapabilities(desiredCapabilities, Platform))
-        {
-        }
+		/// <summary>
+		/// Initializes a new instance of the IOSDriver class using the specified remote address and desired capabilities
+		/// </summary>
+		/// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
+		/// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities.</param>
+		public IOSDriver(Uri remoteAddress, DesiredCapabilities desiredCapabilities)
+			: base(remoteAddress, SetPlatformToCapabilities(desiredCapabilities, Platform))
+		{
+		}
 
-        /// <summary>
-        /// Initializes a new instance of the IOSDriver class using the specified Appium local service and desired capabilities
-        /// </summary>
-        /// <param name="service">the specified Appium local service</param>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities of the browser.</param>
-        public IOSDriver(AppiumLocalService service, DesiredCapabilities desiredCapabilities)
-            : base(service, SetPlatformToCapabilities(desiredCapabilities, Platform))
-        {
-        }
+		/// <summary>
+		/// Initializes a new instance of the IOSDriver class using the specified Appium local service and desired capabilities
+		/// </summary>
+		/// <param name="service">the specified Appium local service</param>
+		/// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities of the browser.</param>
+		public IOSDriver(AppiumLocalService service, DesiredCapabilities desiredCapabilities)
+			: base(service, SetPlatformToCapabilities(desiredCapabilities, Platform))
+		{
+		}
 
-        /// <summary>
-        /// Initializes a new instance of the IOSDriver class using the specified remote address, desired capabilities, and command timeout.
-        /// </summary>
-        /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
-        /// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities.</param>
-        /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
-        public IOSDriver(Uri remoteAddress, DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
-            : base(remoteAddress, SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
-        {
-        }
+		/// <summary>
+		/// Initializes a new instance of the IOSDriver class using the specified remote address, desired capabilities, and command timeout.
+		/// </summary>
+		/// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
+		/// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities.</param>
+		/// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
+		public IOSDriver(Uri remoteAddress, DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
+			: base(remoteAddress, SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
+		{
+		}
 
-        /// <summary>
-        /// Initializes a new instance of the IOSDriver class using the specified Appium local service, desired capabilities, and command timeout.
-        /// </summary>
-        /// <param name="service">the specified Appium local service</param>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
-        /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
-        public IOSDriver(AppiumLocalService service, DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
-            : base(service, SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
-        {
-        }
+		/// <summary>
+		/// Initializes a new instance of the IOSDriver class using the specified Appium local service, desired capabilities, and command timeout.
+		/// </summary>
+		/// <param name="service">the specified Appium local service</param>
+		/// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
+		/// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
+		public IOSDriver(AppiumLocalService service, DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
+			: base(service, SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
+		{
+		}
 
-        #region IFindByIosUIAutomation Members
-        /// <summary>
-        /// Finds the first element that matches the iOS UIAutomation selector
-        /// </summary>
-        /// <param name="selector">UIAutomation selector</param>
-        /// <returns>First element found</returns>
-        public W FindElementByIosUIAutomation(string selector)
-        {
-            return (W) this.FindElement("-ios uiautomation", selector);
-        }
+		#region IFindByIosUIAutomation Members
+		/// <summary>
+		/// Finds the first element that matches the iOS UIAutomation selector
+		/// </summary>
+		/// <param name="selector">UIAutomation selector</param>
+		/// <returns>First element found</returns>
+		public W FindElementByIosUIAutomation(string selector)
+		{
+			return (W)this.FindElement("-ios uiautomation", selector);
+		}
 
-        /// <summary>
-        /// Finds a list of elements that match the iOS UIAutomation selector
-        /// </summary>
-        /// <param name="selector">UIAutomation selector</param>
-        /// <returns>ReadOnlyCollection of elements found</returns>
-        public ReadOnlyCollection<W> FindElementsByIosUIAutomation(string selector)
-        {
-            return CollectionConverterUnility.
-                            ConvertToExtendedWebElementCollection<W>(this.FindElements("-ios uiautomation", selector));
-        }
-        #endregion IFindByIosUIAutomation Members
+		/// <summary>
+		/// Finds a list of elements that match the iOS UIAutomation selector
+		/// </summary>
+		/// <param name="selector">UIAutomation selector</param>
+		/// <returns>ReadOnlyCollection of elements found</returns>
+		public ReadOnlyCollection<W> FindElementsByIosUIAutomation(string selector)
+		{
+			return CollectionConverterUnility.
+							ConvertToExtendedWebElementCollection<W>(this.FindElements("-ios uiautomation", selector));
+		}
+		#endregion IFindByIosUIAutomation Members
 
-        /// <summary>
-        /// Shakes the device.
-        /// </summary>
-        public void ShakeDevice()
-        {
-            this.Execute(AppiumDriverCommand.ShakeDevice, null);
-        }
+		/// <summary>
+		/// Shakes the device.
+		/// </summary>
+		public void ShakeDevice()
+		{
+			this.Execute(AppiumDriverCommand.ShakeDevice, null);
+		}
 
-        /// <summary>
-        /// Hides the keyboard
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="strategy"></param>
-        public new void HideKeyboard(string key, string strategy = null)
-        {
-            base.HideKeyboard(strategy, key);
-        }
+		/// <summary>
+		/// Hides the keyboard
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="strategy"></param>
+		public new void HideKeyboard(string key, string strategy = null)
+		{
+			base.HideKeyboard(strategy, key);
+		}
 
-        /// <summary>
-        /// Create an iOS Element
-        /// </summary>
-        /// <param name="elementId">element to create</param>
-        /// <returns>IOSElement</returns>
-        protected override RemoteWebElement CreateElement(string elementId)
-        {
-            return new IOSElement(this, elementId);
-        }
+		/// <summary>
+		/// Create an iOS Element
+		/// </summary>
+		/// <param name="elementId">element to create</param>
+		/// <returns>IOSElement</returns>
+		protected override RemoteWebElement CreateElement(string elementId)
+		{
+			return new IOSElement(this, elementId);
+		}
 
-        public override W ScrollTo(string text)
-        {
-            return (W) ((IScrollsTo<W>) FindElementByClassName("UIATableView")).ScrollTo(text);
-        }
+		public override W ScrollTo(string text)
+		{
+			return (W)((IScrollsTo<W>)FindElementByClassName("UIATableView")).ScrollTo(text);
+		}
 
-        public override W ScrollToExact(string text)
-        {
-            return (W)((IScrollsTo<W>)FindElementByClassName("UIATableView")).ScrollToExact(text);
-        }
-        
-        public W GetNamedTextField(String name) 
-        {
-		    W element = FindElementByAccessibilityId(name);
-		    if (element.TagName != "TextField") {
-			    return (W) ((IFindByAccessibilityId<W>) element).FindElementByAccessibilityId(name);
-		    }
-		    return element;
-	    }
-    }
+		public override W ScrollToExact(string text)
+		{
+			return (W)((IScrollsTo<W>)FindElementByClassName("UIATableView")).ScrollToExact(text);
+		}
+
+		public W GetNamedTextField(String name)
+		{
+			W element = FindElementByAccessibilityId(name);
+			if (element.TagName != "TextField")
+			{
+				return (W)((IFindByAccessibilityId<W>)element).FindElementByAccessibilityId(name);
+			}
+			return element;
+		}
+	}
 }
