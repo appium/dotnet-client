@@ -78,14 +78,6 @@ namespace OpenQA.Selenium.Appium.Test.Specs
         }
 
         [Test]
-        public void KeyEventTestCase()
-        {
-            IOSDriver<IWebElement> driver = new IOSDriver<IWebElement>(defaultUri, capabilities);
-            server.respondTo("POST", "/appium/device/keyevent", null);
-            driver.KeyEvent(5);
-        }
-
-        [Test]
         public void RotateTestCase()
         {
             IOSDriver<IWebElement> driver = new IOSDriver<IWebElement>(defaultUri, capabilities);

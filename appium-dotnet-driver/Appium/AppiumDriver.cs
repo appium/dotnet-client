@@ -27,7 +27,7 @@ using System.Linq;
 
 namespace OpenQA.Selenium.Appium
 {
-	public abstract class AppiumDriver<W> : RemoteWebDriver, ITouchShortcuts, IFindByAccessibilityId<W>, IDeviceActionShortcuts, IInteractsWithFiles,
+	public abstract class AppiumDriver<W> : RemoteWebDriver, ITouchShortcuts, IFindByAccessibilityId<W>, IHidesKeyboard, IInteractsWithFiles,
 		IInteractsWithApps, IPerformsTouchActions, IRotatable, IContextAware, IGenericSearchContext<W>, IGenericFindsByClassName<W>,
 		IGenericFindsById<W>, IGenericFindsByCssSelector<W>, IGenericFindsByLinkText<W>, IGenericFindsByName<W>,
 		IGenericFindsByPartialLinkText<W>, IGenericFindsByTagName<W>, IGenericFindsByXPath<W>, IScrollsTo<W> where W : IWebElement
@@ -357,17 +357,6 @@ namespace OpenQA.Selenium.Appium
 			Dictionary<string, object> parameters = new Dictionary<string, object>();
 			parameters.Add("seconds", seconds);
 			this.Execute(AppiumDriverCommand.LockDevice, parameters);
-		}
-
-		/// <summary>
-		/// Triggers Device Key Event.
-		/// </summary>
-		/// <param name="keyCode">an integer keycode number corresponding to a java.awt.event.KeyEvent.</param>
-		public void KeyEvent(int keyCode)
-		{
-			var parameters = new Dictionary<string, object>();
-			parameters.Add("keycode", keyCode);
-			this.Execute(AppiumDriverCommand.KeyEvent, parameters);
 		}
 
 		/// <summary>

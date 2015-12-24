@@ -11,20 +11,22 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
-namespace OpenQA.Selenium.Appium.Interfaces
+using OpenQA.Selenium.Appium.Interfaces;
+
+namespace OpenQA.Selenium.Appium.Android.Interfaces
 {
-	public interface IDeviceActionShortcuts
+	public interface ISendsKeyEvents
 	{
 		/// <summary>
-		/// Hides the device keyboard.
+		/// Triggers device key event with metastate for the keypress
 		/// </summary>
-		/// <param name="keyName">The button pressed by the mobile driver to attempt hiding the keyboard.</param>
-		void HideKeyboard();
+		/// <param name="connectionType"></param>
+		void KeyEvent(int keyCode, int metastate);
 
 		/// <summary>
-		/// Triggers Device Key Event.
+		/// Triggers device key event
 		/// </summary>
-		/// <param name="keyCode">an integer keycode number corresponding to a java.awt.event.KeyEvent.</param>
+		/// <param name="keyCode">Code for the long key pressed on the Android device</param>
 		void KeyEvent(int keyCode);
 	}
 }

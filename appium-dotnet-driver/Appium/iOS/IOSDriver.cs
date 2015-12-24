@@ -21,7 +21,7 @@ using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium.iOS
 {
-	public class IOSDriver<W> : AppiumDriver<W>, IFindByIosUIAutomation<W>, IIOSDeviceActionShortcuts where W : IWebElement
+	public class IOSDriver<W> : AppiumDriver<W>, IFindByIosUIAutomation<W>, IIOSHidesKeyboard where W : IWebElement
 	{
 		private static readonly string Platform = MobilePlatform.IOS;
 

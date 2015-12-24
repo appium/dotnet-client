@@ -39,11 +39,11 @@
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="WebDriver, Version=2.48.2.0, Culture=neutral, processorArchitecture=MSIL">
-	  <SpecificVersion>False</SpecificVersion>
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>$(SolutionDir)\packages\Selenium.WebDriver.2.48.2\lib\net40\WebDriver.dll</HintPath>
     </Reference>
     <Reference Include="WebDriver.Support, Version=2.48.2.0, Culture=neutral, processorArchitecture=MSIL">
-	  <SpecificVersion>False</SpecificVersion>
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>$(SolutionDir)\packages\Selenium.Support.2.48.2\lib\net40\WebDriver.Support.dll</HintPath>
     </Reference>
   </ItemGroup>
@@ -52,7 +52,7 @@
     <Compile Include="Appium\Android\AndroidElement.cs" />
     <Compile Include="Appium\Android\Enums\AndroidKeyCode.cs" />
     <Compile Include="Appium\Android\Enums\AndroidKeyMetastate.cs" />
-    <Compile Include="Appium\Android\Interfaces\IAndroidDeviceActionShortcuts.cs" />
+    <Compile Include="Appium\Android\Interfaces\ISendsKeyEvents.cs" />
     <Compile Include="Appium\Android\Interfaces\IHasNetworkConnection.cs" />
     <Compile Include="Appium\Android\Interfaces\IPushesFiles.cs" />
     <Compile Include="Appium\Android\Interfaces\IStartsActivity.cs" />
@@ -72,15 +72,14 @@
     <Compile Include="Appium\Interfaces\Generic\SearchContext\IGenericFindsByXPath.cs" />
     <Compile Include="Appium\Interfaces\Generic\SearchContext\IGenericSearchContext.cs" />
     <Compile Include="Appium\Interfaces\IContextAware.cs" />
-    <Compile Include="Appium\Interfaces\IDeviceActionShortcuts.cs" />
+    <Compile Include="Appium\Interfaces\IHidesKeyboard.cs" />
     <Compile Include="Appium\Interfaces\IInteractsWithApps.cs" />
     <Compile Include="Appium\Interfaces\IInteractsWithFiles.cs" />
     <Compile Include="Appium\Interfaces\IMobileElement.cs" />
     <Compile Include="Appium\Interfaces\IPerformsTouchActions.cs" />
     <Compile Include="Appium\Interfaces\IScrollsTo.cs" />
     <Compile Include="Appium\iOS\Enums\HideKeyboardStrategy.cs" />
-    <Compile Include="Appium\iOS\Enums\IOSKeyCode.cs" />
-    <Compile Include="Appium\iOS\Interfaces\IIOSDeviceActionShortcuts.cs" />
+    <Compile Include="Appium\iOS\Interfaces\IIOSHidesKeyboard.cs" />
     <Compile Include="Appium\iOS\IOSDriver.cs" />
     <Compile Include="Appium\iOS\IOSElement.cs" />
     <Compile Include="Appium\CollectionConverterUnility.cs" />

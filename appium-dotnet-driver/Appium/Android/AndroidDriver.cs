@@ -25,7 +25,7 @@ namespace OpenQA.Selenium.Appium.Android
 {
 	public class AndroidDriver<W> : AppiumDriver<W>, IFindByAndroidUIAutomator<W>, IStartsActivity,
 		IHasNetworkConnection,
-		IAndroidDeviceActionShortcuts,
+		ISendsKeyEvents,
 		IPushesFiles where W : IWebElement
 	{
 		private static readonly string Platform = MobilePlatform.Android;
@@ -148,7 +148,7 @@ namespace OpenQA.Selenium.Appium.Android
 		/// <example>
 		/// driver.StartActivity("com.foo.bar", ".MyActivity");
 		/// </example>
-		public void StartActivity(string appPackage, string appActivity, string appWaitPackage = "", string appWaitActivity = "")
+		public void StartActivity(string appPackage, string appActivity, string appWaitPackage = "", string appWaitActivity = "", bool stopApp = true)
 		{
 			Contract.Requires(!String.IsNullOrWhiteSpace(appPackage));
 			Contract.Requires(!String.IsNullOrWhiteSpace(appActivity));
@@ -156,7 +156,8 @@ namespace OpenQA.Selenium.Appium.Android
 			Dictionary<string, object> parameters = new Dictionary<string, object>() { {"appPackage", appPackage},
 																					   {"appActivity", appActivity},
 																					   {"appWaitPackage", appWaitPackage},
-																					   {"appWaitActivity", appWaitActivity} };
+																					   {"appWaitActivity", appWaitActivity},
+																					   {"dontStopAppOnReset", !stopApp } };
 
 			this.Execute(AppiumDriverCommand.StartActivity, parameters);
 		}
@@ -196,12 +197,24 @@ namespace OpenQA.Selenium.Appium.Android
 		/// <summary>
 		/// Triggers device key event with metastate for the keypress
 		/// </summary>
-		/// <param name="connectionType"></param>
+		/// <param name="keyCode">Code for the long key pressed on the Android device</param>
+		/// <param name="metastate">metastate for the long key press</param>
 		public void KeyEvent(int keyCode, int metastate)
 		{
 			var parameters = new Dictionary<string, object>();
 			parameters.Add("keycode", keyCode);
 			parameters.Add("metastate", metastate);
+			this.Execute(AppiumDriverCommand.KeyEvent, parameters);
+		}
+
+		/// <summary>
+		/// Triggers device key event
+		/// </summary>
+		/// <param name="keyCode">Code for the long key pressed on the Android device</param>
+		public void KeyEvent(int keyCode)
+		{
+			var parameters = new Dictionary<string, object>();
+			parameters.Add("keycode", keyCode);
 			this.Execute(AppiumDriverCommand.KeyEvent, parameters);
 		}
 
