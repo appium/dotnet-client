@@ -18,10 +18,5 @@ namespace OpenQA.Selenium.Appium.iOS.Interfaces
 	public interface IIOSHidesKeyboard : IHidesKeyboard
 	{
 		void HideKeyboard(string key, string strategy = null);
-
-		/// <summary>
-		/// Shakes the device.
-		/// </summary>
-		void ShakeDevice();
 	}
 }
