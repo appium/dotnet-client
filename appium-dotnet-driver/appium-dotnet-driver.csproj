@@ -80,6 +80,7 @@
     <Compile Include="Appium\Interfaces\IScrollsTo.cs" />
     <Compile Include="Appium\iOS\Enums\HideKeyboardStrategy.cs" />
     <Compile Include="Appium\iOS\Interfaces\IIOSHidesKeyboard.cs" />
+    <Compile Include="Appium\iOS\Interfaces\IShakesDevice.cs" />
     <Compile Include="Appium\iOS\IOSDriver.cs" />
     <Compile Include="Appium\iOS\IOSElement.cs" />
     <Compile Include="Appium\CollectionConverterUnility.cs" />
