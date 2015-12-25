@@ -11,13 +11,22 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
-namespace OpenQA.Selenium.Appium.iOS
+using OpenQA.Selenium.Appium.Interfaces;
+
+namespace OpenQA.Selenium.Appium.Android.Interfaces
 {
-	public sealed class IOSKeyCode
+	public interface ISendsKeyEvents
 	{
-		public static readonly int Backspace = 8;
-		public static readonly int Enter = 13;
-		public static readonly int ReturnTo = 13;
-		public static readonly int Space = 32;
+		/// <summary>
+		/// Triggers device key event with metastate for the keypress
+		/// </summary>
+		/// <param name="connectionType"></param>
+		void KeyEvent(int keyCode, int metastate);
+
+		/// <summary>
+		/// Triggers device key event
+		/// </summary>
+		/// <param name="keyCode">Code for the long key pressed on the Android device</param>
+		void KeyEvent(int keyCode);
 	}
 }

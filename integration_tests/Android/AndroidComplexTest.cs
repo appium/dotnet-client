@@ -9,8 +9,6 @@ using System.Threading;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.MultiTouch;
 using OpenQA.Selenium.Appium.Interfaces;
-using System.Diagnostics.Contracts;
-using System.Diagnostics;
 
 namespace Appium.Integration.Tests.Android
 {
@@ -89,40 +87,7 @@ namespace Appium.Integration.Tests.Android
 			driver.Navigate ().Back ();
 		}
 
-		[Test]
-		public void StartActivityInThisAppTestCase()
-		{
-            driver.StartActivity("io.appium.android.apis", ".ApiDemos");
 
-			_AssertActivityNameContains("Demos");
-
-            driver.StartActivity("io.appium.android.apis", ".accessibility.AccessibilityNodeProviderActivity");
-
-			_AssertActivityNameContains("Node");
-		}
-		
-		[Test]
-		public void StartActivityInNewAppTestCase()
-		{
-            driver.StartActivity("io.appium.android.apis", ".ApiDemos");
-
-			_AssertActivityNameContains("Demos");
-
-            driver.StartActivity("com.android.contacts", ".ContactsListActivity");
-
-			_AssertActivityNameContains("Contact");
-		}
-
-		private void _AssertActivityNameContains(string activityName)
-		{
-			Contract.Requires(!String.IsNullOrWhiteSpace(activityName));
-
-            String activity = driver.CurrentActivity;
-			Debug.WriteLine (activity);
-
-			Assert.IsNotNullOrEmpty(activity);
-			Assert.IsTrue(activity.Contains(activityName));
-		}
 
 		[Test ()]
 		public void ScrollTestCase ()

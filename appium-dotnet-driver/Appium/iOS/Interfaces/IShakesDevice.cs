@@ -11,20 +11,14 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
-namespace OpenQA.Selenium.Appium.Interfaces
+
+namespace OpenQA.Selenium.Appium.iOS.Interfaces
 {
-	public interface IDeviceActionShortcuts
+	interface IShakesDevice
 	{
 		/// <summary>
-		/// Hides the device keyboard.
+		/// Shakes the device.
 		/// </summary>
-		/// <param name="keyName">The button pressed by the mobile driver to attempt hiding the keyboard.</param>
-		void HideKeyboard();
-
-		/// <summary>
-		/// Triggers Device Key Event.
-		/// </summary>
-		/// <param name="keyCode">an integer keycode number corresponding to a java.awt.event.KeyEvent.</param>
-		void KeyEvent(int keyCode);
+		void ShakeDevice();
 	}
 }
