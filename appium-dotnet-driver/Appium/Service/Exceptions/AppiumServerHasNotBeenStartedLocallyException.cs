@@ -16,16 +16,16 @@ using System;
 
 namespace OpenQA.Selenium.Appium.Service.Exceptions
 {
-	public class AppiumServerHasNotBeenStartedLocallyException : Exception
-	{
-		public AppiumServerHasNotBeenStartedLocallyException(string messege, Exception cause)
-			: base(messege, cause)
-		{
-		}
+    public class AppiumServerHasNotBeenStartedLocallyException : Exception
+    {
+        public AppiumServerHasNotBeenStartedLocallyException(string messege, Exception cause)
+            : base(messege, cause)
+        {
+        }
 
-		public AppiumServerHasNotBeenStartedLocallyException(string messege)
-			: base(messege)
-		{
-		}
-	}
+        public AppiumServerHasNotBeenStartedLocallyException(string messege)
+            : base(messege)
+        {
+        }
+    }
 }

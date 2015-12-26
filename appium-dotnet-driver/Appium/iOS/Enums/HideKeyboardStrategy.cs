@@ -13,9 +13,9 @@
 //limitations under the License.
 namespace OpenQA.Selenium.Appium.iOS.Enums
 {
-	public sealed class HideKeyboardStrategy
-	{
-		public static readonly string Tap_outside = "tapOutside";
-		public static readonly string Press_key = "pressKey";
-	}
+    public sealed class HideKeyboardStrategy
+    {
+        public static readonly string Tap_outside = "tapOutside";
+        public static readonly string Press_key = "pressKey";
+    }
 }

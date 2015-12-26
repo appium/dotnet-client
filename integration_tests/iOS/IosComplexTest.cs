@@ -16,7 +16,7 @@ namespace Appium.Integration.Tests.iOS
 	{
 		private AppiumDriver<IWebElement> driver;
 
-		[SetUp]
+		[TestFixtureSetUp]
 		public void beforeAll(){
 			DesiredCapabilities capabilities = Caps.getIos82Caps (Apps.get("iosUICatalogApp")); 
 			if (Env.isSauce ()) {
@@ -28,10 +28,30 @@ namespace Appium.Integration.Tests.iOS
 			Uri serverUri = Env.isSauce () ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIForIOS;
             driver = new IOSDriver<IWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);	
 			driver.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
-		}
+            driver.CloseApp();
+        }
 
-		[TearDown]
-		public void AfterEach(){
+        [SetUp]
+        public void SetUp()
+        {
+            if (driver != null)
+            {
+                driver.LaunchApp();
+            }
+        }
+
+        [TearDown]
+        public void TearDowwn()
+        {
+            if (driver != null)
+            {
+                driver.CloseApp();
+            }
+        }
+
+        [TestFixtureTearDown]
+        public void AfterAll()
+        {
             if (driver != null)
             {
                 driver.Quit();
@@ -42,7 +62,7 @@ namespace Appium.Integration.Tests.iOS
             }
         }
 
-		private void ClickMenuItem(string name) 
+        private void ClickMenuItem(string name) 
 		{
 			IWebElement el;
 			try {

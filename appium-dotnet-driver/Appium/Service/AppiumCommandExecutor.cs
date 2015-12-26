@@ -18,87 +18,87 @@ using System.Reflection;
 
 namespace OpenQA.Selenium.Appium.Service
 {
-	internal class AppiumCommandExecutor : ICommandExecutor
-	{
+    internal class AppiumCommandExecutor : ICommandExecutor
+    {
 
-		private readonly AppiumLocalService Service;
-		private readonly Uri URL;
-		private readonly ICommandExecutor RealExecutor;
+        private readonly AppiumLocalService Service;
+        private readonly Uri URL;
+        private readonly ICommandExecutor RealExecutor;
 
-		private static ICommandExecutor CreateRealExecutor(Uri remoteAddress, TimeSpan commandTimeout)
-		{
-			var seleniumAssembly = Assembly.Load("WebDriver");
-			var commandType = seleniumAssembly.GetType("OpenQA.Selenium.Remote.HttpCommandExecutor");
-			ICommandExecutor commandExecutor = null;
+        private static ICommandExecutor CreateRealExecutor(Uri remoteAddress, TimeSpan commandTimeout)
+        {
+            var seleniumAssembly = Assembly.Load("WebDriver");
+            var commandType = seleniumAssembly.GetType("OpenQA.Selenium.Remote.HttpCommandExecutor");
+            ICommandExecutor commandExecutor = null;
 
-			if (null != commandType)
-			{
-				commandExecutor = Activator.CreateInstance(commandType, new object[] { remoteAddress, commandTimeout }) as ICommandExecutor;
-			}
+            if (null != commandType)
+            {
+                commandExecutor = Activator.CreateInstance(commandType, new object[] { remoteAddress, commandTimeout }) as ICommandExecutor;
+            }
 
-			return commandExecutor;
-		}
+            return commandExecutor;
+        }
 
-		private AppiumCommandExecutor(Uri url, ICommandExecutor realExecutor)
-		{
-			this.URL = url;
-			this.RealExecutor = realExecutor;
-		}
+        private AppiumCommandExecutor(Uri url, ICommandExecutor realExecutor)
+        {
+            this.URL = url;
+            this.RealExecutor = realExecutor;
+        }
 
-		internal AppiumCommandExecutor(Uri url, TimeSpan timeForTheServerResponding)
-			: this(url, CreateRealExecutor(url, timeForTheServerResponding))
-		{
-			this.Service = null;
-		}
+        internal AppiumCommandExecutor(Uri url, TimeSpan timeForTheServerResponding)
+            : this(url, CreateRealExecutor(url, timeForTheServerResponding))
+        {
+            this.Service = null;
+        }
 
-		internal AppiumCommandExecutor(AppiumLocalService service, TimeSpan timeForTheServerResponding)
-			: this(service.ServiceUrl, CreateRealExecutor(service.ServiceUrl, timeForTheServerResponding))
-		{
-			this.Service = service;
-		}
+        internal AppiumCommandExecutor(AppiumLocalService service, TimeSpan timeForTheServerResponding)
+            : this(service.ServiceUrl, CreateRealExecutor(service.ServiceUrl, timeForTheServerResponding))
+        {
+            this.Service = service;
+        }
 
-		public CommandInfoRepository CommandInfoRepository
-		{
-			get
-			{
-				return RealExecutor.CommandInfoRepository;
-			}
-		}
+        public CommandInfoRepository CommandInfoRepository
+        {
+            get
+            {
+                return RealExecutor.CommandInfoRepository;
+            }
+        }
 
-		public Response Execute(Command commandToExecute)
-		{
-			Response result = null;
-			if (commandToExecute.Name == DriverCommand.NewSession && this.Service != null)
-			{
-				this.Service.Start();
-			}
+        public Response Execute(Command commandToExecute)
+        {
+            Response result = null;
+            if (commandToExecute.Name == DriverCommand.NewSession && this.Service != null)
+            {
+                this.Service.Start();
+            }
 
-			try
-			{
-				result = RealExecutor.Execute(commandToExecute);
-				return result;
-			}
-			catch (Exception e)
-			{
-				if ((commandToExecute.Name == DriverCommand.NewSession) && (this.Service != null))
-				{
-					this.Service.Dispose();
-				}
-				throw e;
-			}
-			finally
-			{
-				if (result != null && result.Status != WebDriverResult.Success &&
-					commandToExecute.Name == DriverCommand.NewSession && this.Service != null)
-				{
-					this.Service.Dispose();
-				}
+            try
+            {
+                result = RealExecutor.Execute(commandToExecute);
+                return result;
+            }
+            catch (Exception e)
+            {
+                if ((commandToExecute.Name == DriverCommand.NewSession) && (this.Service != null))
+                {
+                    this.Service.Dispose();
+                }
+                throw e;
+            }
+            finally
+            {
+                if (result != null && result.Status != WebDriverResult.Success &&
+                    commandToExecute.Name == DriverCommand.NewSession && this.Service != null)
+                {
+                    this.Service.Dispose();
+                }
 
-				if (commandToExecute.Name == DriverCommand.Quit && this.Service != null)
-				{
-					this.Service.Dispose();
-				}
-			}
-		}
-	}
+                if (commandToExecute.Name == DriverCommand.Quit && this.Service != null)
+                {
+                    this.Service.Dispose();
+                }
+            }
+        }
+    }
 }

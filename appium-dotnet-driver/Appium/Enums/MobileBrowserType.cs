@@ -13,17 +13,17 @@
 //limitations under the License.
 namespace OpenQA.Selenium.Appium.Enums
 {
-	public sealed class MobileBrowserType
-	{
-		/// <summary>
-		/// It is native Android browser.
-		/// </summary>
-		public static readonly string Browser = "Browser";
+    public sealed class MobileBrowserType
+    {
+        /// <summary>
+        /// It is native Android browser.
+        /// </summary>
+        public static readonly string Browser = "Browser";
 
-		public static readonly string Chrome = "Chrome";
+        public static readonly string Chrome = "Chrome";
 
-		public static readonly string Chromium = "Chromium";
+        public static readonly string Chromium = "Chromium";
 
-		public static readonly string Safari = "Safari";
-	}
+        public static readonly string Safari = "Safari";
+    }
 }

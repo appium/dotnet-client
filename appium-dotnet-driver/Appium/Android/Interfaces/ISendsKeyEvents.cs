@@ -15,18 +15,18 @@ using OpenQA.Selenium.Appium.Interfaces;
 
 namespace OpenQA.Selenium.Appium.Android.Interfaces
 {
-	public interface ISendsKeyEvents
-	{
-		/// <summary>
-		/// Triggers device key event with metastate for the keypress
-		/// </summary>
-		/// <param name="connectionType"></param>
-		void KeyEvent(int keyCode, int metastate);
+    public interface ISendsKeyEvents
+    {
+        /// <summary>
+        /// Triggers device key event with metastate for the keypress
+        /// </summary>
+        /// <param name="connectionType"></param>
+        void KeyEvent(int keyCode, int metastate);
 
-		/// <summary>
-		/// Triggers device key event
-		/// </summary>
-		/// <param name="keyCode">Code for the long key pressed on the Android device</param>
-		void KeyEvent(int keyCode);
-	}
+        /// <summary>
+        /// Triggers device key event
+        /// </summary>
+        /// <param name="keyCode">Code for the long key pressed on the Android device</param>
+        void KeyEvent(int keyCode);
+    }
 }

@@ -22,176 +22,176 @@ using System.Runtime.CompilerServices;
 
 namespace OpenQA.Selenium.Appium.Service
 {
-	public class AppiumLocalService : ICommandServer
-	{
-		private readonly FileInfo NodeJS;
-		private readonly string Arguments;
-		private readonly IPAddress IP;
-		private readonly int Port;
-		private readonly TimeSpan InitializationTimeout;
-		private Process Service;
+    public class AppiumLocalService : ICommandServer
+    {
+        private readonly FileInfo NodeJS;
+        private readonly string Arguments;
+        private readonly IPAddress IP;
+        private readonly int Port;
+        private readonly TimeSpan InitializationTimeout;
+        private Process Service;
 
-		/// <summary>
-		/// Creates an instance of AppiumLocalService without special settings
-		/// </summary>
-		/// <returns>An instance of AppiumLocalService without special settings</returns>
-		public static AppiumLocalService BuildDefaultService()
-		{
-			return new AppiumServiceBuilder().Build();
-		}
+        /// <summary>
+        /// Creates an instance of AppiumLocalService without special settings
+        /// </summary>
+        /// <returns>An instance of AppiumLocalService without special settings</returns>
+        public static AppiumLocalService BuildDefaultService()
+        {
+            return new AppiumServiceBuilder().Build();
+        }
 
-		internal AppiumLocalService(FileInfo nodeJS, string arguments, IPAddress ip, int port, TimeSpan initializationTimeout)
-		{
-			this.NodeJS = nodeJS;
-			this.IP = ip;
-			this.Arguments = arguments;
-			this.Port = port;
-			this.InitializationTimeout = initializationTimeout;
-		}
+        internal AppiumLocalService(FileInfo nodeJS, string arguments, IPAddress ip, int port, TimeSpan initializationTimeout)
+        {
+            this.NodeJS = nodeJS;
+            this.IP = ip;
+            this.Arguments = arguments;
+            this.Port = port;
+            this.InitializationTimeout = initializationTimeout;
+        }
 
-		/// <summary>
-		/// The base URL for the managed appium server.
-		/// </summary>
-		public Uri ServiceUrl
-		{
-			get { return new Uri("http://" + IP.ToString() + ":" + Convert.ToString(Port) + "/wd/hub"); }
-		}
+        /// <summary>
+        /// The base URL for the managed appium server.
+        /// </summary>
+        public Uri ServiceUrl
+        {
+            get { return new Uri("http://" + IP.ToString() + ":" + Convert.ToString(Port) + "/wd/hub"); }
+        }
 
-		/// <summary>
-		/// Starts the defined appium server
-		/// </summary>
-		[MethodImpl(MethodImplOptions.Synchronized)]
-		public void Start()
-		{
-			if (IsRunning)
-			{
-				return;
-			}
+        /// <summary>
+        /// Starts the defined appium server
+        /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void Start()
+        {
+            if (IsRunning)
+            {
+                return;
+            }
 
-			this.Service = new Process();
-			this.Service.StartInfo.FileName = this.NodeJS.FullName;
-			this.Service.StartInfo.Arguments = this.Arguments;
-			this.Service.StartInfo.UseShellExecute = false;
-			this.Service.StartInfo.CreateNoWindow = true;
+            this.Service = new Process();
+            this.Service.StartInfo.FileName = this.NodeJS.FullName;
+            this.Service.StartInfo.Arguments = this.Arguments;
+            this.Service.StartInfo.UseShellExecute = false;
+            this.Service.StartInfo.CreateNoWindow = true;
 
-			bool isLaunced = false;
-			string msgTxt = "The local appium server has not been started. " +
-					"The given Node.js executable: " + this.NodeJS.FullName + " Arguments: " + this.Arguments + ". " + "\n";
-			try
-			{
-				this.Service.Start();
-			}
-			catch (Exception e)
-			{
-				DestroyProcess();
-				throw new AppiumServerHasNotBeenStartedLocallyException(msgTxt, e);
-			}
+            bool isLaunced = false;
+            string msgTxt = "The local appium server has not been started. " +
+                    "The given Node.js executable: " + this.NodeJS.FullName + " Arguments: " + this.Arguments + ". " + "\n";
+            try
+            {
+                this.Service.Start();
+            }
+            catch (Exception e)
+            {
+                DestroyProcess();
+                throw new AppiumServerHasNotBeenStartedLocallyException(msgTxt, e);
+            }
 
-			isLaunced = Ping(this.InitializationTimeout);
-			if (!isLaunced)
-			{
-				DestroyProcess();
-				throw new AppiumServerHasNotBeenStartedLocallyException(msgTxt + "Time " + this.InitializationTimeout.TotalMilliseconds +
-					" ms for the service starting has been expired!");
-			}
+            isLaunced = Ping(this.InitializationTimeout);
+            if (!isLaunced)
+            {
+                DestroyProcess();
+                throw new AppiumServerHasNotBeenStartedLocallyException(msgTxt + "Time " + this.InitializationTimeout.TotalMilliseconds +
+                    " ms for the service starting has been expired!");
+            }
 
-		}
+        }
 
-		private void DestroyProcess()
-		{
-			if (this.Service == null)
-			{
-				return;
-			}
+        private void DestroyProcess()
+        {
+            if (this.Service == null)
+            {
+                return;
+            }
 
-			try
-			{
-				this.Service.Kill();
-			}
-			catch (Exception ignored)
-			{ }
-			finally
-			{
-				this.Service.Close();
-			}
-		}
+            try
+            {
+                this.Service.Kill();
+            }
+            catch (Exception ignored)
+            { }
+            finally
+            {
+                this.Service.Close();
+            }
+        }
 
-		/// <summary>
-		/// Stops this service if it is currently running.
-		/// </summary>
-		[MethodImpl(MethodImplOptions.Synchronized)]
-		public void Dispose()
-		{
-			DestroyProcess();
-			GC.SuppressFinalize(this);
-		}
+        /// <summary>
+        /// Stops this service if it is currently running.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public void Dispose()
+        {
+            DestroyProcess();
+            GC.SuppressFinalize(this);
+        }
 
-		/// <summary>
-		/// Is the defined appium server being run or not
-		/// </summary>
-		public bool IsRunning
-		{
-			get
-			{
-				if (this.Service == null)
-				{
-					return false;
-				}
+        /// <summary>
+        /// Is the defined appium server being run or not
+        /// </summary>
+        public bool IsRunning
+        {
+            get
+            {
+                if (this.Service == null)
+                {
+                    return false;
+                }
 
-				try
-				{
-					var pid = this.Service.Id;
-				}
-				catch (Exception)
-				{
-					return false;
-				}
+                try
+                {
+                    var pid = this.Service.Id;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
 
-				return Ping(new TimeSpan(0, 0, 0, 0, 500));
-			}
-		}
+                return Ping(new TimeSpan(0, 0, 0, 0, 500));
+            }
+        }
 
-		private bool Ping(TimeSpan span)
-		{
-			bool pinged = false;
+        private bool Ping(TimeSpan span)
+        {
+            bool pinged = false;
 
-			Uri status;
+            Uri status;
 
-			Uri service = ServiceUrl;
-			if (service.IsLoopback || IP.ToString().Equals(AppiumServiceConstants.DefaultLocalIPAddress))
-			{
-				status = new Uri("http://localhost:" + Convert.ToString(Port) + "/wd/hub/status");
-			}
-			else
-			{
-				status = new Uri(service.ToString() + "/status");
-			}
+            Uri service = ServiceUrl;
+            if (service.IsLoopback || IP.ToString().Equals(AppiumServiceConstants.DefaultLocalIPAddress))
+            {
+                status = new Uri("http://localhost:" + Convert.ToString(Port) + "/wd/hub/status");
+            }
+            else
+            {
+                status = new Uri(service.ToString() + "/status");
+            }
 
-			DateTime endTime = DateTime.Now.Add(this.InitializationTimeout);
-			while (!pinged & DateTime.Now < endTime)
-			{
-				HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(status);
-				HttpWebResponse response = null;
-				try
-				{
-					using (response = (HttpWebResponse)request.GetResponse())
-					{
-						pinged = true;
-					}
-				}
-				catch (Exception e)
-				{
-					pinged = false;
-				}
-				finally
-				{
-					if (response != null)
-					{
-						response.Close();
-					}
-				}
-			}
-			return pinged;
-		}
-	}
+            DateTime endTime = DateTime.Now.Add(this.InitializationTimeout);
+            while (!pinged & DateTime.Now < endTime)
+            {
+                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(status);
+                HttpWebResponse response = null;
+                try
+                {
+                    using (response = (HttpWebResponse)request.GetResponse())
+                    {
+                        pinged = true;
+                    }
+                }
+                catch (Exception e)
+                {
+                    pinged = false;
+                }
+                finally
+                {
+                    if (response != null)
+                    {
+                        response.Close();
+                    }
+                }
+            }
+            return pinged;
+        }
+    }
 }

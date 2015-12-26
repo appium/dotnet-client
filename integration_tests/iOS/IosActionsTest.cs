@@ -17,9 +17,10 @@ namespace Appium.Integration.Tests.iOS
 	{
 		private AppiumDriver<IWebElement> driver;
 
-		[SetUp]
-		public void BeforeAll(){
-			DesiredCapabilities capabilities = Caps.getIos82Caps (Apps.get("iosTestApp")); 
+        [TestFixtureSetUp]
+        public void BeforeAll()
+        { 
+            DesiredCapabilities capabilities = Caps.getIos82Caps (Apps.get("iosTestApp")); 
 			if (Env.isSauce ()) {
 				capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME")); 
 				capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
@@ -29,10 +30,30 @@ namespace Appium.Integration.Tests.iOS
 			Uri serverUri = Env.isSauce () ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIForIOS;
 			driver = new IOSDriver<IWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);	
 			driver.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
+            driver.CloseApp();
 		}
 
-		[TearDown]
-		public void AfterEach(){
+        [SetUp]
+        public void SetUp()
+        {
+            if (driver != null)
+            {
+                driver.LaunchApp();
+            }
+        }
+
+        [TearDown]
+        public void TearDowwn()
+        {
+            if (driver != null)
+            {
+                driver.CloseApp();
+            }
+        }
+
+        [TestFixtureTearDown]
+        public void AfterAll()
+        { 
             if (driver != null)
             {
                 driver.Quit();

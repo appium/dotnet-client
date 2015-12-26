@@ -13,9 +13,9 @@
 //limitations under the License.
 namespace OpenQA.Selenium.Appium.PageObjects
 {
-	internal enum ContentTypes
-	{
-		HTML = 0,
-		NATIVE = 1
-	}
+    internal enum ContentTypes
+    {
+        HTML = 0,
+        NATIVE = 1
+    }
 }

@@ -17,24 +17,24 @@ using System.Collections.ObjectModel;
 
 namespace Appium.Interfaces.Generic.SearchContext
 {
-	/// <summary>
-	/// Defines the interface through which the user finds elements by their name.
-	/// </summary>
-	public interface IGenericFindsByName<W> where W : IWebElement
-	{
-		/// <summary>
-		/// Finds the first element matching the specified name.
-		/// </summary>
-		/// <param name="name">The name to match.</param>
-		/// <returns>The first <see cref="IWebElement"/> matching the criteria.</returns>
-		W FindElementByName(string name);
+    /// <summary>
+    /// Defines the interface through which the user finds elements by their name.
+    /// </summary>
+    public interface IGenericFindsByName<W> where W : IWebElement
+    {
+        /// <summary>
+        /// Finds the first element matching the specified name.
+        /// </summary>
+        /// <param name="name">The name to match.</param>
+        /// <returns>The first <see cref="IWebElement"/> matching the criteria.</returns>
+        W FindElementByName(string name);
 
-		/// <summary>
-		/// Finds all elements matching the specified name.
-		/// </summary>
-		/// <param name="name">The name to match.</param>
-		/// <returns>A <see cref="ReadOnlyCollection{T}"/> containing all
-		/// <see cref="IWebElement">IWebElements</see> matching the criteria.</returns>
-		ReadOnlyCollection<W> FindElementsByName(string name);
-	}
+        /// <summary>
+        /// Finds all elements matching the specified name.
+        /// </summary>
+        /// <param name="name">The name to match.</param>
+        /// <returns>A <see cref="ReadOnlyCollection{T}"/> containing all
+        /// <see cref="IWebElement">IWebElements</see> matching the criteria.</returns>
+        ReadOnlyCollection<W> FindElementsByName(string name);
+    }
 }

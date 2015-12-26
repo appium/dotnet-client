@@ -14,11 +14,11 @@
 
 namespace OpenQA.Selenium.Appium.iOS.Interfaces
 {
-	interface IShakesDevice
-	{
-		/// <summary>
-		/// Shakes the device.
-		/// </summary>
-		void ShakeDevice();
-	}
+    interface IShakesDevice
+    {
+        /// <summary>
+        /// Shakes the device.
+        /// </summary>
+        void ShakeDevice();
+    }
 }

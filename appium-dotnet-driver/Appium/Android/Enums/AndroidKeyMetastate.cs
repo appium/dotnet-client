@@ -18,7 +18,7 @@ namespace OpenQA.Selenium.Appium.Android.Enums
         public static readonly int Meta_Alt_LEFT_On = 16;
         public static readonly int Meta_Alt_On = 2;
         public static readonly int Meta_Alt_Right_On = 32;
-		public static readonly int Meta_Caps_Lock_On = 1048576;
+        public static readonly int Meta_Caps_Lock_On = 1048576;
         public static readonly int Meta_Ctrl_Left_On = 8192;
         public static readonly int Meta_Ctrl_On = 4096;
         public static readonly int Meta_Ctrl_Rijht_On = 16384;

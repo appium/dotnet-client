@@ -17,67 +17,67 @@ using OpenQA.Selenium.Appium.Interfaces;
 
 namespace OpenQA.Selenium.Appium.MultiTouch
 {
-	public class MultiAction : IMultiAction
-	{
-		private IList<ITouchAction> actions = new List<ITouchAction>();
+    public class MultiAction : IMultiAction
+    {
+        private IList<ITouchAction> actions = new List<ITouchAction>();
 
-		private IPerformsTouchActions TouchActionPerformer;
+        private IPerformsTouchActions TouchActionPerformer;
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="MultiTouchAction"/> class.
-		/// </summary>
-		/// <param name="driver">The <see cref="IWebDriver"/> the driver to be used.</param>
-		public MultiAction(IPerformsTouchActions touchActionPerformer)
-		{
-			this.TouchActionPerformer = touchActionPerformer;
-		}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MultiTouchAction"/> class.
+        /// </summary>
+        /// <param name="driver">The <see cref="IWebDriver"/> the driver to be used.</param>
+        public MultiAction(IPerformsTouchActions touchActionPerformer)
+        {
+            this.TouchActionPerformer = touchActionPerformer;
+        }
 
 
-		/// <summary>
-		/// Add touch actions to be performed
-		/// </summary>
-		/// <param name="touchAction"></param>
-		public IMultiAction Add(ITouchAction touchAction)
-		{
-			if (null == touchAction)
-			{
-				throw new ArgumentNullException("touchAction");
-			}
+        /// <summary>
+        /// Add touch actions to be performed
+        /// </summary>
+        /// <param name="touchAction"></param>
+        public IMultiAction Add(ITouchAction touchAction)
+        {
+            if (null == touchAction)
+            {
+                throw new ArgumentNullException("touchAction");
+            }
 
-			actions.Add(touchAction);
-			return this;
-		}
+            actions.Add(touchAction);
+            return this;
+        }
 
-		/// <summary>
-		/// Gets the actions parameter dictionary for this multi touch action
-		/// </summary>
-		/// <returns>empty dictionary if no actions found, else dictionary of actions</returns>
-		public Dictionary<string, object> GetParameters()
-		{
-			Dictionary<string, object> parameters = new Dictionary<string, object>();
-			for (int i = 0; i < actions.Count; i++)
-			{
-				if (i == 0)
-					parameters.Add("actions", new List<object>());
-				((List<object>)parameters["actions"])
-					.Add(((TouchAction)actions[i]).GetParameters());
-			}
-			return parameters;
-		}
-		/// <summary>
-		/// Cancels the Multi Action
-		/// </summary>
-		public void Cancel()
-		{
-			actions.Clear();
-		}
+        /// <summary>
+        /// Gets the actions parameter dictionary for this multi touch action
+        /// </summary>
+        /// <returns>empty dictionary if no actions found, else dictionary of actions</returns>
+        public Dictionary<string, object> GetParameters()
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            for (int i = 0; i < actions.Count; i++)
+            {
+                if (i == 0)
+                    parameters.Add("actions", new List<object>());
+                ((List<object>)parameters["actions"])
+                    .Add(((TouchAction)actions[i]).GetParameters());
+            }
+            return parameters;
+        }
+        /// <summary>
+        /// Cancels the Multi Action
+        /// </summary>
+        public void Cancel()
+        {
+            actions.Clear();
+        }
 
-		/// <summary>
-		/// Executes the Multi Action
-		/// </summary>
-		public void Perform()
-		{
-			TouchActionPerformer.PerformMultiAction(this);
-		}
-	}
+        /// <summary>
+        /// Executes the Multi Action
+        /// </summary>
+        public void Perform()
+        {
+            TouchActionPerformer.PerformMultiAction(this);
+        }
+    }
 }

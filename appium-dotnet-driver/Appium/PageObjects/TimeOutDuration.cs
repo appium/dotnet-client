@@ -15,21 +15,21 @@ using System;
 
 namespace OpenQA.Selenium.Appium.PageObjects
 {
-	/// <summary>
-	/// This class stores the time of the waiting for elements.
-	/// It also allows to change this duration in runtime.
-	/// </summary>
-	public class TimeOutDuration
-	{
+    /// <summary>
+    /// This class stores the time of the waiting for elements.
+    /// It also allows to change this duration in runtime.
+    /// </summary>
+    public class TimeOutDuration
+    {
 
-		public TimeOutDuration(TimeSpan span)
-		{
-			WaitingDuration = span;
-		}
+        public TimeOutDuration(TimeSpan span)
+        {
+            WaitingDuration = span;
+        }
 
-		public TimeSpan WaitingDuration
-		{
-			set; get;
-		}
-	}
+        public TimeSpan WaitingDuration
+        {
+            set; get;
+        }
+    }
 }

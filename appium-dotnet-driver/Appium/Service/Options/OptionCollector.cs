@@ -17,46 +17,46 @@ using System.Collections.Generic;
 
 namespace OpenQA.Selenium.Appium.Service.Options
 {
-	public sealed class OptionCollector
-	{
-		private readonly IDictionary<string, string> CollectedArgs = new Dictionary<string, string>();
+    public sealed class OptionCollector
+    {
+        private readonly IDictionary<string, string> CollectedArgs = new Dictionary<string, string>();
 
-		/// <summary>
-		/// Adds an argument and its value
-		/// </summary>
-		/// <param name="arguments">is a structure where the first alement is a server argument and the second one
-		/// is string value of the passed argument</param>
-		/// <returns>self reference</returns>
-		public OptionCollector AddArguments(KeyValuePair<string, string> arguments)
-		{
-			CollectedArgs.Add(arguments);
-			return this;
-		}
+        /// <summary>
+        /// Adds an argument and its value
+        /// </summary>
+        /// <param name="arguments">is a structure where the first alement is a server argument and the second one
+        /// is string value of the passed argument</param>
+        /// <returns>self reference</returns>
+        public OptionCollector AddArguments(KeyValuePair<string, string> arguments)
+        {
+            CollectedArgs.Add(arguments);
+            return this;
+        }
 
-		/// <summary>
-		/// Builds a sequence of server arguments
-		/// </summary>
-		internal IList<string> Argiments
-		{
-			get
-			{
-				List<String> result = new List<string>();
-				var keys = CollectedArgs.Keys;
-				foreach (var key in keys)
-				{
-					if (String.IsNullOrEmpty(key))
-					{
-						continue;
-					}
-					result.Add(key);
-					string value = CollectedArgs[key];
-					if (!String.IsNullOrEmpty(value))
-					{
-						result.Add(value);
-					}
-				}
-				return result.AsReadOnly();
-			}
-		}
-	}
+        /// <summary>
+        /// Builds a sequence of server arguments
+        /// </summary>
+        internal IList<string> Argiments
+        {
+            get
+            {
+                List<String> result = new List<string>();
+                var keys = CollectedArgs.Keys;
+                foreach (var key in keys)
+                {
+                    if (String.IsNullOrEmpty(key))
+                    {
+                        continue;
+                    }
+                    result.Add(key);
+                    string value = CollectedArgs[key];
+                    if (!String.IsNullOrEmpty(value))
+                    {
+                        result.Add(value);
+                    }
+                }
+                return result.AsReadOnly();
+            }
+        }
+    }
 }

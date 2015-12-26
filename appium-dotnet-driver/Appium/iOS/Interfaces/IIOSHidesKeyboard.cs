@@ -15,8 +15,8 @@ using OpenQA.Selenium.Appium.Interfaces;
 
 namespace OpenQA.Selenium.Appium.iOS.Interfaces
 {
-	public interface IIOSHidesKeyboard : IHidesKeyboard
-	{
-		void HideKeyboard(string key, string strategy = null);
-	}
+    public interface IIOSHidesKeyboard : IHidesKeyboard
+    {
+        void HideKeyboard(string key, string strategy = null);
+    }
 }

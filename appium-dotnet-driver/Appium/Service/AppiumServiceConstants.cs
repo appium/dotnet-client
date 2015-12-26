@@ -20,22 +20,22 @@ using System.Text;
 
 namespace OpenQA.Selenium.Appium.Service
 {
-	public sealed class AppiumServiceConstants
-	{
-		public static readonly string AppiumBinaryPath = "APPIUM_BINARY_PATH";
-		public static readonly string NodeBinaryPath = "NODE_BINARY_PATH";
+    public sealed class AppiumServiceConstants
+    {
+        public static readonly string AppiumBinaryPath = "APPIUM_BINARY_PATH";
+        public static readonly string NodeBinaryPath = "NODE_BINARY_PATH";
 
-		internal readonly static string Bash = "/bin/bash";
-		internal readonly static string CmdExe = "cmd.exe";
-		internal readonly static string Node = "node";
+        internal readonly static string Bash = "/bin/bash";
+        internal readonly static string CmdExe = "cmd.exe";
+        internal readonly static string Node = "node";
 
-		internal static readonly string DefaultLocalIPAddress = "127.0.0.1";
-		internal static readonly int DefaultAppiumPort = 4723;
+        internal static readonly string DefaultLocalIPAddress = "127.0.0.1";
+        internal static readonly int DefaultAppiumPort = 4723;
 
-		internal static readonly string AppiumFolder = "appium";
-		internal static readonly string BinFolder = "bin";
-		internal static readonly string AppiumJSName = "appium.js";
-		internal static readonly string AppiumNodeMask = Path.DirectorySeparatorChar +
-			AppiumFolder + Path.DirectorySeparatorChar + BinFolder + Path.DirectorySeparatorChar + AppiumJSName;
-	}
+        internal static readonly string AppiumFolder = "appium";
+        internal static readonly string BinFolder = "bin";
+        internal static readonly string AppiumJSName = "appium.js";
+        internal static readonly string AppiumNodeMask = Path.DirectorySeparatorChar +
+            AppiumFolder + Path.DirectorySeparatorChar + BinFolder + Path.DirectorySeparatorChar + AppiumJSName;
+    }
 }

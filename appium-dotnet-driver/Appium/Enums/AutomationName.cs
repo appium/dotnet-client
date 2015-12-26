@@ -13,9 +13,9 @@
 //limitations under the License.
 namespace OpenQA.Selenium.Appium.Enums
 {
-	public sealed class AutomationName
-	{
-		public static readonly string Appium = "Appium";
-		public static readonly string Selendroid = "Selendroid";
-	}
+    public sealed class AutomationName
+    {
+        public static readonly string Appium = "Appium";
+        public static readonly string Selendroid = "Selendroid";
+    }
 }
