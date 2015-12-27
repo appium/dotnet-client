@@ -4,11 +4,8 @@ using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Remote;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
 
 namespace Appium.Integration.Tests.Android
 {
@@ -21,7 +18,7 @@ namespace Appium.Integration.Tests.Android
         public void BeforeAll()
         {
             DesiredCapabilities capabilities = Env.isSauce() ?
-                Caps.getAndroid18Caps(Apps.get("androidApiDemos")) :
+                Caps.getAndroid501Caps(Apps.get("androidApiDemos")) :
                 Caps.getAndroid19Caps(Apps.get("androidApiDemos"));
             if (Env.isSauce())
             {
@@ -59,11 +56,11 @@ namespace Appium.Integration.Tests.Android
         {
             driver.StartActivity("io.appium.android.apis", ".ApiDemos");
 
-            _AssertActivityNameContains("Demos");
+            Assert.AreEqual(driver.CurrentActivity, ".ApiDemos");
 
             driver.StartActivity("io.appium.android.apis", ".accessibility.AccessibilityNodeProviderActivity");
 
-            _AssertActivityNameContains("Node");
+            Assert.AreEqual(driver.CurrentActivity, ".accessibility.AccessibilityNodeProviderActivity");
         }
 
         [Test]
@@ -71,12 +68,12 @@ namespace Appium.Integration.Tests.Android
         {
             driver.StartActivity("io.appium.android.apis", ".ApiDemos", "io.appium.android.apis", ".ApiDemos");
 
-            _AssertActivityNameContains("Demos");
+            Assert.AreEqual(driver.CurrentActivity, ".ApiDemos");
 
             driver.StartActivity("io.appium.android.apis", ".accessibility.AccessibilityNodeProviderActivity", 
                 "io.appium.android.apis", ".accessibility.AccessibilityNodeProviderActivity");
 
-            _AssertActivityNameContains("Node");
+            Assert.AreEqual(driver.CurrentActivity, ".accessibility.AccessibilityNodeProviderActivity");
         }
 
         [Test]
@@ -84,13 +81,13 @@ namespace Appium.Integration.Tests.Android
         {
             driver.StartActivity("io.appium.android.apis", ".ApiDemos");
 
-            _AssertActivityNameContains("Demos");
+            Assert.AreEqual(driver.CurrentActivity, ".ApiDemos");
 
             driver.StartActivity("com.android.contacts", ".ContactsListActivity");
 
-            _AssertActivityNameContains("Contact");
+            Assert.AreEqual(driver.CurrentActivity, ".ContactsListActivity");
             driver.KeyEvent(AndroidKeyCode.Back);
-            _AssertActivityNameContains("Contact");
+            Assert.AreEqual(driver.CurrentActivity, ".ContactsListActivity");
         }
 
         [Test]
@@ -98,25 +95,14 @@ namespace Appium.Integration.Tests.Android
         {
             driver.StartActivity("io.appium.android.apis", ".accessibility.AccessibilityNodeProviderActivity");
 
-            _AssertActivityNameContains("Node");
+            Assert.AreEqual(driver.CurrentActivity, ".accessibility.AccessibilityNodeProviderActivity");
 
             driver.StartActivity("com.android.contacts", ".ContactsListActivity", "com.android.contacts", ".ContactsListActivity", false);
 
-            _AssertActivityNameContains("Contact");
+            Assert.AreEqual(driver.CurrentActivity, ".ContactsListActivity");
             driver.KeyEvent(AndroidKeyCode.Back);
-            _AssertActivityNameContains("Node");
+            Assert.AreEqual(driver.CurrentActivity, ".accessibility.AccessibilityNodeProviderActivity");
 
-        }
-
-        private void _AssertActivityNameContains(string activityName)
-        {
-            Contract.Requires(!String.IsNullOrWhiteSpace(activityName));
-
-            String activity = driver.CurrentActivity;
-            Debug.WriteLine(activity);
-
-            Assert.IsNotNullOrEmpty(activity);
-            Assert.IsTrue(activity.Contains(activityName));
         }
 
         [TestFixtureTearDown]

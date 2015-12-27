@@ -1,11 +1,9 @@
 ﻿using Appium.Integration.Tests.Helpers;
 using NUnit.Framework;
-using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Remote;
 using System;
 using System.Drawing;
-using System.Threading;
 
 namespace Appium.Integration.Tests.Android
 {
@@ -18,7 +16,7 @@ namespace Appium.Integration.Tests.Android
         public void BeforeAll()
         {
             DesiredCapabilities capabilities = Env.isSauce() ?
-                Caps.getAndroid18Caps(Apps.get("androidApiDemos")) :
+                Caps.getAndroid501Caps(Apps.get("androidApiDemos")) :
                 Caps.getAndroid19Caps(Apps.get("androidApiDemos"));
             if (Env.isSauce())
             {
@@ -65,23 +63,21 @@ namespace Appium.Integration.Tests.Android
         }
 
         [Test()]
-        public void scrollAndSwipeTest()
+        public void SwipeTest()
         {
-            driver.FindElementByName("Graphics").Click();
-            driver.ScrollTo("FingerPaint", "android:id/list");
-            driver.FindElementByName("FingerPaint").Click();
+            driver.StartActivity("io.appium.android.apis",".graphics.FingerPaint");
             AndroidElement element = driver.FindElementById("android:id/content");
             Point point = element.Coordinates.LocationInDom;
             Size size = element.Size;
             driver.Swipe
             (
-                point.X + 5, 
-                point.Y + 5, 
+                point.X + 5,
+                point.Y + 5,
                 point.X + size.Width - 5,
-                point.Y + size.Height - 5, 
+                point.Y + size.Height - 5,
                 200
-            ); 
-            
+            );
+
             driver.Swipe
             (
                 point.X + size.Width - 5,
@@ -93,19 +89,19 @@ namespace Appium.Integration.Tests.Android
         }
 
         [Test()]
-        public void pinchAndZoomTest()
+        public void PincTest()
         {
-            driver.FindElementByName("Graphics").Click();
-            driver.ScrollTo("OpenGL ES", "android:id/list").Click();
-            //driver.FindElementByName("OpenGL ES").Click();
-            driver.ScrollTo("Touch Rotate", "android:id/list").Click();
-            //driver.FindElementByName("TouchRotate").Click();
-
+            driver.StartActivity("io.appium.android.apis", ".graphics.TouchRotateActivity");
             AndroidElement element = driver.FindElementById("android:id/content");
             driver.Pinch(element);
-            driver.Zoom(element);
+        }
 
-            Thread.Sleep(2000);
+        [Test()]
+        public void ZoomTest()
+        {
+            driver.StartActivity("io.appium.android.apis", ".graphics.TouchRotateActivity");
+            AndroidElement element = driver.FindElementById("android:id/content");
+            driver.Zoom(element);
         }
     }
 }

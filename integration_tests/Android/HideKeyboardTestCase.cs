@@ -1,39 +1,37 @@
 ﻿using Appium.Integration.Tests.Helpers;
-using Appium.Integration.Tests.PageObjects;
 using NUnit.Framework;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Remote;
 using System;
-using System.Threading;
 
-namespace Appium.Integration.Tests.PageObjectTests.Other
+namespace Appium.Integration.Tests.Android
 {
-    class AndroidJSWebViewTest
+    class HideKeyboardTestCase
     {
         private AndroidDriver<AppiumWebElement> driver;
-        private AndroidJavaScriptTestPageObject pageObject;
 
         [TestFixtureSetUp]
         public void BeforeAll()
         {
             DesiredCapabilities capabilities = Env.isSauce() ?
-                Caps.getAndroid501Caps(Apps.get("selendroidTestApp")) :
-                Caps.getAndroid19Caps(Apps.get("selendroidTestApp"));
+                Caps.getAndroid501Caps(Apps.get("androidApiDemos")) :
+                Caps.getAndroid19Caps(Apps.get("androidApiDemos"));
             if (Env.isSauce())
             {
                 capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
                 capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
+                capabilities.SetCapability("name", "android - complex");
                 capabilities.SetCapability("tags", new string[] { "sample" });
             }
             Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIAndroid;
             driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
-            pageObject = new AndroidJavaScriptTestPageObject(driver);
-            driver.StartActivity("io.selendroid.testapp", ".WebViewActivity");
+            driver.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
         }
 
         [TestFixtureTearDown]
-        public void AfterEach()
+        public void AfterAll()
         {
             if (driver != null)
             {
@@ -46,23 +44,12 @@ namespace Appium.Integration.Tests.PageObjectTests.Other
         }
 
         [Test()]
-        public void HighlightingByJS()
+        public void HideKeyBoardTestCase()
         {
-            Thread.Sleep(5000);
-            var contexts = driver.Contexts;
-            string webviewContext = null;
-            for (int i = 0; i < contexts.Count; i++)
-            {
-                Console.WriteLine(contexts[i]);
-                if (contexts[i].Contains("WEBVIEW"))
-                {
-                    webviewContext = contexts[i];
-                    break;
-                }
-            }
-            Assert.IsNotNull(webviewContext);
-            driver.Context = webviewContext;
-            pageObject.HighlightElement();
+            driver.StartActivity("io.appium.android.apis", ".app.CustomTitle");
+            driver.FindElement(By.Id("io.appium.android.apis:id/left_text_edit")).Clear();
+            driver.HideKeyboard();
         }
+
     }
 }

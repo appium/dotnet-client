@@ -13,6 +13,7 @@
 //limitations under the License.
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Remote;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium.Android
@@ -33,7 +34,7 @@ namespace OpenQA.Selenium.Appium.Android
 
         public AppiumWebElement FindElementByAndroidUIAutomator(string selector)
         {
-            return (AppiumWebElement)this.FindElement("-android uiautomator", selector);
+            return (AppiumWebElement) this.FindElement("-android uiautomator", selector);
         }
 
         public ReadOnlyCollection<AppiumWebElement> FindElementsByAndroidUIAutomator(string selector)
@@ -42,5 +43,13 @@ namespace OpenQA.Selenium.Appium.Android
                             ConvertToExtendedWebElementCollection<AppiumWebElement>(this.FindElements("-android uiautomator", selector));
         }
         #endregion IFindByAndroidUIAutomator Members
+
+        public void ReplaceValue(string value)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("id", Id);
+            parameters.Add("value", value);
+            this.Execute(AppiumDriverCommand.ReplaceValue, parameters);
+        }
     }
 }

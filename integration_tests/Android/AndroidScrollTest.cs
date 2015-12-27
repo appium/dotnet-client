@@ -1,39 +1,36 @@
 ﻿using Appium.Integration.Tests.Helpers;
-using Appium.Integration.Tests.PageObjects;
 using NUnit.Framework;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Remote;
 using System;
-using System.Threading;
 
-namespace Appium.Integration.Tests.PageObjectTests.Other
+namespace Appium.Integration.Tests.Android
 {
-    class AndroidJSWebViewTest
+    public class AndroidScrollTest
     {
         private AndroidDriver<AppiumWebElement> driver;
-        private AndroidJavaScriptTestPageObject pageObject;
 
         [TestFixtureSetUp]
         public void BeforeAll()
         {
             DesiredCapabilities capabilities = Env.isSauce() ?
-                Caps.getAndroid501Caps(Apps.get("selendroidTestApp")) :
-                Caps.getAndroid19Caps(Apps.get("selendroidTestApp"));
+                Caps.getAndroid501Caps(Apps.get("androidApiDemos")) :
+                Caps.getAndroid19Caps(Apps.get("androidApiDemos"));
             if (Env.isSauce())
             {
                 capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
                 capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
+                capabilities.SetCapability("name", "android - complex");
                 capabilities.SetCapability("tags", new string[] { "sample" });
             }
             Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIAndroid;
             driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
-            pageObject = new AndroidJavaScriptTestPageObject(driver);
-            driver.StartActivity("io.selendroid.testapp", ".WebViewActivity");
+            driver.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
         }
 
         [TestFixtureTearDown]
-        public void AfterEach()
+        public void AfterAll()
         {
             if (driver != null)
             {
@@ -46,23 +43,27 @@ namespace Appium.Integration.Tests.PageObjectTests.Other
         }
 
         [Test()]
-        public void HighlightingByJS()
+        public void ScrollToTestCase()
         {
-            Thread.Sleep(5000);
-            var contexts = driver.Contexts;
-            string webviewContext = null;
-            for (int i = 0; i < contexts.Count; i++)
-            {
-                Console.WriteLine(contexts[i]);
-                if (contexts[i].Contains("WEBVIEW"))
-                {
-                    webviewContext = contexts[i];
-                    break;
-                }
-            }
-            Assert.IsNotNull(webviewContext);
-            driver.Context = webviewContext;
-            pageObject.HighlightElement();
+            Assert.NotNull(driver.ScrollTo("View"));
+        }
+
+        [Test()]
+        public void ScrollToExactTestCase()
+        {
+            Assert.NotNull(driver.ScrollToExact("Views"));
+        }
+
+        [Test()]
+        public void ScrollToUsingResourceIdTestCase()
+        {
+            Assert.NotNull(driver.ScrollTo("View", "android: id / list"));
+        }
+
+        [Test()]
+        public void ScrollToExactUsingResourceIdTestCase()
+        {
+            Assert.NotNull(driver.ScrollToExact("Views", "android:id/list"));
         }
     }
 }

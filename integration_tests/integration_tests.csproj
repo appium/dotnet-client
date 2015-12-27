@@ -51,6 +51,8 @@
     <Compile Include="Android\AndroidActivityTest.cs" />
     <Compile Include="Android\AndroidConnectionTest.cs" />
     <Compile Include="Android\AndroidGestureTest.cs" />
+    <Compile Include="Android\AndroidScrollTest.cs" />
+    <Compile Include="Android\HideKeyboardTestCase.cs" />
     <Compile Include="iOS\IosGestureTest.cs" />
     <Compile Include="iOS\IOSLocationTest.cs" />
     <Compile Include="Android\AndroidLocationTest.cs" />
@@ -60,15 +62,14 @@
     <Compile Include="helpers\Caps.cs" />
     <Compile Include="helpers\AppiumServers.cs" />
     <Compile Include="iOS\IosSimpleTest.cs" />
-    <Compile Include="helpers\Actions.cs" />
     <Compile Include="iOS\IosActionsTest.cs" />
     <Compile Include="helpers\Env.cs" />
     <Compile Include="iOS\IosComplexTest.cs" />
     <Compile Include="helpers\Filters.cs" />
     <Compile Include="iOS\IosWebviewTest.cs" />
-    <Compile Include="Android\AndroidSimpleTest.cs" />
+    <Compile Include="Android\AndroidSearchingTest.cs" />
     <Compile Include="Android\AndroidWebviewTest.cs" />
-    <Compile Include="Android\AndroidComplexTest.cs" />
+    <Compile Include="Android\AndroidTouchActionTest.cs" />
     <Compile Include="ServerTests\AppiumLocalServerLaunchingTest.cs" />
     <Compile Include="PageObjects\AndroidJavaScriptTestPageObject.cs" />
     <Compile Include="PageObjects\AndroidPageObjectThatChecksTouchActions.cs" />

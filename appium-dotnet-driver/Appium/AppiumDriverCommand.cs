@@ -253,6 +253,8 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string UpdateSettings = "updateSettings";
 
+        public const string ReplaceValue = "replaceValue";
+
         #endregion JSON Wire Protocol
     }
 }

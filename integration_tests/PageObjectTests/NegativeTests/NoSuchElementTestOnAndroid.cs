@@ -36,7 +36,7 @@ namespace Appium.Integration.Tests.PageObjectTests.NegativeTests
         public void BeforeAll()
         {
             DesiredCapabilities capabilities = Env.isSauce() ?
-                Caps.getAndroid18Caps(Apps.get("androidApiDemos")) :
+                Caps.getAndroid501Caps(Apps.get("androidApiDemos")) :
                 Caps.getAndroid19Caps(Apps.get("androidApiDemos"));
             if (Env.isSauce())
             {

@@ -1,6 +1,5 @@
 ﻿using Appium.Integration.Tests.Helpers;
 using NUnit.Framework;
-using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Remote;
@@ -17,7 +16,7 @@ namespace Appium.Integration.Tests.Android
         public void BeforeAll()
         {
             DesiredCapabilities capabilities = Env.isSauce() ?
-                Caps.getAndroid18Caps(Apps.get("androidApiDemos")) :
+                Caps.getAndroid501Caps(Apps.get("androidApiDemos")) :
                 Caps.getAndroid19Caps(Apps.get("androidApiDemos"));
             if (Env.isSauce())
             {

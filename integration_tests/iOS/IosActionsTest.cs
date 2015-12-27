@@ -78,8 +78,7 @@ namespace Appium.Integration.Tests.iOS
             Thread.Sleep(1000);
 
             Point loc = driver.FindElementByXPath("//UIAMapView[1]").Location;
-            ITouchAction swipe = Actions.Swipe(driver, loc.X, loc.Y, loc.X + 150, loc.Y, 800);
-            swipe.Perform();
+            driver.Swipe(loc.X, loc.Y, loc.X + 150, loc.Y, 800);
         }
     }
 }

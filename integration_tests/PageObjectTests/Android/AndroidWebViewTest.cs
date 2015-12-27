@@ -21,7 +21,7 @@ namespace Appium.Integration.Tests.PageObjectTests.Android
         public void BeforeAll()
         {
             DesiredCapabilities capabilities = Env.isSauce() ?
-                Caps.getAndroid18Caps(Apps.get("selendroidTestApp")) :
+                Caps.getAndroid501Caps(Apps.get("selendroidTestApp")) :
                 Caps.getAndroid19Caps(Apps.get("selendroidTestApp"));
             if (Env.isSauce())
             {
