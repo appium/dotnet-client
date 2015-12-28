@@ -80,14 +80,13 @@ namespace Appium.Integration.Tests.Android
             AppiumWebElement target = els[1];
             var loc2 = target.Location;
 
-            TouchAction press = new TouchAction(driver);
-            press.Press(loc1.X, loc1.Y);
+            TouchAction swipe = new TouchAction(driver);
 
-            TouchAction move = new TouchAction(driver);
-            move.MoveTo(loc2.X, loc2.Y);
+            swipe.Press(loc1.X, loc1.Y).Wait(1000)
+                    .MoveTo(loc2.X, loc2.Y).Release();
 
             MultiAction multiAction = new MultiAction(driver);
-            multiAction.Add(press).Add(move).Perform();
+            multiAction.Add(swipe).Perform();
             Assert.AreNotEqual(loc2.Y, target.Location.Y);
         }
     }

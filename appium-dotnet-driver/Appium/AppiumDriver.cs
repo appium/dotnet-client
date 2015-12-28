@@ -646,7 +646,7 @@ namespace OpenQA.Selenium.Appium
         /// Perform the multi action
         /// </summary>
         /// <param name="multiAction">multi action to perform</param>
-        public void PerformMultiAction(MultiAction multiAction)
+        public void PerformMultiAction(IMultiAction multiAction)
         {
             if (null == multiAction)
             {
@@ -654,14 +654,14 @@ namespace OpenQA.Selenium.Appium
             }
 
             var parameters = multiAction.GetParameters();
-            this.Execute(AppiumDriverCommand.MultiActionV2Perform, parameters);
+            this.Execute(AppiumDriverCommand.PerformMultiAction, parameters);
         }
 
         /// <summary>
         /// Perform the touch action
         /// </summary>
         /// <param name="touchAction">touch action to perform</param>
-        public void PerformTouchAction(TouchAction touchAction)
+        public void PerformTouchAction(ITouchAction touchAction)
         {
             if (null == touchAction)
             {
@@ -670,7 +670,7 @@ namespace OpenQA.Selenium.Appium
 
             var parameters = new Dictionary<string, object>();
             parameters.Add("actions", touchAction.GetParameters());
-            this.Execute(AppiumDriverCommand.TouchActionV2Perform, parameters);
+            this.Execute(AppiumDriverCommand.PerformTouchAction, parameters);
         }
 
         #endregion Multi Actions

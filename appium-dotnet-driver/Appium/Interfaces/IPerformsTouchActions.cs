@@ -21,13 +21,13 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// Perform the multi action
         /// </summary>
         /// <param name="multiAction">multi action to perform</param>
-        void PerformMultiAction(MultiAction multiAction);
+        void PerformMultiAction(IMultiAction multiAction);
 
         /// <summary>
         /// Perform the touch action
         /// </summary>
         /// <param name="touchAction">touch action to perform</param>
-        void PerformTouchAction(TouchAction touchAction);
+        void PerformTouchAction(ITouchAction touchAction);
 
     }
 }

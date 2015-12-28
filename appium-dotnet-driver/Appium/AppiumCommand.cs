@@ -59,8 +59,8 @@ namespace OpenQA.Selenium.Appium
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.UpdateSettings, "/session/{sessionId}/appium/settings"),
 				#endregion Appium Commands
 				#region Touch Commands
-				new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.MultiActionV2Perform, "/session/{sessionId}/touch/multi/perform"),
-                new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.TouchActionV2Perform, "/session/{sessionId}/touch/perform"),
+				new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.PerformMultiAction, "/session/{sessionId}/touch/multi/perform"),
+                new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.PerformTouchAction, "/session/{sessionId}/touch/perform"),
 				#endregion Touch Commands
 
 				#region JSON Wire Protocol Commands

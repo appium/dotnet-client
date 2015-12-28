@@ -55,10 +55,10 @@ namespace OpenQA.Selenium.Appium.MultiTouch
         public Dictionary<string, object> GetParameters()
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("actions", new List<object>());
+
             for (int i = 0; i < actions.Count; i++)
-            {
-                if (i == 0)
-                    parameters.Add("actions", new List<object>());
+            {                    
                 ((List<object>)parameters["actions"])
                     .Add(((TouchAction)actions[i]).GetParameters());
             }
@@ -77,7 +77,18 @@ namespace OpenQA.Selenium.Appium.MultiTouch
         /// </summary>
         public void Perform()
         {
-            TouchActionPerformer.PerformMultiAction(this);
+            if (actions.Count == 1)
+            {
+                TouchActionPerformer.PerformTouchAction(actions[0]);
+            }
+            if (actions.Count > 1)
+            {
+                TouchActionPerformer.PerformMultiAction(this);
+            }
+            if (actions.Count == 0)
+            {
+                throw new ArgumentException("Multi action must have at least one TouchAction added before it can be performed");
+            }
         }
     }
 }

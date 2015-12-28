@@ -11,6 +11,8 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+using System.Collections.Generic;
+
 namespace OpenQA.Selenium.Appium.Interfaces
 {
     public interface IMultiAction
@@ -28,5 +30,11 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// Performs the Multi Action
         /// </summary>
         void Perform();
+
+        /// <summary>
+        /// Gets the actions parameter dictionary for this multi touch action
+        /// </summary>
+        /// <returns>empty dictionary if no actions found, else dictionary of actions</returns>
+        Dictionary<string, object> GetParameters();
     }
 }

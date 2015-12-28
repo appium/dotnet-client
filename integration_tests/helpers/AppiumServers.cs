@@ -16,7 +16,8 @@ namespace Appium.Integration.Tests.Helpers
             {
                 if (LocalService == null)
                 {
-                    LocalService = AppiumLocalService.BuildDefaultService();
+                    AppiumServiceBuilder builder = new AppiumServiceBuilder().WithLogFile(new System.IO.FileInfo("Log"));
+                    LocalService = builder.Build();
                 }
 
                 if (!LocalService.IsRunning)

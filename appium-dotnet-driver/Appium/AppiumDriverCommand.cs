@@ -167,12 +167,12 @@ namespace OpenQA.Selenium.Appium
         /// <summary>
         /// Perform touch action
         /// </summary>
-        public const string TouchActionV2Perform = "touchActionV2Perform";
+        public const string PerformTouchAction = "performTouchAction";
 
         /// <summary>
         /// Perform multi touch action
         /// </summary>
-        public const string MultiActionV2Perform = "multiActionV2Perform";
+        public const string PerformMultiAction = "performMultiTouch";
         #endregion MultiTouchActions
 
         #region Context Commands
