@@ -6,6 +6,8 @@ using OpenQA.Selenium.Remote;
 using System.Collections.Generic;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.MultiTouch;
+using OpenQA.Selenium.Appium.Interfaces;
+using System.Threading;
 
 namespace Appium.Integration.Tests.Android
 {
@@ -61,8 +63,23 @@ namespace Appium.Integration.Tests.Android
             }
 		}
 
-		[Test ()]
-		public void TouchActionTestCase ()
+        [Test()]
+        public void SimpleTouchActionTestCase()
+        {
+            IList<AppiumWebElement> els = driver.FindElementsByClassName("android.widget.TextView");
+
+            int number1 = els.Count;
+
+            TouchAction tap = new TouchAction(driver);
+            tap.Tap(els[4], 10, 5, 2).Perform();
+
+            els = driver.FindElementsByClassName("android.widget.TextView");
+
+            Assert.AreNotEqual(number1, els.Count);
+        }
+
+        [Test ()]
+		public void ComplexTouchActionTestCase ()
 		{
 			IList<AppiumWebElement> els = driver.FindElementsByClassName ("android.widget.TextView");
 			var loc1 = els [7].Location;
@@ -73,7 +90,7 @@ namespace Appium.Integration.Tests.Android
 		}
 
         [Test()]
-        public void MultiActionTestCase()
+        public void SingleMultiActionTestCase()
         {
             IList<AppiumWebElement> els = driver.FindElementsByClassName("android.widget.TextView");
             var loc1 = els[7].Location;
@@ -89,6 +106,32 @@ namespace Appium.Integration.Tests.Android
             multiAction.Add(swipe).Perform();
             Assert.AreNotEqual(loc2.Y, target.Location.Y);
         }
+
+        [Test()]
+        public void SequentalMultiActionTestCase()
+        {
+            string originalActivity = driver.CurrentActivity;
+            IList<AppiumWebElement> els = driver.FindElementsByClassName("android.widget.TextView");
+            MultiAction multiTouch = new MultiAction(driver);
+
+            TouchAction tap1 = new TouchAction(driver);
+            tap1.Press(els[5]).Wait(1500).Release();
+
+            multiTouch.Add(tap1).Add(tap1).Perform();
+
+            Thread.Sleep(2500);
+            els = driver.FindElementsByClassName("android.widget.TextView");
+
+            TouchAction tap2 = new TouchAction(driver);
+            tap2.Press(els[1]).Wait(1500).Release();
+
+            MultiAction multiTouch2 = new MultiAction(driver);
+            multiTouch2.Add(tap2).Add(tap2).Perform();
+
+            Thread.Sleep(2500);
+            Assert.AreNotEqual(originalActivity, driver.CurrentActivity);
+        }
+
     }
 }
 

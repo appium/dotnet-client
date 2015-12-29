@@ -79,6 +79,10 @@ namespace OpenQA.Selenium.Appium
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.DeactivateEngine, "/session/{sessionId}/ime/deactivate"),
 				#endregion Input Method (IME) 
 
+                #region Input value
+				new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ReplaceValue, "/session/{sessionId}/appium/element/{id}/replace_value"),
+				#endregion Input value
+
 				#endregion JSON Wire Protocol Commands
 				
 			};
