@@ -24,13 +24,13 @@ namespace OpenQA.Selenium.Appium
     {
 
         private static List<AppiumCommand> CommandList = new List<AppiumCommand>(){
-				#region Context Commands
-				new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.Contexts, "/session/{sessionId}/contexts" ),
+                #region Context Commands
+                new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.Contexts, "/session/{sessionId}/contexts" ),
                 new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetContext, "/session/{sessionId}/context" ),
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.SetContext, "/session/{sessionId}/context" ),
-				#endregion Context Commands
-				#region Appium Commands
-				new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ShakeDevice, "/session/{sessionId}/appium/device/shake"),
+                #endregion Context Commands
+                #region Appium Commands
+                new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ShakeDevice, "/session/{sessionId}/appium/device/shake"),
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.LockDevice, "/session/{sessionId}/appium/device/lock"),
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.IsLocked, "/session/{sessionId}/appium/device/is_locked"),
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ToggleAirplaneMode, "/session/{sessionId}/appium/device/toggle_airplane_mode"),
@@ -57,35 +57,35 @@ namespace OpenQA.Selenium.Appium
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.StartActivity, "/session/{sessionId}/appium/device/start_activity"),
                 new AppiumCommand(CommandInfo.GetCommand,  AppiumDriverCommand.GetSettings, "/session/{sessionId}/appium/settings"),
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.UpdateSettings, "/session/{sessionId}/appium/settings"),
-				#endregion Appium Commands
-				#region Touch Commands
-				new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.PerformMultiAction, "/session/{sessionId}/touch/multi/perform"),
+                #endregion Appium Commands
+                #region Touch Commands
+                new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.PerformMultiAction, "/session/{sessionId}/touch/multi/perform"),
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.PerformTouchAction, "/session/{sessionId}/touch/perform"),
-				#endregion Touch Commands
+                #endregion Touch Commands
 
-				#region JSON Wire Protocol Commands
-				new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetOrientation, "/session/{sessionId}/orientation"),
+                #region JSON Wire Protocol Commands
+                new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetOrientation, "/session/{sessionId}/orientation"),
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.SetOrientation, "/session/{sessionId}/orientation"),
                 new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetConnectionType, "/session/{sessionId}/network_connection"),
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.SetConnectionType, "/session/{sessionId}/network_connection"),
                 new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetLocation, "/session/{sessionId}/location"),
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.SetLocation, "/session/{sessionId}/location"),
 
-				#region Input Method (IME)
-				new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetAvailableEngines, "/session/{sessionId}/ime/available_engines"),
+                #region Input Method (IME)
+                new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetAvailableEngines, "/session/{sessionId}/ime/available_engines"),
                 new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetActiveEngine, "/session/{sessionId}/ime/active_engine"),
                 new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.IsIMEActive, "/session/{sessionId}/ime/activated"),
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ActivateEngine, "/session/{sessionId}/ime/activate"),
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.DeactivateEngine, "/session/{sessionId}/ime/deactivate"),
-				#endregion Input Method (IME) 
+                #endregion Input Method (IME) 
 
                 #region Input value
-				new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ReplaceValue, "/session/{sessionId}/appium/element/{id}/replace_value"),
-				#endregion Input value
+                new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ReplaceValue, "/session/{sessionId}/appium/element/{id}/replace_value"),
+                #endregion Input value
 
-				#endregion JSON Wire Protocol Commands
-				
-			};
+                #endregion JSON Wire Protocol Commands
+                
+            };
 
         /// <summary>
         /// This method adds Appium-specific commands to the given 
