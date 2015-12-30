@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Android\AndroidActivityTest.cs" />
     <Compile Include="Android\AndroidConnectionTest.cs" />
+    <Compile Include="Android\AndroidElementTest.cs" />
     <Compile Include="Android\AndroidGestureTest.cs" />
     <Compile Include="Android\AndroidScrollTest.cs" />
     <Compile Include="Android\HideKeyboardTestCase.cs" />

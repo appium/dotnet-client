@@ -48,7 +48,7 @@ namespace OpenQA.Selenium.Appium.Android
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("id", Id);
-            parameters.Add("value", value);
+            parameters.Add("value", new string[] { value });
             this.Execute(AppiumDriverCommand.ReplaceValue, parameters);
         }
     }

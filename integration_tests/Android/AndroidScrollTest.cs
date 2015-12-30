@@ -9,7 +9,7 @@ namespace Appium.Integration.Tests.Android
 {
     public class AndroidScrollTest
     {
-        private AndroidDriver<AppiumWebElement> driver;
+        private AndroidDriver<AndroidElement> driver;
 
         [TestFixtureSetUp]
         public void BeforeAll()
@@ -25,7 +25,7 @@ namespace Appium.Integration.Tests.Android
                 capabilities.SetCapability("tags", new string[] { "sample" });
             }
             Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIAndroid;
-            driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
+            driver = new AndroidDriver<AndroidElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
             driver.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
         }
 

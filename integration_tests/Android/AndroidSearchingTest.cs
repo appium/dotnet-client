@@ -49,6 +49,7 @@ namespace Appium.Integration.Tests.Android
             Assert.GreaterOrEqual(driver.FindElements(byAccessibilityId).Count, 1);
         }
 
+        [Test]
         public void FindByAndroidUIAutomatorTest()
         {
             By byAndroidUIAutomator = new ByAndroidUIAutomator("new UiSelector().clickable(true)");
@@ -56,6 +57,7 @@ namespace Appium.Integration.Tests.Android
             Assert.GreaterOrEqual(driver.FindElements(byAndroidUIAutomator).Count, 1);
         }
 
+        [Test]
         public void FindByXPathTest()
         {
             string byXPath = "//android.widget.TextView[contains(@text, 'Animat')]";

@@ -18,6 +18,7 @@
 		The new boolean parameter of the AndroidDdriver.StartActivity method. It allows to start a new activity without closing of a target app.
 		All possible key codes were added to AndroidKeyCode.
 		The API refactoring.
+		The "ReplaceValue" method was added to AndroidElement
 	  1.4.1.1
 	    Update to Selenium.Webdriver v2.48.1 and Selenium.Support v2.48.1
 	    .Net client is completely following the Apache 2.0 license now.
