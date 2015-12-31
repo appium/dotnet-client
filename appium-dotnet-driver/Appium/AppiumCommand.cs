@@ -81,6 +81,7 @@ namespace OpenQA.Selenium.Appium
 
                 #region Input value
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ReplaceValue, "/session/{sessionId}/appium/element/{id}/replace_value"),
+                new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.SetValue, "/session/{sessionId}/appium/element/{id}/value"),
                 #endregion Input value
 
                 #endregion JSON Wire Protocol Commands
