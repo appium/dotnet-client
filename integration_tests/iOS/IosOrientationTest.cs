@@ -8,13 +8,13 @@ using System;
 namespace Appium.Integration.Tests.iOS
 {
  	[TestFixture ()]
-    public class IosOrientationTest
+    public class iOSOrientationTest
 	{
 		private IWebDriver driver;
 
 		[TestFixtureSetUp]
 		public void beforeAll(){
-			DesiredCapabilities capabilities = Caps.getIos82Caps (Apps.get("iosUICatalogApp")); 
+			DesiredCapabilities capabilities = Caps.getIos82Caps (Apps.get("iosTestApp")); 
 			if (Env.isSauce ()) {
 				capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME")); 
 				capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));

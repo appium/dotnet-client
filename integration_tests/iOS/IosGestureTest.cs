@@ -4,18 +4,19 @@ using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.iOS;
 using OpenQA.Selenium.Remote;
 using System;
+using System.Drawing;
 
 namespace Appium.Integration.Tests.iOS
 {
     [TestFixture()]
-    class IosGestureTest
+    class iOSGestureTest
     {
         private AppiumDriver<IOSElement> driver;
 
-        [SetUp]
+        [TestFixtureSetUp]
         public void BeforeAll()
         {
-            DesiredCapabilities capabilities = Caps.getIos82Caps(Apps.get("iosUICatalogApp"));
+			DesiredCapabilities capabilities = Caps.getIos82Caps(Apps.get("iosTestApp"));
             if (Env.isSauce())
             {
                 capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
@@ -28,7 +29,7 @@ namespace Appium.Integration.Tests.iOS
             driver.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
         }
 
-        [TearDown]
+		[TestFixtureTearDown]
         public void AfterEach()
         {
             if (driver != null)
@@ -41,13 +42,42 @@ namespace Appium.Integration.Tests.iOS
             }
         }
 
+		[Test()]
+		public void TapTest()
+		{
+
+			driver.FindElementById ("TextField1").SendKeys ("2");
+			driver.FindElementById ("TextField2").SendKeys ("4");
+
+			IOSElement e = driver.FindElementByAccessibilityId("ComputeSumButton");
+			driver.Tap(2, e, 2000);
+			const string str = "6";
+			Assert.AreEqual (driver.FindElementByXPath ("//*[@name = \"Answer\"]").Text, str);
+		}
+
+		[Test()]
+		public void ZoomTest()
+		{
+			IOSElement e = driver.FindElementByName("TextField1");
+			driver.Zoom(e);
+		}
+
         [Test()]
-        public void GestureTestCase()
+        public void PinchTest()
         {
             IOSElement e = driver.FindElementByName("TextField1");
-            driver.Tap(1, e, 2000);
-            driver.Zoom(e);
             driver.Pinch(e);
         }
+
+		[Test()]
+		public void SwipeTest()
+		{
+			IOSElement slider = driver.FindElementByClassName ("UIASlider");
+			Point location = slider.Location;
+			Size size = slider.Size;
+
+			driver.Swipe (location.X + size.Width / 2, location.Y + size.Height / 2, location.X - 1, location.Y + size.Height / 2, 3000);
+			Assert.AreEqual ("0%", slider.GetAttribute ("value"));
+		}
     }
 }

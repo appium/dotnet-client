@@ -9,14 +9,14 @@ using System;
 namespace Appium.Integration.Tests.iOS
 {
     [TestFixture()]
-    class IOSLocationTest
+    class iOSLocationTest
     {
         private AppiumDriver<IOSElement> driver;
 
         [TestFixtureSetUp]
         public void beforeAll()
         {
-            DesiredCapabilities capabilities = Caps.getIos82Caps(Apps.get("iosUICatalogApp"));
+			DesiredCapabilities capabilities = Caps.getIos82Caps(Apps.get("iosTestApp"));
             if (Env.isSauce())
             {
                 capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
@@ -43,7 +43,7 @@ namespace Appium.Integration.Tests.iOS
         }
 
         [Test()]
-        public void setLocationTest()
+        public void SetLocationTest()
         {
             var l = new Location();
             l.Altitude = 10;

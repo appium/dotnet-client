@@ -10,7 +10,7 @@ using OpenQA.Selenium.Appium.iOS;
 namespace Appium.Integration.Tests.iOS
 {
 	[TestFixture ()]
-	public class IosWebviewTest
+	public class iOSWebviewTest
 	{
 		private AppiumDriver<IWebElement> driver;
 
@@ -47,13 +47,14 @@ namespace Appium.Integration.Tests.iOS
 				.SendKeys("www.google.com");
 			driver.FindElementByName ("Go").Click ();
 			driver.FindElementByClassName ("UIAWebView").Click (); // dismissing keyboard
+			Thread.Sleep(10000);
 			driver.Context = "WEBVIEW";
 			Thread.Sleep (3000);
 			var el = driver.FindElementByName ("q");
-			el.SendKeys ("sauce labs");
+			el.SendKeys ("Appium");
 			el.SendKeys(Keys.Return);
 			Thread.Sleep (1000);
-			Assert.IsTrue (driver.Title.Contains("sauce labs"));
+			Assert.IsTrue (driver.Title.Contains("Appium"));
 		}
 	}
 }

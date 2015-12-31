@@ -4,8 +4,6 @@ using Appium.Integration.Tests.Helpers;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium;
-using System.Threading;
-using System.Drawing;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.MultiTouch;
 using OpenQA.Selenium.Appium.iOS;
@@ -13,11 +11,11 @@ using OpenQA.Selenium.Appium.iOS;
 namespace Appium.Integration.Tests.iOS
 {
     [TestFixture()]
-    public class IosActionsTest
+    public class iOSTouchActionTest
     {
         private AppiumDriver<IWebElement> driver;
 
-        [SetUp]
+		[TestFixtureSetUp]
         public void BeforeAll()
         {
             DesiredCapabilities capabilities = Caps.getIos82Caps(Apps.get("iosTestApp"));
@@ -33,7 +31,7 @@ namespace Appium.Integration.Tests.iOS
             driver.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
         }
 
-        [TearDown]
+		[TestFixtureTearDown]
         public void AfterEach()
         {
             if (driver != null)
@@ -49,15 +47,25 @@ namespace Appium.Integration.Tests.iOS
         [Test()]
         public void SimpleActionTestCase()
         {
+			driver.FindElementById ("TextField1").Clear();
+			driver.FindElementById ("TextField1").SendKeys ("1");
+			driver.FindElementById ("TextField2").Clear ();
+			driver.FindElementById ("TextField2").SendKeys ("3");
             IWebElement el = driver.FindElementByAccessibilityId("ComputeSumButton");
             ITouchAction action = new TouchAction(driver);
             action.Press(el, 10, 10).Release();
             action.Perform();
+			const string str = "4";
+			Assert.AreEqual (driver.FindElementByXPath ("//*[@name = \"Answer\"]").Text, str);
         }
 
         [Test()]
         public void MultiActionTestCase()
         {
+			driver.FindElementById ("TextField1").Clear();
+			driver.FindElementById ("TextField1").SendKeys ("2");
+			driver.FindElementById ("TextField2").Clear();
+			driver.FindElementById ("TextField2").SendKeys ("4");
             IWebElement el = driver.FindElementByAccessibilityId("ComputeSumButton");
             ITouchAction a1 = new TouchAction(driver);
             a1.Tap(el, 10, 10);
@@ -66,19 +74,8 @@ namespace Appium.Integration.Tests.iOS
             IMultiAction m = new MultiAction(driver);
             m.Add(a1).Add(a2);
             m.Perform();
-        }
-
-        [Test()]
-        public void SwipeTestCase()
-        {
-            driver.FindElementByName("Test Gesture").Click();
-            Thread.Sleep(1000);
-
-            driver.FindElementByName("OK").Click();
-            Thread.Sleep(1000);
-
-            Point loc = driver.FindElementByXPath("//UIAMapView[1]").Location;
-            driver.Swipe(loc.X, loc.Y, loc.X + 150, loc.Y, 800);
+			const string str = "6";
+			Assert.AreEqual (driver.FindElementByXPath ("//*[@name = \"Answer\"]").Text, str);
         }
     }
 }
