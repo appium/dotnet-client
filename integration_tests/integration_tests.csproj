@@ -68,7 +68,7 @@
     <Compile Include="iOS\iOSGestureTest.cs" />
     <Compile Include="iOS\iOSLocationTest.cs" />
     <Compile Include="iOS\iOSOrientationTest.cs" />
-    <Compile Include="iOS\IosSimpleTest.cs" />
+    <Compile Include="iOS\iOSSearchingTest.cs" />
     <Compile Include="iOS\iOSTouchActionTest.cs" />
     <Compile Include="iOS\iOSWebviewTest.cs" />
     <Compile Include="ServerTests\AppiumLocalServerLaunchingTest.cs" />
