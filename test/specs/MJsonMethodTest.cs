@@ -212,9 +212,9 @@ namespace OpenQA.Selenium.Appium.Test.Specs
         [Test]
         public void SetImmediateValueTestCase()
         {
-            IOSDriver<IWebElement> driver = new IOSDriver<IWebElement>(defaultUri, capabilities);
+            IOSDriver<IOSElement> driver = new IOSDriver<IOSElement>(defaultUri, capabilities);
             server.respondTo("POST", "/element", new Dictionary<string, object>  { 				{"ELEMENT", '5'} 			});
-            AppiumWebElement element = (AppiumWebElement)driver.FindElementByIosUIAutomation(".elements()");
+            IOSElement element = driver.FindElementByIosUIAutomation(".elements()");
             server.clear();
             server.respondTo("POST", "/appium/element/5/value", null);
             element.SetImmediateValue("123");

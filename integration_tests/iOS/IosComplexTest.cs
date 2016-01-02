@@ -160,18 +160,6 @@ namespace Appium.Integration.Tests.iOS
         }
 
         [Test()]
-        public void SliderTestCase()
-        {
-            ClickMenuItem("Sliders, AAPLSliderViewController");
-            // retrieve slider, check initial value
-            var slider = (AppiumWebElement)driver.FindElementByClassName("UIASlider");
-            Assert.AreEqual(slider.GetAttribute("value"), "42%");
-            // change value
-            slider.SetImmediateValue("0%");
-            Assert.AreEqual(slider.GetAttribute("value"), "0%");
-        }
-
-        [Test()]
         public void ElementSizeTestCase()
         {
             var s1 = driver.FindElementByClassName("UIATableView").Size;

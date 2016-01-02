@@ -71,7 +71,7 @@ namespace OpenQA.Selenium.Appium.iOS
 
         #endregion
 
-        public void SetValue(string value)
+        public void SetImmediateValue(string value)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("id", Id);

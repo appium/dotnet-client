@@ -132,11 +132,6 @@ namespace OpenQA.Selenium.Appium
         public const string GetAppStrings = "getAppStrings";
 
         /// <summary>
-        ///  Set Immediate Value Command.
-        /// </summary>
-        public const string SetImmediateValue = "setImmediateValue";
-
-        /// <summary>
         /// Represents the Hide Keyboard command
         /// </summary>
         public const string HideKeyboard = "hideKeyboard";
