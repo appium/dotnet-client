@@ -12,57 +12,57 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Selenium Webdriver extension for Appium.</description>
     <releaseNotes>
-	  1.5.0.1
-		Update to Selenium.Webdriver v2.48.1 and Selenium.Support v2.48.2
-		The ability to start appium server programmatically was provided. The ICommandServer implementation (AppiumLocalService).
-		The new boolean parameter of the AndroidDdriver.StartActivity method. It allows to start a new activity without closing of a target app.
-		All possible key codes were added to AndroidKeyCode.
-		The API refactoring.
-		The "ReplaceValue" method was added to AndroidElement
-	  1.4.1.1
-	    Update to Selenium.Webdriver v2.48.1 and Selenium.Support v2.48.1
-	    .Net client is completely following the Apache 2.0 license now.
-	    IMobileElement implementations are able to perform gestures such as Pinch, Tap and Zoom.	
-		Constructor set of MultiAction and TouchAction was improved. Redundant constructors were removed.
-	  1.4.0.3
-	    the bug which prevented the using of TouchAction/MultiTouchActions with IWebElement was fixed. This problem is reproduced
-		with IWebElement instances created via Selenium PageFactory.
-	  1.4.0.2
-        features ported from the Java-Appium-Driver. Integration with Selenium PageFactory.
+      1.5.0.1
+      Update to Selenium.Webdriver v2.48.1 and Selenium.Support v2.48.2
+      The ability to start appium server programmatically was provided. The ICommandServer implementation (AppiumLocalService).
+      The new boolean parameter of the AndroidDdriver.StartActivity method. It allows to start a new activity without closing of a target app.
+      All possible key codes were added to AndroidKeyCode.
+      The API refactoring.
+      The "ReplaceValue" method was added to AndroidElement
+      The "SetImmediateValue" was moved from the AppiumWebElement to IOSElement
+      1.4.1.1
+      Update to Selenium.Webdriver v2.48.1 and Selenium.Support v2.48.1
+      .Net client is completely following the Apache 2.0 license now.
+      IMobileElement implementations are able to perform gestures such as Pinch, Tap and Zoom.
+      Constructor set of MultiAction and TouchAction was improved. Redundant constructors were removed.
+      1.4.0.3
+      the bug which prevented the using of TouchAction/MultiTouchActions with IWebElement was fixed. This problem is reproduced
+      with IWebElement instances created via Selenium PageFactory.
+      1.4.0.2
+      features ported from the Java-Appium-Driver. Integration with Selenium PageFactory.
       1.3.0.1
-        Generic AppiumDriver class/subclasses and fix for TryAddCommand.
+      Generic AppiumDriver class/subclasses and fix for TryAddCommand.
       1.2.0.8
-        Fix/Test for hide keyboard.
+      Fix/Test for hide keyboard.
       1.2.0.7
-        Separate android and ios drivers, improved namespaces, fixed tests, and redesigned methods and interfaces
+      Separate android and ios drivers, improved namespaces, fixed tests, and redesigned methods and interfaces
       1.2.0.6
-        Update Selenium NuGet Package to get fix for locator strategy.
+      Update Selenium NuGet Package to get fix for locator strategy.
       1.2.0.5
-        Add GetSettings and IgnoreUnimportantViews methods.
+      Add GetSettings and IgnoreUnimportantViews methods.
       1.2.0.4
-        Update version due to assembly not matching NuGet.
-      1.2.0.3 
-        Update version due to NuGet Package mismanagement.
+      Update version due to assembly not matching NuGet.
+      1.2.0.3
+      Update version due to NuGet Package mismanagement.
       1.2.0.2
-        Update NuGet packages. Add IsLocked() and Start Activity.
+      Update NuGet packages. Add IsLocked() and Start Activity.
       1.2.0.1
-        Add Pull Folder, Android Input Methods (IME), and Network Connection Methods for use with Appium 1.2
+      Add Pull Folder, Android Input Methods (IME), and Network Connection Methods for use with Appium 1.2
       1.0.0
-        TouchAction + multiActions rewriting,
-        Project structure overhaul. 
+      TouchAction + multiActions rewriting,
+      Project structure overhaul.
     </releaseNotes>
     <copyright>Copyright 2014</copyright>
     <tags>Appium Webdriver device automation</tags>
-  <dependencies>
-    <dependency id="Newtonsoft.Json" version="7.0.1"/>
-    <dependency id="Selenium.WebDriver" version="2.48.2"/>
-    <dependency id="Selenium.Support" version="2.48.2"/>
-	<dependency id="Castle.Core" version="3.3.3"/>
-  </dependencies>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="7.0.1"/>
+      <dependency id="Selenium.WebDriver" version="2.48.2"/>
+      <dependency id="Selenium.Support" version="2.48.2"/>
+      <dependency id="Castle.Core" version="3.3.3"/>
+    </dependencies>
   </metadata>
   <files>
     <file src="bin/Release/appium-dotnet-driver.dll" target="lib/net40/appium-dotnet-driver.dll" />
-    <file src="bin/Release/appium-dotnet-driver.XML" target="lib/net40/appium-dotnet-driver.XML" /> 
+    <file src="bin/Release/appium-dotnet-driver.XML" target="lib/net40/appium-dotnet-driver.XML" />
   </files>
 </package>
- 
