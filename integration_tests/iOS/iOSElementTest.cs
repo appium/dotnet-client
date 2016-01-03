@@ -5,9 +5,6 @@ using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.iOS;
 using OpenQA.Selenium.Remote;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Appium.Integration.Tests.iOS
 {
@@ -48,16 +45,16 @@ namespace Appium.Integration.Tests.iOS
         public void FindByAccessibilityIdTest()
         {
             By byAccessibilityId = new ByAccessibilityId("ComputeSumButton");
-            Assert.AreNotEqual(driver.FindElementByClassName("UIAWindow").FindElement(byAccessibilityId).Text, null);
-            Assert.GreaterOrEqual(driver.FindElementByClassName("UIAWindow").FindElements(byAccessibilityId).Count, 1);
+            Assert.AreNotEqual(driver.FindElementsByClassName("UIAWindow")[1].FindElement(byAccessibilityId).Text, null);
+            Assert.GreaterOrEqual(driver.FindElementsByClassName("UIAWindow")[1].FindElements(byAccessibilityId).Count, 1);
         }
 
         [Test()]
         public void FindByByIosUIAutomationTest()
         {
             By byIosUIAutomation = new ByIosUIAutomation(".elements().withName(\"Answer\")");
-            Assert.IsNotNull(driver.FindElementByClassName("UIAWindow").FindElement(byIosUIAutomation).Text);
-            Assert.GreaterOrEqual(driver.FindElementByClassName("UIAWindow").FindElements(byIosUIAutomation).Count, 1);
+			Assert.IsNotNull(driver.FindElementsByClassName("UIAWindow")[1].FindElement(byIosUIAutomation).Text);
+			Assert.GreaterOrEqual(driver.FindElementsByClassName("UIAWindow")[1].FindElements(byIosUIAutomation).Count, 1);
         }
 
         [Test()]
