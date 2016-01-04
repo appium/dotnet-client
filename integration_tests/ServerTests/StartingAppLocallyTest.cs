@@ -72,7 +72,7 @@ namespace Appium.Integration.Tests.ServerTests
             IOSDriver<AppiumWebElement> driver = null;
             try
             {
-                driver = new IOSDriver<AppiumWebElement>(capabilities);
+				driver = new IOSDriver<AppiumWebElement>(capabilities, Env.INIT_TIMEOUT_SEC);
                 driver.CloseApp();
             }
             finally
@@ -100,7 +100,7 @@ namespace Appium.Integration.Tests.ServerTests
             IOSDriver<AppiumWebElement> driver = null;
             try
             {
-                driver = new IOSDriver<AppiumWebElement>(builder, capabilities);
+				driver = new IOSDriver<AppiumWebElement>(builder, capabilities, Env.INIT_TIMEOUT_SEC);
                 driver.CloseApp();
             }
             finally
@@ -133,7 +133,7 @@ namespace Appium.Integration.Tests.ServerTests
             {
                 try
                 {
-                    driver = new IOSDriver<AppiumWebElement>(service, capabilities);
+					driver = new IOSDriver<AppiumWebElement>(service, capabilities);
                 }
                 catch (Exception e)
                 {
