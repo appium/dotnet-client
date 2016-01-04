@@ -106,9 +106,14 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <None Include="helpers\ApiDemos-debug.apk" />
     <None Include="helpers\PathToLinuxNode" />
     <None Include="helpers\PathToMacOSNode" />
     <None Include="helpers\PathToWindowsNode" />
+    <None Include="helpers\selendroid-test-app-0.10.0.apk" />
+    <None Include="helpers\TestApp7.1.app.zip" />
+    <None Include="helpers\UICatalog7.1.app.zip" />
+    <None Include="helpers\WebViewApp7.1.app.zip" />
     <None Include="packages.config" />
     <None Include="env.json.sample" />
     <None Include="README.md" />
