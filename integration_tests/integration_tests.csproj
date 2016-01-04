@@ -64,7 +64,7 @@
     <Compile Include="Android\AndroidSearchingTest.cs" />
     <Compile Include="Android\AndroidWebviewTest.cs" />
     <Compile Include="Android\AndroidTouchActionTest.cs" />
-    <Compile Include="iOS\IosComplexTest.cs" />
+    <Compile Include="iOS\iOSAlertTest.cs" />
     <Compile Include="iOS\iOSElementTest.cs" />
     <Compile Include="iOS\iOSGestureTest.cs" />
     <Compile Include="iOS\iOSLocationTest.cs" />
