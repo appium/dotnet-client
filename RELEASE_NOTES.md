@@ -1,7 +1,7 @@
 #Release Notes
 
-##1.5.0.1 (is going to be released)
-- Update to Selenium.Webdriver v2.48.1 and Selenium.Support v2.48.2
+##1.5.0.1
+- Update to Selenium.Webdriver v2.48.2 and Selenium.Support v2.48.2
 - The ability to start appium server programmatically was provided. The ICommandServer implementation (AppiumLocalService).
 - The new boolean parameter of the AndroidDdriver.StartActivity method. It allows to start a new activity without closing of a target app.
 - All possible key codes were added to AndroidKeyCode.

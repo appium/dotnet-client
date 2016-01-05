@@ -25,90 +25,22 @@ Note: we will NOT publish a signed version of this assembly since the dependenci
  the ports are defaulted to Appium values, and the driver does not know how to start the Appium on its own.
 - To use the Appium methods on Element, you need to specify the parameter of `AppiumDriver` or its subclasses.
 
-Here is the example for Android:
-
-```c#
-...
-using OpenQA.Selenium.Remote;
-using OpenQA.Selenium.Appium;
-using OpenQA.Selenium.Appium.Android;
-
-namespace AppiumDriverDemo
-{
-	[TestFixture ()]
-	public class ProgramTest
-	{
-		private AppiumDriver<AppiumWebElement> driver;
-
-		[TestFixtureSetUp]
-		public void beforeAll(){
-			DesiredCapabilities capabilities = new DesiredCapabilities();
-
-			capabilities.SetCapability("deviceName", "Android Emulator");
-			capabilities.SetCapability("platformName", "Android");
-			capabilities.SetCapability("app", "<Path to your app>");
-			driver = new AndroidDriver<AppiumWebElement>(new Uri("http://127.0.0.1:4723/wd/hub"), capabilities);		
-		}
-
-		[TestFixtureTearDown]
-		public void afterAll(){
-			// shutdown
-			driver.Quit();
-		}
-			
-		[Test ()]
-		public void AppiumDriverMethodsTestCase ()
-		{
-			// Using appium extension methods
-			AppiumWebElement el = driver.FindElementsByAndroidUIAutomator ("new UiSelector().enabled(true)");
-			el.SendKeys ("abc");
-			Assert.AreEqual (el.Text, "abc");
-		}
-	}
-
-}
-
-```
 [Read Wiki](https://github.com/appium/appium-dotnet-driver/wiki)
 
-[See samples here](/samples)
+[See samples here](https://github.com/appium/sample-code/tree/master/sample-code/examples/dotnet/AppiumDotNetSample)
 
-### TouchAction
-```c#
-TouchAction a1 = new TouchAction (driver);
-a1
-  .Press (element, 100, 100)
-  .Wait (1000)
-  .Release ();
-a1.Perform();
-```
-
-### MultiAction
-
-```c#
-MultiAction m = new MultiAction(driver);
-
-TouchAction a1 = new TouchAction (driver);
-a1
-  .Press (element, 100, 100)
-  .Wait (1000)
-  .Release ();
-m.Add(a1);
-
-TouchAction a2 = new TouchAction ();
-a2
-  .Tap (100, 100)
-  .MoveTo (element);
-m.Add (a2);
-
-m.Perform();
-```
 
 ## Dev Build+Test 
 
+Xamarin/Mono
 - Open with [Xamarin](http://xamarin.com/)
 - `Rebuild all`
 - `Run tests in test/specs`
+
+Visual studio
+
+- Open with [Visual Studio](https://www.visualstudio.com/)
+- build solution
 
 ## Nuget Deployment (for maintainers)
 
