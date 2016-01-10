@@ -225,6 +225,7 @@ namespace Appium.Integration.Tests.ServerTests
                 {
                     File.Delete(log.FullName);
                 }
+                service.Dispose();
             }
         }
     }
