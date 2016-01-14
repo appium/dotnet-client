@@ -42,52 +42,6 @@ namespace OpenQA.Selenium.Appium
         /// <param name="duration">amount of time in milliseconds for the entire swipe action to take</param>
         void Swipe(int startx, int starty, int endx, int endy, int duration);
 
-        /// <summary>
-        /// Convenience method for pinching an element on the screen.
-        /// "pinching" refers to the action of two appendages Pressing the screen and sliding towards each other.
-        /// NOTE:
-        /// driver convenience method places the initial touches around the element, if driver would happen to place one of them
-        /// off the screen, appium with return an outOfBounds error. In driver case, revert to using the MultiAction api
-        /// instead of driver method.
-        /// </summary>
-        /// <param name="el">The element to pinch</param>
-        void Pinch(IWebElement el);
-
-        /// <summary>
-        /// Convenience method for pinching an element on the screen.
-        /// "pinching" refers to the action of two appendages Pressing the screen and sliding towards each other.
-        /// NOTE:
-        /// driver convenience method places the initial touches around the element at a distance, if driver would happen to place
-        /// one of them off the screen, appium will return an outOfBounds error. In driver case, revert to using the
-        /// MultiAction api instead of driver method.
-        /// </summary>
-        /// <param name="x">x coordinate to terminate the pinch on</param>
-        /// <param name="y">y coordinate to terminate the pinch on></param>
-        void Pinch(int x, int y);
-
-        /// <summary>
-        /// Convenience method for "zooming in" on an element on the screen.
-        /// "zooming in" refers to the action of two appendages Pressing the screen and sliding away from each other.
-        /// NOTE:
-        /// driver convenience method slides touches away from the element, if driver would happen to place one of them
-        /// off the screen, appium will return an outOfBounds error. In driver case, revert to using the MultiAction api
-        /// instead of driver method.
-        /// <param name="x">x coordinate to terminate the zoom on</param>
-        /// <param name="y">y coordinate to terminate the zoom on></param>
-        /// </summary>
-        void Zoom(int x, int y);
-
-        /// <summary>
-        /// Convenience method for "zooming in" on an element on the screen.
-        /// "zooming in" refers to the action of two appendages Pressing the screen and sliding away from each other.
-        /// NOTE:
-        /// driver convenience method slides touches away from the element, if driver would happen to place one of them
-        /// off the screen, appium will return an outOfBounds error. In driver case, revert to using the MultiAction api
-        /// instead of driver method.
-        /// <param name="el">The element to pinch</param>
-        /// </summary>
-        void Zoom(IWebElement el);
-
     }
 }
 
