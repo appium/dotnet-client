@@ -28,6 +28,10 @@ namespace OpenQA.Selenium.Appium.Service
     /// </summary>
     public class AppiumServiceBuilder
     {
+        private static readonly string ErrorNodeNotFound = "There is no installed nodes! Please install " +
+                                " node via NPM (https://www.npmjs.com/package/appium#using-node-js) or download and " +
+                                "install Appium app (http://appium.io/downloads.html)";
+
         private OptionCollector ServerOptions;
         private FileInfo AppiumJS;
         private string IpAddress = AppiumServiceConstants.DefaultLocalIPAddress;
@@ -188,17 +192,30 @@ namespace OpenQA.Selenium.Appium.Service
 
                 try
                 {
-                    FileInfo result;
-                    if (String.IsNullOrEmpty(instancePath) || !(result = new FileInfo(instancePath + Path.DirectorySeparatorChar +
-                            AppiumServiceConstants.AppiumNodeMask)).Exists)
+                    DirectoryInfo defaultAppiumNode;
+                    if (String.IsNullOrEmpty(instancePath) || !(defaultAppiumNode = new DirectoryInfo(instancePath + Path.DirectorySeparatorChar +
+                            AppiumServiceConstants.AppiumFolder)).Exists)
                     {
-                        String errorOutput = ReadErrorStream(p);
-                        throw new InvalidServerInstanceException("There is no installed nodes! Please install " +
-                                " node via NPM (https://www.npmjs.com/package/appium#using-node-js) or download and " +
-                                "install Appium app (http://appium.io/downloads.html)",
-                                new IOException(errorOutput));
+                        throw new InvalidServerInstanceException(ErrorNodeNotFound);
                     }
-                    return result;
+
+                    FileInfo oldResult;
+                    //older appium server
+                    if ((oldResult = new FileInfo(defaultAppiumNode.FullName + AppiumServiceConstants.AppiumNodeOldMask)).Exists)
+                    {
+                        return oldResult;
+                    }
+                    //appium servers v1.5.x and higher
+                    FileInfo newResult;
+                    if ((newResult = new FileInfo(defaultAppiumNode.FullName + AppiumServiceConstants.AppiumNodeMask)).Exists)
+                    {
+                        return newResult;
+                    }
+
+                    throw new InvalidServerInstanceException(ErrorNodeNotFound,
+                                new IOException("Could not find file neither " + AppiumServiceConstants.AppiumNodeOldMask + " nor " +
+                                AppiumServiceConstants.AppiumNodeMask + " in the " +
+                                defaultAppiumNode + " directory"));
                 }
                 finally
                 {

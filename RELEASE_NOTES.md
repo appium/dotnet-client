@@ -1,5 +1,9 @@
 #Release Notes
 
+##1.5.1.1
+- Update to Selenium.Webdriver v2.52.0 and Selenium.Support v2.52.0
+- FIXED The issue of compatibility of AppiumServiceBuilder with Appium node server v >= 1.5.x.
+
 ##1.5.0.1
 - Update to Selenium.Webdriver v2.48.2 and Selenium.Support v2.48.2
 - The ability to start appium server programmatically was provided. The ICommandServer implementation (AppiumLocalService).

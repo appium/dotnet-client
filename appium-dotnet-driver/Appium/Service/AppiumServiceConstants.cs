@@ -22,7 +22,18 @@ namespace OpenQA.Selenium.Appium.Service
 {
     public sealed class AppiumServiceConstants
     {
+        /// <summary>
+        /// The environmental variable used to define
+        /// the path to executable appium.js (1.4.x and lower) or
+        /// main.js (1.5.x and higher)
+        /// </summary>
         public static readonly string AppiumBinaryPath = "APPIUM_BINARY_PATH";
+
+        /// <summary>
+        /// The environmental variable used to define
+        /// the path to executable NodeJS file (node.exe for WIN and
+        /// node for Linux/MacOS X)
+        /// </summary>
         public static readonly string NodeBinaryPath = "NODE_BINARY_PATH";
 
         internal readonly static string Bash = "/bin/bash";
@@ -34,8 +45,15 @@ namespace OpenQA.Selenium.Appium.Service
 
         internal static readonly string AppiumFolder = "appium";
         internal static readonly string BinFolder = "bin";
+
+        internal static readonly string BuildFolder = "build";
+        internal static readonly string LibFolder = "lib";
+
         internal static readonly string AppiumJSName = "appium.js";
-        internal static readonly string AppiumNodeMask = Path.DirectorySeparatorChar +
-            AppiumFolder + Path.DirectorySeparatorChar + BinFolder + Path.DirectorySeparatorChar + AppiumJSName;
+        internal static readonly string MainJSName = "main.js";
+
+        internal static readonly string AppiumNodeOldMask = Path.DirectorySeparatorChar + BinFolder + Path.DirectorySeparatorChar + AppiumJSName;
+        internal static readonly string AppiumNodeMask = Path.DirectorySeparatorChar + BuildFolder + Path.DirectorySeparatorChar + LibFolder +
+            Path.DirectorySeparatorChar + MainJSName;
     }
 }

@@ -26,12 +26,12 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract
         {
             if (byList.Count == 0)
             {
-                throw new IllegalLocatorException("The desired locator strategy is not defines");
+                throw new ArgumentException("The desired locator strategy is not defines");
             }
 
             if (byList.Count > 1)
             {
-                throw new IllegalLocatorException("There should be defined only one locator strategy. Few strategies are being defined " +
+                throw new ArgumentException("There should be defined only one locator strategy. Few strategies are being defined " +
                 "right now: " + byList.ToString());
             }
         }
