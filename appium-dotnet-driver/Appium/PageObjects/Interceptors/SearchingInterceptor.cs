@@ -44,21 +44,6 @@ namespace OpenQA.Selenium.Appium.PageObjects.Interceptors
 
         internal abstract object getTarget(IInvocation invocation);
 
-        private static bool IsInvalidSelectorRootCause(Exception e)
-        {
-            String invalid_selector_pattern = "Invalid locator strategy:";
-            if (e == null)
-                return false;
-
-            string message = e.Message;
-
-            if (!String.IsNullOrWhiteSpace(message) && message.Contains(invalid_selector_pattern))
-                return true;
-
-            return IsInvalidSelectorRootCause(e.InnerException);
-        }
-
-
         internal static Func<IElementLocator, ReadOnlyCollection<IWebElement>> ReturnWaitingFunction(IElementLocator locator,
             IEnumerable<By> bys)
         {
@@ -80,9 +65,7 @@ namespace OpenQA.Selenium.Appium.PageObjects.Interceptors
                     }
                     catch (Exception e)
                     {
-                        if (!IsInvalidSelectorRootCause(e))
-                            throw e;
-                        continue;
+                        throw e;
                     }
 
                 }
