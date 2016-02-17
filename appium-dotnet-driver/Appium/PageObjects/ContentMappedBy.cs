@@ -42,6 +42,23 @@ namespace OpenQA.Selenium.Appium.PageObjects
             return map[ContentTypes.HTML];
         }
 
+        private static bool IsInvalidSelectorRootCause(Exception e)
+        {
+            String invalid_selector_pattern = "Invalid locator strategy:";
+            if (e == null)
+                return false;
+
+            string message = e.Message;
+
+            if (!String.IsNullOrWhiteSpace(message) && (typeof(InvalidSelectorException).IsAssignableFrom(e.GetType()) ||
+                message.Contains(invalid_selector_pattern)))
+            {
+                return true;
+            }            
+
+            return IsInvalidSelectorRootCause(e.InnerException);
+        }
+
 
         public override ReadOnlyCollection<IWebElement> FindElements(ISearchContext context)
         {
@@ -50,8 +67,19 @@ namespace OpenQA.Selenium.Appium.PageObjects
 
             foreach (var by in bys)
             {
-                ReadOnlyCollection<IWebElement> list = context.FindElements(by);
-                result.AddRange(list);
+                try
+                {
+                    ReadOnlyCollection<IWebElement> list = context.FindElements(by);
+                    result.AddRange(list);
+                }
+                catch (Exception e)
+                {
+                    if (IsInvalidSelectorRootCause(e))
+                    {
+                        continue;
+                    }
+                    throw e;
+                }
             }
 
             return result.AsReadOnly();
