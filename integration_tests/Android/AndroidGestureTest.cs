@@ -93,7 +93,7 @@ namespace Appium.Integration.Tests.Android
         {
             driver.StartActivity("io.appium.android.apis", ".graphics.TouchRotateActivity");
             AndroidElement element = driver.FindElementById("android:id/content");
-            driver.Pinch(element);
+            driver.Pinch(element, 100, 50);
         }
 
         [Test()]
@@ -101,7 +101,7 @@ namespace Appium.Integration.Tests.Android
         {
             driver.StartActivity("io.appium.android.apis", ".graphics.TouchRotateActivity");
             AndroidElement element = driver.FindElementById("android:id/content");
-            driver.Zoom(element);
+            driver.Zoom(element, 100, 50);
         }
     }
 }

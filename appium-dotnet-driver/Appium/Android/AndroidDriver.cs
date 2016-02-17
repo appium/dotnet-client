@@ -384,5 +384,38 @@ namespace OpenQA.Selenium.Appium.Android
 
         #endregion
 
+        /// <summary>
+        /// Execute a zoom on an element.
+        /// </summary>
+        public void Zoom(AppiumWebElement element, int percent, int steps)
+        {
+            pinch(element, percent, steps, true);
+        }
+
+        /// <summary>
+        /// Execute a pinch on an element.
+        /// </summary>
+        public void Pinch(AppiumWebElement element, int percent, int steps)
+        {
+            pinch(element, percent, steps, false);
+        }
+
+        /// <summary>
+        /// Will pinch or zoom on an element, depending on the last parameter.
+        /// If zoom is true this will execute a zoom in, otherwise a pinch.
+        /// </summary>
+        private void pinch(AppiumWebElement element, int percent, int steps, bool zoom)
+        {
+            Dictionary<string, object> pinchOpts = new Dictionary<string, object>
+            {
+                {"element", element.ID},
+                {"percent", percent},
+                {"steps", steps}
+            };
+
+            string command = string.Format("mobile: pinch{0}", zoom ? "Open" : "Close");
+            ExecuteScript(command, pinchOpts);
+        }
+
     }
 }

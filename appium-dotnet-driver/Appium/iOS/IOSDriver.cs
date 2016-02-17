@@ -17,6 +17,7 @@ using OpenQA.Selenium.Appium.iOS.Interfaces;
 using OpenQA.Selenium.Appium.Service;
 using OpenQA.Selenium.Remote;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium.iOS
@@ -176,6 +177,41 @@ namespace OpenQA.Selenium.Appium.iOS
                 return (W)((IFindByAccessibilityId<W>)element).FindElementByAccessibilityId(name);
             }
             return element;
+        }
+
+        /// <summary>
+        /// Execute a zoom on an element.
+        /// </summary>
+        public void Zoom(int startX, int startY, int endX, int endY, int duration)
+        {
+            pinch(startX, startY, endX, endY, duration, true);
+        }
+
+        /// <summary>
+        /// Execute a pinch on an element.
+        /// </summary>
+        public void Pinch(int startX, int startY, int endX, int endY, int duration)
+        {
+            pinch(startX, startY, endX, endY, duration, false);
+        }
+
+        /// <summary>
+        /// Will pinch or zoom on an element, depending on the last parameter.
+        /// If zoom is true this will execute a zoom in, otherwise a pinch.
+        /// </summary>
+        private void pinch(int startX, int startY, int endX, int endY, int duration, bool zoom)
+        {
+            Dictionary<string, object> pinchOpts = new Dictionary<string, object>
+            {
+                { "startX", startX },
+                { "startY", startY },
+                { "endX", endX },
+                { "endY", endY },
+                { "duration", duration }
+            };
+
+            string command = string.Format("mobile: pinch{0}", zoom ? "Open" : "Close");
+            ExecuteScript(command, pinchOpts);
         }
     }
 }

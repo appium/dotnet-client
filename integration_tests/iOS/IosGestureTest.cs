@@ -11,12 +11,12 @@ namespace Appium.Integration.Tests.iOS
     [TestFixture()]
     class iOSGestureTest
     {
-        private AppiumDriver<IOSElement> driver;
+        private IOSDriver<IOSElement> driver;
 
         [TestFixtureSetUp]
         public void BeforeAll()
         {
-			DesiredCapabilities capabilities = Caps.getIos82Caps(Apps.get("iosTestApp"));
+            DesiredCapabilities capabilities = Caps.getIos82Caps(Apps.get("iosTestApp"));
             if (Env.isSauce())
             {
                 capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
@@ -24,6 +24,7 @@ namespace Appium.Integration.Tests.iOS
                 capabilities.SetCapability("name", "ios - complex");
                 capabilities.SetCapability("tags", new string[] { "sample" });
             }
+
             Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIForIOS;
             driver = new IOSDriver<IOSElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
             driver.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
@@ -56,17 +57,21 @@ namespace Appium.Integration.Tests.iOS
 		}
 
 		[Test()]
-		public void ZoomTest()
+		public void PinchZoomTest()
 		{
-			IOSElement e = driver.FindElementByName("TextField1");
-			driver.Zoom(e);
+            driver.FindElementByName("Test Gesture").Click();
+			driver.Zoom(200, 200, 300, 300, 2);
+            driver.CloseApp();
+            driver.LaunchApp();
 		}
 
         [Test()]
         public void PinchTest()
         {
-            IOSElement e = driver.FindElementByName("TextField1");
-            driver.Pinch(e);
+            driver.FindElementByName("Test Gesture").Click();
+            driver.Pinch(200, 200, 100, 100, 2);
+            driver.CloseApp();
+            driver.LaunchApp();
         }
 
 		[Test()]
@@ -77,7 +82,7 @@ namespace Appium.Integration.Tests.iOS
 			Size size = slider.Size;
 
 			driver.Swipe (location.X + size.Width / 2, location.Y + size.Height / 2, location.X - 1, location.Y + size.Height / 2, 3000);
-			Assert.AreEqual ("0%", slider.GetAttribute ("value"));
+			Assert.AreEqual ("0 %", slider.GetAttribute ("value"));
 		}
     }
 }
