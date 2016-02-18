@@ -50,8 +50,7 @@ namespace OpenQA.Selenium.Appium.PageObjects
 
             if (attributes.Length == 0)
             {
-                bys.Add(new ByIdOrName(member.Name));
-                return bys.AsReadOnly();
+                return null;
             }
 
             Array.Sort(attributes);
@@ -166,19 +165,35 @@ namespace OpenQA.Selenium.Appium.PageObjects
             string automation = GetAutomation(context);
 
             IEnumerable<By> defaultBys = CreateDefaultLocatorList(member);
-            ReadOnlyCollection<By> defaultByList = new List<By>(defaultBys).AsReadOnly();
-
             IEnumerable<By> nativeBys = CreateNativeContextLocatorList(member, platform, automation);
-            IList<By> nativeByList = null;
+
+            if (defaultBys == null && nativeBys == null)
+            {
+                List<By> defaultList = new List<By>();
+                defaultList.Add(new ByIdOrName(member.Name));
+
+                List<By> nativeList = new List<By>();
+                nativeList.Add(By.Id(member.Name));
+
+                defaultBys = defaultList;
+                nativeBys = nativeList;
+            }
+
+            if (defaultBys == null)
+            {
+                List<By> defaultList = new List<By>();
+                defaultList.Add(new ByIdOrName(member.Name));
+                defaultBys = defaultList;
+            }
 
             if (nativeBys == null)
-                nativeByList = defaultByList;
-            else
-                nativeByList = new List<By>(nativeBys).AsReadOnly();
+            {
+                nativeBys = defaultBys;
+            }
 
             Dictionary<ContentTypes, IEnumerable<By>> map = new Dictionary<ContentTypes, IEnumerable<By>>();
-            map.Add(ContentTypes.HTML, defaultByList);
-            map.Add(ContentTypes.NATIVE, nativeByList);
+            map.Add(ContentTypes.HTML, defaultBys);
+            map.Add(ContentTypes.NATIVE, nativeBys);
             ContentMappedBy by = new ContentMappedBy(map);
             List<By> bys = new List<By>();
             bys.Add(by);

@@ -50,5 +50,20 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes
                 return null;
             }
         }
+
+        /// <summary>
+        /// Sets the target element name
+        /// </summary>
+        public String Name
+        {
+            set
+            {
+                byList.Add(By.Name(value));
+            }
+            get
+            {
+                return null;
+            }
+        }
     }
 }
