@@ -48,6 +48,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Android\AndroidEmulatorDeviceTime.cs" />
+    <Compile Include="Android\AndroidLockDeviceTest.cs" />
     <Compile Include="Android\AndroidActivityTest.cs" />
     <Compile Include="Android\AndroidConnectionTest.cs" />
     <Compile Include="Android\AndroidElementTest.cs" />
@@ -68,6 +70,7 @@
     <Compile Include="iOS\iOSElementTest.cs" />
     <Compile Include="iOS\iOSGestureTest.cs" />
     <Compile Include="iOS\iOSLocationTest.cs" />
+    <Compile Include="iOS\iOSLockDeviceTest.cs" />
     <Compile Include="iOS\iOSOrientationTest.cs" />
     <Compile Include="iOS\iOSScrollTest.cs" />
     <Compile Include="iOS\iOSSearchingTest.cs" />

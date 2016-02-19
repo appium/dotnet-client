@@ -231,17 +231,6 @@ namespace OpenQA.Selenium.Appium.Android
 
 
         /// <summary>
-        /// Check if the device is locked
-        /// </summary>
-        /// <returns>true if device is locked, false otherwise</returns>
-        public bool IsLocked()
-        {
-            var commandResponse = this.Execute(AppiumDriverCommand.IsLocked, null);
-            return (bool)commandResponse.Value;
-        }
-
-
-        /// <summary>
         /// Gets Current Device Activity.
         /// </summary>
         /// 
@@ -381,7 +370,36 @@ namespace OpenQA.Selenium.Appium.Android
         {
             return "new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(" + uiSelector + ".instance(0));";
         }
+        #endregion
 
+        #region locking
+        /**
+        * This method locks a device.
+        */
+        public void Lock()
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("seconds", 0);
+            this.Execute(AppiumDriverCommand.LockDevice, parameters);
+        }
+
+        /// <summary>
+        /// Check if the device is locked
+        /// </summary>
+        /// <returns>true if device is locked, false otherwise</returns>
+        public bool IsLocked()
+        {
+            var commandResponse = this.Execute(AppiumDriverCommand.IsLocked, null);
+            return (bool)commandResponse.Value;
+        }
+
+        /**
+         * This method unlocks a device.
+         */
+        public void Unlock()
+        {
+            this.Execute(AppiumDriverCommand.UnlockDevice, null);
+        }
         #endregion
 
     }

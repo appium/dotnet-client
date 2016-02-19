@@ -33,6 +33,7 @@ namespace OpenQA.Selenium.Appium
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ShakeDevice, "/session/{sessionId}/appium/device/shake"),
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.LockDevice, "/session/{sessionId}/appium/device/lock"),
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.IsLocked, "/session/{sessionId}/appium/device/is_locked"),
+                new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.UnlockDevice, "/session/{sessionId}/appium/device/unlock"),
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ToggleAirplaneMode, "/session/{sessionId}/appium/device/toggle_airplane_mode"),
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.KeyEvent, "/session/{sessionId}/appium/device/keyevent"),
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.Rotate, "/session/{sessionId}/appium/device/rotate"),
@@ -82,6 +83,10 @@ namespace OpenQA.Selenium.Appium
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ReplaceValue, "/session/{sessionId}/appium/element/{id}/replace_value"),
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.SetValue, "/session/{sessionId}/appium/element/{id}/value"),
                 #endregion Input value
+
+                #region Device Time
+                 new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetDeviceTime, "/session/{sessionId}/appium/device/system_time"),
+                #endregion Device Time
 
                 #endregion JSON Wire Protocol Commands
                 

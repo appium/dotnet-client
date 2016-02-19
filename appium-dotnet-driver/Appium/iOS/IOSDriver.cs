@@ -17,6 +17,7 @@ using OpenQA.Selenium.Appium.iOS.Interfaces;
 using OpenQA.Selenium.Appium.Service;
 using OpenQA.Selenium.Remote;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium.iOS
@@ -176,6 +177,17 @@ namespace OpenQA.Selenium.Appium.iOS
                 return (W)((IFindByAccessibilityId<W>)element).FindElementByAccessibilityId(name);
             }
             return element;
+        }
+
+        /// <summary>
+        /// Locks the device.
+        /// </summary>
+        /// <param name="seconds">The number of seconds during which the device need to be locked for.</param>
+        public void Lock(int seconds)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            parameters.Add("seconds", seconds);
+            this.Execute(AppiumDriverCommand.LockDevice, parameters);
         }
     }
 }
