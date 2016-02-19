@@ -15,9 +15,9 @@
       1.5.1.1
       Update to Selenium.Webdriver v2.52.0 and Selenium.Support v2.52.0
       FIXED The issue of compatibility of AppiumServiceBuilder with Appium node server v >= 1.5.x.
-      Page object tools were updated. By.Name locator strategy is deprecated for Android and iOS. It is still valid for the Selendroid mode. 
-	  The DeviceTime property was added and it works with Appium node 1.5
-	  improvements of locking methods. The LockDevice(seconds) is obsolete and it is going to be removed in the next release. Since Appium node server v1.5.x it is recommended to use AndroidDriver.Lock()()...AndroidDriver.Unlock() or IOSDriver.Lock(int seconds) instead.
+      Page object tools were updated. By.Name locator strategy is deprecated for Android and iOS. It is still valid for the Selendroid mode.
+      The DeviceTime property was added and it works with Appium node 1.5
+      improvements of locking methods. The LockDevice(seconds) is obsolete and it is going to be removed in the next release. Since Appium node server v1.5.x it is recommended to use AndroidDriver.Lock()()...AndroidDriver.Unlock() or IOSDriver.Lock(int seconds) instead.
       1.5.0.1
       Update to Selenium.Webdriver v2.48.2 and Selenium.Support v2.48.2
       The ability to start appium server programmatically was provided. The ICommandServer implementation (AppiumLocalService).
