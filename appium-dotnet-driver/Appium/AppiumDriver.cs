@@ -902,7 +902,10 @@ namespace OpenQA.Selenium.Appium
         #endregion
 
         #region Device Time
-
+        /// <summary>
+        /// Gets device date and time for both iOS(Supports only real device) and Android devices
+        /// </summary>
+        /// <returns>A string which consists of date and time</returns>
         public String DeviceTime
         {
             get
