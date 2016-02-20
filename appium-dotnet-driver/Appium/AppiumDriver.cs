@@ -352,6 +352,9 @@ namespace OpenQA.Selenium.Appium
         /// Locks the device.
         /// </summary>
         /// <param name="seconds">The number of seconds during which the device need to be locked for.</param>
+        [Obsolete("This method works incorrectly. It is deprecated and it is going to be removed further. " +
+            "Be careful. Since Appium node 1.5.x you are free to use. " +
+            "IOSDriver.Lock(int seconds) or AndroidDriver.Lock()...AndroidDriver.Unlock() instead")]
         public void LockDevice(int seconds)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
@@ -897,6 +900,22 @@ namespace OpenQA.Selenium.Appium
         }
 
         #endregion
+
+        #region Device Time
+        /// <summary>
+        /// Gets device date and time for both iOS(Supports only real device) and Android devices
+        /// </summary>
+        /// <returns>A string which consists of date and time</returns>
+        public String DeviceTime
+        {
+            get
+            {
+                var commandResponse = this.Execute(AppiumDriverCommand.GetDeviceTime, null);
+                return commandResponse.Value.ToString();
+            }
+        }
+
+        #endregion Device Time
 
         #endregion Public Methods
 

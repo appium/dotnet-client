@@ -49,7 +49,7 @@ namespace OpenQA.Selenium.Appium.Test.Specs
         {
             IOSDriver<IWebElement> driver = new IOSDriver<IWebElement>(defaultUri, capabilities);
             server.respondTo("POST", "/appium/device/lock", null);
-            driver.LockDevice(3);
+            driver.Lock(3);
         }
 
 

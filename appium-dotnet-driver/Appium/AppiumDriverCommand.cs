@@ -30,6 +30,11 @@ namespace OpenQA.Selenium.Appium
         public const string LockDevice = "lockDevice";
 
         /// <summary>
+        /// Represents the Unlock Device Mapping command
+        /// </summary>
+        public const string UnlockDevice = "unlockDevice";
+
+        /// <summary>
         /// Represents the Is Device Locked Mapping command
         /// </summary>
         public const string IsLocked = "isLocked";
@@ -251,6 +256,8 @@ namespace OpenQA.Selenium.Appium
         public const string ReplaceValue = "replaceValue";
 
         public const string SetValue = "setValue";
+
+        public const string GetDeviceTime = "getDeviceTime";
 
         #endregion JSON Wire Protocol
     }
