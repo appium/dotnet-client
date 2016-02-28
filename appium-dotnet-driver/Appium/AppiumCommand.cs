@@ -36,6 +36,8 @@ namespace OpenQA.Selenium.Appium
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.UnlockDevice, "/session/{sessionId}/appium/device/unlock"),
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ToggleAirplaneMode, "/session/{sessionId}/appium/device/toggle_airplane_mode"),
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.KeyEvent, "/session/{sessionId}/appium/device/keyevent"),
+                new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.PressKeyCode, "/session/{sessionId}/appium/device/press_keycode"),
+                new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.LongPressKeyCode, "/session/{sessionId}/appium/device/long_press_keycode"),
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.Rotate, "/session/{sessionId}/appium/device/rotate"),
                 new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetCurrentActivity, "/session/{sessionId}/appium/device/current_activity"),
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.InstallApp, "/session/{sessionId}/appium/device/install_app"),

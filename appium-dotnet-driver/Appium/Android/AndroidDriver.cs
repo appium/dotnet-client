@@ -202,6 +202,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// </summary>
         /// <param name="keyCode">Code for the long key pressed on the Android device</param>
         /// <param name="metastate">metastate for the long key press</param>
+        [Obsolete("This method is obsolete and it is going to be removed soon. Please use PressKeyCode or LongPressKeyCode instead")]
         public void KeyEvent(int keyCode, int metastate)
         {
             var parameters = new Dictionary<string, object>();
@@ -214,11 +215,44 @@ namespace OpenQA.Selenium.Appium.Android
         /// Triggers device key event
         /// </summary>
         /// <param name="keyCode">Code for the long key pressed on the Android device</param>
+        [Obsolete("This method is obsolete and it is going to be removed soon. Please use PressKeyCode or LongPressKeyCode instead")]
         public void KeyEvent(int keyCode)
         {
             var parameters = new Dictionary<string, object>();
             parameters.Add("keycode", keyCode);
             this.Execute(AppiumDriverCommand.KeyEvent, parameters);
+        }
+
+        /// <summary>
+        /// Sends a device key event with metastate
+        /// </summary>
+        /// <param name="keyCode">Code for the long key pressed on the Android device</param>
+        /// <param name="metastate">metastate for the long key press</param>
+        public void PressKeyCode(int keyCode, int metastate = -1)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("keycode", keyCode);
+            if (metastate > 0)
+            {
+                parameters.Add("metastate", metastate);
+            }
+            Execute(AppiumDriverCommand.PressKeyCode, parameters);
+        }
+
+        /// <summary>
+        /// Sends a device long key event with metastate
+        /// </summary>
+        /// <param name="keyCode">Code for the long key pressed on the Android device</param>
+        /// <param name="metastate">metastate for the long key press</param>
+        public void LongPressKeyCode(int keyCode, int metastate = -1)
+        {
+            var parameters = new Dictionary<string, object>();
+            parameters.Add("keycode", keyCode);
+            if (metastate > 0)
+            {
+                parameters.Add("metastate", metastate);
+            }
+            Execute(AppiumDriverCommand.LongPressKeyCode, parameters);
         }
 
         /// <summary>
