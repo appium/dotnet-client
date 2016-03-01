@@ -54,7 +54,18 @@ namespace OpenQA.Selenium.Appium
         /// <summary>
         /// Press Key Event Command.
         /// </summary>
+        [Obsolete("The keyevent function has been deprecated and will be removed. Please use the pressKeyCode function instead.")]
         public const string KeyEvent = "keyEvent";
+
+        /// <summary>
+        /// Press key code 
+        /// </summary>
+        public const string PressKeyCode = "pressKeyCode";
+
+        /// <summary>
+        /// Long press key code
+        /// </summary>
+        public const string LongPressKeyCode = "longPressKeyCode";
 
         /// <summary>
         /// Rotate Command.

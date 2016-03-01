@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Android\AndroidEmulatorDeviceTime.cs" />
+    <Compile Include="Android\AndroidKeyPressTest.cs" />
     <Compile Include="Android\AndroidLockDeviceTest.cs" />
     <Compile Include="Android\AndroidActivityTest.cs" />
     <Compile Include="Android\AndroidConnectionTest.cs" />

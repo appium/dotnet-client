@@ -86,7 +86,7 @@ namespace Appium.Integration.Tests.Android
             driver.StartActivity("com.android.contacts", ".ContactsListActivity");
 
             Assert.AreEqual(driver.CurrentActivity, ".ContactsListActivity");
-            driver.KeyEvent(AndroidKeyCode.Back);
+            driver.PressKeyCode(AndroidKeyCode.Back);
             Assert.AreEqual(driver.CurrentActivity, ".ContactsListActivity");
         }
 
@@ -100,7 +100,7 @@ namespace Appium.Integration.Tests.Android
             driver.StartActivity("com.android.contacts", ".ContactsListActivity", "com.android.contacts", ".ContactsListActivity", false);
 
             Assert.AreEqual(driver.CurrentActivity, ".ContactsListActivity");
-            driver.KeyEvent(AndroidKeyCode.Back);
+            driver.PressKeyCode(AndroidKeyCode.Back);
             Assert.AreEqual(driver.CurrentActivity, ".accessibility.AccessibilityNodeProviderActivity");
 
         }
