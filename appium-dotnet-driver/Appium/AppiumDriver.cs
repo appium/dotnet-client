@@ -479,6 +479,8 @@ namespace OpenQA.Selenium.Appium
         /// <summary>
         /// Gets the App Strings.
         /// </summary>
+		[Obsolete("This method is going to be removed. Use GetAppStringDictionary(string language = null, string stringFile = null) " +
+			"instead")]
         public string GetAppStrings(string language = null)
         {
             Dictionary<string, object> parameters = null;
@@ -490,6 +492,37 @@ namespace OpenQA.Selenium.Appium
             var commandResponse = this.Execute(AppiumDriverCommand.GetAppStrings, parameters);
             return commandResponse.Value as string;
         }
+
+		/// <summary>
+		/// Get all defined Strings from an app for the specified language and
+		/// strings filename
+		/// </summary>
+		/// <returns>a dictionary with localized strings defined in the app.</returns>
+		/// <param name="language">strings language code</param>
+		/// <param name="stringFile">strings filename</param>
+		public Dictionary<string, object> GetAppStringDictionary(string language = null, string stringFile = null)
+		{
+			Dictionary<string, object> parameters = new Dictionary<string, object> ();
+			if (language != null)
+			{
+				parameters.Add("language", language );
+			}
+
+			if (stringFile != null) 
+			{
+				parameters.Add ("stringFile", stringFile);
+			}
+
+			if (parameters.Count == 0) 
+			{
+				parameters = null;
+			}
+
+			var commandResponse = this.Execute(AppiumDriverCommand.GetAppStrings, parameters);
+			return (Dictionary<string, object>) commandResponse.Value;
+		}
+
+
 
         /// <summary>
         /// Hide the keyboard

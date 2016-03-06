@@ -8,6 +8,9 @@
 - improvements of locking methods. The LockDevice(seconds) is obsolete and it is going to be removed in the next release. Since Appium node server v1.5.x it is recommended to use 
 AndroidDriver.Lock()()...AndroidDriver.Unlock() or IOSDriver.Lock(int seconds) instead.
 - AndroidDriver.KeyEvent() is obsolete and it is going to be removed soon. Please use AndroidDriver.PressKeyCode or AndroidDriver.LongPressKeyCode instead.
+- The GetAppStrings(string language = null) method is obsolete now. It is going to be removed. 
+- The  GetAppStringDictionary(string language = null, string stringFile = null) was added instead. It returns a dictionary with app strings (keys and values) instead of a string.
+Also it allows the searching app strings in the specified file.
 
 ##1.5.0.1
 - Update to Selenium.Webdriver v2.48.2 and Selenium.Support v2.48.2
