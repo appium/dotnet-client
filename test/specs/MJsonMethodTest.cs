@@ -200,16 +200,6 @@ namespace OpenQA.Selenium.Appium.Test.Specs
         }
 
         [Test]
-        public void GetAppStringsTestCase()
-        {
-            AndroidDriver<IWebElement> driver = new AndroidDriver<IWebElement>(defaultUri, capabilities);
-            var data = "21343n2312j3jw";
-            server.respondTo("POST", "/appium/app/strings", data);
-            var result = driver.GetAppStrings();
-            Assert.AreEqual(result, data);
-        }
-
-        [Test]
         public void SetImmediateValueTestCase()
         {
             IOSDriver<IOSElement> driver = new IOSDriver<IOSElement>(defaultUri, capabilities);

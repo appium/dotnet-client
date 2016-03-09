@@ -57,7 +57,9 @@
     <Compile Include="Appium\Android\Interfaces\IPushesFiles.cs" />
     <Compile Include="Appium\Android\Interfaces\IStartsActivity.cs" />
     <Compile Include="Appium\AppiumCommand.cs" />
+    <Compile Include="Appium\Enums\AndroidMobileCapabilityType.cs" />
     <Compile Include="Appium\Enums\AutomationName.cs" />
+    <Compile Include="Appium\Enums\IOSMobileCapabilityType.cs" />
     <Compile Include="Appium\Enums\MobilePlatform.cs" />
     <Compile Include="Appium\Enums\MobileBrowserType.cs" />
     <Compile Include="Appium\Enums\MobileCapabilityType.cs" />
