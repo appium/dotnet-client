@@ -2,6 +2,7 @@
 
 ##1.5.1.1 (still not released)
 - Update to Selenium.Webdriver v2.52.0 and Selenium.Support v2.52.0
+- Update to Newtonsoft.Json v8.0.2
 - FIXED The issue of compatibility of AppiumServiceBuilder with Appium node server v >= 1.5.x.
 - Page object tools were updated. By.Name locator strategy is deprecated for Android and iOS. It is still valid for the Selendroid mode. 
 - The DeviceTime property was added and it works with Appium node 1.5
