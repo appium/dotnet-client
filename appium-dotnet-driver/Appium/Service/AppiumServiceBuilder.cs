@@ -492,7 +492,6 @@ namespace OpenQA.Selenium.Appium.Service
                 {
                     result = result + value + " ";
                 }
-
                 return result.Trim();
             }
         }

@@ -93,7 +93,6 @@ namespace OpenQA.Selenium.Appium.Service.Options
         ///<summary>
         /// Enables session override (clobbering) <br/>
         ///</summary>
-        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
         public static KeyValuePair<string, string> OverrideSession()
         {
             return new KeyValuePair<string, string>("--session-override", string.Empty);

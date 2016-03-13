@@ -97,6 +97,13 @@ namespace OpenQA.Selenium.Appium.Service.Options
                             value = "\\\"" + value + "\\\"";
                         }
                     }
+                    else
+                    {
+                        if (typeof(bool).IsAssignableFrom(value.GetType()))
+                        {
+                            value = Convert.ToString(value).ToLower();
+                        }
+                    }
 
                     string key = "\\\"" + item.Key + "\\\"";
                     if (String.IsNullOrEmpty(result))
@@ -110,7 +117,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
                 }
             }
 
-            return "{" + result + "}";
+            return "\"{" + result + "}\"";
         }
 
         private string ParseCapabilitiesIfUNIX()
@@ -135,6 +142,14 @@ namespace OpenQA.Selenium.Appium.Service.Options
                         value = "\"" + value + "\""; ;
                     }
 
+                    else
+                    {
+                        if (typeof(bool).IsAssignableFrom(value.GetType()))
+                        {
+                            value = Convert.ToString(value).ToLower();
+                        }
+                    }
+
                     string key = "\"" + item.Key + "\"";
                     if (String.IsNullOrEmpty(result))
                     {
@@ -147,7 +162,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
                 }
             }
 
-            return "{" + result + "}";
+            return "'{" + result + "}'";
         }
 
         /// <summary>
@@ -171,19 +186,21 @@ namespace OpenQA.Selenium.Appium.Service.Options
                     {
                         result.Add(value);
                     }
-                    if (this.capabilities != null && this.capabilities.ToDictionary().Count > 0)
+                }
+
+                if (this.capabilities != null && this.capabilities.ToDictionary().Count > 0)
+                {
+                    result.Add(CapabilitiesFlag);
+                    if (Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows))
                     {
-                        result.Add(CapabilitiesFlag);
-                        if (Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows))
-                        {
-                            result.Add(ParseCapabilitiesIfWindows());
-                        }
-                        else
-                        {
-                            result.Add(ParseCapabilitiesIfUNIX());
-                        }
+                        result.Add(ParseCapabilitiesIfWindows());
+                    }
+                    else
+                    {
+                        result.Add(ParseCapabilitiesIfUNIX());
                     }
                 }
+
                 return result.AsReadOnly();
             }
         }

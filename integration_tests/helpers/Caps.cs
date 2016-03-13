@@ -18,8 +18,8 @@ namespace Appium.Integration.Tests.Helpers
 			DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.SetCapability(CapabilityType.BrowserName, "");
             capabilities.SetCapability(MobileCapabilityType.PlatformVersion, "5.0.1");
-            capabilities.SetCapability(MobileCapabilityType.AppPackage, "io.appium.android.apis");
-            capabilities.SetCapability(MobileCapabilityType.AppActivity, ".Apidemos");
+            capabilities.SetCapability(AndroidMobileCapabilityType.AppPackage, "io.appium.android.apis");
+            capabilities.SetCapability(AndroidMobileCapabilityType.AppActivity, ".Apidemos");
             capabilities.SetCapability(MobileCapabilityType.DeviceName, "Android Emulator");
             capabilities.SetCapability(MobileCapabilityType.App, app);
 			return capabilities;
