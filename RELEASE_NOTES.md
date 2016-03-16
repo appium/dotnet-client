@@ -2,6 +2,7 @@
 
 ##1.5.1.1 (still not released)
 - Update to Selenium.Webdriver v2.52.0 and Selenium.Support v2.52.0
+- Update to Newtonsoft.Json v8.0.2
 - FIXED The issue of compatibility of AppiumServiceBuilder with Appium node server v >= 1.5.x.
 - Page object tools were updated. By.Name locator strategy is deprecated for Android and iOS. It is still valid for the Selendroid mode. 
 - The DeviceTime property was added and it works with Appium node 1.5
@@ -11,6 +12,12 @@ AndroidDriver.Lock()()...AndroidDriver.Unlock() or IOSDriver.Lock(int seconds) i
 - The GetAppStrings(string language = null) method is obsolete now. It is going to be removed. 
 - The  GetAppStringDictionary(string language = null, string stringFile = null) was added instead. It returns a dictionary with app strings (keys and values) instead of a string.
 Also it allows the searching app strings in the specified file.
+- All capabilities were added according to https://github.com/appium/appium/blob/1.5/docs/en/writing-running-appium/caps.md. There are three classes: 
+	OpenQA.Selenium.Appium.Enums.MobileCapabilityType (just modified), 
+	OpenQA.Selenium.Appium.Enums.AndroidMobileCapabilityType (android-specific capabilities), 
+	OpenQA.Selenium.Appium.Enums.IOSMobileCapabilityType (iOS-specific capabilities).
+- Some server flags were marked as obsolete because they are deprecated since server node v1.5.x. These options are going to be removed at the next .Net client release.
+- The ability to start Appium node programmatically using desired capabilities. This feature is compatible with Appium node server v >= 1.5.x.
 
 ##1.5.0.1
 - Update to Selenium.Webdriver v2.48.2 and Selenium.Support v2.48.2

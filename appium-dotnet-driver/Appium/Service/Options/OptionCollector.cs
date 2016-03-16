@@ -12,6 +12,7 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
 
@@ -20,6 +21,8 @@ namespace OpenQA.Selenium.Appium.Service.Options
     public sealed class OptionCollector
     {
         private readonly IDictionary<string, string> CollectedArgs = new Dictionary<string, string>();
+        private DesiredCapabilities capabilities;
+        private static readonly string CapabilitiesFlag = "--default-capabilities";
 
         /// <summary>
         /// Adds an argument and its value
@@ -31,6 +34,135 @@ namespace OpenQA.Selenium.Appium.Service.Options
         {
             CollectedArgs.Add(arguments);
             return this;
+        }
+
+        /// <summary>
+        /// Adds/merges server-specific capabilities
+        /// </summary>
+        /// <param name="capabilities">is an instance of OpenQA.Selenium.Remote.DesiredCapabilities</param>
+        /// <returns>the self-reference</returns>        
+        public OptionCollector AddCapabilities(DesiredCapabilities capabilities)
+        {
+            if (this.capabilities == null)
+            {
+                this.capabilities = capabilities;
+            }
+            else
+            {
+                Dictionary<string, object> originalDictionary = this.capabilities.ToDictionary();
+                Dictionary<string, object> givenDictionary = capabilities.ToDictionary();
+                Dictionary<string, object> result = new Dictionary<string, object>(originalDictionary);
+
+                foreach (var item in givenDictionary)
+                {
+                    if (originalDictionary.ContainsKey(item.Key))
+                    {
+                        result[item.Key] = item.Value;
+                    }
+                    else
+                    {
+                        result.Add(item.Key, item.Value);
+                    }
+                }
+                this.capabilities = new DesiredCapabilities(result);
+            }
+            return this;
+        }
+
+        private string ParseCapabilitiesIfWindows()
+        {
+            String result = String.Empty;
+
+            if (capabilities != null)
+            {
+                Dictionary<string, object> capabilitiesDictionary = capabilities.ToDictionary();
+
+                foreach (var item in capabilitiesDictionary)
+                {
+                    object value = item.Value;
+
+                    if (value == null)
+                    {
+                        continue;
+                    }
+
+                    if (typeof(string).IsAssignableFrom(value.GetType()))
+                    {
+                        if (AppiumServiceConstants.FilePathCapabilitiesForWindows.Contains(item.Key))
+                        {
+                            value = "\\\"" + Convert.ToString(value).Replace("\\", "/") + "\\\"";
+                        }
+                        else
+                        {
+                            value = "\\\"" + value + "\\\"";
+                        }
+                    }
+                    else
+                    {
+                        if (typeof(bool).IsAssignableFrom(value.GetType()))
+                        {
+                            value = Convert.ToString(value).ToLower();
+                        }
+                    }
+
+                    string key = "\\\"" + item.Key + "\\\"";
+                    if (String.IsNullOrEmpty(result))
+                    {
+                        result = key + ": " + value;
+                    }
+                    else
+                    {
+                        result = result + ", " + key + ": " + value;
+                    }
+                }
+            }
+
+            return "\"{" + result + "}\"";
+        }
+
+        private string ParseCapabilitiesIfUNIX()
+        {
+            String result = String.Empty;
+
+            if (capabilities != null)
+            {
+                Dictionary<string, object> capabilitiesDictionary = capabilities.ToDictionary();
+
+                foreach (var item in capabilitiesDictionary)
+                {
+                    object value = item.Value;
+
+                    if (value == null)
+                    {
+                        continue;
+                    }
+
+                    if (typeof(string).IsAssignableFrom(value.GetType()))
+                    {
+                        value = "\"" + value + "\""; ;
+                    }
+
+                    else
+                    {
+                        if (typeof(bool).IsAssignableFrom(value.GetType()))
+                        {
+                            value = Convert.ToString(value).ToLower();
+                        }
+                    }
+
+                    string key = "\"" + item.Key + "\"";
+                    if (String.IsNullOrEmpty(result))
+                    {
+                        result = key + ": " + value;
+                    }
+                    else
+                    {
+                        result = result + ", " + key + ": " + value;
+                    }
+                }
+            }
+
+            return "'{" + result + "}'";
         }
 
         /// <summary>
@@ -55,6 +187,20 @@ namespace OpenQA.Selenium.Appium.Service.Options
                         result.Add(value);
                     }
                 }
+
+                if (this.capabilities != null && this.capabilities.ToDictionary().Count > 0)
+                {
+                    result.Add(CapabilitiesFlag);
+                    if (Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows))
+                    {
+                        result.Add(ParseCapabilitiesIfWindows());
+                    }
+                    else
+                    {
+                        result.Add(ParseCapabilitiesIfUNIX());
+                    }
+                }
+
                 return result.AsReadOnly();
             }
         }

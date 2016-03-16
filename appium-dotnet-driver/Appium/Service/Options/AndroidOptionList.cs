@@ -57,6 +57,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// Sample:<br/>
         /// --app-pkg com.example.android.MyApp
         ///</summary>
+        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
         public static KeyValuePair<string, string> Package(string value)
         {
             string argument = "--app-pkg";
@@ -71,6 +72,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// Sample:<br/>
         /// --app-activity MainActivity
         ///</summary>
+        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
         public static KeyValuePair<string, string> Activity(string value)
         {
             string argument = "--app-activity";
@@ -84,6 +86,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// Sample:<br/>
         /// --app-wait-package com.example.android.MyApp
         ///</summary>
+        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
         public static KeyValuePair<string, string> AppWaitPackage(string value)
         {
             string argument = "--app-wait-package";
@@ -97,6 +100,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// Sample:<br/>
         /// --app-wait-activity SplashActivity
         ///</summary>
+        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
         public static KeyValuePair<string, string> AppWaitActivity(string value)
         {
             string argument = "--app-wait-activity";
@@ -111,6 +115,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// Sample: <br/>
         /// --android-coverage com.my.Pkg/com.my.Pkg.instrumentation.MyInstrumentation
         ///</summary>
+        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
         public static KeyValuePair<string, string> AndroidCoverage(string value)
         {
             string argument = "--android-coverage";
@@ -123,6 +128,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// Sample:<br/>
         /// --avd @default
         ///</summary>
+        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
         public static KeyValuePair<string, string> Avd(string value)
         {
             string argument = "--avd";
@@ -136,6 +142,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// Sample:<br/>
         /// --avd-args -no-snapshot-load
         ///</summary>
+        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
         public static KeyValuePair<string, string> AvdArguments(string value)
         {
             string argument = "--avd-args";
@@ -149,6 +156,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// Sample:<br/>
         /// --device-ready-timeout 5
         ///</summary>
+        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
         public static KeyValuePair<string, string> DeviceReadyTimeout(string value)
         {
             if (String.IsNullOrEmpty(value))
@@ -182,6 +190,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         ///<summary>
         /// When set the keystore will be used to sign apks.<br/>
         ///</summary>
+        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
         public static KeyValuePair<string, string> UseKeyStore()
         {
             return new KeyValuePair<string, string>("--use-keystore", string.Empty);
@@ -192,6 +201,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// Sample:<br/>
         /// --keystore-path /Users/user/.android/debug.keystore
         ///</summary>
+        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
         public static KeyValuePair<string, string> KeyStorePath(string value)
         {
             string argument = "--keystore-path";
@@ -202,6 +212,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         ///<summary>
         /// Password to keystore<br/>
         ///</summary>
+        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
         public static KeyValuePair<string, string> KeystorePassword(string value)
         {
             if (String.IsNullOrEmpty(value))
@@ -217,6 +228,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         ///<summary>
         /// Key alias<br/>
         ///</summary>
+        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
         public static KeyValuePair<string, string> KeyAlias(string value)
         {
             if (String.IsNullOrEmpty(value))
@@ -232,6 +244,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         ///<summary>
         /// Key password<br/>
         ///</summary>
+        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
         public static KeyValuePair<string, string> KeyPassword(string value)
         {
             if (String.IsNullOrEmpty(value))
@@ -249,6 +262,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// Sample:<br/>
         /// --intent-action android.intent.action.MAIN
         ///</summary>
+        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
         public static KeyValuePair<string, string> IntentAction(string value)
         {
             Dictionary<string, string> result = new Dictionary<string, string>();
@@ -267,6 +281,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// Sample:<br/>
         /// --intent-category android.intent.category.APP_CONTACTS
         ///</summary>
+        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
         public static KeyValuePair<string, string> IntentCategory(string value)
         {
             if (String.IsNullOrEmpty(value))
@@ -284,6 +299,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// Sample:<br/>
         /// --intent-flags 0x10200000
         ///</summary>
+        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
         public static KeyValuePair<string, string> IntentFlags(string value)
         {
             if (String.IsNullOrEmpty(value))
@@ -302,6 +318,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// Sample:<br/>
         /// --intent-args 0x10200000
         ///</summary>
+        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
         public static KeyValuePair<string, string> IntentArgumants(string value)
         {
             string argument = "--intent-args";
@@ -313,6 +330,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// When included, refrains from stopping the app before
         /// restart<br/>
         ///</summary>
+        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
         public static KeyValuePair<string, string> DoNotStopAppOnReset()
         {
             return new KeyValuePair<string, string>("--dont-stop-app-on-reset", string.Empty);
@@ -325,6 +343,33 @@ namespace OpenQA.Selenium.Appium.Service.Options
         public static KeyValuePair<string, string> SuppressAdbKillServer()
         {
             return new KeyValuePair<string, string>("--suppress-adb-kill-server", string.Empty);
+        }
+
+        ///<summary>
+        /// Port upon which ChromeDriver will run<br/>
+        /// Sample:<br/>
+        /// --chromedriver-port 9515
+        ///</summary>
+        public static KeyValuePair<string, string> ChromeDriverPort(string value)
+        {
+            if (String.IsNullOrEmpty(value))
+            {
+                return new KeyValuePair<string, string>("--chromedriver-port", "9515");
+            }
+            else
+            {
+                return new KeyValuePair<string, string>("--chromedriver-port", value);
+            }
+        }
+
+        ///<summary>
+        /// ChromeDriver executable full path
+        ///</summary>
+        public static KeyValuePair<string, string> ChromeDriverExecutable(string value)
+        {
+            string argument = "--chromedriver-executable";
+            CheckArgumentAndThrowException(argument, value);
+            return new KeyValuePair<string, string>(argument, value);
         }
     }
 }

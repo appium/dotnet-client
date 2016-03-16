@@ -12,6 +12,7 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+using OpenQA.Selenium.Appium.Enums;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -55,5 +56,11 @@ namespace OpenQA.Selenium.Appium.Service
         internal static readonly string AppiumNodeOldMask = Path.DirectorySeparatorChar + BinFolder + Path.DirectorySeparatorChar + AppiumJSName;
         internal static readonly string AppiumNodeMask = Path.DirectorySeparatorChar + BuildFolder + Path.DirectorySeparatorChar + LibFolder +
             Path.DirectorySeparatorChar + MainJSName;
+
+        internal static readonly IList<string> FilePathCapabilitiesForWindows = new List<string>(new string[] {
+            AndroidMobileCapabilityType.KeystorePath,
+            AndroidMobileCapabilityType.ChromedriverExecutable,
+            MobileCapabilityType.App
+        }).AsReadOnly();
     }
 }
