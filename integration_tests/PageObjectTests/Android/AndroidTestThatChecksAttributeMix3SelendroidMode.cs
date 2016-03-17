@@ -31,6 +31,7 @@ namespace Appium.Integration.Tests.PageObjectTests.Android
             }
             Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIAndroid;
             driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
+            driver.Context = "NATIVE_APP";
             TimeOutDuration timeSpan = new TimeOutDuration(new TimeSpan(0, 0, 0, 5, 0));
             pageObject = new AndroidPageObjectChecksSelendroidModeOnNativeApp();
             PageFactory.InitElements(driver, pageObject, new AppiumPageObjectMemberDecorator(timeSpan));
