@@ -45,12 +45,12 @@ namespace Appium.Integration.Tests.iOS
 		{
 			driver.FindElementByXPath("//UIATextField[@value='Enter URL']")
 				.SendKeys("www.google.com");
-			driver.FindElementByName ("Go").Click ();
+			driver.FindElementByClassName ("UIAButton").Click ();
 			driver.FindElementByClassName ("UIAWebView").Click (); // dismissing keyboard
 			Thread.Sleep(10000);
 			driver.Context = "WEBVIEW";
 			Thread.Sleep (3000);
-			var el = driver.FindElementByName ("q");
+			var el = driver.FindElementByClassName ("gsfi");
 			el.SendKeys ("Appium");
 			el.SendKeys(Keys.Return);
 			Thread.Sleep (1000);
