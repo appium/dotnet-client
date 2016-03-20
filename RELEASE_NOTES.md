@@ -1,6 +1,6 @@
 #Release Notes
 
-##1.5.1.1 (still not released)
+##1.5.1.1
 - Update to Selenium.Webdriver v2.53.0 and Selenium.Support v2.53.0
 - Update to Newtonsoft.Json v8.0.2
 - FIXED The issue of compatibility of AppiumServiceBuilder with Appium node server v >= 1.5.x.
