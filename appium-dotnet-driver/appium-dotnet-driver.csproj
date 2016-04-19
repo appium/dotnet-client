@@ -67,6 +67,7 @@
     <Compile Include="Appium\Enums\MobileBrowserType.cs" />
     <Compile Include="Appium\Enums\MobileCapabilityType.cs" />
     <Compile Include="Appium\Android\Enums\ConnectionType.cs" />
+    <Compile Include="Appium\Enums\WindowsKeyCodes.cs" />
     <Compile Include="Appium\Interfaces\Generic\SearchContext\IGenericFindsByClassName.cs" />
     <Compile Include="Appium\Interfaces\Generic\SearchContext\IGenericFindsByCssSelector.cs" />
     <Compile Include="Appium\Interfaces\Generic\SearchContext\IGenericFindsById.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Appium\Interfaces\Generic\SearchContext\IGenericFindsByXPath.cs" />
     <Compile Include="Appium\Interfaces\Generic\SearchContext\IGenericSearchContext.cs" />
     <Compile Include="Appium\Interfaces\IContextAware.cs" />
+    <Compile Include="Appium\Interfaces\IFindByWindowsUIAutomation.cs" />
     <Compile Include="Appium\Interfaces\IHidesKeyboard.cs" />
     <Compile Include="Appium\Interfaces\IInteractsWithApps.cs" />
     <Compile Include="Appium\Interfaces\IInteractsWithFiles.cs" />
@@ -119,6 +121,8 @@
     <Compile Include="Appium\Service\Options\IOSOptionList.cs" />
     <Compile Include="Appium\Service\Options\GeneralOptionList.cs" />
     <Compile Include="Appium\Service\Options\OptionCollector.cs" />
+    <Compile Include="Appium\Windows\WindowsDriver.cs" />
+    <Compile Include="Appium\Windows\WindowsElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Appium\AppiumDriver.cs" />
     <Compile Include="Appium\AppiumDriverCommand.cs" />
