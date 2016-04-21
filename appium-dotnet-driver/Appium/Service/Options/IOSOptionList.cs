@@ -34,25 +34,6 @@ namespace OpenQA.Selenium.Appium.Service.Options
         }
 
         ///<summary>
-        /// the relative path of the dir where Localizable.strings file
-        /// resides<br/>
-        /// Sample:<br/>
-        /// --localizable-strings-dir en.lproj
-        ///</summary>
-        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
-        public static KeyValuePair<string, string> LocalizableStringsDir(string value)
-        {
-            if (String.IsNullOrEmpty(value))
-            {
-                return new KeyValuePair<string, string>("--localizable-strings-dir", "en.lproj");
-            }
-            else
-            {
-                return new KeyValuePair<string, string>("--localizable-strings-dir", value);
-            }
-        }
-
-        ///<summary>
         /// absolute path to compiled .ipa file
         /// Sample:<br/>
         /// --ipa /abs/path/to/my.ipa
@@ -80,32 +61,6 @@ namespace OpenQA.Selenium.Appium.Service.Options
             {
                 return new KeyValuePair<string, string>("--backend-retries", value);
             }
-        }
-
-        ///<summary>
-        ///  how long in ms to wait for Instruments to launch<br/>
-        ///</summary>
-        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
-        public static KeyValuePair<string, string> LaunchTimeout(string value)
-        {
-            if (String.IsNullOrEmpty(value))
-            {
-                return new KeyValuePair<string, string>("--launch-timeout", "90000");
-            }
-            else
-            {
-                return new KeyValuePair<string, string>("--launch-timeout", value);
-            }
-        }
-
-        ///<summary>
-        /// IOS has a weird built-in unavoidable delay. We patch this in
-        /// appium. If you do not want it patched, pass in this flag.<br/>
-        ///</summary>
-        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
-        public static KeyValuePair<string, string> UseNativeInstruments()
-        {
-            return new KeyValuePair<string, string>("--native-instruments-lib", string.Empty);
         }
 
         ///<summary>
@@ -142,33 +97,6 @@ namespace OpenQA.Selenium.Appium.Service.Options
         }
 
         ///<summary>
-        /// Calendar format for the iOS simulator<br/>
-        /// Sample:<br/>
-        /// --calendar-format gregorian
-        ///</summary>
-        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
-        public static KeyValuePair<string, string> CalendarFormat(string value)
-        {
-            string argument = "--calendar-format";
-            CheckArgumentAndThrowException(argument, value);
-            return new KeyValuePair<string, string>(argument, value);
-        }
-
-        ///<summary>
-        /// use LANDSCAPE or PORTRAIT to initialize all requests to this
-        /// orientation<br/>
-        /// Sample:<br/>
-        /// --orientation LANDSCAPE
-        ///</summary>
-        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
-        public static KeyValuePair<string, string> Orientation(string value)
-        {
-            string argument = "--orientation";
-            CheckArgumentAndThrowException(argument, value);
-            return new KeyValuePair<string, string>(argument, value);
-        }
-
-        ///<summary>
         /// .tracetemplate file to use with Instruments<br/>
         /// Sample:<br/>
         /// --tracetemplate /Users/me/Automation.tracetemplate
@@ -191,35 +119,6 @@ namespace OpenQA.Selenium.Appium.Service.Options
             string argument = "--instruments";
             CheckArgumentAndThrowException(argument, value);
             return new KeyValuePair<string, string>(argument, value);
-        }
-
-        ///<summary>
-        /// if set, the iOS simulator log will be written to the console<br/>
-        ///</summary>
-        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
-        public static KeyValuePair<string, string> ShowSimLog()
-        {
-            return new KeyValuePair<string, string>("--show-sim-log", string.Empty);
-        }
-
-
-        ///<summary>
-        /// if set, the iOS system log will be written to the console<br/>
-        ///</summary>
-        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
-        public static KeyValuePair<string, string> ShowIosLog()
-        {
-            return new KeyValuePair<string, string>("--show-ios-log", string.Empty);
-        }
-
-        ///<summary>
-        /// Whether to keep keychains (Library/Keychains) when reset app
-        /// between sessions<br/>
-        ///</summary>
-        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
-        public static KeyValuePair<string, string> KeepKeychains()
-        {
-            return new KeyValuePair<string, string>("--keep-keychains", string.Empty);
         }
 
 

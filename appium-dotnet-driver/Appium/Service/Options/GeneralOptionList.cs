@@ -44,32 +44,6 @@ namespace OpenQA.Selenium.Appium.Service.Options
             return new KeyValuePair<string, string>(argument, value);
         }
 
-        /// <summary>
-        /// IOS: abs path to simulator-compiled .app file or the bundle_id of the desired target on device; Android: abs path to .apk file
-        /// Sample 
-        /// --app /abs/path/to/my.app
-        /// </summary>
-        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
-        public static KeyValuePair<string, string> App(string value)
-        {
-            string argument = "--app";
-            CheckArgumentAndThrowException(argument, value);
-            return new KeyValuePair<string, string>(argument, value);
-        }
-
-        ///<summary>
-        /// Unique device identifier of the connected physical device<br/>
-        /// Sample <br/>
-        /// --udid 1adsf-sdfas-asdf-123sdf
-        ///</summary>
-        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
-        public static KeyValuePair<string, string> UIID(string value)
-        {
-            string argument = "--udid";
-            CheckArgumentAndThrowException(argument, value);
-            return new KeyValuePair<string, string>(argument, value);
-        }
-
         ///<summary>
         /// callback IP Address (default: same as address) <br/>
         /// Sample <br/>
@@ -96,15 +70,6 @@ namespace OpenQA.Selenium.Appium.Service.Options
         public static KeyValuePair<string, string> OverrideSession()
         {
             return new KeyValuePair<string, string>("--session-override", string.Empty);
-        }
-
-        ///<summary>
-        /// Don’t reset app state between sessions (IOS: don’t delete app plist files; Android: don’t uninstall app before new session)<br/>
-        ///</summary>
-        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
-        public static KeyValuePair<string, string> NoReset()
-        {
-            return new KeyValuePair<string, string>("--no-reset", string.Empty);
         }
 
         ///<summary>
@@ -170,98 +135,6 @@ namespace OpenQA.Selenium.Appium.Service.Options
         }
 
         ///<summary>
-        /// Name of the mobile device to use<br/>
-        /// Sample: <br/>
-        /// --device-name iPhone Retina (4-inch), Android Emulator
-        ///</summary>
-        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
-        public static KeyValuePair<string, string> DeviceName(string value)
-        {
-            string argument = "--device-name";
-            CheckArgumentAndThrowException(argument, value);
-            return new KeyValuePair<string, string>(argument, value);
-        }
-
-        ///<summary>
-        /// Name of the mobile platform: iOS, Android, or FirefoxOS <br/>
-        /// Sample:<br/>
-        /// --platform-name iOS
-        ///</summary>
-        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
-        public static KeyValuePair<string, string> PlatformName(string value)
-        {
-            string argument = "--platform-name";
-            CheckArgumentAndThrowException(argument, value);
-            return new KeyValuePair<string, string>(argument, value);
-        }
-
-        ///<summary>
-        /// Version of the mobile platform <br/>
-        /// Sample:<br/>
-        /// --platform-version 7.1
-        ///</summary>
-        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
-        public static KeyValuePair<string, string> PlatformVersion(string value)
-        {
-            string argument = "--platform-version";
-            CheckArgumentAndThrowException(argument, value);
-            return new KeyValuePair<string, string>(argument, value);
-        }
-
-        ///<summary>
-        /// Name of the automation tool: Appium or Selendroid<br/>
-        /// Sample:<br/>
-        /// --automation-name Appium
-        ///</summary>
-        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
-        public static KeyValuePair<string, string> AutomationName(string value)
-        {
-            string argument = "--automation-name";
-            CheckArgumentAndThrowException(argument, value);
-            return new KeyValuePair<string, string>(argument, value);
-        }
-
-        ///<summary>
-        /// Name of the mobile browser: Safari or Chrome<br/>
-        /// Sample: <br/>
-        /// --browser-name Safari
-        ///</summary>
-        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
-        public static KeyValuePair<string, string> BrowserName(string value)
-        {
-            string argument = "--browser-name";
-            CheckArgumentAndThrowException(argument, value);
-            return new KeyValuePair<string, string>(argument, value);
-        }
-
-
-        ///<summary>
-        /// Language for the iOS simulator / Android Emulator <br/>
-        /// Sample:<br/>
-        /// --language en
-        ///</summary>
-        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
-        public static KeyValuePair<string, string> Language(string value)
-        {
-            string argument = "--language";
-            CheckArgumentAndThrowException(argument, value);
-            return new KeyValuePair<string, string>(argument, value);
-        }
-
-        ///<summary>
-        /// Locale for the iOS simulator / Android Emulator<br/>
-        /// Sample:<br/>
-        /// --locale en_US
-        ///</summary>
-        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
-        public static KeyValuePair<string, string> Locale(string value)
-        {
-            string argument = "--locale";
-            CheckArgumentAndThrowException(argument, value);
-            return new KeyValuePair<string, string>(argument, value);
-        }
-
-        ///<summary>
         /// Configuration JSON file to register Appium with selenium grid<br/>
         /// Sample:<br/>
         /// --nodeconfig /abs/path/to/nodeconfig.json
@@ -309,35 +182,6 @@ namespace OpenQA.Selenium.Appium.Service.Options
         }
 
         ///<summary>
-        /// Port upon which ChromeDriver will run<br/>
-        /// Sample:<br/>
-        /// --chromedriver-port 9515
-        ///</summary>
-        [Obsolete("This flag is deprecated because it is moved to AndroidOptionList.ChromeDriverPort(value)")]
-        public static KeyValuePair<string, string> ChromeDriverPort(string value)
-        {
-            if (String.IsNullOrEmpty(value))
-            {
-                return new KeyValuePair<string, string>("--chromedriver-port", "9515");
-            }
-            else
-            {
-                return new KeyValuePair<string, string>("--chromedriver-port", value);
-            }
-        }
-
-        ///<summary>
-        /// ChromeDriver executable full path
-        ///</summary>
-        [Obsolete("This flag is deprecated because it is moved to AndroidOptionList.ChromeDriverExecutable(value)")]
-        public static KeyValuePair<string, string> ChromeDriverExecutable(string value)
-        {
-            string argument = "--chromedriver-executable";
-            CheckArgumentAndThrowException(argument, value);
-            return new KeyValuePair<string, string>(argument, value);
-        }
-
-        ///<summary>
         /// Show info about the Appium server configuration and exit<br/>
         ///</summary>
         public static KeyValuePair<string, string> ShowConfig()
@@ -351,25 +195,6 @@ namespace OpenQA.Selenium.Appium.Service.Options
         public static KeyValuePair<string, string> NoPermsCheck()
         {
             return new KeyValuePair<string, string>("--no-perms-check", string.Empty);
-        }
-
-
-        ///<summary>
-        /// The default command timeout for the server to use for all sessions. Will
-        /// still be overridden by newCommandTimeout cap<br/>
-        /// Default: 60
-        ///</summary>
-        [Obsolete("This flag is obsolete since appium node 1.5.x. It will be removed in the next release. Be careful. Please use capabilities instead")]
-        public static KeyValuePair<string, string> CommandTimeOut(string value)
-        {
-            if (String.IsNullOrEmpty(value))
-            {
-                return new KeyValuePair<string, string>("--command-timeout", "60");
-            }
-            else
-            {
-                return new KeyValuePair<string, string>("--command-timeout", value);
-            }
         }
 
         ///<summary>

@@ -348,19 +348,6 @@ namespace OpenQA.Selenium.Appium
 
 
         #region MJsonMethod Members
-        /// <summary>
-        /// Locks the device.
-        /// </summary>
-        /// <param name="seconds">The number of seconds during which the device need to be locked for.</param>
-        [Obsolete("This method works incorrectly. It is deprecated and it is going to be removed further. " +
-            "Be careful. Since Appium node 1.5.x you are free to use. " +
-            "IOSDriver.Lock(int seconds) or AndroidDriver.Lock()...AndroidDriver.Unlock() instead")]
-        public void LockDevice(int seconds)
-        {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters.Add("seconds", seconds);
-            this.Execute(AppiumDriverCommand.LockDevice, parameters);
-        }
 
         /// <summary>
         /// Rotates Device.
@@ -473,24 +460,6 @@ namespace OpenQA.Selenium.Appium
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("seconds", seconds);
             this.Execute(AppiumDriverCommand.BackgroundApp, parameters);
-        }
-
-
-        /// <summary>
-        /// Gets the App Strings.
-        /// </summary>
-		[Obsolete("This method is going to be removed. Use GetAppStringDictionary(string language = null, string stringFile = null) " +
-			"instead")]
-        public string GetAppStrings(string language = null)
-        {
-            Dictionary<string, object> parameters = null;
-            if (null != language)
-            {
-                parameters = new Dictionary<string, object> { { "language", language } };
-            }
-
-            var commandResponse = this.Execute(AppiumDriverCommand.GetAppStrings, parameters);
-            return commandResponse.Value as string;
         }
 
 		/// <summary>

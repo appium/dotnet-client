@@ -18,19 +18,6 @@ namespace OpenQA.Selenium.Appium.Android.Interfaces
 {
     public interface ISendsKeyEvents
     {
-        /// <summary>
-        /// Triggers device key event with metastate for the keypress
-        /// </summary>
-        /// <param name="connectionType"></param>
-        [Obsolete("This method is obsolete and it is going to be removed soon. Please use PressKeyCode or LongPressKeyCode instead")]
-        void KeyEvent(int keyCode, int metastate);
-
-        /// <summary>
-        /// Triggers device key event
-        /// </summary>
-        /// <param name="keyCode">Code for the long key pressed on the Android device</param>
-        [Obsolete("This method is obsolete and it is going to be removed soon. Please use PressKeyCode or LongPressKeyCode instead")]
-        void KeyEvent(int keyCode);
 
         /// <summary>
         /// Sends a device key event with metastate

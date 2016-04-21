@@ -32,22 +32,5 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract
                 return null;
             }
         }
-
-        /// <summary>
-        /// Sets the target element name
-        /// </summary>
-        [Obsolete("By.name selector is not supported by Appium server node since 1.5.x. " +
-            "So this option is going to be removed further. Be careful.")]
-        public String Name
-        {
-            set
-            {
-                byList.Add(By.Name(value));
-            }
-            get
-            {
-                return null;
-            }
-        }
     }
 }

@@ -198,32 +198,6 @@ namespace OpenQA.Selenium.Appium.Android
         #endregion Connection Type
 
         /// <summary>
-        /// Triggers device key event with metastate for the keypress
-        /// </summary>
-        /// <param name="keyCode">Code for the long key pressed on the Android device</param>
-        /// <param name="metastate">metastate for the long key press</param>
-        [Obsolete("This method is obsolete and it is going to be removed soon. Please use PressKeyCode or LongPressKeyCode instead")]
-        public void KeyEvent(int keyCode, int metastate)
-        {
-            var parameters = new Dictionary<string, object>();
-            parameters.Add("keycode", keyCode);
-            parameters.Add("metastate", metastate);
-            this.Execute(AppiumDriverCommand.KeyEvent, parameters);
-        }
-
-        /// <summary>
-        /// Triggers device key event
-        /// </summary>
-        /// <param name="keyCode">Code for the long key pressed on the Android device</param>
-        [Obsolete("This method is obsolete and it is going to be removed soon. Please use PressKeyCode or LongPressKeyCode instead")]
-        public void KeyEvent(int keyCode)
-        {
-            var parameters = new Dictionary<string, object>();
-            parameters.Add("keycode", keyCode);
-            this.Execute(AppiumDriverCommand.KeyEvent, parameters);
-        }
-
-        /// <summary>
         /// Sends a device key event with metastate
         /// </summary>
         /// <param name="keyCode">Code for the long key pressed on the Android device</param>

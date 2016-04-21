@@ -44,19 +44,6 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string ToggleAirplaneMode = "toggleAirplaneMode";
 
-        // TODO: needs to be implemented in the future. (currently not implemented in appium but IS in the spec)
-        /// <summary>
-        /// Represents the Airplane Mode ("Flight Safe Mode") Command
-        /// </summary>
-        [Obsolete]
-        public const string AirplaneMode = "airplaneMode";
-
-        /// <summary>
-        /// Press Key Event Command.
-        /// </summary>
-        [Obsolete("The keyevent function has been deprecated and will be removed. Please use the pressKeyCode function instead.")]
-        public const string KeyEvent = "keyEvent";
-
         /// <summary>
         /// Press key code 
         /// </summary>

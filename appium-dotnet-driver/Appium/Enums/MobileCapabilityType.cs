@@ -43,18 +43,6 @@ namespace OpenQA.Selenium.Appium.Enums
         public static readonly string NewCommandTimeout = "newCommandTimeout";
 
         /// <summary>
-        /// Time out for the waiting for the device is ready.
-        /// </summary>
-        [Obsolete("Moved to AndroidMobileCapabilityType.DeviceReadyTimeout and it is going to be removed from here")]
-        public static readonly string DeviceReadyTimeout = "deviceReadyTimeout";
-
-        /// <summary>
-        /// Time out for the waiting for the app is launched.
-        /// </summary>
-        [Obsolete("Moved to IOSMobileCapabilityType.LaunchTimeout and it is going to be removed from here")]
-        public static readonly string LaunchTimeout = "launchTimeout";
-
-        /// <summary>
         /// Name of mobile web browser to automate. Should be an empty string if automating an app instead.
         /// </summary>
         public static readonly string BrowserName = "browserName";
@@ -68,30 +56,6 @@ namespace OpenQA.Selenium.Appium.Enums
         /// Capability name used for the setting up of the required appium version.
         /// </summary>
         public static readonly string AppiumVersion = "appium-version";
-
-        /// <summary>
-        /// It is the required package name.
-        /// </summary>
-        [Obsolete("Moved to AndroidMobileCapabilityType.AppPackage and it is going to be removed from here")]
-        public static readonly string AppPackage = "appPackage";
-
-        /// <summary>
-        /// It is the required activity name.
-        /// </summary>
-        [Obsolete("Moved to AndroidMobileCapabilityType.AppActivity and it is going to be removed from here")]
-        public static readonly string AppActivity = "appActivity";
-
-        /// <summary>
-        /// It is the name of the activity which is expected.
-        /// </summary>
-        [Obsolete("Moved to AndroidMobileCapabilityType.AppWaitActivity and it is going to be removed from here")]
-        public static readonly string AppWaitActivity = "appWaitActivity";
-
-        /// <summary>
-        /// It is the name of the package which is expected.
-        /// </summary>
-        [Obsolete("Moved to AndroidMobileCapabilityType.AppWaitPackage and it is going to be removed from here")]
-        public static readonly string AppWaitPackage = "appWaitPackage";
 
         // <summary>
         /// Unique device identifier of the connected physical device
@@ -128,12 +92,6 @@ namespace OpenQA.Selenium.Appium.Enums
         /// On Android, this will also remove the app after the session is complete. Default false
         /// </summary>
         public static readonly string FullReset = "fullReset";
-
-        // <summary>
-        /// It is Selendroid port.
-        /// </summary>
-        [Obsolete("Moved to AndroidMobileCapabilityType.SelendroidPort and it is going to be removed from here")]
-        public static readonly string SelendroidPort = "selendroidPort";
 
     }
 }
