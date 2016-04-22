@@ -225,5 +225,13 @@ namespace OpenQA.Selenium.Appium.Service.Options
         {
             return new KeyValuePair<string, string>("--debug-log-spacing", string.Empty);
         }
+
+        /// <summary>
+        /// Add long stack traces to log entries. Recommended for debugging only.
+        /// </summary>
+        public static KeyValuePair<string, string> AsyncTrace()
+        {
+            return new KeyValuePair<string, string>("--async-trace", string.Empty);
+        }
     }
 }

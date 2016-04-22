@@ -146,5 +146,17 @@ namespace OpenQA.Selenium.Appium.Service.Options
             CheckArgumentAndThrowException(argument, value);
             return new KeyValuePair<string, string>(argument, value);
         }
+
+        /// <summary>
+        /// Local port used for communication with ios-webkit-debug-proxy.
+        /// Sample:<br/>
+        /// --webkit-debug-proxy-port 27753
+        /// </summary>
+        public static KeyValuePair<string, string> WebkitDebugProxyPort(string value)
+        {
+            string argument = "--webkit-debug-proxy-port";
+            CheckArgumentAndThrowException(argument, value);
+            return new KeyValuePair<string, string>(argument, value);
+        }
     }
 }

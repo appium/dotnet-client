@@ -1,5 +1,11 @@
 #Release Notes
 
+##2.0.0.1 (still not released)
+- All obsolete code was removed. #C client won't support Appium server v lower than 1.5.0
+- Server flags were added:
+	- GeneralOptionList.AsyncTrace
+	- IOSOptionList.WebkitDebugProxyPort
+
 ##1.5.1.1
 - Update to Selenium.Webdriver v2.53.0 and Selenium.Support v2.53.0
 - Update to Newtonsoft.Json v8.0.2
