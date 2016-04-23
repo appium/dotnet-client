@@ -189,5 +189,18 @@ namespace OpenQA.Selenium.Appium.iOS
             parameters.Add("seconds", seconds);
             this.Execute(AppiumDriverCommand.LockDevice, parameters);
         }
+
+        /// <summary>
+        /// Convenience method for swiping across the screen
+        /// </summary>
+        /// <param name="startx">starting x coordinate</param>
+        /// <param name="starty">starting y coordinate</param>
+        /// <param name="endx">ending x coordinate</param>
+        /// <param name="endy">ending y coordinate</param>
+        /// <param name="duration">amount of time in milliseconds for the entire swipe action to take</param>
+        public override void Swipe(int startx, int starty, int endx, int endy, int duration)
+        {
+            DoSwipe(startx, starty, endx - startx, endy - starty, duration);
+        }
     }
 }

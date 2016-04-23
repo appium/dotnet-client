@@ -762,15 +762,7 @@ namespace OpenQA.Selenium.Appium
             multiTouch.Perform();
         }
 
-        /// <summary>
-        /// Convenience method for swiping across the screen
-        /// </summary>
-        /// <param name="startx">starting x coordinate</param>
-        /// <param name="starty">starting y coordinate</param>
-        /// <param name="endx">ending x coordinate</param>
-        /// <param name="endy">ending y coordinate</param>
-        /// <param name="duration">amount of time in milliseconds for the entire swipe action to take</param>
-        public void Swipe(int startx, int starty, int endx, int endy, int duration)
+        protected void DoSwipe(int startx, int starty, int endx, int endy, int duration)
         {
             TouchAction touchAction = new TouchAction(this);
 
@@ -780,6 +772,16 @@ namespace OpenQA.Selenium.Appium
 
             touchAction.Perform();
         }
+
+        /// <summary>
+        /// Convenience method for swiping across the screen
+        /// </summary>
+        /// <param name="startx">starting x coordinate</param>
+        /// <param name="starty">starting y coordinate</param>
+        /// <param name="endx">ending x coordinate</param>
+        /// <param name="endy">ending y coordinate</param>
+        /// <param name="duration">amount of time in milliseconds for the entire swipe action to take</param>
+        public abstract void Swipe(int startx, int starty, int endx, int endy, int duration);
 
         /// <summary>
         /// Convenience method for pinching an element on the screen.
