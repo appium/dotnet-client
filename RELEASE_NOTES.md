@@ -5,6 +5,7 @@
 - Server flags were added:
 	- GeneralOptionList.AsyncTrace
 	- IOSOptionList.WebkitDebugProxyPort
+- FIX of the swiping issue (iOS, server version >= 1.5.0). Now the swiping is implemented differently by AndroidDriver and IOSDriver.
 
 ##1.5.1.1
 - Update to Selenium.Webdriver v2.53.0 and Selenium.Support v2.53.0
