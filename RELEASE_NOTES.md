@@ -2,6 +2,8 @@
 
 ##2.0.0.1 (still not released)
 - All obsolete code was removed. #C client won't support Appium server v lower than 1.5.0
+- ScrollTo() and ScrollToExact() became deprecated. They are going to be removed in the next release. The swiping action and OpenQA.Selenium.Appium.ByAndroidUIAutomator or
+OpenQA.Selenium.Appium.ByIosUIAutomation are recommended to use instead.
 - Server flags were added:
 	- GeneralOptionList.AsyncTrace
 	- IOSOptionList.WebkitDebugProxyPort

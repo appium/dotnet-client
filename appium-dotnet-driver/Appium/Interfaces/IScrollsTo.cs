@@ -15,17 +15,20 @@ using System;
 
 namespace OpenQA.Selenium.Appium.Interfaces
 {
+    [Obsolete()]
     public interface IScrollsTo<W>
         where W : IWebElement
     {
         /// <summary>
         /// Scroll to an element which contains the given text.
         /// </summary>
+        [Obsolete()]
         W ScrollTo(String text);
 
         /// <summary>
         /// Scroll to an element with the given text.
         /// </summary>
+        [Obsolete()]
         W ScrollToExact(String text);
     }
 }

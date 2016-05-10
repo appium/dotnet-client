@@ -7,7 +7,7 @@ using System;
 
 namespace Appium.Integration.Tests.iOS
 {
-    public class iOSScrollTest
+    public class IOSScrollingSearchingTest
     {
         private IOSDriver<AppiumWebElement> driver;
 
@@ -43,13 +43,19 @@ namespace Appium.Integration.Tests.iOS
         [Test()]
         public void ScrollToTestCase()
         {
-            Assert.AreEqual(driver.ScrollTo("Slider").GetAttribute("name"), "Sliders");
+            AppiumWebElement slider = driver
+                .FindElement(new ByIosUIAutomation(".tableViews()[0]"
+                                + ".scrollToElementWithPredicate(\"name CONTAINS 'Slider'\")"));
+            Assert.AreEqual(slider.GetAttribute("name"), "Sliders");
         }
 
         [Test()]
         public void ScrollToExactTestCase()
         {
-            Assert.NotNull(driver.ScrollToExact("Sliders"));
+            AppiumWebElement table = driver.FindElement(new ByIosUIAutomation(".tableViews()[0]"));
+            AppiumWebElement slider = table.FindElement(
+                new ByIosUIAutomation(".scrollToElementWithPredicate(\"name CONTAINS 'Slider'\")"));
+            Assert.AreEqual(slider.GetAttribute("name"), "Sliders");
         }
     }
 }

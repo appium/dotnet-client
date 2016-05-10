@@ -1000,7 +1000,13 @@ namespace OpenQA.Selenium.Appium
 
         #region abstract scrolling methods
 
+        [Obsolete("This method is deprecated because it is not consistent and it is going to be removed. " +
+            "It is workaround actually. The swiping action and OpenQA.Selenium.Appium.ByAndroidUIAutomator or OpenQA.Selenium.Appium.ByIosUIAutomation " + 
+            "are recommended to use instead")]
         public abstract W ScrollTo(string text);
+        [Obsolete("This method is deprecated because it is not consistent and it is going to be removed. " +
+            "It is workaround actually. The swiping action and OpenQA.Selenium.Appium.ByAndroidUIAutomator or OpenQA.Selenium.Appium.ByIosUIAutomation " +
+            "are recommended to use instead")]
         public abstract W ScrollToExact(string text);
 
         #endregion

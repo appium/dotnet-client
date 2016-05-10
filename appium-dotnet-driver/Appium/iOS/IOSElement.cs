@@ -13,6 +13,7 @@
 //limitations under the License.
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Remote;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -54,6 +55,9 @@ namespace OpenQA.Selenium.Appium.iOS
         /// Scrolling happens within this element
         /// </summary>
         /// <param name="text">input text contained in text attribute</param>
+        [Obsolete("This method is deprecated because it is not consistent and it is going to be removed. " +
+            "It is workaround actually. The swiping action and OpenQA.Selenium.Appium.ByIosUIAutomation are recommended " +
+            "to use instead")]
         public AppiumWebElement ScrollTo(string text)
         {
             return (IOSElement)FindElementByIosUIAutomation(".scrollToElementWithPredicate(\"name CONTAINS '" + text + "'\")");
@@ -64,6 +68,9 @@ namespace OpenQA.Selenium.Appium.iOS
         /// Scrolling happens within this element
         /// </summary>
         /// <param name="text">input text contained in text attribute</param>
+        [Obsolete("This method is deprecated because it is not consistent and it is going to be removed. " +
+            "It is workaround actually. The swiping action and OpenQA.Selenium.Appium.ByIosUIAutomation are recommended " +
+            "to use instead")]
         public AppiumWebElement ScrollToExact(string text)
         {
             return (IOSElement)FindElementByIosUIAutomation(".scrollToElementWithName(\"" + text + "\")");

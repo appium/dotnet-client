@@ -309,6 +309,9 @@ namespace OpenQA.Selenium.Appium.Android
         /// The scrolling is performed on the first scrollView present on the UI.
         /// </summary>
         /// <param name="text">text to look out for while scrolling</param>
+        [Obsolete("This method is deprecated because it is not consistent and it is going to be removed. " +
+            "It is workaround actually. The swiping action and OpenQA.Selenium.Appium.ByAndroidUIAutomator are recommended " +
+            "to use istead")]
         public override W ScrollTo(String text)
         {
             String uiScrollables = UiScrollable("new UiSelector().descriptionContains(\"" + text + "\")") +
@@ -322,6 +325,9 @@ namespace OpenQA.Selenium.Appium.Android
         /// The scrolling is performed on the first scrollView present on the UI
         /// </summary>
         /// <param name="text">text to look out for while scrolling</param>
+        [Obsolete("This method is deprecated because it is not consistent and it is going to be removed. " +
+            "It is workaround actually. The swiping action and OpenQA.Selenium.Appium.ByAndroidUIAutomator are recommended " +
+            "to use instead")]
         public override W ScrollToExact(String text)
         {
             String uiScrollables = UiScrollable("new UiSelector().description(\"" + text + "\")") +
@@ -335,6 +341,9 @@ namespace OpenQA.Selenium.Appium.Android
         /// </summary>
         /// <param name="text">text to look out for while scrolling</param>
         /// <param name="resId">resource ID of the scrollable View</param>
+        [Obsolete("This method is deprecated because it is not consistent and it is going to be removed. " +
+            "It is workaround actually. The swiping action and OpenQA.Selenium.Appium.ByAndroidUIAutomator are recommended " +
+            "to use instead")]
         public W ScrollTo(String text, String resId)
         {
             String uiScrollables = UiScrollable("new UiSelector().descriptionContains(\"" + text + "\")", resId) +
@@ -349,6 +358,9 @@ namespace OpenQA.Selenium.Appium.Android
         /// </summary>
         /// <param name="text">text to look out for while scrolling</param>
         /// <param name="resId">resource ID of the scrollable View</param>
+        [Obsolete("This method is deprecated because it is not consistent and it is going to be removed. " +
+            "It is workaround actually. The swiping action and OpenQA.Selenium.Appium.ByAndroidUIAutomator are recommended " +
+            "to use instead")]
         public W ScrollToExact(String text, String resId)
         {
             String uiScrollables = UiScrollable("new UiSelector().description(\"" + text + "\")", resId) +
@@ -363,6 +375,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// <param name="uiSelector">UiSelector-string to tell what to search for while scrolling</param>
         /// <param name="resId">Resource-ID of a scrollable View</param>
         /// <returns>UiScrollable-string that can be executed with FindElementByAndroidUIAutomator()</returns>
+        [Obsolete()]
         private static string UiScrollable(string uiSelector, string resId)
         {
             return "new UiScrollable(new UiSelector().scrollable(true).resourceId(\"" + resId + "\")).scrollIntoView(" + uiSelector + ".instance(0));";

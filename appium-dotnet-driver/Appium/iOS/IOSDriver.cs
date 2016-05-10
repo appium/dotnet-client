@@ -159,11 +159,17 @@ namespace OpenQA.Selenium.Appium.iOS
             return new IOSElement(this, elementId);
         }
 
+        [Obsolete("This method is deprecated because it is not consistent and it is going to be removed. " +
+            "It is workaround actually. The swiping action and OpenQA.Selenium.Appium.ByIosUIAutomation are recommended " +
+            "to use instead")]
         public override W ScrollTo(string text)
         {
             return (W)((IScrollsTo<W>)FindElementByClassName("UIATableView")).ScrollTo(text);
         }
 
+        [Obsolete("This method is deprecated because it is not consistent and it is going to be removed. " +
+            "It is workaround actually. The swiping action and OpenQA.Selenium.Appium.ByIosUIAutomation are recommended " +
+            "to use instead")]
         public override W ScrollToExact(string text)
         {
             return (W)((IScrollsTo<W>)FindElementByClassName("UIATableView")).ScrollToExact(text);
