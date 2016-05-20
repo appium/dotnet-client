@@ -138,20 +138,17 @@ namespace OpenQA.Selenium.Appium.Android
         /// <summary>
         /// Opens an arbitrary activity during a test. If the activity belongs to
         /// another application, that application is started and the activity is opened.
-        ///
-        /// This is an Android-only method.
+        /// 
         /// </summary>
         /// <param name="appPackage">The package containing the activity to start.</param>
         /// <param name="appActivity">The activity to start.</param>
         /// <param name="appWaitPackage">Begin automation after this package starts. Can be null or empty.</param>
         /// <param name="appWaitActivity">Begin automation after this activity starts. Can be null or empty.</param>
-        /// <example>
-        /// driver.StartActivity("com.foo.bar", ".MyActivity");
-        /// </example>
+        /// <param name="stopApp">If true, target app will be stopped.</param>
         public void StartActivity(string appPackage, string appActivity, string appWaitPackage = "", string appWaitActivity = "", bool stopApp = true)
         {
-            Contract.Requires(!String.IsNullOrWhiteSpace(appPackage));
-            Contract.Requires(!String.IsNullOrWhiteSpace(appActivity));
+            Contract.Requires(!string.IsNullOrWhiteSpace(appPackage));
+            Contract.Requires(!string.IsNullOrWhiteSpace(appActivity));
 
             Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
@@ -160,6 +157,43 @@ namespace OpenQA.Selenium.Appium.Android
                 {"appWaitPackage", appWaitPackage},
                 {"appWaitActivity", appWaitActivity},
                 {"dontStopAppOnReset", !stopApp }
+            };
+
+            this.Execute(AppiumDriverCommand.StartActivity, parameters);
+        }
+
+        /// <summary>
+        /// Opens an arbitrary activity during a test. If the activity belongs to
+        /// another application, that application is started and the activity is opened.
+        /// 
+        /// </summary>
+        /// <param name="appPackage">The package containing the activity to start.</param>
+        /// <param name="appActivity">The activity to start.</param>
+        /// <param name="intentAction">Intent action which will be used to start activity.</param>
+        /// <param name="appWaitPackage">Begin automation after this package starts. Can be null or empty.</param>
+        /// <param name="appWaitActivity">Begin automation after this activity starts. Can be null or empty.</param>
+        /// <param name="intentCategory">Intent category which will be used to start activity.</param>
+        /// <param name="intentFlags">Flags that will be used to start activity.</param>
+        /// <param name="intentOptionalArgs">Additional intent arguments that will be used to start activity.</param>
+        /// <param name="stopApp">If true, target app will be stopped.</param>
+        public void StartActivityWithIntent(string appPackage, string appActivity, string intentAction, string appWaitPackage = "", string appWaitActivity = "",
+            string intentCategory = "", string intentFlags = "", string intentOptionalArgs = "", bool stopApp = true)
+        {
+            Contract.Requires(!string.IsNullOrWhiteSpace(appPackage));
+            Contract.Requires(!string.IsNullOrWhiteSpace(appActivity));
+            Contract.Requires(!string.IsNullOrWhiteSpace(intentAction));
+
+            Dictionary<string, object> parameters = new Dictionary<string, object>()
+            {
+                { "appPackage", appPackage},
+                {"appActivity", appActivity},
+                {"appWaitPackage", appWaitPackage},
+                {"appWaitActivity", appWaitActivity},
+                {"dontStopAppOnReset", !stopApp },
+                {"intentAction", intentAction},
+                {"intentCategory", intentCategory},
+                {"intentFlags", intentFlags},
+                {"optionalIntentArguments", intentOptionalArgs}
             };
 
             this.Execute(AppiumDriverCommand.StartActivity, parameters);

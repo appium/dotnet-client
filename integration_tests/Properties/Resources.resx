@@ -142,4 +142,7 @@
   <data name="WebViewApp7_1_app" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\helpers\WebViewApp7.1.app.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="IntentExample" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\helpers\IntentExample.apk;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

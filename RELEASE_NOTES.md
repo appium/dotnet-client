@@ -8,6 +8,8 @@ OpenQA.Selenium.Appium.ByIosUIAutomation are recommended to use instead.
 	- GeneralOptionList.AsyncTrace
 	- IOSOptionList.WebkitDebugProxyPort
 - FIX of the swiping issue (iOS, server version >= 1.5.0). Now the swiping is implemented differently by AndroidDriver and IOSDriver.
+- the ability to start an activity using Android intent actions, intent categories, flags and arguments was added to OpenQA.Selenium.Appium.Android.AndroidDriver. 
+The StartActivityWithIntent method.
 
 ##1.5.1.1
 - Update to Selenium.Webdriver v2.53.0 and Selenium.Support v2.53.0
