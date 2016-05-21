@@ -59,6 +59,7 @@
     <Compile Include="Android\HideKeyboardTestCase.cs" />
     <Compile Include="Android\AndroidLocationTest.cs" />
     <Compile Include="Android\AndroidOrientationTest.cs" />
+    <Compile Include="Android\IntentAndroidTest.cs" />
     <Compile Include="helpers\Apps.cs" />
     <Compile Include="helpers\Caps.cs" />
     <Compile Include="helpers\AppiumServers.cs" />
@@ -113,6 +114,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="helpers\ApiDemos-debug.apk" />
+    <None Include="helpers\IntentExample.apk" />
     <None Include="helpers\PathToLinuxNode" />
     <None Include="helpers\PathToMacOSNode" />
     <None Include="helpers\PathToWindowsNode" />

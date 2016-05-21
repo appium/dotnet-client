@@ -16,5 +16,13 @@ namespace OpenQA.Selenium.Appium.Android
     public interface IStartsActivity
     {
         void StartActivity(string appPackage, string appActivity, string appWaitPackage = "", string appWaitActivity = "", bool stopApp = true);
+
+        void StartActivityWithIntent(string appPackage, string appActivity, string intentAction, string appWaitPackage = "", string appWaitActivity = "",
+             string intentCategory = "", string intentFlags = "", string intentOptionalArgs = "", bool stopApp = true);
+
+        string CurrentActivity
+        {
+            get;
+        }
     }
 }

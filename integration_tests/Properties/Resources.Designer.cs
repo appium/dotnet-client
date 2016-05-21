@@ -1,19 +1,20 @@
 ﻿namespace Appium.Integration.Tests.Properties {
-
-    [global::System.CodeDom.Compiler.GeneratedCode("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
-    [global::System.Diagnostics.DebuggerNonUserCode()]
-    [global::System.Runtime.CompilerServices.CompilerGenerated()]
+    using System;
+    
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
         }
-
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Advanced)]
+        
+        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
@@ -24,7 +25,7 @@
             }
         }
         
-        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Advanced)]
+        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
@@ -41,6 +42,13 @@
             }
         }
         
+        internal static byte[] IntentExample {
+            get {
+                object obj = ResourceManager.GetObject("IntentExample", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] PathToLinuxNode {
             get {
                 object obj = ResourceManager.GetObject("PathToLinuxNode", resourceCulture);
@@ -48,6 +56,7 @@
             }
         }
         
+
         internal static byte[] PathToMacOSNode {
             get {
                 object obj = ResourceManager.GetObject("PathToMacOSNode", resourceCulture);
