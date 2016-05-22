@@ -20,6 +20,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
+using System.Text;
+using System.IO;
 
 namespace OpenQA.Selenium.Appium.Android
 {
@@ -301,11 +303,23 @@ namespace OpenQA.Selenium.Appium.Android
         }
 
         /// <summary>
-        /// Pushes a File.
+        /// Saves a string as a file on the remote mobile device.
         /// </summary>
-        /// <param name="pathOnDevice">path on device to store file to</param>
-        /// <param name="base64Data">base 64 data to store as the file</param>
-        public void PushFile(string pathOnDevice, string base64Data)
+        /// <param name="pathOnDevice">Path to file to write data to on remote device</param>
+        /// <param name="stringData">A string to write to remote device</param>
+        public void PushFile(string pathOnDevice, string stringData)
+        {
+            var bytes = Encoding.UTF8.GetBytes(stringData);
+            var base64 = Convert.ToBase64String(bytes);
+            PushFile(pathOnDevice, Convert.FromBase64String(base64));
+        }
+
+        /// <summary>
+        /// Saves base64 encoded data as a file on the remote mobile device.
+        /// </summary>
+        /// <param name="pathOnDevice">Path to file to write data to on remote device</param>
+        /// <param name="base64Data">Base64 encoded byte array of data to write to remote device</param>
+        public void PushFile(string pathOnDevice, byte[] base64Data)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             parameters.Add("path", pathOnDevice);
@@ -313,6 +327,27 @@ namespace OpenQA.Selenium.Appium.Android
             this.Execute(AppiumDriverCommand.PushFile, parameters);
         }
 
+        /// <summary>
+        /// Saves given file as a file on the remote mobile device.
+        /// </summary>
+        /// <param name="pathOnDevice">Path to file to write data to on remote device</param>
+        /// <param name="base64Data">A file to write to remote device</param>
+        public void PushFile(string pathOnDevice, FileInfo file)
+        {
+            if (file == null)
+            {
+                throw new ArgumentException("The file argument should not be null");
+            }
+
+            if (!file.Exists)
+            {
+                throw new ArgumentException("The file " + file.FullName + " doesn't exist");
+            }
+
+            byte[] bytes = File.ReadAllBytes(file.FullName);
+            string fileBase64Data = Convert.ToBase64String(bytes);
+            PushFile(pathOnDevice, Convert.FromBase64String(fileBase64Data));
+        }
 
         /// <summary>
         /// Open the notifications 
