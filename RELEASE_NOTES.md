@@ -10,6 +10,9 @@ OpenQA.Selenium.Appium.ByIosUIAutomation are recommended to use instead.
 - FIX of the swiping issue (iOS, server version >= 1.5.0). Now the swiping is implemented differently by AndroidDriver and IOSDriver.
 - the ability to start an activity using Android intent actions, intent categories, flags and arguments was added to OpenQA.Selenium.Appium.Android.AndroidDriver. 
 The StartActivityWithIntent method.
+- [Android] ability to push a common string as a file to the remote mobile device. The method was redesigned.
+- [Android] ability to push base64 encoded bytes as a file to the remote mobile device. The method was added.
+- [Android] ability to push a file as the file to the remote mobile device. The method was added.
 
 ##1.5.1.1
 - Update to Selenium.Webdriver v2.53.0 and Selenium.Support v2.53.0
