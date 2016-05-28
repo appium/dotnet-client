@@ -27,6 +27,16 @@ namespace OpenQA.Selenium.Appium.iOS
         private static readonly string Platform = MobilePlatform.IOS;
 
         /// <summary>
+        /// Initializes a new instance of the IOSDriver class
+        /// </summary>
+        /// <param name="commandExecutor">An <see cref="ICommandExecutor"/> object which executes commands for the driver.</param>
+        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
+        public IOSDriver(ICommandExecutor commandExecutor, DesiredCapabilities desiredCapabilities)
+            : base(commandExecutor, SetPlatformToCapabilities(desiredCapabilities, Platform))
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the IOSDriver class using desired capabilities
         /// </summary>
         /// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities of the browser.</param>

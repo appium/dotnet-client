@@ -20,7 +20,7 @@ namespace OpenQA.Selenium.Appium
     /// <summary>
     /// Container class for the command tuple
     /// </summary>
-    internal class AppiumCommand
+    public class AppiumCommand
     {
 
         private static List<AppiumCommand> CommandList = new List<AppiumCommand>(){
@@ -131,7 +131,7 @@ namespace OpenQA.Selenium.Appium
         /// <param name="command">Command</param>
         /// <param name="apiEndpoint">api endpoint</param>
         /// <summary>
-        internal AppiumCommand(string commandType, string command, string apiEndpoint)
+        public AppiumCommand(string commandType, string command, string apiEndpoint)
         {
             CommandType = commandType;
             CommandName = command;

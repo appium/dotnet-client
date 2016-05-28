@@ -13,6 +13,9 @@ The StartActivityWithIntent method.
 - [Android] ability to push a common string as a file to the remote mobile device. The method was redesigned.
 - [Android] ability to push base64 encoded bytes as a file to the remote mobile device. The method was added.
 - [Android] ability to push a file as the file to the remote mobile device. The method was added.
+- Constructors like AppiumDriver(ICommandExecutor commandExecutor, ICapabilities desiredCapabilities) were added to OpenQA.Selenium.Appium.Android.AndroidDriver and OpenQA.Selenium.Appium.iOS.IOSDriver. Also 
+      OpenQA.Selenium.Appium.AppiumCommand became public. The binding of these features may allow to use realated solutions of other vendors/modified Appium server builds which support JSONWP commands 
+      that default Appium/Selenium do not support.
 
 ##1.5.1.1
 - Update to Selenium.Webdriver v2.53.0 and Selenium.Support v2.53.0

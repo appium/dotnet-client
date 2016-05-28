@@ -13,7 +13,6 @@
 //limitations under the License.
 
 using Appium.Interfaces.Generic.SearchContext;
-using Newtonsoft.Json;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.MultiTouch;
@@ -38,7 +37,7 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <param name="commandExecutor">An <see cref="ICommandExecutor"/> object which executes commands for the driver.</param>
         /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
-        private AppiumDriver(ICommandExecutor commandExecutor, ICapabilities desiredCapabilities)
+        public AppiumDriver(ICommandExecutor commandExecutor, ICapabilities desiredCapabilities)
             : base(commandExecutor, desiredCapabilities)
         {
             AppiumCommand.Merge(commandExecutor.CommandInfoRepository);
