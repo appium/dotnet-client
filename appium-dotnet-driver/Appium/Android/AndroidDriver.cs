@@ -39,6 +39,16 @@ namespace OpenQA.Selenium.Appium.Android
         private const string DATA_PARAM = "data";
         private const string INTENT_PARAM = "intent";
 
+        /// <summary>
+        /// Initializes a new instance of the AndroidDriver class
+        /// </summary>
+        /// <param name="commandExecutor">An <see cref="ICommandExecutor"/> object which executes commands for the driver.</param>
+        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
+        public AndroidDriver(ICommandExecutor commandExecutor, DesiredCapabilities desiredCapabilities)
+            : base(commandExecutor, SetPlatformToCapabilities(desiredCapabilities, Platform))
+        {
+        }
+
 
         /// <summary>
         /// Initializes a new instance of the AndroidDriver class using desired capabilities
