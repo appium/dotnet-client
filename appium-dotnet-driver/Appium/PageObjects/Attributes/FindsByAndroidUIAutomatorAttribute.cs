@@ -22,7 +22,7 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes
         /// <summary>
         /// Sets the target UI automator locator
         /// </summary>
-        public String AndroidUIAutomator
+        public string AndroidUIAutomator
         {
             set
             {

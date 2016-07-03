@@ -124,50 +124,38 @@ namespace OpenQA.Selenium.Appium.iOS
         /// </summary>
         /// <param name="selector">UIAutomation selector</param>
         /// <returns>First element found</returns>
-        public W FindElementByIosUIAutomation(string selector)
-        {
-            return (W)this.FindElement("-ios uiautomation", selector);
-        }
+        public W FindElementByIosUIAutomation(string selector) => 
+            (W) FindElement("-ios uiautomation", selector);
 
         /// <summary>
         /// Finds a list of elements that match the iOS UIAutomation selector
         /// </summary>
         /// <param name="selector">UIAutomation selector</param>
         /// <returns>ReadOnlyCollection of elements found</returns>
-        public ReadOnlyCollection<W> FindElementsByIosUIAutomation(string selector)
-        {
-            return CollectionConverterUnility.
-                            ConvertToExtendedWebElementCollection<W>(this.FindElements("-ios uiautomation", selector));
-        }
+        public ReadOnlyCollection<W> FindElementsByIosUIAutomation(string selector) => 
+            CollectionConverterUnility.
+                            ConvertToExtendedWebElementCollection<W>(FindElements("-ios uiautomation", selector));
         #endregion IFindByIosUIAutomation Members
 
         /// <summary>
         /// Shakes the device.
         /// </summary>
-        public void ShakeDevice()
-        {
-            this.Execute(AppiumDriverCommand.ShakeDevice, null);
-        }
+        public void ShakeDevice() => Execute(AppiumDriverCommand.ShakeDevice, null);
 
         /// <summary>
         /// Hides the keyboard
         /// </summary>
         /// <param name="key"></param>
         /// <param name="strategy"></param>
-        public new void HideKeyboard(string key, string strategy = null)
-        {
-            base.HideKeyboard(strategy, key);
-        }
+        public new void HideKeyboard(string key, string strategy = null) =>
+            HideKeyboard(strategy, key);
 
         /// <summary>
         /// Create an iOS Element
         /// </summary>
         /// <param name="elementId">element to create</param>
         /// <returns>IOSElement</returns>
-        protected override RemoteWebElement CreateElement(string elementId)
-        {
-            return new IOSElement(this, elementId);
-        }
+        protected override RemoteWebElement CreateElement(string elementId) => new IOSElement(this, elementId);
 
         [Obsolete("This method is deprecated because it is not consistent and it is going to be removed. " +
             "It is workaround actually. The swiping action and OpenQA.Selenium.Appium.ByIosUIAutomation are recommended " +
@@ -185,6 +173,7 @@ namespace OpenQA.Selenium.Appium.iOS
             return (W)((IScrollsTo<W>)FindElementByClassName("UIATableView")).ScrollToExact(text);
         }
 
+        [Obsolete]
         public W GetNamedTextField(String name)
         {
             W element = FindElementByAccessibilityId(name);
@@ -199,12 +188,9 @@ namespace OpenQA.Selenium.Appium.iOS
         /// Locks the device.
         /// </summary>
         /// <param name="seconds">The number of seconds during which the device need to be locked for.</param>
-        public void Lock(int seconds)
-        {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters.Add("seconds", seconds);
-            this.Execute(AppiumDriverCommand.LockDevice, parameters);
-        }
+        public void Lock(int seconds) =>
+            Execute(AppiumDriverCommand.LockDevice, new Dictionary<string, object>()
+                {["seconds"] = seconds });
 
         /// <summary>
         /// Convenience method for swiping across the screen
@@ -214,9 +200,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// <param name="endx">ending x coordinate</param>
         /// <param name="endy">ending y coordinate</param>
         /// <param name="duration">amount of time in milliseconds for the entire swipe action to take</param>
-        public override void Swipe(int startx, int starty, int endx, int endy, int duration)
-        {
+        public override void Swipe(int startx, int starty, int endx, int endy, int duration) =>
             DoSwipe(startx, starty, endx - startx, endy - starty, duration);
-        }
     }
 }

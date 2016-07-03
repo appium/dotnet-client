@@ -41,20 +41,20 @@ namespace OpenQA.Selenium.Appium.Service
 
         private AppiumCommandExecutor(Uri url, ICommandExecutor realExecutor)
         {
-            this.URL = url;
-            this.RealExecutor = realExecutor;
+            URL = url;
+            RealExecutor = realExecutor;
         }
 
         internal AppiumCommandExecutor(Uri url, TimeSpan timeForTheServerResponding)
             : this(url, CreateRealExecutor(url, timeForTheServerResponding))
         {
-            this.Service = null;
+            Service = null;
         }
 
         internal AppiumCommandExecutor(AppiumLocalService service, TimeSpan timeForTheServerResponding)
             : this(service.ServiceUrl, CreateRealExecutor(service.ServiceUrl, timeForTheServerResponding))
         {
-            this.Service = service;
+            Service = service;
         }
 
         public CommandInfoRepository CommandInfoRepository
@@ -70,7 +70,7 @@ namespace OpenQA.Selenium.Appium.Service
             Response result = null;
             if (commandToExecute.Name == DriverCommand.NewSession && this.Service != null)
             {
-                this.Service.Start();
+                Service.Start();
             }
 
             try
@@ -80,23 +80,23 @@ namespace OpenQA.Selenium.Appium.Service
             }
             catch (Exception e)
             {
-                if ((commandToExecute.Name == DriverCommand.NewSession) && (this.Service != null))
+                if ((commandToExecute.Name == DriverCommand.NewSession) && (Service != null))
                 {
-                    this.Service.Dispose();
+                    Service.Dispose();
                 }
                 throw e;
             }
             finally
             {
                 if (result != null && result.Status != WebDriverResult.Success &&
-                    commandToExecute.Name == DriverCommand.NewSession && this.Service != null)
+                    commandToExecute.Name == DriverCommand.NewSession && Service != null)
                 {
-                    this.Service.Dispose();
+                    Service.Dispose();
                 }
 
-                if (commandToExecute.Name == DriverCommand.Quit && this.Service != null)
+                if (commandToExecute.Name == DriverCommand.Quit && Service != null)
                 {
-                    this.Service.Dispose();
+                    Service.Dispose();
                 }
             }
         }
