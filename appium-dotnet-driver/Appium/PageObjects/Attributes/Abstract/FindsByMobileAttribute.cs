@@ -55,13 +55,13 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract
         public static bool operator ==(FindsByMobileAttribute one, FindsByMobileAttribute two)
         {
             // If both are null, or both are same instance, return true.
-            if (object.ReferenceEquals(one, two))
+            if (ReferenceEquals(one, two))
             {
                 return true;
             }
 
             // If one is null, but not both, return false.
-            if (((object)one == null) || ((object)two == null))
+            if (((object) one == null) || ((object) two == null))
             {
                 return false;
             }
@@ -75,10 +75,8 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract
         /// <param name="one">One instance to compare.</param>
         /// <param name="two">The other instance to compare.</param>
         /// <returns><see langword="true"/> if the two instances are not equal; otherwise, <see langword="false"/>.</returns>
-        public static bool operator !=(FindsByMobileAttribute one, FindsByMobileAttribute two)
-        {
-            return !(one == two);
-        }
+        public static bool operator !=(FindsByMobileAttribute one, FindsByMobileAttribute two) => 
+            !(one == two);
 
         /// <summary>
         /// Determines if one <see cref="FindsByAttribute"/> instance is greater than another.
@@ -139,9 +137,9 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract
                 throw new ArgumentException("Object to compare must be a FindsByAttribute", "obj");
             }
 
-            if (this.Priority != other.Priority)
+            if (Priority != other.Priority)
             {
-                return this.Priority - other.Priority;
+                return Priority - other.Priority;
             }
 
             return 0;
@@ -169,22 +167,19 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract
                 return false;
             }
 
-            if (other.Priority != this.Priority)
+            if (other.Priority != Priority)
             {
                 return false;
             }
 
-            return other.By.Equals(this.By);
+            return other.By.Equals(By);
         }
 
         /// <summary>
         /// Serves as a hash function for a particular type.
         /// </summary>
         /// <returns>A hash code for the current <see cref="System.Object">Object</see>.</returns>
-        public override int GetHashCode()
-        {
-            return this.By.GetHashCode();
-        }
+        public override int GetHashCode() => By.GetHashCode();
 
         /// <summary>
         /// Gets or sets a value indicating where this attribute should be evaluated relative to other instances
@@ -196,7 +191,7 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract
         /// <summary>
         /// Sets the target element id
         /// </summary>
-        public String ID
+        public string ID
         {
             set
             {
@@ -211,7 +206,7 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract
         /// <summary>
         /// Sets the target element class name
         /// </summary>
-        public String ClassName
+        public string ClassName
         {
             set
             {
@@ -226,7 +221,7 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract
         /// <summary>
         /// Sets the target element tag name
         /// </summary>
-        public String TagName
+        public string TagName
         {
             set
             {
@@ -242,7 +237,7 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract
         /// <summary>
         /// Sets the target element xpath
         /// </summary>
-        public String XPath
+        public string XPath
         {
             set
             {

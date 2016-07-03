@@ -54,26 +54,26 @@ namespace OpenQA.Selenium.Appium.MultiTouch
                     if (!parameters.ContainsKey("options")) parameters.Add("options", new Dictionary<string, object>());
                     if (value is IWebElement)
                     {
-                        string id = GetIdForElement((IWebElement)value);
+                        string id = GetIdForElement((IWebElement) value);
                         ((Dictionary<string, object>)this.parameters["options"]).Add(name, id);
                     }
                     else if (value is double)
                     {
-                        double doubleValue = (double)value;
+                        double doubleValue = (double) value;
                         if (doubleValue == (int)doubleValue)
                         {
-                            ((Dictionary<string, object>)this.parameters["options"])
+                            ((Dictionary<string, object>) parameters["options"])
                                 .Add(name, (int)doubleValue);
                         }
                         else
                         {
-                            ((Dictionary<string, object>)this.parameters["options"])
+                            ((Dictionary<string, object>) parameters["options"])
                                 .Add(name, doubleValue);
                         }
                     }
                     else
                     {
-                        ((Dictionary<string, object>)this.parameters["options"]).Add(name, value);
+                        ((Dictionary<string, object>) parameters["options"]).Add(name, value);
                     }
                 }
                 return this;
@@ -108,7 +108,7 @@ namespace OpenQA.Selenium.Appium.MultiTouch
                 .AddOpt("element", element)
                 .AddOpt("x", x)
                 .AddOpt("y", y);
-            this.steps.Add(longPressStep);
+            steps.Add(longPressStep);
             return this;
         }
 
@@ -125,7 +125,7 @@ namespace OpenQA.Selenium.Appium.MultiTouch
             longPressStep
                 .AddOpt("x", x)
                 .AddOpt("y", y);
-            this.steps.Add(longPressStep);
+            steps.Add(longPressStep);
             return this;
         }
 
@@ -143,7 +143,7 @@ namespace OpenQA.Selenium.Appium.MultiTouch
                 .AddOpt("element", element)
                 .AddOpt("x", x)
                 .AddOpt("y", y);
-            this.steps.Add(moveToStep);
+            steps.Add(moveToStep);
             return this;
         }
 
@@ -159,7 +159,7 @@ namespace OpenQA.Selenium.Appium.MultiTouch
             moveToStep
                 .AddOpt("x", x)
                 .AddOpt("y", y);
-            this.steps.Add(moveToStep);
+            steps.Add(moveToStep);
             return this;
         }
 
@@ -177,7 +177,7 @@ namespace OpenQA.Selenium.Appium.MultiTouch
                 .AddOpt("element", element)
                 .AddOpt("x", x)
                 .AddOpt("y", y);
-            this.steps.Add(pressStep);
+            steps.Add(pressStep);
             return this;
         }
 
@@ -193,7 +193,7 @@ namespace OpenQA.Selenium.Appium.MultiTouch
             pressStep
                 .AddOpt("x", x)
                 .AddOpt("y", y);
-            this.steps.Add(pressStep);
+            steps.Add(pressStep);
             return this;
         }
 
@@ -204,7 +204,7 @@ namespace OpenQA.Selenium.Appium.MultiTouch
         public ITouchAction Release()
         {
             Step releaseStep = new Step("release");
-            this.steps.Add(releaseStep);
+            steps.Add(releaseStep);
             return this;
         }
 
@@ -224,7 +224,7 @@ namespace OpenQA.Selenium.Appium.MultiTouch
                 .AddOpt("x", x)
                 .AddOpt("y", y)
                 .AddOpt("count", count);
-            this.steps.Add(tapStep);
+            steps.Add(tapStep);
             return this;
         }
 
@@ -242,7 +242,7 @@ namespace OpenQA.Selenium.Appium.MultiTouch
                 .AddOpt("x", x)
                 .AddOpt("y", y)
                 .AddOpt("count", count);
-            this.steps.Add(tapStep);
+            steps.Add(tapStep);
             return this;
         }
 
@@ -256,7 +256,7 @@ namespace OpenQA.Selenium.Appium.MultiTouch
             Step waitStep = new Step("wait");
             waitStep
                 .AddOpt("ms", ms);
-            this.steps.Add(waitStep);
+            steps.Add(waitStep);
             return this;
         }
 
@@ -283,7 +283,7 @@ namespace OpenQA.Selenium.Appium.MultiTouch
         /// </summary>
         public void Perform()
         {
-            this.TouchActionPerformer.PerformTouchAction(this);
+            TouchActionPerformer.PerformTouchAction(this);
         }
 
     }

@@ -17,7 +17,7 @@ namespace Appium.Integration.Tests.iOS
         [TestFixtureSetUp]
         public void BeforeAll()
         {
-            DesiredCapabilities capabilities = Caps.getIos82Caps(Apps.get("iosWebviewApp"));
+            DesiredCapabilities capabilities = Caps.getIos92Caps(Apps.get("iosWebviewApp"));
             if (Env.isSauce())
             {
                 capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME"));

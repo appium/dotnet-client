@@ -23,27 +23,15 @@ namespace OpenQA.Selenium.Appium.Service.Options
     /// The full list is available here: http://appium.io/slate/en/master/?ruby#appium-server-arguments
     /// Android specific arguments are marked by (IOS-only)
     /// </summary>
-    public sealed class IOSOptionList
+    public sealed class IOSOptionList : BaseOptionList
     {
-        private static void CheckArgumentAndThrowException(string argument, string value)
-        {
-            if (String.IsNullOrEmpty(value))
-            {
-                throw new ArgumentException("The argument " + argument + " requires not empty value");
-            }
-        }
-
         ///<summary>
         /// absolute path to compiled .ipa file
         /// Sample:<br/>
         /// --ipa /abs/path/to/my.ipa
         ///</summary>
-        public static KeyValuePair<string, string> Ipa(string value)
-        {
-            string argument = "--ipa";
-            CheckArgumentAndThrowException(argument, value);
-            return new KeyValuePair<string, string>(argument, value);
-        }
+        public static KeyValuePair<string, string> Ipa(string value) =>
+            GetKeyValuePair("--ipa", value);
 
         ///<summary>
         /// How many times to retry launching Instruments before saying it
@@ -51,62 +39,41 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// Sample:<br/>
         /// --backend-retries 3
         ///</summary>
-        public static KeyValuePair<string, string> BackEndRetries(string value)
-        {
-            if (String.IsNullOrEmpty(value))
-            {
-                return new KeyValuePair<string, string>("--backend-retries", "3");
-            }
-            else
-            {
-                return new KeyValuePair<string, string>("--backend-retries", value);
-            }
-        }
+        public static KeyValuePair<string, string> BackEndRetries(string value) =>
+            GetKeyValuePairUsingDefaultValue("--backend-retries", value, "3");
 
         ///<summary>
         /// Use the safari app<br/>
         ///</summary>
-        public static KeyValuePair<string, string> Safari()
-        {
-            return new KeyValuePair<string, string>("--safari", string.Empty);
-        }
+        public static KeyValuePair<string, string> Safari() =>
+            new KeyValuePair<string, string>("--safari", string.Empty);
 
         ///<summary>
         /// use the default simulator that instruments launches
         /// on its own<br/>
         ///</summary>
-        public static KeyValuePair<string, string> DefaultDevice()
-        {
-            return new KeyValuePair<string, string>("--default-device", string.Empty);
-        }
+        public static KeyValuePair<string, string> DefaultDevice() =>
+            new KeyValuePair<string, string>("--default-device", string.Empty);
 
         ///<summary>
         /// Use the iPhone Simulator no matter what the app wants<br/>
         ///</summary>
-        public static KeyValuePair<string, string> ForceIPhoneSimulator()
-        {
-            return new KeyValuePair<string, string>("--force-iphone", string.Empty);
-        }
+        public static KeyValuePair<string, string> ForceIPhoneSimulator() =>
+            new KeyValuePair<string, string>("--force-iphone", string.Empty);
 
         ///<summary>
         /// Use the iPad Simulator no matter what the app wants<br/>
         ///</summary>
-        public static KeyValuePair<string, string> ForceIPadSimulator()
-        {
-            return new KeyValuePair<string, string>("--force-ipad", string.Empty);
-        }
+        public static KeyValuePair<string, string> ForceIPadSimulator() =>
+            new KeyValuePair<string, string>("--force-ipad", string.Empty);
 
         ///<summary>
         /// .tracetemplate file to use with Instruments<br/>
         /// Sample:<br/>
         /// --tracetemplate /Users/me/Automation.tracetemplate
         ///</summary>
-        public static KeyValuePair<string, string> TraceTemplate(string value)
-        {
-            string argument = "--tracetemplate";
-            CheckArgumentAndThrowException(argument, value);
-            return new KeyValuePair<string, string>(argument, value);
-        }
+        public static KeyValuePair<string, string> TraceTemplate(string value) =>
+            GetKeyValuePair("--tracetemplate", value);
 
 
         ///<summary>
@@ -114,12 +81,8 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// Sample:<br/>
         /// --instruments /path/to/instruments
         ///</summary>
-        public static KeyValuePair<string, string> Intstruments(string value)
-        {
-            string argument = "--instruments";
-            CheckArgumentAndThrowException(argument, value);
-            return new KeyValuePair<string, string>(argument, value);
-        }
+        public static KeyValuePair<string, string> Intstruments(string value) =>
+            GetKeyValuePair("--instruments", value);
 
 
         ///<summary>
@@ -130,33 +93,23 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// responsible for using simctl or xcode to manage the categories of devices
         /// used with Appium<br/>.
         ///</summary>
-        public static KeyValuePair<string, string> IsolateSimDevice()
-        {
-            return new KeyValuePair<string, string>("--isolate-sim-device", string.Empty);
-        }
+        public static KeyValuePair<string, string> IsolateSimDevice() =>
+            new KeyValuePair<string, string>("--isolate-sim-device", string.Empty);
 
 
         ///<summary>
         /// Absolute path to directory Appium use to save ios instruments traces,
         /// defaults to /appium-instruments<br/>
         ///</summary>
-        public static KeyValuePair<string, string> TraceDirectory(string value)
-        {
-            string argument = "--trace-dir";
-            CheckArgumentAndThrowException(argument, value);
-            return new KeyValuePair<string, string>(argument, value);
-        }
+        public static KeyValuePair<string, string> TraceDirectory(string value) =>
+            GetKeyValuePair("--trace-dir", value);
 
         /// <summary>
         /// Local port used for communication with ios-webkit-debug-proxy.
         /// Sample:<br/>
         /// --webkit-debug-proxy-port 27753
         /// </summary>
-        public static KeyValuePair<string, string> WebkitDebugProxyPort(string value)
-        {
-            string argument = "--webkit-debug-proxy-port";
-            CheckArgumentAndThrowException(argument, value);
-            return new KeyValuePair<string, string>(argument, value);
-        }
+        public static KeyValuePair<string, string> WebkitDebugProxyPort(string value) =>
+            GetKeyValuePair("--webkit-debug-proxy-port", value);
     }
 }

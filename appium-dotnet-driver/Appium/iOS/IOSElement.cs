@@ -36,16 +36,13 @@ namespace OpenQA.Selenium.Appium.iOS
 
         #region IFindByIosUIAutomation Members
 
-        public AppiumWebElement FindElementByIosUIAutomation(string selector)
-        {
-            return (AppiumWebElement)this.FindElement("-ios uiautomation", selector);
-        }
+        public AppiumWebElement FindElementByIosUIAutomation(string selector) => 
+            (AppiumWebElement) this.FindElement("-ios uiautomation", selector);
 
-        public ReadOnlyCollection<AppiumWebElement> FindElementsByIosUIAutomation(string selector)
-        {
-            return CollectionConverterUnility.
+        public ReadOnlyCollection<AppiumWebElement> FindElementsByIosUIAutomation(string selector) =>
+            CollectionConverterUnility.
                             ConvertToExtendedWebElementCollection<AppiumWebElement>(this.FindElements("-ios uiautomation", selector));
-        }
+
         #endregion IFindByIosUIAutomation Members
 
         #region IScrollsTo Members
@@ -78,12 +75,8 @@ namespace OpenQA.Selenium.Appium.iOS
 
         #endregion
 
-        public void SetImmediateValue(string value)
-        {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters.Add("id", Id);
-            parameters.Add("value", value);
-            this.Execute(AppiumDriverCommand.SetValue, parameters);
-        }
+        public void SetImmediateValue(string value) => 
+            Execute(AppiumDriverCommand.SetValue, new Dictionary<string, object>()
+                {["id"] = Id,["value"] = value });
     }
 }

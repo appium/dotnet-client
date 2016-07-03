@@ -13,6 +13,7 @@
 //limitations under the License.
 
 using Appium.Interfaces.Generic.SearchContext;
+using Newtonsoft.Json;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.MultiTouch;
@@ -132,189 +133,154 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <param name="by">Mechanism to find element</param>
         /// <returns>first element found</returns>
-        public new W FindElement(By by)
-        {
-            return (W)base.FindElement(by);
-        }
+        public new W FindElement(By by) => 
+            (W)base.FindElement(by);
+
 
         /// <summary>
         /// Find the elements on the page by using the <see cref="T:OpenQA.Selenium.By"/> object and returns a ReadonlyCollection of the Elements on the page 
         /// </summary>
         /// <param name="by">Mechanism to find element</param>
         /// <returns>ReadOnlyCollection of elements found</returns>
-        public new ReadOnlyCollection<W> FindElements(By by)
-        {
-            return CollectionConverterUnility.
-                ConvertToExtendedWebElementCollection<W>(base.FindElements(by));
-        }
+        public new ReadOnlyCollection<W> FindElements(By by) =>
+            CollectionConverterUnility.
+            ConvertToExtendedWebElementCollection<W>(base.FindElements(by));
 
         /// <summary>
         /// Finds the first element in the page that matches the class name supplied
         /// </summary>
         /// <param name="className">CSS class name on the element</param>
         /// <returns>first element found</returns>
-        public new W FindElementByClassName(string className)
-        {
-            return (W)base.FindElementByClassName(className);
-        }
+        public new W FindElementByClassName(string className) =>
+            (W)base.FindElementByClassName(className);
 
         /// <summary>
         /// Finds a list of elements that match the class name supplied
         /// </summary>
         /// <param name="className">CSS class name on the element</param>
         /// <returns>ReadOnlyCollection of elements found</returns>
-        public new ReadOnlyCollection<W> FindElementsByClassName(string className)
-        {
-            return CollectionConverterUnility.
-                ConvertToExtendedWebElementCollection<W>(base.FindElementsByClassName(className));
-        }
+        public new ReadOnlyCollection<W> FindElementsByClassName(string className) =>
+             CollectionConverterUnility.
+            ConvertToExtendedWebElementCollection<W>(base.FindElementsByClassName(className));
 
         /// <summary>
         /// Finds the first element in the page that matches the ID supplied
         /// </summary>
         /// <param name="id">ID of the element</param>
         /// <returns>First element found</returns>
-        public new W FindElementById(string id)
-        {
-            return (W)base.FindElementById(id);
-        }
+        public new W FindElementById(string id) =>
+            (W)base.FindElementById(id);
 
         /// <summary>
         /// Finds a list of elements that match the ID supplied
         /// </summary>
         /// <param name="id">ID of the element</param>
         /// <returns>ReadOnlyCollection of elements found</returns>
-        public new ReadOnlyCollection<W> FindElementsById(string id)
-        {
-            return CollectionConverterUnility.
+        public new ReadOnlyCollection<W> FindElementsById(string id) =>
+             CollectionConverterUnility.
                             ConvertToExtendedWebElementCollection<W>(base.FindElementsById(id));
-        }
 
         /// <summary>
         /// Finds the first element matching the specified CSS selector
         /// </summary>
         /// <param name="cssSelector">The CSS selector to match</param>
         /// <returns>First element found</returns>
-        public new W FindElementByCssSelector(string cssSelector)
-        {
-            return (W)base.FindElementByCssSelector(cssSelector);
-        }
+        public new W FindElementByCssSelector(string cssSelector) =>
+            (W)base.FindElementByCssSelector(cssSelector);
 
         /// <summary>
         /// Finds a list of elements that match the CSS selector
         /// </summary>
         /// <param name="cssSelector">The CSS selector to match</param>
         /// <returns>ReadOnlyCollection of elements found</returns>
-        public new ReadOnlyCollection<W> FindElementsByCssSelector(string cssSelector)
-        {
-            return CollectionConverterUnility.
+        public new ReadOnlyCollection<W> FindElementsByCssSelector(string cssSelector) =>
+            CollectionConverterUnility.
                             ConvertToExtendedWebElementCollection<W>(base.FindElementsByCssSelector(cssSelector));
-        }
 
         /// <summary>
         /// Finds the first of elements that match the link text supplied
         /// </summary>
         /// <param name="linkText">Link text of element</param>
         /// <returns>First element found</returns>
-        public new W FindElementByLinkText(string linkText)
-        {
-            return (W)base.FindElementByLinkText(linkText);
-        }
+        public new W FindElementByLinkText(string linkText) => 
+             (W)base.FindElementByLinkText(linkText);
 
         /// <summary>
         /// Finds a list of elements that match the link text supplied
         /// </summary>
         /// <param name="linkText">Link text of element</param>
         /// <returns>ReadOnlyCollection of elements found</returns>
-        public new ReadOnlyCollection<W> FindElementsByLinkText(string linkText)
-        {
-            return CollectionConverterUnility.
+        public new ReadOnlyCollection<W> FindElementsByLinkText(string linkText) =>
+            CollectionConverterUnility.
                             ConvertToExtendedWebElementCollection<W>(base.FindElementsByLinkText(linkText));
-        }
 
         /// <summary>
         /// Finds the first of elements that match the name supplied
         /// </summary>
         /// <param name="name">Name of the element on the page</param>
         /// <returns>First element found</returns>
-        public new W FindElementByName(string name)
-        {
-            return (W)base.FindElementByName(name);
-        }
+        public new W FindElementByName(string name) => 
+            (W)base.FindElementByName(name);
 
         /// <summary>
         /// Finds a list of elements that match the name supplied
         /// </summary>
         /// <param name="name">Name of the element on the page</param>
         /// <returns>ReadOnlyCollection of elements found</returns>
-        public new ReadOnlyCollection<W> FindElementsByName(string name)
-        {
-            return CollectionConverterUnility.
+        public new ReadOnlyCollection<W> FindElementsByName(string name) =>
+            CollectionConverterUnility.
                             ConvertToExtendedWebElementCollection<W>(base.FindElementsByName(name));
-        }
 
         /// <summary>
         /// Finds the first of elements that match the part of the link text supplied
         /// </summary>
         /// <param name="partialLinkText">Part of the link text</param>
         /// <returns>First element found</returns>
-        public new W FindElementByPartialLinkText(string partialLinkText)
-        {
-            return (W)base.FindElementByPartialLinkText(partialLinkText);
-        }
+        public new W FindElementByPartialLinkText(string partialLinkText) => 
+            (W)base.FindElementByPartialLinkText(partialLinkText);
 
         /// <summary>
         /// Finds a list of elements that match the part of the link text supplied
         /// </summary>
         /// <param name="partialLinkText">Part of the link text</param>
         /// <returns>ReadOnlyCollection of elements found</returns>
-        public new ReadOnlyCollection<W> FindElementsByPartialLinkText(string partialLinkText)
-        {
-            return CollectionConverterUnility.
+        public new ReadOnlyCollection<W> FindElementsByPartialLinkText(string partialLinkText) =>
+            CollectionConverterUnility.
                             ConvertToExtendedWebElementCollection<W>(base.FindElementsByPartialLinkText(partialLinkText));
-        }
 
         /// <summary>
         /// Finds the first of elements that match the DOM Tag supplied
         /// </summary>
         /// <param name="tagName">DOM tag name of the element being searched</param>
         /// <returns>First element found</returns>
-        public new W FindElementByTagName(string tagName)
-        {
-            return (W)base.FindElementByTagName(tagName);
-        }
+        public new W FindElementByTagName(string tagName) =>
+            (W)base.FindElementByTagName(tagName);
 
         /// <summary>
         /// Finds a list of elements that match the DOM Tag supplied
         /// </summary>
         /// <param name="tagName">DOM tag name of the element being searched</param>
         /// <returns>ReadOnlyCollection of elements found</returns>
-        public new ReadOnlyCollection<W> FindElementsByTagName(string tagName)
-        {
-            return CollectionConverterUnility.
+        public new ReadOnlyCollection<W> FindElementsByTagName(string tagName) =>
+            CollectionConverterUnility.
                             ConvertToExtendedWebElementCollection<W>(base.FindElementsByTagName(tagName));
-        }
 
         /// <summary>
         /// Finds the first of elements that match the XPath supplied
         /// </summary>
         /// <param name="xpath">xpath to the element</param>
         /// <returns>First element found</returns>
-        public new W FindElementByXPath(string xpath)
-        {
-            return (W)base.FindElementByXPath(xpath);
-        }
+        public new W FindElementByXPath(string xpath) =>
+            (W)base.FindElementByXPath(xpath);
 
         /// <summary>
         /// Finds a list of elements that match the XPath supplied
         /// </summary>
         /// <param name="xpath">xpath to the element</param>
         /// <returns>ReadOnlyCollection of elements found</returns>
-        public new ReadOnlyCollection<W> FindElementsByXPath(string xpath)
-        {
-            return CollectionConverterUnility.
+        public new ReadOnlyCollection<W> FindElementsByXPath(string xpath) =>
+            CollectionConverterUnility.
                             ConvertToExtendedWebElementCollection<W>(base.FindElementsByXPath(xpath));
-        }
 
         #region IFindByAccessibilityId Members
 
@@ -323,21 +289,17 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <param name="selector">accessibility id</param>
         /// <returns>First element found</returns>
-        public W FindElementByAccessibilityId(string selector)
-        {
-            return (W)this.FindElement("accessibility id", selector);
-        }
+        public W FindElementByAccessibilityId(string selector) =>
+            (W) FindElement("accessibility id", selector);
 
         /// <summary>
         /// Finds a list of elements that match the accessibillity id supplied
         /// </summary>
         /// <param name="selector">accessibility id</param>
         /// <returns>ReadOnlyCollection of elements found</returns>
-        public ReadOnlyCollection<W> FindElementsByAccessibilityId(string selector)
-        {
-            return CollectionConverterUnility.
-                            ConvertToExtendedWebElementCollection<W>(base.FindElements("accessibility id", selector));
-        }
+        public ReadOnlyCollection<W> FindElementsByAccessibilityId(string selector) =>
+            CollectionConverterUnility.
+                            ConvertToExtendedWebElementCollection<W>(FindElements("accessibility id", selector));
 
         #endregion IFindByAccessibilityId Members
 
@@ -362,104 +324,71 @@ namespace OpenQA.Selenium.Appium
             {
                 parameters.Add(opt.Key, opt.Value);
             }
-            this.Execute(AppiumDriverCommand.Rotate, parameters);
+            Execute(AppiumDriverCommand.Rotate, parameters);
         }
 
         /// <summary>
         /// Installs an App.
         /// </summary>
         /// <param name="appPath">a string containing the file path or url of the app.</param>
-        public void InstallApp(string appPath)
-        {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters.Add("appPath", appPath);
-            this.Execute(AppiumDriverCommand.InstallApp, parameters);
-        }
+        public void InstallApp(string appPath) => 
+            Execute(AppiumDriverCommand.InstallApp, new Dictionary<string, object>() {["appPath"] = appPath });
 
         /// <summary>
         /// Removes an App.
         /// </summary>
         /// <param name="appPath">a string containing the id of the app.</param>
-        public void RemoveApp(string appId)
-        {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters.Add("appId", appId);
-            this.Execute(AppiumDriverCommand.RemoveApp, parameters);
-        }
+        public void RemoveApp(string appId) =>
+            Execute(AppiumDriverCommand.RemoveApp, new Dictionary<string, object>() {["appId"] = appId });
 
         /// <summary>
         /// Checks If an App Is Installed.
         /// </summary>
         /// <param name="appPath">a string containing the bundle id.</param>
         /// <return>a bol indicating if the app is installed.</return>
-        public bool IsAppInstalled(string bundleId)
-        {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters.Add("bundleId", bundleId);
-            var commandResponse = this.Execute(AppiumDriverCommand.IsAppInstalled, parameters);
-            Console.Out.WriteLine(commandResponse.Value);
-            return Convert.ToBoolean(commandResponse.Value.ToString());
-        }
+        public bool IsAppInstalled(string bundleId) =>
+            Convert.ToBoolean(Execute(AppiumDriverCommand.IsAppInstalled,
+                new Dictionary<string, object>() {["bundleId"] = bundleId }).Value.ToString());
 
         /// <summary>
         /// Pulls a File.
         /// </summary>
         /// <param name="pathOnDevice">path on device to pull</param>
-        public byte[] PullFile(string pathOnDevice)
-        {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters.Add("path", pathOnDevice);
-            var commandResponse = this.Execute(AppiumDriverCommand.PullFile, parameters);
-            return Convert.FromBase64String(commandResponse.Value.ToString());
-        }
+        public byte[] PullFile(string pathOnDevice) => 
+            Convert.FromBase64String(Execute(AppiumDriverCommand.PullFile, 
+                new Dictionary<string, object>() {["path"] = pathOnDevice }).Value.ToString());
 
         /// <summary>
         /// Pulls a Folder
         /// </summary>
         /// <param name="remotePath">remote path to the folder to return</param>
         /// <returns>a base64 encoded string representing a zip file of the contents of the folder</returns>
-        public byte[] PullFolder(string remotePath)
-        {
-            var parameters = new Dictionary<string, object>();
-            parameters.Add("path", remotePath);
-            var commandResponse = this.Execute(AppiumDriverCommand.PullFolder, parameters);
-            return Convert.FromBase64String(commandResponse.Value.ToString());
-        }
+        public byte[] PullFolder(string remotePath) =>
+             Convert.FromBase64String(Execute(AppiumDriverCommand.PullFolder, 
+                new Dictionary<string, object>() {["path"] = remotePath }).Value.ToString());
 
         /// <summary>
         /// Launches the current app.
         /// </summary>
-        public void LaunchApp()
-        {
-            this.Execute(AppiumDriverCommand.LaunchApp, null);
-        }
+        public void LaunchApp() => Execute(AppiumDriverCommand.LaunchApp, null);
 
         /// <summary>
         /// Closes the current app.
         /// </summary>
-        public void CloseApp()
-        {
-            this.Execute(AppiumDriverCommand.CloseApp, null);
-        }
+        public void CloseApp() => Execute(AppiumDriverCommand.CloseApp, null);
 
         /// <summary>
         /// Resets the current app.
         /// </summary>
-        public void ResetApp()
-        {
-            this.Execute(AppiumDriverCommand.ResetApp, null);
-        }
+        public void ResetApp() => Execute(AppiumDriverCommand.ResetApp, null);
 
         /// <summary>
         /// Backgrounds the current app for the given number of seconds.
         /// </summary>
         /// <param name="seconds">a string containing the number of seconds.</param>
-        public void BackgroundApp(int seconds)
-        {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters.Add("seconds", seconds);
-            this.Execute(AppiumDriverCommand.BackgroundApp, parameters);
-        }
+        public void BackgroundApp(int seconds) =>
+            Execute(AppiumDriverCommand.BackgroundApp,
+                new Dictionary<string, object>() {["seconds"] = seconds });
 
 		/// <summary>
 		/// Get all defined Strings from an app for the specified language and
@@ -471,23 +400,10 @@ namespace OpenQA.Selenium.Appium
 		public Dictionary<string, object> GetAppStringDictionary(string language = null, string stringFile = null)
 		{
 			Dictionary<string, object> parameters = new Dictionary<string, object> ();
-			if (language != null)
-			{
-				parameters.Add("language", language );
-			}
-
-			if (stringFile != null) 
-			{
-				parameters.Add ("stringFile", stringFile);
-			}
-
-			if (parameters.Count == 0) 
-			{
-				parameters = null;
-			}
-
-			var commandResponse = this.Execute(AppiumDriverCommand.GetAppStrings, parameters);
-			return (Dictionary<string, object>) commandResponse.Value;
+			if (language != null) {parameters.Add("language", language ); }
+			if (stringFile != null) {parameters.Add ("stringFile", stringFile);	}
+			if (parameters.Count == 0)  { parameters = null;}
+			return (Dictionary<string, object>) Execute(AppiumDriverCommand.GetAppStrings, parameters).Value;
 		}
 
 
@@ -500,19 +416,16 @@ namespace OpenQA.Selenium.Appium
         protected void HideKeyboard(string strategy = null, string key = null)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
-            if (strategy != null) parameters.Add("strategy", strategy);
-            if (key != null) parameters.Add("keyName", key);
-            this.Execute(AppiumDriverCommand.HideKeyboard, parameters);
+            if (strategy != null) { parameters.Add("strategy", strategy); }
+            if (key != null) { parameters.Add("keyName", key); }
+            Execute(AppiumDriverCommand.HideKeyboard, parameters);
         }
 
         /// <summary>
         /// Hides the device keyboard.
         /// </summary>
         /// <param name="keyName">The button pressed by the mobile driver to attempt hiding the keyboard.</param>
-        public void HideKeyboard()
-        {
-            this.HideKeyboard(null, null);
-        }
+        public void HideKeyboard() => HideKeyboard(null, null);
 
         /// <sumary>
         /// GPS Location
@@ -538,14 +451,14 @@ namespace OpenQA.Selenium.Appium
         {
             get
             {
-                var commandResponse = this.Execute(AppiumDriverCommand.GetContext, null);
+                var commandResponse = Execute(AppiumDriverCommand.GetContext, null);
                 return commandResponse.Value as string;
             }
             set
             {
                 var parameters = new Dictionary<string, object>();
                 parameters.Add("name", value);
-                this.Execute(AppiumDriverCommand.SetContext, parameters);
+               Execute(AppiumDriverCommand.SetContext, parameters);
             }
         }
 
@@ -553,7 +466,7 @@ namespace OpenQA.Selenium.Appium
         {
             get
             {
-                var commandResponse = this.Execute(AppiumDriverCommand.Contexts, null);
+                var commandResponse = Execute(AppiumDriverCommand.Contexts, null);
                 var contexts = new List<string>();
                 var objects = commandResponse.Value as object[];
 
@@ -575,14 +488,14 @@ namespace OpenQA.Selenium.Appium
         {
             get
             {
-                var commandResponse = this.Execute(AppiumDriverCommand.GetOrientation, null);
+                var commandResponse = Execute(AppiumDriverCommand.GetOrientation, null);
                 return (commandResponse.Value as string).ConvertToScreenOrientation();
             }
             set
             {
                 var parameters = new Dictionary<string, object>();
                 parameters.Add("orientation", value.JSONWireProtocolString());
-                this.Execute(AppiumDriverCommand.SetOrientation, parameters);
+                Execute(AppiumDriverCommand.SetOrientation, parameters);
             }
         }
         #endregion Orientation
@@ -595,7 +508,7 @@ namespace OpenQA.Selenium.Appium
         public List<string> GetIMEAvailableEngines()
         {
             var retVal = new List<string>();
-            var commandResponse = this.Execute(AppiumDriverCommand.GetAvailableEngines, null);
+            var commandResponse = Execute(AppiumDriverCommand.GetAvailableEngines, null);
             var objectArr = commandResponse.Value as object[];
             if (null != objectArr)
             {
@@ -608,40 +521,29 @@ namespace OpenQA.Selenium.Appium
         /// Get the currently active IME Engine on the device
         /// </summary>
         /// <returns>Active IME Engine</returns>
-        public string GetIMEActiveEngine()
-        {
-            var commandResponse = this.Execute(AppiumDriverCommand.GetActiveEngine, null);
-            return commandResponse.Value as string;
-        }
+        public string GetIMEActiveEngine() => 
+            Execute(AppiumDriverCommand.GetActiveEngine, null).Value as string;
 
         /// <summary>
         /// Is the IME active on the device (NOTE: on Android, this is always true)
         /// </summary>
         /// <returns>true if IME is active, false otherwise</returns>
-        public bool IsIMEActive()
-        {
-            var commandResponse = this.Execute(AppiumDriverCommand.IsIMEActive, null);
-            return (bool)(commandResponse.Value);
-        }
+        public bool IsIMEActive() =>
+            (bool) (Execute(AppiumDriverCommand.IsIMEActive, null).Value);
 
         /// <summary>
         /// Activate the given IME on Device
         /// </summary>
         /// <param name="imeEngine">IME to activate</param>
-        public void ActivateIMEEngine(string imeEngine)
-        {
-            var parameters = new Dictionary<string, object>();
-            parameters.Add("engine", imeEngine);
-            this.Execute(AppiumDriverCommand.ActivateEngine, parameters);
-        }
+        public void ActivateIMEEngine(string imeEngine) =>
+            Execute(AppiumDriverCommand.ActivateEngine, new Dictionary<string, object>() {["engine"] = imeEngine });
 
         /// <summary>
         /// Deactivate the currently Active IME Engine on device
         /// </summary>
-        public void DeactiveIMEEngine()
-        {
-            this.Execute(AppiumDriverCommand.DeactivateEngine, null);
-        }
+        public void DeactiveIMEEngine() =>
+            Execute(AppiumDriverCommand.DeactivateEngine, null);
+
         #endregion Input Method (IME)
 
         #region Multi Actions
@@ -652,13 +554,11 @@ namespace OpenQA.Selenium.Appium
         /// <param name="multiAction">multi action to perform</param>
         public void PerformMultiAction(IMultiAction multiAction)
         {
-            if (null == multiAction)
+            if (multiAction != null)
             {
-                return; // do nothing
-            }
-
-            var parameters = multiAction.GetParameters();
-            this.Execute(AppiumDriverCommand.PerformMultiAction, parameters);
+                var parameters = multiAction.GetParameters();
+                Execute(AppiumDriverCommand.PerformMultiAction, parameters);
+            }            
         }
 
         /// <summary>
@@ -667,14 +567,12 @@ namespace OpenQA.Selenium.Appium
         /// <param name="touchAction">touch action to perform</param>
         public void PerformTouchAction(ITouchAction touchAction)
         {
-            if (null == touchAction)
+            if (touchAction != null)
             {
-                return; // do nothing
-            }
-
-            var parameters = new Dictionary<string, object>();
-            parameters.Add("actions", touchAction.GetParameters());
-            this.Execute(AppiumDriverCommand.PerformTouchAction, parameters);
+                var parameters = new Dictionary<string, object>();
+                parameters.Add("actions", touchAction.GetParameters());
+                Execute(AppiumDriverCommand.PerformTouchAction, parameters);
+            }            
         }
 
         #endregion Multi Actions
@@ -685,22 +583,21 @@ namespace OpenQA.Selenium.Appium
         /// Get appium settings currently set for the session
         /// See: https://github.com/appium/appium/blob/master/docs/en/advanced-concepts/settings.md
         /// </summary>
-        public Dictionary<String, Object> GetSettings()
-        {
-            var commandResponse = this.Execute(AppiumDriverCommand.GetSettings, null);
-            return JsonConvert.DeserializeObject<Dictionary<String, Object>>((String)commandResponse.Value);
-        }
+        public Dictionary<string, object> GetSettings() => 
+            JsonConvert.
+                DeserializeObject<Dictionary<string, object>>
+                ((string) Execute(AppiumDriverCommand.GetSettings, null).Value);
 
         /// <summary>
         /// Update an appium Setting, on the session
         /// </summary>
-        protected void UpdateSetting(String setting, Object value)
+        protected void UpdateSetting(string setting, object value)
         {
-            var parameters = new Dictionary<string, object>();
-            var settings = new Dictionary<string, object>();
-            settings.Add(setting, value);
-            parameters.Add("settings", settings);
-            this.Execute(AppiumDriverCommand.UpdateSettings, parameters);
+            var settings = new Dictionary<string, object>()
+            {[setting] = value };
+            var parameters = new Dictionary<string, object>()
+            {["settings"] = settings };
+            Execute(AppiumDriverCommand.UpdateSettings, parameters);
         }
         #endregion Settings
 
@@ -709,20 +606,14 @@ namespace OpenQA.Selenium.Appium
         /// <summary>
         /// Creates a tap on an element for a given time
         /// </summary>
-        private ITouchAction CreateTap(IWebElement element, int duration)
-        {
-            TouchAction tap = new TouchAction(this);
-            return tap.Press(element).Wait(duration).Release();
-        }
+        private ITouchAction CreateTap(IWebElement element, int duration) =>
+            new TouchAction(this).Press(element).Wait(duration).Release();
 
         /// <summary>
         /// Creates a tap on x-y-coordinates for a given time
         /// </summary>
-        private ITouchAction CreateTap(int x, int y, int duration)
-        {
-            TouchAction tap = new TouchAction(this);
-            return tap.Press(x, y).Wait(duration).Release();
-        }
+        private ITouchAction CreateTap(int x, int y, int duration) 
+            => new TouchAction(this).Press(x, y).Wait(duration).Release();
 
         /// <summary>
         /// Convenience method for tapping the center of an element on the screen
@@ -913,8 +804,7 @@ namespace OpenQA.Selenium.Appium
         {
             get
             {
-                var commandResponse = this.Execute(AppiumDriverCommand.GetDeviceTime, null);
-                return commandResponse.Value.ToString();
+                return Execute(AppiumDriverCommand.GetDeviceTime, null).Value.ToString();
             }
         }
 
@@ -922,28 +812,7 @@ namespace OpenQA.Selenium.Appium
 
         #endregion Public Methods
 
-        #region Internal Methods
-        /// <summary>
-        /// Executes commands with the driver 
-        /// </summary>
-        /// <param name="driverCommandToExecute">Command that needs executing</param>
-        /// <param name="parameters">Parameters needed for the command</param>
-        /// <returns>WebDriver Response</returns>
-        internal Response InternalExecute(string driverCommandToExecute, Dictionary<string, object> parameters)
-        {
-            return this.Execute(driverCommandToExecute, parameters);
-        }
-        #endregion Internal Methods
-
         #region Support methods
-        /// <summary>
-        /// In derived classes, the <see cref="PrepareEnvironment"/> method prepares the environment for test execution.
-        /// </summary>
-        protected virtual void PrepareEnvironment()
-        {
-            // Does nothing, but provides a hook for subclasses to do "stuff"
-        }
-
         /// <summary>
         /// Find the element in the response
         /// </summary>

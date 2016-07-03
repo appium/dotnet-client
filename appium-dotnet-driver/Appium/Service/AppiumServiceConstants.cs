@@ -53,9 +53,8 @@ namespace OpenQA.Selenium.Appium.Service
         internal static readonly string AppiumJSName = "appium.js";
         internal static readonly string MainJSName = "main.js";
 
-        internal static readonly string AppiumNodeOldMask = Path.DirectorySeparatorChar + BinFolder + Path.DirectorySeparatorChar + AppiumJSName;
-        internal static readonly string AppiumNodeMask = Path.DirectorySeparatorChar + BuildFolder + Path.DirectorySeparatorChar + LibFolder +
-            Path.DirectorySeparatorChar + MainJSName;
+        internal static readonly string AppiumNodeMask = $"{Path.DirectorySeparatorChar}{BuildFolder}{Path.DirectorySeparatorChar}" +
+            $"{LibFolder}{Path.DirectorySeparatorChar}{MainJSName}";
 
         internal static readonly IList<string> FilePathCapabilitiesForWindows = new List<string>(new string[] {
             AndroidMobileCapabilityType.KeystorePath,

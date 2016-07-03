@@ -36,12 +36,14 @@ namespace OpenQA.Selenium.Appium
 
         public Dictionary<string, object> ToDictionary()
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters.Add("latitude", Latitude);
-            parameters.Add("longitude", Longitude);
-            parameters.Add("altitude", Altitude);
-            Dictionary<string, object> location = new Dictionary<string, object>();
-            location.Add("location", parameters);
+            Dictionary<string, object> parameters = new Dictionary<string, object>()
+            {
+                ["latitude"] = Latitude,
+                ["longitude"] = Longitude,
+                ["altitude"] = Altitude
+            };
+            Dictionary<string, object> location = new Dictionary<string, object>()
+            {["location"] = parameters};
             return location;
         }
     }

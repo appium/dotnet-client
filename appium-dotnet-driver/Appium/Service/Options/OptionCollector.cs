@@ -71,7 +71,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
 
         private string ParseCapabilitiesIfWindows()
         {
-            String result = String.Empty;
+            string result = string.Empty;
 
             if (capabilities != null)
             {
@@ -90,11 +90,11 @@ namespace OpenQA.Selenium.Appium.Service.Options
                     {
                         if (AppiumServiceConstants.FilePathCapabilitiesForWindows.Contains(item.Key))
                         {
-                            value = "\\\"" + Convert.ToString(value).Replace("\\", "/") + "\\\"";
+                            value = $"\\\"{Convert.ToString(value).Replace("\\", "/")}\\\"";
                         }
                         else
                         {
-                            value = "\\\"" + value + "\\\"";
+                            value = $"\\\"{value}\\\"";
                         }
                     }
                     else
@@ -105,10 +105,10 @@ namespace OpenQA.Selenium.Appium.Service.Options
                         }
                     }
 
-                    string key = "\\\"" + item.Key + "\\\"";
-                    if (String.IsNullOrEmpty(result))
+                    string key = $"\\\"{item.Key}\\\"";
+                    if (string.IsNullOrEmpty(result))
                     {
-                        result = key + ": " + value;
+                        result = $"{key}: {value}";
                     }
                     else
                     {
@@ -122,7 +122,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
 
         private string ParseCapabilitiesIfUNIX()
         {
-            String result = String.Empty;
+            string result = string.Empty;
 
             if (capabilities != null)
             {
@@ -139,7 +139,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
 
                     if (typeof(string).IsAssignableFrom(value.GetType()))
                     {
-                        value = "\"" + value + "\""; ;
+                        value = $"\"{value}\""; ;
                     }
 
                     else
@@ -150,10 +150,10 @@ namespace OpenQA.Selenium.Appium.Service.Options
                         }
                     }
 
-                    string key = "\"" + item.Key + "\"";
-                    if (String.IsNullOrEmpty(result))
+                    string key = $"\"{item.Key}\"";
+                    if (string.IsNullOrEmpty(result))
                     {
-                        result = key + ": " + value;
+                        result = $"{key}: {value}";
                     }
                     else
                     {
@@ -172,23 +172,23 @@ namespace OpenQA.Selenium.Appium.Service.Options
         {
             get
             {
-                List<String> result = new List<string>();
+                List<string> result = new List<string>();
                 var keys = CollectedArgs.Keys;
                 foreach (var key in keys)
                 {
-                    if (String.IsNullOrEmpty(key))
+                    if (string.IsNullOrEmpty(key))
                     {
                         continue;
                     }
                     result.Add(key);
                     string value = CollectedArgs[key];
-                    if (!String.IsNullOrEmpty(value))
+                    if (!string.IsNullOrEmpty(value))
                     {
                         result.Add(value);
                     }
                 }
 
-                if (this.capabilities != null && this.capabilities.ToDictionary().Count > 0)
+                if (capabilities != null && capabilities.ToDictionary().Count > 0)
                 {
                     result.Add(CapabilitiesFlag);
                     if (Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows))

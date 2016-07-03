@@ -47,10 +47,10 @@ namespace OpenQA.Selenium.Appium.PageObjects.Interceptors
             }
             catch (WebDriverTimeoutException e)
             {
-                String bysString = "";
+                string bysString = "";
                 foreach (var by in bys)
                     bysString = bysString + by.ToString() + " ";
-                throw new NoSuchElementException("Couldn't locate an element by these strategies: " + bysString);
+                throw new NoSuchElementException("Couldn't locate an element by these strategies: " + bysString, e);
             }
             finally
             {

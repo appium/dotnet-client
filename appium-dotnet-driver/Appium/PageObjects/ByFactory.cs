@@ -88,7 +88,6 @@ namespace OpenQA.Selenium.Appium.PageObjects
                 return null;
 
             string upperPlatform = platform.ToUpper();
-            string upperAutomation = null;
 
             bool useSequence = false;
             bool useAll = false;
@@ -98,8 +97,7 @@ namespace OpenQA.Selenium.Appium.PageObjects
             MobileFindsByAllAttribute all = Attribute.GetCustomAttribute(member, typeof(MobileFindsByAllAttribute), true) as
                 MobileFindsByAllAttribute;
 
-            if (automation != null)
-                upperAutomation = automation.ToUpper();
+            string upperAutomation = automation?.ToUpper();
 
             if (!upperPlatform.Equals(MobilePlatform.Android.ToUpper()) & !upperPlatform.Equals(MobilePlatform.IOS.ToUpper()))
                 return null;
@@ -191,9 +189,8 @@ namespace OpenQA.Selenium.Appium.PageObjects
                 nativeBys = defaultBys;
             }
 
-            Dictionary<ContentTypes, IEnumerable<By>> map = new Dictionary<ContentTypes, IEnumerable<By>>();
-            map.Add(ContentTypes.HTML, defaultBys);
-            map.Add(ContentTypes.NATIVE, nativeBys);
+            Dictionary<ContentTypes, IEnumerable<By>> map = new Dictionary<ContentTypes, IEnumerable<By>>()
+            { [ContentTypes.HTML] = defaultBys , [ContentTypes.NATIVE] = nativeBys};
             ContentMappedBy by = new ContentMappedBy(map);
             List<By> bys = new List<By>();
             bys.Add(by);
@@ -222,11 +219,11 @@ namespace OpenQA.Selenium.Appium.PageObjects
                 object platform = hasCapabilities.
                     Capabilities.GetCapability(MobileCapabilityType.PlatformName);
 
-                if (platform == null || String.IsNullOrEmpty(Convert.ToString(platform)))
+                if (platform == null || string.IsNullOrEmpty(Convert.ToString(platform)))
                     platform = hasCapabilities.Capabilities.GetCapability(CapabilityType.Platform);
 
                 string convertedPlatform = Convert.ToString(platform);
-                if (platform != null && !String.IsNullOrEmpty(convertedPlatform))
+                if (platform != null && !string.IsNullOrEmpty(convertedPlatform))
                     return convertedPlatform;
             }
             return null;
@@ -248,11 +245,11 @@ namespace OpenQA.Selenium.Appium.PageObjects
                 object automation = hasCapabilities.
                     Capabilities.GetCapability(MobileCapabilityType.AutomationName);
 
-                if (automation == null || String.IsNullOrEmpty(Convert.ToString(automation)))
+                if (automation == null || string.IsNullOrEmpty(Convert.ToString(automation)))
                     automation = hasCapabilities.Capabilities.GetCapability(CapabilityType.BrowserName);
 
                 string convertedAutomation = Convert.ToString(automation);
-                if (automation != null && !String.IsNullOrEmpty(convertedAutomation))
+                if (automation != null && ! string.IsNullOrEmpty(convertedAutomation))
                     return convertedAutomation;
             }
             return null;

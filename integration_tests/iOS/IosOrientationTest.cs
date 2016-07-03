@@ -14,7 +14,7 @@ namespace Appium.Integration.Tests.iOS
 
 		[TestFixtureSetUp]
 		public void beforeAll(){
-			DesiredCapabilities capabilities = Caps.getIos82Caps (Apps.get("iosTestApp")); 
+			DesiredCapabilities capabilities = Caps.getIos92Caps (Apps.get("iosTestApp")); 
 			if (Env.isSauce ()) {
 				capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME")); 
 				capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
