@@ -13,6 +13,7 @@
 //limitations under the License.
 
 using Appium.Interfaces.Generic.SearchContext;
+using Newtonsoft.Json;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.MultiTouch;
