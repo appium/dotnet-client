@@ -46,8 +46,8 @@ namespace Appium.Integration.Tests.iOS
 		public void TapTest()
 		{
 
-			driver.FindElementById ("IntegerA").SetImmediateValue ("2");
-			driver.FindElementById ("IntegerB").SetImmediateValue ("4");
+			driver.FindElementById ("IntegerA").SendKeys("2");
+			driver.FindElementById ("IntegerB").SendKeys("4");
 
 			IOSElement e = driver.FindElementByAccessibilityId("ComputeSumButton");
 			driver.Tap(2, e, 2000);
