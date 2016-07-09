@@ -2,6 +2,14 @@
 
 ##2.0.0.1 (still not released)
 - All obsolete code was removed. #C client won't support Appium server v lower than 1.5.0
+- Source code migration to C# 6.0. Now this bundle requires .Net Framework > v4.5 or Mono Framework version which supports .Net Framework v4.5 with Lang Level 6.
+- Update to Selenium.Webdriver v2.53.1 and Selenium.Support v2.53.1.
+- Update to Newtonsoft.Json v9.0.1.
+- Re-design of mobile searching strategies:
+	- The class OpenQA.Selenium.Appium.MobileBy was added.
+	- Classes ByAccessibilityId, ByAndroidUIAutomator, ByIosUIAutomation were grouped by the new class.
+	- Static methods that create instances of ByAccessibilityId, ByAndroidUIAutomator, ByIosUIAutomation were added.
+- The method public W GetNamedTextField(String name) was marked obsolete. It is going to be removed.	   
 - ScrollTo() and ScrollToExact() became deprecated. They are going to be removed in the next release. The swiping action and OpenQA.Selenium.Appium.ByAndroidUIAutomator or
 OpenQA.Selenium.Appium.ByIosUIAutomation are recommended to use instead.
 - Server flags were added:
