@@ -21,13 +21,13 @@ namespace OpenQA.Selenium.Appium.Service.Exceptions
         private readonly static string Prefix = "Invalid server instance exception has occurred: ";
 
         public InvalidServerInstanceException(string message, Exception cause)
-            : base(Prefix + message, cause)
+            : base($"{Prefix}{message}", cause)
         {
 
         }
 
         public InvalidServerInstanceException(string message)
-            : base(Prefix + message)
+            : base($"{Prefix}{message}")
         {
 
         }

@@ -21,7 +21,7 @@ namespace OpenQA.Selenium.Appium.PageObjects
     internal class ContentMappedBy : By
     {
         private readonly Dictionary<ContentTypes, IEnumerable<By>> map;
-        private readonly static String NATIVE_APP_PATTERN = "NATIVE_APP";
+        private readonly static string NATIVE_APP_PATTERN = "NATIVE_APP";
 
         internal ContentMappedBy(Dictionary<ContentTypes, IEnumerable<By>> map)
         {
@@ -35,7 +35,7 @@ namespace OpenQA.Selenium.Appium.PageObjects
                 return map[ContentTypes.HTML];
 
             IContextAware contextAware = driver as IContextAware;
-            String currentContext = contextAware.Context;
+            string currentContext = contextAware.Context;
             if (currentContext.Contains(NATIVE_APP_PATTERN))
                 return map[ContentTypes.NATIVE];
 
@@ -44,13 +44,13 @@ namespace OpenQA.Selenium.Appium.PageObjects
 
         private static bool IsInvalidSelectorRootCause(Exception e)
         {
-            String invalid_selector_pattern = "Invalid locator strategy:";
+            string invalid_selector_pattern = "Invalid locator strategy:";
             if (e == null)
                 return false;
 
             string message = e.Message;
 
-            if (!String.IsNullOrWhiteSpace(message) && (typeof(InvalidSelectorException).IsAssignableFrom(e.GetType()) ||
+            if (!string.IsNullOrWhiteSpace(message) && (typeof(InvalidSelectorException).IsAssignableFrom(e.GetType()) ||
                 message.Contains(invalid_selector_pattern)))
             {
                 return true;
@@ -87,7 +87,7 @@ namespace OpenQA.Selenium.Appium.PageObjects
 
         private static string ReturnByString(IEnumerable<By> bys)
         {
-            String result = "";
+            string result = "";
             foreach (var by in bys)
             {
                 result = result + by.ToString() + "; ";

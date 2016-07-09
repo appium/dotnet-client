@@ -35,18 +35,15 @@ namespace OpenQA.Selenium.Appium.Service
         /// Creates an instance of AppiumLocalService without special settings
         /// </summary>
         /// <returns>An instance of AppiumLocalService without special settings</returns>
-        public static AppiumLocalService BuildDefaultService()
-        {
-            return new AppiumServiceBuilder().Build();
-        }
+        public static AppiumLocalService BuildDefaultService() => new AppiumServiceBuilder().Build();
 
         internal AppiumLocalService(FileInfo nodeJS, string arguments, IPAddress ip, int port, TimeSpan initializationTimeout)
         {
-            this.NodeJS = nodeJS;
-            this.IP = ip;
-            this.Arguments = arguments;
-            this.Port = port;
-            this.InitializationTimeout = initializationTimeout;
+            NodeJS = nodeJS;
+            IP = ip;
+            Arguments = arguments;
+            Port = port;
+            InitializationTimeout = initializationTimeout;
         }
 
         /// <summary>
@@ -54,7 +51,7 @@ namespace OpenQA.Selenium.Appium.Service
         /// </summary>
         public Uri ServiceUrl
         {
-            get { return new Uri("http://" + IP.ToString() + ":" + Convert.ToString(Port) + "/wd/hub"); }
+            get { return new Uri($"http://{IP.ToString()}:{Convert.ToString(Port)}/wd/hub"); }
         }
 
         /// <summary>
@@ -68,18 +65,18 @@ namespace OpenQA.Selenium.Appium.Service
                 return;
             }
 
-            this.Service = new Process();
-            this.Service.StartInfo.FileName = this.NodeJS.FullName;
-            this.Service.StartInfo.Arguments = this.Arguments;
-            this.Service.StartInfo.UseShellExecute = false;
-            this.Service.StartInfo.CreateNoWindow = true;
+            Service = new Process();
+            Service.StartInfo.FileName = NodeJS.FullName;
+            Service.StartInfo.Arguments = Arguments;
+            Service.StartInfo.UseShellExecute = false;
+            Service.StartInfo.CreateNoWindow = true;
 
             bool isLaunced = false;
-            string msgTxt = "The local appium server has not been started. " +
-                    "The given Node.js executable: " + this.NodeJS.FullName + " Arguments: " + this.Arguments + ". " + "\n";
+            string msgTxt = $"The local appium server has not been started. The given Node.js executable: {NodeJS.FullName} Arguments: {Arguments}. " + "\n";
+
             try
             {
-                this.Service.Start();
+                Service.Start();
             }
             catch (Exception e)
             {
@@ -87,32 +84,31 @@ namespace OpenQA.Selenium.Appium.Service
                 throw new AppiumServerHasNotBeenStartedLocallyException(msgTxt, e);
             }
 
-            isLaunced = Ping(this.InitializationTimeout);
+            isLaunced = Ping(InitializationTimeout);
             if (!isLaunced)
             {
                 DestroyProcess();
-                throw new AppiumServerHasNotBeenStartedLocallyException(msgTxt + "Time " + this.InitializationTimeout.TotalMilliseconds +
-                    " ms for the service starting has been expired!");
+                throw new AppiumServerHasNotBeenStartedLocallyException(msgTxt + $"Time {InitializationTimeout.TotalMilliseconds} ms for the service starting has been expired!");
             }
 
         }
 
         private void DestroyProcess()
         {
-            if (this.Service == null)
+            if (Service == null)
             {
                 return;
             }
 
             try
             {
-                this.Service.Kill();
+                Service.Kill();
             }
             catch (Exception ignored)
             { }
             finally
             {
-                this.Service.Close();
+                Service.Close();
             }
         }
 
@@ -133,14 +129,14 @@ namespace OpenQA.Selenium.Appium.Service
         {
             get
             {
-                if (this.Service == null)
+                if (Service == null)
                 {
                     return false;
                 }
 
                 try
                 {
-                    var pid = this.Service.Id;
+                    var pid = Service.Id;
                 }
                 catch (Exception)
                 {

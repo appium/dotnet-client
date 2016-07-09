@@ -32,13 +32,6 @@ namespace OpenQA.Selenium.Appium.Android
     {
         private static readonly string Platform = MobilePlatform.Android;
 
-        private const string METASTATE_PARAM = "metastate";
-        private const string CONNECTION_NAME_PARAM = "name";
-        private const string CONNECTION_PARAM_PARAM = "parameters";
-        private const string CONNECTION_NAME_VALUE = "network_connection";
-        private const string DATA_PARAM = "data";
-        private const string INTENT_PARAM = "intent";
-
         /// <summary>
         /// Initializes a new instance of the AndroidDriver class
         /// </summary>
@@ -134,16 +127,11 @@ namespace OpenQA.Selenium.Appium.Android
 
         #region IFindByAndroidUIAutomator Members
 
-        public W FindElementByAndroidUIAutomator(string selector)
-        {
-            return (W)this.FindElement("-android uiautomator", selector);
-        }
+        public W FindElementByAndroidUIAutomator(string selector) => (W) FindElement("-android uiautomator", selector);
 
-        public ReadOnlyCollection<W> FindElementsByAndroidUIAutomator(string selector)
-        {
-            return CollectionConverterUnility.
-                            ConvertToExtendedWebElementCollection<W>(this.FindElements("-android uiautomator", selector));
-        }
+        public ReadOnlyCollection<W> FindElementsByAndroidUIAutomator(string selector) => 
+            CollectionConverterUnility.
+            ConvertToExtendedWebElementCollection<W>(this.FindElements("-android uiautomator", selector));
 
         #endregion IFindByAndroidUIAutomator Members
 
@@ -164,14 +152,14 @@ namespace OpenQA.Selenium.Appium.Android
 
             Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
-                { "appPackage", appPackage},
-                {"appActivity", appActivity},
-                {"appWaitPackage", appWaitPackage},
-                {"appWaitActivity", appWaitActivity},
-                {"dontStopAppOnReset", !stopApp }
+                ["appPackage"] = appPackage,
+                ["appActivity"] = appActivity,
+                ["appWaitPackage"] = appWaitPackage,
+                ["appWaitActivity"] = appWaitActivity,
+                ["dontStopAppOnReset"] = !stopApp
             };
 
-            this.Execute(AppiumDriverCommand.StartActivity, parameters);
+            Execute(AppiumDriverCommand.StartActivity, parameters);
         }
 
         /// <summary>
@@ -197,18 +185,18 @@ namespace OpenQA.Selenium.Appium.Android
 
             Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
-                { "appPackage", appPackage},
-                {"appActivity", appActivity},
-                {"appWaitPackage", appWaitPackage},
-                {"appWaitActivity", appWaitActivity},
-                {"dontStopAppOnReset", !stopApp },
-                {"intentAction", intentAction},
-                {"intentCategory", intentCategory},
-                {"intentFlags", intentFlags},
-                {"optionalIntentArguments", intentOptionalArgs}
+                ["appPackage"] = appPackage,
+                ["appActivity"] = appActivity,
+                ["appWaitPackage"] = appWaitPackage,
+                ["appWaitActivity"] = appWaitActivity,
+                ["dontStopAppOnReset"] = !stopApp,
+                ["intentAction"] = intentAction,
+                ["intentCategory"] = intentCategory,
+                ["intentFlags"] = intentFlags,
+                ["optionalIntentArguments"] = intentOptionalArgs
             };
 
-            this.Execute(AppiumDriverCommand.StartActivity, parameters);
+            Execute(AppiumDriverCommand.StartActivity, parameters);
         }
 
         #region Connection Type
@@ -217,7 +205,7 @@ namespace OpenQA.Selenium.Appium.Android
         {
             get
             {
-                var commandResponse = this.Execute(AppiumDriverCommand.GetConnectionType, null);
+                var commandResponse = Execute(AppiumDriverCommand.GetConnectionType, null);
                 if (commandResponse.Status == WebDriverResult.Success)
                 {
                     return (ConnectionType)(long)commandResponse.Value;
@@ -230,12 +218,12 @@ namespace OpenQA.Selenium.Appium.Android
             set
             {
                 Dictionary<string, object> values = new Dictionary<string, object>(){
-                    {"type", value}
+                    ["type"] = value
                 };
 
                 Dictionary<string, object> dictionary = new Dictionary<string, object>(){
-                    {CONNECTION_NAME_PARAM, CONNECTION_NAME_VALUE},
-                    {CONNECTION_PARAM_PARAM, values}
+                    ["name"] = "network_connection",
+                    ["parameters"] = values
                 };
 
                 Execute(AppiumDriverCommand.SetConnectionType, dictionary);
@@ -250,8 +238,8 @@ namespace OpenQA.Selenium.Appium.Android
         /// <param name="metastate">metastate for the long key press</param>
         public void PressKeyCode(int keyCode, int metastate = -1)
         {
-            var parameters = new Dictionary<string, object>();
-            parameters.Add("keycode", keyCode);
+            var parameters = new Dictionary<string, object>()
+            {["keycode"] = keyCode };
             if (metastate > 0)
             {
                 parameters.Add("metastate", metastate);
@@ -266,8 +254,8 @@ namespace OpenQA.Selenium.Appium.Android
         /// <param name="metastate">metastate for the long key press</param>
         public void LongPressKeyCode(int keyCode, int metastate = -1)
         {
-            var parameters = new Dictionary<string, object>();
-            parameters.Add("keycode", keyCode);
+            var parameters = new Dictionary<string, object>()
+            {["keycode"] = keyCode};
             if (metastate > 0)
             {
                 parameters.Add("metastate", metastate);
@@ -278,10 +266,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// <summary>
         /// Toggles Location Services.
         /// </summary>
-        public void ToggleLocationServices()
-        {
-            this.Execute(AppiumDriverCommand.ToggleLocationServices, null);
-        }
+        public void ToggleLocationServices() => Execute(AppiumDriverCommand.ToggleLocationServices, null);
 
 
         /// <summary>
@@ -292,7 +277,7 @@ namespace OpenQA.Selenium.Appium.Android
         {
             get
             {
-                var commandResponse = this.Execute(AppiumDriverCommand.GetCurrentActivity, null);
+                var commandResponse = Execute(AppiumDriverCommand.GetCurrentActivity, null);
                 return commandResponse.Value as string;
             }
         }
@@ -303,39 +288,28 @@ namespace OpenQA.Selenium.Appium.Android
         /// <param name="intent">a string containing the intent.</param>
         /// <param name="path">a string containing the path.</param>
         /// <return>a base64 string containing the data</return> 
-        public string EndTestCoverage(string intent, string path)
-        {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters.Add("intent", intent);
-            parameters.Add("path", path);
-            var commandResponse = this.Execute(AppiumDriverCommand.EndTestCoverage, parameters);
-            return commandResponse.Value as string;
-        }
+        public string EndTestCoverage(string intent, string path) =>
+            Execute(AppiumDriverCommand.EndTestCoverage, 
+                new Dictionary<string, object>()
+                {["intent"] = intent,["path"] = path }).Value as string;
 
         /// <summary>
         /// Saves a string as a file on the remote mobile device.
         /// </summary>
         /// <param name="pathOnDevice">Path to file to write data to on remote device</param>
         /// <param name="stringData">A string to write to remote device</param>
-        public void PushFile(string pathOnDevice, string stringData)
-        {
-            var bytes = Encoding.UTF8.GetBytes(stringData);
-            var base64 = Convert.ToBase64String(bytes);
-            PushFile(pathOnDevice, Convert.FromBase64String(base64));
-        }
+        public void PushFile(string pathOnDevice, string stringData) =>
+            PushFile(pathOnDevice, Convert.FromBase64String(Convert.
+                ToBase64String(Encoding.UTF8.GetBytes(stringData))));
 
         /// <summary>
         /// Saves base64 encoded data as a file on the remote mobile device.
         /// </summary>
         /// <param name="pathOnDevice">Path to file to write data to on remote device</param>
         /// <param name="base64Data">Base64 encoded byte array of data to write to remote device</param>
-        public void PushFile(string pathOnDevice, byte[] base64Data)
-        {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters.Add("path", pathOnDevice);
-            parameters.Add("data", base64Data);
-            this.Execute(AppiumDriverCommand.PushFile, parameters);
-        }
+        public void PushFile(string pathOnDevice, byte[] base64Data) =>
+            Execute(AppiumDriverCommand.PushFile, new Dictionary<string, object>()
+                {["path"] = pathOnDevice,["data"] = base64Data });
 
         /// <summary>
         /// Saves given file as a file on the remote mobile device.
@@ -362,24 +336,16 @@ namespace OpenQA.Selenium.Appium.Android
         /// <summary>
         /// Open the notifications 
         /// </summary>
-        public void OpenNotifications()
-        {
-            this.Execute(AppiumDriverCommand.OpenNotifications, null);
-        }
+        public void OpenNotifications() => Execute(AppiumDriverCommand.OpenNotifications, null);
 
-        protected override RemoteWebElement CreateElement(string elementId)
-        {
-            return new AndroidElement(this, elementId);
-        }
+
+        protected override RemoteWebElement CreateElement(string elementId) => new AndroidElement(this, elementId);
 
         /// <summary>
         /// Set "ignoreUnimportantViews" setting.
         /// See: https://github.com/appium/appium/blob/master/docs/en/advanced-concepts/settings.md
         /// </summary>
-        public void IgnoreUnimportantViews(bool value)
-        {
-            base.UpdateSetting("ignoreUnimportantViews", value);
-        }
+        public void IgnoreUnimportantViews(bool value) => UpdateSetting("ignoreUnimportantViews", value);
 
         #region scrollTo, scrollToExact
 
@@ -476,30 +442,22 @@ namespace OpenQA.Selenium.Appium.Android
         /**
         * This method locks a device.
         */
-        public void Lock()
-        {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters.Add("seconds", 0);
-            this.Execute(AppiumDriverCommand.LockDevice, parameters);
-        }
+        public void Lock() =>
+            Execute(AppiumDriverCommand.LockDevice, 
+                new Dictionary<string, object>()
+                {["seconds"] = 0 });
 
         /// <summary>
         /// Check if the device is locked
         /// </summary>
         /// <returns>true if device is locked, false otherwise</returns>
-        public bool IsLocked()
-        {
-            var commandResponse = this.Execute(AppiumDriverCommand.IsLocked, null);
-            return (bool)commandResponse.Value;
-        }
+        public bool IsLocked() => 
+            (bool) Execute(AppiumDriverCommand.IsLocked, null).Value;
 
         /**
          * This method unlocks a device.
          */
-        public void Unlock()
-        {
-            this.Execute(AppiumDriverCommand.UnlockDevice, null);
-        }
+        public void Unlock() => Execute(AppiumDriverCommand.UnlockDevice, null);
 
         /// <summary>
         /// Convenience method for swiping across the screen
@@ -509,10 +467,9 @@ namespace OpenQA.Selenium.Appium.Android
         /// <param name="endx">ending x coordinate</param>
         /// <param name="endy">ending y coordinate</param>
         /// <param name="duration">amount of time in milliseconds for the entire swipe action to take</param>
-        public override void Swipe(int startx, int starty, int endx, int endy, int duration)
-        {
+        public override void Swipe(int startx, int starty, int endx, int endy, int duration) =>
             DoSwipe(startx, starty, endx, endy, duration);
-        }
+
         #endregion
 
     }

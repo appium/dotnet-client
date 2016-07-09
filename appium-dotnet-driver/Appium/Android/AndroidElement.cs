@@ -32,24 +32,17 @@ namespace OpenQA.Selenium.Appium.Android
 
         #region IFindByAndroidUIAutomator Members
 
-        public AppiumWebElement FindElementByAndroidUIAutomator(string selector)
-        {
-            return (AppiumWebElement) this.FindElement("-android uiautomator", selector);
-        }
+        public AppiumWebElement FindElementByAndroidUIAutomator(string selector) => 
+            (AppiumWebElement) this.FindElement("-android uiautomator", selector);
 
-        public ReadOnlyCollection<AppiumWebElement> FindElementsByAndroidUIAutomator(string selector)
-        {
-            return CollectionConverterUnility.
+        public ReadOnlyCollection<AppiumWebElement> FindElementsByAndroidUIAutomator(string selector) => 
+            CollectionConverterUnility.
                             ConvertToExtendedWebElementCollection<AppiumWebElement>(this.FindElements("-android uiautomator", selector));
-        }
         #endregion IFindByAndroidUIAutomator Members
 
-        public void ReplaceValue(string value)
-        {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
-            parameters.Add("id", Id);
-            parameters.Add("value", new string[] { value });
-            this.Execute(AppiumDriverCommand.ReplaceValue, parameters);
-        }
+        public void ReplaceValue(string value) =>
+            Execute(AppiumDriverCommand.ReplaceValue, 
+                new Dictionary<string, object>()
+                {["id"] = Id,["value"] = new string[] { value } });
     }
 }

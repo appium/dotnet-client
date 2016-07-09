@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -9,6 +9,8 @@
     <AssemblyName>appium-dotnet-driver</AssemblyName>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -19,6 +21,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>6</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
@@ -27,24 +31,23 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <DocumentationFile>bin\Release\appium-dotnet-driver.XML</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>6</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Core">
-      <HintPath>$(SolutionDir)\packages\Castle.Core.3.3.3\lib\net40-client\Castle.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>$(SolutionDir)\packages\Newtonsoft.Json.8.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
-    <Reference Include="WebDriver, Version=2.53.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>$(SolutionDir)\packages\Selenium.WebDriver.2.53.0\lib\net40\WebDriver.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Castle.Core">
+      <HintPath>$(SolutionDir)\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="WebDriver.Support, Version=2.53.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>$(SolutionDir)\packages\Selenium.Support.2.53.0\lib\net40\WebDriver.Support.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>$(SolutionDir)\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="WebDriver">
+      <HintPath>$(SolutionDir)\packages\Selenium.WebDriver.2.53.1\lib\net40\WebDriver.dll</HintPath>
+    </Reference>
+    <Reference Include="WebDriver.Support">
+      <HintPath>$(SolutionDir)\packages\Selenium.Support.2.53.1\lib\net40\WebDriver.Support.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -86,6 +89,7 @@
     <Compile Include="Appium\iOS\IOSDriver.cs" />
     <Compile Include="Appium\iOS\IOSElement.cs" />
     <Compile Include="Appium\CollectionConverterUnility.cs" />
+    <Compile Include="Appium\MobileBy.cs" />
     <Compile Include="Appium\PageObjects\AppiumPageObjectMemberDecorator.cs" />
     <Compile Include="Appium\PageObjects\Attributes\FindsByIOSUIAutomationAttribute.cs" />
     <Compile Include="Appium\PageObjects\Attributes\Abstract\FindsByMobileAttribute.cs" />
@@ -112,6 +116,7 @@
     <Compile Include="Appium\Service\Exceptions\InvalidNodeJSInstanceException.cs" />
     <Compile Include="Appium\Service\Exceptions\InvalidServerInstanceException.cs" />
     <Compile Include="Appium\Service\Options\AndroidOptionList.cs" />
+    <Compile Include="Appium\Service\Options\BaseOptionList.cs" />
     <Compile Include="Appium\Service\Options\IOSOptionList.cs" />
     <Compile Include="Appium\Service\Options\GeneralOptionList.cs" />
     <Compile Include="Appium\Service\Options\OptionCollector.cs" />
@@ -119,9 +124,6 @@
     <Compile Include="Appium\AppiumDriver.cs" />
     <Compile Include="Appium\AppiumDriverCommand.cs" />
     <Compile Include="Appium\AppiumWebElement.cs" />
-    <Compile Include="Appium\ByAccessibilityId.cs" />
-    <Compile Include="Appium\ByAndroidUIAutomator.cs" />
-    <Compile Include="Appium\ByIosUIAutomation.cs" />
     <Compile Include="Appium\Interfaces\IFindByAccessibilityId.cs" />
     <Compile Include="Appium\Interfaces\IFindByAndroidUIAutomator.cs" />
     <Compile Include="Appium\Interfaces\IFindByIosUIAutomation.cs" />

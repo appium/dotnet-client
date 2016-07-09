@@ -16,7 +16,7 @@ namespace Appium.Integration.Tests.iOS
         [TestFixtureSetUp]
         public void BeforeAll()
         {
-			DesiredCapabilities capabilities = Caps.getIos82Caps(Apps.get("iosTestApp"));
+			DesiredCapabilities capabilities = Caps.getIos92Caps(Apps.get("iosTestApp"));
 			if (Env.isSauce ())
 			{
 				capabilities.SetCapability ("username", Env.getEnvVar ("SAUCE_USERNAME"));
@@ -46,8 +46,8 @@ namespace Appium.Integration.Tests.iOS
 		public void TapTest()
 		{
 
-			driver.FindElementById ("IntegerA").SetImmediateValue ("2");
-			driver.FindElementById ("IntegerB").SetImmediateValue ("4");
+			driver.FindElementById ("IntegerA").SendKeys("2");
+			driver.FindElementById ("IntegerB").SendKeys("4");
 
 			IOSElement e = driver.FindElementByAccessibilityId("ComputeSumButton");
 			driver.Tap(2, e, 2000);

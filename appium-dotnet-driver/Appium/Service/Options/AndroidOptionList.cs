@@ -24,32 +24,15 @@ namespace OpenQA.Selenium.Appium.Service.Options
     /// The full list is available here: http://appium.io/slate/en/master/?ruby#appium-server-arguments
     /// Android specific arguments are marked by (Android-only)
     /// </summary>
-    public sealed class AndroidOptionList
+    public sealed class AndroidOptionList: BaseOptionList
     {
-        private static void CheckArgumentAndThrowException(string argument, string value)
-        {
-            if (String.IsNullOrEmpty(value))
-            {
-                throw new ArgumentException("The argument " + argument + " requires not empty value");
-            }
-        }
-
         ///<summary>
         /// Port to use on device to talk to Appium<br/>
         /// Sample:<br/>
         /// --bootstrap-port 4724
         ///</summary>
-        public static KeyValuePair<string, string> BootstrapPort(string value)
-        {
-            if (String.IsNullOrEmpty(value))
-            {
-                return new KeyValuePair<string, string>("--bootstrap-port", "4724");
-            }
-            else
-            {
-                return new KeyValuePair<string, string>("--bootstrap-port", value);
-            }
-        }
+        public static KeyValuePair<string, string> BootstrapPort(string value) =>
+            GetKeyValuePairUsingDefaultValue("--bootstrap-port", value, "4724");
 
 
         ///<summary>
@@ -57,52 +40,28 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// Sample:<br/>
         /// --selendroid-port 8080
         ///</summary>
-        public static KeyValuePair<string, string> SelendroidPort(string value)
-        {
-            if (String.IsNullOrEmpty(value))
-            {
-                return new KeyValuePair<string, string>("--selendroid-port", "8080");
-            }
-            else
-            {
-                return new KeyValuePair<string, string>("--selendroid-port", value);
-            }
-        }
+        public static KeyValuePair<string, string> SelendroidPort(string value) =>
+            GetKeyValuePairUsingDefaultValue("--selendroid-port", value, "8080");
 
         ///<summary>
         /// If set, prevents Appium from killing the adb server
         /// instance<br/>
         ///</summary>
-        public static KeyValuePair<string, string> SuppressAdbKillServer()
-        {
-            return new KeyValuePair<string, string>("--suppress-adb-kill-server", string.Empty);
-        }
+        public static KeyValuePair<string, string> SuppressAdbKillServer() => 
+            new KeyValuePair<string, string>("--suppress-adb-kill-server", string.Empty);
 
         ///<summary>
         /// Port upon which ChromeDriver will run<br/>
         /// Sample:<br/>
         /// --chromedriver-port 9515
         ///</summary>
-        public static KeyValuePair<string, string> ChromeDriverPort(string value)
-        {
-            if (String.IsNullOrEmpty(value))
-            {
-                return new KeyValuePair<string, string>("--chromedriver-port", "9515");
-            }
-            else
-            {
-                return new KeyValuePair<string, string>("--chromedriver-port", value);
-            }
-        }
+        public static KeyValuePair<string, string> ChromeDriverPort(string value) =>
+            GetKeyValuePairUsingDefaultValue("--chromedriver-port", value, "9515");
 
         ///<summary>
         /// ChromeDriver executable full path
         ///</summary>
-        public static KeyValuePair<string, string> ChromeDriverExecutable(string value)
-        {
-            string argument = "--chromedriver-executable";
-            CheckArgumentAndThrowException(argument, value);
-            return new KeyValuePair<string, string>(argument, value);
-        }
+        public static KeyValuePair<string, string> ChromeDriverExecutable(string value) =>
+            GetKeyValuePair("--chromedriver-executable", value);
     }
 }

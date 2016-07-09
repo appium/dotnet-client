@@ -21,7 +21,7 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract
         /// <summary>
         /// Sets the target accessibility
         /// </summary>
-        public String Accessibility
+        public string Accessibility
         {
             set
             {

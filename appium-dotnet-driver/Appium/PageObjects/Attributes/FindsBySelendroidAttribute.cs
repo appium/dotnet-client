@@ -23,7 +23,7 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes
         /// Sets the target element link text.
         /// This locator is supported by Selendroid
         /// </summary>
-        public String LinkText
+        public string LinkText
         {
             set
             {
@@ -39,7 +39,7 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes
         /// Sets the target element partial link text
         /// This locator is supported by Selendroid
         /// </summary>
-        public String PartialLinkText
+        public string PartialLinkText
         {
             set
             {
@@ -54,7 +54,7 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes
         /// <summary>
         /// Sets the target element name
         /// </summary>
-        public String Name
+        public string Name
         {
             set
             {

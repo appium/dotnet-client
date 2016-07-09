@@ -100,16 +100,13 @@ namespace OpenQA.Selenium.Appium.PageObjects
             PropertyInfo property = member as PropertyInfo;
 
             Type targetType = null;
-            if (field != null)
-            {
-                targetType = field.FieldType;
-            }
+            targetType = field?.FieldType;
 
             bool hasPropertySet = false;
             if (property != null)
             {
                 hasPropertySet = property.CanWrite;
-                targetType = property.PropertyType;
+                targetType = property?.PropertyType;
             }
 
             if (field == null & (property == null || !hasPropertySet))

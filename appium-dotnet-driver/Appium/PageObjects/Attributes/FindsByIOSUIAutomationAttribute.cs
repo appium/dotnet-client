@@ -22,7 +22,7 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes
         /// <summary>
         /// Sets the target UI automation locator
         /// </summary>
-        public String IosUIAutomation
+        public string IosUIAutomation
         {
             set
             {

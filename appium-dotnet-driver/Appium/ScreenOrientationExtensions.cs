@@ -25,10 +25,8 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <param name="orientation"></param>
         /// <returns></returns>
-        public static string JSONWireProtocolString(this ScreenOrientation orientation)
-        {
-            return orientation.ToString().ToUpper();
-        }
+        public static string JSONWireProtocolString(this ScreenOrientation orientation) =>
+            orientation.ToString().ToUpper();
 
         /// <summary>
         /// Converts the string to a screen orientation if possible, else throws ArgumentOutOfRangeException 

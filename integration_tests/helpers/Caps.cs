@@ -6,9 +6,9 @@ namespace Appium.Integration.Tests.Helpers
 {
 	public class Caps
 	{
-		public static DesiredCapabilities getIos82Caps (string app) {
+		public static DesiredCapabilities getIos92Caps (string app) {
 			DesiredCapabilities capabilities = new DesiredCapabilities();
-			capabilities.SetCapability(MobileCapabilityType.PlatformVersion, "8.2");
+			capabilities.SetCapability(MobileCapabilityType.PlatformVersion, "9.2");
 			capabilities.SetCapability(MobileCapabilityType.DeviceName, "iPhone Simulator");
 			capabilities.SetCapability(MobileCapabilityType.App, app);
 			return capabilities;
@@ -34,10 +34,10 @@ namespace Appium.Integration.Tests.Helpers
 			return capabilities;
 		}
 
-		public static DesiredCapabilities getSelendroid16Caps (string app) {
+		public static DesiredCapabilities getSelendroid19Caps (string app) {
 			DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.SetCapability(CapabilityType.BrowserName, "");
-            capabilities.SetCapability(MobileCapabilityType.PlatformVersion, "4.1");
+            capabilities.SetCapability(MobileCapabilityType.PlatformVersion, "4.4.2");
 			capabilities.SetCapability(MobileCapabilityType.AutomationName, "selendroid");
             capabilities.SetCapability(MobileCapabilityType.DeviceName, "Android Emulator");
             capabilities.SetCapability(MobileCapabilityType.App, app);

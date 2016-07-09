@@ -100,7 +100,7 @@ namespace Appium.Integration.Tests.ServerTests
         {
             string app = Apps.get("iosTestApp");
             DesiredCapabilities capabilities =
-                Caps.getIos82Caps(app);
+                Caps.getIos92Caps(app);
 
             IOSDriver<AppiumWebElement> driver = null;
             try
@@ -122,7 +122,7 @@ namespace Appium.Integration.Tests.ServerTests
         {
             string app = Apps.get("iosTestApp");
             DesiredCapabilities capabilities =
-                Caps.getIos82Caps(app);
+                Caps.getIos92Caps(app);
 
             OptionCollector argCollector = new OptionCollector()
                 .AddArguments(GeneralOptionList.OverrideSession()).AddArguments(GeneralOptionList.StrictCaps());
