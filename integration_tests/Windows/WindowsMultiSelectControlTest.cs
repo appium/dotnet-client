@@ -6,6 +6,7 @@ using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
 using System;
 using System.Globalization;
+using System.Threading;
 
 namespace Appium.Integration.Tests.Windows
 {
@@ -131,6 +132,7 @@ namespace Appium.Integration.Tests.Windows
                 periodSelector?.FindElementByName(period).Click();
                 AlarmClockSession.FindElementByAccessibilityId("HourSelector").FindElementByName(hourString).Click();
                 AlarmClockSession.FindElementByAccessibilityId("MinuteSelector").FindElementByName(minuteString).Click();
+                Thread.Sleep(500);
                 AlarmClockSession.FindElementByAccessibilityId("AlarmSaveButton").Click();
             }
         }
