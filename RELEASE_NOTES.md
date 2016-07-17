@@ -6,23 +6,26 @@
 - Update to Selenium.Webdriver v2.53.1 and Selenium.Support v2.53.1.
 - Update to Newtonsoft.Json v9.0.1.
 - Re-design of mobile searching strategies:
-	- The class OpenQA.Selenium.Appium.MobileBy was added.
-	- Classes ByAccessibilityId, ByAndroidUIAutomator, ByIosUIAutomation were grouped by the new class.
-	- Static methods that create instances of ByAccessibilityId, ByAndroidUIAutomator, ByIosUIAutomation were added.
-- The method public W GetNamedTextField(String name) was marked obsolete. It is going to be removed.	   
-- ScrollTo() and ScrollToExact() became deprecated. They are going to be removed in the next release. The swiping action and OpenQA.Selenium.Appium.ByAndroidUIAutomator or
-OpenQA.Selenium.Appium.ByIosUIAutomation are recommended to use instead.
+	- The class `OpenQA.Selenium.Appium.MobileBy` was added.
+	- Classes `ByAccessibilityId`, `ByAndroidUIAutomator`, `ByIosUIAutomation` were grouped by the new class.
+	- Static methods that create instances of `ByAccessibilityId`, `ByAndroidUIAutomator`, `ByIosUIAutomation` were added.
+- The method public `W GetNamedTextField(String name)` was marked obsolete. It is going to be removed.	   
+- `ScrollTo()` and `ScrollToExact()` became deprecated. They are going to be removed in the next release. The swiping action and `OpenQA.Selenium.Appium.ByAndroidUIAutomator` or
+`OpenQA.Selenium.Appium.ByIosUIAutomatio`n are recommended to use instead.
 - Server flags were added:
-	- GeneralOptionList.AsyncTrace
-	- IOSOptionList.WebkitDebugProxyPort
+	- `GeneralOptionList.AsyncTrace`
+	- `IOSOptionList.WebkitDebugProxyPort`
+- The `SessionDetails` property was added.  This property returns a dictionary of the current session data.
+- [#153](https://github.com/appium/appium-dotnet-driver/issues/153) fix & [#152](https://github.com/appium/appium-dotnet-driver/issues/152) fix. These changes are supposed to be the temporary workaround. We are searching for a more convenient solution. 
+  It seems it requires some changes on the server side.
 - FIX of the swiping issue (iOS, server version >= 1.5.0). Now the swiping is implemented differently by AndroidDriver and IOSDriver.
 - the ability to start an activity using Android intent actions, intent categories, flags and arguments was added to OpenQA.Selenium.Appium.Android.AndroidDriver. 
 The StartActivityWithIntent method.
 - [Android] ability to push a common string as a file to the remote mobile device. The method was redesigned.
 - [Android] ability to push base64 encoded bytes as a file to the remote mobile device. The method was added.
 - [Android] ability to push a file as the file to the remote mobile device. The method was added.
-- Constructors like AppiumDriver(ICommandExecutor commandExecutor, ICapabilities desiredCapabilities) were added to OpenQA.Selenium.Appium.Android.AndroidDriver and OpenQA.Selenium.Appium.iOS.IOSDriver. Also 
-      OpenQA.Selenium.Appium.AppiumCommand became public. The binding of these features may allow to use realated solutions of other vendors/modified Appium server builds which support JSONWP commands 
+- Constructors like `AppiumDriver(ICommandExecutor commandExecutor, ICapabilities desiredCapabilities)` were added to `OpenQA.Selenium.Appium.Android.AndroidDriver` and `OpenQA.Selenium.Appium.iOS.IOSDriver`. Also 
+      `OpenQA.Selenium.Appium.AppiumCommand` became public. The binding of these features may allow to use realated solutions of other vendors/modified Appium server builds which support JSONWP commands 
       that default Appium/Selenium do not support.
 
 ##1.5.1.1
