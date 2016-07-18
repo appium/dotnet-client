@@ -86,8 +86,12 @@ namespace OpenQA.Selenium.Appium
                 #endregion Input value
 
                 #region Device Time
-                 new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetDeviceTime, "/session/{sessionId}/appium/device/system_time"),
+                new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetDeviceTime, "/session/{sessionId}/appium/device/system_time"),
                 #endregion Device Time
+
+                #region SeassionData
+                new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetSession, "/session/{sessionId}/")
+                #endregion SeassionData
 
                 #endregion JSON Wire Protocol Commands
                 

@@ -725,8 +725,8 @@ namespace OpenQA.Selenium.Appium
                 yOffset = scrHeight - y;
             }
 
-            ITouchAction action0 = new TouchAction(this).Press(x, y - yOffset).MoveTo(x, y).Release();
-            ITouchAction action1 = new TouchAction(this).Press(x, y + yOffset).MoveTo(x, y).Release();
+            ITouchAction action0 = new TouchAction(this).Press(x, y - yOffset).MoveTo(0, yOffset).Release();
+            ITouchAction action1 = new TouchAction(this).Press(x, y + yOffset).MoveTo(0, -yOffset).Release();
 
             multiTouch.Add(action0).Add(action1);
 
@@ -759,8 +759,8 @@ namespace OpenQA.Selenium.Appium
                 yOffset = scrHeight - y;
             }
 
-            ITouchAction action0 = new TouchAction(this).Press(x, y).MoveTo(x, y - yOffset).Release();
-            ITouchAction action1 = new TouchAction(this).Press(x, y).MoveTo(x, y + yOffset).Release();
+            ITouchAction action0 = new TouchAction(this).Press(x, y).MoveTo(0, - yOffset).Release();
+            ITouchAction action1 = new TouchAction(this).Press(x, y).MoveTo(0, yOffset).Release();
 
             multiTouch.Add(action0).Add(action1);
 
@@ -785,8 +785,8 @@ namespace OpenQA.Selenium.Appium
             Point center = new Point(upperLeft.X + dimensions.Width / 2, upperLeft.Y + dimensions.Height / 2);
             int yOffset = center.Y - upperLeft.Y;
 
-            ITouchAction action0 = new TouchAction(this).Press(el).MoveTo(el, center.X, center.Y - yOffset).Release();
-            ITouchAction action1 = new TouchAction(this).Press(el).MoveTo(el, center.X, center.Y + yOffset).Release();
+            ITouchAction action0 = new TouchAction(this).Press(el).MoveTo(el, 0,  - yOffset).Release();
+            ITouchAction action1 = new TouchAction(this).Press(el).MoveTo(el, 0, yOffset).Release();
 
             multiTouch.Add(action0).Add(action1);
 
@@ -800,7 +800,7 @@ namespace OpenQA.Selenium.Appium
         /// Gets device date and time for both iOS(Supports only real device) and Android devices
         /// </summary>
         /// <returns>A string which consists of date and time</returns>
-        public String DeviceTime
+        public string DeviceTime
         {
             get
             {
@@ -810,31 +810,23 @@ namespace OpenQA.Selenium.Appium
 
         #endregion Device Time
 
+        #region Session Data
+        /// <summary>
+        /// This property returns a dictionary of the current session data
+        /// </summary>
+        public Dictionary<string, object> SessionDetails
+        {
+            get
+            {
+                return (Dictionary<string, object>) Execute(AppiumDriverCommand.GetSession, null).Value;
+            }
+        }
+        #endregion Session Data
+
         #endregion Public Methods
 
         #region Support methods
-        /// <summary>
-        /// Find the element in the response
-        /// </summary>
-        /// <param name="response">Response from the browser</param>
-        /// <returns>Element from the page</returns>
-        internal IWebElement GetElementFromResponse(Response response)
-        {
-            if (response == null)
-            {
-                throw new NoSuchElementException();
-            }
 
-            RemoteWebElement element = null;
-            Dictionary<string, object> elementDictionary = response.Value as Dictionary<string, object>;
-            if (elementDictionary != null)
-            {
-                string id = (string)elementDictionary["ELEMENT"];
-                element = this.CreateElement(id);
-            }
-
-            return element;
-        }
 
         internal static DesiredCapabilities SetPlatformToCapabilities(DesiredCapabilities dc, string desiredPlatform)
         {

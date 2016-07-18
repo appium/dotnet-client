@@ -257,6 +257,8 @@ namespace OpenQA.Selenium.Appium
 
         public const string GetDeviceTime = "getDeviceTime";
 
+        public const string GetSession = "getSession";
+
         #endregion JSON Wire Protocol
     }
 }
