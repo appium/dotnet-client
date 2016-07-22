@@ -74,9 +74,5 @@ namespace OpenQA.Selenium.Appium.iOS
         }
 
         #endregion
-
-        public void SetImmediateValue(string value) => 
-            Execute(AppiumDriverCommand.SetValue, new Dictionary<string, object>()
-                {["id"] = Id,["value"] = value });
     }
 }
