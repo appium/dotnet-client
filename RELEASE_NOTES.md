@@ -27,6 +27,7 @@ The StartActivityWithIntent method.
 - Constructors like `AppiumDriver(ICommandExecutor commandExecutor, ICapabilities desiredCapabilities)` were added to `OpenQA.Selenium.Appium.Android.AndroidDriver` and `OpenQA.Selenium.Appium.iOS.IOSDriver`. Also 
       `OpenQA.Selenium.Appium.AppiumCommand` became public. The binding of these features may allow to use realated solutions of other vendors/modified Appium server builds which support JSONWP commands 
       that default Appium/Selenium do not support.
+- The `SetImmediateValue` method was moved to `OpenQA.Selenium.Appium.AppiumWebElement`. It works against text input elements on Android.
 
 ##1.5.1.1
 - Update to Selenium.Webdriver v2.53.0 and Selenium.Support v2.53.0

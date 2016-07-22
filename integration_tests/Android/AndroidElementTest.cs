@@ -72,6 +72,20 @@ namespace Appium.Integration.Tests.Android
         }
 
         [Test]
+        public void SetImmediateValueTest()
+        {
+            string value = "new value";
+
+            driver.StartActivity("io.appium.android.apis", ".view.Controls1");
+
+            AndroidElement editElement = driver.FindElementByAndroidUIAutomator("resourceId(\"io.appium.android.apis:id/edit\")");
+
+            editElement.SetImmediateValue(value);
+
+            Assert.AreEqual(value, editElement.Text);
+        }
+
+        [Test]
         public void ScrollingToSubElement()
         {
             driver.FindElementByAccessibilityId("Views").Click();
