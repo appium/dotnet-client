@@ -1,6 +1,5 @@
 #Release Notes
-
-##2.0.0.1 (still not released)
+##2.0.0.1
 - All obsolete code was removed. #C client won't support Appium server v lower than 1.5.0
 - Source code migration to C# 6.0. Now this bundle requires .Net Framework > v4.5 or Mono Framework version which supports .Net Framework v4.5 with Lang Level 6.
 - Update to Selenium.Webdriver v2.53.1 and Selenium.Support v2.53.1.
