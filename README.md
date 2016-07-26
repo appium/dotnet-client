@@ -1,3 +1,5 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f4455fb52ca44735a10073e0af888d9b)](https://www.codacy.com/app/appium/appium-dotnet-driver?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=appium/appium-dotnet-driver&amp;utm_campaign=Badge_Grade)
+
 #appium-dotnet-driver
 
 This driver is an extension of the [Selenium](http://docs.seleniumhq.org/) C# client. It has 
