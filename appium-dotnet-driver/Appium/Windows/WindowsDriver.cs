@@ -103,7 +103,8 @@ namespace OpenQA.Selenium.Appium.Windows
         /// <returns>First element found</returns>
         public W FindElementByWindowsUIAutomation(string selector)
         {
-            return (W)this.FindElement("-windows uiautomation", selector);
+            //return (W)this.FindElement("-windows uiautomation", selector);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -113,8 +114,9 @@ namespace OpenQA.Selenium.Appium.Windows
         /// <returns>ReadOnlyCollection of elements found</returns>
         public ReadOnlyCollection<W> FindElementsByWindowsUIAutomation(string selector)
         {
-            return CollectionConverterUnility.ConvertToExtendedWebElementCollection<W>(
-                this.FindElements("-windows uiautomation", selector));
+            //return CollectionConverterUnility.ConvertToExtendedWebElementCollection<W>(
+            //    this.FindElements("-windows uiautomation", selector));
+            throw new NotImplementedException();
         }
 
         #endregion IFindByWindowsUIAutomation Members
