@@ -1,7 +1,11 @@
 #Release Notes
 
-##*2.x (under construction yet)*
-
+##*2.0.1.1 (under construction yet)*
+- All obsolete code was removed.
+- Following capabilities were added:
+	- OpenQA.Selenium.Appium.Enums.AndroidMobileCapabilityType.AndroidInstallTimeout
+	- OpenQA.Selenium.Appium.Enums.AndroidMobileCapabilityType.NativeWebScreenshot
+	- OpenQA.Selenium.Appium.Enums.AndroidMobileCapabilityType.AndroidScreenshotPath.
 
 ##2.0.0.1
 - All obsolete code was removed. #C client won't support Appium server v lower than 1.5.0
