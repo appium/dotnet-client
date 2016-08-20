@@ -82,7 +82,6 @@
     <Compile Include="Appium\Interfaces\IInteractsWithFiles.cs" />
     <Compile Include="Appium\Interfaces\IMobileElement.cs" />
     <Compile Include="Appium\Interfaces\IPerformsTouchActions.cs" />
-    <Compile Include="Appium\Interfaces\IScrollsTo.cs" />
     <Compile Include="Appium\iOS\Enums\HideKeyboardStrategy.cs" />
     <Compile Include="Appium\iOS\Interfaces\IIOSHidesKeyboard.cs" />
     <Compile Include="Appium\iOS\Interfaces\IShakesDevice.cs" />
