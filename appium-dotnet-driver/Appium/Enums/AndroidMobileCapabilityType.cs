@@ -202,5 +202,22 @@ namespace OpenQA.Selenium.Appium.Enums
         public static readonly string RECREATE_CHROME_DRIVER_SESSIONS = "recreateChromeDriverSessions";
 
         public static readonly string SELENDROID_PORT = "selendroidPort";
+
+        /// <summary>
+        /// In a web context, use native (adb) method for taking a screenshot, rather than proxying
+        /// to ChromeDriver, default false.
+        /// </summary>
+        public static readonly string NativeWebScreenshot = "nativeWebScreenshot";
+
+        /// <summary>
+        /// The name of the directory on the device in which the screenshot will be put.
+        /// Defaults to /data/local/tmp.
+        /// </summary>
+        public static readonly string AndroidScreenshotPath = "androidScreenshotPath";
+
+        /// <summary>
+        /// Timeout in milliseconds used to wait for an apk to install to the device. Defaults to `90000`.
+        /// </summary>
+        public static readonly string AndroidInstallTimeout = "androidInstallTimeout";
     }
 }
