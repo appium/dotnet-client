@@ -20,8 +20,7 @@ using System.Collections.ObjectModel;
 namespace OpenQA.Selenium.Appium.iOS
 {
     public class IOSElement : AppiumWebElement,
-        IFindByIosUIAutomation<AppiumWebElement>,
-        IScrollsTo<AppiumWebElement>
+        IFindByIosUIAutomation<AppiumWebElement>
     {
         /// <summary>
         /// Initializes a new instance of the IOSElement class.
@@ -44,35 +43,5 @@ namespace OpenQA.Selenium.Appium.iOS
                             ConvertToExtendedWebElementCollection<AppiumWebElement>(this.FindElements("-ios uiautomation", selector));
 
         #endregion IFindByIosUIAutomation Members
-
-        #region IScrollsTo Members
-
-        /// <summary>
-        /// Scroll to the element whose 'text' attribute contains the input text.
-        /// Scrolling happens within this element
-        /// </summary>
-        /// <param name="text">input text contained in text attribute</param>
-        [Obsolete("This method is deprecated because it is not consistent and it is going to be removed. " +
-            "It is workaround actually. The swiping action and OpenQA.Selenium.Appium.ByIosUIAutomation are recommended " +
-            "to use instead")]
-        public AppiumWebElement ScrollTo(string text)
-        {
-            return (IOSElement)FindElementByIosUIAutomation(".scrollToElementWithPredicate(\"name CONTAINS '" + text + "'\")");
-        }
-
-        /// <summary>
-        /// Scroll to the element whose 'text' attribute matches the input text.
-        /// Scrolling happens within this element
-        /// </summary>
-        /// <param name="text">input text contained in text attribute</param>
-        [Obsolete("This method is deprecated because it is not consistent and it is going to be removed. " +
-            "It is workaround actually. The swiping action and OpenQA.Selenium.Appium.ByIosUIAutomation are recommended " +
-            "to use instead")]
-        public AppiumWebElement ScrollToExact(string text)
-        {
-            return (IOSElement)FindElementByIosUIAutomation(".scrollToElementWithName(\"" + text + "\")");
-        }
-
-        #endregion
     }
 }

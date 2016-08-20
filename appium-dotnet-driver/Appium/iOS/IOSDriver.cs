@@ -157,33 +157,6 @@ namespace OpenQA.Selenium.Appium.iOS
         /// <returns>IOSElement</returns>
         protected override RemoteWebElement CreateElement(string elementId) => new IOSElement(this, elementId);
 
-        [Obsolete("This method is deprecated because it is not consistent and it is going to be removed. " +
-            "It is workaround actually. The swiping action and OpenQA.Selenium.Appium.ByIosUIAutomation are recommended " +
-            "to use instead")]
-        public override W ScrollTo(string text)
-        {
-            return (W)((IScrollsTo<W>)FindElementByClassName("UIATableView")).ScrollTo(text);
-        }
-
-        [Obsolete("This method is deprecated because it is not consistent and it is going to be removed. " +
-            "It is workaround actually. The swiping action and OpenQA.Selenium.Appium.ByIosUIAutomation are recommended " +
-            "to use instead")]
-        public override W ScrollToExact(string text)
-        {
-            return (W)((IScrollsTo<W>)FindElementByClassName("UIATableView")).ScrollToExact(text);
-        }
-
-        [Obsolete]
-        public W GetNamedTextField(String name)
-        {
-            W element = FindElementByAccessibilityId(name);
-            if (element.TagName != "TextField")
-            {
-                return (W)((IFindByAccessibilityId<W>)element).FindElementByAccessibilityId(name);
-            }
-            return element;
-        }
-
         /// <summary>
         /// Locks the device.
         /// </summary>

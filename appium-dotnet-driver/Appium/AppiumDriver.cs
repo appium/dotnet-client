@@ -30,7 +30,7 @@ namespace OpenQA.Selenium.Appium
     public abstract class AppiumDriver<W> : RemoteWebDriver, ITouchShortcuts, IFindByAccessibilityId<W>, IHidesKeyboard, IInteractsWithFiles,
         IInteractsWithApps, IPerformsTouchActions, IRotatable, IContextAware, IGenericSearchContext<W>, IGenericFindsByClassName<W>,
         IGenericFindsById<W>, IGenericFindsByCssSelector<W>, IGenericFindsByLinkText<W>, IGenericFindsByName<W>,
-        IGenericFindsByPartialLinkText<W>, IGenericFindsByTagName<W>, IGenericFindsByXPath<W>, IScrollsTo<W> where W : IWebElement
+        IGenericFindsByPartialLinkText<W>, IGenericFindsByTagName<W>, IGenericFindsByXPath<W> where W : IWebElement
     {
         #region Constructors
         /// <summary>
@@ -827,7 +827,6 @@ namespace OpenQA.Selenium.Appium
 
         #region Support methods
 
-
         internal static DesiredCapabilities SetPlatformToCapabilities(DesiredCapabilities dc, string desiredPlatform)
         {
             dc.SetCapability(MobileCapabilityType.PlatformName, desiredPlatform);
@@ -856,19 +855,6 @@ namespace OpenQA.Selenium.Appium
 
             return toReturn.AsReadOnly();
         }
-        #endregion
-
-        #region abstract scrolling methods
-
-        [Obsolete("This method is deprecated because it is not consistent and it is going to be removed. " +
-            "It is workaround actually. The swiping action and OpenQA.Selenium.Appium.ByAndroidUIAutomator or OpenQA.Selenium.Appium.ByIosUIAutomation " + 
-            "are recommended to use instead")]
-        public abstract W ScrollTo(string text);
-        [Obsolete("This method is deprecated because it is not consistent and it is going to be removed. " +
-            "It is workaround actually. The swiping action and OpenQA.Selenium.Appium.ByAndroidUIAutomator or OpenQA.Selenium.Appium.ByIosUIAutomation " +
-            "are recommended to use instead")]
-        public abstract W ScrollToExact(string text);
-
         #endregion
     }
 }
