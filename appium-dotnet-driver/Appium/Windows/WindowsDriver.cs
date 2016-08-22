@@ -154,16 +154,6 @@ namespace OpenQA.Selenium.Appium.Windows
             return new WindowsElement(this, elementId);
         }
 
-        public override W ScrollTo(string text)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override W ScrollToExact(string text)
-        {
-            throw new NotImplementedException();
-        }
-
         /// <summary>
         /// Sends a device key event with metastate
         /// </summary>
