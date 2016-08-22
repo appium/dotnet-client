@@ -67,7 +67,7 @@
     <Compile Include="Appium\Enums\MobileBrowserType.cs" />
     <Compile Include="Appium\Enums\MobileCapabilityType.cs" />
     <Compile Include="Appium\Android\Enums\ConnectionType.cs" />
-    <Compile Include="Appium\Enums\WindowsKeyCodes.cs" />
+    <Compile Include="Appium\Windows\Enums\WindowsKeyCodes.cs" />
     <Compile Include="Appium\Interfaces\Generic\SearchContext\IGenericFindsByClassName.cs" />
     <Compile Include="Appium\Interfaces\Generic\SearchContext\IGenericFindsByCssSelector.cs" />
     <Compile Include="Appium\Interfaces\Generic\SearchContext\IGenericFindsById.cs" />
