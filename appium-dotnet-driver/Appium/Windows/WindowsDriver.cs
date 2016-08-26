@@ -110,10 +110,10 @@ namespace OpenQA.Selenium.Appium.Windows
         #region IFindByWindowsUIAutomation Members
 
         /// <summary>
-        /// Finds the first element that matches the Windows UIAutomation selector
+        /// Finds the first of elements that match the Windows UIAutomation selector supplied
         /// </summary>
-        /// <param name="selector">UIAutomation selector</param>
-        /// <returns>First element found</returns>
+        /// <param name="selector">a Windows UIAutomation selector</param>
+        /// <returns>IWebElement object so that you can interact that object</returns>
         public W FindElementByWindowsUIAutomation(string selector)
         {
             //return (W)this.FindElement("-windows uiautomation", selector);
@@ -121,10 +121,10 @@ namespace OpenQA.Selenium.Appium.Windows
         }
 
         /// <summary>
-        /// Finds a list of elements that match the Windows UIAutomation selector
+        /// Finds a list of elements that match the Windows UIAutomation selector supplied
         /// </summary>
-        /// <param name="selector">UIAutomation selector</param>
-        /// <returns>ReadOnlyCollection of elements found</returns>
+        /// <param name="selector">a Windows UIAutomation selector</param>
+        /// <returns>ReadOnlyCollection of IWebElement objects so that you can interact with those objects</returns>
         public ReadOnlyCollection<W> FindElementsByWindowsUIAutomation(string selector)
         {
             //return CollectionConverterUnility.ConvertToExtendedWebElementCollection<W>(

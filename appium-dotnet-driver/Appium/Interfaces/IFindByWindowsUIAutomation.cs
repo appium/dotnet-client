@@ -28,7 +28,7 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// Finds a list of elements that match the Windows UIAutomation selector supplied
         /// </summary>
         /// <param name="selector">a Windows UIAutomation selector</param>
-        /// <returns>IWebElement object so that you can interact that object</returns>
+        /// <returns>ReadOnlyCollection of IWebElement objects so that you can interact with those objects</returns>
         ReadOnlyCollection<W> FindElementsByWindowsUIAutomation(string selector);
     }
 }
