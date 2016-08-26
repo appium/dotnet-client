@@ -116,8 +116,7 @@ namespace OpenQA.Selenium.Appium.Windows
         /// <returns>IWebElement object so that you can interact that object</returns>
         public W FindElementByWindowsUIAutomation(string selector)
         {
-            //return (W)this.FindElement("-windows uiautomation", selector);
-            throw new NotImplementedException();
+            return (W)this.FindElement("-windows uiautomation", selector);
         }
 
         /// <summary>
@@ -127,9 +126,8 @@ namespace OpenQA.Selenium.Appium.Windows
         /// <returns>ReadOnlyCollection of IWebElement objects so that you can interact with those objects</returns>
         public ReadOnlyCollection<W> FindElementsByWindowsUIAutomation(string selector)
         {
-            //return CollectionConverterUnility.ConvertToExtendedWebElementCollection<W>(
-            //    this.FindElements("-windows uiautomation", selector));
-            throw new NotImplementedException();
+            return CollectionConverterUnility.ConvertToExtendedWebElementCollection<W>(
+                this.FindElements("-windows uiautomation", selector));
         }
 
         #endregion IFindByWindowsUIAutomation Members
