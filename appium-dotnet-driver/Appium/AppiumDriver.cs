@@ -27,7 +27,7 @@ using System.Linq;
 
 namespace OpenQA.Selenium.Appium
 {
-    public abstract class AppiumDriver<W> : RemoteWebDriver, ITouchShortcuts, IFindByAccessibilityId<W>, IHidesKeyboard, IInteractsWithFiles,
+    public abstract class AppiumDriver<W> : RemoteWebDriver, IExecuteMethod, ITouchShortcuts, IFindByAccessibilityId<W>, IHidesKeyboard, IInteractsWithFiles,
         IInteractsWithApps, IPerformsTouchActions, IRotatable, IContextAware, IGenericSearchContext<W>, IGenericFindsByClassName<W>,
         IGenericFindsById<W>, IGenericFindsByCssSelector<W>, IGenericFindsByLinkText<W>, IGenericFindsByName<W>,
         IGenericFindsByPartialLinkText<W>, IGenericFindsByTagName<W>, IGenericFindsByXPath<W> where W : IWebElement
@@ -307,6 +307,8 @@ namespace OpenQA.Selenium.Appium
 
         #region Public Methods
 
+        public Response Execute(string commandName, Dictionary<string, object> parameters) => 
+            base.Execute(commandName, parameters);
 
         #region MJsonMethod Members
 
@@ -434,7 +436,7 @@ namespace OpenQA.Selenium.Appium
         {
             get
             {
-                var commandResponse = this.Execute(AppiumDriverCommand.GetLocation, null);
+                var commandResponse = Execute(AppiumDriverCommand.GetLocation, null);
                 return JsonConvert.DeserializeObject<Location>((String)commandResponse.Value);
             }
             set

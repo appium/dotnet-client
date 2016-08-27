@@ -7,6 +7,7 @@
 	- OpenQA.Selenium.Appium.Enums.AndroidMobileCapabilityType.NativeWebScreenshot
 	- OpenQA.Selenium.Appium.Enums.AndroidMobileCapabilityType.AndroidScreenshotPath
 	- OpenQA.Selenium.Appium.Enums.AndroidMobileCapabilityType.AppWaitDuration.
+- The new interface `OpenQA.Selenium.Appium.Interfaces.IExecuteMethod` was added.
 
 ##2.0.0.1
 - All obsolete code was removed. #C client won't support Appium server v lower than 1.5.0
