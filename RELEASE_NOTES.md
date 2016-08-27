@@ -5,7 +5,8 @@
 - Following capabilities were added:
 	- OpenQA.Selenium.Appium.Enums.AndroidMobileCapabilityType.AndroidInstallTimeout
 	- OpenQA.Selenium.Appium.Enums.AndroidMobileCapabilityType.NativeWebScreenshot
-	- OpenQA.Selenium.Appium.Enums.AndroidMobileCapabilityType.AndroidScreenshotPath.
+	- OpenQA.Selenium.Appium.Enums.AndroidMobileCapabilityType.AndroidScreenshotPath
+	- OpenQA.Selenium.Appium.Enums.AndroidMobileCapabilityType.AppWaitDuration.
 
 ##2.0.0.1
 - All obsolete code was removed. #C client won't support Appium server v lower than 1.5.0

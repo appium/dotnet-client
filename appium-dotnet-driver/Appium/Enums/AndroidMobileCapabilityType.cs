@@ -219,5 +219,10 @@ namespace OpenQA.Selenium.Appium.Enums
         /// Timeout in milliseconds used to wait for an apk to install to the device. Defaults to `90000`.
         /// </summary>
         public static readonly string AndroidInstallTimeout = "androidInstallTimeout";
+
+        /// <summary>
+        /// Timeout in seconds while waiting for device to become ready.
+        /// </summary>
+        public static readonly string AppWaitDuration = "appWaitDuration";
     }
 }
