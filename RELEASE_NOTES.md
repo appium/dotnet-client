@@ -1,6 +1,8 @@
 #Release Notes
 
-##*2.0.1.1 (under construction yet)*
+##*3.0.0.1 (under construction yet)*
+
+##2.0.1.1 (under construction yet)
 - All obsolete code was removed.
 - Following capabilities were added:
 	- OpenQA.Selenium.Appium.Enums.AndroidMobileCapabilityType.AndroidInstallTimeout
