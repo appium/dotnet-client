@@ -19,6 +19,8 @@ namespace OpenQA.Selenium.Appium.Enums
 
         public static readonly string IOS = "iOS";
 
+        public static readonly string Windows = "Windows";
+
         //FireFoxOS and WinPhone will be added when there will be the supporting of appropriate mobile OS.
     }
 }

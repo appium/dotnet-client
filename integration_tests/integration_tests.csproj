@@ -112,6 +112,8 @@
     <Compile Include="ServerTests\StartingAppLocallyTest.cs" />
     <Compile Include="Android\AndroidAppStringsTest.cs" />
     <Compile Include="iOS\iOSAppStringsTest.cs" />
+    <Compile Include="Windows\WindowsClickElementTest.cs" />
+    <Compile Include="Windows\WindowsMultiSelectControlTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
