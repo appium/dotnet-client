@@ -1,6 +1,12 @@
 #Release Notes
 
 ##*3.0.0.1 (under construction yet)*
+ - [Major enhancement] Windows automation: 
+	- `OpenQA.Selenium.Appium.Interfaces.IFindByWindowsUIAutomation` was added. [#158](https://github.com/appium/appium-dotnet-driver/pull/158)
+	- `OpenQA.Selenium.Appium.Windows.WindowsDriver` was added. [#158](https://github.com/appium/appium-dotnet-driver/pull/158)
+	- `OpenQA.Selenium.Appium.Windows.WindowsElement` was added. [#158](https://github.com/appium/appium-dotnet-driver/pull/158)
+	- `OpenQA.Selenium.Appium.Windows.Enums.WindowsKeyCode` was added. [#158](https://github.com/appium/appium-dotnet-driver/pull/158)
+
 
 ##2.0.1.1
 - All obsolete code was removed.
