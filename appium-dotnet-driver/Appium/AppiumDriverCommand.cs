@@ -251,6 +251,11 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string UpdateSettings = "updateSettings";
 
+	/// <summary>
+	/// Represents the TouchID command
+	/// </summary>
+	public const string TouchID = "touchId";
+
         public const string ReplaceValue = "replaceValue";
 
         public const string SetValue = "setValue";

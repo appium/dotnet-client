@@ -58,6 +58,7 @@ namespace OpenQA.Selenium.Appium
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.StartActivity, "/session/{sessionId}/appium/device/start_activity"),
                 new AppiumCommand(CommandInfo.GetCommand,  AppiumDriverCommand.GetSettings, "/session/{sessionId}/appium/settings"),
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.UpdateSettings, "/session/{sessionId}/appium/settings"),
+                new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.TouchID, "/session/{sessionId}/appium/simulator/touch_id"),
                 #endregion Appium Commands
                 #region Touch Commands
                 new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.PerformMultiAction, "/session/{sessionId}/touch/multi/perform"),
