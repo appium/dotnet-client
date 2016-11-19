@@ -1,6 +1,7 @@
 #Release Notes
 
 ##*3.0.0.1 (under construction yet)*
+ - [Major update] Update to Selenium 3.0
  - [Major enhancement] Windows automation: 
 	- `OpenQA.Selenium.Appium.Interfaces.IFindByWindowsUIAutomation` was added. [#158](https://github.com/appium/appium-dotnet-driver/pull/158)
 	- `OpenQA.Selenium.Appium.Windows.WindowsDriver` was added. [#158](https://github.com/appium/appium-dotnet-driver/pull/158)

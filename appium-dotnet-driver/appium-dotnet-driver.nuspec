@@ -13,6 +13,7 @@
     <description>Selenium Webdriver extension for Appium.</description>
     <releaseNotes>
       3.0.0.1
+      [Major update] Update to Selenium 3.0
       [Major enhancement] Windows automation: 
 	      - OpenQA.Selenium.Appium.Interfaces.IFindByWindowsUIAutomation was added.
 	      - OpenQA.Selenium.Appium.Windows.WindowsDriver was added.
@@ -135,8 +136,8 @@
     <tags>Appium Webdriver device automation</tags>
     <dependencies>
       <dependency id="Newtonsoft.Json" version="9.0.1"/>
-      <dependency id="Selenium.WebDriver" version="2.53.1"/>
-      <dependency id="Selenium.Support" version="2.53.1"/>
+      <dependency id="Selenium.WebDriver" version="3.0.0"/>
+      <dependency id="Selenium.Support" version="3.0.0"/>
       <dependency id="Castle.Core" version="3.3.3"/>
     </dependencies>
   </metadata>
