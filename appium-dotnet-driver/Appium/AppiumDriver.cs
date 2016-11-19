@@ -310,6 +310,8 @@ namespace OpenQA.Selenium.Appium
         public Response Execute(string commandName, Dictionary<string, object> parameters) => 
             base.Execute(commandName, parameters);
 
+		public Response Execute(string driverCommand) => Execute(driverCommand, null);
+
         #region MJsonMethod Members
 
         /// <summary>
@@ -372,17 +374,17 @@ namespace OpenQA.Selenium.Appium
         /// <summary>
         /// Launches the current app.
         /// </summary>
-        public void LaunchApp() => Execute(AppiumDriverCommand.LaunchApp, null);
+        public void LaunchApp() => Execute(AppiumDriverCommand.LaunchApp);
 
         /// <summary>
         /// Closes the current app.
         /// </summary>
-        public void CloseApp() => Execute(AppiumDriverCommand.CloseApp, null);
+        public void CloseApp() => Execute(AppiumDriverCommand.CloseApp);
 
         /// <summary>
         /// Resets the current app.
         /// </summary>
-        public void ResetApp() => Execute(AppiumDriverCommand.ResetApp, null);
+        public void ResetApp() => Execute(AppiumDriverCommand.ResetApp);
 
         /// <summary>
         /// Backgrounds the current app for the given number of seconds.
@@ -436,8 +438,8 @@ namespace OpenQA.Selenium.Appium
         {
             get
             {
-                var commandResponse = Execute(AppiumDriverCommand.GetLocation, null);
-                return JsonConvert.DeserializeObject<Location>((String)commandResponse.Value);
+                var commandResponse = Execute(AppiumDriverCommand.GetLocation);
+				return JsonConvert.DeserializeObject<Location>((string) commandResponse.Value);
             }
             set
             {
@@ -453,7 +455,7 @@ namespace OpenQA.Selenium.Appium
         {
             get
             {
-                var commandResponse = Execute(AppiumDriverCommand.GetContext, null);
+                var commandResponse = Execute(AppiumDriverCommand.GetContext);
                 return commandResponse.Value as string;
             }
             set
@@ -468,7 +470,7 @@ namespace OpenQA.Selenium.Appium
         {
             get
             {
-                var commandResponse = Execute(AppiumDriverCommand.Contexts, null);
+                var commandResponse = Execute(AppiumDriverCommand.Contexts);
                 var contexts = new List<string>();
                 var objects = commandResponse.Value as object[];
 
@@ -490,7 +492,7 @@ namespace OpenQA.Selenium.Appium
         {
             get
             {
-                var commandResponse = Execute(AppiumDriverCommand.GetOrientation, null);
+                var commandResponse = Execute(AppiumDriverCommand.GetOrientation);
                 return (commandResponse.Value as string).ConvertToScreenOrientation();
             }
             set
@@ -510,7 +512,7 @@ namespace OpenQA.Selenium.Appium
         public List<string> GetIMEAvailableEngines()
         {
             var retVal = new List<string>();
-            var commandResponse = Execute(AppiumDriverCommand.GetAvailableEngines, null);
+            var commandResponse = Execute(AppiumDriverCommand.GetAvailableEngines);
             var objectArr = commandResponse.Value as object[];
             if (null != objectArr)
             {
@@ -524,14 +526,14 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <returns>Active IME Engine</returns>
         public string GetIMEActiveEngine() => 
-            Execute(AppiumDriverCommand.GetActiveEngine, null).Value as string;
+            Execute(AppiumDriverCommand.GetActiveEngine).Value as string;
 
         /// <summary>
         /// Is the IME active on the device (NOTE: on Android, this is always true)
         /// </summary>
         /// <returns>true if IME is active, false otherwise</returns>
         public bool IsIMEActive() =>
-            (bool) (Execute(AppiumDriverCommand.IsIMEActive, null).Value);
+            (bool) (Execute(AppiumDriverCommand.IsIMEActive).Value);
 
         /// <summary>
         /// Activate the given IME on Device
@@ -544,7 +546,7 @@ namespace OpenQA.Selenium.Appium
         /// Deactivate the currently Active IME Engine on device
         /// </summary>
         public void DeactiveIMEEngine() =>
-            Execute(AppiumDriverCommand.DeactivateEngine, null);
+            Execute(AppiumDriverCommand.DeactivateEngine);
 
         #endregion Input Method (IME)
 
@@ -588,7 +590,7 @@ namespace OpenQA.Selenium.Appium
         public Dictionary<string, object> GetSettings() => 
             JsonConvert.
                 DeserializeObject<Dictionary<string, object>>
-                ((string) Execute(AppiumDriverCommand.GetSettings, null).Value);
+                ((string) Execute(AppiumDriverCommand.GetSettings).Value);
 
         /// <summary>
         /// Update an appium Setting, on the session
@@ -806,7 +808,7 @@ namespace OpenQA.Selenium.Appium
         {
             get
             {
-                return Execute(AppiumDriverCommand.GetDeviceTime, null).Value.ToString();
+                return Execute(AppiumDriverCommand.GetDeviceTime).Value.ToString();
             }
         }
 
@@ -820,7 +822,7 @@ namespace OpenQA.Selenium.Appium
         {
             get
             {
-                return (Dictionary<string, object>) Execute(AppiumDriverCommand.GetSession, null).Value;
+                return (Dictionary<string, object>) Execute(AppiumDriverCommand.GetSession).Value;
             }
         }
         #endregion Session Data
@@ -857,6 +859,6 @@ namespace OpenQA.Selenium.Appium
 
             return toReturn.AsReadOnly();
         }
-        #endregion
-    }
+		#endregion
+	}
 }

@@ -140,7 +140,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// <summary>
         /// Shakes the device.
         /// </summary>
-        public void ShakeDevice() => Execute(AppiumDriverCommand.ShakeDevice, null);
+        public void ShakeDevice() => Execute(AppiumDriverCommand.ShakeDevice);
 
         /// <summary>
         /// Hides the keyboard

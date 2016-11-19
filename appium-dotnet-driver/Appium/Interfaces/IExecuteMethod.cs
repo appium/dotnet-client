@@ -25,5 +25,11 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// <param name="parameters">Parameters to execute</param>
         /// <returns>The result</returns>
         Response Execute(string commandName, Dictionary<string, object> parameters);
+
+		/// <summary>
+		/// Execute a command on the remote server.
+		/// </summary>
+		/// <param name="driverCommand">A remote command</param>
+		Response Execute(string driverCommand);
     }
 }

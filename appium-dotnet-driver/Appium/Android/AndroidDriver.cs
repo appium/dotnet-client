@@ -266,7 +266,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// <summary>
         /// Toggles Location Services.
         /// </summary>
-        public void ToggleLocationServices() => Execute(AppiumDriverCommand.ToggleLocationServices, null);
+        public void ToggleLocationServices() => Execute(AppiumDriverCommand.ToggleLocationServices);
 
 
         /// <summary>
@@ -277,7 +277,7 @@ namespace OpenQA.Selenium.Appium.Android
         {
             get
             {
-                var commandResponse = Execute(AppiumDriverCommand.GetCurrentActivity, null);
+                var commandResponse = Execute(AppiumDriverCommand.GetCurrentActivity);
                 return commandResponse.Value as string;
             }
         }
@@ -336,7 +336,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// <summary>
         /// Open the notifications 
         /// </summary>
-        public void OpenNotifications() => Execute(AppiumDriverCommand.OpenNotifications, null);
+        public void OpenNotifications() => Execute(AppiumDriverCommand.OpenNotifications);
 
 
         protected override RemoteWebElement CreateElement(string elementId) => new AndroidElement(this, elementId);
@@ -361,12 +361,12 @@ namespace OpenQA.Selenium.Appium.Android
         /// </summary>
         /// <returns>true if device is locked, false otherwise</returns>
         public bool IsLocked() => 
-            (bool) Execute(AppiumDriverCommand.IsLocked, null).Value;
+            (bool) Execute(AppiumDriverCommand.IsLocked).Value;
 
         /**
          * This method unlocks a device.
          */
-        public void Unlock() => Execute(AppiumDriverCommand.UnlockDevice, null);
+        public void Unlock() => Execute(AppiumDriverCommand.UnlockDevice);
 
         /// <summary>
         /// Convenience method for swiping across the screen

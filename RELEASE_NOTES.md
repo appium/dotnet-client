@@ -6,6 +6,7 @@
 	- `OpenQA.Selenium.Appium.Windows.WindowsDriver` was added. [#158](https://github.com/appium/appium-dotnet-driver/pull/158)
 	- `OpenQA.Selenium.Appium.Windows.WindowsElement` was added. [#158](https://github.com/appium/appium-dotnet-driver/pull/158)
 	- `OpenQA.Selenium.Appium.Windows.Enums.WindowsKeyCode` was added. [#158](https://github.com/appium/appium-dotnet-driver/pull/158)
+ - [Enhancement]. The method `Response Execute(string)` was added to `OpenQA.Selenium.Appium.Interfaces.IExecuteMethod`. It is implemented by `OpenQA.Selenium.Appium.AppiumDriver`.
  - [Enhancement]. New automation types were added:
  	- `OpenQA.Selenium.Appium.Enums.AutomationName.iOSXcuiTest`
  	- `OpenQA.Selenium.Appium.Enums.AutomationName.AndroidUIAutomator2`	  
