@@ -11,22 +11,15 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
-namespace OpenQA.Selenium.Appium
+namespace OpenQA.Selenium.Appium.Enums
 {
-    internal class CollectionConverterUnility
+    public class MobileSelector
     {
-        public static ReadOnlyCollection<T> ConvertToExtendedWebElementCollection<T>(IList list) where T : IWebElement
-        {
-            List<T> result = new List<T>();
-            foreach (var element in list)
-            {
-                result.Add((T)element);
-            }
-            return result.AsReadOnly();
-        }
+        public static readonly string Accessibility = "accessibility id";
+        public static readonly string AndroidUIAutomator = "-android uiautomator";
+        public static readonly string iOSAutomatoion = "-ios uiautomation";
+        public static readonly string iOSPredicateString = "-ios predicate string";
+        public static readonly string WindowsUIAutomation = "-windows uiautomation";
     }
 }

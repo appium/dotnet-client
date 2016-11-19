@@ -7,6 +7,12 @@
 	- `OpenQA.Selenium.Appium.Windows.WindowsDriver` was added. [#158](https://github.com/appium/appium-dotnet-driver/pull/158)
 	- `OpenQA.Selenium.Appium.Windows.WindowsElement` was added. [#158](https://github.com/appium/appium-dotnet-driver/pull/158)
 	- `OpenQA.Selenium.Appium.Windows.Enums.WindowsKeyCode` was added. [#158](https://github.com/appium/appium-dotnet-driver/pull/158)
+ - [Major enhancement] Now the `OpenQA.Selenium.Appium.AppiumDriver` can use an instance of any `OpenQA.Selenium.Appium.MobileBy` subclass for the searching. 
+   It should work as expected when current session supports the given selector.
+ - [Major enhancement] The new interface `OpenQA.Selenium.Appium.Interfaces.IFindsByFluentSelector` was added. It is implemented by `OpenQA.Selenium.Appium.AppiumDriver`.
+ - [Major enhancement] The new interface `OpenQA.Selenium.Appium.Interfaces.IFindsByIosNSPredicate` was added.
+ - [Major enhancement] The new By-selector `OpenQA.Selenium.Appium.ByWindowsAutomation` was added. 
+ - [Major enhancement] The new By-selector `OpenQA.Selenium.Appium.ByIosNSPredicate` was added. 
  - [Enhancement]. The method `Response Execute(string)` was added to `OpenQA.Selenium.Appium.Interfaces.IExecuteMethod`. It is implemented by `OpenQA.Selenium.Appium.AppiumDriver`.
  - [Enhancement]. New automation types were added:
  	- `OpenQA.Selenium.Appium.Enums.AutomationName.iOSXcuiTest`

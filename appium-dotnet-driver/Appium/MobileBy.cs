@@ -12,8 +12,10 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+using OpenQA.Selenium.Appium.Enums;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reflection;
 
@@ -21,13 +23,28 @@ namespace OpenQA.Selenium.Appium
 {
     public abstract class MobileBy: By
     {
+        private const string FindsByFluentSelector = "IFindsByFluentSelector";
+        private const string SingleFluentCriteriaFindBy = "FindElement";
+        private const string MultipleFluentCriteriaFindBy = "FindElements";
+
         protected readonly string selector = string.Empty;
         private readonly string InterfaceNameRegExp;
         private readonly string SingleSearchMethodName;
         private readonly string ListSearchMethodName;
+        private readonly string SearchingCriteriaName;
+
+        private static ReadOnlyCollection<IWebElement> ConvertToExtendedWebElementCollection(IList list)
+        {
+            List<IWebElement> result = new List<IWebElement>();
+            foreach (var element in list)
+            {
+                result.Add((IWebElement)element);
+            }
+            return result.AsReadOnly();
+        }
 
         internal MobileBy(string selector, string interfaceNameRegExp, string singleSearchMethodName,
-            string listSearchMethodName)
+            string listSearchMethodName, string searchingCriteriaName)
             :base()
         {
             if (string.IsNullOrEmpty(selector))
@@ -39,6 +56,7 @@ namespace OpenQA.Selenium.Appium
             InterfaceNameRegExp = interfaceNameRegExp;
             SingleSearchMethodName = singleSearchMethodName;
             ListSearchMethodName = listSearchMethodName;
+            SearchingCriteriaName = searchingCriteriaName;
         }
 
         /// <summary>
@@ -49,13 +67,25 @@ namespace OpenQA.Selenium.Appium
         public override IWebElement FindElement(ISearchContext context)
         {
             Type contextType = context.GetType();
-            Type findByAccessibilityId = contextType.GetInterface(InterfaceNameRegExp + "`1", false);
-            if (null == findByAccessibilityId)
+            MethodInfo m;
+
+            var desiredType = contextType.GetInterface(InterfaceNameRegExp + "`1", false);
+            if (null != desiredType)
             {
-                throw new InvalidCastException("Unable to cast " + contextType.ToString() + " to " + InterfaceNameRegExp);
+                m = desiredType.GetMethod(SingleSearchMethodName, new Type[] { typeof(string) });
+                return (IWebElement) m.Invoke(context, new object[] { selector });
             }
-            MethodInfo m = findByAccessibilityId.GetMethod(SingleSearchMethodName, new Type[] { typeof(string) });
-            return (IWebElement)m.Invoke(context, new object[] { selector });
+
+            desiredType = contextType.GetInterface(FindsByFluentSelector + "`1", false);
+            if (desiredType != null)
+            {
+                m = desiredType.GetMethod(SingleFluentCriteriaFindBy, new Type[] { typeof(string), typeof(string) });
+                return (IWebElement) m.Invoke(context, new object[] {SearchingCriteriaName, selector });
+            }
+
+           
+            throw new InvalidCastException("Unable to cast " + contextType.ToString() + " to " + InterfaceNameRegExp + " nor to " +
+                FindsByFluentSelector);
         }
 
         /// <summary>
@@ -65,15 +95,27 @@ namespace OpenQA.Selenium.Appium
         /// <returns>A readonly collection of elements that match.</returns>
         public override ReadOnlyCollection<IWebElement> FindElements(ISearchContext context)
         {
+
             Type contextType = context.GetType();
-            Type findByAccessibilityId = contextType.GetInterface(InterfaceNameRegExp + "`1", false);
-            if (null == findByAccessibilityId)
+            MethodInfo m;
+
+            var desiredType = contextType.GetInterface(InterfaceNameRegExp + "`1", false);
+            if (null != desiredType)
             {
-                throw new InvalidCastException("Unable to cast " + contextType.ToString() + " to " + InterfaceNameRegExp);
+                m = desiredType.GetMethod(ListSearchMethodName, new Type[] { typeof(string) });
+                return ConvertToExtendedWebElementCollection((IList) m.Invoke(context, new object[] { selector }));
             }
-            MethodInfo m = findByAccessibilityId.GetMethod(ListSearchMethodName, new Type[] { typeof(string) });
-            return CollectionConverterUnility.
-                            ConvertToExtendedWebElementCollection<IWebElement>((IList)m.Invoke(context, new object[] { selector }));
+
+            desiredType = contextType.GetInterface(FindsByFluentSelector + "`1", false);
+            if (desiredType != null)
+            {
+                m = desiredType.GetMethod(MultipleFluentCriteriaFindBy, new Type[] { typeof(string), typeof(string) });
+                return ConvertToExtendedWebElementCollection((IList) m.Invoke(context, new object[] { SearchingCriteriaName, selector }));
+            }
+
+
+            throw new InvalidCastException("Unable to cast " + contextType.ToString() + " to " + InterfaceNameRegExp + " nor to " +
+                FindsByFluentSelector);
         }
 
         /// <summary>
@@ -105,6 +147,10 @@ namespace OpenQA.Selenium.Appium
         /// <param name="selector">The selector to use in finding the element.</param>
         /// <returns></returns>
         public static By IosUIAutomation(string selector) => new ByIosUIAutomation(selector);
+
+        public static By WindowsAutomation(string selector) => new ByWindowsAutomation(selector);
+
+        public static By IosNSPredicate(string selector) => new ByIosNSPredicate(selector);
     }
 
     /// <summary>
@@ -121,7 +167,8 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <param name="selector">The selector to use in finding the element.</param>
         public ByAccessibilityId(string selector)
-            :base(selector, "IFindByAccessibilityId", "FindElementByAccessibilityId", "FindElementsByAccessibilityId")
+            :base(selector, "IFindByAccessibilityId", "FindElementByAccessibilityId", "FindElementsByAccessibilityId", 
+                 MobileSelector.Accessibility)
         {
         }
 
@@ -140,7 +187,8 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <param name="selector">The selector to use in finding the element.</param>
         public ByAndroidUIAutomator(string selector)
-            : base(selector, "IFindByAndroidUIAutomator", "FindElementByAndroidUIAutomator", "FindElementsByAndroidUIAutomator")
+            : base(selector, "IFindByAndroidUIAutomator", "FindElementByAndroidUIAutomator", "FindElementsByAndroidUIAutomator", 
+                  MobileSelector.AndroidUIAutomator)
         {
         }
 
@@ -159,11 +207,41 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <param name="selector">The selector to use in finding the element.</param>
         public ByIosUIAutomation(string selector)
-            :base(selector, "IFindByIosUIAutomation", "FindElementByIosUIAutomation", "FindElementsByIosUIAutomation")
+            :base(selector, "IFindByIosUIAutomation", "FindElementByIosUIAutomation", "FindElementsByIosUIAutomation", MobileSelector.iOSAutomatoion)
         {
         }
 
         public override string ToString() =>
             $"ByIosUIAutomation({selector})";
+    }
+
+    public class ByWindowsAutomation: MobileBy
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ByWindowsAutomation"/> class.
+        /// </summary>
+        /// <param name="selector">The selector to use in finding the element.</param>
+        public ByWindowsAutomation(string selector)
+            :base(selector, "IFindByWindowsUIAutomation", "FindElementByWindowsUIAutomation", "FindElementSByWindowsUIAutomation", MobileSelector.WindowsUIAutomation)
+        {
+        }
+
+        public override string ToString() =>
+            $"ByWindowsAutomation({selector})";
+    }
+
+    public class ByIosNSPredicate : MobileBy
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ByWindowsAutomation"/> class.
+        /// </summary>
+        /// <param name="selector">The selector to use in finding the element.</param>
+        public ByIosNSPredicate(string selector)
+            : base(selector, "IFindsByIosNSPredicate", "FindElementByIosNsPredicate", "FindElementsByIosNsPredicate", MobileSelector.iOSPredicateString)
+        {
+        }
+
+        public override string ToString() =>
+            $"ByIosNSPredicate({selector})";
     }
 }

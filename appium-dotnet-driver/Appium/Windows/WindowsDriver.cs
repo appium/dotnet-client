@@ -114,21 +114,14 @@ namespace OpenQA.Selenium.Appium.Windows
         /// </summary>
         /// <param name="selector">a Windows UIAutomation selector</param>
         /// <returns>IWebElement object so that you can interact that object</returns>
-        public W FindElementByWindowsUIAutomation(string selector)
-        {
-            return (W)this.FindElement("-windows uiautomation", selector);
-        }
+        public W FindElementByWindowsUIAutomation(string selector) => FindElement(MobileSelector.WindowsUIAutomation, selector);
 
         /// <summary>
         /// Finds a list of elements that match the Windows UIAutomation selector supplied
         /// </summary>
         /// <param name="selector">a Windows UIAutomation selector</param>
         /// <returns>ReadOnlyCollection of IWebElement objects so that you can interact with those objects</returns>
-        public ReadOnlyCollection<W> FindElementsByWindowsUIAutomation(string selector)
-        {
-            return CollectionConverterUnility.ConvertToExtendedWebElementCollection<W>(
-                this.FindElements("-windows uiautomation", selector));
-        }
+        public ReadOnlyCollection<W> FindElementsByWindowsUIAutomation(string selector) => FindElements(MobileSelector.WindowsUIAutomation, selector);
 
         #endregion IFindByWindowsUIAutomation Members
 

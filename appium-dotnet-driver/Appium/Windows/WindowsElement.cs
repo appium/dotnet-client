@@ -14,6 +14,7 @@
 using System.Collections.ObjectModel;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Remote;
+using OpenQA.Selenium.Appium.Enums;
 
 namespace OpenQA.Selenium.Appium.Windows
 {
@@ -26,16 +27,11 @@ namespace OpenQA.Selenium.Appium.Windows
 
         #region IFindByWindowsUIAutomation Members
 
-        public AppiumWebElement FindElementByWindowsUIAutomation(string selector)
-        {
-            return (AppiumWebElement)this.FindElement("-windows uiautomation", selector);
-        }
+        public AppiumWebElement FindElementByWindowsUIAutomation(string selector) => FindElement(MobileSelector.WindowsUIAutomation, selector);
 
-        public ReadOnlyCollection<AppiumWebElement> FindElementsByWindowsUIAutomation(string selector)
-        {
-            return CollectionConverterUnility.ConvertToExtendedWebElementCollection<AppiumWebElement>(
-                this.FindElements("-windows uiautomation", selector));
-        }
+        public ReadOnlyCollection<AppiumWebElement> FindElementsByWindowsUIAutomation(string selector) => 
+            FindElements(MobileSelector.WindowsUIAutomation, selector);
+
         #endregion IFindByWindowsUIAutomation Members
     }
 }

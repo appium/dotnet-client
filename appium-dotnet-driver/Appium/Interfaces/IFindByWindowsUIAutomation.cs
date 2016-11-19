@@ -15,7 +15,7 @@ using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium.Interfaces
 {
-    public interface IFindByWindowsUIAutomation<W> where W : IWebElement
+    public interface IFindByWindowsUIAutomation<W> : IFindsByFluentSelector<W> where W : IWebElement
     {
         /// <summary>
         /// Finds the first of elements that match the Windows UIAutomation selector supplied

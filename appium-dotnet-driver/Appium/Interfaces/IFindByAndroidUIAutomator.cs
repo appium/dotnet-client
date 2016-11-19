@@ -15,7 +15,7 @@ using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium.Interfaces
 {
-    public interface IFindByAndroidUIAutomator<W> where W : IWebElement
+    public interface IFindByAndroidUIAutomator<W>: IFindsByFluentSelector<W> where W : IWebElement
     {
         /// <summary>
         /// Finds the first element in the page that matches the Android UIAutomator selector supplied

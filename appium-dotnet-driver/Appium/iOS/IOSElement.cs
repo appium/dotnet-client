@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Remote;
 using System;
@@ -35,12 +36,9 @@ namespace OpenQA.Selenium.Appium.iOS
 
         #region IFindByIosUIAutomation Members
 
-        public AppiumWebElement FindElementByIosUIAutomation(string selector) => 
-            (AppiumWebElement) this.FindElement("-ios uiautomation", selector);
+        public AppiumWebElement FindElementByIosUIAutomation(string selector) => FindElement(MobileSelector.iOSAutomatoion, selector);
 
-        public ReadOnlyCollection<AppiumWebElement> FindElementsByIosUIAutomation(string selector) =>
-            CollectionConverterUnility.
-                            ConvertToExtendedWebElementCollection<AppiumWebElement>(this.FindElements("-ios uiautomation", selector));
+        public ReadOnlyCollection<AppiumWebElement> FindElementsByIosUIAutomation(string selector) => FindElements(MobileSelector.iOSAutomatoion, selector);
 
         #endregion IFindByIosUIAutomation Members
     }

@@ -67,7 +67,10 @@
     <Compile Include="Appium\Enums\MobileBrowserType.cs" />
     <Compile Include="Appium\Enums\MobileCapabilityType.cs" />
     <Compile Include="Appium\Android\Enums\ConnectionType.cs" />
+    <Compile Include="Appium\Enums\MobileSelector.cs" />
+    <Compile Include="Appium\Interfaces\IFindsByIosNSPredicate.cs" />
     <Compile Include="Appium\Interfaces\IExecuteMethod.cs" />
+    <Compile Include="Appium\Interfaces\IFindsByFluentSelector.cs" />
     <Compile Include="Appium\Windows\Enums\WindowsKeyCodes.cs" />
     <Compile Include="Appium\Interfaces\Generic\SearchContext\IGenericFindsByClassName.cs" />
     <Compile Include="Appium\Interfaces\Generic\SearchContext\IGenericFindsByCssSelector.cs" />
@@ -90,7 +93,6 @@
     <Compile Include="Appium\iOS\Interfaces\IShakesDevice.cs" />
     <Compile Include="Appium\iOS\IOSDriver.cs" />
     <Compile Include="Appium\iOS\IOSElement.cs" />
-    <Compile Include="Appium\CollectionConverterUnility.cs" />
     <Compile Include="Appium\MobileBy.cs" />
     <Compile Include="Appium\PageObjects\AppiumPageObjectMemberDecorator.cs" />
     <Compile Include="Appium\PageObjects\Attributes\FindsByIOSUIAutomationAttribute.cs" />

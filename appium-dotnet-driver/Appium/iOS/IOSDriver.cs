@@ -124,17 +124,14 @@ namespace OpenQA.Selenium.Appium.iOS
         /// </summary>
         /// <param name="selector">UIAutomation selector</param>
         /// <returns>First element found</returns>
-        public W FindElementByIosUIAutomation(string selector) => 
-            (W) FindElement("-ios uiautomation", selector);
+        public W FindElementByIosUIAutomation(string selector) => FindElement(MobileSelector.iOSAutomatoion, selector);
 
         /// <summary>
         /// Finds a list of elements that match the iOS UIAutomation selector
         /// </summary>
         /// <param name="selector">UIAutomation selector</param>
         /// <returns>ReadOnlyCollection of elements found</returns>
-        public ReadOnlyCollection<W> FindElementsByIosUIAutomation(string selector) => 
-            CollectionConverterUnility.
-                            ConvertToExtendedWebElementCollection<W>(FindElements("-ios uiautomation", selector));
+        public ReadOnlyCollection<W> FindElementsByIosUIAutomation(string selector) => FindElements(MobileSelector.iOSAutomatoion, selector);
         #endregion IFindByIosUIAutomation Members
 
         /// <summary>

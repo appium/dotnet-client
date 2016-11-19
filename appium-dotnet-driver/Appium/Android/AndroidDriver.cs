@@ -127,11 +127,10 @@ namespace OpenQA.Selenium.Appium.Android
 
         #region IFindByAndroidUIAutomator Members
 
-        public W FindElementByAndroidUIAutomator(string selector) => (W) FindElement("-android uiautomator", selector);
+        public W FindElementByAndroidUIAutomator(string selector) => FindElement(MobileSelector.AndroidUIAutomator, selector);
 
         public ReadOnlyCollection<W> FindElementsByAndroidUIAutomator(string selector) => 
-            CollectionConverterUnility.
-            ConvertToExtendedWebElementCollection<W>(this.FindElements("-android uiautomator", selector));
+            ConvertToExtendedWebElementCollection<W>(FindElements(MobileSelector.AndroidUIAutomator, selector));
 
         #endregion IFindByAndroidUIAutomator Members
 
