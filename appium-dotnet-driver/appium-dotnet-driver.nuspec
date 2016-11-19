@@ -18,6 +18,9 @@
 	      - OpenQA.Selenium.Appium.Windows.WindowsDriver was added.
 	      - OpenQA.Selenium.Appium.Windows.WindowsElement was added.
 	      - OpenQA.Selenium.Appium.Windows.Enums.WindowsKeyCode was added.
+      [Enhancement]. New automation types were added:
+ 		  - OpenQA.Selenium.Appium.Enums.AutomationName.iOSXcuiTest
+ 	      - OpenQA.Selenium.Appium.Enums.AutomationName.AndroidUIAutomator2	  
       
       2.0.1.1
       All obsolete code was removed.
