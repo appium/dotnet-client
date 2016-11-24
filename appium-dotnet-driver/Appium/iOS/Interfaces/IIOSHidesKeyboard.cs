@@ -12,9 +12,11 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 using OpenQA.Selenium.Appium.Interfaces;
+using System;
 
 namespace OpenQA.Selenium.Appium.iOS.Interfaces
 {
+    [Obsolete("It is moved to the 'OpenQA.Selenium.Appium.Interfaces.IHidesKeyboardWithKeyName'")]
     public interface IIOSHidesKeyboard : IHidesKeyboard
     {
         void HideKeyboard(string key, string strategy = null);

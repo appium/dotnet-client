@@ -27,7 +27,7 @@ namespace OpenQA.Selenium.Appium.Android
 {
     public class AndroidDriver<W> : AppiumDriver<W>, IFindByAndroidUIAutomator<W>, IStartsActivity,
         IHasNetworkConnection,
-        ISendsKeyEvents,
+        Appium.Interfaces.ISendsKeyEvents,
         IPushesFiles where W : IWebElement
     {
         private static readonly string Platform = MobilePlatform.Android;
@@ -230,37 +230,9 @@ namespace OpenQA.Selenium.Appium.Android
         }
         #endregion Connection Type
 
-        /// <summary>
-        /// Sends a device key event with metastate
-        /// </summary>
-        /// <param name="keyCode">Code for the long key pressed on the Android device</param>
-        /// <param name="metastate">metastate for the long key press</param>
-        public void PressKeyCode(int keyCode, int metastate = -1)
-        {
-            var parameters = new Dictionary<string, object>()
-            {["keycode"] = keyCode };
-            if (metastate > 0)
-            {
-                parameters.Add("metastate", metastate);
-            }
-            Execute(AppiumDriverCommand.PressKeyCode, parameters);
-        }
+        public void PressKeyCode(int keyCode, int metastate = -1) => AppiumCommand.PressKeyCode(this, keyCode, metastate);
 
-        /// <summary>
-        /// Sends a device long key event with metastate
-        /// </summary>
-        /// <param name="keyCode">Code for the long key pressed on the Android device</param>
-        /// <param name="metastate">metastate for the long key press</param>
-        public void LongPressKeyCode(int keyCode, int metastate = -1)
-        {
-            var parameters = new Dictionary<string, object>()
-            {["keycode"] = keyCode};
-            if (metastate > 0)
-            {
-                parameters.Add("metastate", metastate);
-            }
-            Execute(AppiumDriverCommand.LongPressKeyCode, parameters);
-        }
+        public void LongPressKeyCode(int keyCode, int metastate = -1) => AppiumCommand.LongPressKeyCode(this, keyCode, metastate);
 
         /// <summary>
         /// Toggles Location Services.

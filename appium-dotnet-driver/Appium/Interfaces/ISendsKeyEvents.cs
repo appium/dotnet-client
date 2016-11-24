@@ -12,11 +12,9 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-using System;
 
-namespace OpenQA.Selenium.Appium.Android.Interfaces
+namespace OpenQA.Selenium.Appium.Interfaces
 {
-    [Obsolete("This interface was moved to 'OpenQA.Selenium.Appium.Interfaces'")]
     public interface ISendsKeyEvents
     {
 

@@ -403,28 +403,9 @@ namespace OpenQA.Selenium.Appium
 			if (stringFile != null) {parameters.Add ("stringFile", stringFile);	}
 			if (parameters.Count == 0)  { parameters = null;}
 			return (Dictionary<string, object>) Execute(AppiumDriverCommand.GetAppStrings, parameters).Value;
-		}
+		}        
 
-
-
-        /// <summary>
-        /// Hide the keyboard
-        /// </summary>
-        /// <param name="strategy"></param>
-        /// <param name="key"></param>
-        protected void HideKeyboard(string strategy = null, string key = null)
-        {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
-            if (strategy != null) { parameters.Add("strategy", strategy); }
-            if (key != null) { parameters.Add("keyName", key); }
-            Execute(AppiumDriverCommand.HideKeyboard, parameters);
-        }
-
-        /// <summary>
-        /// Hides the device keyboard.
-        /// </summary>
-        /// <param name="keyName">The button pressed by the mobile driver to attempt hiding the keyboard.</param>
-        public void HideKeyboard() => HideKeyboard(null, null);
+        public void HideKeyboard() => AppiumCommand.HideKeyboard(this, null, null);
 
         /// <sumary>
         /// GPS Location

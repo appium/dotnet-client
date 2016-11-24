@@ -22,7 +22,7 @@ using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium.iOS
 {
-    public class IOSDriver<W> : AppiumDriver<W>, IFindByIosUIAutomation<W>, IIOSHidesKeyboard, IShakesDevice where W : IWebElement
+    public class IOSDriver<W> : AppiumDriver<W>, IFindByIosUIAutomation<W>, IHidesKeyboardWithKeyName, IShakesDevice where W : IWebElement
     {
         private static readonly string Platform = MobilePlatform.IOS;
 
@@ -139,13 +139,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// </summary>
         public void ShakeDevice() => Execute(AppiumDriverCommand.ShakeDevice);
 
-        /// <summary>
-        /// Hides the keyboard
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="strategy"></param>
-        public new void HideKeyboard(string key, string strategy = null) =>
-            HideKeyboard(strategy, key);
+        public void HideKeyboard(string key, string strategy = null) => AppiumCommand.HideKeyboard(this, strategy, key);
 
         /// <summary>
         /// Create an iOS Element
