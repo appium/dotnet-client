@@ -11,9 +11,12 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+using OpenQA.Selenium.Appium.Interfaces;
+
 namespace OpenQA.Selenium.Appium.Android
 {
-    public interface IStartsActivity
+    public interface IStartsActivity : IExecuteMethod
+
     {
         void StartActivity(string appPackage, string appActivity, string appWaitPackage = "", string appWaitActivity = "", bool stopApp = true);
 

@@ -15,7 +15,7 @@
 
 namespace OpenQA.Selenium.Appium.Interfaces
 {
-    public interface ISendsKeyEvents
+    public interface ISendsKeyEvents: IExecuteMethod
     {
 
         /// <summary>

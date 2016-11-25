@@ -13,7 +13,7 @@
 //limitations under the License.
 namespace OpenQA.Selenium.Appium.Interfaces
 {
-    public interface IInteractsWithApps
+    public interface IInteractsWithApps : IExecuteMethod
     {
         /// <summary>
         /// Installs an App.

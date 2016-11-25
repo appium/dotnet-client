@@ -12,9 +12,11 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+using OpenQA.Selenium.Appium.Interfaces;
+
 namespace OpenQA.Selenium.Appium.iOS.Interfaces
 {
-    interface IShakesDevice
+    interface IShakesDevice: IExecuteMethod
     {
         /// <summary>
         /// Shakes the device.

@@ -13,7 +13,7 @@
 //limitations under the License.
 namespace OpenQA.Selenium.Appium.Interfaces
 {
-    public interface IHidesKeyboard
+    public interface IHidesKeyboard : IExecuteMethod
     {
         /// <summary>
         /// Hides the device keyboard.

@@ -11,9 +11,11 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+using OpenQA.Selenium.Appium.Interfaces;
+
 namespace OpenQA.Selenium.Appium.Android.Interfaces
 {
-    public interface IHasNetworkConnection
+    public interface IHasNetworkConnection : IExecuteMethod
     {
         /// <summary>
         /// Get/set the Connection Type
