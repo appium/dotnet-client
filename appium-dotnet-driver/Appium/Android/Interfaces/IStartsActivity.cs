@@ -18,11 +18,39 @@ namespace OpenQA.Selenium.Appium.Android
     public interface IStartsActivity : IExecuteMethod
 
     {
+        /// <summary>
+        /// Opens an arbitrary activity during a test. If the activity belongs to
+        /// another application, that application is started and the activity is opened.
+        /// 
+        /// </summary>
+        /// <param name="appPackage">The package containing the activity to start.</param>
+        /// <param name="appActivity">The activity to start.</param>
+        /// <param name="appWaitPackage">Begin automation after this package starts. Can be null or empty.</param>
+        /// <param name="appWaitActivity">Begin automation after this activity starts. Can be null or empty.</param>
+        /// <param name="stopApp">If true, target app will be stopped.</param>
         void StartActivity(string appPackage, string appActivity, string appWaitPackage = "", string appWaitActivity = "", bool stopApp = true);
 
+        /// <summary>
+        /// Opens an arbitrary activity during a test. If the activity belongs to
+        /// another application, that application is started and the activity is opened.
+        /// 
+        /// </summary>
+        /// <param name="appPackage">The package containing the activity to start.</param>
+        /// <param name="appActivity">The activity to start.</param>
+        /// <param name="intentAction">Intent action which will be used to start activity.</param>
+        /// <param name="appWaitPackage">Begin automation after this package starts. Can be null or empty.</param>
+        /// <param name="appWaitActivity">Begin automation after this activity starts. Can be null or empty.</param>
+        /// <param name="intentCategory">Intent category which will be used to start activity.</param>
+        /// <param name="intentFlags">Flags that will be used to start activity.</param>
+        /// <param name="intentOptionalArgs">Additional intent arguments that will be used to start activity.</param>
+        /// <param name="stopApp">If true, target app will be stopped.</param>
         void StartActivityWithIntent(string appPackage, string appActivity, string intentAction, string appWaitPackage = "", string appWaitActivity = "",
              string intentCategory = "", string intentFlags = "", string intentOptionalArgs = "", bool stopApp = true);
 
+        /// <summary>
+        /// Gets Current Device Activity.
+        /// </summary>
+        /// 
         string CurrentActivity
         {
             get;

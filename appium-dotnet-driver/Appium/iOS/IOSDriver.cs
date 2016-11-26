@@ -139,7 +139,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// </summary>
         public void ShakeDevice() => Execute(AppiumDriverCommand.ShakeDevice);
 
-        public void HideKeyboard(string key, string strategy = null) => AppiumCommand.HideKeyboard(this, strategy, key);
+        public void HideKeyboard(string key, string strategy = null) => AppiumCommandExecutionHelper.HideKeyboard(this, strategy, key);
 
         /// <summary>
         /// Create an iOS Element

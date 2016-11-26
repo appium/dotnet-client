@@ -405,7 +405,7 @@ namespace OpenQA.Selenium.Appium
 			return (Dictionary<string, object>) Execute(AppiumDriverCommand.GetAppStrings, parameters).Value;
 		}        
 
-        public void HideKeyboard() => AppiumCommand.HideKeyboard(this, null, null);
+        public void HideKeyboard() => AppiumCommandExecutionHelper.HideKeyboard(this, null, null);
 
         /// <sumary>
         /// GPS Location

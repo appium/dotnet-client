@@ -125,7 +125,7 @@ namespace OpenQA.Selenium.Appium.Windows
 
         #endregion IFindByWindowsUIAutomation Members
 
-        public void HideKeyboard(string key, string strategy = null) => AppiumCommand.HideKeyboard(this, strategy, key);
+        public void HideKeyboard(string key, string strategy = null) => AppiumCommandExecutionHelper.HideKeyboard(this, strategy, key);
 
         /// <summary>
         /// Create a Windows Element
@@ -137,9 +137,9 @@ namespace OpenQA.Selenium.Appium.Windows
             return new WindowsElement(this, elementId);
         }
 
-        public void PressKeyCode(int keyCode, int metastate = -1) => AppiumCommand.PressKeyCode(this, keyCode, metastate);
+        public void PressKeyCode(int keyCode, int metastate = -1) => AppiumCommandExecutionHelper.PressKeyCode(this, keyCode, metastate);
 
-        public void LongPressKeyCode(int keyCode, int metastate = -1) => AppiumCommand.LongPressKeyCode(this, keyCode, metastate);
+        public void LongPressKeyCode(int keyCode, int metastate = -1) => AppiumCommandExecutionHelper.LongPressKeyCode(this, keyCode, metastate);
 
         /// <summary>
         /// Convenience method for swiping across the screen

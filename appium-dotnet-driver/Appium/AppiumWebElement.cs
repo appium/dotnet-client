@@ -275,5 +275,14 @@ namespace OpenQA.Selenium.Appium
             }
             return result.AsReadOnly();
         }
+
+        public new Response Execute(string commandName, Dictionary<string, object> parameters) => base.Execute(commandName, parameters);
+
+        public Response Execute(string driverCommand) => Execute(driverCommand, null);
+
+        public new string Id
+        {
+            get { return base.Id; }
+        }
     }
 }
