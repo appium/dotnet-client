@@ -62,7 +62,7 @@ namespace OpenQA.Selenium.Appium.Android.Interfaces
         /// invoke {@code setScrollAcknowledgmentTimeout} in {@code com.android.uiautomator.core.Configurator}
         /// </summary>
         /// <param name="timeout">timeout in milliseconds. A negative value would reset to its default value</param>
-        void configuratorSetScrollAcknowledgmentTimeout(int timeout);
+        void ConfiguratorSetScrollAcknowledgmentTimeout(int timeout);
 
         /// <summary>
         /// invoke {@code configuratorSetKeyInjectionDelay} in {@code com.android.uiautomator.core.Configurator}

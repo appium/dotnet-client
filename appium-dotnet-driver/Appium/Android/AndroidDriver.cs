@@ -21,13 +21,15 @@ using System;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.IO;
+using System.Collections.Generic;
+using OpenQA.Selenium.Appium.Android.Enums;
 
 namespace OpenQA.Selenium.Appium.Android
 {
     public class AndroidDriver<W> : AppiumDriver<W>, IFindByAndroidUIAutomator<W>, IStartsActivity,
         IHasNetworkConnection,
         Appium.Interfaces.ISendsKeyEvents,
-        IPushesFiles where W : IWebElement
+        IPushesFiles, IHasSettings where W : IWebElement
     {
         private static readonly string Platform = MobilePlatform.Android;
 
@@ -211,12 +213,6 @@ namespace OpenQA.Selenium.Appium.Android
 
         protected override RemoteWebElement CreateElement(string elementId) => new AndroidElement(this, elementId);
 
-        /// <summary>
-        /// Set "ignoreUnimportantViews" setting.
-        /// See: https://github.com/appium/appium/blob/master/docs/en/advanced-concepts/settings.md
-        /// </summary>
-        public void IgnoreUnimportantViews(bool value) => UpdateSetting("ignoreUnimportantViews", value);
-
         #region locking
         /**
         * This method locks a device.
@@ -244,8 +240,41 @@ namespace OpenQA.Selenium.Appium.Android
         /// <param name="duration">amount of time in milliseconds for the entire swipe action to take</param>
         public override void Swipe(int startx, int starty, int endx, int endy, int duration) =>
             DoSwipe(startx, starty, endx, endy, duration);
-
         #endregion
 
+        public void SetSetting(string setting, object value) => 
+            AndroidCommandExecutionHelper.SetSetting(this, setting, value);
+
+        public void IgnoreUnimportantViews(bool compress) => 
+            SetSetting(AutomatorSetting.IgnoreUnimportantViews, compress);
+
+        public void ConfiguratorSetWaitForIdleTimeout(int timeout) => 
+            SetSetting(AutomatorSetting.WaitForIDLETimeout, timeout);
+
+        public void ConfiguratorSetWaitForSelectorTimeout(int timeout) => 
+            SetSetting(AutomatorSetting.WaitForSelectorTimeout, timeout);
+
+        public void ConfiguratorSetScrollAcknowledgmentTimeout(int timeout) =>
+            SetSetting(AutomatorSetting.WaitScrollAcknowledgmentTimeout, timeout);
+
+        public void ConfiguratorSetKeyInjectionDelay(int delay) =>
+            SetSetting(AutomatorSetting.KeyInjectionDelay, delay);
+
+        public void ConfiguratorSetActionAcknowledgmentTimeout(int timeout) =>
+            SetSetting(AutomatorSetting.WaitActionAcknowledgmentTimeout, timeout);
+
+        public Dictionary<string, object> Settings
+        {
+            get
+            {
+                return AndroidCommandExecutionHelper.GetSettings(this);
+            }
+
+            set
+            {
+                foreach (var entry in value)
+                { SetSetting(entry.Key, entry.Value); } 
+            }
+        }
     }
 }

@@ -557,30 +557,6 @@ namespace OpenQA.Selenium.Appium
 
         #endregion Multi Actions
 
-        #region Settings
-
-        /// <summary>
-        /// Get appium settings currently set for the session
-        /// See: https://github.com/appium/appium/blob/master/docs/en/advanced-concepts/settings.md
-        /// </summary>
-        public Dictionary<string, object> GetSettings() => 
-            JsonConvert.
-                DeserializeObject<Dictionary<string, object>>
-                ((string) Execute(AppiumDriverCommand.GetSettings).Value);
-
-        /// <summary>
-        /// Update an appium Setting, on the session
-        /// </summary>
-        protected void UpdateSetting(string setting, object value)
-        {
-            var settings = new Dictionary<string, object>()
-            {[setting] = value };
-            var parameters = new Dictionary<string, object>()
-            {["settings"] = settings };
-            Execute(AppiumDriverCommand.UpdateSettings, parameters);
-        }
-        #endregion Settings
-
         #region tap, swipe, pinch, zoom
 
         /// <summary>
