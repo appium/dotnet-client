@@ -19,6 +19,26 @@
 	      - OpenQA.Selenium.Appium.Windows.WindowsDriver was added.
 	      - OpenQA.Selenium.Appium.Windows.WindowsElement was added.
 	      - OpenQA.Selenium.Appium.Windows.Enums.WindowsKeyCode was added.
+        
+     [Major enhancement] API redesign
+        - OpenQA.Selenium.Appium.Android.Interfaces.ISendsKeyEvents was marked obsolete.
+        - Appium.Interfaces.ISendsKeyEvents was added. It is implemented by AndroidDriver and WindowsDriver.
+        - OpenQA.Selenium.Appium.iOS.Interfaces.IIOSHidesKeyboard was marked obsolete.
+        - OpenQA.Selenium.Appium.Interfaces.IHidesKeyboardWithKeyName was added. It extends OpenQA.Selenium.Appium.Interfaces.IHidesKeyboard and it is implemented by IOSDriver and WindowsDriver.
+        - OpenQA.Selenium.Appium.Android.Interfaces.IHasSettings was added. It is implemented by AndroidDriver. Also the OpenQA.Selenium.Appium.Android.Enims.AutomatorSetting was provided.
+        - OpenQA.Selenium.Appium.iOS.Interfaces.IPerformsTouchID was added. It is implemented by IOSDriver.
+        - almost all interfaces extend the OpenQA.Selenium.Appium.Interfaces.IExecuteMethod
+	
+	    _The work is stil not finished_
+
+	    - Command execution helpers:
+		    - OpenQA.Selenium.Appium.AppiumCommandExecutionHelper was added.
+		    - OpenQA.Selenium.Appium.Android.AndroidCommandExecutionHelper was added.
+		    - OpenQA.Selenium.Appium.iOS.IOSCommandExecutionHelper was added.
+
+	    These classes consist of static methods which accept IExecuteMethod as one of parameters. 
+        
+        
       [Major enhancement] Now the OpenQA.Selenium.Appium.AppiumDriver can use an instance of any OpenQA.Selenium.Appium.MobileBy subclass for the searching. 
         It should work as expected when current session supports the given selector.
       [Major enhancement] The new interface OpenQA.Selenium.Appium.Interfaces.IFindsByFluentSelector was added. It is implemented by OpenQA.Selenium.Appium.AppiumDriver.
