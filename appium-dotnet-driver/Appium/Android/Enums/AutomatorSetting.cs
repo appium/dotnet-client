@@ -11,14 +11,16 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
-using OpenQA.Selenium.Appium.Interfaces;
-using System;
 
-namespace OpenQA.Selenium.Appium.iOS.Interfaces
+namespace OpenQA.Selenium.Appium.Android.Enums
 {
-    [Obsolete("It is moved to the 'OpenQA.Selenium.Appium.Interfaces.IHidesKeyboardWithKeyName'")]
-    public interface IIOSHidesKeyboard : IHidesKeyboard
+    public sealed class AutomatorSetting
     {
-        void HideKeyboard(string key, string strategy = null);
+        public static readonly string IgnoreUnimportantViews = "ignoreUnimportantViews";
+        public static readonly string WaitForIDLETimeout = "setWaitForIdleTimeout";
+        public static readonly string WaitForSelectorTimeout = "setWaitForSelectorTimeout";
+        public static readonly string WaitScrollAcknowledgmentTimeout = "setScrollAcknowledgmentTimeout";
+        public static readonly string WaitActionAcknowledgmentTimeout = "setActionAcknowledgmentTimeout";
+        public static readonly string KeyInjectionDelay = "setKeyInjectionDelay";
     }
 }

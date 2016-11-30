@@ -15,7 +15,7 @@ using OpenQA.Selenium.Appium.MultiTouch;
 
 namespace OpenQA.Selenium.Appium.Interfaces
 {
-    public interface IPerformsTouchActions
+    public interface IPerformsTouchActions : IExecuteMethod
     {
         /// <summary>
         /// Perform the multi action

@@ -57,6 +57,7 @@
     <Compile Include="Android\AndroidElementTest.cs" />
     <Compile Include="Android\AndroidGestureTest.cs" />
     <Compile Include="Android\AndroidSessionTest.cs" />
+    <Compile Include="Android\AndroidSettingTest.cs" />
     <Compile Include="Android\FileInteractionTest.cs" />
     <Compile Include="Android\HideKeyboardTestCase.cs" />
     <Compile Include="Android\AndroidLocationTest.cs" />

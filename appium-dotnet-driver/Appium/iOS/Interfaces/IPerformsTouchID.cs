@@ -11,25 +11,16 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
-using OpenQA.Selenium.Remote;
-using System.Collections.Generic;
 
-namespace OpenQA.Selenium.Appium.Interfaces
+namespace OpenQA.Selenium.Appium.iOS.Interfaces
 {
-    public interface IExecuteMethod
+    public interface IPerformsTouchID
     {
         /// <summary>
-        /// Execute a command on the remote server.
+        /// Simulate touchId event
         /// </summary>
-        /// <param name="commandName">A remote command</param>
-        /// <param name="parameters">Parameters to execute</param>
-        /// <returns>The result</returns>
-        Response Execute(string commandName, Dictionary<string, object> parameters);
-
-		/// <summary>
-		/// Execute a command on the remote server.
-		/// </summary>
-		/// <param name="driverCommand">A remote command</param>
-		Response Execute(string driverCommand);
+        /// <param name="match">If true, simulates a successful fingerprint scan. 
+        /// If false, simulates a failed fingerprint scan.</param>
+        void PerformTouchID(bool match);
     }
 }

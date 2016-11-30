@@ -11,25 +11,19 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
-using OpenQA.Selenium.Remote;
+
+using OpenQA.Selenium.Appium.Interfaces;
 using System.Collections.Generic;
 
-namespace OpenQA.Selenium.Appium.Interfaces
+namespace OpenQA.Selenium.Appium.iOS
 {
-    public interface IExecuteMethod
+    public sealed class IOSCommandExecutionHelper
     {
-        /// <summary>
-        /// Execute a command on the remote server.
-        /// </summary>
-        /// <param name="commandName">A remote command</param>
-        /// <param name="parameters">Parameters to execute</param>
-        /// <returns>The result</returns>
-        Response Execute(string commandName, Dictionary<string, object> parameters);
+        public static void ShakeDevice(IExecuteMethod executeMethod) => 
+            executeMethod.Execute(AppiumDriverCommand.ShakeDevice);
 
-		/// <summary>
-		/// Execute a command on the remote server.
-		/// </summary>
-		/// <param name="driverCommand">A remote command</param>
-		Response Execute(string driverCommand);
+        public static void PerformTouchID(IExecuteMethod executeMethod, bool match) =>
+            executeMethod.Execute(AppiumDriverCommand.TouchID, 
+                new Dictionary<string, object>() { ["match"] = match });
     }
 }

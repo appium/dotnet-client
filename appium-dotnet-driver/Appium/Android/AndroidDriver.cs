@@ -11,24 +11,25 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
 using OpenQA.Selenium.Appium.Android.Interfaces;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Service;
 using OpenQA.Selenium.Remote;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics.Contracts;
 using System.Text;
 using System.IO;
+using System.Collections.Generic;
+using OpenQA.Selenium.Appium.Android.Enums;
 
 namespace OpenQA.Selenium.Appium.Android
 {
     public class AndroidDriver<W> : AppiumDriver<W>, IFindByAndroidUIAutomator<W>, IStartsActivity,
         IHasNetworkConnection,
-        ISendsKeyEvents,
-        IPushesFiles where W : IWebElement
+        Appium.Interfaces.ISendsKeyEvents,
+        IPushesFiles, IHasSettings where W : IWebElement
     {
         private static readonly string Platform = MobilePlatform.Android;
 
@@ -134,68 +135,20 @@ namespace OpenQA.Selenium.Appium.Android
 
         #endregion IFindByAndroidUIAutomator Members
 
-        /// <summary>
-        /// Opens an arbitrary activity during a test. If the activity belongs to
-        /// another application, that application is started and the activity is opened.
-        /// 
-        /// </summary>
-        /// <param name="appPackage">The package containing the activity to start.</param>
-        /// <param name="appActivity">The activity to start.</param>
-        /// <param name="appWaitPackage">Begin automation after this package starts. Can be null or empty.</param>
-        /// <param name="appWaitActivity">Begin automation after this activity starts. Can be null or empty.</param>
-        /// <param name="stopApp">If true, target app will be stopped.</param>
-        public void StartActivity(string appPackage, string appActivity, string appWaitPackage = "", string appWaitActivity = "", bool stopApp = true)
-        {
-            Contract.Requires(!string.IsNullOrWhiteSpace(appPackage));
-            Contract.Requires(!string.IsNullOrWhiteSpace(appActivity));
+        public void StartActivity(string appPackage, string appActivity, string appWaitPackage = "", string appWaitActivity = "", bool stopApp = true) =>
+            AndroidCommandExecutionHelper.StartActivity(this, appPackage, appActivity, appWaitPackage, appWaitActivity, stopApp);
 
-            Dictionary<string, object> parameters = new Dictionary<string, object>()
-            {
-                ["appPackage"] = appPackage,
-                ["appActivity"] = appActivity,
-                ["appWaitPackage"] = appWaitPackage,
-                ["appWaitActivity"] = appWaitActivity,
-                ["dontStopAppOnReset"] = !stopApp
-            };
-
-            Execute(AppiumDriverCommand.StartActivity, parameters);
-        }
-
-        /// <summary>
-        /// Opens an arbitrary activity during a test. If the activity belongs to
-        /// another application, that application is started and the activity is opened.
-        /// 
-        /// </summary>
-        /// <param name="appPackage">The package containing the activity to start.</param>
-        /// <param name="appActivity">The activity to start.</param>
-        /// <param name="intentAction">Intent action which will be used to start activity.</param>
-        /// <param name="appWaitPackage">Begin automation after this package starts. Can be null or empty.</param>
-        /// <param name="appWaitActivity">Begin automation after this activity starts. Can be null or empty.</param>
-        /// <param name="intentCategory">Intent category which will be used to start activity.</param>
-        /// <param name="intentFlags">Flags that will be used to start activity.</param>
-        /// <param name="intentOptionalArgs">Additional intent arguments that will be used to start activity.</param>
-        /// <param name="stopApp">If true, target app will be stopped.</param>
         public void StartActivityWithIntent(string appPackage, string appActivity, string intentAction, string appWaitPackage = "", string appWaitActivity = "",
-            string intentCategory = "", string intentFlags = "", string intentOptionalArgs = "", bool stopApp = true)
+            string intentCategory = "", string intentFlags = "", string intentOptionalArgs = "", bool stopApp = true) => 
+            AndroidCommandExecutionHelper.StartActivityWithIntent(this, appPackage, appActivity, intentAction, appWaitPackage, appWaitActivity,
+            intentCategory, intentFlags, intentOptionalArgs, stopApp);
+
+        public string CurrentActivity
         {
-            Contract.Requires(!string.IsNullOrWhiteSpace(appPackage));
-            Contract.Requires(!string.IsNullOrWhiteSpace(appActivity));
-            Contract.Requires(!string.IsNullOrWhiteSpace(intentAction));
-
-            Dictionary<string, object> parameters = new Dictionary<string, object>()
+            get
             {
-                ["appPackage"] = appPackage,
-                ["appActivity"] = appActivity,
-                ["appWaitPackage"] = appWaitPackage,
-                ["appWaitActivity"] = appWaitActivity,
-                ["dontStopAppOnReset"] = !stopApp,
-                ["intentAction"] = intentAction,
-                ["intentCategory"] = intentCategory,
-                ["intentFlags"] = intentFlags,
-                ["optionalIntentArguments"] = intentOptionalArgs
-            };
-
-            Execute(AppiumDriverCommand.StartActivity, parameters);
+                return AndroidCommandExecutionHelper.GetCurrentActivity(this);
+            }
         }
 
         #region Connection Type
@@ -204,82 +157,23 @@ namespace OpenQA.Selenium.Appium.Android
         {
             get
             {
-                var commandResponse = Execute(AppiumDriverCommand.GetConnectionType, null);
-                if (commandResponse.Status == WebDriverResult.Success)
-                {
-                    return (ConnectionType)(long)commandResponse.Value;
-                }
-                else
-                {
-                    throw new WebDriverException("The request to get the ConnectionType has failed.");
-                }
+                return AndroidCommandExecutionHelper.GetConection(this);
             }
             set
             {
-                Dictionary<string, object> values = new Dictionary<string, object>(){
-                    ["type"] = value
-                };
-
-                Dictionary<string, object> dictionary = new Dictionary<string, object>(){
-                    ["name"] = "network_connection",
-                    ["parameters"] = values
-                };
-
-                Execute(AppiumDriverCommand.SetConnectionType, dictionary);
+                AndroidCommandExecutionHelper.SetConection(this, value);
             }
         }
         #endregion Connection Type
 
-        /// <summary>
-        /// Sends a device key event with metastate
-        /// </summary>
-        /// <param name="keyCode">Code for the long key pressed on the Android device</param>
-        /// <param name="metastate">metastate for the long key press</param>
-        public void PressKeyCode(int keyCode, int metastate = -1)
-        {
-            var parameters = new Dictionary<string, object>()
-            {["keycode"] = keyCode };
-            if (metastate > 0)
-            {
-                parameters.Add("metastate", metastate);
-            }
-            Execute(AppiumDriverCommand.PressKeyCode, parameters);
-        }
+        public void PressKeyCode(int keyCode, int metastate = -1) => AppiumCommandExecutionHelper.PressKeyCode(this, keyCode, metastate);
 
-        /// <summary>
-        /// Sends a device long key event with metastate
-        /// </summary>
-        /// <param name="keyCode">Code for the long key pressed on the Android device</param>
-        /// <param name="metastate">metastate for the long key press</param>
-        public void LongPressKeyCode(int keyCode, int metastate = -1)
-        {
-            var parameters = new Dictionary<string, object>()
-            {["keycode"] = keyCode};
-            if (metastate > 0)
-            {
-                parameters.Add("metastate", metastate);
-            }
-            Execute(AppiumDriverCommand.LongPressKeyCode, parameters);
-        }
+        public void LongPressKeyCode(int keyCode, int metastate = -1) => AppiumCommandExecutionHelper.LongPressKeyCode(this, keyCode, metastate);
 
         /// <summary>
         /// Toggles Location Services.
         /// </summary>
-        public void ToggleLocationServices() => Execute(AppiumDriverCommand.ToggleLocationServices);
-
-
-        /// <summary>
-        /// Gets Current Device Activity.
-        /// </summary>
-        /// 
-        public string CurrentActivity
-        {
-            get
-            {
-                var commandResponse = Execute(AppiumDriverCommand.GetCurrentActivity);
-                return commandResponse.Value as string;
-            }
-        }
+        public void ToggleLocationServices() => AndroidCommandExecutionHelper.ToggleLocationServices(this);
 
         /// <summary>
         /// Get test-coverage data
@@ -287,18 +181,14 @@ namespace OpenQA.Selenium.Appium.Android
         /// <param name="intent">a string containing the intent.</param>
         /// <param name="path">a string containing the path.</param>
         /// <return>a base64 string containing the data</return> 
-        public string EndTestCoverage(string intent, string path) =>
-            Execute(AppiumDriverCommand.EndTestCoverage, 
-                new Dictionary<string, object>()
-                {["intent"] = intent,["path"] = path }).Value as string;
+        public string EndTestCoverage(string intent, string path) => AndroidCommandExecutionHelper.EndTestCoverage(this, intent, path);
 
         /// <summary>
         /// Saves a string as a file on the remote mobile device.
         /// </summary>
         /// <param name="pathOnDevice">Path to file to write data to on remote device</param>
         /// <param name="stringData">A string to write to remote device</param>
-        public void PushFile(string pathOnDevice, string stringData) =>
-            PushFile(pathOnDevice, Convert.FromBase64String(Convert.
+        public void PushFile(string pathOnDevice, string stringData) => AndroidCommandExecutionHelper.PushFile(this, pathOnDevice, Convert.FromBase64String(Convert.
                 ToBase64String(Encoding.UTF8.GetBytes(stringData))));
 
         /// <summary>
@@ -306,66 +196,39 @@ namespace OpenQA.Selenium.Appium.Android
         /// </summary>
         /// <param name="pathOnDevice">Path to file to write data to on remote device</param>
         /// <param name="base64Data">Base64 encoded byte array of data to write to remote device</param>
-        public void PushFile(string pathOnDevice, byte[] base64Data) =>
-            Execute(AppiumDriverCommand.PushFile, new Dictionary<string, object>()
-                {["path"] = pathOnDevice,["data"] = base64Data });
+        public void PushFile(string pathOnDevice, byte[] base64Data) => AndroidCommandExecutionHelper.PushFile(this, pathOnDevice, base64Data);
 
         /// <summary>
         /// Saves given file as a file on the remote mobile device.
         /// </summary>
         /// <param name="pathOnDevice">Path to file to write data to on remote device</param>
         /// <param name="base64Data">A file to write to remote device</param>
-        public void PushFile(string pathOnDevice, FileInfo file)
-        {
-            if (file == null)
-            {
-                throw new ArgumentException("The file argument should not be null");
-            }
-
-            if (!file.Exists)
-            {
-                throw new ArgumentException("The file " + file.FullName + " doesn't exist");
-            }
-
-            byte[] bytes = File.ReadAllBytes(file.FullName);
-            string fileBase64Data = Convert.ToBase64String(bytes);
-            PushFile(pathOnDevice, Convert.FromBase64String(fileBase64Data));
-        }
+        public void PushFile(string pathOnDevice, FileInfo file) => AndroidCommandExecutionHelper.PushFile(this, pathOnDevice, file);
 
         /// <summary>
         /// Open the notifications 
         /// </summary>
-        public void OpenNotifications() => Execute(AppiumDriverCommand.OpenNotifications);
+        public void OpenNotifications() => AndroidCommandExecutionHelper.OpenNotifications(this);
 
 
         protected override RemoteWebElement CreateElement(string elementId) => new AndroidElement(this, elementId);
-
-        /// <summary>
-        /// Set "ignoreUnimportantViews" setting.
-        /// See: https://github.com/appium/appium/blob/master/docs/en/advanced-concepts/settings.md
-        /// </summary>
-        public void IgnoreUnimportantViews(bool value) => UpdateSetting("ignoreUnimportantViews", value);
 
         #region locking
         /**
         * This method locks a device.
         */
-        public void Lock() =>
-            Execute(AppiumDriverCommand.LockDevice, 
-                new Dictionary<string, object>()
-                {["seconds"] = 0 });
+        public void Lock() => AppiumCommandExecutionHelper.Lock(this, 0);
 
         /// <summary>
         /// Check if the device is locked
         /// </summary>
         /// <returns>true if device is locked, false otherwise</returns>
-        public bool IsLocked() => 
-            (bool) Execute(AppiumDriverCommand.IsLocked).Value;
+        public bool IsLocked() => AndroidCommandExecutionHelper.IsLocked(this);
 
         /**
          * This method unlocks a device.
          */
-        public void Unlock() => Execute(AppiumDriverCommand.UnlockDevice);
+        public void Unlock() => AndroidCommandExecutionHelper.Unlock(this);
 
         /// <summary>
         /// Convenience method for swiping across the screen
@@ -377,8 +240,41 @@ namespace OpenQA.Selenium.Appium.Android
         /// <param name="duration">amount of time in milliseconds for the entire swipe action to take</param>
         public override void Swipe(int startx, int starty, int endx, int endy, int duration) =>
             DoSwipe(startx, starty, endx, endy, duration);
-
         #endregion
 
+        public void SetSetting(string setting, object value) => 
+            AndroidCommandExecutionHelper.SetSetting(this, setting, value);
+
+        public void IgnoreUnimportantViews(bool compress) => 
+            SetSetting(AutomatorSetting.IgnoreUnimportantViews, compress);
+
+        public void ConfiguratorSetWaitForIdleTimeout(int timeout) => 
+            SetSetting(AutomatorSetting.WaitForIDLETimeout, timeout);
+
+        public void ConfiguratorSetWaitForSelectorTimeout(int timeout) => 
+            SetSetting(AutomatorSetting.WaitForSelectorTimeout, timeout);
+
+        public void ConfiguratorSetScrollAcknowledgmentTimeout(int timeout) =>
+            SetSetting(AutomatorSetting.WaitScrollAcknowledgmentTimeout, timeout);
+
+        public void ConfiguratorSetKeyInjectionDelay(int delay) =>
+            SetSetting(AutomatorSetting.KeyInjectionDelay, delay);
+
+        public void ConfiguratorSetActionAcknowledgmentTimeout(int timeout) =>
+            SetSetting(AutomatorSetting.WaitActionAcknowledgmentTimeout, timeout);
+
+        public Dictionary<string, object> Settings
+        {
+            get
+            {
+                return AndroidCommandExecutionHelper.GetSettings(this);
+            }
+
+            set
+            {
+                foreach (var entry in value)
+                { SetSetting(entry.Key, entry.Value); } 
+            }
+        }
     }
 }

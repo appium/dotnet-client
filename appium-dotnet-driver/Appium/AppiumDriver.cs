@@ -403,28 +403,9 @@ namespace OpenQA.Selenium.Appium
 			if (stringFile != null) {parameters.Add ("stringFile", stringFile);	}
 			if (parameters.Count == 0)  { parameters = null;}
 			return (Dictionary<string, object>) Execute(AppiumDriverCommand.GetAppStrings, parameters).Value;
-		}
+		}        
 
-
-
-        /// <summary>
-        /// Hide the keyboard
-        /// </summary>
-        /// <param name="strategy"></param>
-        /// <param name="key"></param>
-        protected void HideKeyboard(string strategy = null, string key = null)
-        {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
-            if (strategy != null) { parameters.Add("strategy", strategy); }
-            if (key != null) { parameters.Add("keyName", key); }
-            Execute(AppiumDriverCommand.HideKeyboard, parameters);
-        }
-
-        /// <summary>
-        /// Hides the device keyboard.
-        /// </summary>
-        /// <param name="keyName">The button pressed by the mobile driver to attempt hiding the keyboard.</param>
-        public void HideKeyboard() => HideKeyboard(null, null);
+        public void HideKeyboard() => AppiumCommandExecutionHelper.HideKeyboard(this, null, null);
 
         /// <sumary>
         /// GPS Location
@@ -575,30 +556,6 @@ namespace OpenQA.Selenium.Appium
         }
 
         #endregion Multi Actions
-
-        #region Settings
-
-        /// <summary>
-        /// Get appium settings currently set for the session
-        /// See: https://github.com/appium/appium/blob/master/docs/en/advanced-concepts/settings.md
-        /// </summary>
-        public Dictionary<string, object> GetSettings() => 
-            JsonConvert.
-                DeserializeObject<Dictionary<string, object>>
-                ((string) Execute(AppiumDriverCommand.GetSettings).Value);
-
-        /// <summary>
-        /// Update an appium Setting, on the session
-        /// </summary>
-        protected void UpdateSetting(string setting, object value)
-        {
-            var settings = new Dictionary<string, object>()
-            {[setting] = value };
-            var parameters = new Dictionary<string, object>()
-            {["settings"] = settings };
-            Execute(AppiumDriverCommand.UpdateSettings, parameters);
-        }
-        #endregion Settings
 
         #region tap, swipe, pinch, zoom
 

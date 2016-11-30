@@ -22,7 +22,8 @@ using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium.iOS
 {
-    public class IOSDriver<W> : AppiumDriver<W>, IFindByIosUIAutomation<W>, IIOSHidesKeyboard, IShakesDevice where W : IWebElement
+    public class IOSDriver<W> : AppiumDriver<W>, IFindByIosUIAutomation<W>, IHidesKeyboardWithKeyName, 
+        IShakesDevice, IPerformsTouchID where W : IWebElement
     {
         private static readonly string Platform = MobilePlatform.IOS;
 
@@ -134,18 +135,9 @@ namespace OpenQA.Selenium.Appium.iOS
         public ReadOnlyCollection<W> FindElementsByIosUIAutomation(string selector) => FindElements(MobileSelector.iOSAutomatoion, selector);
         #endregion IFindByIosUIAutomation Members
 
-        /// <summary>
-        /// Shakes the device.
-        /// </summary>
-        public void ShakeDevice() => Execute(AppiumDriverCommand.ShakeDevice);
+        public void ShakeDevice() => IOSCommandExecutionHelper.ShakeDevice(this);
 
-        /// <summary>
-        /// Hides the keyboard
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="strategy"></param>
-        public new void HideKeyboard(string key, string strategy = null) =>
-            HideKeyboard(strategy, key);
+        public void HideKeyboard(string key, string strategy = null) => AppiumCommandExecutionHelper.HideKeyboard(this, strategy, key);
 
         /// <summary>
         /// Create an iOS Element
@@ -158,9 +150,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// Locks the device.
         /// </summary>
         /// <param name="seconds">The number of seconds during which the device need to be locked for.</param>
-        public void Lock(int seconds) =>
-            Execute(AppiumDriverCommand.LockDevice, new Dictionary<string, object>()
-                {["seconds"] = seconds });
+        public void Lock(int seconds) => AppiumCommandExecutionHelper.Lock(this, seconds);
 
         /// <summary>
         /// Convenience method for swiping across the screen
@@ -172,5 +162,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// <param name="duration">amount of time in milliseconds for the entire swipe action to take</param>
         public override void Swipe(int startx, int starty, int endx, int endy, int duration) =>
             DoSwipe(startx, starty, endx - startx, endy - starty, duration);
+
+        public void PerformTouchID(bool match) => IOSCommandExecutionHelper.PerformTouchID(this, match);
     }
 }

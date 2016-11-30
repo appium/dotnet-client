@@ -39,9 +39,6 @@ namespace OpenQA.Selenium.Appium.Android
             FindElements(MobileSelector.AndroidUIAutomator, selector);
         #endregion IFindByAndroidUIAutomator Members
 
-        public void ReplaceValue(string value) =>
-            Execute(AppiumDriverCommand.ReplaceValue, 
-                new Dictionary<string, object>()
-                {["id"] = Id,["value"] = new string[] { value } });
+        public void ReplaceValue(string value) => AndroidCommandExecutionHelper.ReplaceValue(this, Id, value);
     }
 }

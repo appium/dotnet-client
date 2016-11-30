@@ -11,25 +11,20 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
-using OpenQA.Selenium.Remote;
-using System.Collections.Generic;
 
 namespace OpenQA.Selenium.Appium.Interfaces
 {
-    public interface IExecuteMethod
+    public interface IHidesKeyboardWithKeyName: IHidesKeyboard
     {
         /// <summary>
-        /// Execute a command on the remote server.
+        /// Hides the keyboard if it is showing. Hiding the keyboard often
+        /// depends on the way an app is implemented, no single strategy always
+        /// works.
         /// </summary>
-        /// <param name="commandName">A remote command</param>
-        /// <param name="parameters">Parameters to execute</param>
-        /// <returns>The result</returns>
-        Response Execute(string commandName, Dictionary<string, object> parameters);
-
-		/// <summary>
-		/// Execute a command on the remote server.
-		/// </summary>
-		/// <param name="driverCommand">A remote command</param>
-		Response Execute(string driverCommand);
+        /// <param name="key">a String, representing the text displayed on the button of the
+        /// keyboard you want to press. For example: "Done".
+        /// </param>
+        /// <param name="strategy">HideKeyboardStrategy</param>
+        void HideKeyboard(string key, string strategy = null);
     }
 }

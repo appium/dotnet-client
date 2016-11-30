@@ -21,7 +21,7 @@ using OpenQA.Selenium.Remote;
 
 namespace OpenQA.Selenium.Appium.Windows
 {
-    public class WindowsDriver<W> : AppiumDriver<W>, IFindByWindowsUIAutomation<W> where W : IWebElement
+    public class WindowsDriver<W> : AppiumDriver<W>, ISendsKeyEvents, IHidesKeyboardWithKeyName, IFindByWindowsUIAutomation<W> where W : IWebElement
     {
         private static readonly string Platform = MobilePlatform.Windows;
 
@@ -125,15 +125,7 @@ namespace OpenQA.Selenium.Appium.Windows
 
         #endregion IFindByWindowsUIAutomation Members
 
-        /// <summary>
-        /// Hides the keyboard
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="strategy"></param>
-        public new void HideKeyboard(string key, string strategy = null)
-        {
-            base.HideKeyboard(strategy, key);
-        }
+        public void HideKeyboard(string key, string strategy = null) => AppiumCommandExecutionHelper.HideKeyboard(this, strategy, key);
 
         /// <summary>
         /// Create a Windows Element
@@ -145,37 +137,9 @@ namespace OpenQA.Selenium.Appium.Windows
             return new WindowsElement(this, elementId);
         }
 
-        /// <summary>
-        /// Sends a device key event with metastate
-        /// </summary>
-        /// <param name="keyCode">Code for the long key pressed on the Windows device</param>
-        /// <param name="metastate">metastate for the long key press</param>
-        public void PressKeyCode(int keyCode, int metastate = -1)
-        {
-            var parameters = new Dictionary<string, object>();
-            parameters.Add("keycode", keyCode);
-            if (metastate > 0)
-            {
-                parameters.Add("metastate", metastate);
-            }
-            Execute(AppiumDriverCommand.PressKeyCode, parameters);
-        }
+        public void PressKeyCode(int keyCode, int metastate = -1) => AppiumCommandExecutionHelper.PressKeyCode(this, keyCode, metastate);
 
-        /// <summary>
-        /// Sends a device long key event with metastate
-        /// </summary>
-        /// <param name="keyCode">Code for the long key pressed on the Windows device</param>
-        /// <param name="metastate">metastate for the long key press</param>
-        public void LongPressKeyCode(int keyCode, int metastate = -1)
-        {
-            var parameters = new Dictionary<string, object>();
-            parameters.Add("keycode", keyCode);
-            if (metastate > 0)
-            {
-                parameters.Add("metastate", metastate);
-            }
-            Execute(AppiumDriverCommand.LongPressKeyCode, parameters);
-        }
+        public void LongPressKeyCode(int keyCode, int metastate = -1) => AppiumCommandExecutionHelper.LongPressKeyCode(this, keyCode, metastate);
 
         /// <summary>
         /// Convenience method for swiping across the screen

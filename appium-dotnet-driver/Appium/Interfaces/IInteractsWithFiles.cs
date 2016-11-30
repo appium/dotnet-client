@@ -13,7 +13,7 @@
 //limitations under the License.
 namespace OpenQA.Selenium.Appium.Interfaces
 {
-    public interface IInteractsWithFiles
+    public interface IInteractsWithFiles: IExecuteMethod
     {
         /// <summary>
         /// Pulls a File.
