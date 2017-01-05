@@ -21,7 +21,7 @@ using System.Reflection;
 [assembly: AssemblyConfiguration ("")]
 [assembly: AssemblyCompany ("Appium Contributors")]
 [assembly: AssemblyProduct ("Appium-Dotnet-Driver")]
-[assembly: AssemblyCopyright("Copyright © 2016")]
+[assembly: AssemblyCopyright("Copyright © 2017")]
 [assembly: AssemblyTrademark ("")]
 [assembly: AssemblyCulture ("")]
 

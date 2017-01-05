@@ -1,7 +1,8 @@
 #Release Notes
+##*4.0.0.1 (under construction yet)*
 
-##*3.0.0.1 (under construction yet)*
- - [Major update] Update to Selenium 3.0
+##*3.0.0.1*
+ - [Major update] Update to Selenium 3.0.1
  - [Major enhancement] Windows automation: 
 	- `OpenQA.Selenium.Appium.Interfaces.IFindByWindowsUIAutomation` was added. [#158](https://github.com/appium/appium-dotnet-driver/pull/158)
 	- `OpenQA.Selenium.Appium.Windows.WindowsDriver` was added. [#158](https://github.com/appium/appium-dotnet-driver/pull/158)
@@ -17,8 +18,6 @@
     - ```OpenQA.Selenium.Appium.iOS.Interfaces.IPerformsTouchID``` was added. It is implemented by IOSDriver.
     - almost all interfaces extend the ```OpenQA.Selenium.Appium.Interfaces.IExecuteMethod```
 	
-	_The work is stil not finished_
-
 	- Command execution helpers:
 		- ```OpenQA.Selenium.Appium.AppiumCommandExecutionHelper``` was added.
 		- ```OpenQA.Selenium.Appium.Android.AndroidCommandExecutionHelper``` was added.

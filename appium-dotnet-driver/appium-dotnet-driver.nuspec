@@ -13,7 +13,7 @@
     <description>Selenium Webdriver extension for Appium.</description>
     <releaseNotes>
       3.0.0.1
-      [Major update] Update to Selenium 3.0
+      [Major update] Update to Selenium 3.0.1
       [Major enhancement] Windows automation: 
 	      - OpenQA.Selenium.Appium.Interfaces.IFindByWindowsUIAutomation was added.
 	      - OpenQA.Selenium.Appium.Windows.WindowsDriver was added.
@@ -28,9 +28,7 @@
         - OpenQA.Selenium.Appium.Android.Interfaces.IHasSettings was added. It is implemented by AndroidDriver. Also the OpenQA.Selenium.Appium.Android.Enims.AutomatorSetting was provided.
         - OpenQA.Selenium.Appium.iOS.Interfaces.IPerformsTouchID was added. It is implemented by IOSDriver.
         - almost all interfaces extend the OpenQA.Selenium.Appium.Interfaces.IExecuteMethod
-	
-	    _The work is stil not finished_
-
+        
 	    - Command execution helpers:
 		    - OpenQA.Selenium.Appium.AppiumCommandExecutionHelper was added.
 		    - OpenQA.Selenium.Appium.Android.AndroidCommandExecutionHelper was added.
@@ -158,12 +156,12 @@
       TouchAction + multiActions rewriting,
       Project structure overhaul.
     </releaseNotes>
-    <copyright>Copyright 2016</copyright>
+    <copyright>Copyright 2017</copyright>
     <tags>Appium Webdriver device automation</tags>
     <dependencies>
       <dependency id="Newtonsoft.Json" version="9.0.1"/>
-      <dependency id="Selenium.WebDriver" version="3.0.0"/>
-      <dependency id="Selenium.Support" version="3.0.0"/>
+      <dependency id="Selenium.WebDriver" version="3.0.1"/>
+      <dependency id="Selenium.Support" version="3.0.1"/>
       <dependency id="Castle.Core" version="3.3.3"/>
     </dependencies>
   </metadata>
