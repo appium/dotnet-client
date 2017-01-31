@@ -13,4 +13,5 @@ test-results
 packages
 *.nupkg
 samples/env.json
+.idea
 
