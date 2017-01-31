@@ -58,7 +58,6 @@
     <Compile Include="Appium\Android\Enums\AndroidKeyMetastate.cs" />
     <Compile Include="Appium\Android\Enums\AutomatorSetting.cs" />
     <Compile Include="Appium\Android\Interfaces\IHasSettings.cs" />
-    <Compile Include="Appium\Android\Interfaces\ISendsKeyEvents.cs" />
     <Compile Include="Appium\Android\Interfaces\IHasNetworkConnection.cs" />
     <Compile Include="Appium\Android\Interfaces\IPushesFiles.cs" />
     <Compile Include="Appium\Android\Interfaces\IStartsActivity.cs" />
@@ -97,7 +96,6 @@
     <Compile Include="Appium\Interfaces\IMobileElement.cs" />
     <Compile Include="Appium\Interfaces\IPerformsTouchActions.cs" />
     <Compile Include="Appium\iOS\Enums\HideKeyboardStrategy.cs" />
-    <Compile Include="Appium\iOS\Interfaces\IIOSHidesKeyboard.cs" />
     <Compile Include="Appium\iOS\Interfaces\IShakesDevice.cs" />
     <Compile Include="Appium\iOS\IOSDriver.cs" />
     <Compile Include="Appium\iOS\IOSElement.cs" />
