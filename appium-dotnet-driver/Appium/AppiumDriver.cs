@@ -28,7 +28,7 @@ using System.Linq;
 
 namespace OpenQA.Selenium.Appium
 {
-    public abstract class AppiumDriver<W> : RemoteWebDriver, IExecuteMethod, ITouchShortcuts, IFindsByFluentSelector<W>, IFindByAccessibilityId<W>, 
+    public abstract class AppiumDriver<W> : RemoteWebDriver, IExecuteMethod, ITouchShortcuts, IFindsByFluentSelector<W>, IFindByAccessibilityId<W>,
         IHidesKeyboard, IInteractsWithFiles,
         IInteractsWithApps, IPerformsTouchActions, IRotatable, IContextAware, IGenericSearchContext<W>, IGenericFindsByClassName<W>,
         IGenericFindsById<W>, IGenericFindsByCssSelector<W>, IGenericFindsByLinkText<W>, IGenericFindsByName<W>,
@@ -135,7 +135,7 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <param name="by">Mechanism to find element</param>
         /// <returns>first element found</returns>
-        public new W FindElement(By by) => 
+        public new W FindElement(By by) =>
             (W)base.FindElement(by);
 
 
@@ -144,12 +144,12 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <param name="by">Mechanism to find element</param>
         /// <returns>ReadOnlyCollection of elements found</returns>
-        public new ReadOnlyCollection<W> FindElements(By by) => 
+        public new ReadOnlyCollection<W> FindElements(By by) =>
             ConvertToExtendedWebElementCollection<W>(base.FindElements(by));
 
-        public new W FindElement(string by, string value) => (W) base.FindElement(by, value);
+        public new W FindElement(string by, string value) => (W)base.FindElement(by, value);
 
-        public new ReadOnlyCollection<W> FindElements(string selector, string value) => 
+        public new ReadOnlyCollection<W> FindElements(string selector, string value) =>
             ConvertToExtendedWebElementCollection<W>(base.FindElements(selector, value));
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <param name="id">ID of the element</param>
         /// <returns>ReadOnlyCollection of elements found</returns>
-        public new ReadOnlyCollection<W> FindElementsById(string id) => 
+        public new ReadOnlyCollection<W> FindElementsById(string id) =>
             ConvertToExtendedWebElementCollection<W>(base.FindElementsById(id));
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <param name="linkText">Link text of element</param>
         /// <returns>First element found</returns>
-        public new W FindElementByLinkText(string linkText) => 
+        public new W FindElementByLinkText(string linkText) =>
              (W)base.FindElementByLinkText(linkText);
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <param name="name">Name of the element on the page</param>
         /// <returns>First element found</returns>
-        public new W FindElementByName(string name) => 
+        public new W FindElementByName(string name) =>
             (W)base.FindElementByName(name);
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <param name="partialLinkText">Part of the link text</param>
         /// <returns>First element found</returns>
-        public new W FindElementByPartialLinkText(string partialLinkText) => 
+        public new W FindElementByPartialLinkText(string partialLinkText) =>
             (W)base.FindElementByPartialLinkText(partialLinkText);
 
         /// <summary>
@@ -302,10 +302,13 @@ namespace OpenQA.Selenium.Appium
 
         #region Public Methods
 
-        public new Response Execute(string commandName, Dictionary<string, object> parameters) => 
+        protected override Response Execute(string driverCommandToExecute, Dictionary<string, object> parameters) =>
+            base.Execute(driverCommandToExecute, parameters);
+
+        Response IExecuteMethod.Execute(string commandName, Dictionary<string, object> parameters) =>
             base.Execute(commandName, parameters);
 
-		public Response Execute(string driverCommand) => Execute(driverCommand, null);
+        Response IExecuteMethod.Execute(string driverCommand) => Execute(driverCommand, null);
 
         #region MJsonMethod Members
 
@@ -330,15 +333,15 @@ namespace OpenQA.Selenium.Appium
         /// Installs an App.
         /// </summary>
         /// <param name="appPath">a string containing the file path or url of the app.</param>
-        public void InstallApp(string appPath) => 
-            Execute(AppiumDriverCommand.InstallApp, new Dictionary<string, object>() {["appPath"] = appPath });
+        public void InstallApp(string appPath) =>
+            Execute(AppiumDriverCommand.InstallApp, new Dictionary<string, object>() { ["appPath"] = appPath });
 
         /// <summary>
         /// Removes an App.
         /// </summary>
         /// <param name="appPath">a string containing the id of the app.</param>
         public void RemoveApp(string appId) =>
-            Execute(AppiumDriverCommand.RemoveApp, new Dictionary<string, object>() {["appId"] = appId });
+            Execute(AppiumDriverCommand.RemoveApp, new Dictionary<string, object>() { ["appId"] = appId });
 
         /// <summary>
         /// Checks If an App Is Installed.
@@ -347,15 +350,15 @@ namespace OpenQA.Selenium.Appium
         /// <return>a bol indicating if the app is installed.</return>
         public bool IsAppInstalled(string bundleId) =>
             Convert.ToBoolean(Execute(AppiumDriverCommand.IsAppInstalled,
-                new Dictionary<string, object>() {["bundleId"] = bundleId }).Value.ToString());
+                new Dictionary<string, object>() { ["bundleId"] = bundleId }).Value.ToString());
 
         /// <summary>
         /// Pulls a File.
         /// </summary>
         /// <param name="pathOnDevice">path on device to pull</param>
-        public byte[] PullFile(string pathOnDevice) => 
-            Convert.FromBase64String(Execute(AppiumDriverCommand.PullFile, 
-                new Dictionary<string, object>() {["path"] = pathOnDevice }).Value.ToString());
+        public byte[] PullFile(string pathOnDevice) =>
+            Convert.FromBase64String(Execute(AppiumDriverCommand.PullFile,
+                new Dictionary<string, object>() { ["path"] = pathOnDevice }).Value.ToString());
 
         /// <summary>
         /// Pulls a Folder
@@ -363,23 +366,23 @@ namespace OpenQA.Selenium.Appium
         /// <param name="remotePath">remote path to the folder to return</param>
         /// <returns>a base64 encoded string representing a zip file of the contents of the folder</returns>
         public byte[] PullFolder(string remotePath) =>
-             Convert.FromBase64String(Execute(AppiumDriverCommand.PullFolder, 
-                new Dictionary<string, object>() {["path"] = remotePath }).Value.ToString());
+             Convert.FromBase64String(Execute(AppiumDriverCommand.PullFolder,
+                new Dictionary<string, object>() { ["path"] = remotePath }).Value.ToString());
 
         /// <summary>
         /// Launches the current app.
         /// </summary>
-        public void LaunchApp() => Execute(AppiumDriverCommand.LaunchApp);
+        public void LaunchApp() => ((IExecuteMethod)this).Execute(AppiumDriverCommand.LaunchApp);
 
         /// <summary>
         /// Closes the current app.
         /// </summary>
-        public void CloseApp() => Execute(AppiumDriverCommand.CloseApp);
+        public void CloseApp() => ((IExecuteMethod)this).Execute(AppiumDriverCommand.CloseApp);
 
         /// <summary>
         /// Resets the current app.
         /// </summary>
-        public void ResetApp() => Execute(AppiumDriverCommand.ResetApp);
+        public void ResetApp() => ((IExecuteMethod)this).Execute(AppiumDriverCommand.ResetApp);
 
         /// <summary>
         /// Backgrounds the current app for the given number of seconds.
@@ -387,23 +390,23 @@ namespace OpenQA.Selenium.Appium
         /// <param name="seconds">a string containing the number of seconds.</param>
         public void BackgroundApp(int seconds) =>
             Execute(AppiumDriverCommand.BackgroundApp,
-                new Dictionary<string, object>() {["seconds"] = seconds });
+                new Dictionary<string, object>() { ["seconds"] = seconds });
 
-		/// <summary>
-		/// Get all defined Strings from an app for the specified language and
-		/// strings filename
-		/// </summary>
-		/// <returns>a dictionary with localized strings defined in the app.</returns>
-		/// <param name="language">strings language code</param>
-		/// <param name="stringFile">strings filename</param>
-		public Dictionary<string, object> GetAppStringDictionary(string language = null, string stringFile = null)
-		{
-			Dictionary<string, object> parameters = new Dictionary<string, object> ();
-			if (language != null) {parameters.Add("language", language ); }
-			if (stringFile != null) {parameters.Add ("stringFile", stringFile);	}
-			if (parameters.Count == 0)  { parameters = null;}
-			return (Dictionary<string, object>) Execute(AppiumDriverCommand.GetAppStrings, parameters).Value;
-		}        
+        /// <summary>
+        /// Get all defined Strings from an app for the specified language and
+        /// strings filename
+        /// </summary>
+        /// <returns>a dictionary with localized strings defined in the app.</returns>
+        /// <param name="language">strings language code</param>
+        /// <param name="stringFile">strings filename</param>
+        public Dictionary<string, object> GetAppStringDictionary(string language = null, string stringFile = null)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            if (language != null) { parameters.Add("language", language); }
+            if (stringFile != null) { parameters.Add("stringFile", stringFile); }
+            if (parameters.Count == 0) { parameters = null; }
+            return (Dictionary<string, object>)Execute(AppiumDriverCommand.GetAppStrings, parameters).Value;
+        }
 
         public void HideKeyboard() => AppiumCommandExecutionHelper.HideKeyboard(this, null, null);
 
@@ -414,8 +417,8 @@ namespace OpenQA.Selenium.Appium
         {
             get
             {
-                var commandResponse = Execute(AppiumDriverCommand.GetLocation);
-				return JsonConvert.DeserializeObject<Location>((string) commandResponse.Value);
+                var commandResponse = ((IExecuteMethod)this).Execute(AppiumDriverCommand.GetLocation);
+                return JsonConvert.DeserializeObject<Location>((string)commandResponse.Value);
             }
             set
             {
@@ -431,14 +434,14 @@ namespace OpenQA.Selenium.Appium
         {
             get
             {
-                var commandResponse = Execute(AppiumDriverCommand.GetContext);
+                var commandResponse = ((IExecuteMethod)this).Execute(AppiumDriverCommand.GetContext);
                 return commandResponse.Value as string;
             }
             set
             {
                 var parameters = new Dictionary<string, object>();
                 parameters.Add("name", value);
-               Execute(AppiumDriverCommand.SetContext, parameters);
+                Execute(AppiumDriverCommand.SetContext, parameters);
             }
         }
 
@@ -446,7 +449,7 @@ namespace OpenQA.Selenium.Appium
         {
             get
             {
-                var commandResponse = Execute(AppiumDriverCommand.Contexts);
+                var commandResponse = ((IExecuteMethod)this).Execute(AppiumDriverCommand.Contexts);
                 var contexts = new List<string>();
                 var objects = commandResponse.Value as object[];
 
@@ -468,7 +471,7 @@ namespace OpenQA.Selenium.Appium
         {
             get
             {
-                var commandResponse = Execute(AppiumDriverCommand.GetOrientation);
+                var commandResponse = ((IExecuteMethod)this).Execute(AppiumDriverCommand.GetOrientation);
                 return (commandResponse.Value as string).ConvertToScreenOrientation();
             }
             set
@@ -488,7 +491,7 @@ namespace OpenQA.Selenium.Appium
         public List<string> GetIMEAvailableEngines()
         {
             var retVal = new List<string>();
-            var commandResponse = Execute(AppiumDriverCommand.GetAvailableEngines);
+            var commandResponse = ((IExecuteMethod)this).Execute(AppiumDriverCommand.GetAvailableEngines);
             var objectArr = commandResponse.Value as object[];
             if (null != objectArr)
             {
@@ -501,28 +504,28 @@ namespace OpenQA.Selenium.Appium
         /// Get the currently active IME Engine on the device
         /// </summary>
         /// <returns>Active IME Engine</returns>
-        public string GetIMEActiveEngine() => 
-            Execute(AppiumDriverCommand.GetActiveEngine).Value as string;
+        public string GetIMEActiveEngine() =>
+            ((IExecuteMethod)this).Execute(AppiumDriverCommand.GetActiveEngine).Value as string;
 
         /// <summary>
         /// Is the IME active on the device (NOTE: on Android, this is always true)
         /// </summary>
         /// <returns>true if IME is active, false otherwise</returns>
         public bool IsIMEActive() =>
-            (bool) (Execute(AppiumDriverCommand.IsIMEActive).Value);
+            (bool)(((IExecuteMethod)this).Execute(AppiumDriverCommand.IsIMEActive).Value);
 
         /// <summary>
         /// Activate the given IME on Device
         /// </summary>
         /// <param name="imeEngine">IME to activate</param>
         public void ActivateIMEEngine(string imeEngine) =>
-            Execute(AppiumDriverCommand.ActivateEngine, new Dictionary<string, object>() {["engine"] = imeEngine });
+            Execute(AppiumDriverCommand.ActivateEngine, new Dictionary<string, object>() { ["engine"] = imeEngine });
 
         /// <summary>
         /// Deactivate the currently Active IME Engine on device
         /// </summary>
         public void DeactiveIMEEngine() =>
-            Execute(AppiumDriverCommand.DeactivateEngine);
+            ((IExecuteMethod)this).Execute(AppiumDriverCommand.DeactivateEngine);
 
         #endregion Input Method (IME)
 
@@ -538,7 +541,7 @@ namespace OpenQA.Selenium.Appium
             {
                 var parameters = multiAction.GetParameters();
                 Execute(AppiumDriverCommand.PerformMultiAction, parameters);
-            }            
+            }
         }
 
         /// <summary>
@@ -552,7 +555,7 @@ namespace OpenQA.Selenium.Appium
                 var parameters = new Dictionary<string, object>();
                 parameters.Add("actions", touchAction.GetParameters());
                 Execute(AppiumDriverCommand.PerformTouchAction, parameters);
-            }            
+            }
         }
 
         #endregion Multi Actions
@@ -568,7 +571,7 @@ namespace OpenQA.Selenium.Appium
         /// <summary>
         /// Creates a tap on x-y-coordinates for a given time
         /// </summary>
-        private ITouchAction CreateTap(int x, int y, int duration) 
+        private ITouchAction CreateTap(int x, int y, int duration)
             => new TouchAction(this).Press(x, y).Wait(duration).Release();
 
         /// <summary>
@@ -715,7 +718,7 @@ namespace OpenQA.Selenium.Appium
                 yOffset = scrHeight - y;
             }
 
-            ITouchAction action0 = new TouchAction(this).Press(x, y).MoveTo(0, - yOffset).Release();
+            ITouchAction action0 = new TouchAction(this).Press(x, y).MoveTo(0, -yOffset).Release();
             ITouchAction action1 = new TouchAction(this).Press(x, y).MoveTo(0, yOffset).Release();
 
             multiTouch.Add(action0).Add(action1);
@@ -741,7 +744,7 @@ namespace OpenQA.Selenium.Appium
             Point center = new Point(upperLeft.X + dimensions.Width / 2, upperLeft.Y + dimensions.Height / 2);
             int yOffset = center.Y - upperLeft.Y;
 
-            ITouchAction action0 = new TouchAction(this).Press(el).MoveTo(el, 0,  - yOffset).Release();
+            ITouchAction action0 = new TouchAction(this).Press(el).MoveTo(el, 0, -yOffset).Release();
             ITouchAction action1 = new TouchAction(this).Press(el).MoveTo(el, 0, yOffset).Release();
 
             multiTouch.Add(action0).Add(action1);
@@ -760,7 +763,7 @@ namespace OpenQA.Selenium.Appium
         {
             get
             {
-                return Execute(AppiumDriverCommand.GetDeviceTime).Value.ToString();
+                return ((IExecuteMethod)this).Execute(AppiumDriverCommand.GetDeviceTime).Value.ToString();
             }
         }
 
@@ -774,7 +777,7 @@ namespace OpenQA.Selenium.Appium
         {
             get
             {
-                return (Dictionary<string, object>) Execute(AppiumDriverCommand.GetSession).Value;
+                return (Dictionary<string, object>)((IExecuteMethod)this).Execute(AppiumDriverCommand.GetSession).Value;
             }
         }
         #endregion Session Data
