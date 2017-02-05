@@ -1,8 +1,11 @@
 #Release Notes
 ##*4.0.0.1 (under construction yet)*
+
+##*3.0.0.2*
  - [Refactor] The obsolete interface `OpenQA.Selenium.Appium.Android.Interfaces.ISendsKeyEvents` was removed
  - [Refactor] The obsolete interface `OpenQA.Selenium.Appium.iOS.Interfaces.IIOSHidesKeyboard` was removed
  - [Enhancement] The new `YouiEngine` automation type was added to the `OpenQA.Selenium.Appium.Enums.AutomationName`
+ - [BUG FIX] The issue that was preventing the overriding of the `Execute` method was fixed.
 
 ##*3.0.0.1*
  - [Major update] Update to Selenium 3.0.1
