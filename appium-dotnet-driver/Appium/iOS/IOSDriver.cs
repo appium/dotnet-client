@@ -14,6 +14,7 @@
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.iOS.Interfaces;
+using OpenQA.Selenium.Appium.MultiTouch;
 using OpenQA.Selenium.Appium.Service;
 using OpenQA.Selenium.Remote;
 using System;
@@ -160,8 +161,17 @@ namespace OpenQA.Selenium.Appium.iOS
         /// <param name="endx">ending x coordinate</param>
         /// <param name="endy">ending y coordinate</param>
         /// <param name="duration">amount of time in milliseconds for the entire swipe action to take</param>
-        public override void Swipe(int startx, int starty, int endx, int endy, int duration) =>
-            DoSwipe(startx, starty, endx - startx, endy - starty, duration);
+        [Obsolete("This method is going to be removed")]
+        public void Swipe(int startx, int starty, int endx, int endy, int duration)
+        {
+            TouchAction touchAction = new TouchAction(this);
+
+            // appium converts Press-wait-MoveTo-Release to a swipe action
+            touchAction.Press(startx, starty).Wait(duration)
+                    .MoveTo(endx - startx, endy - starty).Release();
+
+            touchAction.Perform();
+        }
 
         public void PerformTouchID(bool match) => IOSCommandExecutionHelper.PerformTouchID(this, match);
     }

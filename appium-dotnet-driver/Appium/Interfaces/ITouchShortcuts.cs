@@ -11,8 +11,11 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+using System;
+
 namespace OpenQA.Selenium.Appium
 {
+    [Obsolete("This interface is going to be removed")]
     public interface ITouchShortcuts
     {
         /// <summary>
@@ -21,6 +24,7 @@ namespace OpenQA.Selenium.Appium
         /// <param name="fingers">number of fingers/appendages to tap with</param>
         /// <param name="element">element to tap</param>
         /// <param name="duration">how long between pressing down, and lifting fingers/appendages</param>
+        [Obsolete("This method is going to be removed")]
         void Tap(int fingers, IWebElement element, int duration);
 
         /// <summary>
@@ -30,6 +34,7 @@ namespace OpenQA.Selenium.Appium
         /// <param name="x">x coordinate</param>
         /// <param name="y">y coordinate</param>
         /// <param name="duration">how long between pressing down, and lifting fingers/appendages</param>
+        [Obsolete("This method is going to be removed")]
         void Tap(int fingers, int x, int y, int duration);
 
         /// <summary>
@@ -40,6 +45,7 @@ namespace OpenQA.Selenium.Appium
         /// <param name="endx">ending x coordinate</param>
         /// <param name="endy">ending y coordinate</param>
         /// <param name="duration">amount of time in milliseconds for the entire swipe action to take</param>
+        [Obsolete("This method is going to be removed")]
         void Swipe(int startx, int starty, int endx, int endy, int duration);
 
         /// <summary>
@@ -51,6 +57,7 @@ namespace OpenQA.Selenium.Appium
         /// instead of driver method.
         /// </summary>
         /// <param name="el">The element to pinch</param>
+        [Obsolete("This method is going to be removed")]
         void Pinch(IWebElement el);
 
         /// <summary>
@@ -63,6 +70,7 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <param name="x">x coordinate to terminate the pinch on</param>
         /// <param name="y">y coordinate to terminate the pinch on></param>
+        [Obsolete("This method is going to be removed")]
         void Pinch(int x, int y);
 
         /// <summary>
@@ -75,6 +83,7 @@ namespace OpenQA.Selenium.Appium
         /// <param name="x">x coordinate to terminate the zoom on</param>
         /// <param name="y">y coordinate to terminate the zoom on></param>
         /// </summary>
+        [Obsolete("This method is going to be removed")]
         void Zoom(int x, int y);
 
         /// <summary>
@@ -86,6 +95,7 @@ namespace OpenQA.Selenium.Appium
         /// instead of driver method.
         /// <param name="el">The element to pinch</param>
         /// </summary>
+        [Obsolete("This method is going to be removed")]
         void Zoom(IWebElement el);
 
     }
