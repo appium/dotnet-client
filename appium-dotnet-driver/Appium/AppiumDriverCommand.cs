@@ -256,10 +256,10 @@ namespace OpenQA.Selenium.Appium
 	/// </summary>
 	public const string TouchID = "touchId";
 
-		/// <summary>
-		/// Represents the ToggleTouchIdEnrollment Command
-		/// </summary>
-		public const string ToggleTouchIdEnrollment = "toggleTouchIdEnrollment";
+	/// <summary>
+	/// Represents the ToggleTouchIdEnrollment Command
+	/// </summary>
+	public const string ToggleTouchIdEnrollment = "toggleTouchIdEnrollment";
 
         public const string ReplaceValue = "replaceValue";
 
