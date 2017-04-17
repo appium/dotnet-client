@@ -1,13 +1,13 @@
-#Release Notes
-##*4.0.0.1 (under construction yet)*
+# Release Notes
+## *4.0.0.1 (under construction yet)*
 
-##*3.0.0.2*
+## *3.0.0.2*
  - [Refactor] The obsolete interface `OpenQA.Selenium.Appium.Android.Interfaces.ISendsKeyEvents` was removed
  - [Refactor] The obsolete interface `OpenQA.Selenium.Appium.iOS.Interfaces.IIOSHidesKeyboard` was removed
  - [Enhancement] The new `YouiEngine` automation type was added to the `OpenQA.Selenium.Appium.Enums.AutomationName`
  - [BUG FIX] The issue that was preventing the overriding of the `Execute` method was fixed.
 
-##*3.0.0.1*
+## *3.0.0.1*
  - [Major update] Update to Selenium 3.0.1
  - [Major enhancement] Windows automation: 
 	- `OpenQA.Selenium.Appium.Interfaces.IFindByWindowsUIAutomation` was added. [#158](https://github.com/appium/appium-dotnet-driver/pull/158)
@@ -43,7 +43,7 @@
  	- `OpenQA.Selenium.Appium.Enums.AutomationName.AndroidUIAutomator2`	  
 
 
-##2.0.1.1
+## 2.0.1.1
 - All obsolete code was removed.
 - Following capabilities were added:
 	- OpenQA.Selenium.Appium.Enums.AndroidMobileCapabilityType.AndroidInstallTimeout
@@ -52,7 +52,7 @@
 	- OpenQA.Selenium.Appium.Enums.AndroidMobileCapabilityType.AppWaitDuration.
 - The new interface `OpenQA.Selenium.Appium.Interfaces.IExecuteMethod` was added.
 
-##2.0.0.1
+## 2.0.0.1
 - All obsolete code was removed. #C client won't support Appium server v lower than 1.5.0
 - Source code migration to C# 6.0. Now this bundle requires .Net Framework > v4.5 or Mono Framework version which supports .Net Framework v4.5 with Lang Level 6.
 - Update to Selenium.Webdriver v2.53.1 and Selenium.Support v2.53.1.
@@ -81,7 +81,7 @@ The StartActivityWithIntent method.
       that default Appium/Selenium do not support.
 - The `SetImmediateValue` method was moved to `OpenQA.Selenium.Appium.AppiumWebElement`. It works against text input elements on Android.
 
-##1.5.1.1
+## 1.5.1.1
 - Update to Selenium.Webdriver v2.53.0 and Selenium.Support v2.53.0
 - Update to Newtonsoft.Json v8.0.2
 - FIXED The issue of compatibility of AppiumServiceBuilder with Appium node server v >= 1.5.x.
@@ -100,7 +100,7 @@ Also it allows the searching app strings in the specified file.
 - Some server flags were marked as obsolete because they are deprecated since server node v1.5.x. These options are going to be removed at the next .Net client release.
 - The ability to start Appium node programmatically using desired capabilities. This feature is compatible with Appium node server v >= 1.5.x.
 
-##1.5.0.1
+## 1.5.0.1
 - Update to Selenium.Webdriver v2.48.2 and Selenium.Support v2.48.2
 - The ability to start appium server programmatically was provided. The ICommandServer implementation (AppiumLocalService).
 - The new boolean parameter of the AndroidDdriver.StartActivity method. It allows to start a new activity without closing of a target app.
@@ -109,7 +109,7 @@ Also it allows the searching app strings in the specified file.
 - The "ReplaceValue" method was added to AndroidElement
 - The "SetImmediateValue" was moved from the AppiumWebElement to IOSElement
 
-##1.4.1.1
+## 1.4.1.1
 - Update to Selenium.Webdriver v2.48.1 and Selenium.Support v2.48.1
 - .Net client is completely following the Apache 2.0 license now.
 - IMobileElement implementations are able to perform gestures such as Pinch, Tap and Zoom.	
