@@ -103,7 +103,7 @@ namespace OpenQA.Selenium.Appium.MultiTouch
         /// <returns>A self-reference to this <see cref="ITouchAction"/>.</returns>
         public ITouchAction LongPress(IWebElement element, double? x = null, double? y = null)
         {
-            Step longPressStep = new Step("longpress");
+            Step longPressStep = new Step("longPress");
             longPressStep
                 .AddOpt("element", element)
                 .AddOpt("x", x)
