@@ -174,5 +174,7 @@ namespace OpenQA.Selenium.Appium.iOS
         }
 
         public void PerformTouchID(bool match) => IOSCommandExecutionHelper.PerformTouchID(this, match);
+
+        public void ToggleTouchIdEnrollment() => IOSCommandExecutionHelper.ToggleTouchIdEnrollment(this);
     }
 }
