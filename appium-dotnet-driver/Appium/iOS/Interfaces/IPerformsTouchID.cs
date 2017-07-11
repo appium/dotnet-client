@@ -22,5 +22,10 @@ namespace OpenQA.Selenium.Appium.iOS.Interfaces
         /// <param name="match">If true, simulates a successful fingerprint scan. 
         /// If false, simulates a failed fingerprint scan.</param>
         void PerformTouchID(bool match);
+
+        ///<summary>
+        /// Toggle Simulator's enabled state for touch id
+        /// </summary>
+        void ToggleTouchIdEnrollment();
     }
 }
