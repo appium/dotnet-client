@@ -15,11 +15,11 @@ namespace OpenQA.Selenium.Appium.Enums
 {
     public sealed class MobilePlatform
     {
-        public static readonly string Android = "Android";
+        public const string Android = "Android";
 
-        public static readonly string IOS = "iOS";
+        public const string IOS = "iOS";
 
-        public static readonly string Windows = "Windows";
+        public const string Windows = "Windows";
 
         //FireFoxOS and WinPhone will be added when there will be the supporting of appropriate mobile OS.
     }
