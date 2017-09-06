@@ -20,6 +20,7 @@ namespace OpenQA.Selenium.Appium.Enums
         public static readonly string AndroidUIAutomator = "-android uiautomator";
         public static readonly string iOSAutomatoion = "-ios uiautomation";
         public static readonly string iOSPredicateString = "-ios predicate string";
-        public static readonly string WindowsUIAutomation = "-windows uiautomation";
+		public static readonly string iOSClassChain = "-ios class chain";
+		public static readonly string WindowsUIAutomation = "-windows uiautomation";
     }
 }
