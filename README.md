@@ -1,3 +1,5 @@
+THIS PROJECT IS UNDER CONSTRUCTION AND IT IS SUPPOSED TO BE COMPLETELY RE-DESIGNED
+
 # appium-dotnet-driver
 
 This driver is an extension of the [Selenium](http://docs.seleniumhq.org/) C# client. It has 
