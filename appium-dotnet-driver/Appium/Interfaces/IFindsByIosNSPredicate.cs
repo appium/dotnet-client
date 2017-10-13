@@ -18,8 +18,18 @@ namespace OpenQA.Selenium.Appium.Interfaces
 {
     public interface IFindsByIosNSPredicate<W> : IFindsByFluentSelector<W> where W : IWebElement
     {
+        /// <summary>
+        /// Finds the first of elements that match the IosNsPredicate selector supplied
+        /// </summary>
+        /// <param name="selector">an IosNsPredicate selector</param>
+        /// <returns>IWebElement object so that you can interact that object</returns>
         W FindElementByIosNsPredicate(string selector);
 
+        /// <summary>
+        /// Finds a list of elements that match the IosNsPredicate selector supplied
+        /// </summary>
+        /// <param name="selector">an IosNsPredicate selector</param>
+        /// <returns>ReadOnlyCollection of IWebElement objects so that you can interact with those objects</returns>
         ReadOnlyCollection<W> FindElementsByIosNsPredicate(string selector);
     }
 }

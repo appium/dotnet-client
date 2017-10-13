@@ -15,10 +15,20 @@ using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium.Interfaces
 {
-	public interface IFindsByIosClassChain<W> : IFindsByFluentSelector<W> where W : IWebElement
-	{
-		W FindElementByIosClassChain(string selector);
+    public interface IFindsByIosClassChain<W> : IFindsByFluentSelector<W> where W : IWebElement
+    {
+        /// <summary>
+        /// Finds the first of elements that match the IosClassChain selector supplied
+        /// </summary>
+        /// <param name="selector">an IosClassChain selector</param>
+        /// <returns>IWebElement object so that you can interact that object</returns>
+        W FindElementByIosClassChain(string selector);
 
-		ReadOnlyCollection<W> FindElementsByIosClassChain(string selector);
-	}
+        /// <summary>
+        /// Finds a list of elements that match the IosClassChain selector supplied
+        /// </summary>
+        /// <param name="selector">an IosClassChain selector</param>
+        /// <returns>ReadOnlyCollection of IWebElement objects so that you can interact with those objects</returns>
+        ReadOnlyCollection<W> FindElementsByIosClassChain(string selector);
+    }
 }
