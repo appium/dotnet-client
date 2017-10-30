@@ -6,6 +6,15 @@ namespace Appium.Integration.Tests.Helpers
 {
 	public class Caps
 	{
+        public static DesiredCapabilities getIos102Caps (string app) {
+			DesiredCapabilities capabilities = new DesiredCapabilities();
+			capabilities.SetCapability(MobileCapabilityType.PlatformVersion, "10.2");
+			capabilities.SetCapability(MobileCapabilityType.DeviceName, "iPhone Simulator");
+            capabilities.SetCapability(MobileCapabilityType.AppiumVersion, "1.7.1");
+			capabilities.SetCapability(MobileCapabilityType.App, app);
+			return capabilities;
+        }
+
 		public static DesiredCapabilities getIos92Caps (string app) {
 			DesiredCapabilities capabilities = new DesiredCapabilities();
 			capabilities.SetCapability(MobileCapabilityType.PlatformVersion, "9.2");

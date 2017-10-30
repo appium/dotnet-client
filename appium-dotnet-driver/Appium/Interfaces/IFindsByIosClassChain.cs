@@ -1,5 +1,4 @@
-﻿//Licensed under the Apache License, Version 2.0 (the "License");
-//you may not use this file except in compliance with the License.
+﻿//you may not use this file except in compliance with the License.
 //See the NOTICE file distributed with this work for additional
 //information regarding copyright ownership.
 //You may obtain a copy of the License at
@@ -16,20 +15,20 @@ using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium.Interfaces
 {
-    public interface IFindsByIosNSPredicate<W> : IFindsByFluentSelector<W> where W : IWebElement
+    public interface IFindsByIosClassChain<W> : IFindsByFluentSelector<W> where W : IWebElement
     {
         /// <summary>
-        /// Finds the first of elements that match the IosNsPredicate selector supplied
+        /// Finds the first of elements that match the IosClassChain selector supplied
         /// </summary>
-        /// <param name="selector">an IosNsPredicate selector</param>
+        /// <param name="selector">an IosClassChain selector</param>
         /// <returns>IWebElement object so that you can interact that object</returns>
-        W FindElementByIosNsPredicate(string selector);
+        W FindElementByIosClassChain(string selector);
 
         /// <summary>
-        /// Finds a list of elements that match the IosNsPredicate selector supplied
+        /// Finds a list of elements that match the IosClassChain selector supplied
         /// </summary>
-        /// <param name="selector">an IosNsPredicate selector</param>
+        /// <param name="selector">an IosClassChain selector</param>
         /// <returns>ReadOnlyCollection of IWebElement objects so that you can interact with those objects</returns>
-        ReadOnlyCollection<W> FindElementsByIosNsPredicate(string selector);
+        ReadOnlyCollection<W> FindElementsByIosClassChain(string selector);
     }
 }

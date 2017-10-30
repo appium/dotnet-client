@@ -151,6 +151,8 @@ namespace OpenQA.Selenium.Appium
         public static By WindowsAutomation(string selector) => new ByWindowsAutomation(selector);
 
         public static By IosNSPredicate(string selector) => new ByIosNSPredicate(selector);
+
+        public static By IosClassChain(string selector) => new ByIosClassChain(selector);
     }
 
     /// <summary>
@@ -233,7 +235,7 @@ namespace OpenQA.Selenium.Appium
     public class ByIosNSPredicate : MobileBy
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ByWindowsAutomation"/> class.
+        /// Initializes a new instance of the <see cref="ByIosNSPredicate"/> class.
         /// </summary>
         /// <param name="selector">The selector to use in finding the element.</param>
         public ByIosNSPredicate(string selector)
@@ -244,4 +246,20 @@ namespace OpenQA.Selenium.Appium
         public override string ToString() =>
             $"ByIosNSPredicate({selector})";
     }
+
+    public class ByIosClassChain : MobileBy
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ByIosClassChain"/> class.
+        /// </summary>
+        /// <param name="selector">The selector to use in finding the element.</param>
+        public ByIosClassChain(string selector)
+            : base(selector, "IFindsByIosClassChain", "FindElementByIosClassChain", "FindElementsByIosClassChain", MobileSelector.iOSClassChain)
+        {
+        }
+
+        public override string ToString() =>
+            $"ByIosClassChain({selector})";
+    }
+
 }
