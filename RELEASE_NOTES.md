@@ -2,7 +2,7 @@
 ## *4.0.0.1 (under construction yet)*
  - [Enhancement] The searching by ios class chain was implemented.
 
-## *3.0.0.2*-
+## *3.0.0.2*
  - [Refactor] The obsolete interface `OpenQA.Selenium.Appium.Android.Interfaces.ISendsKeyEvents` was removed
  - [Refactor] The obsolete interface `OpenQA.Selenium.Appium.iOS.Interfaces.IIOSHidesKeyboard` was removed
  - [Enhancement] The new `YouiEngine` automation type was added to the `OpenQA.Selenium.Appium.Enums.AutomationName`
