@@ -23,7 +23,7 @@ using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium.iOS
 {
-    public class IOSDriver<W> : AppiumDriver<W>, IFindByIosUIAutomation<W>, IHidesKeyboardWithKeyName, 
+    public class IOSDriver<W> : AppiumDriver<W>, IFindByIosUIAutomation<W>, IFindsByIosClassChain<W>, IFindsByIosNSPredicate<W>, IHidesKeyboardWithKeyName, 
         IShakesDevice, IPerformsTouchID where W : IWebElement
     {
         private static readonly string Platform = MobilePlatform.IOS;
@@ -121,6 +121,7 @@ namespace OpenQA.Selenium.Appium.iOS
         }
 
         #region IFindByIosUIAutomation Members
+
         /// <summary>
         /// Finds the first element that matches the iOS UIAutomation selector
         /// </summary>
@@ -134,7 +135,44 @@ namespace OpenQA.Selenium.Appium.iOS
         /// <param name="selector">UIAutomation selector</param>
         /// <returns>ReadOnlyCollection of elements found</returns>
         public ReadOnlyCollection<W> FindElementsByIosUIAutomation(string selector) => FindElements(MobileSelector.iOSAutomatoion, selector);
+
         #endregion IFindByIosUIAutomation Members
+
+        #region IFindsByIosClassChain Members
+
+        /// <summary>
+        /// Finds the first element that matches the iOS class chain selector
+        /// </summary>
+        /// <param name="selector">class chain selector</param>
+        /// <returns>First element found</returns>
+        public W FindElementByIosClassChain(string selector) => FindElement(MobileSelector.iOSClassChain, selector);
+
+        /// <summary>
+        /// Finds a list of elements that match the iOS class chain selector
+        /// </summary>
+        /// <param name="selector">class chain selector</param>
+        /// <returns>ReadOnlyCollection of elements found</returns>
+        public ReadOnlyCollection<W> FindElementsByIosClassChain(string selector) => FindElements(MobileSelector.iOSClassChain, selector);
+
+        #endregion IFindsByIosClassChain Members
+
+        #region IFindsByIosNSPredicate Members
+
+        /// <summary>
+        /// Finds the first element that matches the IosNSPredicate selector
+        /// </summary>
+        /// <param name="selector">IosNSPredicate selector</param>
+        /// <returns>First element found</returns>
+        public W FindElementByIosNsPredicate(string selector) => FindElement(MobileSelector.iOSPredicateString, selector);
+
+        /// <summary>
+        /// Finds a list of elements that match the IosNSPredicate selector
+        /// </summary>
+        /// <param name="selector">IosNSPredicate selector</param>
+        /// <returns>ReadOnlyCollection of elements found</returns>
+        public ReadOnlyCollection<W> FindElementsByIosNsPredicate(string selector) => FindElements(MobileSelector.iOSPredicateString, selector);
+
+        #endregion IFindsByIosNSPredicate Members
 
         public void ShakeDevice() => IOSCommandExecutionHelper.ShakeDevice(this);
 

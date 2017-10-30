@@ -151,6 +151,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Appium\Interfaces\IFindsByIosClassChain.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="appium-dotnet-driver.licenseheader" />
