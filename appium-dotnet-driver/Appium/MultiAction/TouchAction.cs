@@ -121,7 +121,7 @@ namespace OpenQA.Selenium.Appium.MultiTouch
         /// <returns>A self-reference to this <see cref="ITouchAction"/>.</returns>
         public ITouchAction LongPress(double x, double y)
         {
-            Step longPressStep = new Step("longpress");
+            Step longPressStep = new Step("longPress");
             longPressStep
                 .AddOpt("x", x)
                 .AddOpt("y", y);
