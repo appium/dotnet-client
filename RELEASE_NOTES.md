@@ -1,6 +1,7 @@
 # Release Notes
 ## *4.0.0.1 (under construction yet)*
  - [Enhancement] The searching by ios class chain was implemented.
+ - [BUG FIX] Fix of the `LongPress` action parameters. The report [#197](https://github.com/appium/appium-dotnet-driver/issues/197). FIX [#198](https://github.com/appium/appium-dotnet-driver/pull/198)
 
 ## *3.0.0.2*
  - [Refactor] The obsolete interface `OpenQA.Selenium.Appium.Android.Interfaces.ISendsKeyEvents` was removed
