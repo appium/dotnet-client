@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
 using System;
 
 namespace OpenQA.Selenium.Appium
@@ -97,7 +98,5 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         [Obsolete("This method is going to be removed")]
         void Zoom(IWebElement el);
-
     }
 }
-

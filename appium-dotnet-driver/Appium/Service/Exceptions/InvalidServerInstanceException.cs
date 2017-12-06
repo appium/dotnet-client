@@ -23,13 +23,11 @@ namespace OpenQA.Selenium.Appium.Service.Exceptions
         public InvalidServerInstanceException(string message, Exception cause)
             : base($"{Prefix}{message}", cause)
         {
-
         }
 
         public InvalidServerInstanceException(string message)
             : base($"{Prefix}{message}")
         {
-
         }
     }
 }

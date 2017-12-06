@@ -17,33 +17,29 @@ namespace Appium.Integration.Tests.PageObjectTests.NegativeTests
         private AndroidDriver<AppiumWebElement> driver;
 
         [FindsBy(How = How.ClassName, Using = "FakeHtmlClass")]
-        [FindsByIOSUIAutomation(Accessibility = "FakeAccebility")]
-        private IWebElement inconsistentElement1;
+        [FindsByIOSUIAutomation(Accessibility = "FakeAccebility")] private IWebElement inconsistentElement1;
 
         [FindsBy(How = How.ClassName, Using = "FakeHtmlClass")]
-        [FindsByIOSUIAutomation(Accessibility = "FakeAccebility")]
-        private IList<IWebElement> inconsistentElements1;
+        [FindsByIOSUIAutomation(Accessibility = "FakeAccebility")] private IList<IWebElement> inconsistentElements1;
 
-        [FindsBy(How = How.CssSelector, Using = "fake.css")]
-        [FindsByIOSUIAutomation(Accessibility = "FakeAccebility")]
+        [FindsBy(How = How.CssSelector, Using = "fake.css")] [FindsByIOSUIAutomation(Accessibility = "FakeAccebility")]
         private IWebElement inconsistentElement2;
 
-        [FindsBy(How = How.CssSelector, Using = "fake.css")]
-        [FindsByIOSUIAutomation(Accessibility = "FakeAccebility")]
+        [FindsBy(How = How.CssSelector, Using = "fake.css")] [FindsByIOSUIAutomation(Accessibility = "FakeAccebility")]
         private IList<IWebElement> inconsistentElements2;
 
         [TestFixtureSetUp]
         public void BeforeAll()
         {
-            DesiredCapabilities capabilities = Env.isSauce() ?
-                Caps.getAndroid501Caps(Apps.get("androidApiDemos")) :
-                Caps.getAndroid19Caps(Apps.get("androidApiDemos"));
+            DesiredCapabilities capabilities = Env.isSauce()
+                ? Caps.getAndroid501Caps(Apps.get("androidApiDemos"))
+                : Caps.getAndroid19Caps(Apps.get("androidApiDemos"));
             if (Env.isSauce())
             {
                 capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
                 capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
                 capabilities.SetCapability("name", "android - complex");
-                capabilities.SetCapability("tags", new string[] { "sample" });
+                capabilities.SetCapability("tags", new string[] {"sample"});
             }
             Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIAndroid;
             driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);

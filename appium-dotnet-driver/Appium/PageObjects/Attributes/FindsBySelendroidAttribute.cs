@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
 using OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract;
 using System;
 
@@ -25,14 +26,8 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes
         /// </summary>
         public string LinkText
         {
-            set
-            {
-                byList.Add(By.LinkText(value));
-            }
-            get
-            {
-                return null;
-            }
+            set { byList.Add(By.LinkText(value)); }
+            get { return null; }
         }
 
         /// <summary>
@@ -41,14 +36,8 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes
         /// </summary>
         public string PartialLinkText
         {
-            set
-            {
-                byList.Add(By.PartialLinkText(value));
-            }
-            get
-            {
-                return null;
-            }
+            set { byList.Add(By.PartialLinkText(value)); }
+            get { return null; }
         }
 
         /// <summary>
@@ -56,14 +45,8 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes
         /// </summary>
         public string Name
         {
-            set
-            {
-                byList.Add(By.Name(value));
-            }
-            get
-            {
-                return null;
-            }
+            set { byList.Add(By.Name(value)); }
+            get { return null; }
         }
     }
 }

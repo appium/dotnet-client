@@ -22,7 +22,7 @@ namespace OpenQA.Selenium.Appium
         public static void PressKeyCode(IExecuteMethod executeMethod, int keyCode, int metastate = -1)
         {
             var parameters = new Dictionary<string, object>()
-            { ["keycode"] = keyCode };
+                {["keycode"] = keyCode};
             if (metastate > 0)
             {
                 parameters.Add("metastate", metastate);
@@ -33,7 +33,7 @@ namespace OpenQA.Selenium.Appium
         public static void LongPressKeyCode(IExecuteMethod executeMethod, int keyCode, int metastate = -1)
         {
             var parameters = new Dictionary<string, object>()
-            { ["keycode"] = keyCode };
+                {["keycode"] = keyCode};
             if (metastate > 0)
             {
                 parameters.Add("metastate", metastate);
@@ -44,14 +44,20 @@ namespace OpenQA.Selenium.Appium
         public static void HideKeyboard(IExecuteMethod executeMethod, string strategy = null, string key = null)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
-            if (strategy != null) { parameters.Add("strategy", strategy); }
-            if (key != null) { parameters.Add("keyName", key); }
+            if (strategy != null)
+            {
+                parameters.Add("strategy", strategy);
+            }
+            if (key != null)
+            {
+                parameters.Add("keyName", key);
+            }
             executeMethod.Execute(AppiumDriverCommand.HideKeyboard, parameters);
         }
 
         public static void Lock(IExecuteMethod executeMethod, int seconds) =>
             executeMethod.Execute(AppiumDriverCommand.LockDevice,
                 new Dictionary<string, object>()
-                { ["seconds"] = seconds });
+                    {["seconds"] = seconds});
     }
 }

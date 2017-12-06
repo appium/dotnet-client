@@ -139,7 +139,8 @@ namespace OpenQA.Selenium.Appium.Service.Options
 
                     if (typeof(string).IsAssignableFrom(value.GetType()))
                     {
-                        value = $"\"{value}\""; ;
+                        value = $"\"{value}\"";
+                        ;
                     }
 
                     else

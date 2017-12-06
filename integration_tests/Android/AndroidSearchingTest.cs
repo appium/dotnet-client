@@ -8,26 +8,28 @@ using OpenQA.Selenium.Appium.Android;
 
 namespace Appium.Integration.Tests.Android
 {
-	[TestFixture ()]
-	public class AndroidSearchingTest
-	{
-		private AndroidDriver<AndroidElement> driver;
+    [TestFixture()]
+    public class AndroidSearchingTest
+    {
+        private AndroidDriver<AndroidElement> driver;
 
-		[TestFixtureSetUp]
-		public void BeforeAll(){
-			DesiredCapabilities capabilities = Env.isSauce () ? 
-				Caps.getAndroid501Caps (Apps.get ("androidApiDemos")) :
-				Caps.getAndroid19Caps (Apps.get ("androidApiDemos"));
-			if (Env.isSauce ()) {
-				capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME")); 
-				capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
-				capabilities.SetCapability("name", "android - simple");
-				capabilities.SetCapability("tags", new string[]{"sample"});
-			}
-			Uri serverUri = Env.isSauce () ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIAndroid;
-            driver = new AndroidDriver<AndroidElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);	
-			driver.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
-		}
+        [TestFixtureSetUp]
+        public void BeforeAll()
+        {
+            DesiredCapabilities capabilities = Env.isSauce()
+                ? Caps.getAndroid501Caps(Apps.get("androidApiDemos"))
+                : Caps.getAndroid19Caps(Apps.get("androidApiDemos"));
+            if (Env.isSauce())
+            {
+                capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
+                capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
+                capabilities.SetCapability("name", "android - simple");
+                capabilities.SetCapability("tags", new string[] {"sample"});
+            }
+            Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIAndroid;
+            driver = new AndroidDriver<AndroidElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
+            driver.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
+        }
 
         [SetUp]
         public void SetUp()
@@ -35,8 +37,9 @@ namespace Appium.Integration.Tests.Android
             driver.StartActivity("io.appium.android.apis", ".ApiDemos");
         }
 
-		[TestFixtureTearDown]
-		public void AfterAll(){
+        [TestFixtureTearDown]
+        public void AfterAll()
+        {
             if (driver != null)
             {
                 driver.Quit();
@@ -76,11 +79,10 @@ namespace Appium.Integration.Tests.Android
         {
             driver.FindElementByAccessibilityId("Views").Click();
             AndroidElement radioGroup = driver
-                    .FindElementByAndroidUIAutomator("new UiScrollable(new UiSelector()"
-                    + ".resourceId(\"android:id/list\")).scrollIntoView("
-                    + "new UiSelector().text(\"Radio Group\"));");
+                .FindElementByAndroidUIAutomator("new UiScrollable(new UiSelector()"
+                                                 + ".resourceId(\"android:id/list\")).scrollIntoView("
+                                                 + "new UiSelector().text(\"Radio Group\"));");
             Assert.NotNull(radioGroup.Location);
         }
     }
 }
-

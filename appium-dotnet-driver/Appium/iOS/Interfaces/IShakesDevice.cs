@@ -16,7 +16,7 @@ using OpenQA.Selenium.Appium.Interfaces;
 
 namespace OpenQA.Selenium.Appium.iOS.Interfaces
 {
-    interface IShakesDevice: IExecuteMethod
+    interface IShakesDevice : IExecuteMethod
     {
         /// <summary>
         /// Shakes the device.

@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
 using System;
 using System.Collections.ObjectModel;
 using OpenQA.Selenium.Appium.Enums;
@@ -20,7 +21,8 @@ using OpenQA.Selenium.Remote;
 
 namespace OpenQA.Selenium.Appium.Windows
 {
-    public class WindowsDriver<W> : AppiumDriver<W>, ISendsKeyEvents, IHidesKeyboardWithKeyName, IFindByWindowsUIAutomation<W> where W : IWebElement
+    public class WindowsDriver<W> : AppiumDriver<W>, ISendsKeyEvents, IHidesKeyboardWithKeyName,
+        IFindByWindowsUIAutomation<W> where W : IWebElement
     {
         private static readonly string Platform = MobilePlatform.Windows;
 
@@ -59,7 +61,8 @@ namespace OpenQA.Selenium.Appium.Windows
         /// <param name="builder"> object containing settings of the Appium local service which is going to be started</param>
         /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
-        public WindowsDriver(AppiumServiceBuilder builder, DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
+        public WindowsDriver(AppiumServiceBuilder builder, DesiredCapabilities desiredCapabilities,
+            TimeSpan commandTimeout)
             : base(builder, SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
         {
         }
@@ -101,7 +104,8 @@ namespace OpenQA.Selenium.Appium.Windows
         /// <param name="service">the specified Appium local service</param>
         /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
-        public WindowsDriver(AppiumLocalService service, DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
+        public WindowsDriver(AppiumLocalService service, DesiredCapabilities desiredCapabilities,
+            TimeSpan commandTimeout)
             : base(service, SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
         {
         }
@@ -113,18 +117,21 @@ namespace OpenQA.Selenium.Appium.Windows
         /// </summary>
         /// <param name="selector">a Windows UIAutomation selector</param>
         /// <returns>IWebElement object so that you can interact that object</returns>
-        public W FindElementByWindowsUIAutomation(string selector) => FindElement(MobileSelector.WindowsUIAutomation, selector);
+        public W FindElementByWindowsUIAutomation(string selector) =>
+            FindElement(MobileSelector.WindowsUIAutomation, selector);
 
         /// <summary>
         /// Finds a list of elements that match the Windows UIAutomation selector supplied
         /// </summary>
         /// <param name="selector">a Windows UIAutomation selector</param>
         /// <returns>ReadOnlyCollection of IWebElement objects so that you can interact with those objects</returns>
-        public ReadOnlyCollection<W> FindElementsByWindowsUIAutomation(string selector) => FindElements(MobileSelector.WindowsUIAutomation, selector);
+        public ReadOnlyCollection<W> FindElementsByWindowsUIAutomation(string selector) =>
+            FindElements(MobileSelector.WindowsUIAutomation, selector);
 
         #endregion IFindByWindowsUIAutomation Members
 
-        public void HideKeyboard(string key, string strategy = null) => AppiumCommandExecutionHelper.HideKeyboard(this, strategy, key);
+        public void HideKeyboard(string key, string strategy = null) =>
+            AppiumCommandExecutionHelper.HideKeyboard(this, strategy, key);
 
         /// <summary>
         /// Create a Windows Element
@@ -136,8 +143,10 @@ namespace OpenQA.Selenium.Appium.Windows
             return new WindowsElement(this, elementId);
         }
 
-        public void PressKeyCode(int keyCode, int metastate = -1) => AppiumCommandExecutionHelper.PressKeyCode(this, keyCode, metastate);
+        public void PressKeyCode(int keyCode, int metastate = -1) =>
+            AppiumCommandExecutionHelper.PressKeyCode(this, keyCode, metastate);
 
-        public void LongPressKeyCode(int keyCode, int metastate = -1) => AppiumCommandExecutionHelper.LongPressKeyCode(this, keyCode, metastate);
+        public void LongPressKeyCode(int keyCode, int metastate = -1) =>
+            AppiumCommandExecutionHelper.LongPressKeyCode(this, keyCode, metastate);
     }
 }

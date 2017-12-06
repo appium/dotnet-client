@@ -15,15 +15,15 @@ namespace Appium.Integration.Tests.Android
         [TestFixtureSetUp]
         public void BeforeAll()
         {
-            DesiredCapabilities capabilities = Env.isSauce() ?
-                Caps.getAndroid501Caps(Apps.get("androidApiDemos")) :
-                Caps.getAndroid19Caps(Apps.get("androidApiDemos"));
+            DesiredCapabilities capabilities = Env.isSauce()
+                ? Caps.getAndroid501Caps(Apps.get("androidApiDemos"))
+                : Caps.getAndroid19Caps(Apps.get("androidApiDemos"));
             if (Env.isSauce())
             {
                 capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
                 capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
                 capabilities.SetCapability("name", "android - simple");
-                capabilities.SetCapability("tags", new string[] { "sample" });
+                capabilities.SetCapability("tags", new string[] {"sample"});
             }
             Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIAndroid;
             driver = new AndroidDriver<AndroidElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
@@ -41,7 +41,8 @@ namespace Appium.Integration.Tests.Android
         {
             By byAccessibilityId = new ByAccessibilityId("Graphics");
             Assert.AreNotEqual(driver.FindElementById("android:id/content").FindElement(byAccessibilityId).Text, null);
-            Assert.GreaterOrEqual(driver.FindElementById("android:id/content").FindElements(byAccessibilityId).Count, 1);
+            Assert.GreaterOrEqual(driver.FindElementById("android:id/content").FindElements(byAccessibilityId).Count,
+                1);
         }
 
         [Test()]
@@ -49,7 +50,8 @@ namespace Appium.Integration.Tests.Android
         {
             By byAndroidUIAutomator = new ByAndroidUIAutomator("new UiSelector().clickable(true)");
             Assert.IsNotNull(driver.FindElementById("android:id/content").FindElement(byAndroidUIAutomator).Text);
-            Assert.GreaterOrEqual(driver.FindElementById("android:id/content").FindElements(byAndroidUIAutomator).Count, 1);
+            Assert.GreaterOrEqual(driver.FindElementById("android:id/content").FindElements(byAndroidUIAutomator).Count,
+                1);
         }
 
         [Test]
@@ -60,7 +62,8 @@ namespace Appium.Integration.Tests.Android
 
             driver.StartActivity("io.appium.android.apis", ".view.Controls1");
 
-            AndroidElement editElement = driver.FindElementByAndroidUIAutomator("resourceId(\"io.appium.android.apis:id/edit\")");
+            AndroidElement editElement =
+                driver.FindElementByAndroidUIAutomator("resourceId(\"io.appium.android.apis:id/edit\")");
 
             editElement.SendKeys(originalValue);
 
@@ -78,7 +81,8 @@ namespace Appium.Integration.Tests.Android
 
             driver.StartActivity("io.appium.android.apis", ".view.Controls1");
 
-            AndroidElement editElement = driver.FindElementByAndroidUIAutomator("resourceId(\"io.appium.android.apis:id/edit\")");
+            AndroidElement editElement =
+                driver.FindElementByAndroidUIAutomator("resourceId(\"io.appium.android.apis:id/edit\")");
 
             editElement.SetImmediateValue(value);
 
@@ -91,7 +95,7 @@ namespace Appium.Integration.Tests.Android
             driver.FindElementByAccessibilityId("Views").Click();
             AndroidElement list = driver.FindElement(By.Id("android:id/list"));
             var locator = new ByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView("
-                            + "new UiSelector().text(\"Radio Group\"));");
+                                                   + "new UiSelector().text(\"Radio Group\"));");
             AppiumWebElement radioGroup = list.FindElement(locator);
             Assert.NotNull(radioGroup.Location);
         }
@@ -108,6 +112,5 @@ namespace Appium.Integration.Tests.Android
                 AppiumServers.StopLocalService();
             }
         }
-
     }
 }

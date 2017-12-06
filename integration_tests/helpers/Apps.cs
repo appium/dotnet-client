@@ -15,30 +15,33 @@ namespace Appium.Integration.Tests.Helpers
             {
                 if (Env.isSauce())
                 {
-                    Appz = new Dictionary<string, string> {
-                        { "iosTestApp", "http://appium.github.io/appium/assets/TestApp7.1.app.zip" },
-                        { "iosWebviewApp", "http://appium.github.io/appium/assets/WebViewApp7.1.app.zip" },
-                        { "iosUICatalogApp", "http://appium.github.io/appium/assets/UICatalog7.1.app.zip" },
-                        { "androidApiDemos", "http://appium.github.io/appium/assets/ApiDemos-debug.apk" },
-                        { "selendroidTestApp", "http://appium.github.io/appium/assets/selendroid-test-app-0.10.0.apk" }
+                    Appz = new Dictionary<string, string>
+                    {
+                        {"iosTestApp", "http://appium.github.io/appium/assets/TestApp7.1.app.zip"},
+                        {"iosWebviewApp", "http://appium.github.io/appium/assets/WebViewApp7.1.app.zip"},
+                        {"iosUICatalogApp", "http://appium.github.io/appium/assets/UICatalog7.1.app.zip"},
+                        {"androidApiDemos", "http://appium.github.io/appium/assets/ApiDemos-debug.apk"},
+                        {"selendroidTestApp", "http://appium.github.io/appium/assets/selendroid-test-app-0.10.0.apk"}
                     };
                 }
                 else
                 {
                     File.WriteAllBytes("ApiDemos-debug.apk", Properties.Resources.ApiDemos_debug);
-                    File.WriteAllBytes("selendroid-test-app-0.10.0.apk", Properties.Resources.selendroid_test_app_0_10_0);
+                    File.WriteAllBytes("selendroid-test-app-0.10.0.apk",
+                        Properties.Resources.selendroid_test_app_0_10_0);
                     File.WriteAllBytes("TestApp7.1.app.zip", Properties.Resources.TestApp7_1_app);
                     File.WriteAllBytes("WebViewApp7.1.app.zip", Properties.Resources.WebViewApp7_1_app);
                     File.WriteAllBytes("UICatalog7.1.app.zip", Properties.Resources.UICatalog7_1_app);
                     File.WriteAllBytes("IntentExample.apk", Properties.Resources.IntentExample);
 
-                    Appz = new Dictionary<string, string> {
-                        { "iosTestApp", new FileInfo("TestApp7.1.app.zip").FullName },
-                        { "iosWebviewApp", new FileInfo("WebViewApp7.1.app.zip").FullName },
-                        { "iosUICatalogApp", new FileInfo("UICatalog7.1.app.zip").FullName },
-                        { "androidApiDemos", new FileInfo("ApiDemos-debug.apk").FullName },
-                        { "selendroidTestApp", new FileInfo("selendroid-test-app-0.10.0.apk").FullName },
-                        { "intentApp", new FileInfo("IntentExample.apk").FullName }
+                    Appz = new Dictionary<string, string>
+                    {
+                        {"iosTestApp", new FileInfo("TestApp7.1.app.zip").FullName},
+                        {"iosWebviewApp", new FileInfo("WebViewApp7.1.app.zip").FullName},
+                        {"iosUICatalogApp", new FileInfo("UICatalog7.1.app.zip").FullName},
+                        {"androidApiDemos", new FileInfo("ApiDemos-debug.apk").FullName},
+                        {"selendroidTestApp", new FileInfo("selendroid-test-app-0.10.0.apk").FullName},
+                        {"intentApp", new FileInfo("IntentExample.apk").FullName}
                     };
                 }
                 isInited = true;

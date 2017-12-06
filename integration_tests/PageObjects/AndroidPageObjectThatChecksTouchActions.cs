@@ -7,11 +7,9 @@ namespace Appium.Integration.Tests.PageObjects
 {
     class AndroidPageObjectThatChecksTouchActions
     {
-        [FindsByAndroidUIAutomator(Accessibility = "Accessibility")]
-        private IWebElement accessibility;
+        [FindsByAndroidUIAutomator(Accessibility = "Accessibility")] private IWebElement accessibility;
 
-        [FindsByAndroidUIAutomator(Accessibility = "Custom View")]
-        private IWebElement customView;
+        [FindsByAndroidUIAutomator(Accessibility = "Custom View")] private IWebElement customView;
 
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().clickable(true)")]
         private IWebElement clickable;

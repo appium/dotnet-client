@@ -30,7 +30,8 @@ namespace OpenQA.Selenium.Appium.Service.Options
             return new KeyValuePair<string, string>(argument, value);
         }
 
-        protected static KeyValuePair<string, string> GetKeyValuePairUsingDefaultValue(string argument, string value, string defaultValue)
+        protected static KeyValuePair<string, string> GetKeyValuePairUsingDefaultValue(string argument, string value,
+            string defaultValue)
         {
             if (string.IsNullOrEmpty(value))
             {
@@ -41,7 +42,5 @@ namespace OpenQA.Selenium.Appium.Service.Options
                 return new KeyValuePair<string, string>(argument, value);
             }
         }
-
-
     }
 }

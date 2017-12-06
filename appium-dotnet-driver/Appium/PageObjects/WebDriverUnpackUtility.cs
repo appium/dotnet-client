@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
 using OpenQA.Selenium.Internal;
 
 namespace OpenQA.Selenium.Appium.PageObjects
@@ -31,11 +32,11 @@ namespace OpenQA.Selenium.Appium.PageObjects
             // too.
             // RemoteWebElement and AppiumWebElement implement IWrapsDriver
             if ((context as IWrapsDriver) != null)
-                return UnpackWebdriver(((IWrapsDriver)context)
+                return UnpackWebdriver(((IWrapsDriver) context)
                     .WrappedDriver);
 
             if ((context as IWrapsElement) != null)
-                return UnpackWebdriver(((IWrapsElement)context)
+                return UnpackWebdriver(((IWrapsElement) context)
                     .WrappedElement);
 
             return null;

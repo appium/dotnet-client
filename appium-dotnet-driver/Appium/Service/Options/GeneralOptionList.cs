@@ -23,9 +23,8 @@ namespace OpenQA.Selenium.Appium.Service.Options
     /// All flags are optional, but some are required in conjunction with certain others.
     /// The full list is available here: http://appium.io/slate/en/master/?ruby#appium-server-arguments
     /// </summary>
-    public sealed class GeneralOptionList: BaseOptionList
+    public sealed class GeneralOptionList : BaseOptionList
     {
-
         /// <summary>
         /// Enter REPL mode
         /// </summary>
@@ -51,7 +50,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         ///<summary>
         /// Enables session override (clobbering) <br/>
         ///</summary>
-        public static KeyValuePair<string, string> OverrideSession() => 
+        public static KeyValuePair<string, string> OverrideSession() =>
             new KeyValuePair<string, string>("--session-override", string.Empty);
 
         ///<summary>
@@ -71,7 +70,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         ///<summary>
         /// Show timestamps in console output <br/>
         ///</summary>
-        public static KeyValuePair<string, string> LogTimeStamp() => 
+        public static KeyValuePair<string, string> LogTimeStamp() =>
             new KeyValuePair<string, string>("--log-timestamp", string.Empty);
 
         ///<summary>
@@ -155,7 +154,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// <summary>
         /// Add long stack traces to log entries. Recommended for debugging only.
         /// </summary>
-        public static KeyValuePair<string, string> AsyncTrace() => 
+        public static KeyValuePair<string, string> AsyncTrace() =>
             new KeyValuePair<string, string>("--async-trace", string.Empty);
     }
 }

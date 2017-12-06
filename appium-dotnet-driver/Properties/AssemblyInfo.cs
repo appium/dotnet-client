@@ -11,19 +11,20 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
 using System.Reflection;
 
 // Information about this assembly is defined by the following attributes.
 // Change them to the values specific to your project.
 
-[assembly: AssemblyTitle ("appium-dotnet-driver")]
-[assembly: AssemblyDescription ("Appium Dotnet Driver")]
-[assembly: AssemblyConfiguration ("")]
-[assembly: AssemblyCompany ("Appium Contributors")]
-[assembly: AssemblyProduct ("Appium-Dotnet-Driver")]
+[assembly: AssemblyTitle("appium-dotnet-driver")]
+[assembly: AssemblyDescription("Appium Dotnet Driver")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("Appium Contributors")]
+[assembly: AssemblyProduct("Appium-Dotnet-Driver")]
 [assembly: AssemblyCopyright("Copyright © 2017")]
-[assembly: AssemblyTrademark ("")]
-[assembly: AssemblyCulture ("")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
 
 // The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".
 // The form "{Major}.{Minor}.*" will automatically update the build and revision,
@@ -36,4 +37,3 @@ using System.Reflection;
 
 //[assembly: AssemblyDelaySign(false)]
 //[assembly: AssemblyKeyFile("")]
-

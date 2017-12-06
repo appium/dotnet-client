@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
 using Castle.DynamicProxy;
 using OpenQA.Selenium.Support.PageObjects;
 using System;
@@ -22,14 +23,17 @@ namespace OpenQA.Selenium.Appium.PageObjects.Interceptors
 {
     class ElementListInterceptor : SearchingInterceptor
     {
-        public ElementListInterceptor(IEnumerable<By> bys, IElementLocator locator, TimeOutDuration waitingTimeSpan, bool shouldCache)
+        public ElementListInterceptor(IEnumerable<By> bys, IElementLocator locator, TimeOutDuration waitingTimeSpan,
+            bool shouldCache)
             : base(bys, locator, waitingTimeSpan, shouldCache)
-        { }
+        {
+        }
 
         private IList convert(ReadOnlyCollection<IWebElement> original, Type genericParameter)
         {
             Type generic = typeof(List<>).MakeGenericType(genericParameter);
-            object result = GenericsUtility.CraeteInstanceOfSomeGeneric(typeof(List<>), genericParameter, new Type[] { },
+            object result = GenericsUtility.CraeteInstanceOfSomeGeneric(typeof(List<>), genericParameter,
+                new Type[] { },
                 new object[] { });
             IList list = result as IList;
 
@@ -55,11 +59,13 @@ namespace OpenQA.Selenium.Appium.PageObjects.Interceptors
             {
                 timeOuts.ImplicitlyWait(zeroTimeSpan);
                 waitingForElementList.Timeout = waitingTimeSpan.WaitingDuration;
-                ReadOnlyCollection<IWebElement> found = waitingForElementList.Until(ReturnWaitingFunction(locator, bys));
+                ReadOnlyCollection<IWebElement>
+                    found = waitingForElementList.Until(ReturnWaitingFunction(locator, bys));
                 result = convert(found, genericParameter);
             }
             catch (WebDriverTimeoutException ignored)
-            { }
+            {
+            }
             finally
             {
                 timeOuts.ImplicitlyWait(waitingTimeSpan.WaitingDuration);

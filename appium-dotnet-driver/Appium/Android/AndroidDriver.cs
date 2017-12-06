@@ -79,7 +79,8 @@ namespace OpenQA.Selenium.Appium.Android
         /// <param name="builder"> object containing settings of the Appium local service which is going to be started</param>
         /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
-        public AndroidDriver(AppiumServiceBuilder builder, DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
+        public AndroidDriver(AppiumServiceBuilder builder, DesiredCapabilities desiredCapabilities,
+            TimeSpan commandTimeout)
             : base(builder, SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
         {
         }
@@ -121,54 +122,54 @@ namespace OpenQA.Selenium.Appium.Android
         /// <param name="service">the specified Appium local service</param>
         /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
-        public AndroidDriver(AppiumLocalService service, DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
+        public AndroidDriver(AppiumLocalService service, DesiredCapabilities desiredCapabilities,
+            TimeSpan commandTimeout)
             : base(service, SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
         {
         }
 
         #region IFindByAndroidUIAutomator Members
 
-        public W FindElementByAndroidUIAutomator(string selector) => FindElement(MobileSelector.AndroidUIAutomator, selector);
+        public W FindElementByAndroidUIAutomator(string selector) =>
+            FindElement(MobileSelector.AndroidUIAutomator, selector);
 
-        public ReadOnlyCollection<W> FindElementsByAndroidUIAutomator(string selector) => 
+        public ReadOnlyCollection<W> FindElementsByAndroidUIAutomator(string selector) =>
             ConvertToExtendedWebElementCollection<W>(FindElements(MobileSelector.AndroidUIAutomator, selector));
 
         #endregion IFindByAndroidUIAutomator Members
 
-        public void StartActivity(string appPackage, string appActivity, string appWaitPackage = "", string appWaitActivity = "", bool stopApp = true) =>
-            AndroidCommandExecutionHelper.StartActivity(this, appPackage, appActivity, appWaitPackage, appWaitActivity, stopApp);
+        public void StartActivity(string appPackage, string appActivity, string appWaitPackage = "",
+            string appWaitActivity = "", bool stopApp = true) =>
+            AndroidCommandExecutionHelper.StartActivity(this, appPackage, appActivity, appWaitPackage, appWaitActivity,
+                stopApp);
 
-        public void StartActivityWithIntent(string appPackage, string appActivity, string intentAction, string appWaitPackage = "", string appWaitActivity = "",
-            string intentCategory = "", string intentFlags = "", string intentOptionalArgs = "", bool stopApp = true) => 
-            AndroidCommandExecutionHelper.StartActivityWithIntent(this, appPackage, appActivity, intentAction, appWaitPackage, appWaitActivity,
-            intentCategory, intentFlags, intentOptionalArgs, stopApp);
+        public void StartActivityWithIntent(string appPackage, string appActivity, string intentAction,
+            string appWaitPackage = "", string appWaitActivity = "",
+            string intentCategory = "", string intentFlags = "", string intentOptionalArgs = "", bool stopApp = true) =>
+            AndroidCommandExecutionHelper.StartActivityWithIntent(this, appPackage, appActivity, intentAction,
+                appWaitPackage, appWaitActivity,
+                intentCategory, intentFlags, intentOptionalArgs, stopApp);
 
         public string CurrentActivity
         {
-            get
-            {
-                return AndroidCommandExecutionHelper.GetCurrentActivity(this);
-            }
+            get { return AndroidCommandExecutionHelper.GetCurrentActivity(this); }
         }
 
         #region Connection Type
 
         public ConnectionType ConnectionType
         {
-            get
-            {
-                return AndroidCommandExecutionHelper.GetConection(this);
-            }
-            set
-            {
-                AndroidCommandExecutionHelper.SetConection(this, value);
-            }
+            get { return AndroidCommandExecutionHelper.GetConection(this); }
+            set { AndroidCommandExecutionHelper.SetConection(this, value); }
         }
+
         #endregion Connection Type
 
-        public void PressKeyCode(int keyCode, int metastate = -1) => AppiumCommandExecutionHelper.PressKeyCode(this, keyCode, metastate);
+        public void PressKeyCode(int keyCode, int metastate = -1) =>
+            AppiumCommandExecutionHelper.PressKeyCode(this, keyCode, metastate);
 
-        public void LongPressKeyCode(int keyCode, int metastate = -1) => AppiumCommandExecutionHelper.LongPressKeyCode(this, keyCode, metastate);
+        public void LongPressKeyCode(int keyCode, int metastate = -1) =>
+            AppiumCommandExecutionHelper.LongPressKeyCode(this, keyCode, metastate);
 
         /// <summary>
         /// Toggles Location Services.
@@ -181,29 +182,32 @@ namespace OpenQA.Selenium.Appium.Android
         /// <param name="intent">a string containing the intent.</param>
         /// <param name="path">a string containing the path.</param>
         /// <return>a base64 string containing the data</return> 
-        public string EndTestCoverage(string intent, string path) => AndroidCommandExecutionHelper.EndTestCoverage(this, intent, path);
+        public string EndTestCoverage(string intent, string path) =>
+            AndroidCommandExecutionHelper.EndTestCoverage(this, intent, path);
 
         /// <summary>
         /// Saves a string as a file on the remote mobile device.
         /// </summary>
         /// <param name="pathOnDevice">Path to file to write data to on remote device</param>
         /// <param name="stringData">A string to write to remote device</param>
-        public void PushFile(string pathOnDevice, string stringData) => AndroidCommandExecutionHelper.PushFile(this, pathOnDevice, Convert.FromBase64String(Convert.
-                ToBase64String(Encoding.UTF8.GetBytes(stringData))));
+        public void PushFile(string pathOnDevice, string stringData) => AndroidCommandExecutionHelper.PushFile(this,
+            pathOnDevice, Convert.FromBase64String(Convert.ToBase64String(Encoding.UTF8.GetBytes(stringData))));
 
         /// <summary>
         /// Saves base64 encoded data as a file on the remote mobile device.
         /// </summary>
         /// <param name="pathOnDevice">Path to file to write data to on remote device</param>
         /// <param name="base64Data">Base64 encoded byte array of data to write to remote device</param>
-        public void PushFile(string pathOnDevice, byte[] base64Data) => AndroidCommandExecutionHelper.PushFile(this, pathOnDevice, base64Data);
+        public void PushFile(string pathOnDevice, byte[] base64Data) =>
+            AndroidCommandExecutionHelper.PushFile(this, pathOnDevice, base64Data);
 
         /// <summary>
         /// Saves given file as a file on the remote mobile device.
         /// </summary>
         /// <param name="pathOnDevice">Path to file to write data to on remote device</param>
         /// <param name="base64Data">A file to write to remote device</param>
-        public void PushFile(string pathOnDevice, FileInfo file) => AndroidCommandExecutionHelper.PushFile(this, pathOnDevice, file);
+        public void PushFile(string pathOnDevice, FileInfo file) =>
+            AndroidCommandExecutionHelper.PushFile(this, pathOnDevice, file);
 
         /// <summary>
         /// Open the notifications 
@@ -214,6 +218,7 @@ namespace OpenQA.Selenium.Appium.Android
         protected override RemoteWebElement CreateElement(string elementId) => new AndroidElement(this, elementId);
 
         #region locking
+
         /**
         * This method locks a device.
         */
@@ -229,18 +234,19 @@ namespace OpenQA.Selenium.Appium.Android
          * This method unlocks a device.
          */
         public void Unlock() => AndroidCommandExecutionHelper.Unlock(this);
+
         #endregion
 
-        public void SetSetting(string setting, object value) => 
+        public void SetSetting(string setting, object value) =>
             AndroidCommandExecutionHelper.SetSetting(this, setting, value);
 
-        public void IgnoreUnimportantViews(bool compress) => 
+        public void IgnoreUnimportantViews(bool compress) =>
             SetSetting(AutomatorSetting.IgnoreUnimportantViews, compress);
 
-        public void ConfiguratorSetWaitForIdleTimeout(int timeout) => 
+        public void ConfiguratorSetWaitForIdleTimeout(int timeout) =>
             SetSetting(AutomatorSetting.WaitForIDLETimeout, timeout);
 
-        public void ConfiguratorSetWaitForSelectorTimeout(int timeout) => 
+        public void ConfiguratorSetWaitForSelectorTimeout(int timeout) =>
             SetSetting(AutomatorSetting.WaitForSelectorTimeout, timeout);
 
         public void ConfiguratorSetScrollAcknowledgmentTimeout(int timeout) =>
@@ -254,15 +260,14 @@ namespace OpenQA.Selenium.Appium.Android
 
         public Dictionary<string, object> Settings
         {
-            get
-            {
-                return AndroidCommandExecutionHelper.GetSettings(this);
-            }
+            get { return AndroidCommandExecutionHelper.GetSettings(this); }
 
             set
             {
                 foreach (var entry in value)
-                { SetSetting(entry.Key, entry.Value); } 
+                {
+                    SetSetting(entry.Key, entry.Value);
+                }
             }
         }
     }

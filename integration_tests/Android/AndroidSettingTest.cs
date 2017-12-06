@@ -16,15 +16,15 @@ namespace Appium.Integration.Tests.Android
         [TestFixtureSetUp]
         public void BeforeAll()
         {
-            DesiredCapabilities capabilities = Env.isSauce() ?
-                Caps.getAndroid501Caps(Apps.get("androidApiDemos")) :
-                Caps.getAndroid19Caps(Apps.get("androidApiDemos"));
+            DesiredCapabilities capabilities = Env.isSauce()
+                ? Caps.getAndroid501Caps(Apps.get("androidApiDemos"))
+                : Caps.getAndroid19Caps(Apps.get("androidApiDemos"));
             if (Env.isSauce())
             {
                 capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
                 capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
                 capabilities.SetCapability("name", "android - complex");
-                capabilities.SetCapability("tags", new string[] { "sample" });
+                capabilities.SetCapability("tags", new string[] {"sample"});
             }
             Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIAndroid;
             driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
@@ -37,10 +37,10 @@ namespace Appium.Integration.Tests.Android
         {
             driver.IgnoreUnimportantViews(true);
             bool ignoreViews =
-                    (bool) driver.Settings[AutomatorSetting.IgnoreUnimportantViews];
+                (bool) driver.Settings[AutomatorSetting.IgnoreUnimportantViews];
             Assert.True(ignoreViews);
             driver.IgnoreUnimportantViews(false);
-            ignoreViews = (bool)driver.Settings[AutomatorSetting.IgnoreUnimportantViews];
+            ignoreViews = (bool) driver.Settings[AutomatorSetting.IgnoreUnimportantViews];
             Assert.False(ignoreViews);
         }
 
@@ -65,7 +65,8 @@ namespace Appium.Integration.Tests.Android
         public void ConfiguratorPropertyTest()
         {
             Dictionary<string, object> data = new Dictionary<string, object>()
-            {[AutomatorSetting.KeyInjectionDelay] = 1500,
+            {
+                [AutomatorSetting.KeyInjectionDelay] = 1500,
                 [AutomatorSetting.WaitActionAcknowledgmentTimeout] = 2500,
                 [AutomatorSetting.WaitForIDLETimeout] = 3500,
                 [AutomatorSetting.WaitForSelectorTimeout] = 5000,

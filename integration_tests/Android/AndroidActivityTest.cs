@@ -17,15 +17,15 @@ namespace Appium.Integration.Tests.Android
         [TestFixtureSetUp]
         public void BeforeAll()
         {
-            DesiredCapabilities capabilities = Env.isSauce() ?
-                Caps.getAndroid501Caps(Apps.get("androidApiDemos")) :
-                Caps.getAndroid19Caps(Apps.get("androidApiDemos"));
+            DesiredCapabilities capabilities = Env.isSauce()
+                ? Caps.getAndroid501Caps(Apps.get("androidApiDemos"))
+                : Caps.getAndroid19Caps(Apps.get("androidApiDemos"));
             if (Env.isSauce())
             {
                 capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
                 capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
                 capabilities.SetCapability("name", "android - complex");
-                capabilities.SetCapability("tags", new string[] { "sample" });
+                capabilities.SetCapability("tags", new string[] {"sample"});
             }
             Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIAndroid;
             driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
@@ -70,7 +70,7 @@ namespace Appium.Integration.Tests.Android
 
             Assert.AreEqual(driver.CurrentActivity, ".ApiDemos");
 
-            driver.StartActivity("io.appium.android.apis", ".accessibility.AccessibilityNodeProviderActivity", 
+            driver.StartActivity("io.appium.android.apis", ".accessibility.AccessibilityNodeProviderActivity",
                 "io.appium.android.apis", ".accessibility.AccessibilityNodeProviderActivity");
 
             Assert.AreEqual(driver.CurrentActivity, ".accessibility.AccessibilityNodeProviderActivity");
@@ -97,12 +97,12 @@ namespace Appium.Integration.Tests.Android
 
             Assert.AreEqual(driver.CurrentActivity, ".accessibility.AccessibilityNodeProviderActivity");
 
-            driver.StartActivity("com.android.contacts", ".ContactsListActivity", "com.android.contacts", ".ContactsListActivity", false);
+            driver.StartActivity("com.android.contacts", ".ContactsListActivity", "com.android.contacts",
+                ".ContactsListActivity", false);
 
             Assert.AreEqual(driver.CurrentActivity, ".ContactsListActivity");
             driver.PressKeyCode(AndroidKeyCode.Back);
             Assert.AreEqual(driver.CurrentActivity, ".accessibility.AccessibilityNodeProviderActivity");
-
         }
 
         [TestFixtureTearDown]

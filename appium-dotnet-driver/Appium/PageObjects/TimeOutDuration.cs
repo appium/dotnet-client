@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
 using System;
 
 namespace OpenQA.Selenium.Appium.PageObjects
@@ -21,15 +22,11 @@ namespace OpenQA.Selenium.Appium.PageObjects
     /// </summary>
     public class TimeOutDuration
     {
-
         public TimeOutDuration(TimeSpan span)
         {
             WaitingDuration = span;
         }
 
-        public TimeSpan WaitingDuration
-        {
-            set; get;
-        }
+        public TimeSpan WaitingDuration { set; get; }
     }
 }

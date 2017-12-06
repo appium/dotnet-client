@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
 using Castle.DynamicProxy;
 using OpenQA.Selenium.Internal;
 using OpenQA.Selenium.Support.PageObjects;
@@ -24,7 +25,8 @@ namespace OpenQA.Selenium.Appium.PageObjects.Interceptors
     {
         private readonly IWebDriver driver;
 
-        public ElementInterceptor(IEnumerable<By> bys, IElementLocator locator, TimeOutDuration waitingTimeSpan, bool shouldCache)
+        public ElementInterceptor(IEnumerable<By> bys, IElementLocator locator, TimeOutDuration waitingTimeSpan,
+            bool shouldCache)
             : base(bys, locator, waitingTimeSpan, shouldCache)
         {
             driver = WebDriverUnpackUtility.UnpackWebdriver(locator.SearchContext);
@@ -60,7 +62,6 @@ namespace OpenQA.Selenium.Appium.PageObjects.Interceptors
 
         public override void Intercept(IInvocation invocation)
         {
-
             MethodInfo m = invocation.Method;
             if (typeof(IWrapsDriver).IsAssignableFrom(m.DeclaringType))
             {
@@ -70,13 +71,12 @@ namespace OpenQA.Selenium.Appium.PageObjects.Interceptors
 
             if (typeof(IWrapsElement).IsAssignableFrom(m.DeclaringType))
             {
-                var e = (IWebElement)getTarget(invocation);
+                var e = (IWebElement) getTarget(invocation);
                 invocation.ReturnValue = e;
                 return;
             }
 
             base.Intercept(invocation);
-
         }
     }
 }

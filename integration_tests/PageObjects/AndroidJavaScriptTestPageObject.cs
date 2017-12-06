@@ -8,8 +8,7 @@ namespace Appium.Integration.Tests.PageObjects
 {
     class AndroidJavaScriptTestPageObject
     {
-        [FindsBy(How = How.XPath, Using = ".//*[@type=\"submit\"]")]
-        private IWebElement sendMeYourName;
+        [FindsBy(How = How.XPath, Using = ".//*[@type=\"submit\"]")] private IWebElement sendMeYourName;
 
         private readonly IWebDriver driver;
 
@@ -26,6 +25,5 @@ namespace Appium.Integration.Tests.PageObjects
             executor.ExecuteScript("arguments[0].style.border = '" + "4px solid rgb(0,255,0)" + "'", sendMeYourName);
             Thread.Sleep(5000);
         }
-
     }
 }

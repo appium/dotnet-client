@@ -11,11 +11,12 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
 using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium.Interfaces
 {
-    public interface IFindByAndroidUIAutomator<W>: IFindsByFluentSelector<W> where W : IWebElement
+    public interface IFindByAndroidUIAutomator<W> : IFindsByFluentSelector<W> where W : IWebElement
     {
         /// <summary>
         /// Finds the first element in the page that matches the Android UIAutomator selector supplied

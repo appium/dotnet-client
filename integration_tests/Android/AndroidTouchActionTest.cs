@@ -11,25 +11,27 @@ using System.Threading;
 
 namespace Appium.Integration.Tests.Android
 {
-	[TestFixture ()]
-	public class AndroidTouchActionTest
-	{
-		private AndroidDriver<AppiumWebElement> driver;
+    [TestFixture()]
+    public class AndroidTouchActionTest
+    {
+        private AndroidDriver<AppiumWebElement> driver;
 
-		[TestFixtureSetUp]
-		public void BeforeAll(){
-			DesiredCapabilities capabilities = Env.isSauce () ? 
-				Caps.getAndroid501Caps (Apps.get ("androidApiDemos")) :
-				Caps.getAndroid19Caps (Apps.get ("androidApiDemos"));
-			if (Env.isSauce ()) {
-				capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME")); 
-				capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
-				capabilities.SetCapability("name", "android - complex");
-				capabilities.SetCapability("tags", new string[]{"sample"});
-			}
-			Uri serverUri = Env.isSauce () ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIAndroid;
-            driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);	
-			driver.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
+        [TestFixtureSetUp]
+        public void BeforeAll()
+        {
+            DesiredCapabilities capabilities = Env.isSauce()
+                ? Caps.getAndroid501Caps(Apps.get("androidApiDemos"))
+                : Caps.getAndroid19Caps(Apps.get("androidApiDemos"));
+            if (Env.isSauce())
+            {
+                capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
+                capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
+                capabilities.SetCapability("name", "android - complex");
+                capabilities.SetCapability("tags", new string[] {"sample"});
+            }
+            Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIAndroid;
+            driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
+            driver.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
             driver.CloseApp();
         }
 
@@ -52,7 +54,8 @@ namespace Appium.Integration.Tests.Android
         }
 
         [TestFixtureTearDown]
-		public void AfterAll(){
+        public void AfterAll()
+        {
             if (driver != null)
             {
                 driver.Quit();
@@ -61,7 +64,7 @@ namespace Appium.Integration.Tests.Android
             {
                 AppiumServers.StopLocalService();
             }
-		}
+        }
 
         [Test()]
         public void SimpleTouchActionTestCase()
@@ -78,16 +81,16 @@ namespace Appium.Integration.Tests.Android
             Assert.AreNotEqual(number1, els.Count);
         }
 
-        [Test ()]
-		public void ComplexTouchActionTestCase ()
-		{
-			IList<AppiumWebElement> els = driver.FindElementsByClassName ("android.widget.TextView");
-			var loc1 = els [7].Location;
+        [Test()]
+        public void ComplexTouchActionTestCase()
+        {
+            IList<AppiumWebElement> els = driver.FindElementsByClassName("android.widget.TextView");
+            var loc1 = els[7].Location;
             AppiumWebElement target = els[1];
             var loc2 = target.Location;
-			driver.Swipe (loc1.X, loc1.Y, loc2.X, loc2.Y, 800); //this action includes almost all touch actions
+            driver.Swipe(loc1.X, loc1.Y, loc2.X, loc2.Y, 800); //this action includes almost all touch actions
             Assert.AreNotEqual(loc2.Y, target.Location.Y);
-		}
+        }
 
         [Test()]
         public void SingleMultiActionTestCase()
@@ -100,7 +103,7 @@ namespace Appium.Integration.Tests.Android
             TouchAction swipe = new TouchAction(driver);
 
             swipe.Press(loc1.X, loc1.Y).Wait(1000)
-                    .MoveTo(loc2.X, loc2.Y).Release();
+                .MoveTo(loc2.X, loc2.Y).Release();
 
             MultiAction multiAction = new MultiAction(driver);
             multiAction.Add(swipe).Perform();
@@ -131,7 +134,5 @@ namespace Appium.Integration.Tests.Android
             Thread.Sleep(2500);
             Assert.AreNotEqual(originalActivity, driver.CurrentActivity);
         }
-
     }
 }
-

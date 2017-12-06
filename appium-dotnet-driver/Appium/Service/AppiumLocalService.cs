@@ -37,7 +37,8 @@ namespace OpenQA.Selenium.Appium.Service
         /// <returns>An instance of AppiumLocalService without special settings</returns>
         public static AppiumLocalService BuildDefaultService() => new AppiumServiceBuilder().Build();
 
-        internal AppiumLocalService(FileInfo nodeJS, string arguments, IPAddress ip, int port, TimeSpan initializationTimeout)
+        internal AppiumLocalService(FileInfo nodeJS, string arguments, IPAddress ip, int port,
+            TimeSpan initializationTimeout)
         {
             NodeJS = nodeJS;
             IP = ip;
@@ -72,7 +73,9 @@ namespace OpenQA.Selenium.Appium.Service
             Service.StartInfo.CreateNoWindow = true;
 
             bool isLaunced = false;
-            string msgTxt = $"The local appium server has not been started. The given Node.js executable: {NodeJS.FullName} Arguments: {Arguments}. " + "\n";
+            string msgTxt =
+                $"The local appium server has not been started. The given Node.js executable: {NodeJS.FullName} Arguments: {Arguments}. " +
+                "\n";
 
             try
             {
@@ -88,9 +91,10 @@ namespace OpenQA.Selenium.Appium.Service
             if (!isLaunced)
             {
                 DestroyProcess();
-                throw new AppiumServerHasNotBeenStartedLocallyException(msgTxt + $"Time {InitializationTimeout.TotalMilliseconds} ms for the service starting has been expired!");
+                throw new AppiumServerHasNotBeenStartedLocallyException(
+                    msgTxt +
+                    $"Time {InitializationTimeout.TotalMilliseconds} ms for the service starting has been expired!");
             }
-
         }
 
         private void DestroyProcess()
@@ -105,7 +109,8 @@ namespace OpenQA.Selenium.Appium.Service
                 Service.Kill();
             }
             catch (Exception ignored)
-            { }
+            {
+            }
             finally
             {
                 Service.Close();
@@ -166,11 +171,11 @@ namespace OpenQA.Selenium.Appium.Service
             DateTime endTime = DateTime.Now.Add(this.InitializationTimeout);
             while (!pinged & DateTime.Now < endTime)
             {
-                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(status);
+                HttpWebRequest request = (HttpWebRequest) HttpWebRequest.Create(status);
                 HttpWebResponse response = null;
                 try
                 {
-                    using (response = (HttpWebResponse)request.GetResponse())
+                    using (response = (HttpWebResponse) request.GetResponse())
                     {
                         pinged = true;
                     }
