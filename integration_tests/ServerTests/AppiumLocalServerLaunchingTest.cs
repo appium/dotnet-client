@@ -137,8 +137,7 @@ namespace Appium.Integration.Tests.ServerTests
         [Test]
         public void CheckStartingOfAServiceWithNonLocalhostIP()
         {
-            AppiumLocalService service = new AppiumServiceBuilder().WithIPAddress(testIP).UsingPort(4000).
-                Build();
+            AppiumLocalService service = new AppiumServiceBuilder().WithIPAddress(testIP).UsingPort(4000).Build();
             try
             {
                 service.Start();
@@ -208,13 +207,13 @@ namespace Appium.Integration.Tests.ServerTests
             capabilities.SetCapability(AndroidMobileCapabilityType.AppPackage, "io.appium.android.apis");
             capabilities.SetCapability(AndroidMobileCapabilityType.AppActivity, ".view.WebView1");
 
-            OptionCollector args = new OptionCollector().AddCapabilities(capabilities).AddArguments(GeneralOptionList.CallbackAddress(testIP))
+            OptionCollector args = new OptionCollector().AddCapabilities(capabilities)
+                .AddArguments(GeneralOptionList.CallbackAddress(testIP))
                 .AddArguments(GeneralOptionList.OverrideSession());
             AppiumLocalService service = null;
             try
             {
-                service = new AppiumServiceBuilder().WithArguments(args).
-                    Build();
+                service = new AppiumServiceBuilder().WithArguments(args).Build();
                 service.Start();
                 Assert.IsTrue(service.IsRunning);
             }
@@ -282,7 +281,5 @@ namespace Appium.Integration.Tests.ServerTests
                 service.Dispose();
             }
         }
-
     }
 }
-

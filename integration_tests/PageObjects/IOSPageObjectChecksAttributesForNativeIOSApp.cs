@@ -12,20 +12,13 @@ namespace Appium.Integration.Tests.PageObjects
         [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[0]")]
         private IMobileElement<IOSElement> testMobileElement;
 
-        [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[0]")]
-        private IList<IOSElement> testMobileElements;
+        [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[0]")] private IList<IOSElement> testMobileElements;
 
         [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[0]")]
-        private IMobileElement<IOSElement> TestMobileElement
-        {
-            set; get;
-        }
+        private IMobileElement<IOSElement> TestMobileElement { set; get; }
 
         [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[0]")]
-        private IList<IOSElement> TestMobileElements
-        {
-            set; get;
-        }
+        private IList<IOSElement> TestMobileElements { set; get; }
 
         [FindsByIOSUIAutomation(ID = "FakeID", Priority = 1)]
         [FindsByIOSUIAutomation(ClassName = "UIAUAIFakeClass", Priority = 2)]
@@ -34,8 +27,7 @@ namespace Appium.Integration.Tests.PageObjects
 
         [FindsByIOSUIAutomation(ID = "FakeID", Priority = 1)]
         [FindsByIOSUIAutomation(ClassName = "UIAUAIFakeClass", Priority = 2)]
-        [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 3)]
-        private IList<IOSElement> testMultipleElements;
+        [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 3)] private IList<IOSElement> testMultipleElements;
 
 
         /////////////////////////////////////////////////////////////////
@@ -43,27 +35,19 @@ namespace Appium.Integration.Tests.PageObjects
         [FindsByIOSUIAutomation(ID = "FakeID", Priority = 1)]
         [FindsByIOSUIAutomation(ClassName = "UIAUAIFakeClass", Priority = 2)]
         [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 3)]
-        private IMobileElement<IOSElement> TestMultipleFindByElementProperty
-        {
-            set; get;
-        }
+        private IMobileElement<IOSElement> TestMultipleFindByElementProperty { set; get; }
 
         [FindsByIOSUIAutomation(ID = "FakeID", Priority = 1)]
         [FindsByIOSUIAutomation(ClassName = "UIAUAIFakeClass", Priority = 2)]
         [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 3)]
-        private IList<IOSElement> MultipleFindByElementsProperty
-        {
-            set; get;
-        }
+        private IList<IOSElement> MultipleFindByElementsProperty { set; get; }
 
-        [MobileFindsByAll(IOS = true)]
-        [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 1)]
+        [MobileFindsByAll(IOS = true)] [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 1)]
         //Equals method of RemoteWebElement is not consistent for mobile apps
         //The second selector won't be added till the problem is worked out
         private IMobileElement<IOSElement> matchedToAllLocatorsElement;
 
-        [MobileFindsByAll(IOS = true)]
-        [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 1)]
+        [MobileFindsByAll(IOS = true)] [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 1)]
         //Equals method of RemoteWebElement is not consistent for mobile apps
         //The second selector won't be added till the problem is worked out
         private IList<IOSElement> matchedToAllLocatorsElements;
@@ -74,19 +58,13 @@ namespace Appium.Integration.Tests.PageObjects
         [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 1)]
         //Equals method of RemoteWebElement is not consistent for mobile apps
         //The second selector won't be added till the problem is worked out
-        private IMobileElement<IOSElement> TestMatchedToAllLocatorsElementProperty
-        {
-            set; get;
-        }
+        private IMobileElement<IOSElement> TestMatchedToAllLocatorsElementProperty { set; get; }
 
         [MobileFindsByAll(IOS = true)]
         [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 1)]
         //Equals method of RemoteWebElement is not consistent for mobile apps
         //The second selector won't be added till the problem is worked out
-        private IList<IOSElement> TestMatchedToAllLocatorsElementsProperty
-        {
-            set; get;
-        }
+        private IList<IOSElement> TestMatchedToAllLocatorsElementsProperty { set; get; }
 
         //////////////////////////////////////////////////////////////////////////
         public string GetMobileElementText()
@@ -150,6 +128,5 @@ namespace Appium.Integration.Tests.PageObjects
         {
             return TestMatchedToAllLocatorsElementsProperty.Count;
         }
-
     }
 }

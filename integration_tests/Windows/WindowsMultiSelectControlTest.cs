@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
 using Appium.Integration.Tests.Helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -36,7 +37,8 @@ namespace Appium.Integration.Tests.Windows
             // Launch the AlarmClock app
             DesiredCapabilities appCapabilities = new DesiredCapabilities();
             appCapabilities.SetCapability("app", "Microsoft.WindowsAlarms_8wekyb3d8bbwe!App");
-            AlarmClockSession = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appCapabilities);
+            AlarmClockSession =
+                new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appCapabilities);
             appCapabilities.SetCapability("platformName", "Windows");
 
             Assert.IsNotNull(AlarmClockSession);
@@ -45,7 +47,8 @@ namespace Appium.Integration.Tests.Windows
             // Create a session for Desktop
             DesiredCapabilities desktopCapabilities = new DesiredCapabilities();
             desktopCapabilities.SetCapability("app", "Root");
-            DesktopSession = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), desktopCapabilities);
+            DesktopSession =
+                new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), desktopCapabilities);
             Assert.IsNotNull(DesktopSession);
 
             // Ensure app is started in the default main page
@@ -98,11 +101,12 @@ namespace Appium.Integration.Tests.Windows
         public string ReadLocalTime()
         {
             string localTimeText = "";
-            AppiumWebElement worldClockPivotItem = AlarmClockSession.FindElementByAccessibilityId("WorldClockPivotItem");
+            AppiumWebElement worldClockPivotItem =
+                AlarmClockSession.FindElementByAccessibilityId("WorldClockPivotItem");
             if (worldClockPivotItem != null)
             {
                 localTimeText = worldClockPivotItem.FindElementByClassName("ClockCardItem").Text;
-                var timeStrings = localTimeText.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                var timeStrings = localTimeText.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries);
 
                 foreach (string timeString in timeStrings)
                 {
@@ -132,7 +136,8 @@ namespace Appium.Integration.Tests.Windows
 
                 AlarmClockSession.FindElementByAccessibilityId("AddAlarmButton").Click();
                 AlarmClockSession.FindElementByAccessibilityId("AlarmNameTextBox").Clear();
-                AlarmClockSession.FindElementByAccessibilityId("AlarmNameTextBox").SendKeys("Windows Application Driver Test Alarm");
+                AlarmClockSession.FindElementByAccessibilityId("AlarmNameTextBox")
+                    .SendKeys("Windows Application Driver Test Alarm");
                 WindowsElement periodSelector = null;
                 try
                 {
@@ -144,7 +149,8 @@ namespace Appium.Integration.Tests.Windows
                 }
                 periodSelector?.FindElementByName(period).Click();
                 AlarmClockSession.FindElementByAccessibilityId("HourSelector").FindElementByName(hourString).Click();
-                AlarmClockSession.FindElementByAccessibilityId("MinuteSelector").FindElementByName(minuteString).Click();
+                AlarmClockSession.FindElementByAccessibilityId("MinuteSelector").FindElementByName(minuteString)
+                    .Click();
                 Thread.Sleep(500);
                 AlarmClockSession.FindElementByAccessibilityId("AlarmSaveButton").Click();
             }
@@ -155,10 +161,13 @@ namespace Appium.Integration.Tests.Windows
             try
             {
                 AppiumWebElement newNotification = DesktopSession.FindElementByName("New notification");
-                Assert.IsTrue(newNotification.FindElementByAccessibilityId("MessageText").Text.Contains("Windows Application Driver Test Alarm"));
+                Assert.IsTrue(newNotification.FindElementByAccessibilityId("MessageText").Text
+                    .Contains("Windows Application Driver Test Alarm"));
                 newNotification.FindElementByName("Dismiss").Click();
             }
-            catch { }
+            catch
+            {
+            }
         }
 
         private static void ReturnToMainPage()
@@ -171,10 +180,11 @@ namespace Appium.Integration.Tests.Windows
                 {
                     backButton = AlarmClockSession.FindElementByAccessibilityId("Back");
                     backButton.Click();
-                }
-                while (backButton != null);
+                } while (backButton != null);
             }
-            catch { }
+            catch
+            {
+            }
         }
     }
 }

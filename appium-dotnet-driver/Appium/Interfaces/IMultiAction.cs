@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
 using System.Collections.Generic;
 
 namespace OpenQA.Selenium.Appium.Interfaces
@@ -22,10 +23,12 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// </summary>
         /// <param name="touchAction"></param>
         IMultiAction Add(ITouchAction touchAction);
+
         /// <summary>
         /// Cancels the Multi Action
         /// </summary>
         void Cancel();
+
         /// <summary>
         /// Performs the Multi Action
         /// </summary>

@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
 using System;
 using System.Collections.Generic;
 using OpenQA.Selenium.Appium.Interfaces;
@@ -58,12 +59,13 @@ namespace OpenQA.Selenium.Appium.MultiTouch
             parameters.Add("actions", new List<object>());
 
             for (int i = 0; i < actions.Count; i++)
-            {                    
-                ((List<object>)parameters["actions"])
-                    .Add(((TouchAction)actions[i]).GetParameters());
+            {
+                ((List<object>) parameters["actions"])
+                    .Add(((TouchAction) actions[i]).GetParameters());
             }
             return parameters;
         }
+
         /// <summary>
         /// Cancels the Multi Action
         /// </summary>
@@ -87,7 +89,8 @@ namespace OpenQA.Selenium.Appium.MultiTouch
             }
             if (actions.Count == 0)
             {
-                throw new ArgumentException("Multi action must have at least one TouchAction added before it can be performed");
+                throw new ArgumentException(
+                    "Multi action must have at least one TouchAction added before it can be performed");
             }
         }
     }

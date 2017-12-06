@@ -21,7 +21,7 @@ using System.Reflection;
 
 namespace OpenQA.Selenium.Appium
 {
-    public abstract class MobileBy: By
+    public abstract class MobileBy : By
     {
         private const string FindsByFluentSelector = "IFindsByFluentSelector";
         private const string SingleFluentCriteriaFindBy = "FindElement";
@@ -38,14 +38,14 @@ namespace OpenQA.Selenium.Appium
             List<IWebElement> result = new List<IWebElement>();
             foreach (var element in list)
             {
-                result.Add((IWebElement)element);
+                result.Add((IWebElement) element);
             }
             return result.AsReadOnly();
         }
 
         internal MobileBy(string selector, string interfaceNameRegExp, string singleSearchMethodName,
             string listSearchMethodName, string searchingCriteriaName)
-            :base()
+            : base()
         {
             if (string.IsNullOrEmpty(selector))
             {
@@ -72,20 +72,21 @@ namespace OpenQA.Selenium.Appium
             var desiredType = contextType.GetInterface(InterfaceNameRegExp + "`1", false);
             if (null != desiredType)
             {
-                m = desiredType.GetMethod(SingleSearchMethodName, new Type[] { typeof(string) });
-                return (IWebElement) m.Invoke(context, new object[] { selector });
+                m = desiredType.GetMethod(SingleSearchMethodName, new Type[] {typeof(string)});
+                return (IWebElement) m.Invoke(context, new object[] {selector});
             }
 
             desiredType = contextType.GetInterface(FindsByFluentSelector + "`1", false);
             if (desiredType != null)
             {
-                m = desiredType.GetMethod(SingleFluentCriteriaFindBy, new Type[] { typeof(string), typeof(string) });
-                return (IWebElement) m.Invoke(context, new object[] {SearchingCriteriaName, selector });
+                m = desiredType.GetMethod(SingleFluentCriteriaFindBy, new Type[] {typeof(string), typeof(string)});
+                return (IWebElement) m.Invoke(context, new object[] {SearchingCriteriaName, selector});
             }
 
-           
-            throw new InvalidCastException("Unable to cast " + contextType.ToString() + " to " + InterfaceNameRegExp + " nor to " +
-                FindsByFluentSelector);
+
+            throw new InvalidCastException("Unable to cast " + contextType.ToString() + " to " + InterfaceNameRegExp +
+                                           " nor to " +
+                                           FindsByFluentSelector);
         }
 
         /// <summary>
@@ -95,27 +96,28 @@ namespace OpenQA.Selenium.Appium
         /// <returns>A readonly collection of elements that match.</returns>
         public override ReadOnlyCollection<IWebElement> FindElements(ISearchContext context)
         {
-
             Type contextType = context.GetType();
             MethodInfo m;
 
             var desiredType = contextType.GetInterface(InterfaceNameRegExp + "`1", false);
             if (null != desiredType)
             {
-                m = desiredType.GetMethod(ListSearchMethodName, new Type[] { typeof(string) });
-                return ConvertToExtendedWebElementCollection((IList) m.Invoke(context, new object[] { selector }));
+                m = desiredType.GetMethod(ListSearchMethodName, new Type[] {typeof(string)});
+                return ConvertToExtendedWebElementCollection((IList) m.Invoke(context, new object[] {selector}));
             }
 
             desiredType = contextType.GetInterface(FindsByFluentSelector + "`1", false);
             if (desiredType != null)
             {
-                m = desiredType.GetMethod(MultipleFluentCriteriaFindBy, new Type[] { typeof(string), typeof(string) });
-                return ConvertToExtendedWebElementCollection((IList) m.Invoke(context, new object[] { SearchingCriteriaName, selector }));
+                m = desiredType.GetMethod(MultipleFluentCriteriaFindBy, new Type[] {typeof(string), typeof(string)});
+                return ConvertToExtendedWebElementCollection((IList) m.Invoke(context,
+                    new object[] {SearchingCriteriaName, selector}));
             }
 
 
-            throw new InvalidCastException("Unable to cast " + contextType.ToString() + " to " + InterfaceNameRegExp + " nor to " +
-                FindsByFluentSelector);
+            throw new InvalidCastException("Unable to cast " + contextType.ToString() + " to " + InterfaceNameRegExp +
+                                           " nor to " +
+                                           FindsByFluentSelector);
         }
 
         /// <summary>
@@ -169,8 +171,8 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <param name="selector">The selector to use in finding the element.</param>
         public ByAccessibilityId(string selector)
-            :base(selector, "IFindByAccessibilityId", "FindElementByAccessibilityId", "FindElementsByAccessibilityId", 
-                 MobileSelector.Accessibility)
+            : base(selector, "IFindByAccessibilityId", "FindElementByAccessibilityId", "FindElementsByAccessibilityId",
+                MobileSelector.Accessibility)
         {
         }
 
@@ -189,8 +191,9 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <param name="selector">The selector to use in finding the element.</param>
         public ByAndroidUIAutomator(string selector)
-            : base(selector, "IFindByAndroidUIAutomator", "FindElementByAndroidUIAutomator", "FindElementsByAndroidUIAutomator", 
-                  MobileSelector.AndroidUIAutomator)
+            : base(selector, "IFindByAndroidUIAutomator", "FindElementByAndroidUIAutomator",
+                "FindElementsByAndroidUIAutomator",
+                MobileSelector.AndroidUIAutomator)
         {
         }
 
@@ -209,7 +212,8 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <param name="selector">The selector to use in finding the element.</param>
         public ByIosUIAutomation(string selector)
-            :base(selector, "IFindByIosUIAutomation", "FindElementByIosUIAutomation", "FindElementsByIosUIAutomation", MobileSelector.iOSAutomatoion)
+            : base(selector, "IFindByIosUIAutomation", "FindElementByIosUIAutomation", "FindElementsByIosUIAutomation",
+                MobileSelector.iOSAutomatoion)
         {
         }
 
@@ -217,14 +221,15 @@ namespace OpenQA.Selenium.Appium
             $"ByIosUIAutomation({selector})";
     }
 
-    public class ByWindowsAutomation: MobileBy
+    public class ByWindowsAutomation : MobileBy
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ByWindowsAutomation"/> class.
         /// </summary>
         /// <param name="selector">The selector to use in finding the element.</param>
         public ByWindowsAutomation(string selector)
-            :base(selector, "IFindByWindowsUIAutomation", "FindElementByWindowsUIAutomation", "FindElementSByWindowsUIAutomation", MobileSelector.WindowsUIAutomation)
+            : base(selector, "IFindByWindowsUIAutomation", "FindElementByWindowsUIAutomation",
+                "FindElementSByWindowsUIAutomation", MobileSelector.WindowsUIAutomation)
         {
         }
 
@@ -239,7 +244,8 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <param name="selector">The selector to use in finding the element.</param>
         public ByIosNSPredicate(string selector)
-            : base(selector, "IFindsByIosNSPredicate", "FindElementByIosNsPredicate", "FindElementsByIosNsPredicate", MobileSelector.iOSPredicateString)
+            : base(selector, "IFindsByIosNSPredicate", "FindElementByIosNsPredicate", "FindElementsByIosNsPredicate",
+                MobileSelector.iOSPredicateString)
         {
         }
 
@@ -254,12 +260,12 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <param name="selector">The selector to use in finding the element.</param>
         public ByIosClassChain(string selector)
-            : base(selector, "IFindsByIosClassChain", "FindElementByIosClassChain", "FindElementsByIosClassChain", MobileSelector.iOSClassChain)
+            : base(selector, "IFindsByIosClassChain", "FindElementByIosClassChain", "FindElementsByIosClassChain",
+                MobileSelector.iOSClassChain)
         {
         }
 
         public override string ToString() =>
             $"ByIosClassChain({selector})";
     }
-
 }

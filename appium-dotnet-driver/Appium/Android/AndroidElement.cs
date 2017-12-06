@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Remote;
@@ -33,10 +34,12 @@ namespace OpenQA.Selenium.Appium.Android
 
         #region IFindByAndroidUIAutomator Members
 
-        public AppiumWebElement FindElementByAndroidUIAutomator(string selector) => FindElement(MobileSelector.AndroidUIAutomator, selector);
+        public AppiumWebElement FindElementByAndroidUIAutomator(string selector) =>
+            FindElement(MobileSelector.AndroidUIAutomator, selector);
 
-        public ReadOnlyCollection<AppiumWebElement> FindElementsByAndroidUIAutomator(string selector) => 
+        public ReadOnlyCollection<AppiumWebElement> FindElementsByAndroidUIAutomator(string selector) =>
             FindElements(MobileSelector.AndroidUIAutomator, selector);
+
         #endregion IFindByAndroidUIAutomator Members
 
         public void ReplaceValue(string value) => AndroidCommandExecutionHelper.ReplaceValue(this, Id, value);

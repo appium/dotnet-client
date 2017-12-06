@@ -11,13 +11,14 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
 namespace OpenQA.Selenium.Appium.Enums
 {
     public sealed class AutomationName
     {
         public static readonly string Appium = "Appium";
         public static readonly string Selendroid = "Selendroid";
-		public static readonly string iOSXcuiTest = "XCuiTest";
+        public static readonly string iOSXcuiTest = "XCuiTest";
         public static readonly string AndroidUIAutomator2 = "UIAutomator2";
         public static readonly string YouiEngine = "youiengine";
     }

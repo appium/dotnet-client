@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
 using System;
 
 namespace OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract
@@ -23,14 +24,8 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract
         /// </summary>
         public string Accessibility
         {
-            set
-            {
-                byList.Add(new ByAccessibilityId(value));
-            }
-            get
-            {
-                return null;
-            }
+            set { byList.Add(new ByAccessibilityId(value)); }
+            get { return null; }
         }
     }
 }

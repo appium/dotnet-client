@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.iOS.Interfaces;
@@ -23,7 +24,8 @@ using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium.iOS
 {
-    public class IOSDriver<W> : AppiumDriver<W>, IFindByIosUIAutomation<W>, IFindsByIosClassChain<W>, IFindsByIosNSPredicate<W>, IHidesKeyboardWithKeyName, 
+    public class IOSDriver<W> : AppiumDriver<W>, IFindByIosUIAutomation<W>, IFindsByIosClassChain<W>,
+        IFindsByIosNSPredicate<W>, IHidesKeyboardWithKeyName,
         IShakesDevice, IPerformsTouchID where W : IWebElement
     {
         private static readonly string Platform = MobilePlatform.IOS;
@@ -134,7 +136,8 @@ namespace OpenQA.Selenium.Appium.iOS
         /// </summary>
         /// <param name="selector">UIAutomation selector</param>
         /// <returns>ReadOnlyCollection of elements found</returns>
-        public ReadOnlyCollection<W> FindElementsByIosUIAutomation(string selector) => FindElements(MobileSelector.iOSAutomatoion, selector);
+        public ReadOnlyCollection<W> FindElementsByIosUIAutomation(string selector) =>
+            FindElements(MobileSelector.iOSAutomatoion, selector);
 
         #endregion IFindByIosUIAutomation Members
 
@@ -152,7 +155,8 @@ namespace OpenQA.Selenium.Appium.iOS
         /// </summary>
         /// <param name="selector">class chain selector</param>
         /// <returns>ReadOnlyCollection of elements found</returns>
-        public ReadOnlyCollection<W> FindElementsByIosClassChain(string selector) => FindElements(MobileSelector.iOSClassChain, selector);
+        public ReadOnlyCollection<W> FindElementsByIosClassChain(string selector) =>
+            FindElements(MobileSelector.iOSClassChain, selector);
 
         #endregion IFindsByIosClassChain Members
 
@@ -163,20 +167,23 @@ namespace OpenQA.Selenium.Appium.iOS
         /// </summary>
         /// <param name="selector">IosNSPredicate selector</param>
         /// <returns>First element found</returns>
-        public W FindElementByIosNsPredicate(string selector) => FindElement(MobileSelector.iOSPredicateString, selector);
+        public W FindElementByIosNsPredicate(string selector) =>
+            FindElement(MobileSelector.iOSPredicateString, selector);
 
         /// <summary>
         /// Finds a list of elements that match the IosNSPredicate selector
         /// </summary>
         /// <param name="selector">IosNSPredicate selector</param>
         /// <returns>ReadOnlyCollection of elements found</returns>
-        public ReadOnlyCollection<W> FindElementsByIosNsPredicate(string selector) => FindElements(MobileSelector.iOSPredicateString, selector);
+        public ReadOnlyCollection<W> FindElementsByIosNsPredicate(string selector) =>
+            FindElements(MobileSelector.iOSPredicateString, selector);
 
         #endregion IFindsByIosNSPredicate Members
 
         public void ShakeDevice() => IOSCommandExecutionHelper.ShakeDevice(this);
 
-        public void HideKeyboard(string key, string strategy = null) => AppiumCommandExecutionHelper.HideKeyboard(this, strategy, key);
+        public void HideKeyboard(string key, string strategy = null) =>
+            AppiumCommandExecutionHelper.HideKeyboard(this, strategy, key);
 
         /// <summary>
         /// Create an iOS Element
@@ -206,7 +213,7 @@ namespace OpenQA.Selenium.Appium.iOS
 
             // appium converts Press-wait-MoveTo-Release to a swipe action
             touchAction.Press(startx, starty).Wait(duration)
-                    .MoveTo(endx - startx, endy - starty).Release();
+                .MoveTo(endx - startx, endy - starty).Release();
 
             touchAction.Perform();
         }

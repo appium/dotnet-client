@@ -21,7 +21,7 @@ namespace Appium.Integration.Tests.iOS
                 capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
                 capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
                 capabilities.SetCapability("name", "ios - complex");
-                capabilities.SetCapability("tags", new string[] { "sample" });
+                capabilities.SetCapability("tags", new string[] {"sample"});
             }
             Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIForIOS;
             driver = new IOSDriver<IOSElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
@@ -45,16 +45,19 @@ namespace Appium.Integration.Tests.iOS
         public void FindByAccessibilityIdTest()
         {
             By byAccessibilityId = new ByAccessibilityId("ComputeSumButton");
-            Assert.AreNotEqual(driver.FindElementsByClassName("UIAWindow")[1].FindElement(byAccessibilityId).Text, null);
-            Assert.GreaterOrEqual(driver.FindElementsByClassName("UIAWindow")[1].FindElements(byAccessibilityId).Count, 1);
+            Assert.AreNotEqual(driver.FindElementsByClassName("UIAWindow")[1].FindElement(byAccessibilityId).Text,
+                null);
+            Assert.GreaterOrEqual(driver.FindElementsByClassName("UIAWindow")[1].FindElements(byAccessibilityId).Count,
+                1);
         }
 
         [Test()]
         public void FindByByIosUIAutomationTest()
         {
             By byIosUIAutomation = new ByIosUIAutomation(".elements().withName(\"Answer\")");
-			Assert.IsNotNull(driver.FindElementsByClassName("UIAWindow")[1].FindElement(byIosUIAutomation).Text);
-			Assert.GreaterOrEqual(driver.FindElementsByClassName("UIAWindow")[1].FindElements(byIosUIAutomation).Count, 1);
+            Assert.IsNotNull(driver.FindElementsByClassName("UIAWindow")[1].FindElement(byIosUIAutomation).Text);
+            Assert.GreaterOrEqual(driver.FindElementsByClassName("UIAWindow")[1].FindElements(byIosUIAutomation).Count,
+                1);
         }
 
         [Test()]

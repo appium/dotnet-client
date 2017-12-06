@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
 using Castle.DynamicProxy;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Interfaces;
@@ -34,7 +35,6 @@ namespace OpenQA.Selenium.Appium.PageObjects
         private static List<Type> listAvailableElementTypes;
 
 
-
         internal static List<Type> ListOfAvailableElementTypes
         {
             get
@@ -55,7 +55,8 @@ namespace OpenQA.Selenium.Appium.PageObjects
 
         public AppiumPageObjectMemberDecorator()
             : this(new TimeOutDuration(defaultTimeSpan))
-        { }
+        {
+        }
 
         public AppiumPageObjectMemberDecorator(TimeOutDuration timeForWaitingForElements)
         {
@@ -67,8 +68,7 @@ namespace OpenQA.Selenium.Appium.PageObjects
         {
             if (typeof(IWebElement).Equals(targetType))
                 return targetType;
-            else
-                if (GenericsUtility.MatchGenerics(typeof(IMobileElement<>), ListOfAvailableElementTypes, targetType))
+            else if (GenericsUtility.MatchGenerics(typeof(IMobileElement<>), ListOfAvailableElementTypes, targetType))
                 return targetType;
 
             return null;
@@ -76,8 +76,8 @@ namespace OpenQA.Selenium.Appium.PageObjects
 
         private TimeOutDuration GetTimeWaitingForElements(MemberInfo member)
         {
-            WithTimeSpanAttribute customTimeSpan = (WithTimeSpanAttribute)Attribute.
-                GetCustomAttribute(member, typeof(WithTimeSpanAttribute), true);
+            WithTimeSpanAttribute customTimeSpan =
+                (WithTimeSpanAttribute) Attribute.GetCustomAttribute(member, typeof(WithTimeSpanAttribute), true);
             if (customTimeSpan != null)
                 try
                 {
@@ -86,7 +86,8 @@ namespace OpenQA.Selenium.Appium.PageObjects
                 }
                 catch (Exception e)
                 {
-                    throw new Exception("Exception was thrown while it was tryig to get time of the waiting for elements. Please check the " +
+                    throw new Exception(
+                        "Exception was thrown while it was tryig to get time of the waiting for elements. Please check the " +
                         member.MemberType.ToString() + " " + member.Name + ".", e);
                 }
 
@@ -129,16 +130,15 @@ namespace OpenQA.Selenium.Appium.PageObjects
 
             ProxyGenerator generator = new ProxyGenerator();
             TimeOutDuration span = GetTimeWaitingForElements(member);
-            bool shouldCache = (Attribute.
-                GetCustomAttribute(member, typeof(CacheLookupAttribute), true) != null);
+            bool shouldCache = (Attribute.GetCustomAttribute(member, typeof(CacheLookupAttribute), true) != null);
 
             if (aSingleElementType != null)
-                return generator.CreateInterfaceProxyWithoutTarget(aSingleElementType, new Type[] { typeof(IWrapsDriver), typeof(IWrapsElement) },
+                return generator.CreateInterfaceProxyWithoutTarget(aSingleElementType,
+                    new Type[] {typeof(IWrapsDriver), typeof(IWrapsElement)},
                     ProxyGenerationOptions.Default, new ElementInterceptor(bys, locator, span, shouldCache));
 
             return generator.CreateInterfaceProxyWithoutTarget(aListOfElementsType, ProxyGenerationOptions.Default,
-                    new ElementListInterceptor(bys, locator, span, shouldCache));
+                new ElementListInterceptor(bys, locator, span, shouldCache));
         }
-
     }
 }

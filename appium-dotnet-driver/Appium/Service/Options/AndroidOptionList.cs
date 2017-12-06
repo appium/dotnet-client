@@ -24,7 +24,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
     /// The full list is available here: http://appium.io/slate/en/master/?ruby#appium-server-arguments
     /// Android specific arguments are marked by (Android-only)
     /// </summary>
-    public sealed class AndroidOptionList: BaseOptionList
+    public sealed class AndroidOptionList : BaseOptionList
     {
         ///<summary>
         /// Port to use on device to talk to Appium<br/>
@@ -47,7 +47,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// If set, prevents Appium from killing the adb server
         /// instance<br/>
         ///</summary>
-        public static KeyValuePair<string, string> SuppressAdbKillServer() => 
+        public static KeyValuePair<string, string> SuppressAdbKillServer() =>
             new KeyValuePair<string, string>("--suppress-adb-kill-server", string.Empty);
 
         ///<summary>

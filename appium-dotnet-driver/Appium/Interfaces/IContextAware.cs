@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
 using System.Collections.ObjectModel;
 
 
@@ -23,7 +24,6 @@ namespace OpenQA.Selenium.Appium.Interfaces
     /// </summary>
     public interface IContextAware
     {
-
         /// <summary>
         /// Switches the focus of future commands for this driver to the context with the given name
         /// AND

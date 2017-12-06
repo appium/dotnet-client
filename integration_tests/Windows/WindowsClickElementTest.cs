@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
 using Appium.Integration.Tests.Helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -34,7 +35,8 @@ namespace Appium.Integration.Tests.Windows
             appCapabilities.SetCapability("app", "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
 
             // TODO: What about supporting AppiumServers.sauceURI ???
-            CalculatorSession = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appCapabilities, Env.INIT_TIMEOUT_SEC);
+            CalculatorSession = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appCapabilities,
+                Env.INIT_TIMEOUT_SEC);
             CalculatorSession.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
 
             CalculatorSession.FindElementByName("Clear").Click();

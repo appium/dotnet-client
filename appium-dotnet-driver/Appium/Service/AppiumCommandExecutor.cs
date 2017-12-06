@@ -20,7 +20,6 @@ namespace OpenQA.Selenium.Appium.Service
 {
     internal class AppiumCommandExecutor : ICommandExecutor
     {
-
         private readonly AppiumLocalService Service;
         private readonly Uri URL;
         private readonly ICommandExecutor RealExecutor;
@@ -33,7 +32,9 @@ namespace OpenQA.Selenium.Appium.Service
 
             if (null != commandType)
             {
-                commandExecutor = Activator.CreateInstance(commandType, new object[] { remoteAddress, commandTimeout }) as ICommandExecutor;
+                commandExecutor =
+                    Activator.CreateInstance(commandType, new object[] {remoteAddress, commandTimeout}) as
+                        ICommandExecutor;
             }
 
             return commandExecutor;
@@ -59,10 +60,7 @@ namespace OpenQA.Selenium.Appium.Service
 
         public CommandInfoRepository CommandInfoRepository
         {
-            get
-            {
-                return RealExecutor.CommandInfoRepository;
-            }
+            get { return RealExecutor.CommandInfoRepository; }
         }
 
         public Response Execute(Command commandToExecute)

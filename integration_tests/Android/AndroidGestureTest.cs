@@ -15,15 +15,15 @@ namespace Appium.Integration.Tests.Android
         [TestFixtureSetUp]
         public void BeforeAll()
         {
-            DesiredCapabilities capabilities = Env.isSauce() ?
-                Caps.getAndroid501Caps(Apps.get("androidApiDemos")) :
-                Caps.getAndroid19Caps(Apps.get("androidApiDemos"));
+            DesiredCapabilities capabilities = Env.isSauce()
+                ? Caps.getAndroid501Caps(Apps.get("androidApiDemos"))
+                : Caps.getAndroid19Caps(Apps.get("androidApiDemos"));
             if (Env.isSauce())
             {
                 capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
                 capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
                 capabilities.SetCapability("name", "android - complex");
-                capabilities.SetCapability("tags", new string[] { "sample" });
+                capabilities.SetCapability("tags", new string[] {"sample"});
             }
             Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIAndroid;
             driver = new AndroidDriver<AndroidElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
@@ -65,7 +65,7 @@ namespace Appium.Integration.Tests.Android
         [Test()]
         public void SwipeTest()
         {
-            driver.StartActivity("io.appium.android.apis",".graphics.FingerPaint");
+            driver.StartActivity("io.appium.android.apis", ".graphics.FingerPaint");
             AndroidElement element = driver.FindElementById("android:id/content");
             Point point = element.Coordinates.LocationInDom;
             Size size = element.Size;

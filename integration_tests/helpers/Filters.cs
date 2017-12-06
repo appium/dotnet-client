@@ -11,7 +11,7 @@ namespace Appium.Integration.Tests.Helpers
             {
                 if (els[i].GetAttribute("name") == name)
                 {
-                    return (W)els[i];
+                    return (W) els[i];
                 }
             }
             return null;
@@ -28,7 +28,6 @@ namespace Appium.Integration.Tests.Helpers
                 }
             }
             return res;
-
         }
 
         public static IList<IWebElement> FilterDisplayed<W>(IList<W> els) where W : IWebElement
@@ -44,6 +43,5 @@ namespace Appium.Integration.Tests.Helpers
             }
             return res;
         }
-
     }
 }

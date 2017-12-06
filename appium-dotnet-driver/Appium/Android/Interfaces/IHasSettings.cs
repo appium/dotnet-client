@@ -17,7 +17,7 @@ using System.Collections.Generic;
 
 namespace OpenQA.Selenium.Appium.Android.Interfaces
 {
-    public interface IHasSettings: IExecuteMethod
+    public interface IHasSettings : IExecuteMethod
     {
         /// <summary>
         /// Set a setting for this test session It's probably better to use a
@@ -31,10 +31,7 @@ namespace OpenQA.Selenium.Appium.Android.Interfaces
         /// <summary>
         /// Gets/Sets settings stored for this test session.
         /// </summary>
-        Dictionary<string, object> Settings {
-            set;
-            get;
-        }
+        Dictionary<string, object> Settings { set; get; }
 
         /// <summary>
         ///  Set the `ignoreUnimportantViews` setting. * Android-only method*.
@@ -75,6 +72,5 @@ namespace OpenQA.Selenium.Appium.Android.Interfaces
         /// </summary>
         /// <param name="timeout">timeout in milliseconds. A negative value would reset to its default value</param>
         void ConfiguratorSetActionAcknowledgmentTimeout(int timeout);
-
     }
 }

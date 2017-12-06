@@ -20,7 +20,6 @@ namespace OpenQA.Selenium.Appium.Enums
     /// </summary>
     public sealed class IOSMobileCapabilityType
     {
-
         /// <summary>
         /// (Sim-only) Calendar format to set for the iOS Simulator
         /// </summary>

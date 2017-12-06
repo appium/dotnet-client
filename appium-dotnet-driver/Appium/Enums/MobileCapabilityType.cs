@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
 using System;
 
 namespace OpenQA.Selenium.Appium.Enums
@@ -92,6 +93,5 @@ namespace OpenQA.Selenium.Appium.Enums
         /// On Android, this will also remove the app after the session is complete. Default false
         /// </summary>
         public static readonly string FullReset = "fullReset";
-
     }
 }

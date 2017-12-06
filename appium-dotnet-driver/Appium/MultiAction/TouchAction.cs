@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
 using OpenQA.Selenium.Appium.Interfaces;
 using System.Collections.Generic;
 using System.Reflection;
@@ -19,7 +20,6 @@ using OpenQA.Selenium.Internal;
 
 namespace OpenQA.Selenium.Appium.MultiTouch
 {
-
     public class TouchAction : ITouchAction
     {
         internal class Step
@@ -28,10 +28,9 @@ namespace OpenQA.Selenium.Appium.MultiTouch
 
             private string GetIdForElement(IWebElement el)
             {
-
                 RemoteWebElement remoteWebElement = el as RemoteWebElement;
                 if (remoteWebElement != null)
-                    return (string)typeof(OpenQA.Selenium.Remote.RemoteWebElement).GetProperty("Id",
+                    return (string) typeof(OpenQA.Selenium.Remote.RemoteWebElement).GetProperty("Id",
                         BindingFlags.NonPublic |
                         BindingFlags.Instance).GetValue(el, null);
 
@@ -55,15 +54,15 @@ namespace OpenQA.Selenium.Appium.MultiTouch
                     if (value is IWebElement)
                     {
                         string id = GetIdForElement((IWebElement) value);
-                        ((Dictionary<string, object>)this.parameters["options"]).Add(name, id);
+                        ((Dictionary<string, object>) this.parameters["options"]).Add(name, id);
                     }
                     else if (value is double)
                     {
                         double doubleValue = (double) value;
-                        if (doubleValue == (int)doubleValue)
+                        if (doubleValue == (int) doubleValue)
                         {
                             ((Dictionary<string, object>) parameters["options"])
-                                .Add(name, (int)doubleValue);
+                                .Add(name, (int) doubleValue);
                         }
                         else
                         {
@@ -285,7 +284,5 @@ namespace OpenQA.Selenium.Appium.MultiTouch
         {
             TouchActionPerformer.PerformTouchAction(this);
         }
-
     }
 }
-

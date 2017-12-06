@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
 using OpenQA.Selenium.Appium.Interfaces;
 
 namespace OpenQA.Selenium.Appium.Android
@@ -28,7 +29,8 @@ namespace OpenQA.Selenium.Appium.Android
         /// <param name="appWaitPackage">Begin automation after this package starts. Can be null or empty.</param>
         /// <param name="appWaitActivity">Begin automation after this activity starts. Can be null or empty.</param>
         /// <param name="stopApp">If true, target app will be stopped.</param>
-        void StartActivity(string appPackage, string appActivity, string appWaitPackage = "", string appWaitActivity = "", bool stopApp = true);
+        void StartActivity(string appPackage, string appActivity, string appWaitPackage = "",
+            string appWaitActivity = "", bool stopApp = true);
 
         /// <summary>
         /// Opens an arbitrary activity during a test. If the activity belongs to
@@ -44,16 +46,14 @@ namespace OpenQA.Selenium.Appium.Android
         /// <param name="intentFlags">Flags that will be used to start activity.</param>
         /// <param name="intentOptionalArgs">Additional intent arguments that will be used to start activity.</param>
         /// <param name="stopApp">If true, target app will be stopped.</param>
-        void StartActivityWithIntent(string appPackage, string appActivity, string intentAction, string appWaitPackage = "", string appWaitActivity = "",
-             string intentCategory = "", string intentFlags = "", string intentOptionalArgs = "", bool stopApp = true);
+        void StartActivityWithIntent(string appPackage, string appActivity, string intentAction,
+            string appWaitPackage = "", string appWaitActivity = "",
+            string intentCategory = "", string intentFlags = "", string intentOptionalArgs = "", bool stopApp = true);
 
         /// <summary>
         /// Gets Current Device Activity.
         /// </summary>
         /// 
-        string CurrentActivity
-        {
-            get;
-        }
+        string CurrentActivity { get; }
     }
 }

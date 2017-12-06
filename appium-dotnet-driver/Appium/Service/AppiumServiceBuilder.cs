@@ -29,8 +29,8 @@ namespace OpenQA.Selenium.Appium.Service
     public class AppiumServiceBuilder
     {
         private static readonly string ErrorNodeNotFound = "There is no installed nodes! Please install " +
-                                " node via NPM (https://www.npmjs.com/package/appium#using-node-js) or download and " +
-                                "install Appium app (http://appium.io/downloads.html)";
+                                                           " node via NPM (https://www.npmjs.com/package/appium#using-node-js) or download and " +
+                                                           "install Appium app (http://appium.io/downloads.html)";
 
         private OptionCollector ServerOptions;
         private FileInfo AppiumJS;
@@ -109,7 +109,7 @@ namespace OpenQA.Selenium.Appium.Service
             if (!node.Exists)
             {
                 throw new InvalidServerInstanceException($"The invalid appium node {absoluteNodePath} has been defined",
-                        new IOException($"The node {absoluteNodePath} doesn't exist"));
+                    new IOException($"The node {absoluteNodePath} doesn't exist"));
             }
         }
 
@@ -121,9 +121,12 @@ namespace OpenQA.Selenium.Appium.Service
             {
                 expandedPath = Environment.ExpandEnvironmentVariables(path);
                 if (!Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows) &&
-                    !expandedPath.Contains($"{Path.DirectorySeparatorChar}usr{Path.DirectorySeparatorChar}local{Path.DirectorySeparatorChar}bin"))
+                    !expandedPath.Contains(
+                        $"{Path.DirectorySeparatorChar}usr{Path.DirectorySeparatorChar}local{Path.DirectorySeparatorChar}bin")
+                )
                 {
-                    expandedPath = $"{expandedPath}{Path.PathSeparator}{Path.DirectorySeparatorChar}usr{Path.DirectorySeparatorChar}local{Path.DirectorySeparatorChar}bin";
+                    expandedPath =
+                        $"{expandedPath}{Path.PathSeparator}{Path.DirectorySeparatorChar}usr{Path.DirectorySeparatorChar}local{Path.DirectorySeparatorChar}bin";
                 }
 
                 string[] dirs = expandedPath.Split(Path.PathSeparator);
@@ -139,7 +142,8 @@ namespace OpenQA.Selenium.Appium.Service
                     }
                     else
                     {
-                        throw new IOException($"Can not parse environmental variable PATH because the directory name \"{dir}\" contains invalid characters!");
+                        throw new IOException(
+                            $"Can not parse environmental variable PATH because the directory name \"{dir}\" contains invalid characters!");
                     }
                 }
             }
@@ -191,7 +195,8 @@ namespace OpenQA.Selenium.Appium.Service
                 try
                 {
                     DirectoryInfo defaultAppiumNode;
-                    if (string.IsNullOrEmpty(instancePath) || !(defaultAppiumNode = new DirectoryInfo(instancePath + Path.DirectorySeparatorChar +
+                    if (string.IsNullOrEmpty(instancePath) || !(defaultAppiumNode = new DirectoryInfo(
+                            instancePath + Path.DirectorySeparatorChar +
                             AppiumServiceConstants.AppiumFolder)).Exists)
                     {
                         throw new InvalidServerInstanceException(ErrorNodeNotFound);
@@ -199,14 +204,15 @@ namespace OpenQA.Selenium.Appium.Service
 
                     //appium servers v1.5.x and higher
                     FileInfo newResult;
-                    if ((newResult = new FileInfo(defaultAppiumNode.FullName + AppiumServiceConstants.AppiumNodeMask)).Exists)
+                    if ((newResult = new FileInfo(defaultAppiumNode.FullName + AppiumServiceConstants.AppiumNodeMask))
+                        .Exists)
                     {
                         return newResult;
                     }
 
                     throw new InvalidServerInstanceException(ErrorNodeNotFound,
-                                new IOException($"Could not find the file " +
-                                $"{ AppiumServiceConstants.AppiumNodeMask} in the {defaultAppiumNode} directory"));
+                        new IOException($"Could not find the file " +
+                                        $"{AppiumServiceConstants.AppiumNodeMask} in the {defaultAppiumNode} directory"));
                 }
                 finally
                 {
@@ -234,7 +240,7 @@ namespace OpenQA.Selenium.Appium.Service
                     else
                     {
                         throw new InvalidNodeJSInstanceException($"The defined value {result.FullName} of the " +
-                            $"{AppiumServiceConstants.NodeBinaryPath} refers to unexisting file!");
+                                                                 $"{AppiumServiceConstants.NodeBinaryPath} refers to unexisting file!");
                     }
                 }
 
@@ -257,8 +263,8 @@ namespace OpenQA.Selenium.Appium.Service
 
                 if (string.IsNullOrEmpty(filePath))
                 {
-
-                    string errorMessage = "Couldn't find a path to the default Node.js instance from the PATH environmental variable. It seems Node.js is not " +
+                    string errorMessage =
+                        "Couldn't find a path to the default Node.js instance from the PATH environmental variable. It seems Node.js is not " +
                         $"installed on this computer. Please check the PATH environmental variable or define the {AppiumServiceConstants.NodeBinaryPath} " +
                         "environmental variable value.";
                     throw new InvalidNodeJSInstanceException(errorMessage);
@@ -389,9 +395,9 @@ namespace OpenQA.Selenium.Appium.Service
             try
             {
                 sock = new Socket(AddressFamily.InterNetwork,
-                         SocketType.Stream, ProtocolType.Tcp);
+                    SocketType.Stream, ProtocolType.Tcp);
                 sock.Bind(new IPEndPoint(IPAddress.Any, 0));
-                Port = ((IPEndPoint)sock.LocalEndPoint).Port;
+                Port = ((IPEndPoint) sock.LocalEndPoint).Port;
                 return this;
             }
             finally

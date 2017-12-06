@@ -9,39 +9,28 @@ namespace Appium.Integration.Tests.PageObjects
     {
         /////////////////////////////////////////////////////////////////
 
-        [FindsBySelendroid(ID = "my_text_field")]
-        private IWebElement testMobileElement;
+        [FindsBySelendroid(ID = "my_text_field")] private IWebElement testMobileElement;
+
+        [FindsBySelendroid(ID = "my_text_field")] private IList<IWebElement> testMobileElements;
 
         [FindsBySelendroid(ID = "my_text_field")]
-        private IList<IWebElement> testMobileElements;
+        private IWebElement TestMobileElement { set; get; }
 
         [FindsBySelendroid(ID = "my_text_field")]
-        private IWebElement TestMobileElement
-        {
-            set; get;
-        }
-
-        [FindsBySelendroid(ID = "my_text_field")]
-        private IList<IWebElement> TestMobileElements
-        {
-            set; get;
-        }
+        private IList<IWebElement> TestMobileElements { set; get; }
 
         [FindsBySelendroid(ID = "fake_content", Priority = 1)]
         [FindsBySelendroid(ClassName = "android.webkit.WebView", Priority = 2)] //There is no Webview at the screen
         [FindsBySelendroid(ID = "waitingButtonTest", Priority = 3)]
-
-        [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/fakeId\")", Priority = 1)]
-        [FindsByAndroidUIAutomator(ID = "FakeId", Priority = 2)]
-        [FindsByAndroidUIAutomator(ClassName = "FakeClass", Priority = 3)]
-        private IWebElement testMultipleElement;
+        [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/fakeId\")",
+            Priority = 1)] [FindsByAndroidUIAutomator(ID = "FakeId", Priority = 2)]
+        [FindsByAndroidUIAutomator(ClassName = "FakeClass", Priority = 3)] private IWebElement testMultipleElement;
 
         [FindsBySelendroid(ID = "fake_content", Priority = 1)]
         [FindsBySelendroid(ClassName = "android.webkit.WebView", Priority = 2)] //There is no Webview at the screen
         [FindsBySelendroid(LinkText = "Press to throw unhandled exception", Priority = 3)]
-
-        [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/fakeId\")", Priority = 1)]
-        [FindsByAndroidUIAutomator(ID = "FakeId", Priority = 2)]
+        [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/fakeId\")",
+            Priority = 1)] [FindsByAndroidUIAutomator(ID = "FakeId", Priority = 2)]
         [FindsByAndroidUIAutomator(ClassName = "FakeClass", Priority = 3)]
         private IList<IWebElement> testMultipleElements;
 
@@ -51,37 +40,29 @@ namespace Appium.Integration.Tests.PageObjects
         [FindsBySelendroid(ID = "fake_content", Priority = 1)]
         [FindsBySelendroid(ClassName = "android.webkit.WebView", Priority = 2)] //There is no Webview at the screen
         [FindsBySelendroid(LinkText = "Press to throw unhandled exception", Priority = 3)]
-        private IWebElement TestMultipleFindByElementProperty
-        {
-            set; get;
-        }
+        private IWebElement TestMultipleFindByElementProperty { set; get; }
 
         [FindsBySelendroid(ID = "fake_content", Priority = 1)]
         [FindsBySelendroid(ClassName = "android.webkit.WebView", Priority = 2)] //There is no Webview at the screen
         [FindsBySelendroid(LinkText = "Press to throw unhandled exception", Priority = 3)]
-        private IList<IWebElement> MultipleFindByElementsProperty
-        {
-            set; get;
-        }
+        private IList<IWebElement> MultipleFindByElementsProperty { set; get; }
 
-        [MobileFindsBySequence(Android = true, Selendroid = true)]
-        [FindsBySelendroid(ID = "content", Priority = 1)]
+        [MobileFindsBySequence(Android = true, Selendroid = true)] [FindsBySelendroid(ID = "content", Priority = 1)]
         [FindsBySelendroid(ClassName = "android.widget.FrameLayout", Priority = 2)]
         [FindsBySelendroid(LinkText = "Press to throw unhandled exception", Priority = 3)]
-
-        [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/content\")", Priority = 1)]
-        [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/list\")", Priority = 2)]
-        [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 3)]
+        [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/content\")",
+            Priority = 1)]
+        [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/list\")",
+            Priority = 2)] [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 3)]
         private IWebElement foundByChainedSearchElement;
 
-        [MobileFindsBySequence(Android = true, Selendroid = true)]
-        [FindsBySelendroid(ID = "content", Priority = 1)]
+        [MobileFindsBySequence(Android = true, Selendroid = true)] [FindsBySelendroid(ID = "content", Priority = 1)]
         [FindsBySelendroid(ClassName = "android.widget.FrameLayout", Priority = 2)]
         [FindsBySelendroid(LinkText = "Press to throw unhandled exception", Priority = 3)]
-
-        [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/content\")", Priority = 1)]
-        [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/list\")", Priority = 2)]
-        [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 3)]
+        [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/content\")",
+            Priority = 1)]
+        [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/list\")",
+            Priority = 2)] [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 3)]
         private IList<IWebElement> foundByChainedSearchElements;
 
         /////////////////////////////////////////////////////////////////
@@ -90,27 +71,23 @@ namespace Appium.Integration.Tests.PageObjects
         [FindsBySelendroid(ID = "content", Priority = 1)]
         [FindsBySelendroid(ClassName = "android.widget.FrameLayout", Priority = 2)]
         [FindsBySelendroid(PartialLinkText = "Press to throw unhandled exception", Priority = 3)]
-
-        [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/content\")", Priority = 1)]
-        [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/list\")", Priority = 2)]
+        [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/content\")",
+            Priority = 1)]
+        [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/list\")",
+            Priority = 2)]
         [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 3)]
-        private IWebElement TestFoundByChainedSearchElementProperty
-        {
-            set; get;
-        }
+        private IWebElement TestFoundByChainedSearchElementProperty { set; get; }
 
         [MobileFindsBySequence(Android = true, Selendroid = true)]
         [FindsBySelendroid(ID = "content", Priority = 1)]
         [FindsBySelendroid(ClassName = "android.widget.FrameLayout", Priority = 2)]
         [FindsBySelendroid(PartialLinkText = "Press to throw unhandled exception", Priority = 3)]
-
-        [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/content\")", Priority = 1)]
-        [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/list\")", Priority = 2)]
+        [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/content\")",
+            Priority = 1)]
+        [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/list\")",
+            Priority = 2)]
         [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 3)]
-        private IList<IWebElement> TestFoundByChainedSearchElementsProperty
-        {
-            set; get;
-        }
+        private IList<IWebElement> TestFoundByChainedSearchElementsProperty { set; get; }
 
         [MobileFindsByAll(Selendroid = true)]
         [FindsBySelendroid(LinkText = "Press to throw unhandled exception", Priority = 1)]
@@ -133,20 +110,14 @@ namespace Appium.Integration.Tests.PageObjects
         //[FindsByAndroidUIAutomator(ID = "waitingButtonTest", Priority = 2)]
         //Equals method of RemoteWebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
-        private IWebElement TestMatchedToAllLocatorsElementProperty
-        {
-            set; get;
-        }
+        private IWebElement TestMatchedToAllLocatorsElementProperty { set; get; }
 
         [MobileFindsByAll(Selendroid = true)]
         [FindsBySelendroid(LinkText = "Press to throw unhandled exception", Priority = 1)]
         //[FindsByAndroidUIAutomator(ID = "waitingButtonTest", Priority = 2)]
         //Equals method of RemoteWebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
-        private IList<IWebElement> TestMatchedToAllLocatorsElementsProperty
-        {
-            set; get;
-        }
+        private IList<IWebElement> TestMatchedToAllLocatorsElementsProperty { set; get; }
 
         //////////////////////////////////////////////////////////////////////////
         public string GetMobileElementText()
@@ -231,6 +202,5 @@ namespace Appium.Integration.Tests.PageObjects
         {
             return TestMatchedToAllLocatorsElementsProperty.Count;
         }
-
     }
 }

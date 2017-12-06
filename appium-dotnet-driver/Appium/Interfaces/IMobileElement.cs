@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
 using Appium.Interfaces.Generic.SearchContext;
 
 namespace OpenQA.Selenium.Appium.Interfaces
@@ -23,10 +24,10 @@ namespace OpenQA.Selenium.Appium.Interfaces
         IGenericFindsByClassName<W>,
         IGenericFindsById<W>, IGenericFindsByCssSelector<W>, IGenericFindsByLinkText<W>,
         IGenericFindsByName<W>,
-        IGenericFindsByPartialLinkText<W>, IGenericFindsByTagName<W>, IGenericFindsByXPath<W>, IWebElement, IExecuteMethod
+        IGenericFindsByPartialLinkText<W>, IGenericFindsByTagName<W>, IGenericFindsByXPath<W>, IWebElement,
+        IExecuteMethod
         where W : IWebElement
     {
-
         /// <summary>
         /// Convenience method for pinching the given element.
         /// "pinching" refers to the action of two appendages pressing the screen and sliding towards each other.

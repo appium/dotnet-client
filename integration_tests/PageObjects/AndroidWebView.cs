@@ -10,30 +10,31 @@ namespace Appium.Integration.Tests.PageObjects
     {
         [FindsBy(How = How.Id, Using = "name_input")]
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/fakeID\")")]
-	    private IWebElement name;
+        private IWebElement name;
 
-	    [FindsBy(How = How.Name, Using = "car")]
+        [FindsBy(How = How.Name, Using = "car")]
+        [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/fakeID\")")]
+        [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[0]")] private IWebElement carSelect;
+
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/fakeID\")")]
         [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[0]")]
-	    private IWebElement carSelect;
+        [FindsBy(How = How.XPath, Using = ".//*[@type=\"submit\"]")] private IWebElement sendMeYourName;
 
-        [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/fakeID\")")]
-        [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[0]")]
-	    [FindsBy(How = How.XPath, Using =".//*[@type=\"submit\"]")]
-	    private IWebElement sendMeYourName;
+        public void SetName(string name)
+        {
+            this.name.Clear();
+            this.name.SendKeys(name);
+        }
 
-	    public void SetName(string name){
-		    this.name.  Clear();
-		    this.name.SendKeys(name);
-	    }
-	
-	    public void SelectCar(String car){
+        public void SelectCar(String car)
+        {
             SelectElement select = new SelectElement(carSelect);
-		    select.SelectByValue(car);
-	    }
-	
-	    public void SendMeYourName() {
-		    sendMeYourName.Submit();
-	    }
+            select.SelectByValue(car);
+        }
+
+        public void SendMeYourName()
+        {
+            sendMeYourName.Submit();
+        }
     }
 }

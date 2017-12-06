@@ -15,9 +15,8 @@
 
 namespace OpenQA.Selenium.Appium.Interfaces
 {
-    public interface ISendsKeyEvents: IExecuteMethod
+    public interface ISendsKeyEvents : IExecuteMethod
     {
-
         /// <summary>
         /// Sends a device key event with metastate
         /// </summary>

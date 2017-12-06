@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
 using System.Collections.ObjectModel;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Remote;
@@ -27,9 +28,10 @@ namespace OpenQA.Selenium.Appium.Windows
 
         #region IFindByWindowsUIAutomation Members
 
-        public AppiumWebElement FindElementByWindowsUIAutomation(string selector) => FindElement(MobileSelector.WindowsUIAutomation, selector);
+        public AppiumWebElement FindElementByWindowsUIAutomation(string selector) =>
+            FindElement(MobileSelector.WindowsUIAutomation, selector);
 
-        public ReadOnlyCollection<AppiumWebElement> FindElementsByWindowsUIAutomation(string selector) => 
+        public ReadOnlyCollection<AppiumWebElement> FindElementsByWindowsUIAutomation(string selector) =>
             FindElements(MobileSelector.WindowsUIAutomation, selector);
 
         #endregion IFindByWindowsUIAutomation Members

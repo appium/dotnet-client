@@ -6,11 +6,11 @@ using System;
 
 namespace Appium.Integration.Tests.Helpers
 {
-	public class AppiumServers
-	{
+    public class AppiumServers
+    {
         private static AppiumLocalService LocalService;
 
-		public static Uri sauceURI = new Uri("http://ondemand.saucelabs.com:80/wd/hub");
+        public static Uri sauceURI = new Uri("http://ondemand.saucelabs.com:80/wd/hub");
 
         public static Uri LocalServiceURIAndroid
         {
@@ -18,7 +18,8 @@ namespace Appium.Integration.Tests.Helpers
             {
                 if (LocalService == null)
                 {
-                    AppiumServiceBuilder builder = new AppiumServiceBuilder().WithLogFile(new System.IO.FileInfo("Log"));
+                    AppiumServiceBuilder builder =
+                        new AppiumServiceBuilder().WithLogFile(new System.IO.FileInfo("Log"));
                     LocalService = builder.Build();
                 }
 
@@ -39,7 +40,8 @@ namespace Appium.Integration.Tests.Helpers
                 {
                     AppiumServiceBuilder builder = new AppiumServiceBuilder();
                     DesiredCapabilities capabilities = new DesiredCapabilities();
-                    capabilities.SetCapability(IOSMobileCapabilityType.LaunchTimeout, Env.INIT_TIMEOUT_SEC.TotalMilliseconds);
+                    capabilities.SetCapability(IOSMobileCapabilityType.LaunchTimeout,
+                        Env.INIT_TIMEOUT_SEC.TotalMilliseconds);
                     OptionCollector collector = new OptionCollector().AddCapabilities(capabilities).
                         //I use MAC OS X VMWare image. Sometimes it is very slow. 
                         AddArguments(IOSOptionList.BackEndRetries("5"));
@@ -63,6 +65,5 @@ namespace Appium.Integration.Tests.Helpers
                 LocalService = null;
             }
         }
-	}
+    }
 }
-

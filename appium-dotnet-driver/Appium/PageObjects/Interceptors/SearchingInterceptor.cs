@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
 using Castle.DynamicProxy;
 using OpenQA.Selenium.Support.PageObjects;
 using OpenQA.Selenium.Support.UI;
@@ -31,20 +32,21 @@ namespace OpenQA.Selenium.Appium.PageObjects.Interceptors
         protected readonly bool shouldCache;
         protected object cached;
 
-        public SearchingInterceptor(IEnumerable<By> bys, IElementLocator locator, TimeOutDuration waitingTimeSpan, bool shouldCache)
+        public SearchingInterceptor(IEnumerable<By> bys, IElementLocator locator, TimeOutDuration waitingTimeSpan,
+            bool shouldCache)
         {
             this.locator = locator;
             this.waitingTimeSpan = waitingTimeSpan;
             this.shouldCache = shouldCache;
             this.bys = bys;
             waitingForElementList = new DefaultWait<IElementLocator>(locator);
-            waitingForElementList.IgnoreExceptionTypes(new Type[] { typeof(StaleElementReferenceException) });
-
+            waitingForElementList.IgnoreExceptionTypes(new Type[] {typeof(StaleElementReferenceException)});
         }
 
         internal abstract object getTarget(IInvocation invocation);
 
-        internal static Func<IElementLocator, ReadOnlyCollection<IWebElement>> ReturnWaitingFunction(IElementLocator locator,
+        internal static Func<IElementLocator, ReadOnlyCollection<IWebElement>> ReturnWaitingFunction(
+            IElementLocator locator,
             IEnumerable<By> bys)
         {
             return (IElementLocator) =>
@@ -67,7 +69,6 @@ namespace OpenQA.Selenium.Appium.PageObjects.Interceptors
                     {
                         throw e;
                     }
-
                 }
                 if (result.Count > 0)
                     return result.AsReadOnly();

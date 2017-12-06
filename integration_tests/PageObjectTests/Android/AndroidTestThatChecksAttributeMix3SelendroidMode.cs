@@ -27,7 +27,7 @@ namespace Appium.Integration.Tests.PageObjectTests.Android
                 capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
                 capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
                 capabilities.SetCapability("name", "android - complex");
-                capabilities.SetCapability("tags", new string[] { "sample" });
+                capabilities.SetCapability("tags", new string[] {"sample"});
             }
             Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIAndroid;
             driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
@@ -50,7 +50,7 @@ namespace Appium.Integration.Tests.PageObjectTests.Android
             }
         }
 
-         [Test()]
+        [Test()]
         public void CheckMobileElement()
         {
             Assert.NotNull(pageObject.GetMobileElementText());

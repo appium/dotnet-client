@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
 using System;
 
 namespace OpenQA.Selenium.Appium
@@ -162,6 +163,7 @@ namespace OpenQA.Selenium.Appium
         #endregion Appium Specific extensions to JSONWP Commands
 
         #region TouchActions
+
         /// <summary>
         /// Perform touch action
         /// </summary>
@@ -171,9 +173,11 @@ namespace OpenQA.Selenium.Appium
         /// Perform multi touch action
         /// </summary>
         public const string PerformMultiAction = "performMultiTouch";
+
         #endregion MultiTouchActions
 
         #region Context Commands
+
         /// <summary>
         /// Represents the Contexts command
         /// </summary>
@@ -188,9 +192,11 @@ namespace OpenQA.Selenium.Appium
         /// Represents the Set Context command
         /// </summary>
         public const string SetContext = "setContext";
+
         #endregion Context Commands
 
         #region JSON Wire Protocol
+
         /// <summary>
         /// Represents the Get Orientation Command
         /// </summary>
@@ -251,10 +257,10 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string UpdateSettings = "updateSettings";
 
-	/// <summary>
-	/// Represents the TouchID command
-	/// </summary>
-	public const string TouchID = "touchId";
+        /// <summary>
+        /// Represents the TouchID command
+        /// </summary>
+        public const string TouchID = "touchId";
 
         public const string ReplaceValue = "replaceValue";
 

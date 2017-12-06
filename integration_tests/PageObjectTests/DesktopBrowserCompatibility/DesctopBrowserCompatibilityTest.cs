@@ -20,13 +20,10 @@ namespace Appium.Integration.Tests.PageObjectTests.DesktopBrowserCompatibility
 
         [FindsBy(How = How.Name, Using = "q")]
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/someId\")")]
-        [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[0]")]
-        private IWebElement searchTextField;
+        [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[0]")] private IWebElement searchTextField;
 
-        [FindsByAndroidUIAutomator(ClassName = "someClass")]
-        [FindsByIOSUIAutomation(IosUIAutomation = "//selector[1]")]
-        [FindsBy(How = How.Name, Using = "btnG")]
-        private IWebElement searchButton;
+        [FindsByAndroidUIAutomator(ClassName = "someClass")] [FindsByIOSUIAutomation(IosUIAutomation = "//selector[1]")]
+        [FindsBy(How = How.Name, Using = "btnG")] private IWebElement searchButton;
 
         [CacheLookup] //this element will be found once
         private IWebElement ires; //Should be found by ID or Name equal "ires"
@@ -51,7 +48,8 @@ namespace Appium.Integration.Tests.PageObjectTests.DesktopBrowserCompatibility
             try
             {
                 if (Env.isSauce())
-                    ((IJavaScriptExecutor)driver).ExecuteScript("sauce:job-result=" + (allPassed ? "passed" : "failed"));
+                    ((IJavaScriptExecutor) driver).ExecuteScript(
+                        "sauce:job-result=" + (allPassed ? "passed" : "failed"));
             }
             finally
             {
@@ -70,7 +68,8 @@ namespace Appium.Integration.Tests.PageObjectTests.DesktopBrowserCompatibility
             Assert.AreNotEqual(((IWrapsElement) ires).WrappedElement, null);
 
             //this checking notices that element is found once and cached
-            Assert.AreEqual(((IWrapsElement)ires).WrappedElement.GetHashCode(), ((IWrapsElement)ires).WrappedElement.GetHashCode());
+            Assert.AreEqual(((IWrapsElement) ires).WrappedElement.GetHashCode(),
+                ((IWrapsElement) ires).WrappedElement.GetHashCode());
 
             //this checking notices that element are found once and cached
             IList<IWebElement> cachedList = links.Links;
@@ -93,8 +92,6 @@ namespace Appium.Integration.Tests.PageObjectTests.DesktopBrowserCompatibility
         [FindsBySequence]
         [FindsBy(How = How.ClassName, Using = "r", Priority = 1)]
         [FindsBy(How = How.TagName, Using = "a", Priority = 2)]
-        public IList<IWebElement> Links { set;  get; }
-
-        
+        public IList<IWebElement> Links { set; get; }
     }
 }

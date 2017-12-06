@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
 using OpenQA.Selenium.Appium.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -50,11 +51,12 @@ namespace OpenQA.Selenium.Appium.PageObjects
 
             string message = e.Message;
 
-            if (!string.IsNullOrWhiteSpace(message) && (typeof(InvalidSelectorException).IsAssignableFrom(e.GetType()) ||
-                message.Contains(invalid_selector_pattern)))
+            if (!string.IsNullOrWhiteSpace(message) &&
+                (typeof(InvalidSelectorException).IsAssignableFrom(e.GetType()) ||
+                 message.Contains(invalid_selector_pattern)))
             {
                 return true;
-            }            
+            }
 
             return IsInvalidSelectorRootCause(e.InnerException);
         }
@@ -104,8 +106,8 @@ namespace OpenQA.Selenium.Appium.PageObjects
                 return ReturnByString(defaultBy);
 
             return "Locator map: " + "\n" +
-                    "- native content: \"" + ReturnByString(nativeBy) + "\" \n" +
-                    "- html content: \"" + ReturnByString(defaultBy) + "\"";
+                   "- native content: \"" + ReturnByString(nativeBy) + "\" \n" +
+                   "- html content: \"" + ReturnByString(defaultBy) + "\"";
         }
     }
 }

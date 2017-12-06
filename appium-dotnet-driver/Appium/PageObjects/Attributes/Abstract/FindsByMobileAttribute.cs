@@ -11,6 +11,7 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,8 +32,9 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract
 
             if (byList.Count > 1)
             {
-                throw new ArgumentException("There should be defined only one locator strategy. Few strategies are being defined " +
-                "right now: " + byList.ToString());
+                throw new ArgumentException(
+                    "There should be defined only one locator strategy. Few strategies are being defined " +
+                    "right now: " + byList.ToString());
             }
         }
 
@@ -43,7 +45,6 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract
                 ValidateByDefinition();
                 return byList[0];
             }
-
         }
 
         /// <summary>
@@ -75,7 +76,7 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract
         /// <param name="one">One instance to compare.</param>
         /// <param name="two">The other instance to compare.</param>
         /// <returns><see langword="true"/> if the two instances are not equal; otherwise, <see langword="false"/>.</returns>
-        public static bool operator !=(FindsByMobileAttribute one, FindsByMobileAttribute two) => 
+        public static bool operator !=(FindsByMobileAttribute one, FindsByMobileAttribute two) =>
             !(one == two);
 
         /// <summary>
@@ -193,14 +194,8 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract
         /// </summary>
         public string ID
         {
-            set
-            {
-                byList.Add(By.Id(value));
-            }
-            get
-            {
-                return null;
-            }
+            set { byList.Add(By.Id(value)); }
+            get { return null; }
         }
 
         /// <summary>
@@ -208,14 +203,8 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract
         /// </summary>
         public string ClassName
         {
-            set
-            {
-                byList.Add(By.ClassName(value));
-            }
-            get
-            {
-                return null;
-            }
+            set { byList.Add(By.ClassName(value)); }
+            get { return null; }
         }
 
         /// <summary>
@@ -223,31 +212,18 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract
         /// </summary>
         public string TagName
         {
-            set
-            {
-                byList.Add(By.TagName(value));
-            }
-            get
-            {
-                return null;
-            }
+            set { byList.Add(By.TagName(value)); }
+            get { return null; }
         }
 
-        
+
         /// <summary>
         /// Sets the target element xpath
         /// </summary>
         public string XPath
         {
-            set
-            {
-                byList.Add(By.XPath(value));
-            }
-            get
-            {
-                return null;
-            }
+            set { byList.Add(By.XPath(value)); }
+            get { return null; }
         }
-
     }
 }
