@@ -40,7 +40,7 @@ namespace OpenQA.Selenium.Appium.PageObjects.Interceptors
             ITimeouts timeOuts = WebDriverUnpackUtility.UnpackWebdriver(locator.SearchContext).Manage().Timeouts();
             try
             {
-                timeOuts.ImplicitlyWait(zeroTimeSpan);
+                timeOuts.ImplicitWait = zeroTimeSpan;
                 waitingForElementList.Timeout = waitingTimeSpan.WaitingDuration;
                 var result = waitingForElementList.Until(ReturnWaitingFunction(locator, bys))[0];
                 if (shouldCache && cached == null)
@@ -56,7 +56,7 @@ namespace OpenQA.Selenium.Appium.PageObjects.Interceptors
             }
             finally
             {
-                timeOuts.ImplicitlyWait(waitingTimeSpan.WaitingDuration);
+                timeOuts.ImplicitWait = waitingTimeSpan.WaitingDuration;
             }
         }
 
