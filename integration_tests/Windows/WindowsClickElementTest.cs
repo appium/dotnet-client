@@ -37,7 +37,7 @@ namespace Appium.Integration.Tests.Windows
             // TODO: What about supporting AppiumServers.sauceURI ???
             CalculatorSession = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appCapabilities,
                 Env.INIT_TIMEOUT_SEC);
-            CalculatorSession.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
+            CalculatorSession.Manage().Timeouts().ImplicitWait = Env.IMPLICIT_TIMEOUT_SEC;
 
             CalculatorSession.FindElementByName("Clear").Click();
             CalculatorSession.FindElementByName("Seven").Click();
