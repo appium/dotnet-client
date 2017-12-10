@@ -42,7 +42,7 @@ namespace Appium.Integration.Tests.Windows
             appCapabilities.SetCapability("platformName", "Windows");
 
             Assert.IsNotNull(AlarmClockSession);
-            AlarmClockSession.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(2));
+            AlarmClockSession.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
 
             // Create a session for Desktop
             DesiredCapabilities desktopCapabilities = new DesiredCapabilities();

@@ -25,7 +25,7 @@ namespace Appium.Integration.Tests.iOS
             }
             Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIForIOS;
             driver = new IOSDriver<AppiumWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
-            driver.Manage().Timeouts().ImplicitlyWait(Env.IMPLICIT_TIMEOUT_SEC);
+            driver.Manage().Timeouts().ImplicitWait = Env.IMPLICIT_TIMEOUT_SEC;
         }
 
         [TestFixtureTearDown]
@@ -51,12 +51,6 @@ namespace Appium.Integration.Tests.iOS
             ReadOnlyCollection<AppiumWebElement> sliderCellStaticTextElements_2 = driver
                 .FindElementsByIosClassChain("**/XCUIElementTypeCell");
             Assert.AreEqual(sliderCellStaticTextElements_2.Count, 18);
-
-            AppiumWebElement actionSheetsCell =
-                driver.FindElement(
-                    new ByIosClassChain("**/XCUIElementTypeCell/XCUIElementTypeStaticText[`name == 'Action Sheets'`]"));
-            actionSheetsCell.Tap(1, 250);
-            driver.FindElementByIosClassChain("**/XCUIElementTypeNavigationBar/XCUIElementTypeButton").Click();
         }
     }
 }
