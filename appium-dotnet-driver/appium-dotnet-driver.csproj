@@ -77,6 +77,7 @@
     <Compile Include="Appium\Interfaces\IFindsByIosNSPredicate.cs" />
     <Compile Include="Appium\Interfaces\IExecuteMethod.cs" />
     <Compile Include="Appium\Interfaces\IFindsByFluentSelector.cs" />
+    <Compile Include="Appium\Interfaces\IHasSessionDetails.cs" />
     <Compile Include="Appium\Interfaces\IHidesKeyboardWithKeyName.cs" />
     <Compile Include="Appium\Interfaces\ISendsKeyEvents.cs" />
     <Compile Include="Appium\iOS\Interfaces\IPerformsTouchID.cs" />
