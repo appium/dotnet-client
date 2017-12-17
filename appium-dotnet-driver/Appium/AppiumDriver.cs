@@ -591,7 +591,7 @@ namespace OpenQA.Selenium.Appium
             get
             {
                 var session = 
-                    (Dictionary<string, object>) ((IExecuteMethod) this).Execute(AppiumDriverCommand.GetSession)
+                    (IDictionary<string, object>) ((IExecuteMethod) this).Execute(AppiumDriverCommand.GetSession)
                     .Value;
                 return new ReadOnlyDictionary<string, object>(session.Where(entry =>
                 {
@@ -605,7 +605,8 @@ namespace OpenQA.Selenium.Appium
 
         public object GetSessionDetail(string detail)
         {
-            return SessionDetails[detail];
+            var details = SessionDetails;
+            return details.ContainsKey(detail) ? details[detail] : null;
         }
 
         public string PlatformName
@@ -613,7 +614,7 @@ namespace OpenQA.Selenium.Appium
             get
             {
                 var platform = GetSessionDetail("platformName");
-                if (platform != null && string.IsNullOrEmpty(Convert.ToString(platform)))
+                if (platform == null || string.IsNullOrEmpty(Convert.ToString(platform)))
                 {
                     platform = GetSessionDetail("platform");
                 }
