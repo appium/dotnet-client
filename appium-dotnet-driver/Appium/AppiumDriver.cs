@@ -609,30 +609,12 @@ namespace OpenQA.Selenium.Appium
             return details.ContainsKey(detail) ? details[detail] : null;
         }
 
-        public string PlatformName
-        {
-            get
-            {
-                var platform = GetSessionDetail("platformName");
-                if (platform == null || string.IsNullOrEmpty(Convert.ToString(platform)))
-                {
-                    platform = GetSessionDetail("platform");
-                }
+        public string PlatformName => GetSessionDetail(MobileCapabilityType.PlatformName) as string 
+                                      ?? GetSessionDetail(CapabilityType.Platform) as string;
 
-                return platform == null ? null : Convert.ToString(platform);
-            }
-        }
+        public string AutomationName => GetSessionDetail(MobileCapabilityType.AutomationName) as string;
 
-        public string AutomationName
-        {
-            get
-            {
-                var automation = GetSessionDetail("automationName");
-                return automation == null ? null : Convert.ToString(automation);
-            }
-        }
-
-        public bool IsBrowser => GetSessionDetail("browserName") != null
+        public bool IsBrowser => GetSessionDetail(MobileCapabilityType.BrowserName) != null
                                  && Context.IndexOf("NATIVE_APP", StringComparison.OrdinalIgnoreCase) < 0;
 
         #endregion Session Data
