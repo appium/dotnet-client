@@ -37,6 +37,9 @@ namespace OpenQA.Selenium.Appium
         IGenericFindsById<W>, IGenericFindsByCssSelector<W>, IGenericFindsByLinkText<W>, IGenericFindsByName<W>,
         IGenericFindsByPartialLinkText<W>, IGenericFindsByTagName<W>, IGenericFindsByXPath<W> where W : IWebElement
     {
+
+        private const string NativeApp = "NATIVE_APP";
+        
         #region Constructors
 
         public AppiumDriver(ICommandExecutor commandExecutor, ICapabilities desiredCapabilities)
@@ -615,7 +618,7 @@ namespace OpenQA.Selenium.Appium
         public string AutomationName => GetSessionDetail(MobileCapabilityType.AutomationName) as string;
 
         public bool IsBrowser => GetSessionDetail(MobileCapabilityType.BrowserName) != null
-                                 && Context.IndexOf("NATIVE_APP", StringComparison.OrdinalIgnoreCase) < 0;
+                                 && Context.IndexOf(NativeApp, StringComparison.OrdinalIgnoreCase) < 0;
 
         #endregion Session Data
 
