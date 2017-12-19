@@ -63,6 +63,7 @@
     <Compile Include="Android\AndroidLocationTest.cs" />
     <Compile Include="Android\AndroidOrientationTest.cs" />
     <Compile Include="Android\IntentAndroidTest.cs" />
+    <Compile Include="Android\SessionDetailTest.cs" />
     <Compile Include="helpers\Apps.cs" />
     <Compile Include="helpers\Caps.cs" />
     <Compile Include="helpers\AppiumServers.cs" />
