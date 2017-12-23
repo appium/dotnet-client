@@ -55,7 +55,6 @@
     <Compile Include="Android\AndroidActivityTest.cs" />
     <Compile Include="Android\AndroidConnectionTest.cs" />
     <Compile Include="Android\AndroidElementTest.cs" />
-    <Compile Include="Android\AndroidGestureTest.cs" />
     <Compile Include="Android\AndroidSessionTest.cs" />
     <Compile Include="Android\AndroidSettingTest.cs" />
     <Compile Include="Android\FileInteractionTest.cs" />
@@ -74,7 +73,6 @@
     <Compile Include="Android\AndroidTouchActionTest.cs" />
     <Compile Include="iOS\iOSAlertTest.cs" />
     <Compile Include="iOS\iOSElementTest.cs" />
-    <Compile Include="iOS\iOSGestureTest.cs" />
     <Compile Include="iOS\iOSLocationTest.cs" />
     <Compile Include="iOS\iOSLockDeviceTest.cs" />
     <Compile Include="iOS\iOSOrientationTest.cs" />

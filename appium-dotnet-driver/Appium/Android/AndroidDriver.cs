@@ -28,7 +28,7 @@ namespace OpenQA.Selenium.Appium.Android
 {
     public class AndroidDriver<W> : AppiumDriver<W>, IFindByAndroidUIAutomator<W>, IStartsActivity,
         IHasNetworkConnection,
-        Appium.Interfaces.ISendsKeyEvents,
+        ISendsKeyEvents,
         IPushesFiles, IHasSettings where W : IWebElement
     {
         private static readonly string Platform = MobilePlatform.Android;
@@ -185,27 +185,12 @@ namespace OpenQA.Selenium.Appium.Android
         public string EndTestCoverage(string intent, string path) =>
             AndroidCommandExecutionHelper.EndTestCoverage(this, intent, path);
 
-        /// <summary>
-        /// Saves a string as a file on the remote mobile device.
-        /// </summary>
-        /// <param name="pathOnDevice">Path to file to write data to on remote device</param>
-        /// <param name="stringData">A string to write to remote device</param>
         public void PushFile(string pathOnDevice, string stringData) => AndroidCommandExecutionHelper.PushFile(this,
             pathOnDevice, Convert.FromBase64String(Convert.ToBase64String(Encoding.UTF8.GetBytes(stringData))));
 
-        /// <summary>
-        /// Saves base64 encoded data as a file on the remote mobile device.
-        /// </summary>
-        /// <param name="pathOnDevice">Path to file to write data to on remote device</param>
-        /// <param name="base64Data">Base64 encoded byte array of data to write to remote device</param>
         public void PushFile(string pathOnDevice, byte[] base64Data) =>
             AndroidCommandExecutionHelper.PushFile(this, pathOnDevice, base64Data);
 
-        /// <summary>
-        /// Saves given file as a file on the remote mobile device.
-        /// </summary>
-        /// <param name="pathOnDevice">Path to file to write data to on remote device</param>
-        /// <param name="base64Data">A file to write to remote device</param>
         public void PushFile(string pathOnDevice, FileInfo file) =>
             AndroidCommandExecutionHelper.PushFile(this, pathOnDevice, file);
 

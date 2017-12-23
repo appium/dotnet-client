@@ -15,11 +15,9 @@
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.iOS.Interfaces;
-using OpenQA.Selenium.Appium.MultiTouch;
 using OpenQA.Selenium.Appium.Service;
 using OpenQA.Selenium.Remote;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium.iOS
@@ -124,18 +122,8 @@ namespace OpenQA.Selenium.Appium.iOS
 
         #region IFindByIosUIAutomation Members
 
-        /// <summary>
-        /// Finds the first element that matches the iOS UIAutomation selector
-        /// </summary>
-        /// <param name="selector">UIAutomation selector</param>
-        /// <returns>First element found</returns>
         public W FindElementByIosUIAutomation(string selector) => FindElement(MobileSelector.iOSAutomatoion, selector);
 
-        /// <summary>
-        /// Finds a list of elements that match the iOS UIAutomation selector
-        /// </summary>
-        /// <param name="selector">UIAutomation selector</param>
-        /// <returns>ReadOnlyCollection of elements found</returns>
         public ReadOnlyCollection<W> FindElementsByIosUIAutomation(string selector) =>
             FindElements(MobileSelector.iOSAutomatoion, selector);
 
@@ -143,18 +131,8 @@ namespace OpenQA.Selenium.Appium.iOS
 
         #region IFindsByIosClassChain Members
 
-        /// <summary>
-        /// Finds the first element that matches the iOS class chain selector
-        /// </summary>
-        /// <param name="selector">class chain selector</param>
-        /// <returns>First element found</returns>
         public W FindElementByIosClassChain(string selector) => FindElement(MobileSelector.iOSClassChain, selector);
 
-        /// <summary>
-        /// Finds a list of elements that match the iOS class chain selector
-        /// </summary>
-        /// <param name="selector">class chain selector</param>
-        /// <returns>ReadOnlyCollection of elements found</returns>
         public ReadOnlyCollection<W> FindElementsByIosClassChain(string selector) =>
             FindElements(MobileSelector.iOSClassChain, selector);
 
@@ -162,19 +140,9 @@ namespace OpenQA.Selenium.Appium.iOS
 
         #region IFindsByIosNSPredicate Members
 
-        /// <summary>
-        /// Finds the first element that matches the IosNSPredicate selector
-        /// </summary>
-        /// <param name="selector">IosNSPredicate selector</param>
-        /// <returns>First element found</returns>
         public W FindElementByIosNsPredicate(string selector) =>
             FindElement(MobileSelector.iOSPredicateString, selector);
 
-        /// <summary>
-        /// Finds a list of elements that match the IosNSPredicate selector
-        /// </summary>
-        /// <param name="selector">IosNSPredicate selector</param>
-        /// <returns>ReadOnlyCollection of elements found</returns>
         public ReadOnlyCollection<W> FindElementsByIosNsPredicate(string selector) =>
             FindElements(MobileSelector.iOSPredicateString, selector);
 
@@ -185,11 +153,6 @@ namespace OpenQA.Selenium.Appium.iOS
         public void HideKeyboard(string key, string strategy = null) =>
             AppiumCommandExecutionHelper.HideKeyboard(this, strategy, key);
 
-        /// <summary>
-        /// Create an iOS Element
-        /// </summary>
-        /// <param name="elementId">element to create</param>
-        /// <returns>IOSElement</returns>
         protected override RemoteWebElement CreateElement(string elementId) => new IOSElement(this, elementId);
 
         /// <summary>
@@ -197,26 +160,6 @@ namespace OpenQA.Selenium.Appium.iOS
         /// </summary>
         /// <param name="seconds">The number of seconds during which the device need to be locked for.</param>
         public void Lock(int seconds) => AppiumCommandExecutionHelper.Lock(this, seconds);
-
-        /// <summary>
-        /// Convenience method for swiping across the screen
-        /// </summary>
-        /// <param name="startx">starting x coordinate</param>
-        /// <param name="starty">starting y coordinate</param>
-        /// <param name="endx">ending x coordinate</param>
-        /// <param name="endy">ending y coordinate</param>
-        /// <param name="duration">amount of time in milliseconds for the entire swipe action to take</param>
-        [Obsolete("This method is going to be removed")]
-        public void Swipe(int startx, int starty, int endx, int endy, int duration)
-        {
-            TouchAction touchAction = new TouchAction(this);
-
-            // appium converts Press-wait-MoveTo-Release to a swipe action
-            touchAction.Press(startx, starty).Wait(duration)
-                .MoveTo(endx - startx, endy - starty).Release();
-
-            touchAction.Perform();
-        }
 
         public void PerformTouchID(bool match) => IOSCommandExecutionHelper.PerformTouchID(this, match);
     }
