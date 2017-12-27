@@ -16,14 +16,12 @@ using Appium.Interfaces.Generic.SearchContext;
 using Newtonsoft.Json;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
-using OpenQA.Selenium.Appium.MultiTouch;
 using OpenQA.Selenium.Appium.Service;
 using OpenQA.Selenium.Remote;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using System.Linq;
 
 namespace OpenQA.Selenium.Appium
@@ -304,9 +302,6 @@ namespace OpenQA.Selenium.Appium
 
         #region Orientation
 
-        /// <summary>
-        /// Sets/Gets the Orientation
-        /// </summary>
         public ScreenOrientation Orientation
         {
             get
@@ -389,193 +384,6 @@ namespace OpenQA.Selenium.Appium
         }
 
         #endregion Multi Actions
-
-        #region tap, swipe, pinch, zoom
-
-        /// <summary>
-        /// Convenience method for tapping the center of an element on the screen
-        /// </summary>
-        /// <param name="fingers">number of fingers/appendages to tap with</param>
-        /// <param name="element">element to tap</param>
-        /// <param name="duration">how long between pressing down, and lifting fingers/appendages</param>
-        [Obsolete("This method is going to be removed")]
-        public void Tap(int fingers, IWebElement element, int duration)
-        {
-            MultiAction multiTouch = new MultiAction(this);
-
-            for (int i = 0; i < fingers; i++)
-            {
-                multiTouch.Add(new TouchAction(this).Press(element).Wait(duration).Release());
-            }
-
-            multiTouch.Perform();
-        }
-
-        /// <summary>
-        /// Convenience method for tapping a position on the screen
-        /// </summary>
-        /// <param name="fingers">number of fingers/appendages to tap with</param>
-        /// <param name="x">x coordinate</param>
-        /// <param name="y">y coordinate</param>
-        /// <param name="duration">how long between pressing down, and lifting fingers/appendages</param>
-        [Obsolete("This method is going to be removed")]
-        public void Tap(int fingers, int x, int y, int duration)
-        {
-            MultiAction multiTouch = new MultiAction(this);
-
-            for (int i = 0; i < fingers; i++)
-            {
-                multiTouch.Add(new TouchAction(this).Press(x, y).Wait(duration).Release());
-            }
-
-            multiTouch.Perform();
-        }
-
-        /// <summary>
-        /// Convenience method for swiping across the screen
-        /// </summary>
-        /// <param name="startx">starting x coordinate</param>
-        /// <param name="starty">starting y coordinate</param>
-        /// <param name="endx">ending x coordinate</param>
-        /// <param name="endy">ending y coordinate</param>
-        /// <param name="duration">amount of time in milliseconds for the entire swipe action to take</param>
-        [Obsolete("This method is going to be removed")]
-        public void Swipe(int startx, int starty, int endx, int endy, int duration)
-        {
-            TouchAction touchAction = new TouchAction(this);
-
-            // appium converts Press-wait-MoveTo-Release to a swipe action
-            touchAction.Press(startx, starty).Wait(duration)
-                .MoveTo(endx, endy).Release();
-
-            touchAction.Perform();
-        }
-
-        /// <summary>
-        /// Convenience method for pinching an element on the screen.
-        /// "pinching" refers to the action of two appendages Pressing the screen and sliding towards each other.
-        /// NOTE:
-        /// driver convenience method places the initial touches around the element, if driver would happen to place one of them
-        /// off the screen, appium with return an outOfBounds error. In driver case, revert to using the MultiAction api
-        /// instead of driver method.
-        /// </summary>
-        /// <param name="el">The element to pinch</param>
-        [Obsolete("This method is going to be removed")]
-        public void Pinch(IWebElement el)
-        {
-            MultiAction multiTouch = new MultiAction(this);
-
-            Size dimensions = el.Size;
-            Point upperLeft = el.Location;
-            Point center = new Point(upperLeft.X + dimensions.Width / 2, upperLeft.Y + dimensions.Height / 2);
-            int yOffset = center.Y - upperLeft.Y;
-
-            ITouchAction action0 = new TouchAction(this).Press(el, center.X, center.Y - yOffset).MoveTo(el).Release();
-            ITouchAction action1 = new TouchAction(this).Press(el, center.X, center.Y + yOffset).MoveTo(el).Release();
-
-            multiTouch.Add(action0).Add(action1);
-
-            multiTouch.Perform();
-        }
-
-        /// <summary>
-        /// Convenience method for pinching an element on the screen.
-        /// "pinching" refers to the action of two appendages Pressing the screen and sliding towards each other.
-        /// NOTE:
-        /// driver convenience method places the initial touches around the element at a distance, if driver would happen to place
-        /// one of them off the screen, appium will return an outOfBounds error. In driver case, revert to using the
-        /// MultiAction api instead of driver method.
-        /// </summary>
-        /// <param name="x">x coordinate to terminate the pinch on</param>
-        /// <param name="y">y coordinate to terminate the pinch on></param>
-        [Obsolete("This method is going to be removed")]
-        public void Pinch(int x, int y)
-        {
-            MultiAction multiTouch = new MultiAction(this);
-
-            int scrHeight = Manage().Window.Size.Height;
-            int yOffset = 100;
-
-            if (y - 100 < 0)
-            {
-                yOffset = y;
-            }
-            else if (y + 100 > scrHeight)
-            {
-                yOffset = scrHeight - y;
-            }
-
-            ITouchAction action0 = new TouchAction(this).Press(x, y - yOffset).MoveTo(0, yOffset).Release();
-            ITouchAction action1 = new TouchAction(this).Press(x, y + yOffset).MoveTo(0, -yOffset).Release();
-
-            multiTouch.Add(action0).Add(action1);
-
-            multiTouch.Perform();
-        }
-
-        /// <summary>
-        /// Convenience method for "zooming in" on an element on the screen.
-        /// "zooming in" refers to the action of two appendages Pressing the screen and sliding away from each other.
-        /// NOTE:
-        /// driver convenience method slides touches away from the element, if driver would happen to place one of them
-        /// off the screen, appium will return an outOfBounds error. In driver case, revert to using the MultiAction api
-        /// instead of driver method.
-        /// <param name="x">x coordinate to terminate the zoom on</param>
-        /// <param name="y">y coordinate to terminate the zoom on></param>
-        /// </summary>
-        [Obsolete("This method is going to be removed")]
-        public void Zoom(int x, int y)
-        {
-            MultiAction multiTouch = new MultiAction(this);
-
-            int scrHeight = Manage().Window.Size.Height;
-            int yOffset = 100;
-
-            if (y - 100 < 0)
-            {
-                yOffset = y;
-            }
-            else if (y + 100 > scrHeight)
-            {
-                yOffset = scrHeight - y;
-            }
-
-            ITouchAction action0 = new TouchAction(this).Press(x, y).MoveTo(0, -yOffset).Release();
-            ITouchAction action1 = new TouchAction(this).Press(x, y).MoveTo(0, yOffset).Release();
-
-            multiTouch.Add(action0).Add(action1);
-
-            multiTouch.Perform();
-        }
-
-        /// <summary>
-        /// Convenience method for "zooming in" on an element on the screen.
-        /// "zooming in" refers to the action of two appendages Pressing the screen and sliding away from each other.
-        /// NOTE:
-        /// driver convenience method slides touches away from the element, if driver would happen to place one of them
-        /// off the screen, appium will return an outOfBounds error. In driver case, revert to using the MultiAction api
-        /// instead of driver method.
-        /// <param name="el">The element to pinch</param>
-        /// </summary>
-        [Obsolete("This method is going to be removed")]
-        public void Zoom(IWebElement el)
-        {
-            MultiAction multiTouch = new MultiAction(this);
-
-            Size dimensions = el.Size;
-            Point upperLeft = el.Location;
-            Point center = new Point(upperLeft.X + dimensions.Width / 2, upperLeft.Y + dimensions.Height / 2);
-            int yOffset = center.Y - upperLeft.Y;
-
-            ITouchAction action0 = new TouchAction(this).Press(el).MoveTo(el, 0, -yOffset).Release();
-            ITouchAction action1 = new TouchAction(this).Press(el).MoveTo(el, 0, yOffset).Release();
-
-            multiTouch.Add(action0).Add(action1);
-
-            multiTouch.Perform();
-        }
-
-        #endregion
 
         #region Device Time
 

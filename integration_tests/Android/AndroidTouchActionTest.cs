@@ -87,8 +87,10 @@ namespace Appium.Integration.Tests.Android
             IList<AppiumWebElement> els = driver.FindElementsByClassName("android.widget.TextView");
             var loc1 = els[7].Location;
             AppiumWebElement target = els[1];
-            var loc2 = target.Location;
-            driver.Swipe(loc1.X, loc1.Y, loc2.X, loc2.Y, 800); //this action includes almost all touch actions
+            var loc2 = target.Location;           
+            TouchAction touchAction = new TouchAction(driver);
+            touchAction.Press(loc1.X, loc1.Y).Wait(800)
+                .MoveTo(loc2.X, loc2.Y).Release().Perform();
             Assert.AreNotEqual(loc2.Y, target.Location.Y);
         }
 
