@@ -4,11 +4,12 @@
  - [Enhancement] Details of a session. Interface `IHasSessionDetails` and its implementation. [#201](https://github.com/appium/appium-dotnet-driver/pull/201)
  - [BUG FIX] Fix of the `LongPress` action parameters. The report [#197](https://github.com/appium/appium-dotnet-driver/issues/197). FIX [#198](https://github.com/appium/appium-dotnet-driver/pull/198)
  - [BREAKING CHANGE] Unnecessary interface `ITouchShortcuts` was removed. [#200](https://github.com/appium/appium-dotnet-driver/pull/200)
+ - [BREAKING CHANGE] Deprecated gesture methods were removed. [#204](https://github.com/appium/appium-dotnet-driver/pull/204)
  - [UPDATES]:
-  - Newtonsoft.Json was updated to 10.0.3
-  - Selenium.Support was updated 3.8.0
-  - Selenium.WebDriver was updated 3.8.0
-  - Castle.Core was updated to 4.2.1
+  	- Newtonsoft.Json was updated to 10.0.3
+  	- Selenium.Support was updated 3.8.0
+  	- Selenium.WebDriver was updated 3.8.0
+  	- Castle.Core was updated to 4.2.1
 
 ## *3.0.0.2*
  - [Refactor] The obsolete interface `OpenQA.Selenium.Appium.Android.Interfaces.ISendsKeyEvents` was removed
