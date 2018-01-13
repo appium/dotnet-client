@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Appium.WebDriver</id>
-    <version>3.0.0.2</version>
+    <version>4.0.0.BETA1</version>
     <title>Appium Webdriver</title>
     <authors>Appium Commiters</authors>
     <owners>Appium Commiters</owners>
