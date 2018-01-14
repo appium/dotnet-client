@@ -2,7 +2,7 @@
 <package>
     <metadata>
         <id>Appium.WebDriver</id>
-        <version>4.0.0.BETA1</version>
+        <version>4.0.0.1-beta</version>
         <title>Appium Webdriver</title>
         <authors>Appium Commiters</authors>
         <owners>Appium Commiters</owners>
@@ -12,7 +12,7 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Selenium Webdriver extension for Appium.</description>
         <releaseNotes>
-            4.0.0.BETA1
+            4.0.0.1-beta
             [Enhancement] The searching by ios class chain was implemented.
             [Enhancement] Details of a session. Interface `IHasSessionDetails` and its implementation.
             [BUG FIX] Fix of the `LongPress` action parameters.
@@ -201,13 +201,13 @@
             TouchAction + multiActions rewriting,
             Project structure overhaul.
         </releaseNotes>
-        <copyright>Copyright 2017</copyright>
+        <copyright>Copyright 2018</copyright>
         <tags>Appium Webdriver device automation</tags>
         <dependencies>
-            <dependency id="Newtonsoft.Json" version="9.0.1"/>
-            <dependency id="Selenium.WebDriver" version="3.0.1"/>
-            <dependency id="Selenium.Support" version="3.0.1"/>
-            <dependency id="Castle.Core" version="3.3.3"/>
+            <dependency id="Newtonsoft.Json" version="10.0.3"/>
+            <dependency id="Selenium.WebDriver" version="3.8.0"/>
+            <dependency id="Selenium.Support" version="3.8.0"/>
+            <dependency id="Castle.Core" version="4.2.1"/>
         </dependencies>
     </metadata>
     <files>
