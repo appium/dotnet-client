@@ -1,5 +1,7 @@
 # Release Notes
 ## *4.0.0.1 (under construction yet)*
+
+## *4.0.0.1-beta*
  - [Enhancement] The searching by ios class chain was implemented.
  - [Enhancement] Details of a session. Interface `IHasSessionDetails` and its implementation. [#201](https://github.com/appium/appium-dotnet-driver/pull/201)
  - [BUG FIX] Fix of the `LongPress` action parameters. The report [#197](https://github.com/appium/appium-dotnet-driver/issues/197). FIX [#198](https://github.com/appium/appium-dotnet-driver/pull/198)
