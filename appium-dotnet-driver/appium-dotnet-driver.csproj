@@ -103,6 +103,9 @@
     <Compile Include="Appium\iOS\Interfaces\IShakesDevice.cs" />
     <Compile Include="Appium\iOS\IOSDriver.cs" />
     <Compile Include="Appium\iOS\IOSElement.cs" />
+    <Compile Include="Appium\Tizen\TizenDriver.cs" />
+    <Compile Include="Appium\Tizen\TizenElement.cs" />
+    <Compile Include="Appium\Tizen\TizenCommandExecutionHelper.cs" />
     <Compile Include="Appium\MobileBy.cs" />
     <Compile Include="Appium\PageObjects\AppiumPageObjectMemberDecorator.cs" />
     <Compile Include="Appium\PageObjects\Attributes\FindsByIOSUIAutomationAttribute.cs" />
