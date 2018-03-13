@@ -162,5 +162,12 @@ namespace OpenQA.Selenium.Appium.iOS
         public void Lock(int seconds) => AppiumCommandExecutionHelper.Lock(this, seconds);
 
         public void PerformTouchID(bool match) => IOSCommandExecutionHelper.PerformTouchID(this, match);
+
+        public bool IsLocked() => IOSCommandExecutionHelper.IsLocked(this);
+
+        public void Unlock() => IOSCommandExecutionHelper.Unlock(this);
+
+        public void Lock() => IOSCommandExecutionHelper.Lock(this);
+
     }
 }

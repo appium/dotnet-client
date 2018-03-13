@@ -16,6 +16,15 @@ namespace Appium.Integration.Tests.Helpers
             return capabilities;
         }
 
+        public static DesiredCapabilities getIos112Caps(string app)
+        {
+            DesiredCapabilities capabilities = new DesiredCapabilities();
+            capabilities.SetCapability(MobileCapabilityType.PlatformVersion, "11.2");
+            capabilities.SetCapability(MobileCapabilityType.DeviceName, "iPad Air 2");
+            capabilities.SetCapability(MobileCapabilityType.App, app);
+            return capabilities;
+        }
+
         public static DesiredCapabilities getIos92Caps(string app)
         {
             DesiredCapabilities capabilities = new DesiredCapabilities();
