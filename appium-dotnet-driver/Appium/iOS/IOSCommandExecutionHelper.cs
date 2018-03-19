@@ -24,6 +24,16 @@ namespace OpenQA.Selenium.Appium.iOS
 
         public static void PerformTouchID(IExecuteMethod executeMethod, bool match) =>
             executeMethod.Execute(AppiumDriverCommand.TouchID,
-                new Dictionary<string, object>() {["match"] = match});
+                new Dictionary<string, object> {["match"] = match});
+
+        public static bool IsLocked(IExecuteMethod executeMethod) =>
+            (bool)executeMethod.Execute(AppiumDriverCommand.IsLocked).Value;
+
+        public static void Unlock(IExecuteMethod executeMethod) =>
+            executeMethod.Execute(AppiumDriverCommand.UnlockDevice);
+
+        public static void Lock(IExecuteMethod executeMethod) =>
+            executeMethod.Execute(AppiumDriverCommand.LockDevice);
+
     }
 }
