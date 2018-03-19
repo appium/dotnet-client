@@ -14,10 +14,10 @@ namespace Appium.Integration.Tests.iOS
     {
         private IOSDriver<IWebElement> driver;
 
-        [TestFixtureSetUp]
-        public void BeforeAll()
+        [SetUp]
+        public void TestSetup()
         {
-            DesiredCapabilities capabilities = Caps.getIos92Caps(Apps.get("iosWebviewApp"));
+            DesiredCapabilities capabilities = Caps.getIos112Caps(Apps.get("iosWebviewApp"));
             if (Env.isSauce())
             {
                 capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
@@ -25,13 +25,17 @@ namespace Appium.Integration.Tests.iOS
                 capabilities.SetCapability("tags", new string[] {"sample"});
             }
             Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIForIOS;
+            
+
             driver = new IOSDriver<IWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
             driver.Manage().Timeouts().ImplicitWait = Env.IMPLICIT_TIMEOUT_SEC;
         }
 
-        [TestFixtureTearDown]
-        public void AfterAll()
+        [TearDown]
+        public void Cleanup()
         {
+            if(driver.IsLocked())
+                driver.Unlock();
             if (driver != null)
             {
                 driver.Quit();
@@ -42,10 +46,38 @@ namespace Appium.Integration.Tests.iOS
             }
         }
 
-        [Test()]
+        [Test]
+        public void IsLockedTest()
+        {
+            Assert.AreEqual(driver.IsLocked(), false);
+        }
+
+        [Test]
         public void LockTest()
         {
-            driver.Lock(20);
+            Assert.AreEqual(driver.IsLocked(),false);
+            driver.Lock();
+            Assert.AreEqual(driver.IsLocked(), true);
         }
+
+        [Test]
+        public void LockTestWithSeconds()
+        {
+            Assert.AreEqual(driver.IsLocked(), false);
+            driver.Lock(5);
+            Assert.AreEqual(driver.IsLocked(), false);
+        }
+
+        [Test]
+        public void UnlockTest()
+        {
+            Assert.AreEqual(driver.IsLocked(), false);
+            driver.Lock();
+            Assert.AreEqual(driver.IsLocked(), true);
+            driver.Unlock();
+            Assert.AreEqual(driver.IsLocked(), false);
+        }
+
     }
 }
+ 
