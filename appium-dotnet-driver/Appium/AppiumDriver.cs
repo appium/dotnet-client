@@ -159,6 +159,30 @@ namespace OpenQA.Selenium.Appium
 
         #endregion IFindByAccessibilityId Members
 
+        #region Attribute Cache
+
+        public virtual bool CacheElementAttributes
+        {
+            get
+            {
+                object compactResponses = Capabilities.GetCapability("shouldUseCompactResponses");
+                return compactResponses != null && Convert.ToBoolean(compactResponses) == false;
+            }
+        }
+
+        protected override RemoteWebElement CreateElement(string elementId, Dictionary<string, object> elementDictionary)
+        {
+            RemoteWebElement element = CreateElement(elementId);
+            IWebElementCached elementCached = element as IWebElementCached;
+            if (elementCached != null && CacheElementAttributes)
+            {
+                elementCached.SetCacheValues(elementDictionary);
+            }
+            return element;
+        }
+
+        #endregion
+
         #endregion
 
         #region Public Methods
