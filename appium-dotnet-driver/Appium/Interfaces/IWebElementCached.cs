@@ -20,8 +20,8 @@ namespace OpenQA.Selenium.Appium.Interfaces
     /// This interface extends IWebElement and adds caching support.
     /// To enable caching at the driver level, set the shouldUseCompactResponses capability:
     ///    shouldUseCompactResponses: true
-    /// To specify the attributes to be cached, set the elementResponseFields capability:
-    ///    elementResponseFields: "name,text,rect,attribute/name,attribute/value"
+    /// To specify the attributes to be cached, set the elementResponseAttributes capability:
+    ///    elementResponseAttributes: "name,text,rect,attribute/name,attribute/value"
     /// Note: the cache uses W3C names for attributes. 
     ///       For TagName, use "name"
     ///       For Size, Location use "rect"
