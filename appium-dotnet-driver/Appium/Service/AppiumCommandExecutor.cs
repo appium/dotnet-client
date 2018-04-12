@@ -23,6 +23,7 @@ namespace OpenQA.Selenium.Appium.Service
         private readonly AppiumLocalService Service;
         private readonly Uri URL;
         private readonly ICommandExecutor RealExecutor;
+        private bool isDisposed;
 
         private static ICommandExecutor CreateRealExecutor(Uri remoteAddress, TimeSpan commandTimeout)
         {
@@ -87,15 +88,36 @@ namespace OpenQA.Selenium.Appium.Service
             finally
             {
                 if (result != null && result.Status != WebDriverResult.Success &&
-                    commandToExecute.Name == DriverCommand.NewSession && Service != null)
+                    commandToExecute.Name == DriverCommand.NewSession)
                 {
-                    Service.Dispose();
+                    Dispose();
                 }
 
-                if (commandToExecute.Name == DriverCommand.Quit && Service != null)
+                if (commandToExecute.Name == DriverCommand.Quit)
                 {
-                    Service.Dispose();
+                    Dispose();
                 }
+            }
+        }
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+        }
+
+        protected void Dispose(bool disposing)
+        {
+            if (!isDisposed)
+            {
+                if (disposing)
+                {
+                    if (Service != null)
+                    {
+                        Service.Dispose();
+                    }
+                }
+
+                isDisposed = true;
             }
         }
     }
