@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -54,6 +54,7 @@
     <Compile Include="Appium\Android\AndroidCommandExecutionHelper.cs" />
     <Compile Include="Appium\Android\AndroidDriver.cs" />
     <Compile Include="Appium\Android\AndroidElement.cs" />
+    <Compile Include="Appium\Android\AndroidElementFactory.cs" />
     <Compile Include="Appium\Android\Enums\AndroidKeyCode.cs" />
     <Compile Include="Appium\Android\Enums\AndroidKeyMetastate.cs" />
     <Compile Include="Appium\Android\Enums\AutomatorSetting.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Appium\Android\Interfaces\IHasNetworkConnection.cs" />
     <Compile Include="Appium\Android\Interfaces\IPushesFiles.cs" />
     <Compile Include="Appium\Android\Interfaces\IStartsActivity.cs" />
+    <Compile Include="Appium\CachedElementFactory.cs" />
     <Compile Include="Appium\AppiumCommand.cs" />
     <Compile Include="Appium\AppiumCommandExecutionHelper.cs" />
     <Compile Include="Appium\Enums\AndroidMobileCapabilityType.cs" />
@@ -80,6 +82,7 @@
     <Compile Include="Appium\Interfaces\IWebElementCached.cs" />
     <Compile Include="Appium\iOS\Interfaces\IPerformsTouchID.cs" />
     <Compile Include="Appium\iOS\IOSCommandExecutionHelper.cs" />
+    <Compile Include="Appium\iOS\IOSElementFactory.cs" />
     <Compile Include="Appium\Windows\Enums\WindowsKeyCodes.cs" />
     <Compile Include="Appium\Interfaces\Generic\SearchContext\IGenericFindsByClassName.cs" />
     <Compile Include="Appium\Interfaces\Generic\SearchContext\IGenericFindsByCssSelector.cs" />
@@ -134,6 +137,7 @@
     <Compile Include="Appium\Service\Options\OptionCollector.cs" />
     <Compile Include="Appium\Windows\WindowsDriver.cs" />
     <Compile Include="Appium\Windows\WindowsElement.cs" />
+    <Compile Include="Appium\Windows\WindowsElementFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Appium\AppiumDriver.cs" />
     <Compile Include="Appium\AppiumDriverCommand.cs" />

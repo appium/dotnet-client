@@ -200,7 +200,7 @@ namespace OpenQA.Selenium.Appium.Android
         public void OpenNotifications() => AndroidCommandExecutionHelper.OpenNotifications(this);
 
 
-        protected override RemoteWebElement CreateElement(string elementId) => new AndroidElement(this, elementId);
+        protected override RemoteWebElementFactory CreateElementFactory() => new AndroidElementFactory(this);
 
         #region locking
 
