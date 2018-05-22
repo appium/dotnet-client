@@ -18,7 +18,7 @@ using OpenQA.Selenium.Appium.iOS;
 using OpenQA.Selenium.Appium.PageObjects.Attributes;
 using OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract;
 using OpenQA.Selenium.Remote;
-using OpenQA.Selenium.Support.PageObjects;
+using SeleniumExtras.PageObjects;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -30,8 +30,8 @@ namespace OpenQA.Selenium.Appium.PageObjects
     {
         private static By From(FindsByAttribute attribute)
         {
-            Assembly assembly = Assembly.LoadFrom("WebDriver.Support.dll");
-            Type seleniumByFactory = assembly.GetType("OpenQA.Selenium.Support.PageObjects.ByFactory");
+            Assembly assembly = Assembly.LoadFrom("SeleniumExtras.PageObjects.dll");
+            Type seleniumByFactory = assembly.GetType("SeleniumExtras.PageObjects.ByFactory");
             MethodInfo m = seleniumByFactory.GetMethod("From", new Type[] {typeof(FindsByAttribute)});
             return (By) m.Invoke(seleniumByFactory, new object[] {attribute});
         }
