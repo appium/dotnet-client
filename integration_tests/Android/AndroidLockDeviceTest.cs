@@ -21,7 +21,7 @@ namespace Appium.Integration.Tests.Android
                 capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
                 capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
                 capabilities.SetCapability("name", "android - complex");
-                capabilities.SetCapability("tags", new string[] {"sample"});
+                capabilities.SetCapability("tags", new string[] { "sample" });
             }
             Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIAndroid;
             driver = new AndroidDriver<AndroidElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
@@ -31,6 +31,8 @@ namespace Appium.Integration.Tests.Android
         [TearDown]
         public void AfterEach()
         {
+            if (driver.IsDeviceLocked())
+                driver.UnlockDevice();
             if (driver != null)
             {
                 driver.Quit();
