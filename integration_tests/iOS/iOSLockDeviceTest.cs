@@ -34,8 +34,8 @@ namespace Appium.Integration.Tests.iOS
         [TearDown]
         public void Cleanup()
         {
-            if(driver.IsLocked())
-                driver.Unlock();
+            if(driver.IsDeviceLocked())
+                driver.UnlockDevice();
             if (driver != null)
             {
                 driver.Quit();
@@ -49,33 +49,33 @@ namespace Appium.Integration.Tests.iOS
         [Test]
         public void IsLockedTest()
         {
-            Assert.AreEqual(driver.IsLocked(), false);
+            Assert.AreEqual(driver.IsDeviceLocked(), false);
         }
 
         [Test]
         public void LockTest()
         {
-            Assert.AreEqual(driver.IsLocked(),false);
-            driver.Lock();
-            Assert.AreEqual(driver.IsLocked(), true);
+            Assert.AreEqual(driver.IsDeviceLocked(),false);
+            driver.LockDevice();
+            Assert.AreEqual(driver.IsDeviceLocked(), true);
         }
 
         [Test]
         public void LockTestWithSeconds()
         {
-            Assert.AreEqual(driver.IsLocked(), false);
-            driver.Lock(5);
-            Assert.AreEqual(driver.IsLocked(), false);
+            Assert.AreEqual(driver.IsDeviceLocked(), false);
+            driver.LockDevice(5);
+            Assert.AreEqual(driver.IsDeviceLocked(), false);
         }
 
         [Test]
         public void UnlockTest()
         {
-            Assert.AreEqual(driver.IsLocked(), false);
-            driver.Lock();
-            Assert.AreEqual(driver.IsLocked(), true);
-            driver.Unlock();
-            Assert.AreEqual(driver.IsLocked(), false);
+            Assert.AreEqual(driver.IsDeviceLocked(), false);
+            driver.LockDevice();
+            Assert.AreEqual(driver.IsDeviceLocked(), true);
+            driver.UnlockDevice();
+            Assert.AreEqual(driver.IsDeviceLocked(), false);
         }
 
     }

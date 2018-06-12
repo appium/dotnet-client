@@ -24,7 +24,7 @@ namespace OpenQA.Selenium.Appium.iOS
 {
     public class IOSDriver<W> : AppiumDriver<W>, IFindByIosUIAutomation<W>, IFindsByIosClassChain<W>,
         IFindsByIosNSPredicate<W>, IHidesKeyboardWithKeyName,
-        IShakesDevice, IPerformsTouchID where W : IWebElement
+        IShakesDevice, IPerformsTouchID, ILockDevice where W : IWebElement
     {
         private static readonly string Platform = MobilePlatform.IOS;
 
@@ -148,6 +148,27 @@ namespace OpenQA.Selenium.Appium.iOS
 
         #endregion IFindsByIosNSPredicate Members
 
+        #region ILockDevice Members
+
+        /// <summary>
+        /// Locks the device.
+        /// </summary>
+        /// <param name="seconds">The number of seconds during which the device need to be locked for.</param>
+        public void LockDevice(int seconds = 0) => AppiumCommandExecutionHelper.Lock(this, seconds);
+
+        /// <summary>
+        /// Checks if the device is locked
+        /// </summary>
+        /// <returns>true if device is locked, false otherwise<</returns>
+        public bool IsDeviceLocked() => AppiumCommandExecutionHelper.IsLocked(this);
+
+        /// <summary>
+        /// Unlocks the device
+        /// </summary>
+        public void UnlockDevice() => AppiumCommandExecutionHelper.Unlock(this);
+
+        #endregion ILockDevice Members
+
         public void ShakeDevice() => IOSCommandExecutionHelper.ShakeDevice(this);
 
         public void HideKeyboard(string key, string strategy = null) =>
@@ -155,19 +176,8 @@ namespace OpenQA.Selenium.Appium.iOS
 
         protected override RemoteWebElement CreateElement(string elementId) => new IOSElement(this, elementId);
 
-        /// <summary>
-        /// Locks the device.
-        /// </summary>
-        /// <param name="seconds">The number of seconds during which the device need to be locked for.</param>
-        public void Lock(int seconds) => AppiumCommandExecutionHelper.Lock(this, seconds);
-
         public void PerformTouchID(bool match) => IOSCommandExecutionHelper.PerformTouchID(this, match);
 
-        public bool IsLocked() => IOSCommandExecutionHelper.IsLocked(this);
-
-        public void Unlock() => IOSCommandExecutionHelper.Unlock(this);
-
-        public void Lock() => IOSCommandExecutionHelper.Lock(this);
 
     }
 }

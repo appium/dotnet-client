@@ -44,10 +44,10 @@ namespace Appium.Integration.Tests.Android
         [Test()]
         public void LockTest()
         {
-            driver.Lock();
-            Assert.AreEqual(true, driver.IsLocked());
-            driver.Unlock();
-            Assert.AreEqual(false, driver.IsLocked());
+            driver.LockDevice();
+            Assert.AreEqual(true, driver.IsDeviceLocked());
+            driver.UnlockDevice();
+            Assert.AreEqual(false, driver.IsDeviceLocked());
         }
     }
 }

@@ -59,5 +59,11 @@ namespace OpenQA.Selenium.Appium
             executeMethod.Execute(AppiumDriverCommand.LockDevice,
                 new Dictionary<string, object>()
                     {["seconds"] = seconds});
+
+        public static void Unlock(IExecuteMethod executeMethod) =>
+            executeMethod.Execute(AppiumDriverCommand.UnlockDevice);
+
+        public static bool IsLocked(IExecuteMethod executeMethod) =>
+            (bool)executeMethod.Execute(AppiumDriverCommand.IsLocked).Value;
     }
 }

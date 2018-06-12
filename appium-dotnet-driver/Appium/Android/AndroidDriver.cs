@@ -29,7 +29,7 @@ namespace OpenQA.Selenium.Appium.Android
     public class AndroidDriver<W> : AppiumDriver<W>, IFindByAndroidUIAutomator<W>, IStartsActivity,
         IHasNetworkConnection,
         ISendsKeyEvents,
-        IPushesFiles, IHasSettings where W : IWebElement
+        IPushesFiles, IHasSettings, ILockDevice where W : IWebElement
     {
         private static readonly string Platform = MobilePlatform.Android;
 
@@ -202,25 +202,26 @@ namespace OpenQA.Selenium.Appium.Android
 
         protected override RemoteWebElement CreateElement(string elementId) => new AndroidElement(this, elementId);
 
-        #region locking
-
-        /**
-        * This method locks a device.
-        */
-        public void Lock() => AppiumCommandExecutionHelper.Lock(this, 0);
+        #region ILockDevice Members
 
         /// <summary>
-        /// Check if the device is locked
+        /// Locks the device.
         /// </summary>
-        /// <returns>true if device is locked, false otherwise</returns>
-        public bool IsLocked() => AndroidCommandExecutionHelper.IsLocked(this);
+        /// <param name="seconds">The number of seconds during which the device need to be locked for.</param>
+        public void LockDevice(int seconds = 0) => AppiumCommandExecutionHelper.Lock(this, seconds);
 
-        /**
-         * This method unlocks a device.
-         */
-        public void Unlock() => AndroidCommandExecutionHelper.Unlock(this);
+        /// <summary>
+        /// Checks if the device is locked
+        /// </summary>
+        /// <returns>true if device is locked, false otherwise<</returns>
+        public bool IsDeviceLocked() => AppiumCommandExecutionHelper.IsLocked(this);
 
-        #endregion
+        /// <summary>
+        /// Unlocks the device
+        /// </summary>
+        public void UnlockDevice() => AppiumCommandExecutionHelper.Unlock(this);
+
+        #endregion ILockDevice Members
 
         public void SetSetting(string setting, object value) =>
             AndroidCommandExecutionHelper.SetSetting(this, setting, value);

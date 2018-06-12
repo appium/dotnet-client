@@ -79,6 +79,7 @@
     <Compile Include="Appium\Interfaces\IFindsByFluentSelector.cs" />
     <Compile Include="Appium\Interfaces\IHasSessionDetails.cs" />
     <Compile Include="Appium\Interfaces\IHidesKeyboardWithKeyName.cs" />
+    <Compile Include="Appium\Interfaces\ILockDevice.cs" />
     <Compile Include="Appium\Interfaces\ISendsKeyEvents.cs" />
     <Compile Include="Appium\iOS\Interfaces\IPerformsTouchID.cs" />
     <Compile Include="Appium\iOS\IOSCommandExecutionHelper.cs" />

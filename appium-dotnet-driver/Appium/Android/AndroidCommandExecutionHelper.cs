@@ -128,12 +128,6 @@ namespace OpenQA.Selenium.Appium.Android
         public static void OpenNotifications(IExecuteMethod executeMethod) =>
             executeMethod.Execute(AppiumDriverCommand.OpenNotifications);
 
-        public static bool IsLocked(IExecuteMethod executeMethod) =>
-            (bool) executeMethod.Execute(AppiumDriverCommand.IsLocked).Value;
-
-        public static void Unlock(IExecuteMethod executeMethod) =>
-            executeMethod.Execute(AppiumDriverCommand.UnlockDevice);
-
         public static void ReplaceValue(IExecuteMethod executeMethod, string elementId, string value) =>
             executeMethod.Execute(AppiumDriverCommand.ReplaceValue,
                 new Dictionary<string, object>()
