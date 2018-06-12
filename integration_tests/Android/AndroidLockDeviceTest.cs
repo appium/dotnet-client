@@ -44,10 +44,33 @@ namespace Appium.Integration.Tests.Android
         [Test()]
         public void LockTest()
         {
+            Assert.AreEqual(driver.IsDeviceLocked(), false);
             driver.LockDevice();
-            Assert.AreEqual(true, driver.IsDeviceLocked());
+            Assert.AreEqual(driver.IsDeviceLocked(), true);
+        }
+
+        [Test]
+        public void IsLockedTest()
+        {
+            Assert.AreEqual(driver.IsDeviceLocked(), false);
+        }
+
+        [Test]
+        public void LockTestWithSeconds()
+        {
+            Assert.AreEqual(driver.IsDeviceLocked(), false);
+            driver.LockDevice(5);
+            Assert.AreEqual(driver.IsDeviceLocked(), false);
+        }
+
+        [Test]
+        public void UnlockTest()
+        {
+            Assert.AreEqual(driver.IsDeviceLocked(), false);
+            driver.LockDevice();
+            Assert.AreEqual(driver.IsDeviceLocked(), true);
             driver.UnlockDevice();
-            Assert.AreEqual(false, driver.IsDeviceLocked());
+            Assert.AreEqual(driver.IsDeviceLocked(), false);
         }
     }
 }
