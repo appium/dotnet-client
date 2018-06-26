@@ -16,10 +16,6 @@ using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Service;
 using OpenQA.Selenium.Remote;
 using System;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Runtime.InteropServices;
 
 namespace OpenQA.Selenium.Appium.Tizen
 {
@@ -118,99 +114,6 @@ namespace OpenQA.Selenium.Appium.Tizen
         public TizenDriver(AppiumLocalService service, DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
             : base(service, SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
         {
-        }
-
-        public bool CompareImages(Image firstImage, Image secondImage, out Image resultImage)
-        {
-            resultImage = null;
-            if (firstImage == null || secondImage == null)
-            {
-                throw new NullReferenceException("Images should not be null");
-            }
-
-            if (firstImage.Width != secondImage.Width || firstImage.Height != secondImage.Height)
-            {
-                return false;
-            }
-
-            bool result = true;
-            Bitmap firstBitmap = new Bitmap(firstImage);
-            Bitmap secondBitmap = new Bitmap(secondImage);
-            Bitmap resultBitmap = new Bitmap(secondImage);
-
-            BitmapData firstBitmapData = firstBitmap.LockBits(new Rectangle(0, 0, firstImage.Width, firstImage.Height), ImageLockMode.ReadOnly, firstImage.PixelFormat);
-            BitmapData secondBitmapData = secondBitmap.LockBits(new Rectangle(0, 0, secondImage.Width, secondImage.Height), ImageLockMode.ReadOnly, secondImage.PixelFormat);
-            BitmapData resultBitmapData = resultBitmap.LockBits(new Rectangle(0, 0, secondImage.Width, secondImage.Height), ImageLockMode.ReadOnly, secondImage.PixelFormat);
-
-            int Depth = Image.GetPixelFormatSize(firstBitmap.PixelFormat);
-            int size = firstBitmapData.Stride * firstBitmapData.Height;
-
-            byte[] firstPixels = new byte[size];
-            byte[] secondPixels = new byte[size];
-            byte[] resultPixels = new byte[size];
-
-            Marshal.Copy(firstBitmapData.Scan0, firstPixels, 0, size);
-            Marshal.Copy(secondBitmapData.Scan0, secondPixels, 0, size);
-            Marshal.Copy(resultBitmapData.Scan0, resultPixels, 0, size);
-
-            int firstGrayScale = 0;
-            int secondGrayScale = 0;
-            int diff = 0;
-
-            for (int i = 0; i < size; i += Depth / 8)
-            {
-                firstGrayScale = (int)((firstPixels[i] * 0.11) + (firstPixels[i + 1] * 0.59) + (firstPixels[i + 2] * 0.3));
-                secondGrayScale = (int)((secondPixels[i] * 0.11) + (secondPixels[i + 1] * 0.59) + (secondPixels[i + 2] * 0.3));
-
-                diff = firstGrayScale - secondGrayScale;
-
-                if (Math.Abs(diff) > 3)
-                {
-                    if (resultPixels[i + 2] > 200)
-                    {
-                        resultPixels[i] = 255;
-                        resultPixels[i + 1] = 0;
-                        resultPixels[i + 2] = 0;
-                    }
-                    else
-                    {
-                        resultPixels[i] = 0;
-                        resultPixels[i + 1] = 0;
-                        resultPixels[i + 2] = 255;
-                    }
-
-                    result = false;
-                }
-            }
-
-            Marshal.Copy(firstPixels, 0, firstBitmapData.Scan0, firstPixels.Length);
-            Marshal.Copy(secondPixels, 0, secondBitmapData.Scan0, secondPixels.Length);
-            Marshal.Copy(resultPixels, 0, resultBitmapData.Scan0, secondPixels.Length);
-
-            firstBitmap.UnlockBits(firstBitmapData);
-            secondBitmap.UnlockBits(secondBitmapData);
-            resultBitmap.UnlockBits(resultBitmapData);
-
-            if (!result)
-            {
-                resultImage = Image.FromHbitmap(resultBitmap.GetHbitmap());
-            }
-
-            return result;
-        }
-
-        public Image TransformScreenshot(Screenshot screenshot, Rectangle rectangle)
-        {
-            if (screenshot == null)
-            {
-                throw new NullReferenceException("Screenshot should not be null");
-            }
-
-            MemoryStream imageStream = new MemoryStream(screenshot.AsByteArray);
-            Image screenshotImage = Image.FromStream(imageStream);
-
-            Bitmap bmpImage = new Bitmap(screenshotImage);
-            return bmpImage.Clone(rectangle, bmpImage.PixelFormat);
         }
 
         protected override RemoteWebElement CreateElement(string elementId) => new TizenElement(this, elementId);
