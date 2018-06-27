@@ -13,8 +13,8 @@
 //limitations under the License.
 
 using Castle.DynamicProxy;
-using OpenQA.Selenium.Support.PageObjects;
 using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.PageObjects;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
