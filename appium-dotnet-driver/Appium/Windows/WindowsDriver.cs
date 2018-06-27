@@ -133,15 +133,7 @@ namespace OpenQA.Selenium.Appium.Windows
         public void HideKeyboard(string key, string strategy = null) =>
             AppiumCommandExecutionHelper.HideKeyboard(this, strategy, key);
 
-        /// <summary>
-        /// Create a Windows Element
-        /// </summary>
-        /// <param name="elementId">element to create</param>
-        /// <returns>WindowsElement</returns>
-        protected override RemoteWebElement CreateElement(string elementId)
-        {
-            return new WindowsElement(this, elementId);
-        }
+        protected override RemoteWebElementFactory CreateElementFactory() => new WindowsElementFactory(this);
 
         public void PressKeyCode(int keyCode, int metastate = -1) =>
             AppiumCommandExecutionHelper.PressKeyCode(this, keyCode, metastate);

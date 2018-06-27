@@ -18,6 +18,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections;
 using OpenQA.Selenium.Appium.Enums;
+using System;
+using System.Drawing;
 
 namespace OpenQA.Selenium.Appium
 {
@@ -38,7 +40,7 @@ namespace OpenQA.Selenium.Appium
     /// </code>
     /// </example>
     public abstract class AppiumWebElement : RemoteWebElement,
-        IMobileElement<AppiumWebElement>
+        IMobileElement<AppiumWebElement>, IWebElementCached
     {
         /// <summary>
         /// Initializes a new instance of the AppiumWebElement class.
@@ -50,6 +52,106 @@ namespace OpenQA.Selenium.Appium
         {
         }
 
+        #region Cache 
+
+        protected Dictionary<string, object> cache = null;
+
+        public virtual void SetCacheValues(Dictionary<string, object> cacheValues)
+        {
+            cache = new Dictionary<string, object>(cacheValues);
+        }
+
+        public virtual void ClearCache()
+        {
+            if (cache != null)
+            {
+                cache.Clear();
+            }
+        }
+
+        public virtual void DisableCache()
+        {
+            cache = null;
+        }
+
+        public override string TagName => CacheValue("name", () => base.TagName)?.ToString();
+
+        public override string Text => CacheValue("text", () => base.Text)?.ToString();
+
+        public override bool Displayed => Convert.ToBoolean(CacheValue("displayed", () => base.Displayed));
+
+        public override bool Enabled => Convert.ToBoolean(CacheValue("enabled", () => base.Enabled));
+
+        public override bool Selected => Convert.ToBoolean(CacheValue("selected", () => base.Selected));
+
+        public override Point Location => cache == null ? base.Location : Rect.Location;
+
+        public override Size Size => cache == null ? base.Size : Rect.Size;
+
+        public virtual Rectangle Rect
+        {
+            get
+            {
+                Dictionary<string, object> rect = null;
+                object value;
+                if (cache != null && cache.TryGetValue("rect", out value))
+                {
+                    rect = value as Dictionary<string, object>;
+                }
+                if (rect == null)
+                {
+                    Point location = base.Location;
+                    Size size = base.Size;
+                    rect = new Dictionary<string, object> {
+                        {"x", location.X },
+                        {"y", location.Y },
+                        {"width", size.Width },
+                        {"height", size.Height },
+                    };
+                    if (cache != null)
+                    {
+                        cache["rect"] = rect;
+                    }
+                }
+                return new Rectangle(
+                    Convert.ToInt32(rect["x"]),
+                    Convert.ToInt32(rect["y"]),
+                    Convert.ToInt32(rect["width"]),
+                    Convert.ToInt32(rect["height"]));
+            }
+        }
+
+        public override string GetAttribute(string attributeName) => CacheValue(
+                "attribute/" + attributeName,
+                () => base.GetAttribute(attributeName)
+            )?.ToString();
+
+        public override string GetCssValue(string propertyName) => CacheValue(
+                "css/" + propertyName,
+                () => base.GetCssValue(propertyName)
+            )?.ToString();
+
+        public override string GetProperty(string propertyName) => CacheValue(
+                "property/" + propertyName,
+                () => base.GetProperty(propertyName)
+            )?.ToString();
+
+        protected virtual object CacheValue(string key, Func<object> getter)
+        {
+            if (cache == null)
+            {
+                return getter();
+            }
+            object value;
+            if (!cache.TryGetValue(key, out value))
+            {
+                value = getter();
+                cache.Add(key, value);
+            }
+            return value;
+        }
+
+        #endregion
 
         #region MJSonMethods
 
