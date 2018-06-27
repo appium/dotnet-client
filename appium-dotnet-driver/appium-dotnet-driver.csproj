@@ -46,17 +46,18 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
-    <Reference Include="WebDriver, Version=3.11.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Selenium.WebDriver.3.11.0\lib\net45\WebDriver.dll</HintPath>
+    <Reference Include="WebDriver, Version=3.13.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.WebDriver.3.13.0\lib\net45\WebDriver.dll</HintPath>
     </Reference>
-    <Reference Include="WebDriver.Support, Version=3.11.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Selenium.Support.3.11.0\lib\net45\WebDriver.Support.dll</HintPath>
+    <Reference Include="WebDriver.Support, Version=3.13.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Selenium.Support.3.13.0\lib\net45\WebDriver.Support.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Appium\Android\AndroidCommandExecutionHelper.cs" />
     <Compile Include="Appium\Android\AndroidDriver.cs" />
     <Compile Include="Appium\Android\AndroidElement.cs" />
+    <Compile Include="Appium\Android\AndroidElementFactory.cs" />
     <Compile Include="Appium\Android\Enums\AndroidKeyCode.cs" />
     <Compile Include="Appium\Android\Enums\AndroidKeyMetastate.cs" />
     <Compile Include="Appium\Android\Enums\AutomatorSetting.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Appium\Android\Interfaces\IHasNetworkConnection.cs" />
     <Compile Include="Appium\Android\Interfaces\IPushesFiles.cs" />
     <Compile Include="Appium\Android\Interfaces\IStartsActivity.cs" />
+    <Compile Include="Appium\CachedElementFactory.cs" />
     <Compile Include="Appium\AppiumCommand.cs" />
     <Compile Include="Appium\AppiumCommandExecutionHelper.cs" />
     <Compile Include="Appium\Enums\AndroidMobileCapabilityType.cs" />
@@ -80,8 +82,10 @@
     <Compile Include="Appium\Interfaces\IHasSessionDetails.cs" />
     <Compile Include="Appium\Interfaces\IHidesKeyboardWithKeyName.cs" />
     <Compile Include="Appium\Interfaces\ISendsKeyEvents.cs" />
+    <Compile Include="Appium\Interfaces\IWebElementCached.cs" />
     <Compile Include="Appium\iOS\Interfaces\IPerformsTouchID.cs" />
     <Compile Include="Appium\iOS\IOSCommandExecutionHelper.cs" />
+    <Compile Include="Appium\iOS\IOSElementFactory.cs" />
     <Compile Include="Appium\Windows\Enums\WindowsKeyCodes.cs" />
     <Compile Include="Appium\Interfaces\Generic\SearchContext\IGenericFindsByClassName.cs" />
     <Compile Include="Appium\Interfaces\Generic\SearchContext\IGenericFindsByCssSelector.cs" />
@@ -136,6 +140,7 @@
     <Compile Include="Appium\Service\Options\OptionCollector.cs" />
     <Compile Include="Appium\Windows\WindowsDriver.cs" />
     <Compile Include="Appium\Windows\WindowsElement.cs" />
+    <Compile Include="Appium\Windows\WindowsElementFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Appium\AppiumDriver.cs" />
     <Compile Include="Appium\AppiumDriverCommand.cs" />

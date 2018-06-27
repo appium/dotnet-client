@@ -44,6 +44,7 @@ namespace OpenQA.Selenium.Appium
             : base(commandExecutor, desiredCapabilities)
         {
             AppiumCommand.Merge(commandExecutor.CommandInfoRepository);
+            ElementFactory = CreateElementFactory();
         }
 
         public AppiumDriver(ICapabilities desiredCapabilities)
@@ -433,6 +434,8 @@ namespace OpenQA.Selenium.Appium
         #endregion Public Methods
 
         #region Support methods
+
+        protected abstract RemoteWebElementFactory CreateElementFactory();
 
         internal static DesiredCapabilities SetPlatformToCapabilities(DesiredCapabilities dc, string desiredPlatform)
         {
