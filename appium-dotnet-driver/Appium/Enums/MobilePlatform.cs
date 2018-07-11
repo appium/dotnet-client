@@ -11,7 +11,6 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
-
 namespace OpenQA.Selenium.Appium.Enums
 {
     public sealed class MobilePlatform
@@ -21,6 +20,8 @@ namespace OpenQA.Selenium.Appium.Enums
         public const string IOS = "iOS";
 
         public const string Windows = "Windows";
+
+        public const string Tizen = "Tizen";
 
         //FireFoxOS and WinPhone will be added when there will be the supporting of appropriate mobile OS.
     }
