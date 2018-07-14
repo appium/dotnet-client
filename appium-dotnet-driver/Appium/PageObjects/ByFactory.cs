@@ -108,7 +108,7 @@ namespace OpenQA.Selenium.Appium.PageObjects
                 return null;
 
             Attribute[] attributes = null;
-            if (upperPlatform.Equals(MobilePlatform.Android.ToUpper()) & (upperAutomation != null &&
+            if (upperPlatform.Equals(MobilePlatform.Android.ToUpper()) && (upperAutomation != null &&
                                                                           upperAutomation.Equals(AutomationName
                                                                               .Selendroid.ToUpper())))
             {
