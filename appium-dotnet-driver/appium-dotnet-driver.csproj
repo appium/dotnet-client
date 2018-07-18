@@ -86,6 +86,7 @@
     <Compile Include="Appium\iOS\Interfaces\IPerformsTouchID.cs" />
     <Compile Include="Appium\iOS\IOSCommandExecutionHelper.cs" />
     <Compile Include="Appium\iOS\IOSElementFactory.cs" />
+    <Compile Include="Appium\Tizen\TizenElementFactory.cs" />
     <Compile Include="Appium\Windows\Enums\WindowsKeyCodes.cs" />
     <Compile Include="Appium\Interfaces\Generic\SearchContext\IGenericFindsByClassName.cs" />
     <Compile Include="Appium\Interfaces\Generic\SearchContext\IGenericFindsByCssSelector.cs" />

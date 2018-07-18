@@ -116,6 +116,6 @@ namespace OpenQA.Selenium.Appium.Tizen
         {
         }
 
-        protected override RemoteWebElement CreateElement(string elementId) => new TizenElement(this, elementId);
+        protected override RemoteWebElementFactory CreateElementFactory() => new TizenElementFactory(this);
     }
 }
