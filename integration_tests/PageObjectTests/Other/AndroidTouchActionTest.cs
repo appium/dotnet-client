@@ -16,7 +16,7 @@ namespace Appium.Integration.Tests.PageObjectTests.Other
         private AndroidDriver<AppiumWebElement> driver;
         private AndroidPageObjectThatChecksTouchActions pageObject;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void BeforeAll()
         {
             DesiredCapabilities capabilities = Env.isSauce()
@@ -35,7 +35,7 @@ namespace Appium.Integration.Tests.PageObjectTests.Other
             PageFactory.InitElements(driver, pageObject, new AppiumPageObjectMemberDecorator(timeSpan));
         }
 
-        [TestFixtureTearDown]
+        [OneTimeTearDown]
         public void AfterEach()
         {
             if (driver != null)
