@@ -28,7 +28,7 @@ namespace Appium.Integration.Tests.PageObjectTests.NegativeTests
         [FindsBy(How = How.CssSelector, Using = "fake.css")] [FindsByIOSUIAutomation(Accessibility = "FakeAccebility")]
         private IList<IWebElement> inconsistentElements2;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void BeforeAll()
         {
             DesiredCapabilities capabilities = Env.isSauce()
@@ -47,7 +47,7 @@ namespace Appium.Integration.Tests.PageObjectTests.NegativeTests
             PageFactory.InitElements(driver, this, new AppiumPageObjectMemberDecorator(timeSpan));
         }
 
-        [TestFixtureTearDown]
+        [OneTimeTearDown]
         public void AfterEach()
         {
             if (driver != null)
