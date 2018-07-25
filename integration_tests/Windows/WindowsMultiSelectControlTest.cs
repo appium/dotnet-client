@@ -31,7 +31,7 @@ namespace Appium.Integration.Tests.Windows
         protected static WindowsDriver<WindowsElement> AlarmClockSession;
         protected static WindowsDriver<WindowsElement> DesktopSession;
 
-        [OneTimeSetUp]
+        [TestFixtureSetUp]
         public void Setup()
         {
             // Launch the AlarmClock app
@@ -55,8 +55,8 @@ namespace Appium.Integration.Tests.Windows
             ReturnToMainPage();
         }
 
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
+        [TestFixtureTearDown]
+        public void TestFixtureTearDown()
         {
             ReturnToMainPage();
             SwitchToAlarmTab();

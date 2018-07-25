@@ -17,7 +17,7 @@ namespace Appium.Integration.Tests.ServerTests
         private string PathToCustomizedAppiumJS;
         private string testIP;
 
-        [OneTimeSetUp]
+        [TestFixtureSetUp]
         public void BeforeAll()
         {
             byte[] bytes = null;

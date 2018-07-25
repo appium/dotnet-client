@@ -13,7 +13,7 @@ namespace Appium.Integration.Tests.Android
     {
         private AndroidDriver<AppiumWebElement> driver;
 
-        [OneTimeSetUp]
+        [TestFixtureSetUp]
         public void BeforeAll()
         {
             DesiredCapabilities capabilities = Env.isSauce()
@@ -82,7 +82,7 @@ namespace Appium.Integration.Tests.Android
             Assert.AreEqual(settings[AutomatorSetting.WaitScrollAcknowledgmentTimeout], 7000);
         }
 
-        [OneTimeTearDown]
+        [TestFixtureTearDown]
         public void AfterAll()
         {
             if (driver != null)

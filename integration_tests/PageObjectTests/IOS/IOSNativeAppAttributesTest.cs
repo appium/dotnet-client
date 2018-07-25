@@ -16,7 +16,7 @@ namespace Appium.Integration.Tests.PageObjectTests.IOS
         private IOSDriver<AppiumWebElement> driver;
         private IOSPageObjectChecksAttributesForNativeIOSApp pageObject;
 
-        [OneTimeSetUp]
+        [TestFixtureSetUp]
         public void BeforeAll()
         {
             DesiredCapabilities capabilities = Caps.getIos92Caps(Apps.get("iosTestApp"));
@@ -34,7 +34,7 @@ namespace Appium.Integration.Tests.PageObjectTests.IOS
             PageFactory.InitElements(driver, pageObject, new AppiumPageObjectMemberDecorator(timeSpan));
         }
 
-        [OneTimeTearDown]
+        [TestFixtureTearDown]
         public void AfterEach()
         {
             if (driver != null)

@@ -12,7 +12,7 @@ namespace Appium.Integration.Tests.iOS
     {
         private IOSDriver<AppiumWebElement> driver;
 
-        [OneTimeSetUp]
+        [TestFixtureSetUp]
         public void beforeAll()
         {
             DesiredCapabilities capabilities = Caps.getIos102Caps(Apps.get("iosUICatalogApp"));
@@ -28,7 +28,7 @@ namespace Appium.Integration.Tests.iOS
             driver.Manage().Timeouts().ImplicitWait = Env.IMPLICIT_TIMEOUT_SEC;
         }
 
-        [OneTimeTearDown]
+        [TestFixtureTearDown]
         public void AfterEach()
         {
             if (driver != null)

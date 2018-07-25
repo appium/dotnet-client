@@ -14,7 +14,7 @@ namespace Appium.Integration.Tests.Android
     {
         private AndroidDriver<AppiumWebElement> driver;
 
-        [OneTimeSetUp]
+        [TestFixtureSetUp]
         public void BeforeAll()
         {
             DesiredCapabilities capabilities = Env.isSauce()
@@ -43,7 +43,7 @@ namespace Appium.Integration.Tests.Android
                 "Welcome AppiumIntentTest");
         }
 
-        [OneTimeTearDown]
+        [TestFixtureTearDown]
         public void AfterAll()
         {
             if (driver != null)
