@@ -4,6 +4,7 @@ using OpenQA.Selenium;
 using NUnit.Framework;
 using OpenQA.Selenium.Remote;
 using Appium.Integration.Tests.Helpers;
+using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.iOS;
 
 namespace Appium.Integration.Tests.iOS
@@ -12,23 +13,25 @@ namespace Appium.Integration.Tests.iOS
     {
         private AppiumDriver<IWebElement> driver;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void BeforeAll()
         {
             DesiredCapabilities capabilities = Caps.getIos92Caps(Apps.get("iosTestApp"));
             if (Env.isSauce())
             {
-                capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
-                capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
-                capabilities.SetCapability("name", "ios - complex");
-                capabilities.SetCapability("tags", new string[] {"sample"});
+                //capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
+                //capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
+                //capabilities.SetCapability("name", "ios - complex");
+                //capabilities.SetCapability("tags", new string[] {"sample"});
+                capabilities.SetCapability(MobileCapabilityType.AutomationName, AutomationName.iOSXcuiTest);
+
             }
             Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIForIOS;
             driver = new IOSDriver<IWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
             driver.Manage().Timeouts().ImplicitWait = Env.IMPLICIT_TIMEOUT_SEC;
         }
 
-        [TestFixtureTearDown]
+        [OneTimeTearDown]
         public void AfterEach()
         {
             if (driver != null)

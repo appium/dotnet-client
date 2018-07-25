@@ -37,7 +37,7 @@ namespace Appium.Integration.Tests.PageObjectTests.TimeOutManagement
             PageFactory.InitElements(driver, this, new AppiumPageObjectMemberDecorator(duration));
         }
 
-        [TestFixtureTearDown]
+        [OneTimeTearDown]
         public void AfterAll()
         {
             if (driver != null)

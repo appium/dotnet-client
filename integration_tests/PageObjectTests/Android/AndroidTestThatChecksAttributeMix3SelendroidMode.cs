@@ -17,7 +17,7 @@ namespace Appium.Integration.Tests.PageObjectTests.Android
         private AndroidDriver<AppiumWebElement> driver;
         private AndroidPageObjectChecksSelendroidModeOnNativeApp pageObject;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void BeforeAll()
         {
             DesiredCapabilities capabilities =
@@ -37,7 +37,7 @@ namespace Appium.Integration.Tests.PageObjectTests.Android
             PageFactory.InitElements(driver, pageObject, new AppiumPageObjectMemberDecorator(timeSpan));
         }
 
-        [TestFixtureTearDown]
+        [OneTimeTearDown]
         public void AfterEach()
         {
             if (driver != null)
