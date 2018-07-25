@@ -30,7 +30,7 @@ namespace Appium.Integration.Tests.PageObjectTests.DesktopBrowserCompatibility
 
         private IList<IWebElement> btnG; //these elements are found by name="btnG"
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void BeforeAll()
         {
             TimeOutDuration timeSpan = new TimeOutDuration(new TimeSpan(0, 0, 0, 5, 0));
@@ -42,7 +42,7 @@ namespace Appium.Integration.Tests.PageObjectTests.DesktopBrowserCompatibility
             PageFactory.InitElements(ires, links, decorator);
         }
 
-        [TestFixtureTearDown]
+        [OneTimeTearDown]
         public void AfterAll()
         {
             try

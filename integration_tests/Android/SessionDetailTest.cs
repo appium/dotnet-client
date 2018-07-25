@@ -13,7 +13,7 @@ namespace Appium.Integration.Tests.Android
         
         private AndroidDriver<IWebElement> driver;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void BeforeAll()
         {
             var capabilities = Env.isSauce()
