@@ -55,7 +55,7 @@ namespace Appium.Integration.Tests.PageObjectTests.TimeOutManagement
             var size = list.Count;
             DateTime now = DateTime.Now;
 
-            return (now <= deadline & start.Add(span) <= now);
+            return (now <= deadline && start.Add(span) <= now);
         }
 
 

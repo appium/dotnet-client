@@ -34,10 +34,10 @@ namespace Appium.Integration.Tests.iOS
         [TearDown]
         public void Cleanup()
         {
-            if(driver.IsLocked())
-                driver.Unlock();
             if (driver != null)
             {
+                if (driver.IsLocked())
+                    driver.Unlock();
                 driver.Quit();
             }
             if (!Env.isSauce())
