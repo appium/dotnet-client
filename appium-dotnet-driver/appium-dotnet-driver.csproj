@@ -99,6 +99,7 @@
     <Compile Include="Appium\Interfaces\Generic\SearchContext\IGenericSearchContext.cs" />
     <Compile Include="Appium\Interfaces\IContextAware.cs" />
     <Compile Include="Appium\Interfaces\IFindByWindowsUIAutomation.cs" />
+    <Compile Include="Appium\Interfaces\IFindByTizenUIAutomation.cs" />
     <Compile Include="Appium\Interfaces\IHidesKeyboard.cs" />
     <Compile Include="Appium\Interfaces\IInteractsWithApps.cs" />
     <Compile Include="Appium\Interfaces\IInteractsWithFiles.cs" />

@@ -152,6 +152,8 @@ namespace OpenQA.Selenium.Appium
 
         public static By WindowsAutomation(string selector) => new ByWindowsAutomation(selector);
 
+        public static By TizenAutomation(string selector) => new ByTizenAutomation(selector);
+
         public static By IosNSPredicate(string selector) => new ByIosNSPredicate(selector);
 
         public static By IosClassChain(string selector) => new ByIosClassChain(selector);
@@ -235,6 +237,22 @@ namespace OpenQA.Selenium.Appium
 
         public override string ToString() =>
             $"ByWindowsAutomation({selector})";
+    }
+
+    public class ByTizenAutomation : MobileBy
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ByTizenAutomation"/> class.
+        /// </summary>
+        /// <param name="selector">The selector to use in finding the element.</param>
+        public ByTizenAutomation(string selector)
+            : base(selector, "IFindByTizenUIAutomation", "FindElementByTizenUIAutomation",
+                "FindElementSByTizenUIAutomation", MobileSelector.TizenUIAutomation)
+        {
+        }
+
+        public override string ToString() =>
+            $"ByTizenAutomation({selector})";
     }
 
     public class ByIosNSPredicate : MobileBy

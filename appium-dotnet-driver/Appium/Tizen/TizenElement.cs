@@ -11,11 +11,14 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+using OpenQA.Selenium.Appium.Enums;
+using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Remote;
+using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium.Tizen
 {
-    public class TizenElement : AppiumWebElement
+    public class TizenElement : AppiumWebElement, IFindByTizenUIAutomation<AppiumWebElement>
     {
         /// <summary>
         /// Initializes a new instance of the TizenElement class.
@@ -30,5 +33,15 @@ namespace OpenQA.Selenium.Appium.Tizen
         public void ReplaceValue(string value) => TizenCommandExecutionHelper.ReplaceValue(this, Id, value);
 
         public void SetAttribute(string name, string value) => TizenCommandExecutionHelper.SetAttribute(this, Id, name, value);
+
+        #region IFindByTizenUIAutomation Members
+
+        public AppiumWebElement FindElementByTizenUIAutomation(string selector) =>
+            FindElement(MobileSelector.TizenUIAutomation, selector);
+
+        public ReadOnlyCollection<AppiumWebElement> FindElementsByTizenUIAutomation(string selector) =>
+            FindElements(MobileSelector.TizenUIAutomation, selector);
+
+        #endregion IFindByTizenUIAutomation Members
     }
 }
