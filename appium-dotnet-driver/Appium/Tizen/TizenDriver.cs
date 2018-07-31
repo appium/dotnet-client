@@ -13,13 +13,15 @@
 //limitations under the License.
 
 using OpenQA.Selenium.Appium.Enums;
+using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Service;
 using OpenQA.Selenium.Remote;
 using System;
+using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium.Tizen
 {
-    public class TizenDriver<W> : AppiumDriver<W>
+    public class TizenDriver<W> : AppiumDriver<W>, IFindByTizenUIAutomation<W>
          where W : IWebElement
     {
         private static readonly string Platform = MobilePlatform.Tizen;
@@ -115,6 +117,26 @@ namespace OpenQA.Selenium.Appium.Tizen
             : base(service, SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
         {
         }
+
+        #region IFindByTizenUIAutomation Members
+
+        /// <summary>
+        /// Finds the first of elements that match the Tizen UIAutomation selector supplied
+        /// </summary>
+        /// <param name="selector">a Tizen UIAutomation selector</param>
+        /// <returns>IWebElement object so that you can interact that object</returns>
+        public W FindElementByTizenUIAutomation(string selector) =>
+            FindElement(MobileSelector.TizenUIAutomation, selector);
+
+        /// <summary>
+        /// Finds a list of elements that match the Tizen UIAutomation selector supplied
+        /// </summary>
+        /// <param name="selector">a Tizen UIAutomation selector</param>
+        /// <returns>ReadOnlyCollection of IWebElement objects so that you can interact with those objects</returns>
+        public ReadOnlyCollection<W> FindElementsByTizenUIAutomation(string selector) =>
+            FindElements(MobileSelector.TizenUIAutomation, selector);
+
+        #endregion IFindByTizenUIAutomation Members
 
         protected override RemoteWebElementFactory CreateElementFactory() => new TizenElementFactory(this);
     }
