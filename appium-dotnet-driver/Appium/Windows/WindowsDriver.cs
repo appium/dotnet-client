@@ -27,86 +27,86 @@ namespace OpenQA.Selenium.Appium.Windows
         private static readonly string Platform = MobilePlatform.Windows;
 
         /// <summary>
-        /// Initializes a new instance of the WindowsDriver class using desired capabilities
+        /// Initializes a new instance of the WindowsDriver class using Appium options
         /// </summary>
-        /// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities of the browser.</param>
-        public WindowsDriver(DesiredCapabilities desiredCapabilities)
-            : base(SetPlatformToCapabilities(desiredCapabilities, Platform))
+        /// <param name="AppiumOptions">An <see cref="AppiumOptions"/> object containing the Appium options of the browser.</param>
+        public WindowsDriver(AppiumOptions AppiumOptions)
+            : base(SetPlatformToCapabilities(AppiumOptions, Platform))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the WindowsDriver class using desired capabilities and command timeout
+        /// Initializes a new instance of the WindowsDriver class using Appium options and command timeout
         /// </summary>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
+        /// <param name="AppiumOptions">An <see cref="ICapabilities"/> object containing the Appium options.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
-        public WindowsDriver(DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
-            : base(SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
+        public WindowsDriver(AppiumOptions AppiumOptions, TimeSpan commandTimeout)
+            : base(SetPlatformToCapabilities(AppiumOptions, Platform), commandTimeout)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the WindowsDriver class using the AppiumServiceBuilder instance and desired capabilities
+        /// Initializes a new instance of the WindowsDriver class using the AppiumServiceBuilder instance and Appium options
         /// </summary>
         /// <param name="builder"> object containing settings of the Appium local service which is going to be started</param>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
-        public WindowsDriver(AppiumServiceBuilder builder, DesiredCapabilities desiredCapabilities)
-            : base(builder, SetPlatformToCapabilities(desiredCapabilities, Platform))
+        /// <param name="AppiumOptions">An <see cref="ICapabilities"/> object containing the Appium options.</param>
+        public WindowsDriver(AppiumServiceBuilder builder, AppiumOptions AppiumOptions)
+            : base(builder, SetPlatformToCapabilities(AppiumOptions, Platform))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the WindowsDriver class using the AppiumServiceBuilder instance, desired capabilities and command timeout
+        /// Initializes a new instance of the WindowsDriver class using the AppiumServiceBuilder instance, Appium options and command timeout
         /// </summary>
         /// <param name="builder"> object containing settings of the Appium local service which is going to be started</param>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
+        /// <param name="AppiumOptions">An <see cref="ICapabilities"/> object containing the Appium options.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
-        public WindowsDriver(AppiumServiceBuilder builder, DesiredCapabilities desiredCapabilities,
+        public WindowsDriver(AppiumServiceBuilder builder, AppiumOptions AppiumOptions,
             TimeSpan commandTimeout)
-            : base(builder, SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
+            : base(builder, SetPlatformToCapabilities(AppiumOptions, Platform), commandTimeout)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the WindowsDriver class using the specified remote address and desired capabilities
+        /// Initializes a new instance of the WindowsDriver class using the specified remote address and Appium options
         /// </summary>
         /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
-        /// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities.</param>
-        public WindowsDriver(Uri remoteAddress, DesiredCapabilities desiredCapabilities)
-            : base(remoteAddress, SetPlatformToCapabilities(desiredCapabilities, Platform))
+        /// <param name="AppiumOptions">An <see cref="AppiumOptions"/> object containing the Appium options.</param>
+        public WindowsDriver(Uri remoteAddress, AppiumOptions AppiumOptions)
+            : base(remoteAddress, SetPlatformToCapabilities(AppiumOptions, Platform))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the WindowsDriver class using the specified Appium local service and desired capabilities
+        /// Initializes a new instance of the WindowsDriver class using the specified Appium local service and Appium options
         /// </summary>
         /// <param name="service">the specified Appium local service</param>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities of the browser.</param>
-        public WindowsDriver(AppiumLocalService service, DesiredCapabilities desiredCapabilities)
-            : base(service, SetPlatformToCapabilities(desiredCapabilities, Platform))
+        /// <param name="AppiumOptions">An <see cref="ICapabilities"/> object containing the Appium options of the browser.</param>
+        public WindowsDriver(AppiumLocalService service, AppiumOptions AppiumOptions)
+            : base(service, SetPlatformToCapabilities(AppiumOptions, Platform))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the WindowsDriver class using the specified remote address, desired capabilities, and command timeout.
+        /// Initializes a new instance of the WindowsDriver class using the specified remote address, Appium options, and command timeout.
         /// </summary>
         /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
-        /// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities.</param>
+        /// <param name="AppiumOptions">An <see cref="AppiumOptions"/> object containing the Appium options.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
-        public WindowsDriver(Uri remoteAddress, DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
-            : base(remoteAddress, SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
+        public WindowsDriver(Uri remoteAddress, AppiumOptions AppiumOptions, TimeSpan commandTimeout)
+            : base(remoteAddress, SetPlatformToCapabilities(AppiumOptions, Platform), commandTimeout)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the WindowsDriver class using the specified Appium local service, desired capabilities, and command timeout.
+        /// Initializes a new instance of the WindowsDriver class using the specified Appium local service, Appium options, and command timeout.
         /// </summary>
         /// <param name="service">the specified Appium local service</param>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
+        /// <param name="AppiumOptions">An <see cref="ICapabilities"/> object containing the Appium options.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
-        public WindowsDriver(AppiumLocalService service, DesiredCapabilities desiredCapabilities,
+        public WindowsDriver(AppiumLocalService service, AppiumOptions AppiumOptions,
             TimeSpan commandTimeout)
-            : base(service, SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
+            : base(service, SetPlatformToCapabilities(AppiumOptions, Platform), commandTimeout)
         {
         }
 

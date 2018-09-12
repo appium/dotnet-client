@@ -1,5 +1,6 @@
 ﻿using Appium.Integration.Tests.Helpers;
 using NUnit.Framework;
+using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Android.Enums;
 using OpenQA.Selenium.Remote;
@@ -14,15 +15,15 @@ namespace Appium.Integration.Tests.Android
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            DesiredCapabilities capabilities = Env.isSauce()
+            AppiumOptions capabilities = Env.isSauce()
                 ? Caps.getAndroid501Caps(Apps.get("androidApiDemos"))
                 : Caps.getAndroid19Caps(Apps.get("androidApiDemos"));
             if (Env.isSauce())
             {
-                capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
-                capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
-                capabilities.SetCapability("name", "android - simple");
-                capabilities.SetCapability("tags", new string[] {"sample"});
+                capabilities.AddAdditionalCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
+                capabilities.AddAdditionalCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
+                capabilities.AddAdditionalCapability("name", "android - simple");
+                capabilities.AddAdditionalCapability("tags", new string[] {"sample"});
             }
             Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIAndroid;
             driver = new AndroidDriver<AndroidElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);

@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium.Appium.Enums;
+﻿using OpenQA.Selenium.Appium;
+using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Service;
 using OpenQA.Selenium.Appium.Service.Options;
 using OpenQA.Selenium.Remote;
@@ -39,8 +40,8 @@ namespace Appium.Integration.Tests.Helpers
                 if (LocalService == null)
                 {
                     AppiumServiceBuilder builder = new AppiumServiceBuilder();
-                    DesiredCapabilities capabilities = new DesiredCapabilities();
-                    capabilities.SetCapability(IOSMobileCapabilityType.LaunchTimeout,
+                    AppiumOptions capabilities = new AppiumOptions();
+                    capabilities.AddAdditionalCapability(IOSMobileCapabilityType.LaunchTimeout,
                         Env.INIT_TIMEOUT_SEC.TotalMilliseconds);
                     OptionCollector collector = new OptionCollector().AddCapabilities(capabilities).
                         //I use MAC OS X VMWare image. Sometimes it is very slow. 

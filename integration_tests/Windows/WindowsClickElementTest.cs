@@ -31,8 +31,8 @@ namespace Appium.Integration.Tests.Windows
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            DesiredCapabilities appCapabilities = new DesiredCapabilities();
-            appCapabilities.SetCapability("app", "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            AppiumOptions appCapabilities = new AppiumOptions();
+            appCapabilities.AddAdditionalCapability("app", "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
 
             // TODO: What about supporting AppiumServers.sauceURI ???
             CalculatorSession = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appCapabilities,
