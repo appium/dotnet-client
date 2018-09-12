@@ -30,91 +30,91 @@ namespace OpenQA.Selenium.Appium.Tizen
         /// Initializes a new instance of the TizenDriver class
         /// </summary>
         /// <param name="commandExecutor">An <see cref="ICommandExecutor"/> object which executes commands for the driver.</param>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
-        public TizenDriver(ICommandExecutor commandExecutor, DesiredCapabilities desiredCapabilities)
-            : base(commandExecutor, SetPlatformToCapabilities(desiredCapabilities, Platform))
+        /// <param name="AppiumOptions">An <see cref="ICapabilities"/> object containing the Appium options.</param>
+        public TizenDriver(ICommandExecutor commandExecutor, AppiumOptions AppiumOptions)
+            : base(commandExecutor, SetPlatformToCapabilities(AppiumOptions, Platform))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the TizenDriver class using desired capabilities
+        /// Initializes a new instance of the TizenDriver class using Appium options
         /// </summary>
-        /// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities of the browser.</param>
-        public TizenDriver(DesiredCapabilities desiredCapabilities)
-            : base(SetPlatformToCapabilities(desiredCapabilities, Platform))
+        /// <param name="AppiumOptions">An <see cref="AppiumOptions"/> object containing the Appium options of the browser.</param>
+        public TizenDriver(AppiumOptions AppiumOptions)
+            : base(SetPlatformToCapabilities(AppiumOptions, Platform))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the TizenDriver class using desired capabilities and command timeout
+        /// Initializes a new instance of the TizenDriver class using Appium options and command timeout
         /// </summary>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
+        /// <param name="AppiumOptions">An <see cref="ICapabilities"/> object containing the Appium options.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
-        public TizenDriver(DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
-            : base(SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
+        public TizenDriver(AppiumOptions AppiumOptions, TimeSpan commandTimeout)
+            : base(SetPlatformToCapabilities(AppiumOptions, Platform), commandTimeout)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the TizenDriver class using the AppiumServiceBuilder instance and desired capabilities
+        /// Initializes a new instance of the TizenDriver class using the AppiumServiceBuilder instance and Appium options
         /// </summary>
         /// <param name="builder"> object containing settings of the Appium local service which is going to be started</param>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
-        public TizenDriver(AppiumServiceBuilder builder, DesiredCapabilities desiredCapabilities)
-            : base(builder, SetPlatformToCapabilities(desiredCapabilities, Platform))
+        /// <param name="AppiumOptions">An <see cref="ICapabilities"/> object containing the Appium options.</param>
+        public TizenDriver(AppiumServiceBuilder builder, AppiumOptions AppiumOptions)
+            : base(builder, SetPlatformToCapabilities(AppiumOptions, Platform))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the TizenDriver class using the AppiumServiceBuilder instance, desired capabilities and command timeout
+        /// Initializes a new instance of the TizenDriver class using the AppiumServiceBuilder instance, Appium options and command timeout
         /// </summary>
         /// <param name="builder"> object containing settings of the Appium local service which is going to be started</param>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
+        /// <param name="AppiumOptions">An <see cref="ICapabilities"/> object containing the Appium options.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
-        public TizenDriver(AppiumServiceBuilder builder, DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
-            : base(builder, SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
+        public TizenDriver(AppiumServiceBuilder builder, AppiumOptions AppiumOptions, TimeSpan commandTimeout)
+            : base(builder, SetPlatformToCapabilities(AppiumOptions, Platform), commandTimeout)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the TizenDriver class using the specified remote address and desired capabilities
+        /// Initializes a new instance of the TizenDriver class using the specified remote address and Appium options
         /// </summary>
         /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
-        /// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities.</param>
-        public TizenDriver(Uri remoteAddress, DesiredCapabilities desiredCapabilities)
-            : base(remoteAddress, SetPlatformToCapabilities(desiredCapabilities, Platform))
+        /// <param name="AppiumOptions">An <see cref="AppiumOptions"/> object containing the Appium options.</param>
+        public TizenDriver(Uri remoteAddress, AppiumOptions AppiumOptions)
+            : base(remoteAddress, SetPlatformToCapabilities(AppiumOptions, Platform))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the TizenDriver class using the specified Appium local service and desired capabilities
+        /// Initializes a new instance of the TizenDriver class using the specified Appium local service and Appium options
         /// </summary>
         /// <param name="service">the specified Appium local service</param>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities of the browser.</param>
-        public TizenDriver(AppiumLocalService service, DesiredCapabilities desiredCapabilities)
-            : base(service, SetPlatformToCapabilities(desiredCapabilities, Platform))
+        /// <param name="AppiumOptions">An <see cref="ICapabilities"/> object containing the Appium options of the browser.</param>
+        public TizenDriver(AppiumLocalService service, AppiumOptions AppiumOptions)
+            : base(service, SetPlatformToCapabilities(AppiumOptions, Platform))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the TizenDriver class using the specified remote address, desired capabilities, and command timeout.
+        /// Initializes a new instance of the TizenDriver class using the specified remote address, Appium options, and command timeout.
         /// </summary>
         /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
-        /// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities.</param>
+        /// <param name="AppiumOptions">An <see cref="AppiumOptions"/> object containing the Appium options.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
-        public TizenDriver(Uri remoteAddress, DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
-            : base(remoteAddress, SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
+        public TizenDriver(Uri remoteAddress, AppiumOptions AppiumOptions, TimeSpan commandTimeout)
+            : base(remoteAddress, SetPlatformToCapabilities(AppiumOptions, Platform), commandTimeout)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the TizenDriver class using the specified Appium local service, desired capabilities, and command timeout.
+        /// Initializes a new instance of the TizenDriver class using the specified Appium local service, Appium options, and command timeout.
         /// </summary>
         /// <param name="service">the specified Appium local service</param>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
+        /// <param name="AppiumOptions">An <see cref="ICapabilities"/> object containing the Appium options.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
-        public TizenDriver(AppiumLocalService service, DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
-            : base(service, SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
+        public TizenDriver(AppiumLocalService service, AppiumOptions AppiumOptions, TimeSpan commandTimeout)
+            : base(service, SetPlatformToCapabilities(AppiumOptions, Platform), commandTimeout)
         {
         }
 

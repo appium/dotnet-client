@@ -17,7 +17,7 @@ namespace Appium.Integration.Tests.ServerTests
         public void StartingAndroidAppWithCapabilitiesOnlyTest()
         {
             string app = Apps.get("androidApiDemos");
-            DesiredCapabilities capabilities =
+            AppiumOptions capabilities =
                 Caps.getAndroid19Caps(app);
 
             AndroidDriver<AppiumWebElement> driver = null;
@@ -38,7 +38,7 @@ namespace Appium.Integration.Tests.ServerTests
         [Test]
         public void StartingAndroidAppWithCapabilitiesAndServiceTest()
         {
-            DesiredCapabilities capabilities = Env.isSauce()
+            AppiumOptions capabilities = Env.isSauce()
                 ? Caps.getAndroid501Caps(Apps.get("androidApiDemos"))
                 : Caps.getAndroid19Caps(Apps.get("androidApiDemos"));
 
@@ -68,13 +68,13 @@ namespace Appium.Integration.Tests.ServerTests
         {
             string app = Apps.get("androidApiDemos");
 
-            DesiredCapabilities serverCapabilities = Env.isSauce()
+            AppiumOptions serverCapabilities = Env.isSauce()
                 ? Caps.getAndroid501Caps(Apps.get("androidApiDemos"))
                 : Caps.getAndroid19Caps(Apps.get("androidApiDemos"));
 
-            DesiredCapabilities clientCapabilities = new DesiredCapabilities();
-            clientCapabilities.SetCapability(AndroidMobileCapabilityType.AppPackage, "io.appium.android.apis");
-            clientCapabilities.SetCapability(AndroidMobileCapabilityType.AppActivity, ".view.WebView1");
+            AppiumOptions clientCapabilities = new AppiumOptions();
+            clientCapabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppPackage, "io.appium.android.apis");
+            clientCapabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppActivity, ".view.WebView1");
 
             OptionCollector argCollector = new OptionCollector().AddCapabilities(serverCapabilities);
             AppiumServiceBuilder builder = new AppiumServiceBuilder().WithArguments(argCollector);
@@ -98,7 +98,7 @@ namespace Appium.Integration.Tests.ServerTests
         public void StartingIOSAppWithCapabilitiesOnlyTest()
         {
             string app = Apps.get("iosTestApp");
-            DesiredCapabilities capabilities =
+            AppiumOptions capabilities =
                 Caps.getIos92Caps(app);
 
             IOSDriver<AppiumWebElement> driver = null;
@@ -120,7 +120,7 @@ namespace Appium.Integration.Tests.ServerTests
         public void StartingIOSAppWithCapabilitiesAndServiseTest()
         {
             string app = Apps.get("iosTestApp");
-            DesiredCapabilities capabilities =
+            AppiumOptions capabilities =
                 Caps.getIos92Caps(app);
 
             OptionCollector argCollector = new OptionCollector()
@@ -145,12 +145,12 @@ namespace Appium.Integration.Tests.ServerTests
         [Test]
         public void CheckThatServiseIsNotRunWhenTheCreatingOfANewSessionIsFailed()
         {
-            DesiredCapabilities capabilities = Env.isSauce()
+            AppiumOptions capabilities = Env.isSauce()
                 ? //it will be a cause of error
                 Caps.getAndroid501Caps(Apps.get("androidApiDemos"))
                 : Caps.getAndroid19Caps(Apps.get("androidApiDemos"));
-            capabilities.SetCapability(MobileCapabilityType.DeviceName, "iPhone Simulator");
-            capabilities.SetCapability(MobileCapabilityType.PlatformName, MobilePlatform.IOS);
+            capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "iPhone Simulator");
+            capabilities.AddAdditionalCapability(MobileCapabilityType.PlatformName, MobilePlatform.IOS);
 
             AppiumServiceBuilder builder = new AppiumServiceBuilder();
             AppiumLocalService service = builder.Build();
