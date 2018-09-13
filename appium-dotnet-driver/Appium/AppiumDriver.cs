@@ -40,50 +40,50 @@ namespace OpenQA.Selenium.Appium
         
         #region Constructors
 
-        public AppiumDriver(ICommandExecutor commandExecutor, ICapabilities AppiumOptions)
-            : base(commandExecutor, AppiumOptions)
+        public AppiumDriver(ICommandExecutor commandExecutor, ICapabilities appiumOptions)
+            : base(commandExecutor, appiumOptions)
         {
             AppiumCommand.Merge(commandExecutor.CommandInfoRepository);
             ElementFactory = CreateElementFactory();
         }
 
-        public AppiumDriver(ICapabilities AppiumOptions)
-            : this(AppiumLocalService.BuildDefaultService(), AppiumOptions)
+        public AppiumDriver(ICapabilities appiumOptions)
+            : this(AppiumLocalService.BuildDefaultService(), appiumOptions)
         {
         }
 
-        public AppiumDriver(ICapabilities AppiumOptions, TimeSpan commandTimeout)
-            : this(AppiumLocalService.BuildDefaultService(), AppiumOptions, commandTimeout)
+        public AppiumDriver(ICapabilities appiumOptions, TimeSpan commandTimeout)
+            : this(AppiumLocalService.BuildDefaultService(), appiumOptions, commandTimeout)
         {
         }
 
-        public AppiumDriver(AppiumServiceBuilder builder, ICapabilities AppiumOptions)
-            : this(builder.Build(), AppiumOptions)
+        public AppiumDriver(AppiumServiceBuilder builder, ICapabilities appiumOptions)
+            : this(builder.Build(), appiumOptions)
         {
         }
 
-        public AppiumDriver(AppiumServiceBuilder builder, ICapabilities AppiumOptions, TimeSpan commandTimeout)
-            : this(builder.Build(), AppiumOptions, commandTimeout)
+        public AppiumDriver(AppiumServiceBuilder builder, ICapabilities appiumOptions, TimeSpan commandTimeout)
+            : this(builder.Build(), appiumOptions, commandTimeout)
         {
         }
 
-        public AppiumDriver(Uri remoteAddress, ICapabilities AppiumOptions)
-            : this(remoteAddress, AppiumOptions, DefaultCommandTimeout)
+        public AppiumDriver(Uri remoteAddress, ICapabilities appiumOptions)
+            : this(remoteAddress, appiumOptions, DefaultCommandTimeout)
         {
         }
 
-        public AppiumDriver(AppiumLocalService service, ICapabilities AppiumOptions)
-            : this(service, AppiumOptions, DefaultCommandTimeout)
+        public AppiumDriver(AppiumLocalService service, ICapabilities appiumOptions)
+            : this(service, appiumOptions, DefaultCommandTimeout)
         {
         }
 
-        public AppiumDriver(Uri remoteAddress, ICapabilities AppiumOptions, TimeSpan commandTimeout)
-            : this(new AppiumCommandExecutor(remoteAddress, commandTimeout), AppiumOptions)
+        public AppiumDriver(Uri remoteAddress, ICapabilities appiumOptions, TimeSpan commandTimeout)
+            : this(new AppiumCommandExecutor(remoteAddress, commandTimeout), appiumOptions)
         {
         }
 
-        public AppiumDriver(AppiumLocalService service, ICapabilities AppiumOptions, TimeSpan commandTimeout)
-            : this(new AppiumCommandExecutor(service, commandTimeout), AppiumOptions)
+        public AppiumDriver(AppiumLocalService service, ICapabilities appiumOptions, TimeSpan commandTimeout)
+            : this(new AppiumCommandExecutor(service, commandTimeout), appiumOptions)
         {
         }
 
