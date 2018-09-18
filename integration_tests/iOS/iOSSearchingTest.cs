@@ -15,13 +15,13 @@ namespace Appium.Integration.Tests.iOS
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            DesiredCapabilities capabilities = Caps.getIos92Caps(Apps.get("iosTestApp"));
+            AppiumOptions capabilities = Caps.getIos92Caps(Apps.get("iosTestApp"));
             if (Env.isSauce())
             {
-                capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
-                capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
-                capabilities.SetCapability("name", "ios - simple");
-                capabilities.SetCapability("tags", new string[] {"sample"});
+                capabilities.AddAdditionalCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
+                capabilities.AddAdditionalCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
+                capabilities.AddAdditionalCapability("name", "ios - simple");
+                capabilities.AddAdditionalCapability("tags", new string[] {"sample"});
             }
             Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIForIOS;
             driver = new IOSDriver<IOSElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);

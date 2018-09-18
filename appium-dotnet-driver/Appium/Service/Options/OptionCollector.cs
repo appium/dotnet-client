@@ -21,7 +21,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
     public sealed class OptionCollector
     {
         private readonly IDictionary<string, string> CollectedArgs = new Dictionary<string, string>();
-        private DesiredCapabilities capabilities;
+        private AppiumOptions options;
         private static readonly string CapabilitiesFlag = "--default-capabilities";
 
         /// <summary>
@@ -39,18 +39,18 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// <summary>
         /// Adds/merges server-specific capabilities
         /// </summary>
-        /// <param name="capabilities">is an instance of OpenQA.Selenium.Remote.DesiredCapabilities</param>
+        /// <param name="options">is an instance of OpenQA.Selenium.Remote.AppiumOptions</param>
         /// <returns>the self-reference</returns>        
-        public OptionCollector AddCapabilities(DesiredCapabilities capabilities)
+        public OptionCollector AddCapabilities(AppiumOptions options)
         {
-            if (this.capabilities == null)
+            if (this.options == null)
             {
-                this.capabilities = capabilities;
+                this.options = options;
             }
             else
             {
-                Dictionary<string, object> originalDictionary = this.capabilities.ToDictionary();
-                Dictionary<string, object> givenDictionary = capabilities.ToDictionary();
+                Dictionary<string, object> originalDictionary = this.options.ToDictionary();
+                Dictionary<string, object> givenDictionary = options.ToDictionary();
                 Dictionary<string, object> result = new Dictionary<string, object>(originalDictionary);
 
                 foreach (var item in givenDictionary)
@@ -64,8 +64,15 @@ namespace OpenQA.Selenium.Appium.Service.Options
                         result.Add(item.Key, item.Value);
                     }
                 }
-                this.capabilities = new DesiredCapabilities(result);
+
+                this.options = new AppiumOptions();
+
+                foreach (var item in result)
+                {
+                    this.options.AddAdditionalCapability(item.Key, item.Value);
+                }
             }
+
             return this;
         }
 
@@ -73,9 +80,9 @@ namespace OpenQA.Selenium.Appium.Service.Options
         {
             string result = string.Empty;
 
-            if (capabilities != null)
+            if (options != null)
             {
-                Dictionary<string, object> capabilitiesDictionary = capabilities.ToDictionary();
+                Dictionary<string, object> capabilitiesDictionary = options.ToDictionary();
 
                 foreach (var item in capabilitiesDictionary)
                 {
@@ -124,9 +131,9 @@ namespace OpenQA.Selenium.Appium.Service.Options
         {
             string result = string.Empty;
 
-            if (capabilities != null)
+            if (options != null)
             {
-                Dictionary<string, object> capabilitiesDictionary = capabilities.ToDictionary();
+                Dictionary<string, object> capabilitiesDictionary = options.ToDictionary();
 
                 foreach (var item in capabilitiesDictionary)
                 {
@@ -189,7 +196,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
                     }
                 }
 
-                if (capabilities != null && capabilities.ToDictionary().Count > 0)
+                if (options != null && options.ToDictionary().Count > 0)
                 {
                     result.Add(CapabilitiesFlag);
                     if (Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows))

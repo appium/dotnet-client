@@ -32,91 +32,91 @@ namespace OpenQA.Selenium.Appium.iOS
         /// Initializes a new instance of the IOSDriver class
         /// </summary>
         /// <param name="commandExecutor">An <see cref="ICommandExecutor"/> object which executes commands for the driver.</param>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
-        public IOSDriver(ICommandExecutor commandExecutor, DesiredCapabilities desiredCapabilities)
-            : base(commandExecutor, SetPlatformToCapabilities(desiredCapabilities, Platform))
+        /// <param name="driverOptions">An <see cref="DriverOptions"/> object containing the Appium options.</param>
+        public IOSDriver(ICommandExecutor commandExecutor, DriverOptions driverOptions)
+            : base(commandExecutor, SetPlatformToCapabilities(driverOptions, Platform))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the IOSDriver class using desired capabilities
+        /// Initializes a new instance of the IOSDriver class using Appium options
         /// </summary>
-        /// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities of the browser.</param>
-        public IOSDriver(DesiredCapabilities desiredCapabilities)
-            : base(SetPlatformToCapabilities(desiredCapabilities, Platform))
+        /// <param name="driverOptions">An <see cref="DriverOptions"/> object containing the Appium options of the browser.</param>
+        public IOSDriver(DriverOptions driverOptions)
+            : base(SetPlatformToCapabilities(driverOptions, Platform))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the IOSDriver class using desired capabilities and command timeout
+        /// Initializes a new instance of the IOSDriver class using Appium options and command timeout
         /// </summary>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
+        /// <param name="driverOptions">An <see cref="DriverOptions"/> object containing the Appium options.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
-        public IOSDriver(DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
-            : base(SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
+        public IOSDriver(DriverOptions driverOptions, TimeSpan commandTimeout)
+            : base(SetPlatformToCapabilities(driverOptions, Platform), commandTimeout)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the IOSDriver class using the AppiumServiceBuilder instance and desired capabilities
+        /// Initializes a new instance of the IOSDriver class using the AppiumServiceBuilder instance and Appium options
         /// </summary>
         /// <param name="builder"> object containing settings of the Appium local service which is going to be started</param>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
-        public IOSDriver(AppiumServiceBuilder builder, DesiredCapabilities desiredCapabilities)
-            : base(builder, SetPlatformToCapabilities(desiredCapabilities, Platform))
+        /// <param name="driverOptions">An <see cref="DriverOptions"/> object containing the Appium options.</param>
+        public IOSDriver(AppiumServiceBuilder builder, DriverOptions driverOptions)
+            : base(builder, SetPlatformToCapabilities(driverOptions, Platform))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the IOSDriver class using the AppiumServiceBuilder instance, desired capabilities and command timeout
+        /// Initializes a new instance of the IOSDriver class using the AppiumServiceBuilder instance, Appium options and command timeout
         /// </summary>
         /// <param name="builder"> object containing settings of the Appium local service which is going to be started</param>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
+        /// <param name="driverOptions">An <see cref="DriverOptions"/> object containing the Appium options.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
-        public IOSDriver(AppiumServiceBuilder builder, DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
-            : base(builder, SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
+        public IOSDriver(AppiumServiceBuilder builder, DriverOptions driverOptions, TimeSpan commandTimeout)
+            : base(builder, SetPlatformToCapabilities(driverOptions, Platform), commandTimeout)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the IOSDriver class using the specified remote address and desired capabilities
+        /// Initializes a new instance of the IOSDriver class using the specified remote address and Appium options
         /// </summary>
         /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
-        /// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities.</param>
-        public IOSDriver(Uri remoteAddress, DesiredCapabilities desiredCapabilities)
-            : base(remoteAddress, SetPlatformToCapabilities(desiredCapabilities, Platform))
+        /// <param name="DriverOptions">An <see cref="DriverOptions"/> object containing the Appium options.</param>
+        public IOSDriver(Uri remoteAddress, DriverOptions driverOptions)
+            : base(remoteAddress, SetPlatformToCapabilities(driverOptions, Platform))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the IOSDriver class using the specified Appium local service and desired capabilities
+        /// Initializes a new instance of the IOSDriver class using the specified Appium local service and Appium options
         /// </summary>
         /// <param name="service">the specified Appium local service</param>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities of the browser.</param>
-        public IOSDriver(AppiumLocalService service, DesiredCapabilities desiredCapabilities)
-            : base(service, SetPlatformToCapabilities(desiredCapabilities, Platform))
+        /// <param name="driverOptions">An <see cref="DriverOptions"/> object containing the Appium options of the browser.</param>
+        public IOSDriver(AppiumLocalService service, DriverOptions driverOptions)
+            : base(service, SetPlatformToCapabilities(driverOptions, Platform))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the IOSDriver class using the specified remote address, desired capabilities, and command timeout.
+        /// Initializes a new instance of the IOSDriver class using the specified remote address, Appium options, and command timeout.
         /// </summary>
         /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
-        /// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities.</param>
+        /// <param name="DriverOptions">An <see cref="DriverOptions"/> object containing the Appium options.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
-        public IOSDriver(Uri remoteAddress, DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
-            : base(remoteAddress, SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
+        public IOSDriver(Uri remoteAddress, DriverOptions driverOptions, TimeSpan commandTimeout)
+            : base(remoteAddress, SetPlatformToCapabilities(driverOptions, Platform), commandTimeout)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the IOSDriver class using the specified Appium local service, desired capabilities, and command timeout.
+        /// Initializes a new instance of the IOSDriver class using the specified Appium local service, Appium options, and command timeout.
         /// </summary>
         /// <param name="service">the specified Appium local service</param>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
+        /// <param name="driverOptions">An <see cref="DriverOptions"/> object containing the Appium options.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
-        public IOSDriver(AppiumLocalService service, DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
-            : base(service, SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
+        public IOSDriver(AppiumLocalService service, DriverOptions driverOptions, TimeSpan commandTimeout)
+            : base(service, SetPlatformToCapabilities(driverOptions, Platform), commandTimeout)
         {
         }
 
