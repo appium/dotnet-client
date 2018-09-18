@@ -35,18 +35,18 @@ namespace Appium.Integration.Tests.Windows
         public void Setup()
         {
             // Launch the AlarmClock app
-            DesiredCapabilities appCapabilities = new DesiredCapabilities();
-            appCapabilities.SetCapability("app", "Microsoft.WindowsAlarms_8wekyb3d8bbwe!App");
+            AppiumOptions appCapabilities = new AppiumOptions();
+            appCapabilities.AddAdditionalCapability("app", "Microsoft.WindowsAlarms_8wekyb3d8bbwe!App");
             AlarmClockSession =
                 new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appCapabilities);
-            appCapabilities.SetCapability("platformName", "Windows");
+            appCapabilities.AddAdditionalCapability("platformName", "Windows");
 
             Assert.IsNotNull(AlarmClockSession);
             AlarmClockSession.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
 
             // Create a session for Desktop
-            DesiredCapabilities desktopCapabilities = new DesiredCapabilities();
-            desktopCapabilities.SetCapability("app", "Root");
+            AppiumOptions desktopCapabilities = new AppiumOptions();
+            desktopCapabilities.AddAdditionalCapability("app", "Root");
             DesktopSession =
                 new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), desktopCapabilities);
             Assert.IsNotNull(DesktopSession);

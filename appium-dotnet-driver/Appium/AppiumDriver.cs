@@ -40,50 +40,50 @@ namespace OpenQA.Selenium.Appium
         
         #region Constructors
 
-        public AppiumDriver(ICommandExecutor commandExecutor, ICapabilities desiredCapabilities)
-            : base(commandExecutor, desiredCapabilities)
+        public AppiumDriver(ICommandExecutor commandExecutor, ICapabilities appiumOptions)
+            : base(commandExecutor, appiumOptions)
         {
             AppiumCommand.Merge(commandExecutor.CommandInfoRepository);
             ElementFactory = CreateElementFactory();
         }
 
-        public AppiumDriver(ICapabilities desiredCapabilities)
-            : this(AppiumLocalService.BuildDefaultService(), desiredCapabilities)
+        public AppiumDriver(ICapabilities appiumOptions)
+            : this(AppiumLocalService.BuildDefaultService(), appiumOptions)
         {
         }
 
-        public AppiumDriver(ICapabilities desiredCapabilities, TimeSpan commandTimeout)
-            : this(AppiumLocalService.BuildDefaultService(), desiredCapabilities, commandTimeout)
+        public AppiumDriver(ICapabilities appiumOptions, TimeSpan commandTimeout)
+            : this(AppiumLocalService.BuildDefaultService(), appiumOptions, commandTimeout)
         {
         }
 
-        public AppiumDriver(AppiumServiceBuilder builder, ICapabilities desiredCapabilities)
-            : this(builder.Build(), desiredCapabilities)
+        public AppiumDriver(AppiumServiceBuilder builder, ICapabilities appiumOptions)
+            : this(builder.Build(), appiumOptions)
         {
         }
 
-        public AppiumDriver(AppiumServiceBuilder builder, ICapabilities desiredCapabilities, TimeSpan commandTimeout)
-            : this(builder.Build(), desiredCapabilities, commandTimeout)
+        public AppiumDriver(AppiumServiceBuilder builder, ICapabilities appiumOptions, TimeSpan commandTimeout)
+            : this(builder.Build(), appiumOptions, commandTimeout)
         {
         }
 
-        public AppiumDriver(Uri remoteAddress, ICapabilities desiredCapabilities)
-            : this(remoteAddress, desiredCapabilities, DefaultCommandTimeout)
+        public AppiumDriver(Uri remoteAddress, ICapabilities appiumOptions)
+            : this(remoteAddress, appiumOptions, DefaultCommandTimeout)
         {
         }
 
-        public AppiumDriver(AppiumLocalService service, ICapabilities desiredCapabilities)
-            : this(service, desiredCapabilities, DefaultCommandTimeout)
+        public AppiumDriver(AppiumLocalService service, ICapabilities appiumOptions)
+            : this(service, appiumOptions, DefaultCommandTimeout)
         {
         }
 
-        public AppiumDriver(Uri remoteAddress, ICapabilities desiredCapabilities, TimeSpan commandTimeout)
-            : this(new AppiumCommandExecutor(remoteAddress, commandTimeout), desiredCapabilities)
+        public AppiumDriver(Uri remoteAddress, ICapabilities appiumOptions, TimeSpan commandTimeout)
+            : this(new AppiumCommandExecutor(remoteAddress, commandTimeout), appiumOptions)
         {
         }
 
-        public AppiumDriver(AppiumLocalService service, ICapabilities desiredCapabilities, TimeSpan commandTimeout)
-            : this(new AppiumCommandExecutor(service, commandTimeout), desiredCapabilities)
+        public AppiumDriver(AppiumLocalService service, ICapabilities appiumOptions, TimeSpan commandTimeout)
+            : this(new AppiumCommandExecutor(service, commandTimeout), appiumOptions)
         {
         }
 
@@ -437,10 +437,10 @@ namespace OpenQA.Selenium.Appium
 
         protected abstract RemoteWebElementFactory CreateElementFactory();
 
-        internal static DesiredCapabilities SetPlatformToCapabilities(DesiredCapabilities dc, string desiredPlatform)
+        internal static ICapabilities SetPlatformToCapabilities(DriverOptions dc, string desiredPlatform)
         {
-            dc.SetCapability(MobileCapabilityType.PlatformName, desiredPlatform);
-            return dc;
+            dc.AddAdditionalCapability(MobileCapabilityType.PlatformName, desiredPlatform);
+            return dc.ToCapabilities();
         }
 
         internal static ReadOnlyCollection<T> ConvertToExtendedWebElementCollection<T>(IList list) where T : IWebElement

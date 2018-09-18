@@ -21,10 +21,10 @@ namespace Appium.Integration.Tests.Android
                 : Caps.getAndroid19Caps(Apps.get("selendroidTestApp"));
             if (Env.isSauce())
             {
-                capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
-                capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
-                capabilities.SetCapability("name", "android - complex");
-                capabilities.SetCapability("tags", new[] {"sample"});
+                capabilities.AddAdditionalCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
+                capabilities.AddAdditionalCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
+                capabilities.AddAdditionalCapability("name", "android - complex");
+                capabilities.AddAdditionalCapability("tags", new[] {"sample"});
             }
             Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIAndroid;
             driver = new AndroidDriver<IWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);

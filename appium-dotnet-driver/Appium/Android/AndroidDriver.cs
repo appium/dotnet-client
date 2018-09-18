@@ -37,94 +37,94 @@ namespace OpenQA.Selenium.Appium.Android
         /// Initializes a new instance of the AndroidDriver class
         /// </summary>
         /// <param name="commandExecutor">An <see cref="ICommandExecutor"/> object which executes commands for the driver.</param>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
-        public AndroidDriver(ICommandExecutor commandExecutor, DesiredCapabilities desiredCapabilities)
-            : base(commandExecutor, SetPlatformToCapabilities(desiredCapabilities, Platform))
+        /// <param name="driverOptions">An <see cref="ICapabilities"/> object containing the Appium options.</param>
+        public AndroidDriver(ICommandExecutor commandExecutor, DriverOptions driverOptions)
+            : base(commandExecutor, SetPlatformToCapabilities(driverOptions, Platform))
         {
         }
 
 
         /// <summary>
-        /// Initializes a new instance of the AndroidDriver class using desired capabilities
+        /// Initializes a new instance of the AndroidDriver class using Appium options
         /// </summary>
-        /// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities of the browser.</param>
-        public AndroidDriver(DesiredCapabilities desiredCapabilities)
-            : base(SetPlatformToCapabilities(desiredCapabilities, Platform))
+        /// <param name="driverOptions">An <see cref="DriverOptions"/> object containing the Appium options of the browser.</param>
+        public AndroidDriver(DriverOptions driverOptions)
+            : base(SetPlatformToCapabilities(driverOptions, Platform))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the AndroidDriver class using desired capabilities and command timeout
+        /// Initializes a new instance of the AndroidDriver class using Appium options and command timeout
         /// </summary>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
+        /// <param name="driverOptions">An <see cref="ICapabilities"/> object containing the Appium options.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
-        public AndroidDriver(DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
-            : base(SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
+        public AndroidDriver(DriverOptions driverOptions, TimeSpan commandTimeout)
+            : base(SetPlatformToCapabilities(driverOptions, Platform), commandTimeout)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the AndroidDriver class using the AppiumServiceBuilder instance and desired capabilities
+        /// Initializes a new instance of the AndroidDriver class using the AppiumServiceBuilder instance and Appium options
         /// </summary>
         /// <param name="builder"> object containing settings of the Appium local service which is going to be started</param>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
-        public AndroidDriver(AppiumServiceBuilder builder, DesiredCapabilities desiredCapabilities)
-            : base(builder, SetPlatformToCapabilities(desiredCapabilities, Platform))
+        /// <param name="driverOptions">An <see cref="ICapabilities"/> object containing the Appium options.</param>
+        public AndroidDriver(AppiumServiceBuilder builder, DriverOptions driverOptions)
+            : base(builder, SetPlatformToCapabilities(driverOptions, Platform))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the AndroidDriver class using the AppiumServiceBuilder instance, desired capabilities and command timeout
+        /// Initializes a new instance of the AndroidDriver class using the AppiumServiceBuilder instance, Appium options and command timeout
         /// </summary>
         /// <param name="builder"> object containing settings of the Appium local service which is going to be started</param>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
+        /// <param name="driverOptions">An <see cref="ICapabilities"/> object containing the Appium options.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
-        public AndroidDriver(AppiumServiceBuilder builder, DesiredCapabilities desiredCapabilities,
+        public AndroidDriver(AppiumServiceBuilder builder, DriverOptions driverOptions,
             TimeSpan commandTimeout)
-            : base(builder, SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
+            : base(builder, SetPlatformToCapabilities(driverOptions, Platform), commandTimeout)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the AndroidDriver class using the specified remote address and desired capabilities
+        /// Initializes a new instance of the AndroidDriver class using the specified remote address and Appium options
         /// </summary>
         /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
-        /// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities.</param>
-        public AndroidDriver(Uri remoteAddress, DesiredCapabilities desiredCapabilities)
-            : base(remoteAddress, SetPlatformToCapabilities(desiredCapabilities, Platform))
+        /// <param name="driverOptions">An <see cref="DriverOptions"/> object containing the Appium options.</param>
+        public AndroidDriver(Uri remoteAddress, DriverOptions driverOptions)
+            : base(remoteAddress, SetPlatformToCapabilities(driverOptions, Platform))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the AndroidDriver class using the specified Appium local service and desired capabilities
+        /// Initializes a new instance of the AndroidDriver class using the specified Appium local service and Appium options
         /// </summary>
         /// <param name="service">the specified Appium local service</param>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities of the browser.</param>
-        public AndroidDriver(AppiumLocalService service, DesiredCapabilities desiredCapabilities)
-            : base(service, SetPlatformToCapabilities(desiredCapabilities, Platform))
+        /// <param name="driverOptions">An <see cref="ICapabilities"/> object containing the Appium options of the browser.</param>
+        public AndroidDriver(AppiumLocalService service, DriverOptions driverOptions)
+            : base(service, SetPlatformToCapabilities(driverOptions, Platform))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the AndroidDriver class using the specified remote address, desired capabilities, and command timeout.
+        /// Initializes a new instance of the AndroidDriver class using the specified remote address, Appium options, and command timeout.
         /// </summary>
         /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
-        /// <param name="desiredCapabilities">An <see cref="DesiredCapabilities"/> object containing the desired capabilities.</param>
+        /// <param name="driverOptions">An <see cref="DriverOptions"/> object containing the Appium options.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
-        public AndroidDriver(Uri remoteAddress, DesiredCapabilities desiredCapabilities, TimeSpan commandTimeout)
-            : base(remoteAddress, SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
+        public AndroidDriver(Uri remoteAddress, DriverOptions driverOptions, TimeSpan commandTimeout)
+            : base(remoteAddress, SetPlatformToCapabilities(driverOptions, Platform), commandTimeout)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the AndroidDriver class using the specified Appium local service, desired capabilities, and command timeout.
+        /// Initializes a new instance of the AndroidDriver class using the specified Appium local service, Appium options, and command timeout.
         /// </summary>
         /// <param name="service">the specified Appium local service</param>
-        /// <param name="desiredCapabilities">An <see cref="ICapabilities"/> object containing the desired capabilities.</param>
+        /// <param name="driverOptions">An <see cref="ICapabilities"/> object containing the Appium options.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
-        public AndroidDriver(AppiumLocalService service, DesiredCapabilities desiredCapabilities,
+        public AndroidDriver(AppiumLocalService service, DriverOptions driverOptions,
             TimeSpan commandTimeout)
-            : base(service, SetPlatformToCapabilities(desiredCapabilities, Platform), commandTimeout)
+            : base(service, SetPlatformToCapabilities(driverOptions, Platform), commandTimeout)
         {
         }
 

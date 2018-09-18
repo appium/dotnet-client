@@ -7,6 +7,7 @@ using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Enums;
 using System.Threading;
+using OpenQA.Selenium.Appium;
 
 namespace Appium.Integration.Tests.Android
 {
@@ -18,18 +19,18 @@ namespace Appium.Integration.Tests.Android
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            DesiredCapabilities capabilities = Env.isSauce()
+            AppiumOptions capabilities = Env.isSauce()
                 ? Caps.getAndroid501Caps(Apps.get("selendroidTestApp"))
                 : Caps.getAndroid19Caps(Apps.get("selendroidTestApp"));
             if (Env.isSauce())
             {
-                capabilities.SetCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
-                capabilities.SetCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
-                capabilities.SetCapability("name", "android - webview");
-                capabilities.SetCapability("tags", new string[] {"sample"});
+                capabilities.AddAdditionalCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
+                capabilities.AddAdditionalCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
+                capabilities.AddAdditionalCapability("name", "android - webview");
+                capabilities.AddAdditionalCapability("tags", new string[] {"sample"});
             }
-            capabilities.SetCapability(AndroidMobileCapabilityType.AppPackage, "io.selendroid.testapp");
-            capabilities.SetCapability(AndroidMobileCapabilityType.AppActivity, ".WebViewActivity");
+            capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppPackage, "io.selendroid.testapp");
+            capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppActivity, ".WebViewActivity");
             Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIAndroid;
             driver = new AndroidDriver<IWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
             driver.Manage().Timeouts().ImplicitWait = Env.IMPLICIT_TIMEOUT_SEC;
