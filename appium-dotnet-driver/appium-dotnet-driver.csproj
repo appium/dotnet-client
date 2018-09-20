@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
@@ -19,8 +19,9 @@
     <PackageIconUrl>https://avatars1.githubusercontent.com/u/3221291?s=140</PackageIconUrl>
     <Description>Selenium Webdriver extension for Appium.</Description>
     <PackageTags>Appium Webdriver device automation</PackageTags>
-    <PackageReleaseNotes>4.0.0.2-beta
-          [BREAKING CHANGE] Move to Dotnet Standard.
+    <PackageReleaseNotes>
+          4.0.0.2-beta
+          [BREAKING CHANGE] Move to Dotnet Standard with the exception of PageFactory.
           [BREAKING CHANGE] Replace DesiredCapabilities with AppiumOptions and AppiumCapablilities.
           [UPDATES]:
           - Selenium.Support was updated 3.14.0
@@ -213,7 +214,8 @@
 
             1.0.0
             TouchAction + multiActions rewriting,
-            Project structure overhaul.</PackageReleaseNotes>
+            Project structure overhaul.
+    </PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
