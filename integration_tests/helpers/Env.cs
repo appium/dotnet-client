@@ -21,7 +21,7 @@ namespace Appium.Integration.Tests.Helpers
                 if (!initialized)
                 {
                     initialized = true;
-                    string path = AppDomain.CurrentDomain.BaseDirectory + "../../";
+                    string path = AppDomain.CurrentDomain.BaseDirectory;
                     StreamReader sr = new StreamReader(path + "env.json");
                     string jsonString = sr.ReadToEnd();
                     env = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonString);
