@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 
 namespace Appium.Integration.Tests.Helpers
 {
@@ -24,8 +24,7 @@ namespace Appium.Integration.Tests.Helpers
                     string path = AppDomain.CurrentDomain.BaseDirectory + "../../";
                     StreamReader sr = new StreamReader(path + "env.json");
                     string jsonString = sr.ReadToEnd();
-                    JavaScriptSerializer ser = new JavaScriptSerializer();
-                    env = ser.Deserialize<Dictionary<string, string>>(jsonString);
+                    env = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonString);
                 }
             }
             catch
