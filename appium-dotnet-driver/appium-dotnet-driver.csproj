@@ -21,6 +21,7 @@
     <PackageTags>Appium Webdriver device automation</PackageTags>
     <PackageReleaseNotes>
           4.0.0.2-beta
+          [Enhancement] Added support for Tizen driver
           [BREAKING CHANGE] Move to Dotnet Standard with the exception of PageFactory.
           [BREAKING CHANGE] Replace DesiredCapabilities with AppiumOptions and AppiumCapablilities.
           [UPDATES]:
