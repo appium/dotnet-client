@@ -78,7 +78,7 @@ namespace OpenQA.Selenium.Appium
 
         public override string Text => CacheValue("text", () => base.Text)?.ToString();
 
-        public override bool Displayed => Convert.ToBoolean(CacheValue("displayed", () => base.Displayed));
+        public override bool Displayed => Convert.ToBoolean(CacheValue("displayed", () => Execute(DriverCommand.IsElementDisplayed, new Dictionary<string, object>{{"id", Id}}).Value));
 
         public override bool Enabled => Convert.ToBoolean(CacheValue("enabled", () => base.Enabled));
 
