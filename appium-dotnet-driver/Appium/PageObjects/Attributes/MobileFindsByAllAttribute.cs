@@ -64,6 +64,7 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes
         /// all <see cref="FindsBySelendroidAttribute"/>  on the field or property.
         /// </summary>
         [DefaultValue(false)]
+        [Obsolete("Support for Selendroid is deprecated and will be removed in the next release")]
         public bool Selendroid { get; set; }
     }
 }
