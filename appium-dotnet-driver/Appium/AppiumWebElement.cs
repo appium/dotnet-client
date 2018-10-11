@@ -240,7 +240,7 @@ namespace OpenQA.Selenium.Appium
         /// <param name="className">CSS class name on the element</param>
         /// <returns>first element found</returns
         public new AppiumWebElement FindElementByClassName(string className) =>
-            (AppiumWebElement) base.FindElement("class name", className);
+            (AppiumWebElement) base.FindElement(MobileSelector.ClassName, className);
 
         /// <summary>
         /// Finds a list of elements that match the class name supplied
@@ -248,7 +248,7 @@ namespace OpenQA.Selenium.Appium
         /// <param name="className">CSS class name on the element</param>
         /// <returns>ReadOnlyCollection of elements found</returns
         public new ReadOnlyCollection<AppiumWebElement> FindElementsByClassName(string className) =>
-            ConvertToExtendedWebElementCollection(base.FindElements("class name", className));
+            ConvertToExtendedWebElementCollection(base.FindElements(MobileSelector.ClassName, className));
 
         /// <summary>
         /// Finds the first element in the page that matches the ID supplied
@@ -256,7 +256,7 @@ namespace OpenQA.Selenium.Appium
         /// <param name="id">ID of the element</param>
         /// <returns>First element found</returns>
         public new AppiumWebElement FindElementById(string id) =>
-             (AppiumWebElement) base.FindElement("id", id);
+            (AppiumWebElement) base.FindElement(MobileSelector.Id, id);
 
         /// <summary>
         /// Finds a list of elements that match the ID supplied
@@ -264,7 +264,7 @@ namespace OpenQA.Selenium.Appium
         /// <param name="id">ID of the element</param>
         /// <returns>ReadOnlyCollection of elements found</returns>
         public new ReadOnlyCollection<AppiumWebElement> FindElementsById(string id) =>
-            ConvertToExtendedWebElementCollection(base.FindElements("id", id));
+            ConvertToExtendedWebElementCollection(base.FindElements(MobileSelector.Id, id));
 
         /// <summary>
         /// Finds the first element matching the specified CSS selector
@@ -304,7 +304,7 @@ namespace OpenQA.Selenium.Appium
         /// <param name="name">Name of the element on the page</param>
         /// <returns>First element found</returns>
         public new AppiumWebElement FindElementByName(string name) =>
-            (AppiumWebElement) base.FindElement("name", name);
+            (AppiumWebElement) base.FindElement(MobileSelector.Name, name);
 
         /// <summary>
         /// Finds a list of elements that match the name supplied
@@ -312,7 +312,7 @@ namespace OpenQA.Selenium.Appium
         /// <param name="name">Name of the element on the page</param>
         /// <returns>ReadOnlyCollection of elements found</returns>
         public new ReadOnlyCollection<AppiumWebElement> FindElementsByName(string name) =>
-            ConvertToExtendedWebElementCollection(base.FindElements("name", name));
+            ConvertToExtendedWebElementCollection(base.FindElements(MobileSelector.Name, name));
 
         /// <summary>
         /// Finds the first of elements that match the part of the link text supplied
@@ -336,7 +336,7 @@ namespace OpenQA.Selenium.Appium
         /// <param name="tagName">DOM tag name of the element being searched</param>
         /// <returns>First element found</returns>
         public new AppiumWebElement FindElementByTagName(string tagName) =>
-            (AppiumWebElement) base.FindElement("tag name", tagName);
+            (AppiumWebElement) base.FindElement(MobileSelector.TagName, tagName);
 
         /// <summary>
         /// Finds a list of elements that match the DOM Tag supplied
@@ -344,7 +344,7 @@ namespace OpenQA.Selenium.Appium
         /// <param name="tagName">DOM tag name of the element being searched</param>
         /// <returns>ReadOnlyCollection of elements found</returns>
         public new ReadOnlyCollection<AppiumWebElement> FindElementsByTagName(string tagName) =>
-            ConvertToExtendedWebElementCollection(FindElements("tag name", tagName));
+            ConvertToExtendedWebElementCollection(FindElements(MobileSelector.TagName, tagName));
 
         /// <summary>
         /// Finds the first of elements that match the XPath supplied
