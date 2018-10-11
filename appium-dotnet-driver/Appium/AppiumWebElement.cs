@@ -123,8 +123,34 @@ namespace OpenQA.Selenium.Appium
 
         public override string GetAttribute(string attributeName) => CacheValue(
                 "attribute/" + attributeName,
-                () => base.GetAttribute(attributeName)
+                () => _GetAttribute(attributeName)
             )?.ToString();
+
+        private string _GetAttribute(string attributeName)
+        {
+            Response commandResponse = null;
+            string attributeValue = string.Empty;
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+
+            parameters.Add("id", Id);
+            parameters.Add("name", attributeName);
+            commandResponse = Execute(DriverCommand.GetElementAttribute, parameters);
+
+            if (commandResponse.Value == null)
+            {
+                return null;
+            }
+
+            attributeValue = commandResponse.Value.ToString();
+
+            // Normalize string values of boolean results as lowercase.
+            if (commandResponse.Value is bool)
+            {
+                attributeValue = attributeValue.ToLowerInvariant();
+            }
+
+            return attributeValue;
+        }
 
         public override string GetCssValue(string propertyName) => CacheValue(
                 "css/" + propertyName,
