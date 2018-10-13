@@ -7,6 +7,8 @@ using Appium.Integration.Tests.Helpers;
 using OpenQA.Selenium.Appium.Android;
 using System.Threading;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 
 namespace Appium.Integration.Tests.Android
 {
@@ -50,13 +52,26 @@ namespace Appium.Integration.Tests.Android
         public void TestScreenRecord()
         {
             Dictionary<string, object> StartRecordOptions = new Dictionary<string, object>();
-            Dictionary<string, object> StopRecordOptions = new Dictionary<string, object>();
+            driver.StartRecordingScreen(StartRecordOptions);
+            Thread.Sleep(1000);
+            String Base64ResponseString = driver.StopRecordingScreen();
+            Assert.IsNotEmpty(Base64ResponseString);
+            Assert.IsTrue(Validations.IsBase64String(Base64ResponseString), "Response Must be a base64 string");
+        }
 
-
+        [Test]
+        public void TestScreenRecordOutput()
+        {
+            Dictionary<string, object> StartRecordOptions = new Dictionary<string, object>();
             driver.StartRecordingScreen(StartRecordOptions);
             Thread.Sleep(5000);
-            String Base64Response = driver.StopRecordingScreen();
-            ;
+            String Base64ResponseString = driver.StopRecordingScreen();
+            byte[] data = Convert.FromBase64String(Base64ResponseString);
+            string filePath = Path.GetTempPath();
+            var fileName = "TestScreenRecordOutput.mp4";
+            string fullPath = Path.Combine(filePath, fileName);
+            Console.WriteLine(fullPath);
+            File.WriteAllBytes(fullPath, data);
         }
     }
 }

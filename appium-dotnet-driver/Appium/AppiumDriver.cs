@@ -452,7 +452,7 @@ namespace OpenQA.Selenium.Appium
         public String StopRecordingScreen()
         {
             var commandResponse = ((IExecuteMethod)this).Execute(AppiumDriverCommand.StopRecordingScreen);
-            return commandResponse.ToString();
+            return commandResponse.Value as string;
         }
 
         #endregion Device Methods
