@@ -129,7 +129,7 @@ namespace OpenQA.Selenium.Appium
             (W) base.FindElement(MobileSelector.Name, name);
 
         public new ReadOnlyCollection<W> FindElementsByName(string name) =>
-            ConvertToExtendedWebElementCollection<W>(base.FindElementsByName(name));
+            ConvertToExtendedWebElementCollection<W>(base.FindElements(MobileSelector.Name, name));
 
         public new W FindElementByPartialLinkText(string partialLinkText) =>
             (W) base.FindElementByPartialLinkText(partialLinkText);
