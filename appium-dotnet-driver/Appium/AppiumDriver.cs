@@ -432,14 +432,27 @@ namespace OpenQA.Selenium.Appium
         #endregion Session Data
 
         #region Device Methods
-        public void StartRecordingScreen()
+        /// <summary>
+        /// Rotates Device.
+        /// </summary>
+        /// <param name="opts">rotations options like the following:
+        /// new Dictionary<string, object> {{"x", 114}, {"y", 198}, {"duration", 5}, 
+        /// {"radius", 3}, {"rotation", 220}, {"touchCount", 2}}
+        /// </param>
+        public void StartRecordingScreen(Dictionary<string, object> opts)
         {
-            throw new NotImplementedException();
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            foreach (KeyValuePair<string, object> opt in opts)
+            {
+                parameters.Add(opt.Key, opt.Value);
+            }
+            Execute(AppiumDriverCommand.StartRecordingScreen, parameters);
         }
 
-        public void StopRecordingScreen()
+        public String StopRecordingScreen()
         {
-            throw new NotImplementedException();
+            var commandResponse = ((IExecuteMethod)this).Execute(AppiumDriverCommand.StopRecordingScreen);
+            return commandResponse.ToString();
         }
 
         #endregion Device Methods

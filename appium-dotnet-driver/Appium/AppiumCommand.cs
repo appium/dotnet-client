@@ -92,7 +92,10 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/settings"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.TouchID,
                 "/session/{sessionId}/appium/simulator/touch_id"),
-
+            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.StartRecordingScreen,
+                "/session/{sessionId}/appium/start_recording_screen"),
+            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.StopRecordingScreen,
+                "/session/{sessionId}/appium/stop_recording_screen"),
             #endregion Appium Commands
 
             #region Touch Commands

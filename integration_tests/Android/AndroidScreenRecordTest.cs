@@ -6,6 +6,7 @@ using OpenQA.Selenium.Remote;
 using Appium.Integration.Tests.Helpers;
 using OpenQA.Selenium.Appium.Android;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace Appium.Integration.Tests.Android
 {
@@ -18,8 +19,8 @@ namespace Appium.Integration.Tests.Android
         public void BeforeAll()
         {
             AppiumOptions capabilities = Env.isSauce()
-                ? Caps.getAndroid501Caps(Apps.get("androidApiDemos"))
-                : Caps.getAndroid19Caps(Apps.get("androidApiDemos"));
+                ? Caps.getAndroid81Caps(Apps.get("androidApiDemos"))
+                : Caps.getAndroid81Caps(Apps.get("androidApiDemos"));
             if (Env.isSauce())
             {
                 capabilities.AddAdditionalCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
@@ -48,9 +49,14 @@ namespace Appium.Integration.Tests.Android
         [Test]
         public void TestScreenRecord()
         {
-            driver.StartRecordingScreen();
+            Dictionary<string, object> StartRecordOptions = new Dictionary<string, object>();
+            Dictionary<string, object> StopRecordOptions = new Dictionary<string, object>();
+
+
+            driver.StartRecordingScreen(StartRecordOptions);
             Thread.Sleep(5000);
-            driver.StopRecordingScreen();
+            String Base64Response = driver.StopRecordingScreen();
+            ;
         }
     }
 }

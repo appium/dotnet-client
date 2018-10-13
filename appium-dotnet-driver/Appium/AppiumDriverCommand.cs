@@ -160,6 +160,16 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string GetLocation = "getLocation";
 
+        /// <summary>
+        /// Start recording screen.
+        /// </summary>
+        public const string StartRecordingScreen = "startRecordingScreen";
+
+        /// <summary>
+        /// Stop recording screen.
+        /// </summary>
+        public const string StopRecordingScreen = "stopRecordingScreen";
+
         #endregion Appium Specific extensions to JSONWP Commands
 
         #region TouchActions
