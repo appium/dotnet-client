@@ -388,10 +388,8 @@ namespace OpenQA.Selenium.Appium
 
         #region Device Time
 
-        /// <summary>
-        /// Gets device date and time for both iOS(Supports only real device) and Android devices
-        /// </summary>
-        /// <returns>A string which consists of date and time</returns>
+        
+
         public string DeviceTime => ((IExecuteMethod) this).Execute(AppiumDriverCommand.GetDeviceTime).Value.ToString();
 
         #endregion Device Time
@@ -432,12 +430,14 @@ namespace OpenQA.Selenium.Appium
         #endregion Session Data
 
         #region Device Methods
+
         /// <summary>
-        /// Rotates Device.
+        /// Start recording the device screen
         /// </summary>
-        /// <param name="opts">rotations options like the following:
-        /// new Dictionary<string, object> {{"x", 114}, {"y", 198}, {"duration", 5}, 
-        /// {"radius", 3}, {"rotation", 220}, {"touchCount", 2}}
+        /// <param name="opts">recording options like the following:
+        ///  Dictionary<string, object> StartRecordOptions = new Dictionary<string, object>();
+        ///  StartRecordOptions.Add("bit_rate", "1");
+        ///  StartRecordOptions.Add("video_size", "1280x720");
         /// </param>
         public void StartRecordingScreen(Dictionary<string, object> opts)
         {
@@ -449,6 +449,10 @@ namespace OpenQA.Selenium.Appium
             Execute(AppiumDriverCommand.StartRecordingScreen, parameters);
         }
 
+
+        /// <summary>
+        /// Stop recording the device screen
+        /// </summary>
         public String StopRecordingScreen()
         {
             var commandResponse = ((IExecuteMethod)this).Execute(AppiumDriverCommand.StopRecordingScreen);
