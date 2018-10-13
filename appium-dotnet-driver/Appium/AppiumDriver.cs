@@ -37,7 +37,7 @@ namespace OpenQA.Selenium.Appium
     {
 
         private const string NativeApp = "NATIVE_APP";
-        
+
         #region Constructors
 
         public AppiumDriver(ICommandExecutor commandExecutor, ICapabilities appiumOptions)
@@ -430,6 +430,19 @@ namespace OpenQA.Selenium.Appium
                                  && Context.IndexOf(NativeApp, StringComparison.OrdinalIgnoreCase) < 0;
 
         #endregion Session Data
+
+        #region Device Methods
+        public void StartRecordingScreen()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void StopRecordingScreen()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion Device Methods
 
         #endregion Public Methods
 

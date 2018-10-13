@@ -21,3 +21,6 @@
 - `cp samples/env.json.sample samples/env.json`
 - Update `samples/env.json` set SAUCE=true, and configure your Sauce credentials.
 - Run the tests in NUnit.
+
+## Troubleshooting
+If you are running the tests locally and you get errors such as ` 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\ApiDemos-debug.apk' is denied`, Restart visual studio in administrator mode
