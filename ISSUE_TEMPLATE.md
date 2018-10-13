@@ -24,7 +24,7 @@ You can git clone https://github.com/appium/sample-code or https://github.com/ap
 Also you can create a [gist](https://gist.github.com) with pasted C# code sample or put it here using markdown. About markdown please read [Mastering markdown](https://guides.github.com/features/mastering-markdown/) and 
 [Writing on GitHub](https://help.github.com/categories/writing-on-github/)
 
-## Ecxeption stacktraces
+## Exception stacktraces
 
 Please create a [gist](https://gist.github.com) with pasted stacktrace of exception thrown by .NET.
 
