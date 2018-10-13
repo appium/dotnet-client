@@ -93,8 +93,6 @@ namespace OpenQA.Selenium.Appium
 
         public new W FindElement(By by) =>
             (W) base.FindElement(by);
-
-
         public new ReadOnlyCollection<W> FindElements(By by) =>
             ConvertToExtendedWebElementCollection<W>(base.FindElements(by));
 
@@ -104,16 +102,16 @@ namespace OpenQA.Selenium.Appium
             ConvertToExtendedWebElementCollection<W>(base.FindElements(selector, value));
 
         public new W FindElementByClassName(string className) =>
-            (W) base.FindElementByClassName(className);
+            (W) base.FindElement(MobileSelector.ClassName, className);
 
         public new ReadOnlyCollection<W> FindElementsByClassName(string className) =>
-            ConvertToExtendedWebElementCollection<W>(base.FindElementsByClassName(className));
+            ConvertToExtendedWebElementCollection<W>(base.FindElements(MobileSelector.ClassName, className));
 
         public new W FindElementById(string id) =>
-            (W) base.FindElementById(id);
+            (W) base.FindElement(MobileSelector.Id, id);
 
         public new ReadOnlyCollection<W> FindElementsById(string id) =>
-            ConvertToExtendedWebElementCollection<W>(base.FindElementsById(id));
+            ConvertToExtendedWebElementCollection<W>(base.FindElements(MobileSelector.Id, id));
 
         public new W FindElementByCssSelector(string cssSelector) =>
             (W) base.FindElementByCssSelector(cssSelector);
@@ -128,10 +126,10 @@ namespace OpenQA.Selenium.Appium
             ConvertToExtendedWebElementCollection<W>(base.FindElementsByLinkText(linkText));
 
         public new W FindElementByName(string name) =>
-            (W) base.FindElementByName(name);
+            (W) base.FindElement(MobileSelector.Name, name);
 
         public new ReadOnlyCollection<W> FindElementsByName(string name) =>
-            ConvertToExtendedWebElementCollection<W>(base.FindElementsByName(name));
+            ConvertToExtendedWebElementCollection<W>(base.FindElements(MobileSelector.Name, name));
 
         public new W FindElementByPartialLinkText(string partialLinkText) =>
             (W) base.FindElementByPartialLinkText(partialLinkText);
@@ -140,10 +138,10 @@ namespace OpenQA.Selenium.Appium
             ConvertToExtendedWebElementCollection<W>(base.FindElementsByPartialLinkText(partialLinkText));
 
         public new W FindElementByTagName(string tagName) =>
-            (W) base.FindElementByTagName(tagName);
+            (W) base.FindElement(MobileSelector.TagName, tagName);
 
         public new ReadOnlyCollection<W> FindElementsByTagName(string tagName) =>
-            ConvertToExtendedWebElementCollection<W>(base.FindElementsByTagName(tagName));
+            ConvertToExtendedWebElementCollection<W>(base.FindElements(MobileSelector.TagName, tagName));
 
         public new W FindElementByXPath(string xpath) =>
             (W) base.FindElementByXPath(xpath);
