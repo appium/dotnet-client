@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
+
 namespace Appium.Integration.Tests.Android
 {
     [TestFixture]
@@ -59,19 +60,45 @@ namespace Appium.Integration.Tests.Android
             Assert.IsTrue(Validations.IsBase64String(Base64ResponseString), "Response Must be a base64 string");
         }
 
+
         [Test]
-        public void TestScreenRecordOutput()
+        public void TestScreenRecordWithOptions()
         {
             Dictionary<string, object> StartRecordOptions = new Dictionary<string, object>();
+            StartRecordOptions.Add("bit_rate", "1");
+            StartRecordOptions.Add("video_size", "1280x720");
             driver.StartRecordingScreen(StartRecordOptions);
-            Thread.Sleep(5000);
+            Thread.Sleep(1000);
+            String Base64ResponseString = driver.StopRecordingScreen();
+            Assert.IsNotEmpty(Base64ResponseString);
+            Assert.IsTrue(Validations.IsBase64String(Base64ResponseString), "Response Must be a base64 string");
+        }
+
+        [Test]
+        public void TestScreenRecordOutputToFile()
+        {
+            Dictionary<string, object> StartRecordOptions = new Dictionary<string, object>();
+            StartRecordOptions.Add("bit_rate", "1");
+            StartRecordOptions.Add("video_size", "1280x720");
+            driver.StartRecordingScreen(StartRecordOptions);
+            Thread.Sleep(2000);
             String Base64ResponseString = driver.StopRecordingScreen();
             byte[] data = Convert.FromBase64String(Base64ResponseString);
             string filePath = Path.GetTempPath();
             var fileName = "TestScreenRecordOutput.mp4";
             string fullPath = Path.Combine(filePath, fileName);
             Console.WriteLine(fullPath);
-            File.WriteAllBytes(fullPath, data);
+            try
+            {
+                File.WriteAllBytes(fullPath, data);
+                Assert.IsTrue(File.Exists(fullPath));
+                FileInfo outputFileInfo = new FileInfo(fullPath);
+                Assert.IsTrue(outputFileInfo.Length > 10000);
+            }
+            finally
+            {
+                File.Delete(fullPath);
+            }
         }
     }
 }
