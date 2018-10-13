@@ -40,6 +40,8 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// Sample:<br/>
         /// --selendroid-port 8080
         ///</summary>
+        ///
+        [Obsolete("Support for Selendroid is deprecated and will be removed in the next release")]
         public static KeyValuePair<string, string> SelendroidPort(string value) =>
             GetKeyValuePairUsingDefaultValue("--selendroid-port", value, "8080");
 

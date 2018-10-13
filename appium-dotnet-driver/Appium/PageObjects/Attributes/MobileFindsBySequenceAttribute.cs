@@ -63,6 +63,7 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes
         /// property will be used in sequence to find the appropriate element.
         /// </summary>
         [DefaultValue(false)]
+        [Obsolete("Support for Selendroid is deprecated and will be removed in the next release")]
         public bool Selendroid { get; set; }
     }
 }
