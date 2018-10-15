@@ -17,11 +17,12 @@ namespace Appium.Integration.Tests.Helpers
                 {
                     Appz = new Dictionary<string, string>
                     {
-                        {"iosTestApp", "http://appium.github.io/appium/assets/TestApp7.1.app.zip"},
-                        {"iosWebviewApp", "http://appium.github.io/appium/assets/WebViewApp7.1.app.zip"},
-                        {"iosUICatalogApp", "http://appium.github.io/appium/assets/UICatalog7.1.app.zip"},
-                        {"androidApiDemos", "http://appium.github.io/appium/assets/ApiDemos-debug.apk"},
-                        {"selendroidTestApp", "http://appium.github.io/appium/assets/selendroid-test-app-0.10.0.apk"}
+                        {"iosTestApp", "https://github.com/akinsolb/appium-dotnet-driver/tree/update-test-apps/integration_tests/Test%20Apps.app.zip"},
+                        {"intentApp", "https://github.com/akinsolb/appium-dotnet-driver/tree/update-test-apps/integration_tests/Test%20Apps/IntentExample.apk"},
+                        {"iosWebviewApp", "https://github.com/akinsolb/appium-dotnet-driver/tree/update-test-apps/integration_tests/Test%20Apps/WebViewApp.app.zip"},
+                        {"iosUICatalogApp", "https://github.com/akinsolb/appium-dotnet-driver/tree/update-test-apps/integration_tests/Test%20Apps/UICatalog.app.zip"},
+                        {"androidApiDemos", "https://github.com/akinsolb/appium-dotnet-driver/tree/update-test-apps/integration_tests/Test%20Apps/ApiDemos-debug.apk"},
+                        {"vodqaApp", "https://github.com/akinsolb/appium-dotnet-driver/tree/update-test-apps/integration_tests/Test%20Apps/vodqa.zip"}
                     };
                 }
                 else
