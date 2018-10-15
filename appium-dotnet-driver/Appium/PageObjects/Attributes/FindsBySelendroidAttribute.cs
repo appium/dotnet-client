@@ -18,6 +18,7 @@ using System;
 namespace OpenQA.Selenium.Appium.PageObjects.Attributes
 {
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Class, AllowMultiple = true)]
+    [Obsolete("Support for Selendroid is deprecated and will be removed in the next release")]
     public class FindsBySelendroidAttribute : FindsByMobileAttribute
     {
         /// <summary>
