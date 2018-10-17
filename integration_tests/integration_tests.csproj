@@ -3,6 +3,11 @@
     <TargetFrameworks>net45</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="apps\**" />
+    <EmbeddedResource Remove="apps\**" />
+    <None Remove="apps\**" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Castle.Core" Version="4.3.1" />
     <PackageReference Include="DotNetSeleniumExtras.PageObjects" Version="3.11.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
