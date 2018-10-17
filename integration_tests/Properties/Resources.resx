@@ -118,9 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="ApiDemos_debug" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\helpers\ApiDemos-debug.apk;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="PathToLinuxNode" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\helpers\PathToLinuxNode;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -130,19 +127,22 @@
   <data name="PathToWindowsNode" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\helpers\PathToWindowsNode;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="selendroid_test_app_0_10_0" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\helpers\selendroid-test-app-0.10.0.apk;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="TestApp7_1_app" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\helpers\TestApp7.1.app.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="UICatalog7_1_app" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\helpers\UICatalog7.1.app.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="WebViewApp7_1_app" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\helpers\WebViewApp7.1.app.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="ApiDemos_debug" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\apps\ApiDemos-debug.apk;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="IntentExample" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\helpers\IntentExample.apk;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\apps\IntentExample.apk;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="TestApp_app" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\apps\archives\TestApp.app.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="UICatalog_app" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\apps\archives\UICatalog.app.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="vodqa" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\apps\archives\vodqa.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="WebViewApp_app" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\apps\archives\WebViewApp.app.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>
