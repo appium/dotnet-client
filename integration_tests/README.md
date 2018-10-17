@@ -1,23 +1,16 @@
-# appium-dotnet-driver samples
+# Appium.Net Integration Tests
 
-## Run locally
+## Running tests locally (local service)
 
-### Download apps (default)
-
-- Start Appium.
+- Ensure node.js is installed
+- Install appium server instance via npm
+- `cp env.json.sample env.json`
+- Update `env.json` set DEV=true
 - Run the tests in NUnit.
 
-### Use Appium dev apps 
+## Running tests on remote appium server
 
-- Clone Appium.
-- Build dev version of appium `./reset.sh --android --ios --dev --hardcore`
-- `cp samples/env.json.sample samples/env.json`
-- Update `samples/env.json` set DEV=true
-- Start appium: `node .`
-- Run the tests in NUnit.
-
-## Run on Sauce Labs
-
-- `cp samples/env.json.sample samples/env.json`
-- Update `samples/env.json` set SAUCE=true, and configure your Sauce credentials.
+- `cp env.json.sample env.json`
+- Update `env.json` set isRemoteServer=true
+- Update 'env.json' set remoteAppiumServerUri i.e. remoteAppiumServerUri="http://10.200.1.2:4723/wd/hub"
 - Run the tests in NUnit.
