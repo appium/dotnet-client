@@ -16,19 +16,19 @@ namespace Appium.Integration.Tests.Android
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            var capabilities = Env.isSauce()
-                ? Caps.getAndroid501Caps(Apps.get("selendroidTestApp"))
-                : Caps.getAndroid19Caps(Apps.get("selendroidTestApp"));
-            if (Env.isSauce())
+            var capabilities = Env.ServerIsRemote()
+                ? Caps.GetAndroidCaps(Apps.get("selendroidTestApp"))
+                : Caps.GetAndroidCaps(Apps.get("selendroidTestApp"));
+            if (Env.ServerIsRemote())
             {
-                capabilities.AddAdditionalCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
-                capabilities.AddAdditionalCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
+                capabilities.AddAdditionalCapability("username", Env.GetEnvVar("SAUCE_USERNAME"));
+                capabilities.AddAdditionalCapability("accessKey", Env.GetEnvVar("SAUCE_ACCESS_KEY"));
                 capabilities.AddAdditionalCapability("name", "android - complex");
                 capabilities.AddAdditionalCapability("tags", new[] {"sample"});
             }
-            Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIAndroid;
-            driver = new AndroidDriver<IWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
-            driver.Manage().Timeouts().ImplicitWait = Env.IMPLICIT_TIMEOUT_SEC;
+            Uri serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
+            driver = new AndroidDriver<IWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
         
         [SetUp]

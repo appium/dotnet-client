@@ -7,20 +7,19 @@ namespace Appium.Integration.Tests.Helpers
 {
     public class Env
     {
-        public static TimeSpan INIT_TIMEOUT_SEC = TimeSpan.FromSeconds(180);
-        public static TimeSpan IMPLICIT_TIMEOUT_SEC = TimeSpan.FromSeconds(5);
-        public static string ASSETS_ROOT_DIR = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory + "../../assets");
+        public static TimeSpan InitTimeoutSec = TimeSpan.FromSeconds(180);
+        public static TimeSpan ImplicitTimeoutSec = TimeSpan.FromSeconds(10);
 
         private static Dictionary<string, string> env;
-        private static bool initialized = false;
+        private static bool _initialized;
 
         private static void Init()
         {
             try
             {
-                if (!initialized)
+                if (!_initialized)
                 {
-                    initialized = true;
+                    _initialized = true;
                     string path = AppDomain.CurrentDomain.BaseDirectory;
                     StreamReader sr = new StreamReader(path + "env.json");
                     string jsonString = sr.ReadToEnd();
@@ -33,38 +32,31 @@ namespace Appium.Integration.Tests.Helpers
             }
         }
 
-        private static bool isTrue(string val)
+        private static bool IsTrue(string val)
         {
-            if (val != null)
-            {
-                val = val.ToLower().Trim();
-            }
+            val = val?.ToLower().Trim();
             return (val == "true") || (val == "1");
         }
 
-        static public bool isSauce()
+        public static bool ServerIsRemote()
         {
             Init();
-            return (env.ContainsKey("SAUCE") && isTrue(env["SAUCE"])) ||
-                   isTrue(Environment.GetEnvironmentVariable("SAUCE"));
+            return env.ContainsKey("isRemoteAppiumServer") && IsTrue(env["isRemoteAppiumServer"]);
         }
 
-        static public bool isDev()
+        public static bool ServerIsLocal()
         {
             Init();
-            return (env.ContainsKey("DEV") && isTrue(env["DEV"])) || isTrue(Environment.GetEnvironmentVariable("DEV"));
+            return env.ContainsKey("DEV") && IsTrue(env["DEV"]) || IsTrue(Environment.GetEnvironmentVariable("DEV"));
         }
 
-        static public string getEnvVar(string name)
+        public static string GetEnvVar(string name)
         {
             if (env.ContainsKey(name) && (env[name] != null))
             {
                 return env[name];
             }
-            else
-            {
                 return Environment.GetEnvironmentVariable(name);
-            }
         }
     }
 }

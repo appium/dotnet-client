@@ -9,6 +9,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Threading;
+using integration_tests.Properties;
 
 namespace Appium.Integration.Tests.ServerTests
 {
@@ -42,19 +43,19 @@ namespace Appium.Integration.Tests.ServerTests
 
             if (isWindows)
             {
-                bytes = Properties.Resources.PathToWindowsNode;
+                bytes = Resources.PathToWindowsNode;
                 PathToCustomizedAppiumJS = System.Text.Encoding.UTF8.GetString(bytes);
                 return;
             }
             if (isMacOS)
             {
-                bytes = Properties.Resources.PathToMacOSNode;
+                bytes = Resources.PathToMacOSNode;
                 PathToCustomizedAppiumJS = System.Text.Encoding.UTF8.GetString(bytes);
                 return;
             }
             if (isLinux)
             {
-                bytes = Properties.Resources.PathToLinuxNode;
+                bytes = Resources.PathToLinuxNode;
                 PathToCustomizedAppiumJS = System.Text.Encoding.UTF8.GetString(bytes);
                 return;
             }

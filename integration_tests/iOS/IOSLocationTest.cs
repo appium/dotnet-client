@@ -15,17 +15,17 @@ namespace Appium.Integration.Tests.iOS
         [OneTimeSetUp]
         public void beforeAll()
         {
-            AppiumOptions capabilities = Caps.getIos92Caps(Apps.get("iosTestApp"));
-            if (Env.isSauce())
+            AppiumOptions capabilities = Caps.GetIOSCaps(Apps.get("iosTestApp"));
+            if (Env.ServerIsRemote())
             {
-                capabilities.AddAdditionalCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
-                capabilities.AddAdditionalCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
+                capabilities.AddAdditionalCapability("username", Env.GetEnvVar("SAUCE_USERNAME"));
+                capabilities.AddAdditionalCapability("accessKey", Env.GetEnvVar("SAUCE_ACCESS_KEY"));
                 capabilities.AddAdditionalCapability("name", "ios - complex");
                 capabilities.AddAdditionalCapability("tags", new string[] {"sample"});
             }
-            Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIForIOS;
-            driver = new IOSDriver<IOSElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
-            driver.Manage().Timeouts().ImplicitWait = Env.IMPLICIT_TIMEOUT_SEC;
+            Uri serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
+            driver = new IOSDriver<IOSElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 
         [OneTimeTearDown]
@@ -35,7 +35,7 @@ namespace Appium.Integration.Tests.iOS
             {
                 driver.Quit();
             }
-            if (!Env.isSauce())
+            if (!Env.ServerIsRemote())
             {
                 AppiumServers.StopLocalService();
             }

@@ -22,15 +22,15 @@ namespace Appium.Integration.Tests.PageObjectTests.Android
         {
             AppiumOptions capabilities =
                 Caps.getSelendroid19Caps(Apps.get("selendroidTestApp"));
-            if (Env.isSauce())
+            if (Env.ServerIsRemote())
             {
-                capabilities.AddAdditionalCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
-                capabilities.AddAdditionalCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
+                capabilities.AddAdditionalCapability("username", Env.GetEnvVar("SAUCE_USERNAME"));
+                capabilities.AddAdditionalCapability("accessKey", Env.GetEnvVar("SAUCE_ACCESS_KEY"));
                 capabilities.AddAdditionalCapability("name", "android - complex");
                 capabilities.AddAdditionalCapability("tags", new string[] {"sample"});
             }
-            Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIAndroid;
-            driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
+            Uri serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
+            driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.ImplicitTimeoutSec);
             driver.Context = "NATIVE_APP";
             TimeOutDuration timeSpan = new TimeOutDuration(new TimeSpan(0, 0, 0, 5, 0));
             pageObject = new AndroidPageObjectChecksSelendroidModeOnNativeApp();
@@ -44,7 +44,7 @@ namespace Appium.Integration.Tests.PageObjectTests.Android
             {
                 driver.Quit();
             }
-            if (!Env.isSauce())
+            if (!Env.ServerIsRemote())
             {
                 AppiumServers.StopLocalService();
             }

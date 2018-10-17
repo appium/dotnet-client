@@ -47,7 +47,7 @@ namespace Appium.Integration.Tests.PageObjectTests.DesktopBrowserCompatibility
         {
             try
             {
-                if (Env.isSauce())
+                if (Env.ServerIsRemote())
                     ((IJavaScriptExecutor) driver).ExecuteScript(
                         "sauce:job-result=" + (allPassed ? "passed" : "failed"));
             }

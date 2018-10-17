@@ -18,7 +18,7 @@ namespace Appium.Integration.Tests.ServerTests
         {
             string app = Apps.get("androidApiDemos");
             AppiumOptions capabilities =
-                Caps.getAndroid19Caps(app);
+                Caps.GetAndroidCaps(app);
 
             AndroidDriver<AppiumWebElement> driver = null;
             try
@@ -38,9 +38,9 @@ namespace Appium.Integration.Tests.ServerTests
         [Test]
         public void StartingAndroidAppWithCapabilitiesAndServiceTest()
         {
-            AppiumOptions capabilities = Env.isSauce()
-                ? Caps.getAndroid501Caps(Apps.get("androidApiDemos"))
-                : Caps.getAndroid19Caps(Apps.get("androidApiDemos"));
+            AppiumOptions capabilities = Env.ServerIsRemote()
+                ? Caps.GetAndroidCaps(Apps.get("androidApiDemos"))
+                : Caps.GetAndroidCaps(Apps.get("androidApiDemos"));
 
 
             OptionCollector argCollector = new OptionCollector()
@@ -68,9 +68,9 @@ namespace Appium.Integration.Tests.ServerTests
         {
             string app = Apps.get("androidApiDemos");
 
-            AppiumOptions serverCapabilities = Env.isSauce()
-                ? Caps.getAndroid501Caps(Apps.get("androidApiDemos"))
-                : Caps.getAndroid19Caps(Apps.get("androidApiDemos"));
+            AppiumOptions serverCapabilities = Env.ServerIsRemote()
+                ? Caps.GetAndroidCaps(Apps.get("androidApiDemos"))
+                : Caps.GetAndroidCaps(Apps.get("androidApiDemos"));
 
             AppiumOptions clientCapabilities = new AppiumOptions();
             clientCapabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppPackage, "io.appium.android.apis");
@@ -99,12 +99,12 @@ namespace Appium.Integration.Tests.ServerTests
         {
             string app = Apps.get("iosTestApp");
             AppiumOptions capabilities =
-                Caps.getIos92Caps(app);
+                Caps.GetIOSCaps(app);
 
             IOSDriver<AppiumWebElement> driver = null;
             try
             {
-                driver = new IOSDriver<AppiumWebElement>(capabilities, Env.INIT_TIMEOUT_SEC);
+                driver = new IOSDriver<AppiumWebElement>(capabilities, Env.InitTimeoutSec);
                 driver.CloseApp();
             }
             finally
@@ -121,7 +121,7 @@ namespace Appium.Integration.Tests.ServerTests
         {
             string app = Apps.get("iosTestApp");
             AppiumOptions capabilities =
-                Caps.getIos92Caps(app);
+                Caps.GetIOSCaps(app);
 
             OptionCollector argCollector = new OptionCollector()
                 .AddArguments(GeneralOptionList.OverrideSession()).AddArguments(GeneralOptionList.StrictCaps());
@@ -130,7 +130,7 @@ namespace Appium.Integration.Tests.ServerTests
             IOSDriver<AppiumWebElement> driver = null;
             try
             {
-                driver = new IOSDriver<AppiumWebElement>(builder, capabilities, Env.INIT_TIMEOUT_SEC);
+                driver = new IOSDriver<AppiumWebElement>(builder, capabilities, Env.InitTimeoutSec);
                 driver.CloseApp();
             }
             finally
@@ -145,10 +145,10 @@ namespace Appium.Integration.Tests.ServerTests
         [Test]
         public void CheckThatServiseIsNotRunWhenTheCreatingOfANewSessionIsFailed()
         {
-            AppiumOptions capabilities = Env.isSauce()
+            AppiumOptions capabilities = Env.ServerIsRemote()
                 ? //it will be a cause of error
-                Caps.getAndroid501Caps(Apps.get("androidApiDemos"))
-                : Caps.getAndroid19Caps(Apps.get("androidApiDemos"));
+                Caps.GetAndroidCaps(Apps.get("androidApiDemos"))
+                : Caps.GetAndroidCaps(Apps.get("androidApiDemos"));
             capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "iPhone Simulator");
             capabilities.AddAdditionalCapability(MobileCapabilityType.PlatformName, MobilePlatform.IOS);
 

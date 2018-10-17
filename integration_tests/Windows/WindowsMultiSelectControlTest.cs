@@ -27,7 +27,6 @@ namespace Appium.Integration.Tests.Windows
     public class WindowsMultiSelectControlTest
     {
         private WindowsDriver<WindowsElement> driver;
-        protected const string WindowsApplicationDriverUrl = "http://127.0.0.1:4723/wd/hub";
         protected static WindowsDriver<WindowsElement> AlarmClockSession;
         protected static WindowsDriver<WindowsElement> DesktopSession;
 
@@ -37,8 +36,10 @@ namespace Appium.Integration.Tests.Windows
             // Launch the AlarmClock app
             AppiumOptions appCapabilities = new AppiumOptions();
             appCapabilities.AddAdditionalCapability("app", "Microsoft.WindowsAlarms_8wekyb3d8bbwe!App");
+            var serverUri = Env.ServerIsLocal() ? AppiumServers.LocalServiceUri : AppiumServers.RemoteServerUri;
+
             AlarmClockSession =
-                new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appCapabilities);
+                new WindowsDriver<WindowsElement>(serverUri, appCapabilities);
             appCapabilities.AddAdditionalCapability("platformName", "Windows");
 
             Assert.IsNotNull(AlarmClockSession);
@@ -48,7 +49,7 @@ namespace Appium.Integration.Tests.Windows
             AppiumOptions desktopCapabilities = new AppiumOptions();
             desktopCapabilities.AddAdditionalCapability("app", "Root");
             DesktopSession =
-                new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), desktopCapabilities);
+                new WindowsDriver<WindowsElement>(serverUri, desktopCapabilities);
             Assert.IsNotNull(DesktopSession);
 
             // Ensure app is started in the default main page

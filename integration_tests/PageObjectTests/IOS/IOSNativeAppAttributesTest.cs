@@ -19,16 +19,16 @@ namespace Appium.Integration.Tests.PageObjectTests.IOS
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            AppiumOptions capabilities = Caps.getIos92Caps(Apps.get("iosTestApp"));
-            if (Env.isSauce())
+            AppiumOptions capabilities = Caps.GetIOSCaps(Apps.get("iosTestApp"));
+            if (Env.ServerIsRemote())
             {
-                capabilities.AddAdditionalCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
-                capabilities.AddAdditionalCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
+                capabilities.AddAdditionalCapability("username", Env.GetEnvVar("SAUCE_USERNAME"));
+                capabilities.AddAdditionalCapability("accessKey", Env.GetEnvVar("SAUCE_ACCESS_KEY"));
                 capabilities.AddAdditionalCapability("name", "ios - actions");
                 capabilities.AddAdditionalCapability("tags", new string[] {"sample"});
             }
-            Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIForIOS;
-            driver = new IOSDriver<AppiumWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
+            Uri serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
+            driver = new IOSDriver<AppiumWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
             TimeOutDuration timeSpan = new TimeOutDuration(new TimeSpan(0, 0, 0, 5, 0));
             pageObject = new IOSPageObjectChecksAttributesForNativeIOSApp();
             PageFactory.InitElements(driver, pageObject, new AppiumPageObjectMemberDecorator(timeSpan));
@@ -41,7 +41,7 @@ namespace Appium.Integration.Tests.PageObjectTests.IOS
             {
                 driver.Quit();
             }
-            if (!Env.isSauce())
+            if (!Env.ServerIsRemote())
             {
                 AppiumServers.StopLocalService();
             }

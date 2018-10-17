@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using OpenQA.Selenium.Appium.Service;
 
 namespace Appium.Integration.Tests.iOS
 {
@@ -18,18 +19,23 @@ namespace Appium.Integration.Tests.iOS
         [SetUp]
         public void TestSetup()
         {
-            AppiumOptions capabilities = Caps.getIos112Caps(Apps.get("iosWebviewApp"));
-            if (Env.isSauce())
+            AppiumOptions capabilities = Caps.GetIOSCaps(Apps.get("iosWebviewApp"));
+            if (Env.ServerIsRemote())
             {
-                capabilities.AddAdditionalCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
-                capabilities.AddAdditionalCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
+                capabilities.AddAdditionalCapability("username", Env.GetEnvVar("SAUCE_USERNAME"));
+                capabilities.AddAdditionalCapability("accessKey", Env.GetEnvVar("SAUCE_ACCESS_KEY"));
                 capabilities.AddAdditionalCapability("tags", new string[] {"sample"});
             }
-            Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIForIOS;
+            AppiumLocalService a = new AppiumServiceBuilder().UsingPort(4723).Build();
+
+            a.Start();
+            var isRunning = a.IsRunning;
+
+            Uri serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : a.ServiceUrl;
             
 
-            driver = new IOSDriver<IWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
-            driver.Manage().Timeouts().ImplicitWait = Env.IMPLICIT_TIMEOUT_SEC;
+            driver = new IOSDriver<IWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 
         [TearDown]
@@ -41,7 +47,7 @@ namespace Appium.Integration.Tests.iOS
             {
                 driver.Quit();
             }
-            if (!Env.isSauce())
+            if (!Env.ServerIsRemote())
             {
                 AppiumServers.StopLocalService();
             }

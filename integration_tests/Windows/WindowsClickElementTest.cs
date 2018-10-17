@@ -19,13 +19,13 @@ using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
 using System;
+using OpenQA.Selenium.Appium.Enums;
 
 namespace Appium.Integration.Tests.Windows
 {
     public class WindowsClickElementTest
     {
         private WindowsDriver<WindowsElement> CalculatorSession;
-        protected const string WindowsApplicationDriverUrl = "http://localhost:4723/wd/hub";
         protected static RemoteWebElement CalculatorResult;
 
         [OneTimeSetUp]
@@ -33,11 +33,13 @@ namespace Appium.Integration.Tests.Windows
         {
             AppiumOptions appCapabilities = new AppiumOptions();
             appCapabilities.AddAdditionalCapability("app", "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            appCapabilities.AddAdditionalCapability("deviceName", "WindowsPC");
+            appCapabilities.AddAdditionalCapability("platformName", "Windows");
 
-            // TODO: What about supporting AppiumServers.sauceURI ???
-            CalculatorSession = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appCapabilities,
-                Env.INIT_TIMEOUT_SEC);
-            CalculatorSession.Manage().Timeouts().ImplicitWait = Env.IMPLICIT_TIMEOUT_SEC;
+            var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
+            CalculatorSession = new WindowsDriver<WindowsElement>(serverUri, appCapabilities,
+                Env.InitTimeoutSec);
+            CalculatorSession.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
 
             CalculatorSession.FindElementByName("Clear").Click();
             CalculatorSession.FindElementByName("Seven").Click();

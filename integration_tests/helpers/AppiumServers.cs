@@ -1,69 +1,59 @@
-﻿using OpenQA.Selenium.Appium;
-using OpenQA.Selenium.Appium.Enums;
-using OpenQA.Selenium.Appium.Service;
-using OpenQA.Selenium.Appium.Service.Options;
-using OpenQA.Selenium.Remote;
+﻿using OpenQA.Selenium.Appium.Service;
 using System;
+using System.IO;
 
 namespace Appium.Integration.Tests.Helpers
 {
     public class AppiumServers
     {
-        private static AppiumLocalService LocalService;
+        private static AppiumLocalService _localService;
+        private static Uri _remoteAppiumServerUri;
 
-        public static Uri sauceURI = new Uri("http://ondemand.saucelabs.com:80/wd/hub");
-
-        public static Uri LocalServiceURIAndroid
+        public static Uri LocalServiceUri
         {
             get
             {
-                if (LocalService == null)
+                if (_localService == null)
                 {
-                    AppiumServiceBuilder builder =
-                        new AppiumServiceBuilder().WithLogFile(new System.IO.FileInfo("Log"));
-                    LocalService = builder.Build();
+                    var builder =
+                        new AppiumServiceBuilder()
+                            .WithLogFile(new FileInfo(Path.GetTempPath() + "Log.txt"));
+                   
+                    _localService = builder.Build();
                 }
 
-                if (!LocalService.IsRunning)
+                if (!_localService.IsRunning)
                 {
-                    LocalService.Start();
+                    _localService.Start();
                 }
 
-                return LocalService.ServiceUrl;
+                return _localService.ServiceUrl;
             }
         }
 
-        public static Uri LocalServiceURIForIOS
+        public static Uri RemoteServerUri
         {
             get
             {
-                if (LocalService == null)
+                if (_remoteAppiumServerUri == null)
                 {
-                    AppiumServiceBuilder builder = new AppiumServiceBuilder();
-                    AppiumOptions capabilities = new AppiumOptions();
-                    capabilities.AddAdditionalCapability(IOSMobileCapabilityType.LaunchTimeout,
-                        Env.INIT_TIMEOUT_SEC.TotalMilliseconds);
-                    OptionCollector collector = new OptionCollector().AddCapabilities(capabilities).
-                        //I use MAC OS X VMWare image. Sometimes it is very slow. 
-                        AddArguments(IOSOptionList.BackEndRetries("5"));
-                    LocalService = builder.WithArguments(collector).Build();
+                    _remoteAppiumServerUri = new Uri(Env.GetEnvVar("remoteAppiumServerUri"));
+                }
+                else
+                {
+                    return _remoteAppiumServerUri;
                 }
 
-                if (!LocalService.IsRunning)
-                {
-                    LocalService.Start();
-                }
-
-                return LocalService.ServiceUrl;
+                return _remoteAppiumServerUri;
             }
         }
 
         public static void StopLocalService()
         {
-            if (LocalService != null && LocalService.IsRunning)
+            if (_localService != null && _localService.IsRunning)
             {
-                LocalService.Dispose();
-                LocalService = null;
+                _localService.Dispose();
+                _localService = null;
             }
         }
     }

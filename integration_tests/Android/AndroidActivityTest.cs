@@ -17,19 +17,19 @@ namespace Appium.Integration.Tests.Android
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            AppiumOptions capabilities = Env.isSauce()
-                ? Caps.getAndroid501Caps(Apps.get("androidApiDemos"))
-                : Caps.getAndroid19Caps(Apps.get("androidApiDemos"));
-            if (Env.isSauce())
+            AppiumOptions capabilities = Env.ServerIsRemote()
+                ? Caps.GetAndroidCaps(Apps.get("androidApiDemos"))
+                : Caps.GetAndroidCaps(Apps.get("androidApiDemos"));
+            if (Env.ServerIsRemote())
             {
-                capabilities.AddAdditionalCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
-                capabilities.AddAdditionalCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
+                capabilities.AddAdditionalCapability("username", Env.GetEnvVar("SAUCE_USERNAME"));
+                capabilities.AddAdditionalCapability("accessKey", Env.GetEnvVar("SAUCE_ACCESS_KEY"));
                 capabilities.AddAdditionalCapability("name", "android - complex");
                 capabilities.AddAdditionalCapability("tags", new string[] {"sample"});
             }
-            Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIAndroid;
-            driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
-            driver.Manage().Timeouts().ImplicitWait = Env.IMPLICIT_TIMEOUT_SEC;
+            Uri serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
+            driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
             driver.CloseApp();
         }
 
@@ -112,7 +112,7 @@ namespace Appium.Integration.Tests.Android
             {
                 driver.Quit();
             }
-            if (!Env.isSauce())
+            if (!Env.ServerIsRemote())
             {
                 AppiumServers.StopLocalService();
             }
