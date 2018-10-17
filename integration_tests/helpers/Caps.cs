@@ -7,51 +7,22 @@ namespace Appium.Integration.Tests.Helpers
 {
     public class Caps
     {
-        public static AppiumOptions getIos102Caps(string app)
+        public static AppiumOptions GetIOSCaps(string app)
         {
             AppiumOptions capabilities = new AppiumOptions();
-            capabilities.AddAdditionalCapability(MobileCapabilityType.PlatformVersion, "10.2");
-            capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "iPhone Simulator");
-            capabilities.AddAdditionalCapability(MobileCapabilityType.AppiumVersion, "1.7.1");
+            capabilities.AddAdditionalCapability(MobileCapabilityType.AutomationName, AutomationName.iOSXcuiTest);
+            capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "iPhone X");
+            capabilities.AddAdditionalCapability(MobileCapabilityType.PlatformVersion, "12.0");
             capabilities.AddAdditionalCapability(MobileCapabilityType.App, app);
+            capabilities.AddAdditionalCapability(IOSMobileCapabilityType.LaunchTimeout, Env.InitTimeoutSec.TotalMilliseconds);
+
             return capabilities;
         }
 
-        public static AppiumOptions getIos112Caps(string app)
+        public static AppiumOptions GetAndroidCaps(string app)
         {
             AppiumOptions capabilities = new AppiumOptions();
-            capabilities.AddAdditionalCapability(MobileCapabilityType.PlatformVersion, "11.2");
-            capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "iPad Air 2");
-            capabilities.AddAdditionalCapability(MobileCapabilityType.App, app);
-            return capabilities;
-        }
-
-        public static AppiumOptions getIos92Caps(string app)
-        {
-            AppiumOptions capabilities = new AppiumOptions();
-            capabilities.AddAdditionalCapability(MobileCapabilityType.PlatformVersion, "9.2");
-            capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "iPhone Simulator");
-            capabilities.AddAdditionalCapability(MobileCapabilityType.App, app);
-            return capabilities;
-        }
-
-        public static AppiumOptions getAndroid501Caps(string app)
-        {
-            AppiumOptions capabilities = new AppiumOptions();
-            capabilities.AddAdditionalCapability(CapabilityType.BrowserName, "");
-            capabilities.AddAdditionalCapability(MobileCapabilityType.PlatformVersion, "5.0.1");
-            capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppPackage, "io.appium.android.apis");
-            capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppActivity, ".Apidemos");
-            capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "Android Emulator");
-            capabilities.AddAdditionalCapability(MobileCapabilityType.App, app);
-            return capabilities;
-        }
-
-        public static AppiumOptions getAndroid19Caps(string app)
-        {
-            AppiumOptions capabilities = new AppiumOptions();
-            capabilities.AddAdditionalCapability(CapabilityType.BrowserName, "");
-            capabilities.AddAdditionalCapability(MobileCapabilityType.PlatformVersion, "4.4.2");
+            capabilities.AddAdditionalCapability(MobileCapabilityType.AutomationName, AutomationName.AndroidUIAutomator2);
             capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "Android Emulator");
             capabilities.AddAdditionalCapability(MobileCapabilityType.App, app);
             return capabilities;
