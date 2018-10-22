@@ -257,12 +257,12 @@ namespace OpenQA.Selenium.Appium.Android
         }
 
         /// <inheritdoc />
-        public void SetClipboard(byte[] base64Content, ClipboardContentType contentType, string label = null) =>
-            AppiumCommandExecutionHelper.SetClipboard(this, contentType, base64Content, label);
+        public void SetClipboard(ClipboardContentType contentType, string base64Content) =>
+            AppiumCommandExecutionHelper.SetClipboard(this, contentType, base64Content);
 
         /// <inheritdoc />
         public void SetClipboardText(string textContent, string label) =>
-            AppiumCommandExecutionHelper.SetClipboardText(this, ClipboardContentType.PlainText, textContent, label);
+            AppiumCommandExecutionHelper.SetClipboard(this, ClipboardContentType.PlainText, label);
 
         /// <inheritdoc />
         public string GetClipboard(ClipboardContentType contentType)
@@ -273,10 +273,13 @@ namespace OpenQA.Selenium.Appium.Android
                 case ClipboardContentType.Url:
                     throw new NotImplementedException($"Android only supports {nameof(ClipboardContentType.PlainText)}");
                 case ClipboardContentType.PlainText:
-                    return AppiumCommandExecutionHelper.GetClipboard(this, contentType);
+                    return GetClipboardText();
                 default:
-                    return AppiumCommandExecutionHelper.GetClipboard(this, contentType);
+                    return GetClipboardText();
             }
         }
+
+        /// <inheritdoc />
+        public string GetClipboardText() => AppiumCommandExecutionHelper.GetClipboardText(this);
     }
 }

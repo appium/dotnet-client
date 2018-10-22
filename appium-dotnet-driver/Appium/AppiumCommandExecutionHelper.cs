@@ -15,6 +15,8 @@
 using System;
 using OpenQA.Selenium.Appium.Interfaces;
 using System.Collections.Generic;
+using System.IO;
+using System.Security.Cryptography;
 using System.Text;
 using OpenQA.Selenium.Appium.Enums;
 
@@ -67,25 +69,32 @@ namespace OpenQA.Selenium.Appium
 
         public static string GetClipboard(IExecuteMethod executeMethod, ClipboardContentType clipboardContentType)
         {
-            return (string)executeMethod.Execute(AppiumDriverCommand.GetClipboard,
-                PrepareArgument("contentType", clipboardContentType.ToString())).Value;
+            return (string) executeMethod.Execute(AppiumDriverCommand.GetClipboard,
+                PrepareArgument("contentType", clipboardContentType.ToString().ToLower())).Value;
         }
 
-        public static string SetClipboard(IExecuteMethod executeMethod, ClipboardContentType clipboardContentType, byte[] base64Content, string label)
+        public static string GetClipboardText(IExecuteMethod executeMethod)
         {
+            var encodedContentBytes = Convert.FromBase64String(GetClipboard(executeMethod, ClipboardContentType.PlainText));
+            return Encoding.UTF8.GetString(encodedContentBytes);
+        }
+
+        public static string SetClipboard(IExecuteMethod executeMethod, ClipboardContentType clipboardContentType, string base64Content)
+        {
+            var encodedContentBytes = Encoding.UTF8.GetBytes(base64Content);
             return (string) executeMethod.Execute(AppiumDriverCommand.SetClipboard,
                 PrepareArguments(new[] {"content", "contentType", "label"},
-                    new object[] {base64Content, clipboardContentType.ToString().ToLower(), label})).Value;
+                    new object[] {Convert.ToBase64String(encodedContentBytes), clipboardContentType.ToString().ToLower()})).Value;
         }
 
         public static string SetClipboardText(IExecuteMethod executeMethod, ClipboardContentType clipboardContentType, string textContent, string label)
         {
             if (textContent == null) throw new NullReferenceException(nameof(textContent));
-            var stringContentBytes = Encoding.UTF8.GetBytes(textContent);
+            var encodedStringContentBytes = Encoding.UTF8.GetBytes(textContent);
             
             return (string)executeMethod.Execute(AppiumDriverCommand.SetClipboard,
                 PrepareArguments(new[] { "content", "contentType", "label" },
-                    new object[] {Convert.ToBase64String(stringContentBytes), clipboardContentType.ToString().ToLower(), label })).Value;
+                    new object[] {Convert.ToBase64String(encodedStringContentBytes), clipboardContentType.ToString().ToLower(), label })).Value;
         }
 
         #endregion Device Commands
