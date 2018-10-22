@@ -261,8 +261,8 @@ namespace OpenQA.Selenium.Appium.Android
             AppiumCommandExecutionHelper.SetClipboard(this, contentType, base64Content, label);
 
         /// <inheritdoc />
-        public void SetClipboardText(string textContent) =>
-            AppiumCommandExecutionHelper.SetClipboardText(this, ClipboardContentType.PlainText, textContent, null);
+        public void SetClipboardText(string textContent, string label) =>
+            AppiumCommandExecutionHelper.SetClipboardText(this, ClipboardContentType.PlainText, textContent, label);
 
         /// <inheritdoc />
         public string GetClipboard(ClipboardContentType contentType)
