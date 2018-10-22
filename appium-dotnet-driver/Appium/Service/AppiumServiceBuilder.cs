@@ -475,7 +475,7 @@ namespace OpenQA.Selenium.Appium.Service
                 if (PathToLogFile != null)
                 {
                     argList.Add("--log");
-                    argList.Add(PathToLogFile);
+                    argList.Add($"\"{PathToLogFile}\"");
                 }
 
                 if (ServerOptions != null)
