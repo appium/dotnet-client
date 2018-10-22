@@ -27,7 +27,7 @@ using OpenQA.Selenium.Appium.Android.Enums;
 namespace OpenQA.Selenium.Appium.Android
 {
     public class AndroidDriver<W> : AppiumDriver<W>, IFindByAndroidUIAutomator<W>, IStartsActivity,
-        IHasNetworkConnection,
+        IHasNetworkConnection, IHasClipboard,
         ISendsKeyEvents,
         IPushesFiles, IHasSettings where W : IWebElement
     {
@@ -253,6 +253,29 @@ namespace OpenQA.Selenium.Appium.Android
                 {
                     SetSetting(entry.Key, entry.Value);
                 }
+            }
+        }
+
+        /// <inheritdoc />
+        public void SetClipboard(byte[] base64Content, ClipboardContentType contentType, string label = null) =>
+            AppiumCommandExecutionHelper.SetClipboard(this, contentType, base64Content, label);
+
+        /// <inheritdoc />
+        public void SetClipboardText(string textContent) =>
+            AppiumCommandExecutionHelper.SetClipboardText(this, ClipboardContentType.PlainText, textContent, null);
+
+        /// <inheritdoc />
+        public string GetClipboard(ClipboardContentType contentType)
+        {
+            switch (contentType)
+            {
+                case ClipboardContentType.Image:
+                case ClipboardContentType.Url:
+                    throw new NotImplementedException($"Android only supports {nameof(ClipboardContentType.PlainText)}");
+                case ClipboardContentType.PlainText:
+                    return AppiumCommandExecutionHelper.GetClipboard(this, contentType);
+                default:
+                    return AppiumCommandExecutionHelper.GetClipboard(this, contentType);
             }
         }
     }
