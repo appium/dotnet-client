@@ -160,9 +160,9 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string GetLocation = "getLocation";
 
-        public const string GetClipboard = "get_clipboard";
+        public const string GetClipboard = "getClipboard";
 
-        public const string SetClipboard = "set_clipboard";
+        public const string SetClipboard = "setClipboard";
 
         #endregion Appium Specific extensions to JSONWP Commands
 
