@@ -23,7 +23,7 @@ using System.Collections.ObjectModel;
 namespace OpenQA.Selenium.Appium.iOS
 {
     public class IOSDriver<W> : AppiumDriver<W>, IFindByIosUIAutomation<W>, IFindsByIosClassChain<W>,
-        IFindsByIosNSPredicate<W>, IHidesKeyboardWithKeyName,
+        IFindsByIosNSPredicate<W>, IHidesKeyboardWithKeyName, IHasClipboard
         IShakesDevice, IPerformsTouchID where W : IWebElement
     {
         private static readonly string Platform = MobilePlatform.IOS;
@@ -169,5 +169,17 @@ namespace OpenQA.Selenium.Appium.iOS
 
         public void Lock() => IOSCommandExecutionHelper.Lock(this);
 
+        /// <inheritdoc />
+        public void SetClipboard(byte[] base64Content, ClipboardContentType contentType, string label = null) =>
+            AppiumCommandExecutionHelper.SetClipboard(this, contentType, base64Content, label);
+
+        /// <inheritdoc />
+        public void SetClipboardText(string textContent)
+        {
+            AppiumCommandExecutionHelper.SetClipboardText(this, ClipboardContentType.PlainText, textContent, null);
+        }
+
+        /// <inheritdoc />
+        public string GetClipboard(ClipboardContentType contentType) => AppiumCommandExecutionHelper.GetClipboard(this, contentType);
     }
 }
