@@ -434,25 +434,40 @@ namespace OpenQA.Selenium.Appium
         /// <summary>
         /// Start recording the device screen
         /// </summary>
-        /// <param name="opts">recording options like the following:
-        ///  Dictionary<string, object> StartRecordOptions = new Dictionary<string, object>();
-        ///  StartRecordOptions.Add("bit_rate", "1");
-        ///  StartRecordOptions.Add("video_size", "1280x720");
+        /// <param name="opts">recording options
         /// </param>
-        public void StartRecordingScreen(Dictionary<string, object> opts)
+        /// <example>
+        /// <code>
+        ///  Dictionary<string, object> startRecordOptions = new Dictionary<string, object>();
+        ///  startRecordOptions.Add("bit_rate", "1");
+        ///  startRecordOptions.Add("video_size", "1280x720");
+        /// </code>
+        /// </example>
+
+        public void StartRecordingScreen(RecordScreenBaseOptions recordScreenOptions)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
-            foreach (KeyValuePair<string, object> opt in opts)
-            {
-                parameters.Add(opt.Key, opt.Value);
-            }
+            var jsonString = JsonConvert.SerializeObject(
+            recordScreenOptions,
+            Formatting.Indented,
+            new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }
+            );
+            Dictionary<string, object> parameters = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonString);
             Execute(AppiumDriverCommand.StartRecordingScreen, parameters);
         }
 
 
         /// <summary>
-        /// Stop recording the device screen
+        /// Stop recording the device screen 
         /// </summary>
+        /// <returns>
+        ///  String Containing Base64-encoded content of the recorded media file if any screen recording is currently running or an empty string.
+        /// </returns>
+        public String StopRecordingScreen(RecordScreenUploadOptions recordScreenUploadOptions)
+        {
+            var commandResponse = ((IExecuteMethod)this).Execute(AppiumDriverCommand.StopRecordingScreen);
+            return commandResponse.Value as string;
+        }
+
         public String StopRecordingScreen()
         {
             var commandResponse = ((IExecuteMethod)this).Execute(AppiumDriverCommand.StopRecordingScreen);
