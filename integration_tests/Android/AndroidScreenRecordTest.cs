@@ -52,8 +52,7 @@ namespace Appium.Integration.Tests.Android
         [Test]
         public void TestScreenRecord()
         {
-            var obj = new AndroidScreenRecordOptions();
-            driver.StartRecordingScreen(obj);
+            driver.StartRecordingScreen();
             Thread.Sleep(1000);
             String Base64ResponseString = driver.StopRecordingScreen();
             Assert.IsNotEmpty(Base64ResponseString);
@@ -73,7 +72,8 @@ namespace Appium.Integration.Tests.Android
             };
             driver.StartRecordingScreen(obj);
             Thread.Sleep(1000);
-            String Base64ResponseString = driver.StopRecordingScreen();
+            var stopObj = new RecordScreenUploadOptions();
+            String Base64ResponseString = driver.StopRecordingScreen(stopObj);
             Assert.IsNotEmpty(Base64ResponseString);
             Assert.IsTrue(Validations.IsBase64String(Base64ResponseString), "Response Must be a base64 string");
         }
@@ -81,8 +81,12 @@ namespace Appium.Integration.Tests.Android
         [Test]
         public void TestScreenRecordOutputToFile()
         {
-            var obj = new AndroidScreenRecordOptions();
-            driver.StartRecordingScreen(obj);
+            var obj = new AndroidScreenRecordOptions()
+            {
+                VideoSize = "640x480",
+                BitRate = "5"
+
+            };
             Thread.Sleep(2000);
             String Base64ResponseString = driver.StopRecordingScreen();
             byte[] data = Convert.FromBase64String(Base64ResponseString);
