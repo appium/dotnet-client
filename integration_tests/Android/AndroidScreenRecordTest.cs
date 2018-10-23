@@ -66,8 +66,8 @@ namespace Appium.Integration.Tests.Android
             var obj = new AndroidScreenRecordOptions()
             {
                 VideoSize = "640x480",
-                BugReport = "true",
-                BitRate = "1"
+                BugReport = true,
+                BitRate = 1
 
             };
             driver.StartRecordingScreen(obj);
@@ -84,7 +84,7 @@ namespace Appium.Integration.Tests.Android
             var obj = new AndroidScreenRecordOptions()
             {
                 VideoSize = "640x480",
-                BitRate = "5"
+                BitRate = 5
 
             };
             Thread.Sleep(2000);

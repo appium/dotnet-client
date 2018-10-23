@@ -77,11 +77,15 @@ namespace OpenQA.Selenium.Appium
         public bool? ForceRestart;
 
         /// <summary>
-        /// The actual time limit of the recorded video in seconds.
-        /// The default value for both iOS and Android is 180 seconds (3 minutes).
-        /// The maximum value for Android is 3 minutes.
-        /// The maximum value for iOS is 10 minutes.
-        /// Time resolution unit is one second.
+        /// The maximum recording time. The default and maximum value is 180 seconds (3 minutes).
+        /// Setting values greater than this or less than zero will cause an exception. The minimum
+        /// time resolution unit is one second.
+        /// 
+        /// Since Appium 1.8.2 the time limit can be up to 1800 seconds (30 minutes).
+        /// Appium will automatically try to merge the 3-minutes chunks recorded
+        /// by the screenrecord utility, however, this requires FFMPEG utility
+        /// to be installed and available in PATH on the server machine. If the utility is not
+        /// present then the most recent screen recording chunk is going to be returned as the result.
         /// </summary>
         [JsonProperty(PropertyName = "timeLimit")]
         public string TimeLimit;
@@ -107,7 +111,7 @@ namespace OpenQA.Selenium.Appium
         /// This option is only supported since API level 27 (Android P).
         /// </summary>
         [JsonProperty(PropertyName = "bugReport")]
-        public string BugReport;
+        public bool BugReport;
 
         /// <summary>
         /// The video bit rate for the video, in megabits per second.
@@ -115,7 +119,7 @@ namespace OpenQA.Selenium.Appium
         /// but doing so results in larger movie files.
         /// </summary>
         [JsonProperty(PropertyName = "bitRate")]
-        public string BitRate;
+        public int BitRate;
     }
 
     /// <summary>

@@ -491,6 +491,9 @@ namespace OpenQA.Selenium.Appium
         /// <summary>
         /// Stop recording the device screen with no options
         /// </summary>
+        ///  <returns>
+        ///  String Containing Base64-encoded content of the recorded media file if any screen recording is currently running or an empty string.
+        /// </returns>
         public String StopRecordingScreen()
         {
             var commandResponse = ((IExecuteMethod)this).Execute(AppiumDriverCommand.StopRecordingScreen);
