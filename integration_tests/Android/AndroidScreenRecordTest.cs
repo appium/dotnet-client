@@ -52,8 +52,7 @@ namespace Appium.Integration.Tests.Android
         [Test]
         public void TestScreenRecord()
         {
-            Dictionary<string, object> StartRecordOptions = new Dictionary<string, object>();
-            driver.StartRecordingScreen(StartRecordOptions);
+            driver.StartRecordingScreen();
             Thread.Sleep(1000);
             String Base64ResponseString = driver.StopRecordingScreen();
             Assert.IsNotEmpty(Base64ResponseString);
@@ -64,12 +63,17 @@ namespace Appium.Integration.Tests.Android
         [Test]
         public void TestScreenRecordWithOptions()
         {
-            Dictionary<string, object> StartRecordOptions = new Dictionary<string, object>();
-            StartRecordOptions.Add("bit_rate", "1");
-            StartRecordOptions.Add("video_size", "1280x720");
-            driver.StartRecordingScreen(StartRecordOptions);
+            var obj = new AndroidScreenRecordOptions()
+            {
+                VideoSize = "640x480",
+                BugReport = "true",
+                BitRate = "1"
+
+            };
+            driver.StartRecordingScreen(obj);
             Thread.Sleep(1000);
-            String Base64ResponseString = driver.StopRecordingScreen();
+            var stopObj = new RecordScreenUploadOptions();
+            String Base64ResponseString = driver.StopRecordingScreen(stopObj);
             Assert.IsNotEmpty(Base64ResponseString);
             Assert.IsTrue(Validations.IsBase64String(Base64ResponseString), "Response Must be a base64 string");
         }
@@ -77,10 +81,12 @@ namespace Appium.Integration.Tests.Android
         [Test]
         public void TestScreenRecordOutputToFile()
         {
-            Dictionary<string, object> StartRecordOptions = new Dictionary<string, object>();
-            StartRecordOptions.Add("bit_rate", "1");
-            StartRecordOptions.Add("video_size", "1280x720");
-            driver.StartRecordingScreen(StartRecordOptions);
+            var obj = new AndroidScreenRecordOptions()
+            {
+                VideoSize = "640x480",
+                BitRate = "5"
+
+            };
             Thread.Sleep(2000);
             String Base64ResponseString = driver.StopRecordingScreen();
             byte[] data = Convert.FromBase64String(Base64ResponseString);
