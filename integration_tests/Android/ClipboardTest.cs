@@ -50,7 +50,7 @@ namespace Appium.Integration.Tests.Android
         }
 
         [Test]
-        public void WhenClipboardContentTypeIsPlainText_GetClipboardShouldReturnEncodedBase64String()
+        public void WhenSetClipboardContentTypeIsPlainText_GetClipboardShouldReturnEncodedBase64String()
         {
             _driver.SetClipboard(ClipboardContentType.PlainText, ClipboardTestString);
             Assert.That(() => Regex.IsMatch(_driver.GetClipboard(ClipboardContentType.PlainText), Base64RegexPattern, RegexOptions.Multiline), 
@@ -86,19 +86,16 @@ namespace Appium.Integration.Tests.Android
         }
 
         [Test]
-        public void WhenClipboardContentTypeIsImage_SetClipboardShouldReturnNotImplementedException()
+        public void WhenSetClipboardContentTypeIsImage_SetClipboardShouldReturnNotImplementedException()
         {
             Assert.That(() => _driver.SetClipboard(ClipboardContentType.Image, ClipboardTestString),
                 Throws.TypeOf<NotImplementedException>());
         }
 
         [Test]
-        public void WhenClipboardContentTypeIsUrl_SetClipboardShouldReturnNotImplementedException()
+        public void WhenSetClipboardContentTypeIsUrl_SetClipboardShouldReturnNotImplementedException()
         {
-            var url = new Url("https://github.com/appium/appium-dotnet-driver");
-            var urlBytes = Encoding.UTF8.GetBytes(url.ToString());
-            var base64UrlString = Convert.ToBase64String(urlBytes);
-            Assert.That(() => _driver.SetClipboard(ClipboardContentType.Url, base64UrlString),
+            Assert.That(() => _driver.SetClipboard(ClipboardContentType.Url, string.Empty),
                 Throws.TypeOf<NotImplementedException>());
         }
 

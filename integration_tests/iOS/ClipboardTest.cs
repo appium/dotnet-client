@@ -36,7 +36,7 @@ namespace Appium.Integration.Tests.PageObjectTests.IOS
         }
 
         [Test]
-        public void WhenClipboardContentTypeIsPlainText_GetClipboardShouldReturnEncodedBase64String()
+        public void WhenSetClipboardContentTypeIsPlainText_GetClipboardShouldReturnEncodedBase64String()
         {
             string base64ClipboardTestString = Convert.ToBase64String(Encoding.UTF8.GetBytes(ClipboardTestString));
             _driver.SetClipboard(ClipboardContentType.PlainText, base64ClipboardTestString);
@@ -52,7 +52,7 @@ namespace Appium.Integration.Tests.PageObjectTests.IOS
         }
 
         [Test]
-        public void WhenClipboardContentTypeIsUrl_GetClipboardShouldReturnEncodedBase64String()
+        public void WhenSetClipboardContentTypeIsUrl_GetClipboardShouldReturnEncodedBase64String()
         {
             var url = new Url("https://github.com/appium/appium-dotnet-driver");
             
@@ -65,7 +65,7 @@ namespace Appium.Integration.Tests.PageObjectTests.IOS
         }
 
         [Test]
-        public void WhenClipboardContentTypeIsImage_SetClipboardShouldReturnNotImplementedException()
+        public void WhenSetClipboardContentTypeIsImage_GetClipboardShouldReturnEncodedBase64String()
         {
             var testImageBytes = _driver.GetScreenshot().AsByteArray;
             var base64Image = Convert.ToBase64String(testImageBytes);
