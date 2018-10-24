@@ -151,9 +151,16 @@ namespace OpenQA.Selenium.Appium
 
             #region SeassionData
 
-            new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetSession, "/session/{sessionId}/")
+            new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetSession, "/session/{sessionId}/"),
 
             #endregion SeassionData
+
+            #region Recording Screen
+
+            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.StartRecordingScreen, "/session/{sessionId}/appium/start_recording_screen"),
+            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.StopRecordingScreen, "/session/{sessionId}/appium/stop_recording_screen")
+
+            #endregion Recording Screen
 
             #endregion JSON Wire Protocol Commands
         };
