@@ -257,12 +257,25 @@ namespace OpenQA.Selenium.Appium.Android
         }
 
         /// <inheritdoc />
-        public void SetClipboard(ClipboardContentType contentType, string base64Content) =>
-            AppiumCommandExecutionHelper.SetClipboard(this, contentType, base64Content);
+        public void SetClipboard(ClipboardContentType contentType, string base64Content)
+        {
+            switch (contentType)
+            {
+                case ClipboardContentType.Image:
+                case ClipboardContentType.Url:
+                    throw new NotImplementedException($"Android only supports contentType: {nameof(ClipboardContentType.PlainText)}");
+                case ClipboardContentType.PlainText:
+                    AppiumCommandExecutionHelper.SetClipboard(this, contentType, base64Content);
+                    break;
+                default:
+                    AppiumCommandExecutionHelper.SetClipboard(this, contentType, base64Content);
+                    break;
+            }
+        }
 
         /// <inheritdoc />
         public void SetClipboardText(string textContent, string label) =>
-            AppiumCommandExecutionHelper.SetClipboard(this, ClipboardContentType.PlainText, label);
+            AppiumCommandExecutionHelper.SetClipboardText(this, ClipboardContentType.PlainText, textContent, label);
 
         /// <inheritdoc />
         public string GetClipboard(ClipboardContentType contentType)
@@ -271,11 +284,11 @@ namespace OpenQA.Selenium.Appium.Android
             {
                 case ClipboardContentType.Image:
                 case ClipboardContentType.Url:
-                    throw new NotImplementedException($"Android only supports {nameof(ClipboardContentType.PlainText)}");
+                    throw new NotImplementedException($"Android only supports contentType: {nameof(ClipboardContentType.PlainText)}");
                 case ClipboardContentType.PlainText:
-                    return GetClipboardText();
+                    return AppiumCommandExecutionHelper.GetClipboard(this, contentType);
                 default:
-                    return GetClipboardText();
+                    return AppiumCommandExecutionHelper.GetClipboard(this, contentType);
             }
         }
 

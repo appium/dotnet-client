@@ -69,7 +69,7 @@ namespace OpenQA.Selenium.Appium
 
         public static string GetClipboard(IExecuteMethod executeMethod, ClipboardContentType clipboardContentType)
         {
-            return (string) executeMethod.Execute(AppiumDriverCommand.GetClipboard,
+            return (string)executeMethod.Execute(AppiumDriverCommand.GetClipboard,
                 PrepareArgument("contentType", clipboardContentType.ToString().ToLower())).Value;
         }
 
@@ -81,20 +81,27 @@ namespace OpenQA.Selenium.Appium
 
         public static string SetClipboard(IExecuteMethod executeMethod, ClipboardContentType clipboardContentType, string base64Content)
         {
-            var encodedContentBytes = Encoding.UTF8.GetBytes(base64Content);
-            return (string) executeMethod.Execute(AppiumDriverCommand.SetClipboard,
-                PrepareArguments(new[] {"content", "contentType", "label"},
-                    new object[] {Convert.ToBase64String(encodedContentBytes), clipboardContentType.ToString().ToLower()})).Value;
+            switch (clipboardContentType)
+            {
+                case ClipboardContentType.Url:
+                case ClipboardContentType.PlainText:
+                    var encodedContentBytes = Encoding.UTF8.GetBytes(base64Content);
+                    base64Content = Convert.ToBase64String(encodedContentBytes);
+                    break;
+            }
+            return (string)executeMethod.Execute(AppiumDriverCommand.SetClipboard,
+                PrepareArguments(new[] { "content", "contentType", "label" },
+                    new object[] { base64Content, clipboardContentType.ToString().ToLower(), null })).Value;
         }
 
         public static string SetClipboardText(IExecuteMethod executeMethod, ClipboardContentType clipboardContentType, string textContent, string label)
         {
             if (textContent == null) throw new NullReferenceException(nameof(textContent));
             var encodedStringContentBytes = Encoding.UTF8.GetBytes(textContent);
-            
+
             return (string)executeMethod.Execute(AppiumDriverCommand.SetClipboard,
                 PrepareArguments(new[] { "content", "contentType", "label" },
-                    new object[] {Convert.ToBase64String(encodedStringContentBytes), clipboardContentType.ToString().ToLower(), label })).Value;
+                    new object[] { Convert.ToBase64String(encodedStringContentBytes), clipboardContentType.ToString().ToLower(), label })).Value;
         }
 
         #endregion Device Commands
@@ -107,7 +114,7 @@ namespace OpenQA.Selenium.Appium
         /// <returns></returns>
         internal static Dictionary<string, object> PrepareArgument(string name, object value)
         {
-            var parameterBuilder = new Dictionary<string, object> {{name, value}};
+            var parameterBuilder = new Dictionary<string, object> { { name, value } };
             return parameterBuilder;
         }
 
@@ -131,6 +138,4 @@ namespace OpenQA.Selenium.Appium
             return parameterBuilder;
         }
     }
-
-
 }
