@@ -20,6 +20,7 @@ namespace Appium.Integration.Tests.Helpers
         public static AppiumOptions getIos112Caps(string app)
         {
             AppiumOptions capabilities = new AppiumOptions();
+            capabilities.AddAdditionalCapability(MobileCapabilityType.AutomationName, AutomationName.iOSXcuiTest);
             capabilities.AddAdditionalCapability(MobileCapabilityType.PlatformVersion, "11.2");
             capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "iPad Air 2");
             capabilities.AddAdditionalCapability(MobileCapabilityType.App, app);
@@ -39,9 +40,7 @@ namespace Appium.Integration.Tests.Helpers
         {
             AppiumOptions capabilities = new AppiumOptions();
             capabilities.AddAdditionalCapability(CapabilityType.BrowserName, "");
-            capabilities.AddAdditionalCapability(MobileCapabilityType.PlatformVersion, "5.0.1");
-            capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppPackage, "io.appium.android.apis");
-            capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppActivity, ".Apidemos");
+            capabilities.AddAdditionalCapability(MobileCapabilityType.AutomationName, AutomationName.AndroidUIAutomator2);
             capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "Android Emulator");
             capabilities.AddAdditionalCapability(MobileCapabilityType.App, app);
             return capabilities;
