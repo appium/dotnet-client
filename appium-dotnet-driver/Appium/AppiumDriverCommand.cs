@@ -270,6 +270,10 @@ namespace OpenQA.Selenium.Appium
 
         public const string GetSession = "getSession";
 
+        public const string StartRecordingScreen = "startRecordingScreen";
+
+        public const string StopRecordingScreen = "stopRecordingScreen";
+
         #endregion JSON Wire Protocol
     }
 }
