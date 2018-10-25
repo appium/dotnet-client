@@ -24,7 +24,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// <returns>self instance for chaining.</returns>
         public IOSStartScreenRecordingOptions WithVideoType(VideoType videoType)
         {
-            Parameters["videoType"] = videoType.ToString();
+            Parameters["videoType"] = videoType.ToString().ToLower();
             return this;
         }
 
@@ -41,7 +41,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// <returns></returns>
         public IOSStartScreenRecordingOptions WithVideoQuality(VideoQuality videoQuality)
         {
-            Parameters["videoQuality"] = videoQuality.ToString();
+            Parameters["videoQuality"] = videoQuality.ToString().ToLower();
             return this;
         }
 

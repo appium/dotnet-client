@@ -28,7 +28,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// <summary>
         /// The video size of the generated media file. The format is WIDTHxHEIGHT.
         /// The default value is the device's native display resolution (if supported),
-        /// 1280x720 if not.For best results,
+        /// 1280x720 if not. For best results,
         /// use a size supported by your device's Advanced Video Coding (AVC) encoder.
         /// </summary>
         /// <param name="videoSize">The actual video size: WIDTHxHEIGHT.</param>

@@ -57,6 +57,16 @@ namespace Appium.Integration.Tests.Helpers
             return capabilities;
         }
 
+        public static AppiumOptions getAndroid27Caps(string app)
+        {
+            AppiumOptions capabilities = new AppiumOptions();
+            capabilities.AddAdditionalCapability(CapabilityType.BrowserName, "");
+            capabilities.AddAdditionalCapability(MobileCapabilityType.PlatformVersion, "8.1.0");
+            capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "Android Emulator");
+            capabilities.AddAdditionalCapability(MobileCapabilityType.App, app);
+            return capabilities;
+        }
+
         public static AppiumOptions getSelendroid19Caps(string app)
         {
             AppiumOptions capabilities = new AppiumOptions();
