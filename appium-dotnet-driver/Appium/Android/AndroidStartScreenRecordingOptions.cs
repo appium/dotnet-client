@@ -5,7 +5,7 @@ namespace OpenQA.Selenium.Appium.Android
 {
     public class AndroidStartScreenRecordingOptions : BaseStartScreenRecordingOptions<AndroidStartScreenRecordingOptions>
     {
-        public static AndroidStartScreenRecordingOptions StartScreenRecordingOptions()
+        public static AndroidStartScreenRecordingOptions GetAndroidStartScreenRecordingOptions()
         {
             return new AndroidStartScreenRecordingOptions();
         }

@@ -55,7 +55,7 @@ namespace Appium.Integration.Tests.Android
         public void ScreenRecordWithOptionsTest()
         {
             driver.StartRecordingScreen(
-                StartScreenRecordingOptions()
+                GetAndroidStartScreenRecordingOptions()
                     .WithTimeLimit(TimeSpan.FromSeconds(10))
                     .WithBitRate(500000)
                     .WithVideoSize("720x1280"));

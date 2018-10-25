@@ -5,7 +5,7 @@ namespace OpenQA.Selenium.Appium.iOS
 {
     public class IOSStartScreenRecordingOptions : BaseStartScreenRecordingOptions<IOSStartScreenRecordingOptions>
     {
-        public static IOSStartScreenRecordingOptions StartScreenRecordingOptions()
+        public static IOSStartScreenRecordingOptions GetIosStartScreenRecordingOptions()
         {
             return new IOSStartScreenRecordingOptions();
         }

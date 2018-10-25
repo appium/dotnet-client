@@ -55,7 +55,7 @@ namespace Appium.Integration.Tests.iOS
         public void ScreenRecordWithOptionsTest()
         {
             driver.StartRecordingScreen(
-                StartScreenRecordingOptions()
+                GetIosStartScreenRecordingOptions()
                     .WithTimeLimit(TimeSpan.FromSeconds(10))
                     .WithVideoType(VideoType.H264));
             Thread.Sleep(1000);
