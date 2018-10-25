@@ -90,8 +90,8 @@ namespace OpenQA.Selenium.Appium
                     break;
             }
             return (string)executeMethod.Execute(AppiumDriverCommand.SetClipboard,
-                PrepareArguments(new[] { "content", "contentType", "label" },
-                    new object[] { base64Content, clipboardContentType.ToString().ToLower(), null })).Value;
+                PrepareArguments(new[] { "content", "contentType"},
+                    new object[] { base64Content, clipboardContentType.ToString().ToLower() })).Value;
         }
 
         public static string SetClipboardText(IExecuteMethod executeMethod, ClipboardContentType clipboardContentType, string textContent, string label)
