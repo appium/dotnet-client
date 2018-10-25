@@ -114,8 +114,7 @@ namespace OpenQA.Selenium.Appium
         /// <returns></returns>
         internal static Dictionary<string, object> PrepareArgument(string name, object value)
         {
-            var parameterBuilder = new Dictionary<string, object> { { name, value } };
-            return parameterBuilder;
+            return new Dictionary<string, object> { { name, value } };
         }
 
         /// <summary>
