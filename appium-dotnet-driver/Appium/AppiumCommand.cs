@@ -32,7 +32,7 @@ namespace OpenQA.Selenium.Appium
 
             #endregion Context Commands
 
-            #region  Driver Commands
+            #region Driver Commands
 
             #region Clipboard
 
