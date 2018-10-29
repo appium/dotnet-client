@@ -11,6 +11,9 @@ _Put an `x` in the boxes that apply_
 - [ ] New feature (non-breaking change which adds functionality)
 - [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
 
+## Integration tests
+- [ ] Have you provided integration tests to pass against the latest version of appium? (for Bugfix or New feature)
+
 ## Details
 
 Please provide more details about changes if it is necessary. If there are new features you can provide code samples which show the way they
