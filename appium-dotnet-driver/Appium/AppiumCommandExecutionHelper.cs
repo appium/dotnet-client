@@ -15,10 +15,6 @@
 using System;
 using OpenQA.Selenium.Appium.Interfaces;
 using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Net;
-using System.Security.Cryptography;
 using System.Text;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Enums;
