@@ -18,6 +18,7 @@ using OpenQA.Selenium.Appium.Service;
 using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using OpenQA.Selenium.Appium.iOS.Interfaces;
 
 namespace OpenQA.Selenium.Appium.iOS
@@ -169,21 +170,61 @@ namespace OpenQA.Selenium.Appium.iOS
 
         public void Lock() => IOSCommandExecutionHelper.Lock(this);
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Sets the content to the clipboard
+        /// </summary>
+        /// <param name="contentType"></param>
+        /// <param name="base64Content"></param>
         public void SetClipboard(ClipboardContentType contentType, string base64Content) =>
             AppiumCommandExecutionHelper.SetClipboard(this, contentType, base64Content);
 
-        /// <inheritdoc />
-        public void SetClipboardText(string textContent, string label = null) =>
-            AppiumCommandExecutionHelper.SetClipboardText(this, ClipboardContentType.PlainText, textContent, null);
-
-        /// <inheritdoc />
+        /// <summary>
+        /// Get the content of the clipboard.
+        /// </summary>
+        /// <param name="contentType"></param>
+        /// <remarks>Android supports plaintext only</remarks>
+        /// <returns>The content of the clipboard as base64-encoded string or an empty string if the clipboard is empty</returns>
         public string GetClipboard(ClipboardContentType contentType) =>
             AppiumCommandExecutionHelper.GetClipboard(this, contentType);
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Sets text to the clipboard
+        /// </summary>
+        /// <param name="textContent"></param>
+        /// <param name="label">For Android only - A user visible label for the clipboard content.</param>
+        public void SetClipboardText(string textContent, string label = null) =>
+            AppiumCommandExecutionHelper.SetClipboardText(this, textContent, null);
+
+        /// <summary>
+        /// Get the plaintext content of the clipboard.
+        /// </summary>
+        /// <remarks>Android supports plaintext only</remarks>
+        /// <returns>The string content of the clipboard or an empty string if the clipboard is empty</returns>
         public string GetClipboardText() =>
             AppiumCommandExecutionHelper.GetClipboardText(this);
 
+        /// <summary>
+        /// Sets the url string to the clipboard
+        /// </summary>
+        /// <param name="url"></param>
+        public void SetClipboardUrl(string url) => IOSCommandExecutionHelper.SetClipboardUrl(this, url);
+
+        /// <summary>
+        /// Gets the url string from the clipboard
+        /// </summary>
+        /// <returns>The url string content of the clipboard or an empty string if the clipboard is empty</returns>
+        public string GetClipboardUrl() => IOSCommandExecutionHelper.GetClipboardUrl(this);
+
+        /// <summary>
+        /// Sets the image to the clipboard
+        /// </summary>
+        /// <param name="image"></param>
+        public void SetClipboardImage(Image image) => IOSCommandExecutionHelper.SetClipboardImage(this, image);
+
+        /// <summary>
+        /// Gets the image from the clipboard
+        /// </summary>
+        /// <returns>The image content of the clipboard as an Image object or null if there is no image on the clipboard</returns>
+        public Image GetClipboardImage() => IOSCommandExecutionHelper.GetClipboardImage(this);
     }
 }

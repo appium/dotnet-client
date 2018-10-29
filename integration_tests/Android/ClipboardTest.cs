@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.IO;
 using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -89,6 +91,20 @@ namespace Appium.Integration.Tests.Android
         public void WhenSetClipboardContentTypeIsImage_SetClipboardShouldReturnNotImplementedException()
         {
             Assert.That(() => _driver.SetClipboard(ClipboardContentType.Image, ClipboardTestString),
+                Throws.TypeOf<NotImplementedException>());
+        }
+
+        [Test]
+        public void WhenGetClipboardImage_GetClipboardShouldReturnNotImplementedException()
+        {
+            Assert.That(() => _driver.GetClipboardImage(),
+                Throws.TypeOf<NotImplementedException>());
+        }
+
+        [Test]
+        public void WhenGetClipboardUrl_GetClipboardShouldReturnNotImplementedException()
+        {
+            Assert.That(() => _driver.GetClipboardUrl(),
                 Throws.TypeOf<NotImplementedException>());
         }
 

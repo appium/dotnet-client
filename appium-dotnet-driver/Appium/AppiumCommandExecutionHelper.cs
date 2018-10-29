@@ -15,9 +15,12 @@
 using System;
 using OpenQA.Selenium.Appium.Interfaces;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Enums;
 
 namespace OpenQA.Selenium.Appium
@@ -67,41 +70,60 @@ namespace OpenQA.Selenium.Appium
                 new Dictionary<string, object>()
                 { ["seconds"] = seconds });
 
+        public static void SetClipboard(IExecuteMethod executeMethod, ClipboardContentType clipboardContentType, string base64Content)
+        {
+            switch (clipboardContentType)
+            {
+                case ClipboardContentType.Image:
+                case ClipboardContentType.Url:
+                    if (executeMethod.GetType().GetGenericTypeDefinition() == typeof(AndroidDriver<>))
+                    { throw new NotImplementedException($"Android only supports contentType: {nameof(ClipboardContentType.PlainText)}"); }
+
+                    executeMethod.Execute(AppiumDriverCommand.SetClipboard,
+                        PrepareArguments(new[] { "content", "contentType", "label" },
+                            new object[] { base64Content, clipboardContentType.ToString().ToLower(), null }));
+                    break;
+                default:
+                    executeMethod.Execute(AppiumDriverCommand.SetClipboard,
+                        PrepareArguments(new[] { "content", "contentType", "label" },
+                            new object[] { base64Content, clipboardContentType.ToString().ToLower(), null }));
+                    break;
+            }
+        }
+
         public static string GetClipboard(IExecuteMethod executeMethod, ClipboardContentType clipboardContentType)
         {
-            return (string)executeMethod.Execute(AppiumDriverCommand.GetClipboard,
-                PrepareArgument("contentType", clipboardContentType.ToString().ToLower())).Value;
+            switch (clipboardContentType)
+            {
+                case ClipboardContentType.Image:
+                case ClipboardContentType.Url:
+                    if (executeMethod.GetType().GetGenericTypeDefinition() == typeof(AndroidDriver<>))
+                    { throw new NotImplementedException($"Android only supports contentType: {nameof(ClipboardContentType.PlainText)}"); }
+                    return (string)executeMethod.Execute(AppiumDriverCommand.GetClipboard,
+                        PrepareArgument("contentType", clipboardContentType.ToString().ToLower())).Value;
+                case ClipboardContentType.PlainText:
+                    return (string)executeMethod.Execute(AppiumDriverCommand.GetClipboard,
+                        PrepareArgument("contentType", clipboardContentType.ToString().ToLower())).Value;
+                default:
+                    return (string)executeMethod.Execute(AppiumDriverCommand.GetClipboard,
+                        PrepareArgument("contentType", clipboardContentType.ToString().ToLower())).Value;
+            }
+        }
+
+        public static string SetClipboardText(IExecuteMethod executeMethod, string textContent, string label)
+        {
+            if (textContent == null) { throw new ArgumentException($"{nameof(textContent)} cannot be null"); }
+            var encodedStringContentBytes = Encoding.UTF8.GetBytes(textContent);
+
+            return (string)executeMethod.Execute(AppiumDriverCommand.SetClipboard,
+                PrepareArguments(new[] { "content", "contentType", "label" },
+                    new object[] { Convert.ToBase64String(encodedStringContentBytes), ClipboardContentType.PlainText.ToString().ToLower(), label })).Value;
         }
 
         public static string GetClipboardText(IExecuteMethod executeMethod)
         {
             var encodedContentBytes = Convert.FromBase64String(GetClipboard(executeMethod, ClipboardContentType.PlainText));
             return Encoding.UTF8.GetString(encodedContentBytes);
-        }
-
-        public static string SetClipboard(IExecuteMethod executeMethod, ClipboardContentType clipboardContentType, string base64Content)
-        {
-            switch (clipboardContentType)
-            {
-                case ClipboardContentType.Url:
-                case ClipboardContentType.PlainText:
-                    var encodedContentBytes = Encoding.UTF8.GetBytes(base64Content);
-                    base64Content = Convert.ToBase64String(encodedContentBytes);
-                    break;
-            }
-            return (string)executeMethod.Execute(AppiumDriverCommand.SetClipboard,
-                PrepareArguments(new[] { "content", "contentType"},
-                    new object[] { base64Content, clipboardContentType.ToString().ToLower() })).Value;
-        }
-
-        public static string SetClipboardText(IExecuteMethod executeMethod, ClipboardContentType clipboardContentType, string textContent, string label)
-        {
-            if (textContent == null) throw new NullReferenceException(nameof(textContent));
-            var encodedStringContentBytes = Encoding.UTF8.GetBytes(textContent);
-
-            return (string)executeMethod.Execute(AppiumDriverCommand.SetClipboard,
-                PrepareArguments(new[] { "content", "contentType", "label" },
-                    new object[] { Convert.ToBase64String(encodedStringContentBytes), clipboardContentType.ToString().ToLower(), label })).Value;
         }
 
         #endregion Device Commands
@@ -126,6 +148,7 @@ namespace OpenQA.Selenium.Appium
         internal static Dictionary<string, object> PrepareArguments(string[] names, object[] values)
         {
             var parameterBuilder = new Dictionary<string, object>();
+            if (names.Length != values.Length) return parameterBuilder;
             for (var i = 0; i < names.Length; i++)
             {
                 if (names[i] != string.Empty && values[i] != null)

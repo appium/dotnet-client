@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.IO;
 using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -54,14 +56,21 @@ namespace Appium.Integration.Tests.PageObjectTests.IOS
         [Test]
         public void WhenSetClipboardContentTypeIsUrl_GetClipboardShouldReturnEncodedBase64String()
         {
-            var url = new Url("https://github.com/appium/appium-dotnet-driver");
-            
-            var urlBytes = Encoding.UTF8.GetBytes(url.ToString());
-            var base64UrlString = Convert.ToBase64String(urlBytes);
+            const string urlString = "https://github.com/appium/appium-dotnet-driver";
+            var base64String = Convert.ToBase64String(Encoding.UTF8.GetBytes(urlString));
+            _driver.SetClipboard(ClipboardContentType.Url, base64String);
 
-            _driver.SetClipboard(ClipboardContentType.Url, base64UrlString);
             Assert.That(() => Regex.IsMatch(_driver.GetClipboard(ClipboardContentType.Url), Base64RegexPattern, RegexOptions.Multiline), 
                 Is.True);
+        }
+
+        [Test]
+        public void WhenSetClipboardUrl_GetClipboardUrlShouldReturnUrl()
+        {
+            const string urlString = "https://github.com/appium/appium-dotnet-driver";
+            _driver.SetClipboardUrl(urlString);
+
+            Assert.That(() => _driver.GetClipboardUrl(), Does.Match(urlString));
         }
 
         [Test]
@@ -70,14 +79,32 @@ namespace Appium.Integration.Tests.PageObjectTests.IOS
             var testImageBytes = _driver.GetScreenshot().AsByteArray;
             var base64Image = Convert.ToBase64String(testImageBytes);
             _driver.SetClipboard(ClipboardContentType.Image, base64Image);
+
             Assert.That(() => Regex.IsMatch(_driver.GetClipboard(ClipboardContentType.Image), Base64RegexPattern, RegexOptions.Multiline),
                 Is.True);
         }
 
         [Test]
+        public void WhenSetClipboardImage_GetClipboardImageShouldReturnImage()
+        {
+            var imageBytes = _driver.GetScreenshot().AsByteArray;
+            var testImage = Image.FromStream(new MemoryStream(imageBytes));
+
+            _driver.SetClipboardImage(testImage);
+            Assert.That(() => _driver.GetClipboardImage().Size, Is.EqualTo(testImage.Size));
+        }
+
+        [Test]
+        public void WhenClipboardHasNoImage_GetClipboardImageShouldReturnNull()
+        {
+            _driver.SetClipboardText(ClipboardTestString);
+            Assert.That(() => _driver.GetClipboardImage(), Is.Null);
+        }
+
+        [Test]
         public void WhenClipboardIsEmpty_GetClipboardShouldReturnEmptyString()
         {
-            _driver.SetClipboardText(string.Empty, null);
+            _driver.SetClipboardText(string.Empty);
             Assert.That(() => _driver.GetClipboard(ClipboardContentType.PlainText), Is.Empty);
         }
 
