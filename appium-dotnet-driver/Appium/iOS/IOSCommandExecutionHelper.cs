@@ -12,8 +12,15 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+using System;
 using OpenQA.Selenium.Appium.Interfaces;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Net;
+using System.Text;
+using OpenQA.Selenium.Appium.Enums;
 
 namespace OpenQA.Selenium.Appium.iOS
 {
@@ -35,5 +42,52 @@ namespace OpenQA.Selenium.Appium.iOS
         public static void Lock(IExecuteMethod executeMethod) =>
             executeMethod.Execute(AppiumDriverCommand.LockDevice);
 
+        public static void SetClipboardUrl(IExecuteMethod executeMethod, string url)
+        {
+            var urlEncoded = WebUtility.UrlEncode(url);
+            var base64UrlBytes = Encoding.UTF8.GetBytes(urlEncoded);
+            AppiumCommandExecutionHelper.SetClipboard(executeMethod, ClipboardContentType.Url, Convert.ToBase64String(base64UrlBytes));
+        }
+
+        public static string GetClipboardUrl(IExecuteMethod executeMethod)
+        {
+            var content = AppiumCommandExecutionHelper.GetClipboard(executeMethod, ClipboardContentType.Url);
+            var urlEncodedBytes = Convert.FromBase64String(content);
+            var urlDecodedBytes = Encoding.UTF8.GetString(urlEncodedBytes);
+
+            return WebUtility.UrlDecode(urlDecodedBytes);
+        }
+
+        public static void SetClipboardImage(IExecuteMethod executeMethod, Image image)
+        {
+            byte[] imageBytes;
+            using (var memoryStream = new MemoryStream())
+            {
+                image.Save(memoryStream, ImageFormat.Png);
+                imageBytes = memoryStream.ToArray();
+            }
+
+            AppiumCommandExecutionHelper.SetClipboard(executeMethod,
+                ClipboardContentType.Image,
+                Convert.ToBase64String(imageBytes));
+        }
+
+        public static void SetClipboardImage(IExecuteMethod executeMethod, string base64EncodeImage)
+        {
+            AppiumCommandExecutionHelper.SetClipboard(executeMethod,ClipboardContentType.Image, base64EncodeImage);
+        }
+
+        public static Image GetClipboardImage(IExecuteMethod executeMethod)
+        {
+            var imageBytes = Convert.FromBase64String(
+                AppiumCommandExecutionHelper.GetClipboard(executeMethod, ClipboardContentType.Image));
+
+            if (imageBytes.Length > 0)
+            {
+                Image.FromStream(new MemoryStream(imageBytes));
+            }
+
+            return null;
+        }
     }
 }
