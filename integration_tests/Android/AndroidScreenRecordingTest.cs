@@ -11,32 +11,25 @@ namespace Appium.Integration.Tests.Android
     [TestFixture]
     class AndroidScreenRecordingTest
     {
-        private AppiumDriver<AndroidElement> driver;
+        private AppiumDriver<AndroidElement> _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            AppiumOptions capabilities = Caps.getAndroid27Caps(Apps.get("androidApiDemos"));
-            if (Env.isSauce())
-            {
-                capabilities.AddAdditionalCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
-                capabilities.AddAdditionalCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
-                capabilities.AddAdditionalCapability("name", "android - complex");
-                capabilities.AddAdditionalCapability("tags", new string[] { "sample" });
-            }
-            Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIAndroid;
-            driver = new AndroidDriver<AndroidElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
-            driver.Manage().Timeouts().ImplicitWait = Env.IMPLICIT_TIMEOUT_SEC;
+            var capabilities = Caps.GetAndroidCaps(Apps.Get("androidApiDemos"));
+            var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
+            _driver = new AndroidDriver<AndroidElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 
         [OneTimeTearDown]
         public void AfterAll()
         {
-            if (driver != null)
+            if (_driver != null)
             {
-                driver.Quit();
+                _driver.Quit();
             }
-            if (!Env.isSauce())
+            if (!Env.ServerIsRemote())
             {
                 AppiumServers.StopLocalService();
             }
@@ -45,22 +38,22 @@ namespace Appium.Integration.Tests.Android
         [Test]
         public void ScreenRecordTest()
         {
-            driver.StartRecordingScreen();
+            _driver.StartRecordingScreen();
             Thread.Sleep(1000);
-            string result = driver.StopRecordingScreen();
+            var result = _driver.StopRecordingScreen();
             Assert.IsNotEmpty(result);
         }
         
         [Test]
         public void ScreenRecordWithOptionsTest()
         {
-            driver.StartRecordingScreen(
+            _driver.StartRecordingScreen(
                 GetAndroidStartScreenRecordingOptions()
                     .WithTimeLimit(TimeSpan.FromSeconds(10))
                     .WithBitRate(500000)
                     .WithVideoSize("720x1280"));
             Thread.Sleep(1000);
-            string result = driver.StopRecordingScreen();
+            var result = _driver.StopRecordingScreen();
             Assert.IsNotEmpty(result);
         }
     }

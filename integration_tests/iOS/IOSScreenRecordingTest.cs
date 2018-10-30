@@ -9,34 +9,27 @@ using static OpenQA.Selenium.Appium.iOS.IOSStartScreenRecordingOptions;
 namespace Appium.Integration.Tests.iOS
 {
     [TestFixture]
-    class IOSScreenRecordingTest
+    class IosScreenRecordingTest
     {
-        private IOSDriver<AppiumWebElement> driver;
+        private IOSDriver<AppiumWebElement> _driver;
 
         [OneTimeSetUp]
-        public void beforeAll()
+        public void BeforeAll()
         {
-            AppiumOptions capabilities = Caps.getIos102Caps(Apps.get("iosUICatalogApp"));
-            if (Env.isSauce())
-            {
-                capabilities.AddAdditionalCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
-                capabilities.AddAdditionalCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
-                capabilities.AddAdditionalCapability("name", "ios - complex");
-                capabilities.AddAdditionalCapability("tags", new string[] { "sample" });
-            }
-            Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIForIOS;
-            driver = new IOSDriver<AppiumWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
-            driver.Manage().Timeouts().ImplicitWait = Env.IMPLICIT_TIMEOUT_SEC;
+            var capabilities = Caps.GetIosCaps(Apps.Get("iosUICatalogApp"));
+            var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
+            _driver = new IOSDriver<AppiumWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 
         [OneTimeTearDown]
         public void AfterEach()
         {
-            if (driver != null)
+            if (_driver != null)
             {
-                driver.Quit();
+                _driver.Quit();
             }
-            if (!Env.isSauce())
+            if (!Env.ServerIsRemote())
             {
                 AppiumServers.StopLocalService();
             }
@@ -45,21 +38,21 @@ namespace Appium.Integration.Tests.iOS
         [Test]
         public void ScreenRecordTest()
         {
-            driver.StartRecordingScreen();
+            _driver.StartRecordingScreen();
             Thread.Sleep(1000);
-            string result = driver.StopRecordingScreen();
+            var result = _driver.StopRecordingScreen();
             Assert.IsNotEmpty(result);
         }
 
         [Test]
         public void ScreenRecordWithOptionsTest()
         {
-            driver.StartRecordingScreen(
+            _driver.StartRecordingScreen(
                 GetIosStartScreenRecordingOptions()
                     .WithTimeLimit(TimeSpan.FromSeconds(10))
                     .WithVideoType(VideoType.H264));
             Thread.Sleep(1000);
-            string result = driver.StopRecordingScreen();
+            var result = _driver.StopRecordingScreen();
             Assert.IsNotEmpty(result);
         }
     }
