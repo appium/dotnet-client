@@ -23,6 +23,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Castle.Core.Internal;
+using OpenQA.Selenium.Appium.ScreenRecording;
 
 namespace OpenQA.Selenium.Appium
 {
@@ -428,6 +430,26 @@ namespace OpenQA.Selenium.Appium
                                  && Context.IndexOf(NativeApp, StringComparison.OrdinalIgnoreCase) < 0;
 
         #endregion Session Data
+
+        #region Recording Screen
+
+        public string StartRecordingScreen() => ((IExecuteMethod)this).Execute(AppiumDriverCommand.StartRecordingScreen).Value.ToString();
+
+        public string StartRecordingScreen(IScreenRecordingOptions options)
+        {
+            var parameters = new Dictionary<string, object> {{"options", options.GetParameters()} };
+            return Execute(AppiumDriverCommand.StartRecordingScreen, parameters).Value.ToString();
+        }
+
+        public string StopRecordingScreen() => ((IExecuteMethod)this).Execute(AppiumDriverCommand.StopRecordingScreen).Value.ToString();
+
+        public string StopRecordingScreen(IScreenRecordingOptions options)
+        {
+            var parameters = new Dictionary<string, object> { { "options", options.GetParameters() } };
+            return Execute(AppiumDriverCommand.StopRecordingScreen, parameters).Value.ToString();
+        }
+
+        #endregion Recording Screen
 
         #endregion Public Methods
 
