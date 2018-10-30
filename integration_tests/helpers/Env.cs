@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 
-namespace Appium.Integration.Tests.Helpers
+namespace Appium.Net.Integration.Tests.helpers
 {
     public class Env
     {
         public static TimeSpan InitTimeoutSec = TimeSpan.FromSeconds(180);
         public static TimeSpan ImplicitTimeoutSec = TimeSpan.FromSeconds(10);
 
-        private static Dictionary<string, string> env;
+        private static Dictionary<string, string> _env;
         private static bool _initialized;
 
         private static void Init()
@@ -20,15 +20,15 @@ namespace Appium.Integration.Tests.Helpers
                 if (!_initialized)
                 {
                     _initialized = true;
-                    string path = AppDomain.CurrentDomain.BaseDirectory;
-                    StreamReader sr = new StreamReader(path + "env.json");
-                    string jsonString = sr.ReadToEnd();
-                    env = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonString);
+                    var path = AppDomain.CurrentDomain.BaseDirectory;
+                    var sr = new StreamReader(path + "env.json");
+                    var jsonString = sr.ReadToEnd();
+                    _env = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonString);
                 }
             }
             catch
             {
-                env = new Dictionary<string, string>();
+                _env = new Dictionary<string, string>();
             }
         }
 
@@ -41,20 +41,20 @@ namespace Appium.Integration.Tests.Helpers
         public static bool ServerIsRemote()
         {
             Init();
-            return env.ContainsKey("isRemoteAppiumServer") && IsTrue(env["isRemoteAppiumServer"]);
+            return _env.ContainsKey("isRemoteAppiumServer") && IsTrue(_env["isRemoteAppiumServer"]);
         }
 
         public static bool ServerIsLocal()
         {
             Init();
-            return env.ContainsKey("DEV") && IsTrue(env["DEV"]) || IsTrue(Environment.GetEnvironmentVariable("DEV"));
+            return _env.ContainsKey("DEV") && IsTrue(_env["DEV"]) || IsTrue(Environment.GetEnvironmentVariable("DEV"));
         }
 
         public static string GetEnvVar(string name)
         {
-            if (env.ContainsKey(name) && (env[name] != null))
+            if (_env.ContainsKey(name) && (_env[name] != null))
             {
-                return env[name];
+                return _env[name];
             }
                 return Environment.GetEnvironmentVariable(name);
         }

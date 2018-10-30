@@ -1,43 +1,30 @@
-﻿using Appium.Integration.Tests.Helpers;
+﻿using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
-using OpenQA.Selenium.Remote;
-using System;
 
-namespace Appium.Integration.Tests.Android
+namespace Appium.Net.Integration.Tests.Android
 {
-    [TestFixture()]
+    [TestFixture]
     class AndroidOrientationTest
     {
-        private IWebDriver driver;
+        private IWebDriver _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            AppiumOptions capabilities = Env.ServerIsRemote()
-                ? Caps.GetAndroidCaps(Apps.get("androidApiDemos"))
-                : Caps.GetAndroidCaps(Apps.get("androidApiDemos"));
-            if (Env.ServerIsRemote())
-            {
-                capabilities.AddAdditionalCapability("username", Env.GetEnvVar("SAUCE_USERNAME"));
-                capabilities.AddAdditionalCapability("accessKey", Env.GetEnvVar("SAUCE_ACCESS_KEY"));
-                capabilities.AddAdditionalCapability("name", "android - complex");
-                capabilities.AddAdditionalCapability("tags", new string[] {"sample"});
-            }
-            Uri serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            driver = new AndroidDriver<IWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
-            driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
+            var capabilities = Env.ServerIsRemote()
+                ? Caps.GetAndroidCaps(Apps.Get("androidApiDemos"))
+                : Caps.GetAndroidCaps(Apps.Get("androidApiDemos"));
+            var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
+            _driver = new AndroidDriver<IWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 
         [OneTimeTearDown]
         public void AfterAll()
         {
-            if (driver != null)
-            {
-                driver.Quit();
-            }
+            _driver?.Quit();
             if (!Env.ServerIsRemote())
             {
                 AppiumServers.StopLocalService();
@@ -47,7 +34,7 @@ namespace Appium.Integration.Tests.Android
         [Test]
         public void OrientationTest()
         {
-            IRotatable rotatable = ((IRotatable) driver);
+            var rotatable = ((IRotatable) _driver);
             rotatable.Orientation = ScreenOrientation.Portrait;
             Assert.AreEqual(ScreenOrientation.Portrait, rotatable.Orientation);
         }

@@ -1,51 +1,35 @@
-﻿using Appium.Integration.Tests.Helpers;
+﻿using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
-using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Android.Enums;
-using OpenQA.Selenium.Remote;
-using System;
 
-namespace Appium.Integration.Tests.Android
+namespace Appium.Net.Integration.Tests.Android
 {
     class AndroidKeyPressTest
     {
-        private AndroidDriver<AndroidElement> driver;
+        private AndroidDriver<AndroidElement> _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            AppiumOptions capabilities = Env.ServerIsRemote()
-                ? Caps.GetAndroidCaps(Apps.get("androidApiDemos"))
-                : Caps.GetAndroidCaps(Apps.get("androidApiDemos"));
-            if (Env.ServerIsRemote())
-            {
-                capabilities.AddAdditionalCapability("username", Env.GetEnvVar("SAUCE_USERNAME"));
-                capabilities.AddAdditionalCapability("accessKey", Env.GetEnvVar("SAUCE_ACCESS_KEY"));
-                capabilities.AddAdditionalCapability("name", "android - simple");
-                capabilities.AddAdditionalCapability("tags", new string[] {"sample"});
-            }
-            Uri serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            driver = new AndroidDriver<AndroidElement>(serverUri, capabilities, Env.InitTimeoutSec);
-            driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
+            var capabilities = Env.ServerIsRemote()
+                ? Caps.GetAndroidCaps(Apps.Get("androidApiDemos"))
+                : Caps.GetAndroidCaps(Apps.Get("androidApiDemos"));
+            var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
+            _driver = new AndroidDriver<AndroidElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 
         [SetUp]
         public void SetUp()
         {
-            if (driver != null)
-            {
-                driver.ResetApp();
-            }
+            _driver?.ResetApp();
         }
 
         [OneTimeTearDown]
         public void AfterAll()
         {
-            if (driver != null)
-            {
-                driver.Quit();
-            }
+            _driver?.Quit();
             if (!Env.ServerIsRemote())
             {
                 AppiumServers.StopLocalService();
@@ -55,25 +39,25 @@ namespace Appium.Integration.Tests.Android
         [Test]
         public void PressKeyCodeTest()
         {
-            driver.PressKeyCode(AndroidKeyCode.Home);
+            _driver.PressKeyCode(AndroidKeyCode.Home);
         }
 
         [Test]
         public void PressKeyCodeWithMetastateTest()
         {
-            driver.PressKeyCode(AndroidKeyCode.Space, AndroidKeyMetastate.Meta_Shift_On);
+            _driver.PressKeyCode(AndroidKeyCode.Space, AndroidKeyMetastate.Meta_Shift_On);
         }
 
         [Test]
         public void LongPressKeyCodeTest()
         {
-            driver.LongPressKeyCode(AndroidKeyCode.Home);
+            _driver.LongPressKeyCode(AndroidKeyCode.Home);
         }
 
         [Test]
         public void LongPressKeyCodeWithMetastateTest()
         {
-            driver.LongPressKeyCode(AndroidKeyCode.Space, AndroidKeyMetastate.Meta_Shift_On);
+            _driver.LongPressKeyCode(AndroidKeyCode.Space, AndroidKeyMetastate.Meta_Shift_On);
         }
     }
 }

@@ -1,140 +1,121 @@
-﻿using NUnit.Framework;
-using System;
-using Appium.Integration.Tests.Helpers;
+﻿using System.Collections.Generic;
+using System.Threading;
+using Appium.Net.Integration.Tests.helpers;
+using NUnit.Framework;
 using OpenQA.Selenium.Appium;
-using OpenQA.Selenium.Remote;
-using System.Collections.Generic;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.MultiTouch;
-using OpenQA.Selenium.Appium.Interfaces;
-using System.Threading;
 
-namespace Appium.Integration.Tests.Android
+namespace Appium.Net.Integration.Tests.Android
 {
-    [TestFixture()]
+    [TestFixture]
     public class AndroidTouchActionTest
     {
-        private AndroidDriver<AppiumWebElement> driver;
+        private AndroidDriver<AppiumWebElement> _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            AppiumOptions capabilities = Env.ServerIsRemote()
-                ? Caps.GetAndroidCaps(Apps.get("androidApiDemos"))
-                : Caps.GetAndroidCaps(Apps.get("androidApiDemos"));
-            if (Env.ServerIsRemote())
-            {
-                capabilities.AddAdditionalCapability("username", Env.GetEnvVar("SAUCE_USERNAME"));
-                capabilities.AddAdditionalCapability("accessKey", Env.GetEnvVar("SAUCE_ACCESS_KEY"));
-                capabilities.AddAdditionalCapability("name", "android - complex");
-                capabilities.AddAdditionalCapability("tags", new string[] {"sample"});
-            }
-            Uri serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
-            driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
-            driver.CloseApp();
+            var capabilities = Env.ServerIsRemote()
+                ? Caps.GetAndroidCaps(Apps.Get("androidApiDemos"))
+                : Caps.GetAndroidCaps(Apps.Get("androidApiDemos"));
+            var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
+            _driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
+            _driver.CloseApp();
         }
 
         [SetUp]
         public void SetUp()
         {
-            if (driver != null)
-            {
-                driver.LaunchApp();
-            }
+            _driver?.LaunchApp();
         }
 
         [TearDown]
         public void TearDowwn()
         {
-            if (driver != null)
-            {
-                driver.CloseApp();
-            }
+            _driver?.CloseApp();
         }
 
         [OneTimeTearDown]
         public void AfterAll()
         {
-            if (driver != null)
-            {
-                driver.Quit();
-            }
+            _driver?.Quit();
             if (!Env.ServerIsRemote())
             {
                 AppiumServers.StopLocalService();
             }
         }
 
-        [Test()]
+        [Test]
         public void SimpleTouchActionTestCase()
         {
-            IList<AppiumWebElement> els = driver.FindElementsByClassName("android.widget.TextView");
+            IList<AppiumWebElement> els = _driver.FindElementsByClassName("android.widget.TextView");
 
-            int number1 = els.Count;
+            var number1 = els.Count;
 
-            TouchAction tap = new TouchAction(driver);
+            var tap = new TouchAction(_driver);
             tap.Tap(els[4], 10, 5, 2).Perform();
 
-            els = driver.FindElementsByClassName("android.widget.TextView");
+            els = _driver.FindElementsByClassName("android.widget.TextView");
 
             Assert.AreNotEqual(number1, els.Count);
         }
 
-        [Test()]
+        [Test]
         public void ComplexTouchActionTestCase()
         {
-            IList<AppiumWebElement> els = driver.FindElementsByClassName("android.widget.TextView");
+            IList<AppiumWebElement> els = _driver.FindElementsByClassName("android.widget.TextView");
             var loc1 = els[7].Location;
-            AppiumWebElement target = els[1];
+            var target = els[1];
             var loc2 = target.Location;           
-            TouchAction touchAction = new TouchAction(driver);
+            var touchAction = new TouchAction(_driver);
             touchAction.Press(loc1.X, loc1.Y).Wait(800)
                 .MoveTo(loc2.X, loc2.Y).Release().Perform();
             Assert.AreNotEqual(loc2.Y, target.Location.Y);
         }
 
-        [Test()]
+        [Test]
         public void SingleMultiActionTestCase()
         {
-            IList<AppiumWebElement> els = driver.FindElementsByClassName("android.widget.TextView");
+            IList<AppiumWebElement> els = _driver.FindElementsByClassName("android.widget.TextView");
             var loc1 = els[7].Location;
-            AppiumWebElement target = els[1];
+            var target = els[1];
             var loc2 = target.Location;
 
-            TouchAction swipe = new TouchAction(driver);
+            var swipe = new TouchAction(_driver);
 
             swipe.Press(loc1.X, loc1.Y).Wait(1000)
                 .MoveTo(loc2.X, loc2.Y).Release();
 
-            MultiAction multiAction = new MultiAction(driver);
+            var multiAction = new MultiAction(_driver);
             multiAction.Add(swipe).Perform();
             Assert.AreNotEqual(loc2.Y, target.Location.Y);
         }
 
-        [Test()]
+        [Test]
         public void SequentalMultiActionTestCase()
         {
-            string originalActivity = driver.CurrentActivity;
-            IList<AppiumWebElement> els = driver.FindElementsByClassName("android.widget.TextView");
-            MultiAction multiTouch = new MultiAction(driver);
+            var originalActivity = _driver.CurrentActivity;
+            IList<AppiumWebElement> els = _driver.FindElementsByClassName("android.widget.TextView");
+            var multiTouch = new MultiAction(_driver);
 
-            TouchAction tap1 = new TouchAction(driver);
+            var tap1 = new TouchAction(_driver);
             tap1.Press(els[5]).Wait(1500).Release();
 
             multiTouch.Add(tap1).Add(tap1).Perform();
 
             Thread.Sleep(2500);
-            els = driver.FindElementsByClassName("android.widget.TextView");
+            els = _driver.FindElementsByClassName("android.widget.TextView");
 
-            TouchAction tap2 = new TouchAction(driver);
+            var tap2 = new TouchAction(_driver);
             tap2.Press(els[1]).Wait(1500).Release();
 
-            MultiAction multiTouch2 = new MultiAction(driver);
+            var multiTouch2 = new MultiAction(_driver);
             multiTouch2.Add(tap2).Add(tap2).Perform();
 
             Thread.Sleep(2500);
-            Assert.AreNotEqual(originalActivity, driver.CurrentActivity);
+            Assert.AreNotEqual(originalActivity, _driver.CurrentActivity);
         }
     }
 }

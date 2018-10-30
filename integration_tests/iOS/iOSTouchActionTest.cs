@@ -1,81 +1,76 @@
-﻿using NUnit.Framework;
-using System;
-using Appium.Integration.Tests.Helpers;
-using OpenQA.Selenium.Appium;
-using OpenQA.Selenium.Remote;
+﻿using Appium.Net.Integration.Tests.helpers;
+using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Appium;
+using OpenQA.Selenium.Appium.iOS;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.MultiTouch;
-using OpenQA.Selenium.Appium.iOS;
 
-namespace Appium.Integration.Tests.iOS
+namespace Appium.Net.Integration.Tests.iOS
 {
-    [TestFixture()]
-    public class iOSTouchActionTest
+    [TestFixture]
+    public class IOsTouchActionTest
     {
-        private AppiumDriver<IWebElement> driver;
+        private AppiumDriver<IWebElement> _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            AppiumOptions capabilities = Caps.GetIOSCaps(Apps.get("iosTestApp"));
+            var capabilities = Caps.GetIosCaps(Apps.Get("iosTestApp"));
             if (Env.ServerIsRemote())
             {
                 capabilities.AddAdditionalCapability("username", Env.GetEnvVar("SAUCE_USERNAME"));
                 capabilities.AddAdditionalCapability("accessKey", Env.GetEnvVar("SAUCE_ACCESS_KEY"));
                 capabilities.AddAdditionalCapability("name", "ios - actions");
-                capabilities.AddAdditionalCapability("tags", new string[] {"sample"});
+                capabilities.AddAdditionalCapability("tags", new[] {"sample"});
             }
-            Uri serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            driver = new IOSDriver<IWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
-            driver.Manage().Timeouts().ImplicitWait= Env.ImplicitTimeoutSec;
+            var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
+            _driver = new IOSDriver<IWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver.Manage().Timeouts().ImplicitWait= Env.ImplicitTimeoutSec;
         }
 
         [OneTimeTearDown]
         public void AfterEach()
         {
-            if (driver != null)
-            {
-                driver.Quit();
-            }
+            _driver?.Quit();
             if (!Env.ServerIsRemote())
             {
                 AppiumServers.StopLocalService();
             }
         }
 
-        [Test()]
+        [Test]
         public void SimpleActionTestCase()
         {
-            driver.FindElementById("TextField1").Clear();
-            driver.FindElementById("TextField1").SendKeys("1");
-            driver.FindElementById("TextField2").Clear();
-            driver.FindElementById("TextField2").SendKeys("3");
-            IWebElement el = driver.FindElementByAccessibilityId("ComputeSumButton");
-            ITouchAction action = new TouchAction(driver);
+            _driver.FindElementById("TextField1").Clear();
+            _driver.FindElementById("TextField1").SendKeys("1");
+            _driver.FindElementById("TextField2").Clear();
+            _driver.FindElementById("TextField2").SendKeys("3");
+            var el = _driver.FindElementByAccessibilityId("ComputeSumButton");
+            ITouchAction action = new TouchAction(_driver);
             action.Press(el, 10, 10).Release();
             action.Perform();
             const string str = "4";
-            Assert.AreEqual(driver.FindElementByXPath("//*[@name = \"Answer\"]").Text, str);
+            Assert.AreEqual(_driver.FindElementByXPath("//*[@name = \"Answer\"]").Text, str);
         }
 
-        [Test()]
+        [Test]
         public void MultiActionTestCase()
         {
-            driver.FindElementById("TextField1").Clear();
-            driver.FindElementById("TextField1").SendKeys("2");
-            driver.FindElementById("TextField2").Clear();
-            driver.FindElementById("TextField2").SendKeys("4");
-            IWebElement el = driver.FindElementByAccessibilityId("ComputeSumButton");
-            ITouchAction a1 = new TouchAction(driver);
+            _driver.FindElementById("TextField1").Clear();
+            _driver.FindElementById("TextField1").SendKeys("2");
+            _driver.FindElementById("TextField2").Clear();
+            _driver.FindElementById("TextField2").SendKeys("4");
+            var el = _driver.FindElementByAccessibilityId("ComputeSumButton");
+            ITouchAction a1 = new TouchAction(_driver);
             a1.Tap(el, 10, 10);
-            ITouchAction a2 = new TouchAction(driver);
+            ITouchAction a2 = new TouchAction(_driver);
             a2.Tap(el);
-            IMultiAction m = new MultiAction(driver);
+            IMultiAction m = new MultiAction(_driver);
             m.Add(a1).Add(a2);
             m.Perform();
             const string str = "6";
-            Assert.AreEqual(driver.FindElementByXPath("//*[@name = \"Answer\"]").Text, str);
+            Assert.AreEqual(_driver.FindElementByXPath("//*[@name = \"Answer\"]").Text, str);
         }
     }
 }

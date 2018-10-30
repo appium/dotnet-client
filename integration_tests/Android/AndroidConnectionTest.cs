@@ -1,43 +1,31 @@
-﻿using Appium.Integration.Tests.Helpers;
+﻿using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
-using OpenQA.Selenium.Remote;
-using System;
 
-namespace Appium.Integration.Tests.Android
+namespace Appium.Net.Integration.Tests.Android
 {
-    [TestFixture()]
+    [TestFixture]
     class AndroidConnectionTest
     {
-        private AppiumDriver<IWebElement> driver;
+        private AppiumDriver<IWebElement> _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            AppiumOptions capabilities = Env.ServerIsRemote()
-                ? Caps.GetAndroidCaps(Apps.get("androidApiDemos"))
-                : Caps.GetAndroidCaps(Apps.get("androidApiDemos"));
-            if (Env.ServerIsRemote())
-            {
-                capabilities.AddAdditionalCapability("username", Env.GetEnvVar("SAUCE_USERNAME"));
-                capabilities.AddAdditionalCapability("accessKey", Env.GetEnvVar("SAUCE_ACCESS_KEY"));
-                capabilities.AddAdditionalCapability("name", "android - complex");
-                capabilities.AddAdditionalCapability("tags", new string[] {"sample"});
-            }
-            Uri serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            driver = new AndroidDriver<IWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
-            driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
+            var capabilities = Env.ServerIsRemote()
+                ? Caps.GetAndroidCaps(Apps.Get("androidApiDemos"))
+                : Caps.GetAndroidCaps(Apps.Get("androidApiDemos"));
+            var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
+            _driver = new AndroidDriver<IWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 
         [OneTimeTearDown]
         public void AfterAll()
         {
-            if (driver != null)
-            {
-                driver.Quit();
-            }
+            _driver?.Quit();
             if (!Env.ServerIsRemote())
             {
                 AppiumServers.StopLocalService();
@@ -47,11 +35,11 @@ namespace Appium.Integration.Tests.Android
         [Test]
         public void ConnectionTest()
         {
-            ((AndroidDriver<IWebElement>) driver).ConnectionType = ConnectionType.AirplaneMode;
-            Assert.AreEqual(ConnectionType.AirplaneMode, ((AndroidDriver<IWebElement>) driver).ConnectionType);
+            ((AndroidDriver<IWebElement>) _driver).ConnectionType = ConnectionType.AirplaneMode;
+            Assert.AreEqual(ConnectionType.AirplaneMode, ((AndroidDriver<IWebElement>) _driver).ConnectionType);
 
-            ((AndroidDriver<IWebElement>) driver).ConnectionType = ConnectionType.AllNetworkOn;
-            Assert.AreEqual(ConnectionType.AllNetworkOn, ((AndroidDriver<IWebElement>) driver).ConnectionType);
+            ((AndroidDriver<IWebElement>) _driver).ConnectionType = ConnectionType.AllNetworkOn;
+            Assert.AreEqual(ConnectionType.AllNetworkOn, ((AndroidDriver<IWebElement>) _driver).ConnectionType);
         }
     }
 }

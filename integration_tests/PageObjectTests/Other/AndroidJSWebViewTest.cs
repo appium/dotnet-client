@@ -1,57 +1,47 @@
-﻿using Appium.Integration.Tests.Helpers;
-using Appium.Integration.Tests.PageObjects;
+﻿using System;
+using System.Threading;
+using Appium.Net.Integration.Tests.helpers;
+using Appium.Net.Integration.Tests.PageObjects;
 using NUnit.Framework;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
-using OpenQA.Selenium.Remote;
-using System;
-using System.Threading;
 
-namespace Appium.Integration.Tests.PageObjectTests.Other
+namespace Appium.Net.Integration.Tests.PageObjectTests.Other
 {
-    class AndroidJSWebViewTest
+    class AndroidJsWebViewTest
     {
-        private AndroidDriver<AppiumWebElement> driver;
-        private AndroidJavaScriptTestPageObject pageObject;
+        private AndroidDriver<AppiumWebElement> _driver;
+        private AndroidJavaScriptTestPageObject _pageObject;
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            AppiumOptions capabilities = Env.ServerIsRemote()
-                ? Caps.GetAndroidCaps(Apps.get("selendroidTestApp"))
-                : Caps.GetAndroidCaps(Apps.get("selendroidTestApp"));
-            if (Env.ServerIsRemote())
-            {
-                capabilities.AddAdditionalCapability("username", Env.GetEnvVar("SAUCE_USERNAME"));
-                capabilities.AddAdditionalCapability("accessKey", Env.GetEnvVar("SAUCE_ACCESS_KEY"));
-                capabilities.AddAdditionalCapability("tags", new string[] {"sample"});
-            }
-            Uri serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
-            pageObject = new AndroidJavaScriptTestPageObject(driver);
-            driver.StartActivity("io.selendroid.testapp", ".WebViewActivity");
+            var capabilities = Env.ServerIsRemote()
+                ? Caps.GetAndroidCaps(Apps.Get("selendroidTestApp"))
+                : Caps.GetAndroidCaps(Apps.Get("selendroidTestApp"));
+            var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
+            _driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _pageObject = new AndroidJavaScriptTestPageObject(_driver);
+            _driver.StartActivity("io.selendroid.testapp", ".WebViewActivity");
         }
 
         [OneTimeTearDown]
         public void AfterEach()
         {
-            if (driver != null)
-            {
-                driver.Quit();
-            }
+            _driver?.Quit();
             if (!Env.ServerIsRemote())
             {
                 AppiumServers.StopLocalService();
             }
         }
 
-        [Test()]
-        public void HighlightingByJS()
+        [Test]
+        public void HighlightingByJs()
         {
             Thread.Sleep(5000);
-            var contexts = driver.Contexts;
+            var contexts = _driver.Contexts;
             string webviewContext = null;
-            for (int i = 0; i < contexts.Count; i++)
+            for (var i = 0; i < contexts.Count; i++)
             {
                 Console.WriteLine(contexts[i]);
                 if (contexts[i].Contains("WEBVIEW"))
@@ -61,8 +51,8 @@ namespace Appium.Integration.Tests.PageObjectTests.Other
                 }
             }
             Assert.IsNotNull(webviewContext);
-            driver.Context = webviewContext;
-            pageObject.HighlightElement();
+            _driver.Context = webviewContext;
+            _pageObject.HighlightElement();
         }
     }
 }

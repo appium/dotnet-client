@@ -12,5 +12,7 @@
 
 - `cp env.json.sample env.json`
 - Update `env.json` set isRemoteServer=true
-- Update 'env.json' set remoteAppiumServerUri i.e. remoteAppiumServerUri="{serverUrl}:{port/wd/hub"
+- Ensure env.json file is build action is non 
+- Update env.json 'Copy to Output Directory' property is either set to 'Copy always' or 'Copy if newer'
+- Set remoteAppiumServerUri i.e. remoteAppiumServerUri="http://10.200.1.2:4723/wd/hub"
 - Run the tests in NUnit.

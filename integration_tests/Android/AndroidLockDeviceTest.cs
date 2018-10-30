@@ -1,54 +1,41 @@
-﻿using Appium.Integration.Tests.Helpers;
+﻿using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
-using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
-using OpenQA.Selenium.Remote;
-using System;
 
-namespace Appium.Integration.Tests.Android
+namespace Appium.Net.Integration.Tests.Android
 {
     class AndroidLockDeviceTest
     {
-        private AndroidDriver<AndroidElement> driver;
+        private AndroidDriver<AndroidElement> _driver;
 
         [SetUp]
         public void BeforeAll()
         {
-            AppiumOptions capabilities = Env.ServerIsRemote()
-                ? Caps.GetAndroidCaps(Apps.get("androidApiDemos"))
-                : Caps.GetAndroidCaps(Apps.get("androidApiDemos"));
-            if (Env.ServerIsRemote())
-            {
-                capabilities.AddAdditionalCapability("username", Env.GetEnvVar("SAUCE_USERNAME"));
-                capabilities.AddAdditionalCapability("accessKey", Env.GetEnvVar("SAUCE_ACCESS_KEY"));
-                capabilities.AddAdditionalCapability("name", "android - complex");
-                capabilities.AddAdditionalCapability("tags", new string[] {"sample"});
-            }
-            Uri serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            driver = new AndroidDriver<AndroidElement>(serverUri, capabilities, Env.InitTimeoutSec);
-            driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
+            var capabilities = Env.ServerIsRemote()
+                ? Caps.GetAndroidCaps(Apps.Get("androidApiDemos"))
+                : Caps.GetAndroidCaps(Apps.Get("androidApiDemos"));
+            var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
+            _driver = new AndroidDriver<AndroidElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 
         [TearDown]
         public void AfterEach()
         {
-            if (driver != null)
-            {
-                driver.Quit();
-            }
+            _driver?.Quit();
             if (!Env.ServerIsRemote())
             {
                 AppiumServers.StopLocalService();
             }
         }
 
-        [Test()]
+        [Test]
         public void LockTest()
         {
-            driver.Lock();
-            Assert.AreEqual(true, driver.IsLocked());
-            driver.Unlock();
-            Assert.AreEqual(false, driver.IsLocked());
+            _driver.Lock();
+            Assert.AreEqual(true, _driver.IsLocked());
+            _driver.Unlock();
+            Assert.AreEqual(false, _driver.IsLocked());
         }
     }
 }

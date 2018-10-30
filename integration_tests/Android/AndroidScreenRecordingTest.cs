@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Threading;
-using Appium.Integration.Tests.Helpers;
+using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
-using static OpenQA.Selenium.Appium.Android.AndroidStartScreenRecordingOptions;
 
-namespace Appium.Integration.Tests.Android
+namespace Appium.Net.Integration.Tests.Android
 {
     [TestFixture]
     class AndroidScreenRecordingTest
@@ -22,13 +21,11 @@ namespace Appium.Integration.Tests.Android
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 
+
         [OneTimeTearDown]
         public void AfterAll()
         {
-            if (_driver != null)
-            {
-                _driver.Quit();
-            }
+            _driver?.Quit();
             if (!Env.ServerIsRemote())
             {
                 AppiumServers.StopLocalService();
@@ -48,7 +45,7 @@ namespace Appium.Integration.Tests.Android
         public void ScreenRecordWithOptionsTest()
         {
             _driver.StartRecordingScreen(
-                GetAndroidStartScreenRecordingOptions()
+                AndroidStartScreenRecordingOptions.GetAndroidStartScreenRecordingOptions()
                     .WithTimeLimit(TimeSpan.FromSeconds(10))
                     .WithBitRate(500000)
                     .WithVideoSize("720x1280"));

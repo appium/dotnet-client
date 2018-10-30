@@ -1,88 +1,83 @@
-﻿using Appium.Integration.Tests.Helpers;
+﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.PageObjects;
 using OpenQA.Selenium.Appium.PageObjects.Attributes;
 using OpenQA.Selenium.Firefox;
 using SeleniumExtras.PageObjects;
-using System;
-using System.Collections.Generic;
 
-
-namespace Appium.Integration.Tests.PageObjectTests.TimeOutManagement
+namespace Appium.Net.Integration.Tests.PageObjectTests.TimeOutManagement
 {
     public class TimeOutManagementTest
     {
-        private IWebDriver driver;
-        private TimeOutDuration duration;
+        private IWebDriver _driver;
+        private TimeOutDuration _duration;
 
         [FindsBy(How = How.ClassName, Using = "FakeClass", Priority = 1)]
-        [FindsBy(How = How.TagName, Using = "FakeTag", Priority = 2)] private IList<IWebElement> stubElements;
+        [FindsBy(How = How.TagName, Using = "FakeTag", Priority = 2)] private IList<IWebElement> _stubElements;
 
         [WithTimeSpan(Seconds = 15)] [FindsBy(How = How.ClassName, Using = "FakeClass", Priority = 1)]
-        [FindsBy(How = How.TagName, Using = "FakeTag", Priority = 2)] private IList<IWebElement> stubElements2;
+        [FindsBy(How = How.TagName, Using = "FakeTag", Priority = 2)] private IList<IWebElement> _stubElements2;
 
-        private readonly TimeSpan accepableTimeDelta = new TimeSpan(0, 0, 2)
+        private readonly TimeSpan _accepableTimeDelta = new TimeSpan(0, 0, 2)
             ; //Another procceses/environment issues can interfere 
         //the checking
 
         [SetUp]
         public void Before()
         {
-            if (driver == null)
+            if (_driver == null)
             {
-                driver = new FirefoxDriver();
+                _driver = new FirefoxDriver();
             }
-            duration = new TimeOutDuration(new TimeSpan(0, 0, 5));
-            PageFactory.InitElements(driver, this, new AppiumPageObjectMemberDecorator(duration));
+            _duration = new TimeOutDuration(new TimeSpan(0, 0, 5));
+            PageFactory.InitElements(_driver, this, new AppiumPageObjectMemberDecorator(_duration));
         }
 
         [OneTimeTearDown]
         public void AfterAll()
         {
-            if (driver != null)
-            {
-                driver.Quit();
-            }
+            _driver?.Quit();
         }
 
         private bool IsInTime(TimeSpan span, IList<IWebElement> list)
         {
-            DateTime start = DateTime.Now;
-            TimeSpan checkingSpan =
-                new TimeSpan(span.Hours, span.Seconds + accepableTimeDelta.Seconds, span.Milliseconds);
-            DateTime deadline = DateTime.Now.Add(checkingSpan);
+            var start = DateTime.Now;
+            var checkingSpan =
+                new TimeSpan(span.Hours, span.Seconds + _accepableTimeDelta.Seconds, span.Milliseconds);
+            var deadline = DateTime.Now.Add(checkingSpan);
             var size = list.Count;
-            DateTime now = DateTime.Now;
+            var now = DateTime.Now;
 
             return (now <= deadline & start.Add(span) <= now);
         }
 
 
-        [Test()]
+        [Test]
         public void CheckAbilityToChangeWaitingTime()
         {
-            Assert.AreEqual(true, IsInTime(new TimeSpan(0, 0, 5), stubElements));
-            TimeSpan newTime = new TimeSpan(0, 0, 0, 20, 500);
-            duration.WaitingDuration = newTime;
-            Assert.AreEqual(true, IsInTime(newTime, stubElements));
+            Assert.AreEqual(true, IsInTime(new TimeSpan(0, 0, 5), _stubElements));
+            var newTime = new TimeSpan(0, 0, 0, 20, 500);
+            _duration.WaitingDuration = newTime;
+            Assert.AreEqual(true, IsInTime(newTime, _stubElements));
             newTime = new TimeSpan(0, 0, 0, 2, 0);
-            duration.WaitingDuration = newTime;
-            Assert.AreEqual(true, IsInTime(newTime, stubElements));
+            _duration.WaitingDuration = newTime;
+            Assert.AreEqual(true, IsInTime(newTime, _stubElements));
         }
 
-        [Test()]
+        [Test]
         public void CheckWaitingTimeIfMemberHasAttribute_WithTimeSpan()
         {
-            TimeSpan fifteenSeconds = new TimeSpan(0, 0, 0, 15, 0);
+            var fifteenSeconds = new TimeSpan(0, 0, 0, 15, 0);
             ;
-            Assert.AreEqual(true, IsInTime(new TimeSpan(0, 0, 5), stubElements));
-            Assert.AreEqual(true, IsInTime(fifteenSeconds, stubElements2));
+            Assert.AreEqual(true, IsInTime(new TimeSpan(0, 0, 5), _stubElements));
+            Assert.AreEqual(true, IsInTime(fifteenSeconds, _stubElements2));
 
-            TimeSpan newTime = new TimeSpan(0, 0, 0, 2, 0);
-            duration.WaitingDuration = newTime;
-            Assert.AreEqual(true, IsInTime(newTime, stubElements));
-            Assert.AreEqual(true, IsInTime(fifteenSeconds, stubElements2));
+            var newTime = new TimeSpan(0, 0, 0, 2, 0);
+            _duration.WaitingDuration = newTime;
+            Assert.AreEqual(true, IsInTime(newTime, _stubElements));
+            Assert.AreEqual(true, IsInTime(fifteenSeconds, _stubElements2));
         }
     }
 }

@@ -1,46 +1,31 @@
-﻿using Appium.Integration.Tests.Helpers;
+﻿using System.Collections.Generic;
+using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
-using OpenQA.Selenium.Remote;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Appium.Integration.Tests.Android
+namespace Appium.Net.Integration.Tests.Android
 {
     class AndroidSessionTest
     {
-        private AppiumDriver<IWebElement> driver;
+        private AppiumDriver<IWebElement> _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            AppiumOptions capabilities = Env.ServerIsRemote()
-                ? Caps.GetAndroidCaps(Apps.get("androidApiDemos"))
-                : Caps.GetAndroidCaps(Apps.get("androidApiDemos"));
-            if (Env.ServerIsRemote())
-            {
-                capabilities.AddAdditionalCapability("username", Env.GetEnvVar("SAUCE_USERNAME"));
-                capabilities.AddAdditionalCapability("accessKey", Env.GetEnvVar("SAUCE_ACCESS_KEY"));
-                capabilities.AddAdditionalCapability("name", "android - complex");
-                capabilities.AddAdditionalCapability("tags", new string[] {"sample"});
-            }
-            Uri serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            driver = new AndroidDriver<IWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
-            driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
+            var capabilities = Env.ServerIsRemote()
+                ? Caps.GetAndroidCaps(Apps.Get("androidApiDemos"))
+                : Caps.GetAndroidCaps(Apps.Get("androidApiDemos"));
+            var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
+            _driver = new AndroidDriver<IWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 
         [OneTimeTearDown]
         public void AfterAll()
         {
-            if (driver != null)
-            {
-                driver.Quit();
-            }
+            _driver?.Quit();
             if (!Env.ServerIsRemote())
             {
                 AppiumServers.StopLocalService();
@@ -48,16 +33,16 @@ namespace Appium.Integration.Tests.Android
         }
 
         [Test]
-        public void GetDeviceUDIDTest()
+        public void GetDeviceUdidTest()
         {
-            string deviceUIID = driver.SessionDetails["deviceUDID"].ToString();
-            Assert.NotNull(deviceUIID);
+            var deviceUiid = _driver.SessionDetails["deviceUDID"].ToString();
+            Assert.NotNull(deviceUiid);
         }
 
         [Test]
         public void GetDeviceDictionaryData()
         {
-            Dictionary<string, object> dictionary = (Dictionary<string, object>) driver.SessionDetails["desired"];
+            var dictionary = (Dictionary<string, object>) _driver.SessionDetails["desired"];
             Assert.AreNotEqual(dictionary.Count, 0);
         }
     }

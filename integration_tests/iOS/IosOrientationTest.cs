@@ -1,41 +1,28 @@
-﻿using Appium.Integration.Tests.Helpers;
+﻿using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.iOS;
-using OpenQA.Selenium.Remote;
-using System;
 
-namespace Appium.Integration.Tests.iOS
+namespace Appium.Net.Integration.Tests.iOS
 {
-    [TestFixture()]
+    [TestFixture]
     public class iOSOrientationTest
     {
-        private IWebDriver driver;
+        private IWebDriver _driver;
 
         [OneTimeSetUp]
-        public void beforeAll()
+        public void BeforeAll()
         {
-            AppiumOptions capabilities = Caps.GetIOSCaps(Apps.get("iosTestApp"));
-            if (Env.ServerIsRemote())
-            {
-                capabilities.AddAdditionalCapability("username", Env.GetEnvVar("SAUCE_USERNAME"));
-                capabilities.AddAdditionalCapability("accessKey", Env.GetEnvVar("SAUCE_ACCESS_KEY"));
-                capabilities.AddAdditionalCapability("name", "ios - complex");
-                capabilities.AddAdditionalCapability("tags", new string[] {"sample"});
-            }
-            Uri serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            driver = new IOSDriver<IWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
-            driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
+            var capabilities = Caps.GetIosCaps(Apps.Get("iosTestApp"));
+            var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
+            _driver = new IOSDriver<IWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 
         [OneTimeTearDown]
-        public void afterAll()
+        public void AfterAll()
         {
-            if (driver != null)
-            {
-                driver.Quit();
-            }
+            _driver?.Quit();
             if (!Env.ServerIsRemote())
             {
                 AppiumServers.StopLocalService();
@@ -45,7 +32,7 @@ namespace Appium.Integration.Tests.iOS
         [Test]
         public void OrientationTest()
         {
-            IRotatable rotatable = ((IRotatable) driver);
+            var rotatable = ((IRotatable) _driver);
             rotatable.Orientation = ScreenOrientation.Landscape;
             Assert.AreEqual(ScreenOrientation.Landscape, rotatable.Orientation);
         }

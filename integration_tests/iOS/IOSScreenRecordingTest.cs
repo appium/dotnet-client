@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Threading;
-using Appium.Integration.Tests.Helpers;
+using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.iOS;
-using static OpenQA.Selenium.Appium.iOS.IOSStartScreenRecordingOptions;
 
-namespace Appium.Integration.Tests.iOS
+namespace Appium.Net.Integration.Tests.iOS
 {
     [TestFixture]
     class IosScreenRecordingTest
@@ -25,10 +24,7 @@ namespace Appium.Integration.Tests.iOS
         [OneTimeTearDown]
         public void AfterEach()
         {
-            if (_driver != null)
-            {
-                _driver.Quit();
-            }
+            _driver?.Quit();
             if (!Env.ServerIsRemote())
             {
                 AppiumServers.StopLocalService();
@@ -48,9 +44,9 @@ namespace Appium.Integration.Tests.iOS
         public void ScreenRecordWithOptionsTest()
         {
             _driver.StartRecordingScreen(
-                GetIosStartScreenRecordingOptions()
+                IOSStartScreenRecordingOptions.GetIosStartScreenRecordingOptions()
                     .WithTimeLimit(TimeSpan.FromSeconds(10))
-                    .WithVideoType(VideoType.H264));
+                    .WithVideoType(IOSStartScreenRecordingOptions.VideoType.H264));
             Thread.Sleep(1000);
             var result = _driver.StopRecordingScreen();
             Assert.IsNotEmpty(result);

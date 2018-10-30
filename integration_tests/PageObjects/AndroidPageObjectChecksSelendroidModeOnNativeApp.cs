@@ -1,17 +1,17 @@
-﻿using OpenQA.Selenium;
+﻿using System.Collections.Generic;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.PageObjects.Attributes;
-using System.Collections.Generic;
 
-namespace Appium.Integration.Tests.PageObjects
+namespace Appium.Net.Integration.Tests.PageObjects
 {
     public class AndroidPageObjectChecksSelendroidModeOnNativeApp
     {
         /////////////////////////////////////////////////////////////////
 
-        [FindsBySelendroid(ID = "my_text_field")] private IWebElement testMobileElement;
+        [FindsBySelendroid(ID = "my_text_field")] private IWebElement _testMobileElement;
 
-        [FindsBySelendroid(ID = "my_text_field")] private IList<IWebElement> testMobileElements;
+        [FindsBySelendroid(ID = "my_text_field")] private IList<IWebElement> _testMobileElements;
 
         [FindsBySelendroid(ID = "my_text_field")]
         private IWebElement TestMobileElement { set; get; }
@@ -24,7 +24,7 @@ namespace Appium.Integration.Tests.PageObjects
         [FindsBySelendroid(ID = "waitingButtonTest", Priority = 3)]
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/fakeId\")",
             Priority = 1)] [FindsByAndroidUIAutomator(ID = "FakeId", Priority = 2)]
-        [FindsByAndroidUIAutomator(ClassName = "FakeClass", Priority = 3)] private IWebElement testMultipleElement;
+        [FindsByAndroidUIAutomator(ClassName = "FakeClass", Priority = 3)] private IWebElement _testMultipleElement;
 
         [FindsBySelendroid(ID = "fake_content", Priority = 1)]
         [FindsBySelendroid(ClassName = "android.webkit.WebView", Priority = 2)] //There is no Webview at the screen
@@ -32,7 +32,7 @@ namespace Appium.Integration.Tests.PageObjects
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/fakeId\")",
             Priority = 1)] [FindsByAndroidUIAutomator(ID = "FakeId", Priority = 2)]
         [FindsByAndroidUIAutomator(ClassName = "FakeClass", Priority = 3)]
-        private IList<IWebElement> testMultipleElements;
+        private IList<IWebElement> _testMultipleElements;
 
 
         /////////////////////////////////////////////////////////////////
@@ -54,7 +54,7 @@ namespace Appium.Integration.Tests.PageObjects
             Priority = 1)]
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/list\")",
             Priority = 2)] [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 3)]
-        private IWebElement foundByChainedSearchElement;
+        private IWebElement _foundByChainedSearchElement;
 
         [MobileFindsBySequence(Android = true, Selendroid = true)] [FindsBySelendroid(ID = "content", Priority = 1)]
         [FindsBySelendroid(ClassName = "android.widget.FrameLayout", Priority = 2)]
@@ -63,7 +63,7 @@ namespace Appium.Integration.Tests.PageObjects
             Priority = 1)]
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/list\")",
             Priority = 2)] [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 3)]
-        private IList<IWebElement> foundByChainedSearchElements;
+        private IList<IWebElement> _foundByChainedSearchElements;
 
         /////////////////////////////////////////////////////////////////
 
@@ -94,14 +94,14 @@ namespace Appium.Integration.Tests.PageObjects
         //[FindsByAndroidUIAutomator(ID = "waitingButtonTest", Priority = 2)]
         //Equals method of RemoteWebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
-        private IMobileElement<IWebElement> matchedToAllLocatorsElement;
+        private IMobileElement<IWebElement> _matchedToAllLocatorsElement;
 
         [MobileFindsByAll(Selendroid = true)]
         [FindsBySelendroid(LinkText = "Press to throw unhandled exception", Priority = 1)]
         //[FindsByAndroidUIAutomator(ID = "waitingButtonTest", Priority = 2)]
         //Equals method of RemoteWebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
-        private IList<IWebElement> matchedToAllLocatorsElements;
+        private IList<IWebElement> _matchedToAllLocatorsElements;
 
         /////////////////////////////////////////////////////////////////
 
@@ -122,12 +122,12 @@ namespace Appium.Integration.Tests.PageObjects
         //////////////////////////////////////////////////////////////////////////
         public string GetMobileElementText()
         {
-            return testMobileElement.Text;
+            return _testMobileElement.Text;
         }
 
         public int GetMobileElementSize()
         {
-            return testMobileElements.Count;
+            return _testMobileElements.Count;
         }
 
         public string GetMobileElementPropertyText()
@@ -143,12 +143,12 @@ namespace Appium.Integration.Tests.PageObjects
         //////////////////////////////////////////////////////////////////////////
         public string GetMultipleFindByElementText()
         {
-            return testMultipleElement.Text;
+            return _testMultipleElement.Text;
         }
 
         public int GetMultipleFindByElementSize()
         {
-            return testMultipleElements.Count;
+            return _testMultipleElements.Count;
         }
 
         public string GetMultipleFindByElementPropertyText()
@@ -164,12 +164,12 @@ namespace Appium.Integration.Tests.PageObjects
         //////////////////////////////////////////////////////////////////////////
         public string GetFoundByChainedSearchElementText()
         {
-            return foundByChainedSearchElement.Text;
+            return _foundByChainedSearchElement.Text;
         }
 
         public int GetFoundByChainedSearchElementSize()
         {
-            return foundByChainedSearchElements.Count;
+            return _foundByChainedSearchElements.Count;
         }
 
         public string GetFoundByChainedSearchElementPropertyText()
@@ -185,12 +185,12 @@ namespace Appium.Integration.Tests.PageObjects
         //////////////////////////////////////////////////////////////////////////
         public string GetMatchedToAllLocatorsElementText()
         {
-            return matchedToAllLocatorsElement.Text;
+            return _matchedToAllLocatorsElement.Text;
         }
 
         public int GetMatchedToAllLocatorsElementSize()
         {
-            return matchedToAllLocatorsElements.Count;
+            return _matchedToAllLocatorsElements.Count;
         }
 
         public string GetMatchedToAllLocatorsElementPropertyText()

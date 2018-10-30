@@ -12,21 +12,20 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-using Appium.Integration.Tests.Helpers;
-using NUnit.Framework;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Remote;
-using OpenQA.Selenium.Appium;
-using OpenQA.Selenium.Appium.Windows;
 using System;
 using System.Globalization;
 using System.Threading;
+using Appium.Net.Integration.Tests.helpers;
+using NUnit.Framework;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Appium;
+using OpenQA.Selenium.Appium.Windows;
 
-namespace Appium.Integration.Tests.Windows
+namespace Appium.Net.Integration.Tests.Windows
 {
     public class WindowsMultiSelectControlTest
     {
-        private WindowsDriver<WindowsElement> driver;
+        private WindowsDriver<WindowsElement> _driver;
         protected static WindowsDriver<WindowsElement> AlarmClockSession;
         protected static WindowsDriver<WindowsElement> DesktopSession;
 
@@ -34,7 +33,7 @@ namespace Appium.Integration.Tests.Windows
         public void Setup()
         {
             // Launch the AlarmClock app
-            AppiumOptions appCapabilities = new AppiumOptions();
+            var appCapabilities = new AppiumOptions();
             appCapabilities.AddAdditionalCapability("app", "Microsoft.WindowsAlarms_8wekyb3d8bbwe!App");
             var serverUri = Env.ServerIsLocal() ? AppiumServers.LocalServiceUri : AppiumServers.RemoteServerUri;
 
@@ -46,7 +45,7 @@ namespace Appium.Integration.Tests.Windows
             AlarmClockSession.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
 
             // Create a session for Desktop
-            AppiumOptions desktopCapabilities = new AppiumOptions();
+            var desktopCapabilities = new AppiumOptions();
             desktopCapabilities.AddAdditionalCapability("app", "Root");
             DesktopSession =
                 new WindowsDriver<WindowsElement>(serverUri, desktopCapabilities);
@@ -79,7 +78,7 @@ namespace Appium.Integration.Tests.Windows
         {
             // Read the current local time
             SwitchToWorldClockTab();
-            string localTimeText = ReadLocalTime();
+            var localTimeText = ReadLocalTime();
             Assert.IsTrue(localTimeText.Length > 0);
 
             // Add an alarm at 1 minute after local time
@@ -101,15 +100,15 @@ namespace Appium.Integration.Tests.Windows
 
         public string ReadLocalTime()
         {
-            string localTimeText = "";
+            var localTimeText = "";
             AppiumWebElement worldClockPivotItem =
                 AlarmClockSession.FindElementByAccessibilityId("WorldClockPivotItem");
             if (worldClockPivotItem != null)
             {
                 localTimeText = worldClockPivotItem.FindElementByClassName("ClockCardItem").Text;
-                var timeStrings = localTimeText.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries);
+                var timeStrings = localTimeText.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries);
 
-                foreach (string timeString in timeStrings)
+                foreach (var timeString in timeStrings)
                 {
                     // Get the time. E.g. "11:32 AM" from "Local time, Monday, February 22, 2016, 11:32 AM, "
                     if (timeString.Contains(":"))
@@ -128,12 +127,12 @@ namespace Appium.Integration.Tests.Windows
             if (timeText.Length > 0)
             {
                 // Create a test alarm 1 minute after the read local time
-                DateTimeFormatInfo fi = CultureInfo.CurrentUICulture.DateTimeFormat;
-                DateTime alarmTime = DateTime.Parse(timeText, fi);
+                var fi = CultureInfo.CurrentUICulture.DateTimeFormat;
+                var alarmTime = DateTime.Parse(timeText, fi);
                 alarmTime = alarmTime.AddMinutes(1.0);
-                string hourString = alarmTime.ToString("%h", fi);
-                string minuteString = alarmTime.ToString("mm", fi);
-                string period = alarmTime.ToString("tt", fi);
+                var hourString = alarmTime.ToString("%h", fi);
+                var minuteString = alarmTime.ToString("mm", fi);
+                var period = alarmTime.ToString("tt", fi);
 
                 AlarmClockSession.FindElementByAccessibilityId("AddAlarmButton").Click();
                 AlarmClockSession.FindElementByAccessibilityId("AlarmNameTextBox").Clear();

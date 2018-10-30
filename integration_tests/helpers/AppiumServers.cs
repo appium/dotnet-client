@@ -1,8 +1,8 @@
-﻿using OpenQA.Selenium.Appium.Service;
-using System;
+﻿using System;
 using System.IO;
+using OpenQA.Selenium.Appium.Service;
 
-namespace Appium.Integration.Tests.Helpers
+namespace Appium.Net.Integration.Tests.helpers
 {
     public class AppiumServers
     {

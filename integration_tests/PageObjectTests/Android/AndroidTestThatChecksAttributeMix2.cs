@@ -1,155 +1,143 @@
-﻿using Appium.Integration.Tests.Helpers;
-using Appium.Integration.Tests.PageObjects;
+﻿using System;
+using Appium.Net.Integration.Tests.helpers;
+using Appium.Net.Integration.Tests.PageObjects;
 using NUnit.Framework;
-using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.PageObjects;
-using OpenQA.Selenium.Remote;
 using SeleniumExtras.PageObjects;
-using System;
 
-namespace Appium.Integration.Tests.PageObjectTests.Android
+namespace Appium.Net.Integration.Tests.PageObjectTests.Android
 {
-    [TestFixture()]
+    [TestFixture]
     public class AndroidTestThatChecksAttributeMix2
     {
-        private AndroidDriver<AppiumWebElement> driver;
-        private AndroidPageObjectChecksAttributeMixOnNativeApp2 pageObject;
+        private AndroidDriver<AppiumWebElement> _driver;
+        private AndroidPageObjectChecksAttributeMixOnNativeApp2 _pageObject;
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            AppiumOptions capabilities = Env.ServerIsRemote()
-                ? Caps.GetAndroidCaps(Apps.get("androidApiDemos"))
-                : Caps.GetAndroidCaps(Apps.get("androidApiDemos"));
-            if (Env.ServerIsRemote())
-            {
-                capabilities.AddAdditionalCapability("username", Env.GetEnvVar("SAUCE_USERNAME"));
-                capabilities.AddAdditionalCapability("accessKey", Env.GetEnvVar("SAUCE_ACCESS_KEY"));
-                capabilities.AddAdditionalCapability("name", "android - complex");
-                capabilities.AddAdditionalCapability("tags", new string[] {"sample"});
-            }
-            Uri serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
-            TimeOutDuration timeSpan = new TimeOutDuration(new TimeSpan(0, 0, 0, 5, 0));
-            pageObject = new AndroidPageObjectChecksAttributeMixOnNativeApp2();
-            PageFactory.InitElements(driver, pageObject, new AppiumPageObjectMemberDecorator(timeSpan));
+            var capabilities = Env.ServerIsRemote()
+                ? Caps.GetAndroidCaps(Apps.Get("androidApiDemos"))
+                : Caps.GetAndroidCaps(Apps.Get("androidApiDemos"));
+            var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
+            _driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            var timeSpan = new TimeOutDuration(new TimeSpan(0, 0, 0, 5, 0));
+            _pageObject = new AndroidPageObjectChecksAttributeMixOnNativeApp2();
+            PageFactory.InitElements(_driver, _pageObject, new AppiumPageObjectMemberDecorator(timeSpan));
         }
 
         [OneTimeTearDown]
         public void AfterEach()
         {
-            if (driver != null)
-            {
-                driver.Quit();
-            }
+            _driver?.Quit();
             if (!Env.ServerIsRemote())
             {
                 AppiumServers.StopLocalService();
             }
         }
 
-        [Test()]
+        [Test]
         public void CheckMobileElement()
         {
-            Assert.NotNull(pageObject.GetMobileElementText());
+            Assert.NotNull(_pageObject.GetMobileElementText());
         }
 
-        [Test()]
+        [Test]
         public void CheckMobileElements()
         {
-            Assert.GreaterOrEqual(pageObject.GetMobileElementSize(), 1);
+            Assert.GreaterOrEqual(_pageObject.GetMobileElementSize(), 1);
         }
 
-        [Test()]
+        [Test]
         public void CheckMobileElementProperty()
         {
-            Assert.NotNull(pageObject.GetMobileElementPropertyText());
+            Assert.NotNull(_pageObject.GetMobileElementPropertyText());
         }
 
-        [Test()]
+        [Test]
         public void CheckMobileElementsProperty()
         {
-            Assert.GreaterOrEqual(pageObject.GetMobileElementPropertySize(), 1);
+            Assert.GreaterOrEqual(_pageObject.GetMobileElementPropertySize(), 1);
         }
 
-        [Test()]
+        [Test]
         public void CheckElementFoundUsingMultipleLocators()
         {
-            Assert.NotNull(pageObject.GetMultipleFindByElementText());
+            Assert.NotNull(_pageObject.GetMultipleFindByElementText());
         }
 
-        [Test()]
+        [Test]
         public void CheckElementsFoundUsingMultipleLocators()
         {
-            Assert.GreaterOrEqual(pageObject.GetMultipleFindByElementSize(), 10);
-            Assert.LessOrEqual(pageObject.GetMultipleFindByElementSize(), 14);
+            Assert.GreaterOrEqual(_pageObject.GetMultipleFindByElementSize(), 10);
+            Assert.LessOrEqual(_pageObject.GetMultipleFindByElementSize(), 14);
         }
 
-        [Test()]
+        [Test]
         public void CheckElementFoundUsingMultipleLocatorsProperty()
         {
-            Assert.NotNull(pageObject.GetMultipleFindByElementPropertyText());
+            Assert.NotNull(_pageObject.GetMultipleFindByElementPropertyText());
         }
 
-        [Test()]
+        [Test]
         public void CheckElementsFoundUsingMultipleLocatorssProperty()
         {
-            Assert.GreaterOrEqual(pageObject.GetMultipleFindByElementPropertySize(), 10);
-            Assert.LessOrEqual(pageObject.GetMultipleFindByElementSize(), 14);
+            Assert.GreaterOrEqual(_pageObject.GetMultipleFindByElementPropertySize(), 10);
+            Assert.LessOrEqual(_pageObject.GetMultipleFindByElementSize(), 14);
         }
 
-        [Test()]
+        [Test]
         public void CheckElementFoundByChainedSearch()
         {
-            Assert.NotNull(pageObject.GetFoundByChainedSearchElementText());
+            Assert.NotNull(_pageObject.GetFoundByChainedSearchElementText());
         }
 
-        [Test()]
+        [Test]
         public void CheckElementsFoundByChainedSearch()
         {
-            Assert.GreaterOrEqual(pageObject.GetFoundByChainedSearchElementSize(), 10);
-            Assert.LessOrEqual(pageObject.GetMultipleFindByElementSize(), 14);
+            Assert.GreaterOrEqual(_pageObject.GetFoundByChainedSearchElementSize(), 10);
+            Assert.LessOrEqual(_pageObject.GetMultipleFindByElementSize(), 14);
         }
 
-        [Test()]
+        [Test]
         public void CheckFoundByChainedSearchElementProperty()
         {
-            Assert.NotNull(pageObject.GetFoundByChainedSearchElementPropertyText());
+            Assert.NotNull(_pageObject.GetFoundByChainedSearchElementPropertyText());
         }
 
-        [Test()]
+        [Test]
         public void CheckFoundByChainedSearchElementsProperty()
         {
-            Assert.GreaterOrEqual(pageObject.GetFoundByChainedSearchElementPropertySize(), 10);
-            Assert.LessOrEqual(pageObject.GetMultipleFindByElementSize(), 14);
+            Assert.GreaterOrEqual(_pageObject.GetFoundByChainedSearchElementPropertySize(), 10);
+            Assert.LessOrEqual(_pageObject.GetMultipleFindByElementSize(), 14);
         }
 
-        [Test()]
+        [Test]
         public void CheckElementMatchedToAll()
         {
-            Assert.NotNull(pageObject.GetMatchedToAllLocatorsElementText());
+            Assert.NotNull(_pageObject.GetMatchedToAllLocatorsElementText());
         }
 
-        [Test()]
+        [Test]
         public void CheckElementsMatchedToAll()
         {
-            Assert.GreaterOrEqual(pageObject.GetMatchedToAllLocatorsElementSize(), 1);
-            Assert.LessOrEqual(pageObject.GetMatchedToAllLocatorsElementSize(), 13);
+            Assert.GreaterOrEqual(_pageObject.GetMatchedToAllLocatorsElementSize(), 1);
+            Assert.LessOrEqual(_pageObject.GetMatchedToAllLocatorsElementSize(), 13);
         }
 
-        [Test()]
+        [Test]
         public void CheckElementMatchedToAllProperty()
         {
-            Assert.NotNull(pageObject.GetMatchedToAllLocatorsElementPropertyText());
+            Assert.NotNull(_pageObject.GetMatchedToAllLocatorsElementPropertyText());
         }
 
-        [Test()]
+        [Test]
         public void CheckElementMatchedToAllElementsProperty()
         {
-            Assert.GreaterOrEqual(pageObject.GetMatchedToAllLocatorsElementPropertySize(), 1);
-            Assert.LessOrEqual(pageObject.GetMatchedToAllLocatorsElementPropertySize(), 13);
+            Assert.GreaterOrEqual(_pageObject.GetMatchedToAllLocatorsElementPropertySize(), 1);
+            Assert.LessOrEqual(_pageObject.GetMatchedToAllLocatorsElementPropertySize(), 13);
         }
     }
 }

@@ -1,59 +1,47 @@
-﻿using Appium.Integration.Tests.Helpers;
+﻿using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.iOS;
-using OpenQA.Selenium.Remote;
-using System;
 
-namespace Appium.Integration.Tests.iOS
+namespace Appium.Net.Integration.Tests.iOS
 {
-    public class IOSScrollingSearchingTest
+    public class IosScrollingSearchingTest
     {
-        private IOSDriver<AppiumWebElement> driver;
+        private IOSDriver<AppiumWebElement> _driver;
 
         [OneTimeSetUp]
-        public void beforeAll()
+        public void BeforeAll()
         {
-            AppiumOptions capabilities = Caps.GetIOSCaps(Apps.get("iosUICatalogApp"));
-            if (Env.ServerIsRemote())
-            {
-                capabilities.AddAdditionalCapability("username", Env.GetEnvVar("SAUCE_USERNAME"));
-                capabilities.AddAdditionalCapability("accessKey", Env.GetEnvVar("SAUCE_ACCESS_KEY"));
-                capabilities.AddAdditionalCapability("name", "ios - complex");
-                capabilities.AddAdditionalCapability("tags", new string[] {"sample"});
-            }
-            Uri serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            driver = new IOSDriver<AppiumWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
-            driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
+            var capabilities = Caps.GetIosCaps(Apps.Get("iosUICatalogApp"));
+            var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
+            _driver = new IOSDriver<AppiumWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 
         [OneTimeTearDown]
         public void AfterEach()
         {
-            if (driver != null)
-            {
-                driver.Quit();
-            }
+            _driver?.Quit();
             if (!Env.ServerIsRemote())
             {
                 AppiumServers.StopLocalService();
             }
         }
 
-        [Test()]
+        [Test]
         public void ScrollToTestCase()
         {
-            AppiumWebElement slider = driver
+            var slider = _driver
                 .FindElement(new ByIosUIAutomation(".tableViews()[0]"
                                                    + ".scrollToElementWithPredicate(\"name CONTAINS 'Slider'\")"));
             Assert.AreEqual(slider.GetAttribute("name"), "Sliders");
         }
 
-        [Test()]
+        [Test]
         public void ScrollToExactTestCase()
         {
-            AppiumWebElement table = driver.FindElement(new ByIosUIAutomation(".tableViews()[0]"));
-            AppiumWebElement slider = table.FindElement(
+            var table = _driver.FindElement(new ByIosUIAutomation(".tableViews()[0]"));
+            var slider = table.FindElement(
                 new ByIosUIAutomation(".scrollToElementWithPredicate(\"name CONTAINS 'Slider'\")"));
             Assert.AreEqual(slider.GetAttribute("name"), "Sliders");
         }

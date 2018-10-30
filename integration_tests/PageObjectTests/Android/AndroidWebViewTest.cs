@@ -1,65 +1,60 @@
-﻿using Appium.Integration.Tests.Helpers;
-using Appium.Integration.Tests.PageObjects;
+﻿using System;
+using System.Threading;
+using Appium.Net.Integration.Tests.helpers;
+using Appium.Net.Integration.Tests.PageObjects;
 using NUnit.Framework;
-using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.PageObjects;
-using OpenQA.Selenium.Remote;
 using SeleniumExtras.PageObjects;
-using System;
-using System.Threading;
 
-namespace Appium.Integration.Tests.PageObjectTests.Android
+namespace Appium.Net.Integration.Tests.PageObjectTests.Android
 {
     public class AndroidWebViewTest
     {
-        private AndroidDriver<AppiumWebElement> driver;
-        private AndroidWebView pageObject;
+        private AndroidDriver<AppiumWebElement> _driver;
+        private AndroidWebView _pageObject;
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            AppiumOptions capabilities = Env.ServerIsRemote()
-                ? Caps.GetAndroidCaps(Apps.get("selendroidTestApp"))
-                : Caps.GetAndroidCaps(Apps.get("selendroidTestApp"));
+            var capabilities = Env.ServerIsRemote()
+                ? Caps.GetAndroidCaps(Apps.Get("selendroidTestApp"))
+                : Caps.GetAndroidCaps(Apps.Get("selendroidTestApp"));
             if (Env.ServerIsRemote())
             {
                 capabilities.AddAdditionalCapability("username", Env.GetEnvVar("SAUCE_USERNAME"));
                 capabilities.AddAdditionalCapability("accessKey", Env.GetEnvVar("SAUCE_ACCESS_KEY"));
                 capabilities.AddAdditionalCapability("name", "android - webview");
-                capabilities.AddAdditionalCapability("tags", new string[] {"sample"});
+                capabilities.AddAdditionalCapability("tags", new[] {"sample"});
             }
-            Uri serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
-            TimeOutDuration timeSpan = new TimeOutDuration(new TimeSpan(0, 0, 0, 5, 0));
-            pageObject = new AndroidWebView();
-            PageFactory.InitElements(driver, pageObject, new AppiumPageObjectMemberDecorator(timeSpan));
-            driver.StartActivity("io.selendroid.testapp", ".WebViewActivity");
+            var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
+            _driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            var timeSpan = new TimeOutDuration(new TimeSpan(0, 0, 0, 5, 0));
+            _pageObject = new AndroidWebView();
+            PageFactory.InitElements(_driver, _pageObject, new AppiumPageObjectMemberDecorator(timeSpan));
+            _driver.StartActivity("io.selendroid.testapp", ".WebViewActivity");
         }
 
         [OneTimeTearDown]
         public void AfterEach()
         {
-            if (driver != null)
-            {
-                driver.Quit();
-            }
+            _driver?.Quit();
             if (!Env.ServerIsRemote())
             {
                 AppiumServers.StopLocalService();
             }
         }
 
-        [Test()]
+        [Test]
         public void WebViewTestCase()
         {
             Thread.Sleep(5000);
             if (!Env.ServerIsRemote())
             {
-                var contexts = driver.Contexts;
+                var contexts = _driver.Contexts;
                 string webviewContext = null;
-                for (int i = 0; i < contexts.Count; i++)
+                for (var i = 0; i < contexts.Count; i++)
                 {
                     Console.WriteLine(contexts[i]);
                     if (contexts[i].Contains("WEBVIEW"))
@@ -68,9 +63,9 @@ namespace Appium.Integration.Tests.PageObjectTests.Android
                     }
                 }
                 Assert.IsNotNull(webviewContext);
-                driver.Context = webviewContext;
+                _driver.Context = webviewContext;
 
-                pageObject.SendMeYourName();
+                _pageObject.SendMeYourName();
             }
         }
     }

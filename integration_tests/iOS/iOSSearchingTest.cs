@@ -1,60 +1,55 @@
-﻿using Appium.Integration.Tests.Helpers;
+﻿using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.iOS;
-using OpenQA.Selenium.Remote;
-using System;
 
-namespace Appium.Integration.Tests.iOS
+namespace Appium.Net.Integration.Tests.iOS
 {
-    class iOSSearchingTest
+    class IOsSearchingTest
     {
-        private IOSDriver<IOSElement> driver;
+        private IOSDriver<IOSElement> _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            AppiumOptions capabilities = Caps.GetIOSCaps(Apps.get("iosTestApp"));
+            var capabilities = Caps.GetIosCaps(Apps.Get("iosTestApp"));
             if (Env.ServerIsRemote())
             {
                 capabilities.AddAdditionalCapability("username", Env.GetEnvVar("SAUCE_USERNAME"));
                 capabilities.AddAdditionalCapability("accessKey", Env.GetEnvVar("SAUCE_ACCESS_KEY"));
                 capabilities.AddAdditionalCapability("name", "ios - simple");
-                capabilities.AddAdditionalCapability("tags", new string[] {"sample"});
+                capabilities.AddAdditionalCapability("tags", new[] {"sample"});
             }
-            Uri serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            driver = new IOSDriver<IOSElement>(serverUri, capabilities, Env.InitTimeoutSec);
-            driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
+            var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
+            _driver = new IOSDriver<IOSElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 
         [OneTimeTearDown]
         public void AfterAll()
         {
-            if (driver != null)
-            {
-                driver.Quit();
-            }
+            _driver?.Quit();
             if (!Env.ServerIsRemote())
             {
                 AppiumServers.StopLocalService();
             }
         }
 
-        [Test()]
+        [Test]
         public void FindByAccessibilityIdTest()
         {
             By byAccessibilityId = new ByAccessibilityId("ComputeSumButton");
-            Assert.AreNotEqual(driver.FindElement(byAccessibilityId).Text, null);
-            Assert.GreaterOrEqual(driver.FindElements(byAccessibilityId).Count, 1);
+            Assert.AreNotEqual(_driver.FindElement(byAccessibilityId).Text, null);
+            Assert.GreaterOrEqual(_driver.FindElements(byAccessibilityId).Count, 1);
         }
 
         [Test]
-        public void FindByByIosUIAutomationTest()
+        public void FindByByIosUiAutomationTest()
         {
-            By byIosUIAutomation = new ByIosUIAutomation(".elements().withName(\"Answer\")");
-            Assert.IsNotNull(driver.FindElement(byIosUIAutomation).Text);
-            Assert.GreaterOrEqual(driver.FindElements(byIosUIAutomation).Count, 1);
+            By byIosUiAutomation = new ByIosUIAutomation(".elements().withName(\"Answer\")");
+            Assert.IsNotNull(_driver.FindElement(byIosUiAutomation).Text);
+            Assert.GreaterOrEqual(_driver.FindElements(byIosUiAutomation).Count, 1);
         }
     }
 }

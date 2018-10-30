@@ -1,61 +1,56 @@
-﻿using NUnit.Framework;
-using System;
-using Appium.Integration.Tests.Helpers;
-using OpenQA.Selenium.Remote;
+﻿using System;
+using System.Threading;
+using Appium.Net.Integration.Tests.helpers;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.Android;
-using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Enums;
-using System.Threading;
-using OpenQA.Selenium.Appium;
+using OpenQA.Selenium.Appium.Interfaces;
 
-namespace Appium.Integration.Tests.Android
+namespace Appium.Net.Integration.Tests.Android
 {
-    [TestFixture()]
+    [TestFixture]
     public class AndroidWebviewTest
     {
-        private IWebDriver driver;
+        private IWebDriver _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            AppiumOptions capabilities = Env.ServerIsRemote()
-                ? Caps.GetAndroidCaps(Apps.get("selendroidTestApp"))
-                : Caps.GetAndroidCaps(Apps.get("selendroidTestApp"));
+            var capabilities = Env.ServerIsRemote()
+                ? Caps.GetAndroidCaps(Apps.Get("selendroidTestApp"))
+                : Caps.GetAndroidCaps(Apps.Get("selendroidTestApp"));
             if (Env.ServerIsRemote())
             {
                 capabilities.AddAdditionalCapability("username", Env.GetEnvVar("SAUCE_USERNAME"));
                 capabilities.AddAdditionalCapability("accessKey", Env.GetEnvVar("SAUCE_ACCESS_KEY"));
                 capabilities.AddAdditionalCapability("name", "android - webview");
-                capabilities.AddAdditionalCapability("tags", new string[] {"sample"});
+                capabilities.AddAdditionalCapability("tags", new[] {"sample"});
             }
             capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppPackage, "io.selendroid.testapp");
             capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppActivity, ".WebViewActivity");
-            Uri serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            driver = new AndroidDriver<IWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
-            driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
+            var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
+            _driver = new AndroidDriver<IWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 
         [OneTimeTearDown]
         public void AfterAll()
         {
-            if (driver != null)
-            {
-                driver.Quit();
-            }
+            _driver?.Quit();
             if (!Env.ServerIsRemote())
             {
                 AppiumServers.StopLocalService();
             }
         }
 
-        [Test()]
+        [Test]
         public void WebViewTestCase()
         {
             Thread.Sleep(5000);
-            var contexts = ((IContextAware) driver).Contexts;
+            var contexts = ((IContextAware) _driver).Contexts;
             string webviewContext = null;
-            for (int i = 0; i < contexts.Count; i++)
+            for (var i = 0; i < contexts.Count; i++)
             {
                 Console.WriteLine(contexts[i]);
                 if (contexts[i].Contains("WEBVIEW"))
@@ -65,8 +60,8 @@ namespace Appium.Integration.Tests.Android
                 }
             }
             Assert.IsNotNull(webviewContext);
-            ((IContextAware) driver).Context = webviewContext;
-            Assert.IsTrue(driver.PageSource.Contains("Hello, can you please tell me your name?"));
+            ((IContextAware) _driver).Context = webviewContext;
+            Assert.IsTrue(_driver.PageSource.Contains("Hello, can you please tell me your name?"));
         }
     }
 }

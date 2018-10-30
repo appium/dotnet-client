@@ -10,10 +10,10 @@ using SeleniumExtras.PageObjects;
 namespace Appium.Net.Integration.Tests.PageObjectTests.Android
 {
     [TestFixture]
-    public class AndroidNativeAppAttributesTest
+    public class SeleniumAttributesCompatibilityTest
     {
         private AndroidDriver<AppiumWebElement> _driver;
-        private AndroidPageObjectChecksAttributesForNativeAndroidApp _pageObject;
+        private AndroidPageObjectChecksSeleniumFindsByCompatibility _pageObject;
 
         [OneTimeSetUp]
         public void BeforeAll()
@@ -24,7 +24,7 @@ namespace Appium.Net.Integration.Tests.PageObjectTests.Android
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
             _driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
             var timeSpan = new TimeOutDuration(new TimeSpan(0, 0, 0, 5, 0));
-            _pageObject = new AndroidPageObjectChecksAttributesForNativeAndroidApp();
+            _pageObject = new AndroidPageObjectChecksSeleniumFindsByCompatibility();
             PageFactory.InitElements(_driver, _pageObject, new AppiumPageObjectMemberDecorator(timeSpan));
         }
 
@@ -36,6 +36,30 @@ namespace Appium.Net.Integration.Tests.PageObjectTests.Android
             {
                 AppiumServers.StopLocalService();
             }
+        }
+
+        [Test]
+        public void CheckElement()
+        {
+            Assert.NotNull(_pageObject.GetElementText());
+        }
+
+        [Test]
+        public void CheckElements()
+        {
+            Assert.GreaterOrEqual(_pageObject.GetElementSize(), 1);
+        }
+
+        [Test]
+        public void CheckElementProperty()
+        {
+            Assert.NotNull(_pageObject.GetElementPropertyText());
+        }
+
+        [Test]
+        public void CheckElementsProperty()
+        {
+            Assert.GreaterOrEqual(_pageObject.GetElementPropertySize(), 1);
         }
 
         [Test]

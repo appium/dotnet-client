@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using integration_tests.Properties;
+using Appium.Net.Integration.Tests.Properties;
 
-namespace Appium.Integration.Tests.Helpers
+namespace Appium.Net.Integration.Tests.helpers
 {
     public class Apps
     {
@@ -58,7 +58,7 @@ namespace Appium.Integration.Tests.Helpers
             }
         }
 
-        public static string get(string appKey)
+        public static string Get(string appKey)
         {
             Init();
             return _testApps[appKey];
