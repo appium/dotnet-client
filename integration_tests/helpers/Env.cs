@@ -3,68 +3,60 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 
-namespace Appium.Integration.Tests.Helpers
+namespace Appium.Net.Integration.Tests.helpers
 {
     public class Env
     {
-        public static TimeSpan INIT_TIMEOUT_SEC = TimeSpan.FromSeconds(180);
-        public static TimeSpan IMPLICIT_TIMEOUT_SEC = TimeSpan.FromSeconds(5);
-        public static string ASSETS_ROOT_DIR = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory + "../../assets");
+        public static TimeSpan InitTimeoutSec = TimeSpan.FromSeconds(180);
+        public static TimeSpan ImplicitTimeoutSec = TimeSpan.FromSeconds(10);
 
-        private static Dictionary<string, string> env;
-        private static bool initialized = false;
+        private static Dictionary<string, string> _env;
+        private static bool _initialized;
 
         private static void Init()
         {
             try
             {
-                if (!initialized)
+                if (!_initialized)
                 {
-                    initialized = true;
-                    string path = AppDomain.CurrentDomain.BaseDirectory;
-                    StreamReader sr = new StreamReader(path + "env.json");
-                    string jsonString = sr.ReadToEnd();
-                    env = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonString);
+                    _initialized = true;
+                    var path = AppDomain.CurrentDomain.BaseDirectory;
+                    var sr = new StreamReader(path + "env.json");
+                    var jsonString = sr.ReadToEnd();
+                    _env = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonString);
                 }
             }
             catch
             {
-                env = new Dictionary<string, string>();
+                _env = new Dictionary<string, string>();
             }
         }
 
-        private static bool isTrue(string val)
+        private static bool IsTrue(string val)
         {
-            if (val != null)
-            {
-                val = val.ToLower().Trim();
-            }
+            val = val?.ToLower().Trim();
             return (val == "true") || (val == "1");
         }
 
-        static public bool isSauce()
+        public static bool ServerIsRemote()
         {
             Init();
-            return (env.ContainsKey("SAUCE") && isTrue(env["SAUCE"])) ||
-                   isTrue(Environment.GetEnvironmentVariable("SAUCE"));
+            return _env.ContainsKey("isRemoteAppiumServer") && IsTrue(_env["isRemoteAppiumServer"]);
         }
 
-        static public bool isDev()
+        public static bool ServerIsLocal()
         {
             Init();
-            return (env.ContainsKey("DEV") && isTrue(env["DEV"])) || isTrue(Environment.GetEnvironmentVariable("DEV"));
+            return _env.ContainsKey("DEV") && IsTrue(_env["DEV"]) || IsTrue(Environment.GetEnvironmentVariable("DEV"));
         }
 
-        static public string getEnvVar(string name)
+        public static string GetEnvVar(string name)
         {
-            if (env.ContainsKey(name) && (env[name] != null))
+            if (_env.ContainsKey(name) && (_env[name] != null))
             {
-                return env[name];
+                return _env[name];
             }
-            else
-            {
                 return Environment.GetEnvironmentVariable(name);
-            }
         }
     }
 }

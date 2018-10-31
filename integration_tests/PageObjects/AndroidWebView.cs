@@ -1,40 +1,40 @@
-﻿using OpenQA.Selenium;
+﻿using System;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.PageObjects.Attributes;
-using SeleniumExtras.PageObjects;
 using OpenQA.Selenium.Support.UI;
-using System;
+using SeleniumExtras.PageObjects;
 
-namespace Appium.Integration.Tests.PageObjects
+namespace Appium.Net.Integration.Tests.PageObjects
 {
     public class AndroidWebView
     {
         [FindsBy(How = How.Id, Using = "name_input")]
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/fakeID\")")]
-        private IWebElement name;
+        private IWebElement _name;
 
         [FindsBy(How = How.Name, Using = "car")]
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/fakeID\")")]
-        [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[0]")] private IWebElement carSelect;
+        [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[0]")] private IWebElement _carSelect;
 
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/fakeID\")")]
         [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[0]")]
-        [FindsBy(How = How.XPath, Using = ".//*[@type=\"submit\"]")] private IWebElement sendMeYourName;
+        [FindsBy(How = How.XPath, Using = ".//*[@type=\"submit\"]")] private IWebElement _sendMeYourName;
 
         public void SetName(string name)
         {
-            this.name.Clear();
-            this.name.SendKeys(name);
+            this._name.Clear();
+            this._name.SendKeys(name);
         }
 
         public void SelectCar(String car)
         {
-            SelectElement select = new SelectElement(carSelect);
+            var select = new SelectElement(_carSelect);
             select.SelectByValue(car);
         }
 
         public void SendMeYourName()
         {
-            sendMeYourName.Submit();
+            _sendMeYourName.Submit();
         }
     }
 }

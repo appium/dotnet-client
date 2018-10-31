@@ -1,28 +1,28 @@
-﻿using OpenQA.Selenium;
+﻿using System;
+using System.Threading;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.PageObjects;
 using SeleniumExtras.PageObjects;
-using System;
-using System.Threading;
 
-namespace Appium.Integration.Tests.PageObjects
+namespace Appium.Net.Integration.Tests.PageObjects
 {
     class AndroidJavaScriptTestPageObject
     {
-        [FindsBy(How = How.XPath, Using = ".//*[@type=\"submit\"]")] private IWebElement sendMeYourName;
+        [FindsBy(How = How.XPath, Using = ".//*[@type=\"submit\"]")] private IWebElement _sendMeYourName;
 
-        private readonly IWebDriver driver;
+        private readonly IWebDriver _driver;
 
         public AndroidJavaScriptTestPageObject(IWebDriver driver)
         {
-            this.driver = driver;
-            TimeOutDuration timeSpan = new TimeOutDuration(new TimeSpan(0, 0, 0, 5, 0));
+            this._driver = driver;
+            var timeSpan = new TimeOutDuration(new TimeSpan(0, 0, 0, 5, 0));
             PageFactory.InitElements(driver, this, new AppiumPageObjectMemberDecorator(timeSpan));
         }
 
         public void HighlightElement()
         {
-            IJavaScriptExecutor executor = driver as IJavaScriptExecutor;
-            executor.ExecuteScript("arguments[0].style.border = '" + "4px solid rgb(0,255,0)" + "'", sendMeYourName);
+            var executor = _driver as IJavaScriptExecutor;
+            executor.ExecuteScript("arguments[0].style.border = '" + "4px solid rgb(0,255,0)" + "'", _sendMeYourName);
             Thread.Sleep(5000);
         }
     }

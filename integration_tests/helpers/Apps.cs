@@ -1,57 +1,67 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Appium.Net.Integration.Tests.Properties;
 
-namespace Appium.Integration.Tests.Helpers
+namespace Appium.Net.Integration.Tests.helpers
 {
     public class Apps
     {
-        private static bool isInited;
-        private static Dictionary<string, string> Appz;
+        private static bool _isInited;
+        private static Dictionary<string, string> _testApps;
+
+        private static string _testAppsDir = $"{AppDomain.CurrentDomain.BaseDirectory}..//..//..//apps";
 
         private static void Init()
         {
-            if (!isInited)
+            if (!_isInited)
             {
-                if (Env.isSauce())
+                if (Env.ServerIsRemote())
                 {
-                    Appz = new Dictionary<string, string>
+                    _testApps = new Dictionary<string, string>
                     {
-                        {"iosTestApp", "http://appium.github.io/appium/assets/TestApp7.1.app.zip"},
-                        {"iosWebviewApp", "http://appium.github.io/appium/assets/WebViewApp7.1.app.zip"},
-                        {"iosUICatalogApp", "http://appium.github.io/appium/assets/UICatalog7.1.app.zip"},
-                        {"androidApiDemos", "http://appium.github.io/appium/assets/ApiDemos-debug.apk"},
-                        {"selendroidTestApp", "http://appium.github.io/appium/assets/selendroid-test-app-0.10.0.apk"}
+                        {"iosTestApp", "https://github.com/akinsolb/appium-dotnet-driver/blob/update-test-apps/integration_tests/apps/TestApp.app.zip?raw=true"},
+                        {"intentApp", "https://github.com/akinsolb/appium-dotnet-driver/blob/update-test-apps/integration_tests/apps/IntentExample.zip?raw=true"},
+                        {"iosWebviewApp", "https://github.com/akinsolb/appium-dotnet-driver/blob/update-test-apps/integration_tests/apps/WebViewApp.app.zip?raw=true"},
+                        {"iosUICatalogApp", "https://github.com/akinsolb/appium-dotnet-driver/blob/update-test-apps/integration_tests/apps/UICatalog.app.zip?raw=true"},
+                        {"androidApiDemos", "https://github.com/akinsolb/appium-dotnet-driver/blob/update-test-apps/integration_tests/apps/ApiDemos-debug.zip?raw=true"},
+                        {"vodqaApp", "https://github.com/akinsolb/appium-dotnet-driver/blob/update-test-apps/integration_tests/apps/vodqa.zip?raw=true"}
                     };
                 }
                 else
                 {
-                    File.WriteAllBytes("ApiDemos-debug.apk", Properties.Resources.ApiDemos_debug);
-                    File.WriteAllBytes("selendroid-test-app-0.10.0.apk",
-                        Properties.Resources.selendroid_test_app_0_10_0);
-                    File.WriteAllBytes("TestApp7.1.app.zip", Properties.Resources.TestApp7_1_app);
-                    File.WriteAllBytes("WebViewApp7.1.app.zip", Properties.Resources.WebViewApp7_1_app);
-                    File.WriteAllBytes("UICatalog7.1.app.zip", Properties.Resources.UICatalog7_1_app);
-                    File.WriteAllBytes("IntentExample.apk", Properties.Resources.IntentExample);
+                    var tempFolder = Path.GetTempPath();
 
-                    Appz = new Dictionary<string, string>
+                    File.WriteAllBytes($"{tempFolder}/ApiDemos-debug.apk", Resources.ApiDemos_debug);
+                    File.WriteAllBytes($"{tempFolder}/TestApp.app.zip", Resources.TestApp_app);
+                    File.WriteAllBytes($"{tempFolder}/WebViewApp.app.zip", Resources.WebViewApp_app);
+                    File.WriteAllBytes($"{tempFolder}/UICatalog.app.zip", Resources.UICatalog_app);
+                    File.WriteAllBytes($"{tempFolder}/IntentExample.apk", Resources.IntentExample);
+                    File.WriteAllBytes($"{tempFolder}/vodqa.app.zip", Resources.vodqa);
+
+
+
+
+
+                    _testApps = new Dictionary<string, string>
                     {
-                        {"iosTestApp", new FileInfo("TestApp7.1.app.zip").FullName},
-                        {"iosWebviewApp", new FileInfo("WebViewApp7.1.app.zip").FullName},
-                        {"iosUICatalogApp", new FileInfo("UICatalog7.1.app.zip").FullName},
-                        {"androidApiDemos", new FileInfo("ApiDemos-debug.apk").FullName},
-                        {"selendroidTestApp", new FileInfo("selendroid-test-app-0.10.0.apk").FullName},
-                        {"intentApp", new FileInfo("IntentExample.apk").FullName}
+                        {"iosTestApp", new FileInfo($"{Path.GetTempPath()}/TestApp.app.zip").FullName},
+                        {"intentApp", new FileInfo($"{Path.GetTempPath()}/IntentExample.apk").FullName},
+                        {"iosWebviewApp", new FileInfo($"{Path.GetTempPath()}//WebViewApp.app.zip").FullName},
+                        {"iosUICatalogApp", new FileInfo($"{Path.GetTempPath()}/UICatalog.app.zip").FullName},
+                        {"androidApiDemos", new FileInfo($"{Path.GetTempPath()}/ApiDemos-debug.apk").FullName},
+                        {"vodqaApp", new FileInfo($"{Path.GetTempPath()}/vodqa.app.zip").FullName}
+
                     };
                 }
-                isInited = true;
+                _isInited = true;
             }
         }
 
-        public static string get(string appKey)
+        public static string Get(string appKey)
         {
             Init();
-            return Appz[appKey];
+            return _testApps[appKey];
         }
     }
 }
