@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
-using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
-using Appium.Integration.Tests.Helpers;
+using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.iOS;
 
-namespace Appium.Integration.Tests.PageObjectTests.IOS
+namespace Appium.Net.Integration.Tests.iOS
 {
     [TestFixture(Category = "Device")]
     public class ClipboardTest
@@ -22,25 +21,18 @@ namespace Appium.Integration.Tests.PageObjectTests.IOS
         [SetUp]
         public void Setup()
         {
-            var capabilities = Caps.getIos112Caps(Apps.get("iosUICatalogApp"));
-            if (Env.isSauce())
-            {
-                capabilities.AddAdditionalCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
-                capabilities.AddAdditionalCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
-                capabilities.AddAdditionalCapability("tags", new string[] { "sample" });
-            }
+            var capabilities = Caps.GetIosCaps(Apps.Get("iosUICatalogApp"));
             capabilities.AddAdditionalCapability(MobileCapabilityType.FullReset, true);
-            var serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIForIOS;
+            var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
 
-            _driver = new IOSDriver<IWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
-            _driver.Manage().Timeouts().ImplicitWait = Env.IMPLICIT_TIMEOUT_SEC;
-            
+            _driver = new IOSDriver<IWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 
         [Test]
         public void WhenSetClipboardContentTypeIsPlainText_GetClipboardShouldReturnEncodedBase64String()
         {
-            string base64ClipboardTestString = Convert.ToBase64String(Encoding.UTF8.GetBytes(ClipboardTestString));
+            var base64ClipboardTestString = Convert.ToBase64String(Encoding.UTF8.GetBytes(ClipboardTestString));
             _driver.SetClipboard(ClipboardContentType.PlainText, base64ClipboardTestString);
             Assert.That(() => Regex.IsMatch(_driver.GetClipboard(ClipboardContentType.PlainText), Base64RegexPattern), 
                 Is.True);
@@ -122,7 +114,7 @@ namespace Appium.Integration.Tests.PageObjectTests.IOS
                 _driver.Unlock();
             _driver?.Quit();
 
-            if (!Env.isSauce())
+            if (!Env.ServerIsRemote())
             {
                 AppiumServers.StopLocalService();
             }
