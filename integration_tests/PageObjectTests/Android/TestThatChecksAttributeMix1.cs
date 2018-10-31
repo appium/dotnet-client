@@ -10,7 +10,7 @@ using SeleniumExtras.PageObjects;
 namespace Appium.Net.Integration.Tests.PageObjectTests.Android
 {
     [TestFixture]
-    public class AndroidTestThatChecksAttributeMix1
+    public class TestThatChecksAttributeMix1
     {
         private AndroidDriver<AppiumWebElement> _driver;
         private AndroidPageObjectChecksAttributeMixOnNativeApp1 _pageObject;

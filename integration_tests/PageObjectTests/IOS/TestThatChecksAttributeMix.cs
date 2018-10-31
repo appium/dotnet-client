@@ -10,27 +10,19 @@ using SeleniumExtras.PageObjects;
 namespace Appium.Net.Integration.Tests.PageObjectTests.IOS
 {
     [TestFixture]
-    public class IosNativeAppAttributesTest
+    public class TestThatChecksAttributeMix
     {
         private IOSDriver<AppiumWebElement> _driver;
-        private IosPageObjectChecksAttributesForNativeIosApp _pageObject;
+        private IosPageObjectChecksAttributeMixOnNativeApp _pageObject;
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
             var capabilities = Caps.GetIosCaps(Apps.Get("iosTestApp"));
-            if (Env.ServerIsRemote())
-            {
-                capabilities.AddAdditionalCapability("username", Env.GetEnvVar("SAUCE_USERNAME"));
-                capabilities.AddAdditionalCapability("accessKey", Env.GetEnvVar("SAUCE_ACCESS_KEY"));
-                capabilities.AddAdditionalCapability("name", "ios - actions");
-                capabilities.AddAdditionalCapability("tags", new[] {"sample"});
-            }
-
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
             _driver = new IOSDriver<AppiumWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
             var timeSpan = new TimeOutDuration(new TimeSpan(0, 0, 0, 5, 0));
-            _pageObject = new IosPageObjectChecksAttributesForNativeIosApp();
+            _pageObject = new IosPageObjectChecksAttributeMixOnNativeApp();
             PageFactory.InitElements(_driver, _pageObject, new AppiumPageObjectMemberDecorator(timeSpan));
         }
 
