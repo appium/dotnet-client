@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "appium-dotnet-driver", "appium-dotnet-driver\appium-dotnet-driver.csproj", "{A54D6086-3606-4E81-8B89-5C0F61638DCF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "integration_tests", "integration_tests\integration_tests.csproj", "{0D4A1C2F-D180-4293-AB38-41F685F60B43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Appium.Net.Integration.Tests", "integration_tests\Appium.Net.Integration.Tests.csproj", "{0D4A1C2F-D180-4293-AB38-41F685F60B43}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DD79BA21-B485-411E-B132-0C1A462FFABF}"
 	ProjectSection(SolutionItems) = preProject

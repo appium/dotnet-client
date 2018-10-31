@@ -1,18 +1,18 @@
-﻿using OpenQA.Selenium.Appium.Interfaces;
+﻿using System.Collections.Generic;
 using OpenQA.Selenium.Appium.iOS;
+using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.PageObjects.Attributes;
-using System.Collections.Generic;
 
-namespace Appium.Integration.Tests.PageObjects
+namespace Appium.Net.Integration.Tests.PageObjects
 {
-    public class IOSPageObjectChecksAttributesForNativeIOSApp
+    public class IosPageObjectChecksAttributesForNativeIosApp
     {
         /////////////////////////////////////////////////////////////////
 
         [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[0]")]
-        private IMobileElement<IOSElement> testMobileElement;
+        private IMobileElement<IOSElement> _testMobileElement;
 
-        [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[0]")] private IList<IOSElement> testMobileElements;
+        [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[0]")] private IList<IOSElement> _testMobileElements;
 
         [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[0]")]
         private IMobileElement<IOSElement> TestMobileElement { set; get; }
@@ -23,11 +23,11 @@ namespace Appium.Integration.Tests.PageObjects
         [FindsByIOSUIAutomation(ID = "FakeID", Priority = 1)]
         [FindsByIOSUIAutomation(ClassName = "UIAUAIFakeClass", Priority = 2)]
         [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 3)]
-        private IMobileElement<IOSElement> testMultipleElement;
+        private IMobileElement<IOSElement> _testMultipleElement;
 
         [FindsByIOSUIAutomation(ID = "FakeID", Priority = 1)]
         [FindsByIOSUIAutomation(ClassName = "UIAUAIFakeClass", Priority = 2)]
-        [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 3)] private IList<IOSElement> testMultipleElements;
+        [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 3)] private IList<IOSElement> _testMultipleElements;
 
 
         /////////////////////////////////////////////////////////////////
@@ -45,12 +45,12 @@ namespace Appium.Integration.Tests.PageObjects
         [MobileFindsByAll(IOS = true)] [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 1)]
         //Equals method of RemoteWebElement is not consistent for mobile apps
         //The second selector won't be added till the problem is worked out
-        private IMobileElement<IOSElement> matchedToAllLocatorsElement;
+        private IMobileElement<IOSElement> _matchedToAllLocatorsElement;
 
         [MobileFindsByAll(IOS = true)] [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 1)]
         //Equals method of RemoteWebElement is not consistent for mobile apps
         //The second selector won't be added till the problem is worked out
-        private IList<IOSElement> matchedToAllLocatorsElements;
+        private IList<IOSElement> _matchedToAllLocatorsElements;
 
         /////////////////////////////////////////////////////////////////
 
@@ -69,12 +69,12 @@ namespace Appium.Integration.Tests.PageObjects
         //////////////////////////////////////////////////////////////////////////
         public string GetMobileElementText()
         {
-            return testMobileElement.Text;
+            return _testMobileElement.Text;
         }
 
         public int GetMobileElementSize()
         {
-            return testMobileElements.Count;
+            return _testMobileElements.Count;
         }
 
         public string GetMobileElementPropertyText()
@@ -90,12 +90,12 @@ namespace Appium.Integration.Tests.PageObjects
         //////////////////////////////////////////////////////////////////////////
         public string GetMultipleFindByElementText()
         {
-            return testMultipleElement.Text;
+            return _testMultipleElement.Text;
         }
 
         public int GetMultipleFindByElementSize()
         {
-            return testMultipleElements.Count;
+            return _testMultipleElements.Count;
         }
 
         public string GetMultipleFindByElementPropertyText()
@@ -111,12 +111,12 @@ namespace Appium.Integration.Tests.PageObjects
         //////////////////////////////////////////////////////////////////////////
         public string GetMatchedToAllLocatorsElementText()
         {
-            return matchedToAllLocatorsElement.Text;
+            return _matchedToAllLocatorsElement.Text;
         }
 
         public int GetMatchedToAllLocatorsElementSize()
         {
-            return matchedToAllLocatorsElements.Count;
+            return _matchedToAllLocatorsElements.Count;
         }
 
         public string GetMatchedToAllLocatorsElementPropertyText()

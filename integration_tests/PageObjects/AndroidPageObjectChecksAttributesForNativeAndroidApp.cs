@@ -1,17 +1,17 @@
-﻿using OpenQA.Selenium.Appium.Android;
+﻿using System.Collections.Generic;
+using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.PageObjects.Attributes;
-using System.Collections.Generic;
 
-namespace Appium.Integration.Tests.PageObjects
+namespace Appium.Net.Integration.Tests.PageObjects
 {
     public class AndroidPageObjectChecksAttributesForNativeAndroidApp
     {
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/text1\")")]
-        private IMobileElement<AndroidElement> testMobileElement;
+        private IMobileElement<AndroidElement> _testMobileElement;
 
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/text1\")")]
-        private IList<AndroidElement> testMobileElements;
+        private IList<AndroidElement> _testMobileElements;
 
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/text1\")")]
         private IMobileElement<AndroidElement> TestMobileElement { set; get; }
@@ -22,18 +22,18 @@ namespace Appium.Integration.Tests.PageObjects
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/fakeId\")",
             Priority = 1)] [FindsByAndroidUIAutomator(ID = "FakeId", Priority = 2)]
         [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 3)]
-        private IMobileElement<AndroidElement> testMultipleElement;
+        private IMobileElement<AndroidElement> _testMultipleElement;
 
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/fakeId\")",
             Priority = 1)] [FindsByAndroidUIAutomator(ID = "FakeId", Priority = 2)]
         [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 3)]
-        private IList<AndroidElement> testMultipleElements;
+        private IList<AndroidElement> _testMultipleElements;
 
 
         /////////////////////////////////////////////////////////////////
-        private object testMultipleFindByElementProperty;
+        private object _testMultipleFindByElementProperty;
 
-        private object testMultipleFindByElementsProperty;
+        private object _testMultipleFindByElementsProperty;
         /////////////////////////////////////////////////////////////////
 
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/fakeId\")",
@@ -42,8 +42,8 @@ namespace Appium.Integration.Tests.PageObjects
         [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 3)]
         private IMobileElement<AndroidElement> TestMultipleFindByElementProperty
         {
-            set { testMultipleFindByElementProperty = value; }
-            get { return (IMobileElement<AndroidElement>) testMultipleFindByElementProperty; }
+            set { _testMultipleFindByElementProperty = value; }
+            get { return (IMobileElement<AndroidElement>) _testMultipleFindByElementProperty; }
         }
 
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/fakeId\")",
@@ -52,8 +52,8 @@ namespace Appium.Integration.Tests.PageObjects
         [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 3)]
         private IList<AndroidElement> MultipleFindByElementsProperty
         {
-            set { testMultipleFindByElementsProperty = value; }
-            get { return (IList<AndroidElement>) testMultipleFindByElementsProperty; }
+            set { _testMultipleFindByElementsProperty = value; }
+            get { return (IList<AndroidElement>) _testMultipleFindByElementsProperty; }
         }
 
         [MobileFindsBySequence(Android = true)]
@@ -61,19 +61,19 @@ namespace Appium.Integration.Tests.PageObjects
             Priority = 1)]
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/list\")",
             Priority = 2)] [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 3)]
-        private IMobileElement<AndroidElement> foundByChainedSearchElement;
+        private IMobileElement<AndroidElement> _foundByChainedSearchElement;
 
         [MobileFindsBySequence(Android = true)]
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/content\")",
             Priority = 1)]
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/list\")",
             Priority = 2)] [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 3)]
-        private IList<AndroidElement> foundByChainedSearchElements;
+        private IList<AndroidElement> _foundByChainedSearchElements;
 
         /////////////////////////////////////////////////////////////////
-        private object foundByChainedSearchElementProperty;
+        private object _foundByChainedSearchElementProperty;
 
-        private object foundByChainedSearchElementsProperty;
+        private object _foundByChainedSearchElementsProperty;
         /////////////////////////////////////////////////////////////////
 
         [MobileFindsBySequence(Android = true)]
@@ -84,8 +84,8 @@ namespace Appium.Integration.Tests.PageObjects
         [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 3)]
         private IMobileElement<AndroidElement> TestFoundByChainedSearchElementProperty
         {
-            set { foundByChainedSearchElementProperty = value; }
-            get { return (IMobileElement<AndroidElement>) foundByChainedSearchElementProperty; }
+            set { _foundByChainedSearchElementProperty = value; }
+            get { return (IMobileElement<AndroidElement>) _foundByChainedSearchElementProperty; }
         }
 
         [MobileFindsBySequence(Android = true)]
@@ -96,26 +96,26 @@ namespace Appium.Integration.Tests.PageObjects
         [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 3)]
         private IList<AndroidElement> TestFoundByChainedSearchElementsProperty
         {
-            set { foundByChainedSearchElementsProperty = value; }
-            get { return (IList<AndroidElement>) foundByChainedSearchElementsProperty; }
+            set { _foundByChainedSearchElementsProperty = value; }
+            get { return (IList<AndroidElement>) _foundByChainedSearchElementsProperty; }
         }
 
         [MobileFindsByAll(Android = true)] [FindsByAndroidUIAutomator(ID = "android:id/text1", Priority = 1)]
         //[FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 2)]
         //Equals method of RemoteWebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
-        private IMobileElement<AndroidElement> matchedToAllLocatorsElement;
+        private IMobileElement<AndroidElement> _matchedToAllLocatorsElement;
 
         [MobileFindsByAll(Android = true)] [FindsByAndroidUIAutomator(ID = "android:id/text1", Priority = 1)]
         //[FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 2)]
         //Equals method of RemoteWebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
-        private IList<AndroidElement> matchedToAllLocatorsElements;
+        private IList<AndroidElement> _matchedToAllLocatorsElements;
 
         /////////////////////////////////////////////////////////////////
-        private object matchedToAllLocatorsElementProperty;
+        private object _matchedToAllLocatorsElementProperty;
 
-        private object matchedToAllLocatorsElementsProperty;
+        private object _matchedToAllLocatorsElementsProperty;
         /////////////////////////////////////////////////////////////////
 
         [MobileFindsByAll(Android = true)]
@@ -125,8 +125,8 @@ namespace Appium.Integration.Tests.PageObjects
         //The second selector will be commented till the problem is worked out
         private IMobileElement<AndroidElement> TestMatchedToAllLocatorsElementProperty
         {
-            set { matchedToAllLocatorsElementProperty = value; }
-            get { return (IMobileElement<AndroidElement>) matchedToAllLocatorsElementProperty; }
+            set { _matchedToAllLocatorsElementProperty = value; }
+            get { return (IMobileElement<AndroidElement>) _matchedToAllLocatorsElementProperty; }
         }
 
         [MobileFindsByAll(Android = true)]
@@ -136,19 +136,19 @@ namespace Appium.Integration.Tests.PageObjects
         //The second selector will be commented till the problem is worked out
         private IList<AndroidElement> TestMatchedToAllLocatorsElementsProperty
         {
-            set { matchedToAllLocatorsElementsProperty = value; }
-            get { return (IList<AndroidElement>) matchedToAllLocatorsElementsProperty; }
+            set { _matchedToAllLocatorsElementsProperty = value; }
+            get { return (IList<AndroidElement>) _matchedToAllLocatorsElementsProperty; }
         }
 
         //////////////////////////////////////////////////////////////////////////
         public string GetMobileElementText()
         {
-            return testMobileElement.Text;
+            return _testMobileElement.Text;
         }
 
         public int GetMobileElementSize()
         {
-            return testMobileElements.Count;
+            return _testMobileElements.Count;
         }
 
         public string GetMobileElementPropertyText()
@@ -164,12 +164,12 @@ namespace Appium.Integration.Tests.PageObjects
         //////////////////////////////////////////////////////////////////////////
         public string GetMultipleFindByElementText()
         {
-            return testMultipleElement.Text;
+            return _testMultipleElement.Text;
         }
 
         public int GetMultipleFindByElementSize()
         {
-            return testMultipleElements.Count;
+            return _testMultipleElements.Count;
         }
 
         public string GetMultipleFindByElementPropertyText()
@@ -185,12 +185,12 @@ namespace Appium.Integration.Tests.PageObjects
         //////////////////////////////////////////////////////////////////////////
         public string GetFoundByChainedSearchElementText()
         {
-            return foundByChainedSearchElement.Text;
+            return _foundByChainedSearchElement.Text;
         }
 
         public int GetFoundByChainedSearchElementSize()
         {
-            return foundByChainedSearchElements.Count;
+            return _foundByChainedSearchElements.Count;
         }
 
         public string GetFoundByChainedSearchElementPropertyText()
@@ -206,12 +206,12 @@ namespace Appium.Integration.Tests.PageObjects
         //////////////////////////////////////////////////////////////////////////
         public string GetMatchedToAllLocatorsElementText()
         {
-            return matchedToAllLocatorsElement.Text;
+            return _matchedToAllLocatorsElement.Text;
         }
 
         public int GetMatchedToAllLocatorsElementSize()
         {
-            return matchedToAllLocatorsElements.Count;
+            return _matchedToAllLocatorsElements.Count;
         }
 
         public string GetMatchedToAllLocatorsElementPropertyText()

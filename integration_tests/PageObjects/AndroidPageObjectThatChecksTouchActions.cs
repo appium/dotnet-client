@@ -3,26 +3,26 @@ using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.MultiTouch;
 using OpenQA.Selenium.Appium.PageObjects.Attributes;
 
-namespace Appium.Integration.Tests.PageObjects
+namespace Appium.Net.Integration.Tests.PageObjects
 {
     class AndroidPageObjectThatChecksTouchActions
     {
-        [FindsByAndroidUIAutomator(Accessibility = "Accessibility")] private IWebElement accessibility;
+        [FindsByAndroidUIAutomator(Accessibility = "Accessibility")] private IWebElement _accessibility;
 
-        [FindsByAndroidUIAutomator(Accessibility = "Custom View")] private IWebElement customView;
+        [FindsByAndroidUIAutomator(Accessibility = "Custom View")] private IWebElement _customView;
 
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().clickable(true)")]
-        private IWebElement clickable;
+        private IWebElement _clickable;
 
         public void CheckTap(IPerformsTouchActions performer)
         {
-            TouchAction t = new TouchAction(performer);
-            t.Tap(accessibility);
+            var t = new TouchAction(performer);
+            t.Tap(_accessibility);
             t.Perform();
 
-            MultiAction m = new MultiAction(performer);
-            m.Add(new TouchAction(performer).Tap(customView));
-            m.Add(new TouchAction(performer).Tap(clickable));
+            var m = new MultiAction(performer);
+            m.Add(new TouchAction(performer).Tap(_customView));
+            m.Add(new TouchAction(performer).Tap(_clickable));
             m.Perform();
         }
     }
