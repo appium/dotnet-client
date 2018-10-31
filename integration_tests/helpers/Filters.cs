@@ -1,26 +1,26 @@
 ﻿using System.Collections.Generic;
 using OpenQA.Selenium;
 
-namespace Appium.Integration.Tests.Helpers
+namespace Appium.Net.Integration.Tests.helpers
 {
     public class Filters
     {
-        public static IWebElement FirstWithName<W>(IList<W> els, string name) where W : IWebElement
+        public static IWebElement FirstWithName<TW>(IList<TW> els, string name) where TW : IWebElement
         {
-            for (int i = 0; i < els.Count; i++)
+            for (var i = 0; i < els.Count; i++)
             {
                 if (els[i].GetAttribute("name") == name)
                 {
-                    return (W) els[i];
+                    return (TW) els[i];
                 }
             }
             return null;
         }
 
-        public static IList<IWebElement> FilterWithName<W>(IList<W> els, string name) where W : IWebElement
+        public static IList<IWebElement> FilterWithName<TW>(IList<TW> els, string name) where TW : IWebElement
         {
             var res = new List<IWebElement>();
-            for (int i = 0; i < els.Count; i++)
+            for (var i = 0; i < els.Count; i++)
             {
                 if (els[i].GetAttribute("name") == name)
                 {
@@ -30,10 +30,10 @@ namespace Appium.Integration.Tests.Helpers
             return res;
         }
 
-        public static IList<IWebElement> FilterDisplayed<W>(IList<W> els) where W : IWebElement
+        public static IList<IWebElement> FilterDisplayed<TW>(IList<TW> els) where TW : IWebElement
         {
             var res = new List<IWebElement>();
-            for (int i = 0; i < els.Count; i++)
+            for (var i = 0; i < els.Count; i++)
             {
                 IWebElement el = els[i];
                 if (els[i].Displayed)

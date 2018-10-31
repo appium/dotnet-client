@@ -7,10 +7,8 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-namespace Appium.Integration.Tests.Properties {
-    using System;
-    
-    
+
+namespace Appium.Net.Integration.Tests.Properties {
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -21,7 +19,7 @@ namespace Appium.Integration.Tests.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -35,11 +33,10 @@ namespace Appium.Integration.Tests.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources
-                        .ResourceManager("integration_tests.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("integration_tests.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +48,7 @@ namespace Appium.Integration.Tests.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +60,7 @@ namespace Appium.Integration.Tests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] ApiDemos_debug {
+        public static byte[] ApiDemos_debug {
             get {
                 object obj = ResourceManager.GetObject("ApiDemos_debug", resourceCulture);
                 return ((byte[])(obj));
@@ -73,7 +70,7 @@ namespace Appium.Integration.Tests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] IntentExample {
+        public static byte[] IntentExample {
             get {
                 object obj = ResourceManager.GetObject("IntentExample", resourceCulture);
                 return ((byte[])(obj));
@@ -83,7 +80,7 @@ namespace Appium.Integration.Tests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] PathToLinuxNode {
+        public static byte[] PathToLinuxNode {
             get {
                 object obj = ResourceManager.GetObject("PathToLinuxNode", resourceCulture);
                 return ((byte[])(obj));
@@ -93,7 +90,7 @@ namespace Appium.Integration.Tests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] PathToMacOSNode {
+        public static byte[] PathToMacOSNode {
             get {
                 object obj = ResourceManager.GetObject("PathToMacOSNode", resourceCulture);
                 return ((byte[])(obj));
@@ -103,7 +100,7 @@ namespace Appium.Integration.Tests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] PathToWindowsNode {
+        public static byte[] PathToWindowsNode {
             get {
                 object obj = ResourceManager.GetObject("PathToWindowsNode", resourceCulture);
                 return ((byte[])(obj));
@@ -113,9 +110,9 @@ namespace Appium.Integration.Tests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] selendroid_test_app_0_10_0 {
+        public static byte[] TestApp_app {
             get {
-                object obj = ResourceManager.GetObject("selendroid_test_app_0_10_0", resourceCulture);
+                object obj = ResourceManager.GetObject("TestApp_app", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -123,9 +120,9 @@ namespace Appium.Integration.Tests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] TestApp7_1_app {
+        public static byte[] UICatalog_app {
             get {
-                object obj = ResourceManager.GetObject("TestApp7_1_app", resourceCulture);
+                object obj = ResourceManager.GetObject("UICatalog_app", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -133,9 +130,9 @@ namespace Appium.Integration.Tests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] UICatalog7_1_app {
+        public static byte[] vodqa {
             get {
-                object obj = ResourceManager.GetObject("UICatalog7_1_app", resourceCulture);
+                object obj = ResourceManager.GetObject("vodqa", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -143,9 +140,9 @@ namespace Appium.Integration.Tests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] WebViewApp7_1_app {
+        public static byte[] WebViewApp_app {
             get {
-                object obj = ResourceManager.GetObject("WebViewApp7_1_app", resourceCulture);
+                object obj = ResourceManager.GetObject("WebViewApp_app", resourceCulture);
                 return ((byte[])(obj));
             }
         }

@@ -1,75 +1,68 @@
 ﻿using System;
-using Appium.Integration.Tests.Helpers;
+using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Enums;
 
-namespace Appium.Integration.Tests.Android
+namespace Appium.Net.Integration.Tests.Android
 {
     [TestFixture]
     public class SessionDetailTest
     {
         
-        private AndroidDriver<IWebElement> driver;
+        private AndroidDriver<IWebElement> _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            var capabilities = Env.isSauce()
-                ? Caps.getAndroid501Caps(Apps.get("selendroidTestApp"))
-                : Caps.getAndroid19Caps(Apps.get("selendroidTestApp"));
-            if (Env.isSauce())
-            {
-                capabilities.AddAdditionalCapability("username", Env.getEnvVar("SAUCE_USERNAME"));
-                capabilities.AddAdditionalCapability("accessKey", Env.getEnvVar("SAUCE_ACCESS_KEY"));
-                capabilities.AddAdditionalCapability("name", "android - complex");
-                capabilities.AddAdditionalCapability("tags", new[] {"sample"});
-            }
-            Uri serverUri = Env.isSauce() ? AppiumServers.sauceURI : AppiumServers.LocalServiceURIAndroid;
-            driver = new AndroidDriver<IWebElement>(serverUri, capabilities, Env.INIT_TIMEOUT_SEC);
-            driver.Manage().Timeouts().ImplicitWait = Env.IMPLICIT_TIMEOUT_SEC;
+            var capabilities = Env.ServerIsRemote()
+                ? Caps.GetAndroidCaps(Apps.Get("selendroidTestApp"))
+                : Caps.GetAndroidCaps(Apps.Get("selendroidTestApp"));
+            var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
+            _driver = new AndroidDriver<IWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
         
         [SetUp]
         public void SetUp()
         {
-            driver?.LaunchApp();
+            _driver?.LaunchApp();
         }
 
         [TearDown]
-        public void TearDowwn()
+        public void TearDown()
         {
-            driver?.CloseApp();
+            _driver?.CloseApp();
         }
         
         [Test]
         public void NativeAppSessionDetails()
         {
-            Assert.NotNull(driver.GetSessionDetail("deviceUDID"));
-            Assert.Null(driver.GetSessionDetail("fakeDetail"));
-            Assert.AreEqual(driver.PlatformName, MobilePlatform.Android);
-            Assert.False(driver.IsBrowser);
+            Assert.NotNull(_driver.GetSessionDetail("deviceUDID"));
+            Assert.Null(_driver.GetSessionDetail("fakeDetail"));
+            Assert.AreEqual(_driver.PlatformName, MobilePlatform.Android);
+            Assert.False(_driver.IsBrowser);
         }
         
         [Test]
         public void WebAppSessionDetails()
         {
-            driver.StartActivity("io.selendroid.testapp", ".WebViewActivity");
-            var contexts = driver.Contexts;
+            _driver.StartActivity("io.selendroid.testapp", ".WebViewActivity");
+            var contexts = _driver.Contexts;
             foreach (var t in contexts)
             {
                 Console.WriteLine(t);
                 if (!t.Contains("WEBVIEW")) continue;
-                driver.Context = t;
+                _driver.Context = t;
                 break;
             }
             
-            Assert.Null(driver.GetSessionDetail("deviceUDID"));
-            Assert.True(MobilePlatform.Android.IndexOf(driver.PlatformName, 
+            Assert.Null(_driver.GetSessionDetail("deviceUDID"));
+            Assert.True(MobilePlatform.Android.IndexOf(_driver.PlatformName, 
                             StringComparison.OrdinalIgnoreCase) >= 0);
-            Assert.Null(driver.AutomationName);
-            Assert.True(driver.IsBrowser);
+            Assert.Null(_driver.AutomationName);
+            Assert.True(_driver.IsBrowser);
         }
     }
 }
