@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Appium.Net", "appium-dotnet-driver\Appium.Net.csproj", "{A54D6086-3606-4E81-8B89-5C0F61638DCF}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DD79BA21-B485-411E-B132-0C1A462FFABF}"
 	ProjectSection(SolutionItems) = preProject
 		..\.travis.yml = ..\.travis.yml
@@ -12,20 +10,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Appium.Net.Integration.Tests", "..\test\integration\Appium.Net.Integration.Tests.csproj", "{278EE5EC-9414-43D8-B8C0-E7B4F8C8D283}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Appium.Net", "Appium.Net\Appium.Net.csproj", "{F83BBAB0-9359-45AF-BADC-6A338EF668F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A54D6086-3606-4E81-8B89-5C0F61638DCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A54D6086-3606-4E81-8B89-5C0F61638DCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A54D6086-3606-4E81-8B89-5C0F61638DCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A54D6086-3606-4E81-8B89-5C0F61638DCF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{278EE5EC-9414-43D8-B8C0-E7B4F8C8D283}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{278EE5EC-9414-43D8-B8C0-E7B4F8C8D283}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{278EE5EC-9414-43D8-B8C0-E7B4F8C8D283}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{278EE5EC-9414-43D8-B8C0-E7B4F8C8D283}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F83BBAB0-9359-45AF-BADC-6A338EF668F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F83BBAB0-9359-45AF-BADC-6A338EF668F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F83BBAB0-9359-45AF-BADC-6A338EF668F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F83BBAB0-9359-45AF-BADC-6A338EF668F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
