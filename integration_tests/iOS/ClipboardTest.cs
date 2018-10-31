@@ -9,7 +9,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.iOS;
 
-namespace Appium.Net.Integration.Tests.iOS
+namespace Appium.Net.Integration.Tests.IOS
 {
     [TestFixture(Category = "Device")]
     public class ClipboardTest
