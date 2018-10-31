@@ -16,7 +16,7 @@
     <PackageReference Include="Selenium.WebDriver" Version="3.14.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\appium-dotnet-driver\appium-dotnet-driver.csproj" />
+    <ProjectReference Include="..\..\src\appium-dotnet-driver\Appium.Net.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">

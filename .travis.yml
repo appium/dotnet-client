@@ -1,3 +1,3 @@
 language: csharp
-solution: appium-dotnet-driver.sln
+solution: Appium.Net.sln
 os: osx
