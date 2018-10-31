@@ -33,7 +33,7 @@ namespace Appium.Net.Integration.Tests.Android
         }
 
         [Test]
-        public void ConnectionTest()
+        public void NetworkConnectionTest()
         {
             ((AndroidDriver<IWebElement>) _driver).ConnectionType = ConnectionType.AirplaneMode;
             Assert.AreEqual(ConnectionType.AirplaneMode, ((AndroidDriver<IWebElement>) _driver).ConnectionType);

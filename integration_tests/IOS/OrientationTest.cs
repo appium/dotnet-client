@@ -30,7 +30,7 @@ namespace Appium.Net.Integration.Tests.IOS
         }
 
         [Test]
-        public void OrientationTest()
+        public void DeviceOrientationTest()
         {
             var rotatable = ((IRotatable) _driver);
             rotatable.Orientation = ScreenOrientation.Landscape;
