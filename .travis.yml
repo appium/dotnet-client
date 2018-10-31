@@ -1,3 +1,3 @@
 language: csharp
-solution: Appium.Net.sln
+solution: \src\Appium.Net.sln
 os: osx
