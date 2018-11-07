@@ -1,0 +1,268 @@
+﻿using System;
+using System.IO;
+using System.Net;
+using System.Threading;
+using Appium.Net.Integration.Tests.Properties;
+using NUnit.Framework;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Appium;
+using OpenQA.Selenium.Appium.Enums;
+using OpenQA.Selenium.Appium.Service;
+using OpenQA.Selenium.Appium.Service.Options;
+
+namespace Appium.Net.Integration.Tests.ServerTests
+{
+    [TestFixture]
+    public class AppiumLocalServerLaunchingTest
+    {
+        private string _pathToCustomizedAppiumJs;
+        private string _testIp;
+
+        [OneTimeSetUp]
+        public void BeforeAll()
+        {
+            byte[] bytes = null;
+
+            var isWindows = Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows);
+            var isMacOs = Platform.CurrentPlatform.IsPlatformType(PlatformType.Mac);
+            var isLinux = Platform.CurrentPlatform.IsPlatformType(PlatformType.Linux);
+
+            IPHostEntry host;
+            var hostName = Dns.GetHostName();
+            host = Dns.GetHostEntry(hostName);
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily.ToString() == "InterNetwork")
+                {
+                    _testIp = ip.ToString();
+                    break;
+                }
+            }
+            Console.WriteLine(_testIp);
+
+            if (isWindows)
+            {
+                bytes = Resources.PathToWindowsNode;
+                _pathToCustomizedAppiumJs = System.Text.Encoding.UTF8.GetString(bytes);
+                return;
+            }
+            if (isMacOs)
+            {
+                bytes = Resources.PathToMacOSNode;
+                _pathToCustomizedAppiumJs = System.Text.Encoding.UTF8.GetString(bytes);
+                return;
+            }
+            if (isLinux)
+            {
+                bytes = Resources.PathToLinuxNode;
+                _pathToCustomizedAppiumJs = System.Text.Encoding.UTF8.GetString(bytes);
+                return;
+            }
+        }
+
+        [Test]
+        public void CheckAbilityToBuildDefaultService()
+        {
+            var service = AppiumLocalService.BuildDefaultService();
+            try
+            {
+                service.Start();
+                Assert.AreEqual(true, service.IsRunning);
+            }
+            finally
+            {
+                service.Dispose();
+            }
+        }
+
+        [Test]
+        public void CheckAbilityToBuildServiceUsingNodeDefinedInProperties()
+        {
+            AppiumLocalService service = null;
+            try
+            {
+                var definedNode = _pathToCustomizedAppiumJs;
+                Environment.SetEnvironmentVariable(AppiumServiceConstants.AppiumBinaryPath, definedNode);
+                service = AppiumLocalService.BuildDefaultService();
+                service.Start();
+                Assert.AreEqual(true, service.IsRunning);
+            }
+            finally
+            {
+                service?.Dispose();
+                Environment.SetEnvironmentVariable(AppiumServiceConstants.AppiumBinaryPath, string.Empty);
+            }
+        }
+
+        [Test]
+        public void CheckAbilityToBuildServiceUsingNodeDefinedExplicitly()
+        {
+            AppiumLocalService service = null;
+            try
+            {
+                service = new AppiumServiceBuilder().WithAppiumJS(new FileInfo(_pathToCustomizedAppiumJs)).Build();
+                service.Start();
+                Assert.AreEqual(true, service.IsRunning);
+            }
+            finally
+            {
+                service?.Dispose();
+            }
+        }
+
+        [Test]
+        public void CheckAbilityToStartServiceOnAFreePort()
+        {
+            AppiumLocalService service = null;
+            try
+            {
+                service = new AppiumServiceBuilder().UsingAnyFreePort().Build();
+                service.Start();
+                Assert.AreEqual(true, service.IsRunning);
+            }
+            finally
+            {
+                service?.Dispose();
+            }
+        }
+
+        [Test]
+        public void CheckStartingOfAServiceWithNonLocalhostIp()
+        {
+            var service = new AppiumServiceBuilder().WithIPAddress(_testIp).UsingPort(4000).Build();
+            try
+            {
+                service.Start();
+                Assert.IsTrue(service.IsRunning);
+            }
+            finally
+            {
+                service.Dispose();
+            }
+        }
+
+        [Test]
+        public void CheckAbilityToStartServiceUsingFlags()
+        {
+            AppiumLocalService service = null;
+            var args = new OptionCollector().AddArguments(GeneralOptionList.CallbackAddress(_testIp))
+                .AddArguments(GeneralOptionList.OverrideSession());
+            try
+            {
+                service = new AppiumServiceBuilder().WithArguments(args).Build();
+                service.Start();
+                Assert.IsTrue(service.IsRunning);
+            }
+            finally
+            {
+                service?.Dispose();
+            }
+        }
+
+        [Test]
+        public void CheckAbilityToStartServiceUsingCapabilities()
+        {
+            var capabilities = new AppiumOptions();
+            capabilities.AddAdditionalCapability(MobileCapabilityType.PlatformName, "Android");
+            capabilities.AddAdditionalCapability(MobileCapabilityType.FullReset, true);
+            capabilities.AddAdditionalCapability(MobileCapabilityType.NewCommandTimeout, 60);
+            capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppPackage, "io.appium.android.apis");
+            capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppActivity, ".view.WebView1");
+
+            var args = new OptionCollector().AddCapabilities(capabilities);
+            AppiumLocalService service = null;
+            try
+            {
+                service = new AppiumServiceBuilder().WithArguments(args).Build();
+                service.Start();
+                Assert.IsTrue(service.IsRunning);
+            }
+            finally
+            {
+                service?.Dispose();
+            }
+        }
+
+        [Test]
+        public void CheckAbilityToStartServiceUsingCapabilitiesAndFlags()
+        {
+            var capabilities = new AppiumOptions();
+            capabilities.AddAdditionalCapability(MobileCapabilityType.PlatformName, "Android");
+            capabilities.AddAdditionalCapability(MobileCapabilityType.FullReset, true);
+            capabilities.AddAdditionalCapability(MobileCapabilityType.NewCommandTimeout, 60);
+            capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppPackage, "io.appium.android.apis");
+            capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppActivity, ".view.WebView1");
+
+            var args = new OptionCollector().AddCapabilities(capabilities)
+                .AddArguments(GeneralOptionList.CallbackAddress(_testIp))
+                .AddArguments(GeneralOptionList.OverrideSession());
+            AppiumLocalService service = null;
+            try
+            {
+                service = new AppiumServiceBuilder().WithArguments(args).Build();
+                service.Start();
+                Assert.IsTrue(service.IsRunning);
+            }
+            finally
+            {
+                service?.Dispose();
+            }
+        }
+
+        [Test]
+        public void CheckAbilityToShutDownService()
+        {
+            var service = AppiumLocalService.BuildDefaultService();
+            service.Start();
+            service.Dispose();
+            Assert.IsTrue(!service.IsRunning);
+        }
+
+        [Test]
+        public void CheckAbilityToStartAndShutDownFewServices()
+        {
+            var service1 = new AppiumServiceBuilder().UsingAnyFreePort().Build();
+            var service2 = new AppiumServiceBuilder().UsingAnyFreePort().Build();
+            var service3 = new AppiumServiceBuilder().UsingAnyFreePort().Build();
+            var service4 = new AppiumServiceBuilder().UsingAnyFreePort().Build();
+            service1.Start();
+            service2.Start();
+            service3.Start();
+            service4.Start();
+            service1.Dispose();
+            Thread.Sleep(1000);
+            service2.Dispose();
+            Thread.Sleep(1000);
+            service3.Dispose();
+            Thread.Sleep(1000);
+            service4.Dispose();
+            Assert.IsTrue(!service1.IsRunning);
+            Assert.IsTrue(!service2.IsRunning);
+            Assert.IsTrue(!service3.IsRunning);
+            Assert.IsTrue(!service4.IsRunning);
+        }
+
+
+        [Test]
+        public void CheckTheAbilityToDefineTheDesiredLogFile()
+        {
+            var log = new FileInfo("Log.txt");
+            var service = new AppiumServiceBuilder().WithLogFile(log).Build();
+            try
+            {
+                service.Start();
+                Assert.IsTrue(log.Exists);
+                Assert.IsTrue(log.Length > 0); //There should be Appium greeting messages
+            }
+            finally
+            {
+                service.Dispose();
+                if (log.Exists)
+                {
+                    File.Delete(log.FullName);
+                }
+                service.Dispose();
+            }
+        }
+    }
+}
