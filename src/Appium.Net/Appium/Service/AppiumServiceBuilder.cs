@@ -467,10 +467,10 @@ namespace OpenQA.Selenium.Appium.Service
                 CheckAppiumJS();
                 argList.Add($"\"{AppiumJS.FullName}\"");
                 argList.Add("--port");
-                argList.Add(Convert.ToString(this.Port));
+                argList.Add($"\"{Port}\"");
 
                 argList.Add("--address");
-                argList.Add(IpAddress);
+                argList.Add($"\"{IpAddress}\"");
 
                 if (PathToLogFile != null)
                 {
