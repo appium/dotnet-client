@@ -84,7 +84,7 @@ namespace OpenQA.Selenium.Appium.iOS
 
             if (imageBytes.Length > 0)
             {
-                Image.FromStream(new MemoryStream(imageBytes));
+                return Image.FromStream(new MemoryStream(imageBytes));
             }
 
             return null;
