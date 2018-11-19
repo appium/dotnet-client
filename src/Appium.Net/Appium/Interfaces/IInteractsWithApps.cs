@@ -40,10 +40,10 @@ namespace OpenQA.Selenium.Appium.Interfaces
         void ResetApp();
 
         /// <summary>
-        /// Backgrounds the current app for the given number of seconds.
+        /// Backgrounds the current app for the given number of seconds or deactivates app completely if negative number or null is given. 
         /// </summary>
-        /// <param name="seconds">a string containing the number of seconds.</param>
-        void BackgroundApp(int seconds);
+        /// <param name="seconds">a integer number containing the number of seconds or null.</param>
+        void BackgroundApp(int? seconds);
 
 
         /// <summary>
