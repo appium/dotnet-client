@@ -190,22 +190,22 @@ namespace OpenQA.Selenium.Appium
         }
 
         public void InstallApp(string appPath) =>
-            Execute(AppiumDriverCommand.InstallApp, PrepareArgument("appPath", appPath));
+            Execute(AppiumDriverCommand.InstallApp, PrepareArguments("appPath", appPath));
 
         public void RemoveApp(string appId) =>
-            Execute(AppiumDriverCommand.RemoveApp, PrepareArgument("appId", appId));
+            Execute(AppiumDriverCommand.RemoveApp, PrepareArguments("appId", appId));
 
         public bool IsAppInstalled(string bundleId) =>
             Convert.ToBoolean(Execute(AppiumDriverCommand.IsAppInstalled,
-                PrepareArgument("bundleId", bundleId)).Value.ToString());
+                PrepareArguments("bundleId", bundleId)).Value.ToString());
 
         public byte[] PullFile(string pathOnDevice) =>
             Convert.FromBase64String(Execute(AppiumDriverCommand.PullFile,
-                PrepareArgument("path", pathOnDevice)).Value.ToString());
+                PrepareArguments("path", pathOnDevice)).Value.ToString());
 
         public byte[] PullFolder(string remotePath) =>
             Convert.FromBase64String(Execute(AppiumDriverCommand.PullFolder,
-                PrepareArgument("path", remotePath)).Value.ToString());
+                PrepareArguments("path", remotePath)).Value.ToString());
 
         public void LaunchApp() => ((IExecuteMethod) this).Execute(AppiumDriverCommand.LaunchApp);
 
@@ -213,9 +213,13 @@ namespace OpenQA.Selenium.Appium
 
         public void ResetApp() => ((IExecuteMethod) this).Execute(AppiumDriverCommand.ResetApp);
 
-        public void BackgroundApp(int? seconds) =>
+        public void BackgroundApp() =>
+            Execute(AppiumDriverCommand.BackgroundApp,
+                PrepareArguments("seconds", PrepareArguments("timeout", null)));
+
+        public void BackgroundApp(int seconds) =>
             Execute(AppiumDriverCommand.BackgroundApp, 
-                PrepareArgument("seconds", PrepareArgument("timeout", seconds)));
+                PrepareArguments("seconds", PrepareArguments("timeout", seconds)));
 
         /// <summary>
         /// Get all defined Strings from an app for the specified language and
@@ -274,7 +278,7 @@ namespace OpenQA.Selenium.Appium
             }
             set
             {
-                var parameters = PrepareArgument("name", value);
+                var parameters = PrepareArguments("name", value);
                 Execute(AppiumDriverCommand.SetContext, parameters);
             }
         }
@@ -309,7 +313,7 @@ namespace OpenQA.Selenium.Appium
             }
             set
             {
-                var parameters = PrepareArgument("orientation", value.JSONWireProtocolString());
+                var parameters = PrepareArguments("orientation", value.JSONWireProtocolString());
                 Execute(AppiumDriverCommand.SetOrientation, parameters);
             }
         }
@@ -353,7 +357,7 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <param name="imeEngine">IME to activate</param>
         public void ActivateIMEEngine(string imeEngine) =>
-            Execute(AppiumDriverCommand.ActivateEngine, PrepareArgument("engine", imeEngine));
+            Execute(AppiumDriverCommand.ActivateEngine, PrepareArguments("engine", imeEngine));
 
         /// <summary>
         /// Deactivate the currently Active IME Engine on device
@@ -375,7 +379,7 @@ namespace OpenQA.Selenium.Appium
         public void PerformTouchAction(ITouchAction touchAction)
         {
             if (touchAction == null) return;
-            var parameters = PrepareArgument("actions", touchAction.GetParameters());
+            var parameters = PrepareArguments("actions", touchAction.GetParameters());
             Execute(AppiumDriverCommand.PerformTouchAction, parameters);
         }
 
@@ -432,7 +436,7 @@ namespace OpenQA.Selenium.Appium
 
         public string StartRecordingScreen(IScreenRecordingOptions options)
         {
-            var parameters = PrepareArgument("options", options.GetParameters());
+            var parameters = PrepareArguments("options", options.GetParameters());
             return Execute(AppiumDriverCommand.StartRecordingScreen, parameters).Value.ToString();
         }
 
@@ -440,7 +444,7 @@ namespace OpenQA.Selenium.Appium
 
         public string StopRecordingScreen(IScreenRecordingOptions options)
         {
-            var parameters = PrepareArgument("options", options.GetParameters());
+            var parameters = PrepareArguments("options", options.GetParameters());
             return Execute(AppiumDriverCommand.StopRecordingScreen, parameters).Value.ToString();
         }
 
@@ -468,9 +472,14 @@ namespace OpenQA.Selenium.Appium
             return result.AsReadOnly();
         }
 
-        protected static Dictionary<string, object> PrepareArgument(string param, object value)
+        protected static Dictionary<string, object> PrepareArguments(string param, object value, params object[] additionalParamsAndValues)
         {
-            return new Dictionary<string, object> { { param, value } };
+            var arguments = new Dictionary<string, object> { { param, value } };
+            for (int index = 0; index < additionalParamsAndValues.Length - 1; ++index) {
+                var key = additionalParamsAndValues[index++] as string ?? throw new InvalidOperationException();
+                arguments.Add(key, additionalParamsAndValues[index]);
+            }
+            return arguments;
         }
 
         #endregion
