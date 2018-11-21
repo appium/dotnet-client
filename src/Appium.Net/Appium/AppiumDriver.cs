@@ -23,8 +23,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Castle.Core.Internal;
-using OpenQA.Selenium.Appium.ScreenRecording;
 
 namespace OpenQA.Selenium.Appium
 {
@@ -192,22 +190,22 @@ namespace OpenQA.Selenium.Appium
         }
 
         public void InstallApp(string appPath) =>
-            Execute(AppiumDriverCommand.InstallApp, new Dictionary<string, object>() {["appPath"] = appPath});
+            Execute(AppiumDriverCommand.InstallApp, AppiumCommandExecutionHelper.PrepareArgument("appPath", appPath));
 
         public void RemoveApp(string appId) =>
-            Execute(AppiumDriverCommand.RemoveApp, new Dictionary<string, object>() {["appId"] = appId});
+            Execute(AppiumDriverCommand.RemoveApp, AppiumCommandExecutionHelper.PrepareArgument("appId", appId));
 
         public bool IsAppInstalled(string bundleId) =>
             Convert.ToBoolean(Execute(AppiumDriverCommand.IsAppInstalled,
-                new Dictionary<string, object>() {["bundleId"] = bundleId}).Value.ToString());
+                AppiumCommandExecutionHelper.PrepareArgument("bundleId", bundleId)).Value.ToString());
 
         public byte[] PullFile(string pathOnDevice) =>
             Convert.FromBase64String(Execute(AppiumDriverCommand.PullFile,
-                new Dictionary<string, object>() {["path"] = pathOnDevice}).Value.ToString());
+                AppiumCommandExecutionHelper.PrepareArgument("path", pathOnDevice)).Value.ToString());
 
         public byte[] PullFolder(string remotePath) =>
             Convert.FromBase64String(Execute(AppiumDriverCommand.PullFolder,
-                new Dictionary<string, object>() {["path"] = remotePath}).Value.ToString());
+                AppiumCommandExecutionHelper.PrepareArgument("path", remotePath)).Value.ToString());
 
         public void LaunchApp() => ((IExecuteMethod) this).Execute(AppiumDriverCommand.LaunchApp);
 
@@ -215,9 +213,13 @@ namespace OpenQA.Selenium.Appium
 
         public void ResetApp() => ((IExecuteMethod) this).Execute(AppiumDriverCommand.ResetApp);
 
+        public void BackgroundApp() =>
+            Execute(AppiumDriverCommand.BackgroundApp,
+                AppiumCommandExecutionHelper.PrepareArgument("seconds", AppiumCommandExecutionHelper.PrepareArgument("timeout", null)));
+
         public void BackgroundApp(int seconds) =>
             Execute(AppiumDriverCommand.BackgroundApp,
-                new Dictionary<string, object>() {["seconds"] = seconds});
+                AppiumCommandExecutionHelper.PrepareArgument("seconds", AppiumCommandExecutionHelper.PrepareArgument("timeout", seconds)));
 
         /// <summary>
         /// Get all defined Strings from an app for the specified language and
@@ -276,8 +278,7 @@ namespace OpenQA.Selenium.Appium
             }
             set
             {
-                var parameters = new Dictionary<string, object>();
-                parameters.Add("name", value);
+                var parameters = AppiumCommandExecutionHelper.PrepareArgument("name", value);
                 Execute(AppiumDriverCommand.SetContext, parameters);
             }
         }
@@ -312,8 +313,7 @@ namespace OpenQA.Selenium.Appium
             }
             set
             {
-                var parameters = new Dictionary<string, object>();
-                parameters.Add("orientation", value.JSONWireProtocolString());
+                var parameters = AppiumCommandExecutionHelper.PrepareArgument("orientation", value.JSONWireProtocolString());
                 Execute(AppiumDriverCommand.SetOrientation, parameters);
             }
         }
@@ -357,7 +357,7 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <param name="imeEngine">IME to activate</param>
         public void ActivateIMEEngine(string imeEngine) =>
-            Execute(AppiumDriverCommand.ActivateEngine, new Dictionary<string, object>() {["engine"] = imeEngine});
+            Execute(AppiumDriverCommand.ActivateEngine, AppiumCommandExecutionHelper.PrepareArgument("engine", imeEngine));
 
         /// <summary>
         /// Deactivate the currently Active IME Engine on device
@@ -379,8 +379,7 @@ namespace OpenQA.Selenium.Appium
         public void PerformTouchAction(ITouchAction touchAction)
         {
             if (touchAction == null) return;
-            var parameters = new Dictionary<string, object>();
-            parameters.Add("actions", touchAction.GetParameters());
+            var parameters = AppiumCommandExecutionHelper.PrepareArgument("actions", touchAction.GetParameters());
             Execute(AppiumDriverCommand.PerformTouchAction, parameters);
         }
 
@@ -437,7 +436,7 @@ namespace OpenQA.Selenium.Appium
 
         public string StartRecordingScreen(IScreenRecordingOptions options)
         {
-            var parameters = new Dictionary<string, object> {{"options", options.GetParameters()} };
+            var parameters = AppiumCommandExecutionHelper.PrepareArgument("options", options.GetParameters());
             return Execute(AppiumDriverCommand.StartRecordingScreen, parameters).Value.ToString();
         }
 
@@ -445,7 +444,7 @@ namespace OpenQA.Selenium.Appium
 
         public string StopRecordingScreen(IScreenRecordingOptions options)
         {
-            var parameters = new Dictionary<string, object> { { "options", options.GetParameters() } };
+            var parameters = AppiumCommandExecutionHelper.PrepareArgument("options", options.GetParameters());
             return Execute(AppiumDriverCommand.StopRecordingScreen, parameters).Value.ToString();
         }
 
