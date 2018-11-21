@@ -11,11 +11,12 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium.Interfaces
 {
-    public interface IFindsByIosClassChain<W> : IFindsByFluentSelector<W> where W : IWebElement
+    public interface IFindsByIosClassChain<out W> : IFindsByFluentSelector<W> where W : IWebElement
     {
         /// <summary>
         /// Finds the first of elements that match the IosClassChain selector supplied
@@ -29,6 +30,6 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// </summary>
         /// <param name="selector">an IosClassChain selector</param>
         /// <returns>ReadOnlyCollection of IWebElement objects so that you can interact with those objects</returns>
-        ReadOnlyCollection<W> FindElementsByIosClassChain(string selector);
+        IReadOnlyCollection<W> FindElementsByIosClassChain(string selector);
     }
 }

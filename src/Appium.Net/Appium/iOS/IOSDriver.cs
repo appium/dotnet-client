@@ -20,6 +20,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using OpenQA.Selenium.Appium.iOS.Interfaces;
+using System.Collections.Generic;
 
 namespace OpenQA.Selenium.Appium.iOS
 {
@@ -125,7 +126,7 @@ namespace OpenQA.Selenium.Appium.iOS
 
         public W FindElementByIosUIAutomation(string selector) => FindElement(MobileSelector.iOSAutomatoion, selector);
 
-        public ReadOnlyCollection<W> FindElementsByIosUIAutomation(string selector) =>
+        public IReadOnlyCollection<W> FindElementsByIosUIAutomation(string selector) =>
             FindElements(MobileSelector.iOSAutomatoion, selector);
 
         #endregion IFindByIosUIAutomation Members
@@ -134,7 +135,7 @@ namespace OpenQA.Selenium.Appium.iOS
 
         public W FindElementByIosClassChain(string selector) => FindElement(MobileSelector.iOSClassChain, selector);
 
-        public ReadOnlyCollection<W> FindElementsByIosClassChain(string selector) =>
+        public IReadOnlyCollection<W> FindElementsByIosClassChain(string selector) =>
             FindElements(MobileSelector.iOSClassChain, selector);
 
         #endregion IFindsByIosClassChain Members
@@ -144,7 +145,7 @@ namespace OpenQA.Selenium.Appium.iOS
         public W FindElementByIosNsPredicate(string selector) =>
             FindElement(MobileSelector.iOSPredicateString, selector);
 
-        public ReadOnlyCollection<W> FindElementsByIosNsPredicate(string selector) =>
+        public IReadOnlyCollection<W> FindElementsByIosNsPredicate(string selector) =>
             FindElements(MobileSelector.iOSPredicateString, selector);
 
         #endregion IFindsByIosNSPredicate Members

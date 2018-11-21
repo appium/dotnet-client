@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Appium.Enums;
+using System.Collections.Generic;
 
 namespace OpenQA.Selenium.Appium.Windows
 {
@@ -31,7 +32,7 @@ namespace OpenQA.Selenium.Appium.Windows
         public AppiumWebElement FindElementByWindowsUIAutomation(string selector) =>
             FindElement(MobileSelector.WindowsUIAutomation, selector);
 
-        public ReadOnlyCollection<AppiumWebElement> FindElementsByWindowsUIAutomation(string selector) =>
+        public IReadOnlyCollection<AppiumWebElement> FindElementsByWindowsUIAutomation(string selector) =>
             FindElements(MobileSelector.WindowsUIAutomation, selector);
 
         #endregion IFindByWindowsUIAutomation Members

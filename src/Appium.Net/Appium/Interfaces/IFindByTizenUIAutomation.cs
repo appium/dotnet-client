@@ -12,11 +12,12 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium.Interfaces
 {
-    public interface IFindByTizenUIAutomation<W> : IFindsByFluentSelector<W> where W : IWebElement
+    public interface IFindByTizenUIAutomation<out W> : IFindsByFluentSelector<W> where W : IWebElement
     {
         /// <summary>
         /// Finds the first of elements that match the Tizen UIAutomation selector supplied
@@ -30,6 +31,6 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// </summary>
         /// <param name="selector">a Tizen UIAutomation selector</param>
         /// <returns>ReadOnlyCollection of IWebElement objects so that you can interact with those objects</returns>
-        ReadOnlyCollection<W> FindElementsByTizenUIAutomation(string selector);
+        IReadOnlyCollection<W> FindElementsByTizenUIAutomation(string selector);
     }
 }

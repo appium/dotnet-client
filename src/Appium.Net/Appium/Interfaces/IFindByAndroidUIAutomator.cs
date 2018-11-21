@@ -12,11 +12,12 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium.Interfaces
 {
-    public interface IFindByAndroidUIAutomator<W> : IFindsByFluentSelector<W> where W : IWebElement
+    public interface IFindByAndroidUIAutomator<out W> : IFindsByFluentSelector<W> where W : IWebElement
     {
         /// <summary>
         /// Finds the first element in the page that matches the Android UIAutomator selector supplied
@@ -42,6 +43,6 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// ReadOnlyCollection<![CDATA[<IWebElement>]]> elem = driver.FindElementsByAndroidUIAutomator(elements())
         /// </code>
         /// </example>
-        ReadOnlyCollection<W> FindElementsByAndroidUIAutomator(string selector);
+        IReadOnlyCollection<W> FindElementsByAndroidUIAutomator(string selector);
     }
 }
