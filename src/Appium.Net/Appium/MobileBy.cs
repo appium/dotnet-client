@@ -37,6 +37,11 @@ namespace OpenQA.Selenium.Appium
             SearchingCriteriaName = searchingCriteriaName;
         }
 
+        /// <summary>
+        /// Find a single element.
+        /// </summary>
+        /// <param name="context">Context used to find the element.</param>
+        /// <returns>The element that matches</returns>
         public override IWebElement FindElement(ISearchContext context)
         {
             var finder = context as IFindsByFluentSelector<IWebElement>;
