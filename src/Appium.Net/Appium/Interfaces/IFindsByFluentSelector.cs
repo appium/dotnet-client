@@ -12,11 +12,12 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium.Interfaces
 {
-    public interface IFindsByFluentSelector<W> where W : IWebElement
+    public interface IFindsByFluentSelector<out W> where W : IWebElement
     {
         /// <summary>
         /// Method performs the searching for a single element by some selector defined by string
@@ -34,6 +35,6 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// <param name="by">is a string selector</param>
         /// <param name="value">is a value of the given selector</param>
         /// <returns>a list of elements</returns>
-        ReadOnlyCollection<W> FindElements(string selector, string value);
+        IReadOnlyCollection<W> FindElements(string selector, string value);
     }
 }

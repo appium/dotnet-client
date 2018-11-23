@@ -40,7 +40,7 @@ namespace OpenQA.Selenium.Appium.iOS
         public AppiumWebElement FindElementByIosUIAutomation(string selector) =>
             FindElement(MobileSelector.iOSAutomatoion, selector);
 
-        public ReadOnlyCollection<AppiumWebElement> FindElementsByIosUIAutomation(string selector) =>
+        public IReadOnlyCollection<AppiumWebElement> FindElementsByIosUIAutomation(string selector) =>
             FindElements(MobileSelector.iOSAutomatoion, selector);
 
         #endregion IFindByIosUIAutomation Members

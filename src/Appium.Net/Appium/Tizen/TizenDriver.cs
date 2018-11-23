@@ -17,6 +17,7 @@ using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Service;
 using OpenQA.Selenium.Remote;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium.Tizen
@@ -133,7 +134,7 @@ namespace OpenQA.Selenium.Appium.Tizen
         /// </summary>
         /// <param name="selector">a Tizen UIAutomation selector</param>
         /// <returns>ReadOnlyCollection of IWebElement objects so that you can interact with those objects</returns>
-        public ReadOnlyCollection<W> FindElementsByTizenUIAutomation(string selector) =>
+        public IReadOnlyCollection<W> FindElementsByTizenUIAutomation(string selector) =>
             FindElements(MobileSelector.TizenUIAutomation, selector);
 
         #endregion IFindByTizenUIAutomation Members
