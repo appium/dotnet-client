@@ -22,7 +22,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace OpenQA.Selenium.Appium
 {
@@ -206,6 +208,15 @@ namespace OpenQA.Selenium.Appium
         public byte[] PullFolder(string remotePath) =>
             Convert.FromBase64String(Execute(AppiumDriverCommand.PullFolder,
                 AppiumCommandExecutionHelper.PrepareArgument("path", remotePath)).Value.ToString());
+
+        public void PushFile(string pathOnDevice, string stringData) => AppiumCommandExecutionHelper.PushFile(this,
+            pathOnDevice, Convert.FromBase64String(Convert.ToBase64String(Encoding.UTF8.GetBytes(stringData))));
+
+        public void PushFile(string pathOnDevice, byte[] base64Data) =>
+            AppiumCommandExecutionHelper.PushFile(this, pathOnDevice, base64Data);
+
+        public void PushFile(string pathOnDevice, FileInfo file) =>
+            AppiumCommandExecutionHelper.PushFile(this, pathOnDevice, file);
 
         public void LaunchApp() => ((IExecuteMethod) this).Execute(AppiumDriverCommand.LaunchApp);
 
