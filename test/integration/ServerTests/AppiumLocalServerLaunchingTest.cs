@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading;
@@ -64,6 +65,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
         public void CheckAbilityToBuildDefaultService()
         {
             var service = AppiumLocalService.BuildDefaultService();
+
             try
             {
                 service.Start();
@@ -73,6 +75,27 @@ namespace Appium.Net.Integration.Tests.ServerTests
             {
                 service.Dispose();
             }
+        }
+
+        [Test]
+        public void CheckAbilityToLogServiceOutputToConsole()
+        {
+            var service = AppiumLocalService.BuildDefaultService();
+            var lines = new List<string>();
+
+            service.OutputDataReceived += (sender, e) => { lines.Add(e.Data); Console.Out.WriteLine(e.Data); };
+
+            try
+            {
+                service.Start();
+                Assert.AreEqual(true, service.IsRunning);
+            }
+            finally
+            {
+                service.Dispose();
+            }
+
+            Assert.IsNotEmpty(lines);
         }
 
         [Test]

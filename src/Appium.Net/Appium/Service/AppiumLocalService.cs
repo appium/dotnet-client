@@ -37,7 +37,11 @@ namespace OpenQA.Selenium.Appium.Service
         /// <returns>An instance of AppiumLocalService without special settings</returns>
         public static AppiumLocalService BuildDefaultService() => new AppiumServiceBuilder().Build();
 
-        internal AppiumLocalService(FileInfo nodeJS, string arguments, IPAddress ip, int port,
+        internal AppiumLocalService(
+            FileInfo nodeJS, 
+            string arguments, 
+            IPAddress ip, 
+            int port,
             TimeSpan initializationTimeout)
         {
             NodeJS = nodeJS;
@@ -56,6 +60,11 @@ namespace OpenQA.Selenium.Appium.Service
         }
 
         /// <summary>
+        /// Event that can be used to capture the output of the service
+        /// </summary>
+        public event DataReceivedEventHandler OutputDataReceived;
+
+        /// <summary>
         /// Starts the defined appium server
         /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -72,7 +81,10 @@ namespace OpenQA.Selenium.Appium.Service
             Service.StartInfo.UseShellExecute = false;
             Service.StartInfo.CreateNoWindow = true;
 
-            bool isLaunced = false;
+            Service.StartInfo.RedirectStandardOutput = true;
+            Service.OutputDataReceived += (sender, e) => OutputDataReceived?.Invoke(this, e);
+
+            bool isLaunched = false;
             string msgTxt =
                 $"The local appium server has not been started. The given Node.js executable: {NodeJS.FullName} Arguments: {Arguments}. " +
                 "\n";
@@ -80,6 +92,8 @@ namespace OpenQA.Selenium.Appium.Service
             try
             {
                 Service.Start();
+
+                Service.BeginOutputReadLine();
             }
             catch (Exception e)
             {
@@ -87,8 +101,8 @@ namespace OpenQA.Selenium.Appium.Service
                 throw new AppiumServerHasNotBeenStartedLocallyException(msgTxt, e);
             }
 
-            isLaunced = Ping(InitializationTimeout);
-            if (!isLaunced)
+            isLaunched = Ping(InitializationTimeout);
+            if (!isLaunched)
             {
                 DestroyProcess();
                 throw new AppiumServerHasNotBeenStartedLocallyException(
