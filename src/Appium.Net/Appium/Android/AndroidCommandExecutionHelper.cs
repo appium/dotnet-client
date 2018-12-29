@@ -13,10 +13,8 @@
 //limitations under the License.
 
 using OpenQA.Selenium.Appium.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.IO;
 
 namespace OpenQA.Selenium.Appium.Android
 {
@@ -103,27 +101,6 @@ namespace OpenQA.Selenium.Appium.Android
             executeMethod.Execute(AppiumDriverCommand.EndTestCoverage,
                 new Dictionary<string, object>()
                     {["intent"] = intent, ["path"] = path}).Value as string;
-
-        public static void PushFile(IExecuteMethod executeMethod, string pathOnDevice, byte[] base64Data) =>
-            executeMethod.Execute(AppiumDriverCommand.PushFile, new Dictionary<string, object>()
-                {["path"] = pathOnDevice, ["data"] = base64Data});
-
-        public static void PushFile(IExecuteMethod executeMethod, string pathOnDevice, FileInfo file)
-        {
-            if (file == null)
-            {
-                throw new ArgumentException("The file argument should not be null");
-            }
-
-            if (!file.Exists)
-            {
-                throw new ArgumentException("The file " + file.FullName + " doesn't exist");
-            }
-
-            byte[] bytes = File.ReadAllBytes(file.FullName);
-            string fileBase64Data = Convert.ToBase64String(bytes);
-            PushFile(executeMethod, pathOnDevice, Convert.FromBase64String(fileBase64Data));
-        }
 
         public static void OpenNotifications(IExecuteMethod executeMethod) =>
             executeMethod.Execute(AppiumDriverCommand.OpenNotifications);
