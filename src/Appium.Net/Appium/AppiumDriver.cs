@@ -17,16 +17,19 @@ using Newtonsoft.Json;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Service;
+using OpenQA.Selenium.Internal;
 using OpenQA.Selenium.Remote;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace OpenQA.Selenium.Appium
 {
-    public abstract class AppiumDriver<W> : RemoteWebDriver, IExecuteMethod, IFindsByFluentSelector<W>,
+    public abstract class AppiumDriver<W> : RemoteWebDriver, IFindsById, IFindsByClassName, IFindsByName, IFindsByTagName, IExecuteMethod, IFindsByFluentSelector<W>,
         IHasSessionDetails,
         IFindByAccessibilityId<W>,
         IHidesKeyboard, IInteractsWithFiles,
@@ -88,6 +91,34 @@ namespace OpenQA.Selenium.Appium
         }
 
         #endregion Constructors
+
+        #region Overrides to fix "css selector" issue
+
+        IWebElement IFindsByClassName.FindElementByClassName(string className) =>
+            base.FindElement(MobileSelector.ClassName, className);
+
+        ReadOnlyCollection<IWebElement> IFindsByClassName.FindElementsByClassName(string className) =>
+            base.FindElements(MobileSelector.ClassName, className);
+
+        IWebElement IFindsById.FindElementById(string id) => 
+            base.FindElement(MobileSelector.Id, id);
+
+        ReadOnlyCollection<IWebElement> IFindsById.FindElementsById(string id) =>
+            base.FindElements(MobileSelector.Id, id);
+
+        IWebElement IFindsByName.FindElementByName(string name) =>
+            base.FindElement(MobileSelector.Name, name);
+
+        ReadOnlyCollection<IWebElement> IFindsByName.FindElementsByName(string name) =>
+            base.FindElements(MobileSelector.Name, name);
+
+        IWebElement IFindsByTagName.FindElementByTagName(string tagName) =>
+            base.FindElement(MobileSelector.TagName, tagName);
+
+        ReadOnlyCollection<IWebElement> IFindsByTagName.FindElementsByTagName(string tagName) =>
+            base.FindElements(MobileSelector.TagName, tagName);
+
+        #endregion Overrides to fix "css selector" issue
 
         #region Generic FindMethods
 
@@ -206,6 +237,15 @@ namespace OpenQA.Selenium.Appium
         public byte[] PullFolder(string remotePath) =>
             Convert.FromBase64String(Execute(AppiumDriverCommand.PullFolder,
                 AppiumCommandExecutionHelper.PrepareArgument("path", remotePath)).Value.ToString());
+
+        public void PushFile(string pathOnDevice, string stringData) => AppiumCommandExecutionHelper.PushFile(this,
+            pathOnDevice, Convert.FromBase64String(Convert.ToBase64String(Encoding.UTF8.GetBytes(stringData))));
+
+        public void PushFile(string pathOnDevice, byte[] base64Data) =>
+            AppiumCommandExecutionHelper.PushFile(this, pathOnDevice, base64Data);
+
+        public void PushFile(string pathOnDevice, FileInfo file) =>
+            AppiumCommandExecutionHelper.PushFile(this, pathOnDevice, file);
 
         public void LaunchApp() => ((IExecuteMethod) this).Execute(AppiumDriverCommand.LaunchApp);
 

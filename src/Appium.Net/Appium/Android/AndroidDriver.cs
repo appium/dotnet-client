@@ -19,8 +19,6 @@ using OpenQA.Selenium.Appium.Service;
 using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.ObjectModel;
-using System.Text;
-using System.IO;
 using System.Collections.Generic;
 using System.Drawing;
 using OpenQA.Selenium.Appium.Android.Enums;
@@ -185,15 +183,6 @@ namespace OpenQA.Selenium.Appium.Android
         /// <return>a base64 string containing the data</return> 
         public string EndTestCoverage(string intent, string path) =>
             AndroidCommandExecutionHelper.EndTestCoverage(this, intent, path);
-
-        public void PushFile(string pathOnDevice, string stringData) => AndroidCommandExecutionHelper.PushFile(this,
-            pathOnDevice, Convert.FromBase64String(Convert.ToBase64String(Encoding.UTF8.GetBytes(stringData))));
-
-        public void PushFile(string pathOnDevice, byte[] base64Data) =>
-            AndroidCommandExecutionHelper.PushFile(this, pathOnDevice, base64Data);
-
-        public void PushFile(string pathOnDevice, FileInfo file) =>
-            AndroidCommandExecutionHelper.PushFile(this, pathOnDevice, file);
 
         /// <summary>
         /// Open the notifications 
