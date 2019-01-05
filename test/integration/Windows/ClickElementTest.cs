@@ -40,7 +40,7 @@ namespace Appium.Net.Integration.Tests.Windows
 
             _calculatorSession.FindElementByName("Clear").Click();
             _calculatorSession.FindElementByName("Seven").Click();
-            CalculatorResult = _calculatorSession.FindElementByName("Display is  7 ") as RemoteWebElement;
+            CalculatorResult = _calculatorSession.FindElementByName("Display is 7") as RemoteWebElement;
             Assert.IsNotNull(CalculatorResult);
         }
 
@@ -57,7 +57,7 @@ namespace Appium.Net.Integration.Tests.Windows
         public void SetUp()
         {
             _calculatorSession.FindElementByName("Clear").Click();
-            Assert.AreEqual("Display is  0 ", CalculatorResult.Text);
+            Assert.AreEqual("Display is 0", CalculatorResult.Text);
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace Appium.Net.Integration.Tests.Windows
             _calculatorSession.FindElementByName("Plus").Click();
             _calculatorSession.FindElementByName("Seven").Click();
             _calculatorSession.FindElementByName("Equals").Click();
-            Assert.AreEqual("Display is  8 ", CalculatorResult.Text);
+            Assert.AreEqual("Display is 8", CalculatorResult.Text);
         }
 
         [Test]
@@ -82,7 +82,7 @@ namespace Appium.Net.Integration.Tests.Windows
             _calculatorSession.FindElementByName("Divide by").Click();
             _calculatorSession.FindElementByName("Eight").Click();
             _calculatorSession.FindElementByName("Equals").Click();
-            Assert.AreEqual("Display is  8 ", CalculatorResult.Text);
+            Assert.AreEqual("Display is 8", CalculatorResult.Text);
         }
 
         [Test]
@@ -94,7 +94,7 @@ namespace Appium.Net.Integration.Tests.Windows
             _calculatorSession.FindElementByName("One").Click();
             _calculatorSession.FindElementByName("One").Click();
             _calculatorSession.FindElementByName("Equals").Click();
-            Assert.AreEqual("Display is  8 ", CalculatorResult.Text);
+            Assert.AreEqual("Display is 8", CalculatorResult.Text);
         }
 
         [Test]
@@ -104,7 +104,7 @@ namespace Appium.Net.Integration.Tests.Windows
             _calculatorSession.FindElementByName("Multiply by").Click();
             _calculatorSession.FindElementByName("Nine").Click();
             _calculatorSession.FindElementByName("Equals").Click();
-            Assert.AreEqual("Display is  81 ", CalculatorResult.Text);
+            Assert.AreEqual("Display is 81", CalculatorResult.Text);
         }
 
         [Test]
@@ -114,7 +114,7 @@ namespace Appium.Net.Integration.Tests.Windows
             _calculatorSession.FindElementByName("Minus").Click();
             _calculatorSession.FindElementByName("One").Click();
             _calculatorSession.FindElementByName("Equals").Click();
-            Assert.AreEqual("Display is  8 ", CalculatorResult.Text);
+            Assert.AreEqual("Display is 8", CalculatorResult.Text);
         }
     }
 }

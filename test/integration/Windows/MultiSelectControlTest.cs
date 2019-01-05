@@ -14,6 +14,7 @@
 
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
@@ -35,11 +36,13 @@ namespace Appium.Net.Integration.Tests.Windows
             // Launch the AlarmClock app
             var appCapabilities = new AppiumOptions();
             appCapabilities.AddAdditionalCapability("app", "Microsoft.WindowsAlarms_8wekyb3d8bbwe!App");
-            var serverUri = Env.ServerIsLocal() ? AppiumServers.LocalServiceUri : AppiumServers.RemoteServerUri;
+            appCapabilities.AddAdditionalCapability("platformName", "Windows");
+            appCapabilities.AddAdditionalCapability("deviceName", "WindowsPC");
+
+            var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
 
             AlarmClockSession =
                 new WindowsDriver<WindowsElement>(serverUri, appCapabilities);
-            appCapabilities.AddAdditionalCapability("platformName", "Windows");
 
             Assert.IsNotNull(AlarmClockSession);
             AlarmClockSession.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
@@ -47,6 +50,8 @@ namespace Appium.Net.Integration.Tests.Windows
             // Create a session for Desktop
             var desktopCapabilities = new AppiumOptions();
             desktopCapabilities.AddAdditionalCapability("app", "Root");
+            desktopCapabilities.AddAdditionalCapability("deviceName", "WindowsPC");
+
             DesktopSession =
                 new WindowsDriver<WindowsElement>(serverUri, desktopCapabilities);
             Assert.IsNotNull(DesktopSession);
@@ -90,22 +95,22 @@ namespace Appium.Net.Integration.Tests.Windows
 
         public static void SwitchToAlarmTab()
         {
-            AlarmClockSession.FindElementByAccessibilityId("AlarmPivotItem").Click();
+            AlarmClockSession.FindElementByAccessibilityId("AlarmButton").Click();
         }
 
         public void SwitchToWorldClockTab()
         {
-            AlarmClockSession.FindElementByAccessibilityId("WorldClockPivotItem").Click();
+            AlarmClockSession.FindElementByAccessibilityId("ClockButton").Click();
         }
 
         public string ReadLocalTime()
         {
             var localTimeText = "";
             AppiumWebElement worldClockPivotItem =
-                AlarmClockSession.FindElementByAccessibilityId("WorldClockPivotItem");
+                AlarmClockSession.FindElementByAccessibilityId("ClockButton");
             if (worldClockPivotItem != null)
             {
-                localTimeText = worldClockPivotItem.FindElementByClassName("ClockCardItem").Text;
+                localTimeText = AlarmClockSession.FindElementByAccessibilityId("WorldClockItemGrid").Text;
                 var timeStrings = localTimeText.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries);
 
                 foreach (var timeString in timeStrings)
@@ -113,7 +118,7 @@ namespace Appium.Net.Integration.Tests.Windows
                     // Get the time. E.g. "11:32 AM" from "Local time, Monday, February 22, 2016, 11:32 AM, "
                     if (timeString.Contains(":"))
                     {
-                        localTimeText = timeString;
+                        localTimeText = new string(timeString.Trim().Where(c => c < 128).ToArray()); // Remove 8206 character, see https://stackoverflow.com/questions/18298208/strange-error-when-parsing-string-to-date
                         break;
                     }
                 }
@@ -141,15 +146,15 @@ namespace Appium.Net.Integration.Tests.Windows
                 WindowsElement periodSelector = null;
                 try
                 {
-                    periodSelector = AlarmClockSession.FindElementByAccessibilityId("PeriodSelector");
+                    periodSelector = AlarmClockSession.FindElementByAccessibilityId("PeriodLoopingSelector");
                 }
                 catch (NoSuchElementException)
                 {
                     hourString = alarmTime.ToString("HH", fi);
                 }
                 periodSelector?.FindElementByName(period).Click();
-                AlarmClockSession.FindElementByAccessibilityId("HourSelector").FindElementByName(hourString).Click();
-                AlarmClockSession.FindElementByAccessibilityId("MinuteSelector").FindElementByName(minuteString)
+                AlarmClockSession.FindElementByAccessibilityId("HourLoopingSelector").FindElementByName(hourString).Click();
+                AlarmClockSession.FindElementByAccessibilityId("MinuteLoopingSelector").FindElementByName(minuteString)
                     .Click();
                 Thread.Sleep(500);
                 AlarmClockSession.FindElementByAccessibilityId("AlarmSaveButton").Click();
