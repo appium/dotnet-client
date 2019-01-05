@@ -17,6 +17,7 @@ using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.iOS;
 using OpenQA.Selenium.Appium.PageObjects.Attributes;
 using OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract;
+using OpenQA.Selenium.Appium.Windows;
 using OpenQA.Selenium.Remote;
 using SeleniumExtras.PageObjects;
 using System;
@@ -103,8 +104,9 @@ namespace OpenQA.Selenium.Appium.PageObjects
 
             string upperAutomation = automation?.ToUpper();
 
-            if (!upperPlatform.Equals(MobilePlatform.Android.ToUpper()) &
-                !upperPlatform.Equals(MobilePlatform.IOS.ToUpper()))
+            if (!upperPlatform.Equals(MobilePlatform.Android.ToUpper()) & 
+                !upperPlatform.Equals(MobilePlatform.IOS.ToUpper()) & 
+                !upperPlatform.Equals(MobilePlatform.Windows.ToUpper()))
                 return null;
 
             Attribute[] attributes = null;
@@ -138,6 +140,15 @@ namespace OpenQA.Selenium.Appium.PageObjects
                     useSequence = sequence.IOS;
                 if (all != null)
                     useAll = all.IOS;
+            }
+
+            if (upperPlatform.Equals(MobilePlatform.Windows.ToUpper()))
+            {
+                attributes = Attribute.GetCustomAttributes(member, typeof(FindsByWindowsAutomationAttribute), true);
+                if (sequence != null)
+                    useSequence = sequence.Windows;
+                if (all != null)
+                    useAll = all.Windows;
             }
 
             if (useSequence && useAll)
@@ -220,6 +231,10 @@ namespace OpenQA.Selenium.Appium.PageObjects
             if (GenericsUtility.MatchGenerics(typeof(IOSDriver<>),
                 AppiumPageObjectMemberDecorator.ListOfAvailableElementTypes, driverType))
                 return MobilePlatform.IOS;
+            
+            if (GenericsUtility.MatchGenerics(typeof(WindowsDriver<>), 
+                AppiumPageObjectMemberDecorator.ListOfAvailableElementTypes, driverType))
+                return MobilePlatform.Windows;
 
             if (typeof(IHasCapabilities).IsAssignableFrom(driverType))
             {
