@@ -31,10 +31,8 @@ namespace OpenQA.Selenium.Appium.PageObjects
     {
         private static By From(FindsByAttribute attribute)
         {
-            Assembly assembly = Assembly.LoadFrom("SeleniumExtras.PageObjects.dll");
-            Type seleniumByFactory = assembly.GetType("SeleniumExtras.PageObjects.ByFactory");
-            MethodInfo m = seleniumByFactory.GetMethod("From", new Type[] {typeof(FindsByAttribute)});
-            return (By) m.Invoke(seleniumByFactory, new object[] {attribute});
+            var finderProp = attribute.GetType().GetProperty("Finder", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            return finderProp.GetValue(attribute) as By;
         }
 
         private static ReadOnlyCollection<By> CreateDefaultLocatorList(MemberInfo member)

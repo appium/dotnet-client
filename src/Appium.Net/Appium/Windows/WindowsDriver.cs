@@ -145,7 +145,7 @@ namespace OpenQA.Selenium.Appium.Windows
         /// </summary>
         /// <param name="selector">a Windows UIAutomation selector</param>
         /// <returns>ReadOnlyCollection of IWebElement objects so that you can interact with those objects</returns>
-        public ReadOnlyCollection<W> FindElementsByWindowsUIAutomation(string selector) =>
+        public IReadOnlyCollection<W> FindElementsByWindowsUIAutomation(string selector) =>
             FindElements(MobileSelector.WindowsUIAutomation, selector);
 
         #endregion IFindByWindowsUIAutomation Members

@@ -12,11 +12,12 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium.Interfaces
 {
-    public interface IFindByAccessibilityId<W> : IFindsByFluentSelector<W> where W : IWebElement
+    public interface IFindByAccessibilityId<out W> : IFindsByFluentSelector<W> where W : IWebElement
     {
         /// <summary>
         /// Finds the first of elements that match the Accessibility Id selector supplied
@@ -30,6 +31,6 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// </summary>
         /// <param name="selector">an Accessibility Id selector</param>
         /// <returns>IWebElement object so that you can interact that object</returns>
-        ReadOnlyCollection<W> FindElementsByAccessibilityId(string selector);
+        IReadOnlyCollection<W> FindElementsByAccessibilityId(string selector);
     }
 }

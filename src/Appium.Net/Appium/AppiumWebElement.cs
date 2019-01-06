@@ -208,7 +208,7 @@ namespace OpenQA.Selenium.Appium
         public AppiumWebElement FindElementByAccessibilityId(string selector) =>
             FindElement(MobileSelector.Accessibility, selector);
 
-        public ReadOnlyCollection<AppiumWebElement> FindElementsByAccessibilityId(string selector) =>
+        public IReadOnlyCollection<AppiumWebElement> FindElementsByAccessibilityId(string selector) =>
             ConvertToExtendedWebElementCollection(FindElements(MobileSelector.Accessibility, selector));
 
         #endregion IFindByAccessibilityId Members
@@ -231,7 +231,7 @@ namespace OpenQA.Selenium.Appium
         public new AppiumWebElement FindElement(string by, string value) =>
             (AppiumWebElement) base.FindElement(by, value);
 
-        public new ReadOnlyCollection<AppiumWebElement> FindElements(string selector, string value) =>
+        public new IReadOnlyCollection<AppiumWebElement> FindElements(string selector, string value) =>
             ConvertToExtendedWebElementCollection(base.FindElements(selector, value));
 
         /// <summary>
@@ -367,7 +367,7 @@ namespace OpenQA.Selenium.Appium
         public void SetImmediateValue(string value) => Execute(AppiumDriverCommand.SetValue,
             new Dictionary<string, object>() {["id"] = Id, ["value"] = value});
 
-        private ReadOnlyCollection<AppiumWebElement> ConvertToExtendedWebElementCollection(IList list)
+        private ReadOnlyCollection<AppiumWebElement> ConvertToExtendedWebElementCollection(IEnumerable list)
         {
             List<AppiumWebElement> result = new List<AppiumWebElement>();
             foreach (var element in list)
