@@ -132,7 +132,7 @@ namespace OpenQA.Selenium.Appium.Android
         public W FindElementByAndroidUIAutomator(string selector) =>
             FindElement(MobileSelector.AndroidUIAutomator, selector);
 
-        public ReadOnlyCollection<W> FindElementsByAndroidUIAutomator(string selector) =>
+        public IReadOnlyCollection<W> FindElementsByAndroidUIAutomator(string selector) =>
             ConvertToExtendedWebElementCollection<W>(FindElements(MobileSelector.AndroidUIAutomator, selector));
 
         #endregion IFindByAndroidUIAutomator Members

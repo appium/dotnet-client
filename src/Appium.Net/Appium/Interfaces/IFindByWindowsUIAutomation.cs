@@ -12,11 +12,12 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium.Interfaces
 {
-    public interface IFindByWindowsUIAutomation<W> : IFindsByFluentSelector<W> where W : IWebElement
+    public interface IFindByWindowsUIAutomation<out W> : IFindsByFluentSelector<W> where W : IWebElement
     {
         /// <summary>
         /// Finds the first of elements that match the Windows UIAutomation selector supplied
@@ -30,6 +31,6 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// </summary>
         /// <param name="selector">a Windows UIAutomation selector</param>
         /// <returns>ReadOnlyCollection of IWebElement objects so that you can interact with those objects</returns>
-        ReadOnlyCollection<W> FindElementsByWindowsUIAutomation(string selector);
+        IReadOnlyCollection<W> FindElementsByWindowsUIAutomation(string selector);
     }
 }

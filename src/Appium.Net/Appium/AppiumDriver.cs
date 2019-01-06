@@ -129,7 +129,7 @@ namespace OpenQA.Selenium.Appium
 
         public new W FindElement(string by, string value) => (W) base.FindElement(by, value);
 
-        public new ReadOnlyCollection<W> FindElements(string selector, string value) =>
+        public new IReadOnlyCollection<W> FindElements(string selector, string value) =>
             ConvertToExtendedWebElementCollection<W>(base.FindElements(selector, value));
 
         public new W FindElementByClassName(string className) =>
@@ -184,7 +184,7 @@ namespace OpenQA.Selenium.Appium
 
         public W FindElementByAccessibilityId(string selector) => FindElement(MobileSelector.Accessibility, selector);
 
-        public ReadOnlyCollection<W> FindElementsByAccessibilityId(string selector) =>
+        public IReadOnlyCollection<W> FindElementsByAccessibilityId(string selector) =>
             FindElements(MobileSelector.Accessibility, selector);
 
         #endregion IFindByAccessibilityId Members
@@ -502,14 +502,9 @@ namespace OpenQA.Selenium.Appium
             return dc.ToCapabilities();
         }
 
-        internal static ReadOnlyCollection<T> ConvertToExtendedWebElementCollection<T>(IList list) where T : IWebElement
+        internal static ReadOnlyCollection<T> ConvertToExtendedWebElementCollection<T>(IEnumerable collection) where T : IWebElement
         {
-            List<T> result = new List<T>();
-            foreach (var element in list)
-            {
-                result.Add((T) element);
-            }
-            return result.AsReadOnly();
+            return collection.Cast<T>().ToList().AsReadOnly();
         }
 
         #endregion
