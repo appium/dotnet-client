@@ -194,7 +194,7 @@ namespace OpenQA.Selenium.Appium.Enums
         /// Allows passing chromeOptions capability for ChromeDriver. For more information see chromeOptions:
         /// https://sites.google.com/a/chromium.org/chromedriver/capabilities
         /// </summary>
-        public static readonly string ChromeOptions = "chromeOptions";
+        public static readonly string ChromeOptions = "goog:chromeOptions";
 
         /**
          * Kill ChromeDriver session when moving to a non-ChromeDriver webview. Defaults to false
