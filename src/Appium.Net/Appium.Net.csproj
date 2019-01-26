@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <RootNamespace>OpenQA.Selenium</RootNamespace>
     <AssemblyVersion>4.0.0.5</AssemblyVersion>
     <Version>4.0.0.5-beta</Version>
@@ -10,7 +11,6 @@
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Copyright>Copyright © 2019</Copyright>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/appium/appium-dotnet-driver/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/appium/appium-dotnet-driver</PackageProjectUrl>
     <RepositoryUrl>https://github.com/appium/appium-dotnet-driver</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -235,6 +235,9 @@
             Project structure overhaul.
     </PackageReleaseNotes>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="LICENSE.txt" Pack="true"/>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Castle.Core" Version="4.3.1" />
