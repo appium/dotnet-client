@@ -235,8 +235,13 @@
             Project structure overhaul.
     </PackageReleaseNotes>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+  </PropertyGroup>
+
   <ItemGroup>
-    <None Include="LICENSE.txt" Pack="true"/>
+    <None Include="LICENSE.txt" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <ItemGroup>
