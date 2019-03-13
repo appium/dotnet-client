@@ -66,5 +66,12 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes
         [DefaultValue(false)]
         [Obsolete("Support for Selendroid is deprecated and will be removed in the next release")]
         public bool Selendroid { get; set; }
+
+        /// <summary>
+        /// If this property is "true" then target elements should match the criteria of
+        /// all <see cref="FindsByWindowsAutomationAttribute"/>  on the field or property.
+        /// </summary>
+        [DefaultValue(false)]
+        public bool Windows { get; set; }
     }
 }

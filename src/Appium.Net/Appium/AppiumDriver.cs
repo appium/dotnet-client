@@ -309,7 +309,7 @@ namespace OpenQA.Selenium.Appium
 
         #region Context
 
-        public string Context
+        public virtual string Context
         {
             get
             {
@@ -323,7 +323,7 @@ namespace OpenQA.Selenium.Appium
             }
         }
 
-        public ReadOnlyCollection<string> Contexts
+        public virtual ReadOnlyCollection<string> Contexts
         {
             get
             {

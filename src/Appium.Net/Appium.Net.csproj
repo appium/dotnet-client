@@ -2,15 +2,15 @@
 
   <PropertyGroup>
     <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <RootNamespace>OpenQA.Selenium</RootNamespace>
-    <AssemblyVersion>4.0.0.4</AssemblyVersion>
-    <Version>4.0.0.4-beta</Version>
+    <AssemblyVersion>4.0.0.5</AssemblyVersion>
+    <Version>4.0.0.5-beta</Version>
     <Company>Appium Commiters</Company>
     <Product>Appium-Dotnet-Driver</Product>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Copyright>Copyright © 2018</Copyright>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/appium/appium-dotnet-driver/master/LICENSE</PackageLicenseUrl>
+    <Copyright>Copyright © 2019</Copyright>
     <PackageProjectUrl>https://github.com/appium/appium-dotnet-driver</PackageProjectUrl>
     <RepositoryUrl>https://github.com/appium/appium-dotnet-driver</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -20,6 +20,17 @@
     <Description>Selenium Webdriver extension for Appium.</Description>
     <PackageTags>Appium Webdriver device automation</PackageTags>
     <PackageReleaseNotes>
+      4.0.0.5-beta
+      [Enhancement] Add screen recording mechanism (#277)
+      [Enhancement] Add setting/getting clipboard mechanism (#278)
+      [Enhancement] Update support for backgrounding (android) app (#292)
+      [Enhancement] Add file push mechanism for ios and android driver (#301)
+      [Enhancement] Add windows support for page Object pattern (#276)
+      [Enhancement] Redirect local appium server log to Visual Studio output (#303)
+      [BUG FIX] Override IFindsBy methods in appium driver (#302) fixes #265
+      [BUG FIX] Refactor - removing the use of reflection (#297) fixes #291
+      [BUG FIX] Allow log file to be parsed  appium log file  (#286)
+
       4.0.0.4-beta
       [BUG FIX] Fix for w3C locator strategies
 
@@ -224,6 +235,14 @@
             Project structure overhaul.
     </PackageReleaseNotes>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="LICENSE.txt" Pack="true" PackagePath="" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Castle.Core" Version="4.3.1" />
