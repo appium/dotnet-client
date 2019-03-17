@@ -46,7 +46,7 @@ namespace OpenQA.Selenium.Appium
         public const string ToggleAirplaneMode = "toggleAirplaneMode";
 
         /// <summary>
-        /// Press key code 
+        /// Press key code
         /// </summary>
         public const string PressKeyCode = "pressKeyCode";
 
@@ -179,6 +179,15 @@ namespace OpenQA.Selenium.Appium
         public const string PerformMultiAction = "performMultiTouch";
 
         #endregion MultiTouchActions
+
+        #region W3C Actions
+
+        /// <summary>
+        /// Perform multi purpose W3C actions
+        /// </summary>
+        public const string Actions = "actions";
+
+        #endregion W3C Actions
 
         #region Context Commands
 
