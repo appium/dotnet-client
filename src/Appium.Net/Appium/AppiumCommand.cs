@@ -111,6 +111,14 @@ namespace OpenQA.Selenium.Appium
 
             #endregion Touch Commands
 
+            // Enable W3C Actions on AppiumWebDriver
+            #region W3C Actions
+
+            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.Actions,
+                "/session/{sessionId}/actions"),
+
+            #endregion W3C Actions
+
             #region JSON Wire Protocol Commands
 
             new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetOrientation,

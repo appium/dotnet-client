@@ -4,8 +4,8 @@
     <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <RootNamespace>OpenQA.Selenium</RootNamespace>
-    <AssemblyVersion>4.0.0.5</AssemblyVersion>
-    <Version>4.0.0.5-beta</Version>
+    <AssemblyVersion>4.0.0.6</AssemblyVersion>
+    <Version>4.0.0.6-beta</Version>
     <Company>Appium Commiters</Company>
     <Product>Appium-Dotnet-Driver</Product>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -20,6 +20,8 @@
     <Description>Selenium Webdriver extension for Appium.</Description>
     <PackageTags>Appium Webdriver device automation</PackageTags>
     <PackageReleaseNotes>
+      4.0.0.6-beta
+      [Enhancement] Adds pointer input device extension (#315) - with help from Timotius Margo
       4.0.0.5-beta
       [Enhancement] Add screen recording mechanism (#277)
       [Enhancement] Add setting/getting clipboard mechanism (#278)
@@ -233,11 +235,12 @@
             1.0.0
             TouchAction + multiActions rewriting,
             Project structure overhaul.
-    </PackageReleaseNotes>
+</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <FileVersion>4.0.0.6</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -247,9 +250,9 @@
   <ItemGroup>
     <PackageReference Include="Castle.Core" Version="4.3.1" />
     <PackageReference Include="DotNetSeleniumExtras.PageObjects" Version="3.11.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="Selenium.Support" Version="3.14.0" />
-    <PackageReference Include="Selenium.WebDriver" Version="3.14.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="Selenium.Support" Version="3.141.0" />
+    <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
   </ItemGroup>
 
   <ItemGroup>
