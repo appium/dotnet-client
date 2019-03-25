@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net472;netstandard2.0</TargetFrameworks>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <RootNamespace>OpenQA.Selenium</RootNamespace>
     <AssemblyVersion>4.0.0.6</AssemblyVersion>
@@ -21,6 +21,7 @@
     <PackageTags>Appium Webdriver device automation</PackageTags>
     <PackageReleaseNotes>
       4.0.0.6-beta
+      [Enhancement] Target latest version of .Net Framework 4.7.2
       [Enhancement] Adds pointer input device extension (#315) - with help from Timotius Margo
       4.0.0.5-beta
       [Enhancement] Add screen recording mechanism (#277)
