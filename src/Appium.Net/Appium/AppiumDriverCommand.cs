@@ -275,6 +275,11 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string TouchID = "touchId";
 
+        /// <summary>
+        /// Represents the fingerPrint command
+        public const string FingerPrint = "fingerPrint";
+        /// </summary>
+
         public const string ReplaceValue = "replaceValue";
 
         public const string SetValue = "setValue";

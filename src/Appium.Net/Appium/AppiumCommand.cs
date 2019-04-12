@@ -99,6 +99,8 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/settings"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.TouchID,
                 "/session/{sessionId}/appium/simulator/touch_id"),
+            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.FingerPrint,
+                "/session/{sessionId}/appium/device/finger_print"),
 
             #endregion Driver Commands
 
