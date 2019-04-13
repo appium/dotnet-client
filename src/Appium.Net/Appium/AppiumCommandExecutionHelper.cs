@@ -127,6 +127,10 @@ namespace OpenQA.Selenium.Appium
             executeMethod.Execute(AppiumDriverCommand.PushFile, new Dictionary<string, object>()
                 { ["path"] = pathOnDevice, ["data"] = base64Data });
 
+        public static void FingerPrint(IExecuteMethod executeMethod, int fingerprintId) =>
+            executeMethod.Execute(AppiumDriverCommand.FingerPrint, new Dictionary<string, object>()
+                { ["fingerprintId"] = fingerprintId});
+        
         public static void PushFile(IExecuteMethod executeMethod, string pathOnDevice, FileInfo file)
         {
             if (file == null)
