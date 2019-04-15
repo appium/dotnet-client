@@ -308,7 +308,7 @@ namespace OpenQA.Selenium.Appium
                 Execute(AppiumDriverCommand.SetLocation, location.ToDictionary());
             }
         }
-        
+
         #endregion MJsonMethod Members
 
         #region Context

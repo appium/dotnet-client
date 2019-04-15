@@ -18,9 +18,7 @@ namespace Appium.Net.Integration.Tests.Android
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            var capabilities = Env.ServerIsRemote()
-                ? Caps.GetAndroidCaps(Apps.Get("androidApiDemos"))
-                : Caps.GetAndroidCaps(Apps.Get("androidApiDemos"));
+            var capabilities = Caps.GetAndroidCaps(Apps.Get("androidApiDemos"));
             capabilities.AddAdditionalCapability(MobileCapabilityType.FullReset, true);
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
             _driver = new AndroidDriver<IWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
@@ -42,6 +40,8 @@ namespace Appium.Net.Integration.Tests.Android
         [Test]
         public void TestSendFingerprint()
         {
+            // There's no way to verify sending fingerprint had an affect,
+            // so just test that it's successfully called without an exception
             _driver.FingerPrint(1);
         }
     }
