@@ -40,7 +40,7 @@ namespace Appium.Net.Integration.Tests.Android
         [Test]
         public void TestSendFingerprint()
         {
-            // There's no way to verify sending fingerprint had an affect,
+            // There's no way to verify sending fingerprint had an effect,
             // so just test that it's successfully called without an exception
             _driver.FingerPrint(1);
         }
