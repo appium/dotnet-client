@@ -45,6 +45,12 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string ToggleAirplaneMode = "toggleAirplaneMode";
 
+
+        /// <summary>
+        /// Toggle Network Data Command
+        /// </summary>
+        public static string ToggleData = "toggleData";
+
         /// <summary>
         /// Press key code
         /// </summary>
@@ -275,6 +281,11 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string TouchID = "touchId";
 
+        /// <summary>
+        /// Represents the fingerPrint command
+        public const string FingerPrint = "fingerPrint";
+        /// </summary>
+
         public const string ReplaceValue = "replaceValue";
 
         public const string SetValue = "setValue";
@@ -288,5 +299,6 @@ namespace OpenQA.Selenium.Appium
         public const string StopRecordingScreen = "stopRecordingScreen";
 
         #endregion JSON Wire Protocol
+
     }
 }
