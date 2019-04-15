@@ -148,6 +148,11 @@ namespace OpenQA.Selenium.Appium
             PushFile(executeMethod, pathOnDevice, Convert.FromBase64String(fileBase64Data));
         }
 
+        public static void ToggleData(IExecuteMethod executeMethod)
+        {
+            executeMethod.Execute(AppiumDriverCommand.ToggleData);
+        }
+
         #endregion Device Commands
 
         /// <summary>

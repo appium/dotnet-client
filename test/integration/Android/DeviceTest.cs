@@ -9,7 +9,7 @@ using OpenQA.Selenium.Appium.Enums;
 namespace Appium.Net.Integration.Tests.Android
 {
     [TestFixture(Category = "Device")]
-    public class FingerprintTest
+    public class DeviceTest
     {
         private AndroidDriver<IWebElement> _driver;
         private const string ClipboardTestString = "Hello Clipboard";
@@ -43,6 +43,13 @@ namespace Appium.Net.Integration.Tests.Android
             // There's no way to verify sending fingerprint had an affect,
             // so just test that it's successfully called without an exception
             _driver.FingerPrint(1);
+        }
+
+        [Test]
+        public void TestToggleData()
+        {
+            _driver.ToggleData();
+            _driver.ToggleData();
         }
     }
 }
