@@ -22,6 +22,8 @@
     <PackageReleaseNotes>
       4.0.0.6-beta
       [Enhancement] Adds pointer input device extension (#315) - with help from Timotius Margo
+      [Enhancement] Add finger print authentication command for Android emulator (#324)
+      [Enhancement] Add toggle data command to switch the state of data service on Android devices (#324)
       4.0.0.5-beta
       [Enhancement] Add screen recording mechanism (#277)
       [Enhancement] Add setting/getting clipboard mechanism (#278)
