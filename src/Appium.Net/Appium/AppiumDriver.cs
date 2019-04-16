@@ -254,6 +254,13 @@ namespace OpenQA.Selenium.Appium
 
         public void ResetApp() => ((IExecuteMethod) this).Execute(AppiumDriverCommand.ResetApp);
 
+        public void FingerPrint(int fingerprintId) =>
+            AppiumCommandExecutionHelper.FingerPrint(this, fingerprintId);
+
+        public void ToggleData() =>
+            AppiumCommandExecutionHelper.ToggleData(this);
+       
+
         public void BackgroundApp() =>
             Execute(AppiumDriverCommand.BackgroundApp,
                 AppiumCommandExecutionHelper.PrepareArgument("seconds", AppiumCommandExecutionHelper.PrepareArgument("timeout", null)));

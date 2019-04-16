@@ -51,6 +51,8 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/device/unlock"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ToggleAirplaneMode,
                 "/session/{sessionId}/appium/device/toggle_airplane_mode"),
+            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ToggleData,
+                "/session/{sessionId}/appium/device/toggle_data"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.PressKeyCode,
                 "/session/{sessionId}/appium/device/press_keycode"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.LongPressKeyCode,
@@ -99,6 +101,8 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/settings"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.TouchID,
                 "/session/{sessionId}/appium/simulator/touch_id"),
+            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.FingerPrint,
+                "/session/{sessionId}/appium/device/finger_print"),
 
             #endregion Driver Commands
 

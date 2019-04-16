@@ -15,4 +15,4 @@ packages
 .idea
 .vs/
 env.json
-
+.vscode/
