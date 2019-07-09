@@ -1,9 +1,9 @@
-# 4.0.0.6-beta
+## 4.0.0.6-beta
 - [Enhancement] Adds pointer input device extension (#315) - with help from Timotius Margo
 - [Enhancement] Add finger print authentication command for Android emulator (#324)
 - [Enhancement] Add toggle data command to switch the state of data service on Android devices (#324)
 
-# 4.0.0.5-beta
+### 4.0.0.5-beta
 - [Enhancement] Add screen recording mechanism (#277)
 - [Enhancement] Add setting/getting clipboard mechanism (#278)
 - [Enhancement] Update support for backgrounding (android) app (#292)
@@ -14,13 +14,13 @@
 - [BUG FIX] Refactor - removing the use of reflection (#297) fixes #291
 - [BUG FIX] Allow log file to be parsed  appium log file  (#286)
 
-# 4.0.0.4-beta
+### 4.0.0.4-beta
 - [BUG FIX] Fix for w3C locator strategies
 
-# 4.0.0.3-beta
+### 4.0.0.3-beta
 - [BUG FIX] Fix for Displayed endpoint on AppiumWebElement
 
-# 4.0.0.2-beta
+### 4.0.0.2-beta
 - [Enhancement] Added support for Tizen driver
 - [BREAKING CHANGE] Move to Dotnet Standard with the exception of PageFactory.
 - [BREAKING CHANGE] Replace DesiredCapabilities with AppiumOptions and AppiumCapablilities.
@@ -28,7 +28,7 @@
  - Selenium.Support was updated 3.14.0
  - Selenium.WebDriver was updated 3.14.0
 
-# 4.0.0.1-beta
+### 4.0.0.1-beta
 - [Enhancement] The searching by ios class chain was implemented.
 - [Enhancement] Details of a session. Interface `IHasSessionDetails` and its implementation.
 - [BUG FIX] Fix of the `LongPress` action parameters.
@@ -40,14 +40,14 @@
  - Selenium.WebDriver was updated 3.8.0
  - Castle.Core was updated to 4.2.1
 
-# 3.0.0.2
+### 3.0.0.2
 - [Refactor] The obsolete interface OpenQA.Selenium.Appium.Android.Interfaces.ISendsKeyEvents was removed
 - [Refactor] The obsolete interface OpenQA.Selenium.Appium.iOS.Interfaces.IIOSHidesKeyboard was removed
 - [Enhancement] The new `YouiEngine` automation type was added to the
 OpenQA.Selenium.Appium.Enums.AutomationName
 - [BUG FIX] The issue that was preventing the overriding of the Execute method was fixed.
 
-# 3.0.0.1
+### 3.0.0.1
 - [Major update] Update to Selenium 3.0.1
 - [Major enhancement] Windows automation:
  - OpenQA.Selenium.Appium.Interfaces.IFindByWindowsUIAutomation was added.
@@ -82,7 +82,7 @@ is implemented by OpenQA.Selenium.Appium.AppiumDriver.
  - OpenQA.Selenium.Appium.Enums.AutomationName.iOSXcuiTest
  - OpenQA.Selenium.Appium.Enums.AutomationName.AndroidUIAutomator2
 
-# 2.0.1.1
+### 2.0.1.1
 - All obsolete code was removed.
 Following capabilities were added:
  - OpenQA.Selenium.Appium.Enums.AndroidMobileCapabilityType.AndroidInstallTimeout
@@ -91,7 +91,7 @@ Following capabilities were added:
  - OpenQA.Selenium.Appium.Enums.AndroidMobileCapabilityType.AppWaitDuration.
 -The new interface OpenQA.Selenium.Appium.Interfaces.IExecuteMethod was added.
 
-# 2.0.0.1
+### 2.0.0.1
 - All obsolete code was removed. #C client won't support Appium server v lower than 1.5.0
 - Source code migration to C# 6.0. Now this bundle requires .Net Framework &gt; v4.5 or Mono Framework version
 which supports .Net Framework v4.5 with Lang Level 6.
@@ -128,7 +128,7 @@ added to OpenQA.Selenium.Appium.Android.AndroidDriver.
             The SetImmediateValue method was moved to OpenQA.Selenium.Appium.AppiumWebElement. It works against text
             input elements on Android.
 
-# 1.5.1.1
+### 1.5.1.1
 - Update to Selenium.Webdriver v2.53.0 and Selenium.Support v2.53.0
 - Update to Newtonsoft.Json v8.0.2
 - FIXED The issue of compatibility of AppiumServiceBuilder with Appium node server v &gt;= 1.5.x.
@@ -153,7 +153,7 @@ options are going to be removed at the next .Net client release.
 - The ability to start Appium node programmatically using desired capabilities. This feature is compatible 
 with Appium node server v &gt;= 1.5.x.
 
-# 1.5.0.1
+### 1.5.0.1
 - Update to Selenium.Webdriver v2.48.2 and Selenium.Support v2.48.2
 - The ability to start appium server programmatically was provided. The ICommandServer implementation (AppiumLocalService).
 - The new boolean parameter of the AndroidDdriver.StartActivity method. It allows to start a new activity
@@ -163,7 +163,7 @@ without closing of a target app.
 - The "ReplaceValue" method was added to AndroidElement
 - The "SetImmediateValue" was moved from the AppiumWebElement to IOSElement
 
-# 1.4.1.1
+#### 1.4.1.1
 - Update to Selenium.Webdriver v2.48.1 and Selenium.Support v2.48.1
 - .Net client is completely following the Apache 2.0 license now.
 - IMobileElement implementations are able to perform gestures such as Pinch, Tap and Zoom.
@@ -173,35 +173,35 @@ without closing of a target app.
 - the bug which prevented the using of TouchAction/MultiTouchActions with IWebElement was fixed. This problem is reproduced
 - with IWebElement instances created via Selenium PageFactory.
 
-# 1.4.0.2
+### 1.4.0.2
 - features ported from the Java-Appium-Driver. Integration with Selenium PageFactory.
 
-# 1.3.0.1
+### 1.3.0.1
 - Generic AppiumDriver class/subclasses and fix for TryAddCommand.
 
-# 1.2.0.8
+### 1.2.0.8
 - Fix/Test for hide keyboard.
 
-# 1.2.0.7
+### 1.2.0.7
 - Separate android and ios drivers, improved namespaces, fixed tests, and redesigned methods and interfaces
 
-# 1.2.0.6
+### 1.2.0.6
 - Update Selenium NuGet Package to get fix for locator strategy.
 
-# 1.2.0.5
+### 1.2.0.5
 - Add GetSettings and IgnoreUnimportantViews methods.
 
-# 1.2.0.4
+### 1.2.0.4
 - Update version due to assembly not matching NuGet.
 
-# 1.2.0.3
+### 1.2.0.3
 - Update version due to NuGet Package mismanagement.
 
 - Update NuGet packages. Add IsLocked() and Start Activity.
 
-# 1.2.0.1
+### 1.2.0.1
 - Add Pull Folder, Android Input Methods (IME), and Network Connection Methods for use with Appium 1.2
 
-# 1.0.0
+### 1.0.0
 - TouchAction + multiActions rewriting,
 - Project structure overhaul.
