@@ -37,6 +37,11 @@ Xamarin/Mono
 - `Rebuild all`
 - `Run tests in test/specs`
 
+JetBrains Rider
+- Open with [Rider](https://www.jetbrains.com/rider/)
+- From the menu `Build -> Rebuild Solution`
+- Run tests in Appium.Net.Integration.Tests
+
 Visual studio
 
 - Open with [Visual Studio](https://www.visualstudio.com/)
