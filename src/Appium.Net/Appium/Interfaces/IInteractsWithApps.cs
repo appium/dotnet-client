@@ -57,6 +57,12 @@ namespace OpenQA.Selenium.Appium.Interfaces
         void RemoveApp(string appId);
 
         /// <summary>
+        /// Terminates an App.
+        /// </summary>
+        /// <param name="appId">a string containing the id of the app.</param>
+        void TerminateApp(string appId);
+
+        /// <summary>
         /// Closes the current app.
         /// </summary>
         void CloseApp();
