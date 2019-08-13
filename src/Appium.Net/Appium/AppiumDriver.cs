@@ -227,8 +227,9 @@ namespace OpenQA.Selenium.Appium
         public void RemoveApp(string appId) =>
             Execute(AppiumDriverCommand.RemoveApp, AppiumCommandExecutionHelper.PrepareArgument("appId", appId));
 
-        public void TerminateApp(string appId) =>
-            Execute(AppiumDriverCommand.TerminateApp, AppiumCommandExecutionHelper.PrepareArgument("appId", appId));
+        public void TerminateApp(string appId, int? timeout = null) =>
+            Execute(AppiumDriverCommand.TerminateApp, 
+                AppiumCommandExecutionHelper.PrepareArguments(new string[] { "appId", "options" }, new object[] { appId, timeout }));
 
         public bool IsAppInstalled(string bundleId) =>
             Convert.ToBoolean(Execute(AppiumDriverCommand.IsAppInstalled,

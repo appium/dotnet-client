@@ -60,7 +60,7 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// Terminates an App.
         /// </summary>
         /// <param name="appId">a string containing the id of the app.</param>
-        void TerminateApp(string appId);
+        void TerminateApp(string appId, int? timeout = null);
 
         /// <summary>
         /// Closes the current app.
