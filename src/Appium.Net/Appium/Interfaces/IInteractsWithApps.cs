@@ -60,5 +60,7 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// Closes the current app.
         /// </summary>
         void CloseApp();
+
+        int GetAppState(string appId);
     }
 }
