@@ -62,10 +62,10 @@ namespace OpenQA.Selenium.Appium.Interfaces
         void CloseApp();
 
         /// <summary>
-        /// Gets the State of the app. 0 is not installed. 1 is not running. 2 is running in background or suspended. 3 is running in background. 4 is running in foreground.
+        /// Gets the State of the app.
         /// </summary>
         /// <param name="appId">a string containing the id of the app.</param>
-        /// <returns></returns>
+        /// <returns>an integer number representing the status. 0 is not installed. 1 is not running. 2 is running in background or suspended. 3 is running in background. 4 is running in foreground.</returns>
         int GetAppState(string appId);
     }
 }
