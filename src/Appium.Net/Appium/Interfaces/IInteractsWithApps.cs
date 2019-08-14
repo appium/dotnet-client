@@ -69,7 +69,7 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// Terminates an App.
         /// </summary>
         /// <param name="appId">a string containing the id of the app.</param>
-        /// <param name="timeout">an integer number containing the timeout in ms for how long to wait until the application is terminated.</param>
+        /// <param name="timeout">a TimeSpan for how long to wait until the application is terminated.</param>
         /// <return>a boolean indicating if the app was terminated in the given timeout.</return>
         bool TerminateApp(string appId, TimeSpan timeout);
 
