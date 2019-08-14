@@ -269,8 +269,8 @@ namespace OpenQA.Selenium.Appium
             Execute(AppiumDriverCommand.BackgroundApp,
                 AppiumCommandExecutionHelper.PrepareArgument("seconds", AppiumCommandExecutionHelper.PrepareArgument("timeout", seconds)));
 
-        public int GetAppState(string appId) =>
-            Convert.ToInt32(Execute(AppiumDriverCommand.GetAppState, AppiumCommandExecutionHelper.PrepareArgument("appId", appId)).Value.ToString());
+        public AppState GetAppState(string appId) =>
+            (AppState)Convert.ToInt32(Execute(AppiumDriverCommand.GetAppState, AppiumCommandExecutionHelper.PrepareArgument("appId", appId)).Value.ToString());
 
         /// <summary>
         /// Get all defined Strings from an app for the specified language and

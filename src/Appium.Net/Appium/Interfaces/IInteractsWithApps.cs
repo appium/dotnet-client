@@ -12,6 +12,8 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+using OpenQA.Selenium.Appium.Enums;
+
 namespace OpenQA.Selenium.Appium.Interfaces
 {
     public interface IInteractsWithApps : IExecuteMethod
@@ -65,7 +67,7 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// Gets the State of the app.
         /// </summary>
         /// <param name="appId">a string containing the id of the app.</param>
-        /// <returns>an integer number representing the status. 0 is not installed. 1 is not running. 2 is running in background or suspended. 3 is running in background. 4 is running in foreground.</returns>
-        int GetAppState(string appId);
+        /// <returns>an enumeration of the app state.</returns>
+        AppState GetAppState(string appId);
     }
 }
