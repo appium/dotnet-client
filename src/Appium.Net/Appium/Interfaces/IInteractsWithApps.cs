@@ -60,8 +60,16 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// Terminates an App.
         /// </summary>
         /// <param name="appId">a string containing the id of the app.</param>
-        /// <param name="timeout">an integer number containing the retry-timeout</param>
-        void TerminateApp(string appId, int? timeout = null);
+        /// <return>a boolean indicating if the app was terminated.</return>
+        bool TerminateApp(string appId);
+
+        /// <summary>
+        /// Terminates an App.
+        /// </summary>
+        /// <param name="appId">a string containing the id of the app.</param>
+        /// <param name="timeout">an integer number containing the timeout in ms for how long to wait until the application is terminated.</param>
+        /// <return>a boolean indicating if the app was terminated in the given timeout.</return>
+        bool TerminateApp(string appId, int timeout);
 
         /// <summary>
         /// Closes the current app.
