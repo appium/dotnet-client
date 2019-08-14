@@ -229,7 +229,8 @@ namespace OpenQA.Selenium.Appium
 
         public void TerminateApp(string appId, int? timeout = null) =>
             Execute(AppiumDriverCommand.TerminateApp, 
-                AppiumCommandExecutionHelper.PrepareArguments(new string[] { "appId", "options" }, new object[] { appId, timeout }));
+                AppiumCommandExecutionHelper.PrepareArguments(new string[] { "appId", "options" }, 
+                    new object[] { appId, new Dictionary<string, int?>() { { "timeout", timeout } } }));
 
         public bool IsAppInstalled(string bundleId) =>
             Convert.ToBoolean(Execute(AppiumDriverCommand.IsAppInstalled,
