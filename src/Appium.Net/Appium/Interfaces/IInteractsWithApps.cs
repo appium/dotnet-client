@@ -12,6 +12,8 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+using System;
+
 namespace OpenQA.Selenium.Appium.Interfaces
 {
     public interface IInteractsWithApps : IExecuteMethod
@@ -69,7 +71,7 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// <param name="appId">a string containing the id of the app.</param>
         /// <param name="timeout">an integer number containing the timeout in ms for how long to wait until the application is terminated.</param>
         /// <return>a boolean indicating if the app was terminated in the given timeout.</return>
-        bool TerminateApp(string appId, int timeout);
+        bool TerminateApp(string appId, TimeSpan timeout);
 
         /// <summary>
         /// Closes the current app.

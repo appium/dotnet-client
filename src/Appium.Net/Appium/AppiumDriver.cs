@@ -231,10 +231,10 @@ namespace OpenQA.Selenium.Appium
             Convert.ToBoolean(Execute(AppiumDriverCommand.TerminateApp,
                 AppiumCommandExecutionHelper.PrepareArgument("appId", appId)).Value.ToString());
 
-        public bool TerminateApp(string appId, int timeout) =>
+        public bool TerminateApp(string appId, TimeSpan timeout) =>
             Convert.ToBoolean(Execute(AppiumDriverCommand.TerminateApp, 
                 AppiumCommandExecutionHelper.PrepareArguments(new string[] { "appId", "options" }, 
-                    new object[] { appId, new Dictionary<string, object>() { { "timeout", timeout } } })).Value.ToString());
+                    new object[] { appId, new Dictionary<string, object>() { { "timeout", (long)timeout.TotalMilliseconds } } })).Value.ToString());
 
         public bool IsAppInstalled(string bundleId) =>
             Convert.ToBoolean(Execute(AppiumDriverCommand.IsAppInstalled,
