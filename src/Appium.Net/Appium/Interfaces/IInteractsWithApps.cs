@@ -13,6 +13,7 @@
 //limitations under the License.
 
 using System;
+using OpenQA.Selenium.Appium.Enums;
 
 namespace OpenQA.Selenium.Appium.Interfaces
 {
@@ -77,5 +78,12 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// Closes the current app.
         /// </summary>
         void CloseApp();
+
+        /// <summary>
+        /// Gets the State of the app.
+        /// </summary>
+        /// <param name="appId">a string containing the id of the app.</param>
+        /// <returns>an enumeration of the app state.</returns>
+        AppState GetAppState(string appId);
     }
 }

@@ -91,6 +91,8 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/app/end_test_coverage"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.GetAppStrings,
                 "/session/{sessionId}/appium/app/strings"),
+            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.GetAppState,
+                "/session/{sessionId}/appium/device/app_state"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.HideKeyboard,
                 "/session/{sessionId}/appium/device/hide_keyboard"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.OpenNotifications,
