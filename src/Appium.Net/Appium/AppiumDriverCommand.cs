@@ -142,6 +142,11 @@ namespace OpenQA.Selenium.Appium
         public const string GetAppStrings = "getAppStrings";
 
         /// <summary>
+        /// Get App State Command.
+        /// </summary>
+        public const string GetAppState = "getAppState";
+
+        /// <summary>
         /// Represents the Hide Keyboard command
         /// </summary>
         public const string HideKeyboard = "hideKeyboard";
