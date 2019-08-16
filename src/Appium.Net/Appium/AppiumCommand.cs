@@ -65,6 +65,8 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/device/install_app"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.RemoveApp,
                 "/session/{sessionId}/appium/device/remove_app"),
+            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.TerminateApp,
+                "/session/{sessionId}/appium/device/terminate_app"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.IsAppInstalled,
                 "/session/{sessionId}/appium/device/app_installed"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.PushFile,
