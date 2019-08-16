@@ -12,6 +12,7 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+using System;
 using OpenQA.Selenium.Appium.Enums;
 
 namespace OpenQA.Selenium.Appium.Interfaces
@@ -57,6 +58,21 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// </summary>
         /// <param name="appPath">a string containing the id of the app.</param>
         void RemoveApp(string appId);
+
+        /// <summary>
+        /// Terminates an App.
+        /// </summary>
+        /// <param name="appId">a string containing the id of the app.</param>
+        /// <return>a boolean indicating if the app was terminated.</return>
+        bool TerminateApp(string appId);
+
+        /// <summary>
+        /// Terminates an App.
+        /// </summary>
+        /// <param name="appId">a string containing the id of the app.</param>
+        /// <param name="timeout">a TimeSpan for how long to wait until the application is terminated.</param>
+        /// <return>a boolean indicating if the app was terminated in the given timeout.</return>
+        bool TerminateApp(string appId, TimeSpan timeout);
 
         /// <summary>
         /// Closes the current app.

@@ -82,6 +82,11 @@ namespace OpenQA.Selenium.Appium
         public const string RemoveApp = "removeApp";
 
         /// <summary>
+        /// Remove App Command.
+        /// </summary>
+        public const string TerminateApp = "terminateApp";
+
+        /// <summary>
         /// Is App Installed Command.
         /// </summary>
         public const string IsAppInstalled = "isAppInstalled";
