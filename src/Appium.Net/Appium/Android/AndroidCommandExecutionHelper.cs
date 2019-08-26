@@ -66,7 +66,7 @@ namespace OpenQA.Selenium.Appium.Android
             executeMethod.Execute(AppiumDriverCommand.GetCurrentActivity).Value as string;
 
         public static string GetCurrentPackage(IExecuteMethod executeMethod) =>
-	        executeMethod.Execute(AppiumDriverCommand.GetCurrentPackage).Value as string;
+            executeMethod.Execute(AppiumDriverCommand.GetCurrentPackage).Value as string;
 
         public static void SetConection(IExecuteMethod executeMethod, ConnectionType connectionType)
         {

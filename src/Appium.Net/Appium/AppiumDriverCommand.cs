@@ -71,10 +71,10 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string GetCurrentActivity = "getCurrentActivity";
 
-		/// <summary>
-		/// Get CurrentPackage Command.
-		/// </summary>
-		public const string GetCurrentPackage = "getCurrentPackage";
+        /// <summary>
+        /// Get CurrentPackage Command.
+        /// </summary>
+        public const string GetCurrentPackage = "getCurrentPackage";
 
         /// <summary>
         /// Install App Command.
