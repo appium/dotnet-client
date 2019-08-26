@@ -154,6 +154,11 @@ namespace OpenQA.Selenium.Appium.Android
             get { return AndroidCommandExecutionHelper.GetCurrentActivity(this); }
         }
 
+        public string CurrentPackage
+        {
+	        get { return AndroidCommandExecutionHelper.GetCurrentPackage(this); }
+        }
+
         #region Connection Type
 
         public ConnectionType ConnectionType

@@ -65,6 +65,9 @@ namespace OpenQA.Selenium.Appium.Android
         public static string GetCurrentActivity(IExecuteMethod executeMethod) =>
             executeMethod.Execute(AppiumDriverCommand.GetCurrentActivity).Value as string;
 
+        public static string GetCurrentPackage(IExecuteMethod executeMethod) =>
+	        executeMethod.Execute(AppiumDriverCommand.GetCurrentPackage).Value as string;
+
         public static void SetConection(IExecuteMethod executeMethod, ConnectionType connectionType)
         {
             Dictionary<string, object> values = new Dictionary<string, object>()
