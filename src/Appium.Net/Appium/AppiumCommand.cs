@@ -61,6 +61,8 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/device/rotate"),
             new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetCurrentActivity,
                 "/session/{sessionId}/appium/device/current_activity"),
+            new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetCurrentPackage,
+                "/session/{sessionId}/appium/device/current_package"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.InstallApp,
                 "/session/{sessionId}/appium/device/install_app"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.RemoveApp,
