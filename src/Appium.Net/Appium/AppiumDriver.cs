@@ -227,6 +227,15 @@ namespace OpenQA.Selenium.Appium
         public void RemoveApp(string appId) =>
             Execute(AppiumDriverCommand.RemoveApp, AppiumCommandExecutionHelper.PrepareArgument("appId", appId));
 
+        public bool TerminateApp(string appId) =>
+            Convert.ToBoolean(Execute(AppiumDriverCommand.TerminateApp,
+                AppiumCommandExecutionHelper.PrepareArgument("appId", appId)).Value.ToString());
+
+        public bool TerminateApp(string appId, TimeSpan timeout) =>
+            Convert.ToBoolean(Execute(AppiumDriverCommand.TerminateApp, 
+                AppiumCommandExecutionHelper.PrepareArguments(new string[] { "appId", "options" }, 
+                    new object[] { appId, new Dictionary<string, object>() { { "timeout", (long) timeout.TotalMilliseconds } } })).Value.ToString());
+
         public bool IsAppInstalled(string bundleId) =>
             Convert.ToBoolean(Execute(AppiumDriverCommand.IsAppInstalled,
                 AppiumCommandExecutionHelper.PrepareArgument("bundleId", bundleId)).Value.ToString());
@@ -268,6 +277,9 @@ namespace OpenQA.Selenium.Appium
         public void BackgroundApp(int seconds) =>
             Execute(AppiumDriverCommand.BackgroundApp,
                 AppiumCommandExecutionHelper.PrepareArgument("seconds", AppiumCommandExecutionHelper.PrepareArgument("timeout", seconds)));
+
+        public AppState GetAppState(string appId) =>
+            (AppState) Convert.ToInt32(Execute(AppiumDriverCommand.GetAppState, AppiumCommandExecutionHelper.PrepareArgument("appId", appId)).Value.ToString());
 
         /// <summary>
         /// Get all defined Strings from an app for the specified language and
