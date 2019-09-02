@@ -1,3 +1,9 @@
+## 4.0
+- Added the ability to terminate a given application on the device (#340). See [documentation](http://appium.io/docs/en/commands/device/app/terminate-app)
+- Added the ability to query the given app status on a device (#341). See [documentation](http://appium.io/docs/en/commands/device/app/app-state/)
+- Added property on AndroidDriver.cs to provide the ability to get the name of the current Android package (#343) See [documentation](http://appium.io/docs/en/commands/device/activity/current-package/)
+- Updated AppiumWebElement.cs to strictly compatible locator strategies (#345) fixes #328
+
 ## 4.0.0.6-beta
 - [Enhancement] Adds pointer input device extension (#315) - with help from Timotius Margo
 - [Enhancement] Add finger print authentication command for Android emulator (#324)
