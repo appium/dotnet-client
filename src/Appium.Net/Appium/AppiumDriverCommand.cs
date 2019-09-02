@@ -72,6 +72,11 @@ namespace OpenQA.Selenium.Appium
         public const string GetCurrentActivity = "getCurrentActivity";
 
         /// <summary>
+        /// Get CurrentPackage Command.
+        /// </summary>
+        public const string GetCurrentPackage = "getCurrentPackage";
+
+        /// <summary>
         /// Install App Command.
         /// </summary>
         public const string InstallApp = "installApp";
@@ -80,6 +85,11 @@ namespace OpenQA.Selenium.Appium
         /// Remove App Command.
         /// </summary>
         public const string RemoveApp = "removeApp";
+
+        /// <summary>
+        /// Remove App Command.
+        /// </summary>
+        public const string TerminateApp = "terminateApp";
 
         /// <summary>
         /// Is App Installed Command.
@@ -140,6 +150,11 @@ namespace OpenQA.Selenium.Appium
         ///  Get App Strings Command.
         /// </summary>
         public const string GetAppStrings = "getAppStrings";
+
+        /// <summary>
+        /// Get App State Command.
+        /// </summary>
+        public const string GetAppState = "getAppState";
 
         /// <summary>
         /// Represents the Hide Keyboard command
