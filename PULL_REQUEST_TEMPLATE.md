@@ -13,7 +13,7 @@ _Put an `x` in the boxes that apply_
 
 ## Documentation
 - [ ] Have you proposed a file change/ PR with appium to update documentation? 
-#### This can be done by navigating to the documentation section on http://appium.io selecting the appropriate command/endpoint and clicking 'Edit this doc' link to update the C# example
+#### This can be done by navigating to the documentation section on http://appium.io selecting the appropriate command/endpoint and clicking the 'Edit this doc' link to update the C# example
 
 ## Integration tests
 - [ ] Have you provided integration tests to pass against the beta version of appium? (for Bugfix or New feature)
