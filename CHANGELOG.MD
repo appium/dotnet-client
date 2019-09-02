@@ -3,6 +3,7 @@
 - Added the ability to query the given app status on a device (#341). See [documentation](http://appium.io/docs/en/commands/device/app/app-state/)
 - Added property on AndroidDriver.cs to provide the ability to get the name of the current Android package (#343) See [documentation](http://appium.io/docs/en/commands/device/activity/current-package/)
 - Updated AppiumWebElement.cs to strictly compatible locator strategies (#345) fixes #328
+- Updated ToDictionary() method on AppiumOptions.cs to temporarily use reflection (#346) resolves #338
 
 ## 4.0.0.6-beta
 - [Enhancement] Adds pointer input device extension (#315) - with help from Timotius Margo
