@@ -11,7 +11,7 @@ namespace OpenQA.Selenium.Appium.Enums
         NotInstalled,
         NotRunning,
         RunningInBackgroundOrSuspended,
-        RunningInBackgroud,
+        RunningInBackground,
         RunningInForeground
     }
 }
