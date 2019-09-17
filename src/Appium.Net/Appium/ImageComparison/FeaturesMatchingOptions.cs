@@ -6,15 +6,27 @@ namespace OpenQA.Selenium.Appium.ImageComparison
     {
         public string DetectorName { get; set; }
         public string MatchFunc { get; set; }
-        public int GoodMatchesFactor { get; set; }
+        public int? GoodMatchesFactor { get; set; }
 
         public override Dictionary<string, object> GetParameters()
         {
-            return new Dictionary<string, object> {
-                { "detectorName", DetectorName },
-                { "matchFunc", MatchFunc },
-                { "goodMatchesFactor", GoodMatchesFactor }
-            };
+            var parameters = new Dictionary<string, object>();
+            if (!string.IsNullOrWhiteSpace(DetectorName))
+            {
+                parameters.Add("detectorName", DetectorName);
+            }
+
+            if (!string.IsNullOrEmpty(MatchFunc))
+            {
+                parameters.Add("matchFunc", MatchFunc);
+            }
+
+            if (GoodMatchesFactor.HasValue)
+            {
+                parameters.Add("goodMatchesFactor", GoodMatchesFactor);
+            }
+
+            return parameters;
         }
     }
 }
