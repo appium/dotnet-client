@@ -27,6 +27,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using OpenQA.Selenium.Appium.ImageComparison;
 
 namespace OpenQA.Selenium.Appium
 {
@@ -533,6 +534,62 @@ namespace OpenQA.Selenium.Appium
         }
 
         #endregion Recording Screen
+
+        #region Compare Images
+
+        public FeaturesMatchingResult MatchImageFeatures(string base64Image1, string base64Image2, FeaturesMatchingOptions options = null)
+        {
+            var parameters = new Dictionary<string, object> {
+                { "mode", ComparisonMode.MatchFeatures },
+                { "firstImage", base64Image1 },
+                { "secondImage", base64Image2 }
+            };
+
+            if (options != null)
+            {
+                parameters.Add("options", options.GetParameters());
+            }
+
+            var result = Execute(AppiumDriverCommand.CompareImages, parameters);
+            return new FeaturesMatchingResult(result.Value as Dictionary<string, object>);
+        }
+
+        public OccurenceMatchingResult FindImageOccurence(string base64Image1, string base64Image2, OccurenceMatchingOptions options = null)
+        {
+            var parameters = new Dictionary<string, object> {
+                { "mode", ComparisonMode.MatchTemplate },
+                { "firstImage", base64Image1 },
+                { "secondImage", base64Image2 }
+            };
+
+            if (options != null)
+            {
+                parameters.Add("options", options.GetParameters());
+            }
+
+            var result = Execute(AppiumDriverCommand.CompareImages, parameters);
+            return new OccurenceMatchingResult(result.Value as Dictionary<string, object>);
+        }
+
+        public SimilarityMatchingResult GetImagesSimilarity(string base64Image1, string base64Image2, SimilarityMatchingOptions options = null)
+        {
+            var parameters = new Dictionary<string, object>()
+            {
+                { "mode", ComparisonMode.GetSimilarity },
+                { "firstImage", base64Image1 },
+                { "secondImage", base64Image2 },
+            };
+
+            if (options != null)
+            {
+                parameters.Add("options", options.GetParameters());
+            }
+
+            var result =  Execute(AppiumDriverCommand.CompareImages, parameters);
+            return new SimilarityMatchingResult(result.Value as Dictionary<string, object>);
+        }
+
+        #endregion Compare Images
 
         #endregion Public Methods
 
