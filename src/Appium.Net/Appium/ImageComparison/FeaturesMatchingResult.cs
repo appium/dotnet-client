@@ -11,17 +11,17 @@ namespace OpenQA.Selenium.Appium.ImageComparison
             get { return Convert.ToInt32(Result["count"]); }
         }
 
-        public int Totalcount
+        public int TotalCount
         {
             get { return Convert.ToInt32(Result["totalCount"]);  }
         }
 
-        public Point Points1
+        public List<Point> Points1
         {
             get { return ConvertToPoint(Result["points1"]); }
         }
 
-        public Point Points2
+        public List<Point> Points2
         {
             get { return ConvertToPoint(Result["points2"]); }
         }

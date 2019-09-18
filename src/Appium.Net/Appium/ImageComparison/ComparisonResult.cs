@@ -35,13 +35,20 @@ namespace OpenQA.Selenium.Appium.ImageComparison
             );
         }
 
-        protected Point ConvertToPoint(object value)
+        protected List<Point> ConvertToPoint(object value)
         {
-            var point = value as Dictionary<string, object>;
-            return new Point(
-                Convert.ToInt32(point["x"]),
-                Convert.ToInt32(point["y"])
-            );
+            var points = value as List<Dictionary<string, object>>;
+            var convertedPoints = new List<Point>();
+
+            foreach(var point in points)
+            {
+                convertedPoints.Add(new Point(
+                    Convert.ToInt32(point["x"]),
+                    Convert.ToInt32(point["y"])
+                ));
+            }
+
+            return convertedPoints;
         }
     }
 }
