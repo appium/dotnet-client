@@ -614,7 +614,7 @@ namespace OpenQA.Selenium.Appium
                 parameters.Add("options", options.GetParameters());
             }
 
-            var result =  Execute(AppiumDriverCommand.CompareImages, parameters);
+            var result = Execute(AppiumDriverCommand.CompareImages, parameters);
             return new SimilarityMatchingResult(result.Value as Dictionary<string, object>);
         }
 
