@@ -6,9 +6,14 @@ namespace OpenQA.Selenium.Appium.ImageComparison
     {
         public override Dictionary<string, object> GetParameters()
         {
-            return new Dictionary<string, object> {
-                { "visualize", Visualize }
-            };
+            var parameters = new Dictionary<string, object>();
+
+            if (Visualize != null)
+            {
+                parameters.Add("visualize", Visualize);
+            }
+
+            return parameters;
         }
     }
 }
