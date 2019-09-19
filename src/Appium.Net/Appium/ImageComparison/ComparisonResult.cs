@@ -7,6 +7,9 @@ namespace OpenQA.Selenium.Appium.ImageComparison
 {
     public abstract class ComparisonResult
     {
+        /// <summary>
+        /// The visualization of the matching result represented as base64-encoded PNG image.
+        /// </summary>
         public string Visualization
         {
             get { return Result["visualization"].ToString(); }
@@ -14,7 +17,7 @@ namespace OpenQA.Selenium.Appium.ImageComparison
 
         protected Dictionary<string, object> Result { get; }
 
-        public ComparisonResult(Dictionary<string, object> result)
+        protected ComparisonResult(Dictionary<string, object> result)
         {
             Result = result;
         }
