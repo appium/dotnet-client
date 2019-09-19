@@ -37,14 +37,14 @@ namespace OpenQA.Selenium.Appium.ImageComparison
 
         protected List<Point> ConvertToPoint(object value)
         {
-            var points = value as List<Dictionary<string, object>>;
+            var points = value as object[];
             var convertedPoints = new List<Point>();
-
             foreach(var point in points)
             {
+                var currentPoint = point as Dictionary<string, object>;
                 convertedPoints.Add(new Point(
-                    Convert.ToInt32(point["x"]),
-                    Convert.ToInt32(point["y"])
+                    Convert.ToInt32(currentPoint["x"]),
+                    Convert.ToInt32(currentPoint["y"])
                 ));
             }
 
