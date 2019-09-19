@@ -35,13 +35,6 @@ namespace Appium.Net.Integration.Tests.Windows
             _calculatorSession = null;
         }
 
-        [SetUp]
-        public void SetUp()
-        {
-            _calculatorSession.FindElementByName("Clear").Click();
-            Assert.AreEqual("Display is 0", CalculatorResult.Text);
-        }
-
         [Test]
         public void SimilarityCalculation()
         {
