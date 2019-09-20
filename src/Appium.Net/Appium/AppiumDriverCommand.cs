@@ -315,5 +315,10 @@ namespace OpenQA.Selenium.Appium
 
         #endregion JSON Wire Protocol
 
+        #region Compare Images
+
+        public const string CompareImages = "compareImages";
+
+        #endregion
     }
 }

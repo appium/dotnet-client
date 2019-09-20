@@ -1,3 +1,6 @@
+## 4.1
+Added helpers to access Appiums image comparison tools
+
 ## 4.0
 - Added the ability to terminate a given application on a device (#340). See [documentation](http://appium.io/docs/en/commands/device/app/terminate-app)
 - Added the ability to query the given app status on a device (#341). See [documentation](http://appium.io/docs/en/commands/device/app/app-state/)
