@@ -57,14 +57,5 @@ namespace OpenQA.Selenium.Appium.Properties
                 resourceCulture = value;
             }
         }
-
-        internal static byte[] npm_script_unix
-        {
-            get
-            {
-                object obj = ResourceManager.GetObject("npm_script_unix", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
     }
 }
