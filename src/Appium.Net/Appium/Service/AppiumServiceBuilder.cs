@@ -165,10 +165,8 @@ namespace OpenQA.Selenium.Appium.Service
 #if NETSTANDARD
                 if (!isWindows)
                 {
-                    var embeddedResource = new Microsoft.Extensions.FileProviders.EmbeddedFileProvider(Assembly.GetEntryAssembly());
-                    var node_path = embeddedResource.GetFileInfo("resources/script/path_to_default_node");
-
-                    bytes = Properties.Resources.npm_script_unix;
+                    var embeddedScriptResource = new Microsoft.Extensions.FileProviders.EmbeddedFileProvider(Assembly.GetEntryAssembly());
+                    var node_path = embeddedScriptResource.GetFileInfo("resources/script/path_to_default_node");
                     pathToScript = node_path.PhysicalPath;
                 }
 #endif
