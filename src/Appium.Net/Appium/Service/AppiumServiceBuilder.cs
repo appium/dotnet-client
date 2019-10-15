@@ -167,7 +167,7 @@ namespace OpenQA.Selenium.Appium.Service
                     }
                     else
                     {
-                        p = StartSearchingProcess(AppiumServiceConstants.Bash, "-c \"" + "OUTPUT=$(npm root -g); echo ${OUTPUT}\"");
+                        p = StartSearchingProcess(AppiumServiceConstants.Bash, "-c \"" + "-c \"" + "echo $(npm root -g);\"");
                     }
                 }
                 catch (Exception e)
