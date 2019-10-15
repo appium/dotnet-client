@@ -27,10 +27,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="resources\scripts\path_to_default_node.sh" />
-  </ItemGroup>
-
-  <ItemGroup>
     <EmbeddedResource Include="resources\scripts\path_to_default_node.sh" />
   </ItemGroup>
 
