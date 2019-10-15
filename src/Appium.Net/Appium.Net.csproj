@@ -27,12 +27,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="resources\scripts\path_to_default_node.sh" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="resources\scripts\path_to_default_node.sh" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="LICENSE.txt" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Castle.Core" Version="4.3.1" />
     <PackageReference Include="DotNetSeleniumExtras.PageObjects" Version="3.11.0" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="3.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="Selenium.Support" Version="3.141.0" />
     <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />

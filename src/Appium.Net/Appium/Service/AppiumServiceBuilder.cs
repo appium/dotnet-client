@@ -20,6 +20,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Reflection;
 
 namespace OpenQA.Selenium.Appium.Service
 {
@@ -160,11 +161,17 @@ namespace OpenQA.Selenium.Appium.Service
                 bool isWindows = Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows);
                 byte[] bytes;
                 string pathToScript = null;
+
+#if NETSTANDARD
                 if (!isWindows)
                 {
+                    var embeddedResource = new Microsoft.Extensions.FileProviders.EmbeddedFileProvider(Assembly.GetEntryAssembly());
+                    var node_path = embeddedResource.GetFileInfo("resources/script/path_to_default_node");
+
                     bytes = Properties.Resources.npm_script_unix;
-                    pathToScript = GetTempFile(".sh", bytes).FullName;
+                    pathToScript = node_path.PhysicalPath;
                 }
+#endif
 
                 try
                 {
@@ -397,7 +404,7 @@ namespace OpenQA.Selenium.Appium.Service
                 sock = new Socket(AddressFamily.InterNetwork,
                     SocketType.Stream, ProtocolType.Tcp);
                 sock.Bind(new IPEndPoint(IPAddress.Any, 0));
-                Port = ((IPEndPoint) sock.LocalEndPoint).Port;
+                Port = ((IPEndPoint)sock.LocalEndPoint).Port;
                 return this;
             }
             finally
