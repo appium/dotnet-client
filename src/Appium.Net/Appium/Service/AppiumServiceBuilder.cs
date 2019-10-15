@@ -21,6 +21,8 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
+using System.Text;
+using System.Linq;
 
 namespace OpenQA.Selenium.Appium.Service
 {
@@ -159,17 +161,20 @@ namespace OpenQA.Selenium.Appium.Service
                 Process p = null;
 
                 bool isWindows = Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows);
-                byte[] bytes;
+                byte[] scriptResourceBytes;
                 string pathToScript = null;
 
-#if NETSTANDARD
                 if (!isWindows)
                 {
-                    var embeddedScriptResource = new Microsoft.Extensions.FileProviders.EmbeddedFileProvider(Assembly.GetEntryAssembly());
-                    var node_path = embeddedScriptResource.GetFileInfo("resources/script/path_to_default_node");
-                    pathToScript = node_path.PhysicalPath;
+                    var assembly = Assembly.GetExecutingAssembly();
+                    var scriptResourceName = assembly.GetManifestResourceNames().First(x => x.EndsWith("path_to_default_node.sh", StringComparison.OrdinalIgnoreCase));
+                    using (var stream = assembly.GetManifestResourceStream(scriptResourceName))
+                    {
+                        using (var reader = new StreamReader(stream)) { scriptResourceBytes = Encoding.ASCII.GetBytes(reader.ReadToEnd()); }
+                    }
+                    pathToScript = GetTempFile(".sh", scriptResourceBytes).FullName;
                 }
-#endif
+
                 try
                 {
                     if (isWindows)
