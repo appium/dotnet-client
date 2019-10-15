@@ -170,7 +170,6 @@ namespace OpenQA.Selenium.Appium.Service
                     pathToScript = node_path.PhysicalPath;
                 }
 #endif
-
                 try
                 {
                     if (isWindows)
