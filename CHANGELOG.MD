@@ -1,5 +1,6 @@
 ## 4.1
-Added helpers to access Appiums image comparison tools
+- Added helpers to access Appiums image comparison tools
+- Removed the need to embed an application resource for finding the node instance path. Fixes (#356) InvalidCastException error when locating node path on non-windows host & net45 target (#357)
 
 ## 4.0
 - Added the ability to terminate a given application on a device (#340). See [documentation](http://appium.io/docs/en/commands/device/app/terminate-app)
