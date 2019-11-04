@@ -60,6 +60,12 @@ namespace OpenQA.Selenium.Appium.Interfaces
         void RemoveApp(string appId);
 
         /// <summary>
+        /// Activates an App.
+        /// </summary>
+        /// <param name="appPath">a string containing the id of the app.</param>
+        void ActivateApp(string appId);
+
+        /// <summary>
         /// Terminates an App.
         /// </summary>
         /// <param name="appId">a string containing the id of the app.</param>
