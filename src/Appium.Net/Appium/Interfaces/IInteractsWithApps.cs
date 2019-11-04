@@ -60,7 +60,7 @@ namespace OpenQA.Selenium.Appium.Interfaces
         void RemoveApp(string appId);
 
         /// <summary>
-        /// Activates an App.
+        /// Activates the given app by moving to the foreground if it is running in the background or starting it if it is not running yet.
         /// </summary>
         /// <param name="appPath">a string containing the id of the app.</param>
         void ActivateApp(string appId);
