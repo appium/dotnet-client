@@ -34,7 +34,7 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// Checks If an App Is Installed.
         /// </summary>
         /// <param name="appPath">a string containing the bundle id.</param>
-        /// <return>a bol indicating if the app is installed.</return>
+        /// <return>a boolean indicating if the app is installed.</return>
         bool IsAppInstalled(string bundleId);
 
         /// <summary>

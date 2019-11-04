@@ -87,7 +87,7 @@ namespace OpenQA.Selenium.Appium
         public const string RemoveApp = "removeApp";
 
         /// <summary>
-        /// Remove App Command.
+        /// Activate App Command.
         /// </summary>
         public const string ActivateApp = "activateApp";
 
