@@ -1,5 +1,10 @@
 # appium-dotnet-driver
 
+[![NuGet version](https://badge.fury.io/nu/Appium.WebDriver.svg)](https://badge.fury.io/nu/Appium.WebDriver)
+![Nuget](https://img.shields.io/nuget/dt/Appium.Webdriver)
+
+[![Build Status](https://dev.azure.com/AppiumCI/dotnet-client/_apis/build/status/appium.appium-dotnet-driver?branchName=master)](https://dev.azure.com/AppiumCI/dotnet-client/_apis/build/status/appium.appium-dotnet-driver?branchName=master)
+
 This driver is an extension of the [Selenium](http://docs.seleniumhq.org/) C# client. It has 
 all the functionalities of the regular driver, but add Appium specific methods on top of this.
 
