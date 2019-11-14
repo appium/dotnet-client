@@ -4,8 +4,8 @@
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <RootNamespace>OpenQA.Selenium</RootNamespace>
-    <AssemblyVersion>4.0</AssemblyVersion>
-    <Version>4.0</Version>
+    <AssemblyVersion>4.1.0</AssemblyVersion>
+    <Version>4.1.0</Version>
     <Company>Appium Commiters</Company>
     <Product>Appium-Dotnet-Driver</Product>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
