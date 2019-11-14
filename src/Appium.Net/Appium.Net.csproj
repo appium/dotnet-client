@@ -16,18 +16,22 @@
     <RepositoryType>git</RepositoryType>
     <PackageId>Appium.WebDriver</PackageId>
     <Authors>Appium Commiters</Authors>
-    <PackageIconUrl>https://avatars1.githubusercontent.com/u/3221291?s=140</PackageIconUrl>
+    <PackageIcon>appium-icon.png</PackageIcon>
     <Description>Selenium Webdriver extension for Appium.</Description>
     <PackageTags>Appium Webdriver device automation</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-    <FileVersion>4.0</FileVersion>
+    <FileVersion>4.1.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="LICENSE.txt" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="appium-icon.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <ItemGroup>
