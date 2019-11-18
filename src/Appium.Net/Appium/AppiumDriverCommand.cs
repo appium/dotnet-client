@@ -87,6 +87,11 @@ namespace OpenQA.Selenium.Appium
         public const string RemoveApp = "removeApp";
 
         /// <summary>
+        /// Activate App Command.
+        /// </summary>
+        public const string ActivateApp = "activateApp";
+
+        /// <summary>
         /// Remove App Command.
         /// </summary>
         public const string TerminateApp = "terminateApp";
@@ -315,5 +320,10 @@ namespace OpenQA.Selenium.Appium
 
         #endregion JSON Wire Protocol
 
+        #region Compare Images
+
+        public const string CompareImages = "compareImages";
+
+        #endregion
     }
 }

@@ -67,6 +67,8 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/device/install_app"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.RemoveApp,
                 "/session/{sessionId}/appium/device/remove_app"),
+            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ActivateApp,
+                "/session/{sessionId}/appium/device/remove_app"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.TerminateApp,
                 "/session/{sessionId}/appium/device/terminate_app"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.IsAppInstalled,
@@ -183,11 +185,15 @@ namespace OpenQA.Selenium.Appium
             #region Recording Screen
 
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.StartRecordingScreen, "/session/{sessionId}/appium/start_recording_screen"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.StopRecordingScreen, "/session/{sessionId}/appium/stop_recording_screen")
+            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.StopRecordingScreen, "/session/{sessionId}/appium/stop_recording_screen"),
 
             #endregion Recording Screen
 
             #endregion JSON Wire Protocol Commands
+
+            #region Compare Images
+            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.CompareImages, "/session/{sessionId}/appium/compare_images" ),
+            #endregion
         };
 
         /// <summary>

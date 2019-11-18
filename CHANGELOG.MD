@@ -1,3 +1,8 @@
+## 4.1.0
+- Added helpers to access Appiums image comparison tools (#355)
+- Removed the need to embed an application resource for finding the node instance path (#357). Fixes (#356): InvalidCastException error when locating node path on non-windows host & net45 target
+- Added the ability to activate a given application on a device (#359). [documentation](http://appium.io/docs/en/commands/device/app/activate-app)
+
 ## 4.0
 - Added the ability to terminate a given application on a device (#340). See [documentation](http://appium.io/docs/en/commands/device/app/terminate-app)
 - Added the ability to query the given app status on a device (#341). See [documentation](http://appium.io/docs/en/commands/device/app/app-state/)

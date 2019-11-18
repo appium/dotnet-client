@@ -1,11 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2026
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29509.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DD79BA21-B485-411E-B132-0C1A462FFABF}"
 	ProjectSection(SolutionItems) = preProject
 		..\.travis.yml = ..\.travis.yml
+		Appium.Net\appium-icon.png = Appium.Net\appium-icon.png
 		..\CHANGELOG.MD = ..\CHANGELOG.MD
 	EndProjectSection
 EndProject

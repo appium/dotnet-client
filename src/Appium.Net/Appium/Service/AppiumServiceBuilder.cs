@@ -154,17 +154,10 @@ namespace OpenQA.Selenium.Appium.Service
         {
             get
             {
-                string instancePath;
+                string nodeInstancePath;
                 Process p = null;
 
                 bool isWindows = Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows);
-                byte[] bytes;
-                string pathToScript = null;
-                if (!isWindows)
-                {
-                    bytes = Properties.Resources.npm_script_unix;
-                    pathToScript = GetTempFile(".sh", bytes).FullName;
-                }
 
                 try
                 {
@@ -174,7 +167,7 @@ namespace OpenQA.Selenium.Appium.Service
                     }
                     else
                     {
-                        p = StartSearchingProcess(AppiumServiceConstants.Bash, "-l " + pathToScript);
+                        p = StartSearchingProcess(AppiumServiceConstants.Bash, "-c \"" + "echo $(npm root -g);\"");
                     }
                 }
                 catch (Exception e)
@@ -183,20 +176,16 @@ namespace OpenQA.Selenium.Appium.Service
                     {
                         p.Close();
                     }
-                    if (pathToScript != null && File.Exists(pathToScript))
-                    {
-                        File.Delete(pathToScript);
-                    }
                     throw e;
                 }
 
-                instancePath = GetTheLastStringFromsOutput(p.StandardOutput);
+                nodeInstancePath = GetTheLastStringFromsOutput(p.StandardOutput);
 
                 try
                 {
                     DirectoryInfo defaultAppiumNode;
-                    if (string.IsNullOrEmpty(instancePath) || !(defaultAppiumNode = new DirectoryInfo(
-                            instancePath + Path.DirectorySeparatorChar +
+                    if (string.IsNullOrEmpty(nodeInstancePath) || !(defaultAppiumNode = new DirectoryInfo(
+                            nodeInstancePath + Path.DirectorySeparatorChar +
                             AppiumServiceConstants.AppiumFolder)).Exists)
                     {
                         throw new InvalidServerInstanceException(ErrorNodeNotFound);
@@ -217,10 +206,6 @@ namespace OpenQA.Selenium.Appium.Service
                 finally
                 {
                     p.Close();
-                    if (pathToScript != null && File.Exists(pathToScript))
-                    {
-                        File.Delete(pathToScript);
-                    }
                 }
             }
         }
@@ -397,7 +382,7 @@ namespace OpenQA.Selenium.Appium.Service
                 sock = new Socket(AddressFamily.InterNetwork,
                     SocketType.Stream, ProtocolType.Tcp);
                 sock.Bind(new IPEndPoint(IPAddress.Any, 0));
-                Port = ((IPEndPoint) sock.LocalEndPoint).Port;
+                Port = ((IPEndPoint)sock.LocalEndPoint).Port;
                 return this;
             }
             finally

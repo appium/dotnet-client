@@ -226,5 +226,11 @@ namespace OpenQA.Selenium.Appium.Enums
         /// Timeout in seconds while waiting for device to become ready.
         /// </summary>
         public static readonly string AppWaitDuration = "appWaitDuration";
+
+        /// <summary>
+        /// Have Appium automatically determine which permissions your app requires and grant them to the app on install.
+        /// Defaults to false. If noReset is true, this capability doesn't work.
+        /// </summary>
+        public static readonly string AutoGrantPermissions = "autoGrantPermissions";
     }
 }

@@ -27,6 +27,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using OpenQA.Selenium.Appium.ImageComparison;
 
 namespace OpenQA.Selenium.Appium
 {
@@ -226,6 +227,9 @@ namespace OpenQA.Selenium.Appium
 
         public void RemoveApp(string appId) =>
             Execute(AppiumDriverCommand.RemoveApp, AppiumCommandExecutionHelper.PrepareArgument("appId", appId));
+
+        public void ActivateApp(string appId) =>
+            Execute(AppiumDriverCommand.ActivateApp, AppiumCommandExecutionHelper.PrepareArgument("appId", appId));
 
         public bool TerminateApp(string appId) =>
             Convert.ToBoolean(Execute(AppiumDriverCommand.TerminateApp,
@@ -533,6 +537,91 @@ namespace OpenQA.Selenium.Appium
         }
 
         #endregion Recording Screen
+
+        #region Compare Images
+
+        /// <summary>
+        /// Performs images matching by features. Read
+        /// https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_feature2d/py_matcher/py_matcher.html
+        /// for more details on this topic.
+        /// </summary>
+        /// <param name="base64Image1">base64-encoded representation of the first image</param>
+        /// <param name="base64Image2">base64-encoded representation of the second image</param>
+        /// <param name="options">comparison options</param>
+        /// <returns>The matching result. The configuration of fields in the result depends on comparison options</returns>
+        public FeaturesMatchingResult MatchImageFeatures(string base64Image1, string base64Image2, FeaturesMatchingOptions options = null)
+        {
+            var parameters = new Dictionary<string, object> {
+                { "mode", ComparisonMode.MatchFeatures },
+                { "firstImage", base64Image1 },
+                { "secondImage", base64Image2 }
+            };
+
+            if (options != null)
+            {
+                parameters.Add("options", options.GetParameters());
+            }
+
+            var result = Execute(AppiumDriverCommand.CompareImages, parameters);
+            return new FeaturesMatchingResult(result.Value as Dictionary<string, object>);
+        }
+
+        /// <summary>
+        /// Performs images matching by template to find possible occurrence of 
+        /// the partial image in the full image with default options. Read
+        /// https://docs.opencv.org/2.4/doc/tutorials/imgproc/histograms/template_matching/template_matching.html
+        /// for more details on this topic.
+        /// </summary>
+        /// <param name="fullImage">base64-encoded representation of the full image</param>
+        /// <param name="partialImage">base64-encoded representation of the partial image</param>
+        /// <param name="options">comparison options</param>
+        /// <returns>The matching result. The configuration of fields in the result depends on comparison options.</returns>
+        public OccurenceMatchingResult FindImageOccurence(string fullImage, string partialImage, OccurenceMatchingOptions options = null)
+        {
+            var parameters = new Dictionary<string, object> {
+                { "mode", ComparisonMode.MatchTemplate },
+                { "firstImage", fullImage },
+                { "secondImage", partialImage }
+            };
+
+            if (options != null)
+            {
+                parameters.Add("options", options.GetParameters());
+            }
+
+            var result = Execute(AppiumDriverCommand.CompareImages, parameters);
+            return new OccurenceMatchingResult(result.Value as Dictionary<string, object>);
+        }
+
+        /// <summary>
+        /// Performs images matching to calculate the similarity score between them.
+        /// The flow there is similar to the one used in
+        /// <see cref="FindImageOccurence(string, string, OccurenceMatchingOptions)"/>
+        /// but it is mandatory that both images are of equal size.
+        /// </summary>
+        /// <param name="base64Image1">base64-encoded representation of the first image</param>
+        /// <param name="base64Image2">base64-encoded representation of the second image</param>
+        /// <param name="options">comparison options</param>
+        /// <returns>Matching result. The configuration of fields in the result depends on comparison options.</returns>
+        public SimilarityMatchingResult GetImagesSimilarity(string base64Image1, string base64Image2, SimilarityMatchingOptions options = null)
+        {
+            var parameters = new Dictionary<string, object>()
+            {
+                { "mode", ComparisonMode.GetSimilarity },
+                { "firstImage", base64Image1 },
+                { "secondImage", base64Image2 },
+            };
+
+            if (options != null)
+            {
+                parameters.Add("options", options.GetParameters());
+            }
+
+            var result = Execute(AppiumDriverCommand.CompareImages, parameters);
+            return new SimilarityMatchingResult(result.Value as Dictionary<string, object>);
+        }
+
+        #endregion Compare Images
 
         #endregion Public Methods
 
