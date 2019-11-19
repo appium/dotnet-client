@@ -1,3 +1,6 @@
+## 4.1.1
+- Resolved #372 by fixing the endpoint for Activating an App
+
 ## 4.1.0
 - Added helpers to access Appiums image comparison tools (#355)
 - Removed the need to embed an application resource for finding the node instance path (#357). Fixes (#356): InvalidCastException error when locating node path on non-windows host & net45 target
