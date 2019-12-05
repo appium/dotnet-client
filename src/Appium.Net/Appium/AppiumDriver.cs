@@ -328,9 +328,7 @@ namespace OpenQA.Selenium.Appium
         {
             get
             {
-                try
-                {
-                    var commandResponse = ((IExecuteMethod)this).Execute(AppiumDriverCommand.GetLocation);
+                var commandResponse = ((IExecuteMethod) this).Execute(AppiumDriverCommand.GetLocation);
                     var locationValues = commandResponse.Value as Dictionary<string, object>;
                     return new Location
                     {
@@ -338,12 +336,6 @@ namespace OpenQA.Selenium.Appium
                         Latitude = Convert.ToDouble(locationValues["latitude"]),
                         Longitude = Convert.ToDouble(locationValues["longitude"])
                     };
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    throw;
-                }
             }
             set
             {
