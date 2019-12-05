@@ -31,7 +31,8 @@ using OpenQA.Selenium.Appium.ImageComparison;
 
 namespace OpenQA.Selenium.Appium
 {
-    public abstract class AppiumDriver<W> : RemoteWebDriver, IFindsById, IFindsByClassName, IFindsByName, IFindsByTagName, IExecuteMethod, IFindsByFluentSelector<W>,
+    public abstract class AppiumDriver<W> : RemoteWebDriver, IFindsById, IFindsByClassName, IFindsByName,
+        IFindsByTagName, IExecuteMethod, IFindsByFluentSelector<W>,
         IHasSessionDetails,
         IFindByAccessibilityId<W>,
         IHidesKeyboard, IInteractsWithFiles,
@@ -40,9 +41,8 @@ namespace OpenQA.Selenium.Appium
         IGenericFindsById<W>, IGenericFindsByCssSelector<W>, IGenericFindsByLinkText<W>, IGenericFindsByName<W>,
         IGenericFindsByPartialLinkText<W>, IGenericFindsByTagName<W>, IGenericFindsByXPath<W> where W : IWebElement
     {
-
         private const string NativeApp = "NATIVE_APP";
-        
+
         #region Constructors
 
         public AppiumDriver(ICommandExecutor commandExecutor, ICapabilities appiumOptions)
@@ -102,7 +102,7 @@ namespace OpenQA.Selenium.Appium
         ReadOnlyCollection<IWebElement> IFindsByClassName.FindElementsByClassName(string className) =>
             base.FindElements(MobileSelector.ClassName, className);
 
-        IWebElement IFindsById.FindElementById(string id) => 
+        IWebElement IFindsById.FindElementById(string id) =>
             base.FindElement(MobileSelector.Id, id);
 
         ReadOnlyCollection<IWebElement> IFindsById.FindElementsById(string id) =>
@@ -126,6 +126,7 @@ namespace OpenQA.Selenium.Appium
 
         public new W FindElement(By by) =>
             (W) base.FindElement(by);
+
         public new ReadOnlyCollection<W> FindElements(By by) =>
             ConvertToExtendedWebElementCollection<W>(base.FindElements(by));
 
@@ -219,6 +220,7 @@ namespace OpenQA.Selenium.Appium
             {
                 parameters.Add(opt.Key, opt.Value);
             }
+
             Execute(AppiumDriverCommand.Rotate, parameters);
         }
 
@@ -236,9 +238,11 @@ namespace OpenQA.Selenium.Appium
                 AppiumCommandExecutionHelper.PrepareArgument("appId", appId)).Value.ToString());
 
         public bool TerminateApp(string appId, TimeSpan timeout) =>
-            Convert.ToBoolean(Execute(AppiumDriverCommand.TerminateApp, 
-                AppiumCommandExecutionHelper.PrepareArguments(new string[] { "appId", "options" }, 
-                    new object[] { appId, new Dictionary<string, object>() { { "timeout", (long) timeout.TotalMilliseconds } } })).Value.ToString());
+            Convert.ToBoolean(Execute(AppiumDriverCommand.TerminateApp,
+                    AppiumCommandExecutionHelper.PrepareArguments(new string[] {"appId", "options"},
+                        new object[]
+                            {appId, new Dictionary<string, object>() {{"timeout", (long) timeout.TotalMilliseconds}}}))
+                .Value.ToString());
 
         public bool IsAppInstalled(string bundleId) =>
             Convert.ToBoolean(Execute(AppiumDriverCommand.IsAppInstalled,
@@ -272,18 +276,20 @@ namespace OpenQA.Selenium.Appium
 
         public void ToggleData() =>
             AppiumCommandExecutionHelper.ToggleData(this);
-       
 
         public void BackgroundApp() =>
             Execute(AppiumDriverCommand.BackgroundApp,
-                AppiumCommandExecutionHelper.PrepareArgument("seconds", AppiumCommandExecutionHelper.PrepareArgument("timeout", null)));
+                AppiumCommandExecutionHelper.PrepareArgument("seconds",
+                    AppiumCommandExecutionHelper.PrepareArgument("timeout", null)));
 
         public void BackgroundApp(int seconds) =>
             Execute(AppiumDriverCommand.BackgroundApp,
-                AppiumCommandExecutionHelper.PrepareArgument("seconds", AppiumCommandExecutionHelper.PrepareArgument("timeout", seconds)));
+                AppiumCommandExecutionHelper.PrepareArgument("seconds",
+                    AppiumCommandExecutionHelper.PrepareArgument("timeout", seconds)));
 
         public AppState GetAppState(string appId) =>
-            (AppState) Convert.ToInt32(Execute(AppiumDriverCommand.GetAppState, AppiumCommandExecutionHelper.PrepareArgument("appId", appId)).Value.ToString());
+            (AppState) Convert.ToInt32(Execute(AppiumDriverCommand.GetAppState,
+                AppiumCommandExecutionHelper.PrepareArgument("appId", appId)).Value.ToString());
 
         /// <summary>
         /// Get all defined Strings from an app for the specified language and
@@ -299,14 +305,17 @@ namespace OpenQA.Selenium.Appium
             {
                 parameters.Add("language", language);
             }
+
             if (stringFile != null)
             {
                 parameters.Add("stringFile", stringFile);
             }
+
             if (parameters.Count == 0)
             {
                 parameters = null;
             }
+
             return (Dictionary<string, object>) Execute(AppiumDriverCommand.GetAppStrings, parameters).Value;
         }
 
@@ -319,8 +328,22 @@ namespace OpenQA.Selenium.Appium
         {
             get
             {
-                var commandResponse = ((IExecuteMethod) this).Execute(AppiumDriverCommand.GetLocation);
-                return JsonConvert.DeserializeObject<Location>((string) commandResponse.Value);
+                try
+                {
+                    var commandResponse = ((IExecuteMethod)this).Execute(AppiumDriverCommand.GetLocation);
+                    var locationValues = commandResponse.Value as Dictionary<string, object>;
+                    return new Location
+                    {
+                        Altitude = Convert.ToDouble(locationValues["altitude"]),
+                        Latitude = Convert.ToDouble(locationValues["latitude"]),
+                        Longitude = Convert.ToDouble(locationValues["longitude"])
+                    };
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
             }
             set
             {
@@ -377,7 +400,8 @@ namespace OpenQA.Selenium.Appium
             }
             set
             {
-                var parameters = AppiumCommandExecutionHelper.PrepareArgument("orientation", value.JSONWireProtocolString());
+                var parameters =
+                    AppiumCommandExecutionHelper.PrepareArgument("orientation", value.JSONWireProtocolString());
                 Execute(AppiumDriverCommand.SetOrientation, parameters);
             }
         }
@@ -399,6 +423,7 @@ namespace OpenQA.Selenium.Appium
             {
                 retVal.AddRange(objectArr.Select(val => val.ToString()));
             }
+
             return retVal;
         }
 
@@ -421,7 +446,8 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <param name="imeEngine">IME to activate</param>
         public void ActivateIMEEngine(string imeEngine) =>
-            Execute(AppiumDriverCommand.ActivateEngine, AppiumCommandExecutionHelper.PrepareArgument("engine", imeEngine));
+            Execute(AppiumDriverCommand.ActivateEngine,
+                AppiumCommandExecutionHelper.PrepareArgument("engine", imeEngine));
 
         /// <summary>
         /// Deactivate the currently Active IME Engine on device
@@ -489,7 +515,7 @@ namespace OpenQA.Selenium.Appium
         {
             get
             {
-                var session = 
+                var session =
                     (IDictionary<string, object>) ((IExecuteMethod) this).Execute(AppiumDriverCommand.GetSession)
                     .Value;
                 return new ReadOnlyDictionary<string, object>(session.Where(entry =>
@@ -508,7 +534,7 @@ namespace OpenQA.Selenium.Appium
             return details.ContainsKey(detail) ? details[detail] : null;
         }
 
-        public string PlatformName => GetSessionDetail(MobileCapabilityType.PlatformName) as string 
+        public string PlatformName => GetSessionDetail(MobileCapabilityType.PlatformName) as string
                                       ?? GetSessionDetail(CapabilityType.Platform) as string;
 
         public string AutomationName => GetSessionDetail(MobileCapabilityType.AutomationName) as string;
@@ -520,7 +546,8 @@ namespace OpenQA.Selenium.Appium
 
         #region Recording Screen
 
-        public string StartRecordingScreen() => ((IExecuteMethod)this).Execute(AppiumDriverCommand.StartRecordingScreen).Value.ToString();
+        public string StartRecordingScreen() =>
+            ((IExecuteMethod) this).Execute(AppiumDriverCommand.StartRecordingScreen).Value.ToString();
 
         public string StartRecordingScreen(IScreenRecordingOptions options)
         {
@@ -528,7 +555,8 @@ namespace OpenQA.Selenium.Appium
             return Execute(AppiumDriverCommand.StartRecordingScreen, parameters).Value.ToString();
         }
 
-        public string StopRecordingScreen() => ((IExecuteMethod)this).Execute(AppiumDriverCommand.StopRecordingScreen).Value.ToString();
+        public string StopRecordingScreen() =>
+            ((IExecuteMethod) this).Execute(AppiumDriverCommand.StopRecordingScreen).Value.ToString();
 
         public string StopRecordingScreen(IScreenRecordingOptions options)
         {
@@ -549,12 +577,14 @@ namespace OpenQA.Selenium.Appium
         /// <param name="base64Image2">base64-encoded representation of the second image</param>
         /// <param name="options">comparison options</param>
         /// <returns>The matching result. The configuration of fields in the result depends on comparison options</returns>
-        public FeaturesMatchingResult MatchImageFeatures(string base64Image1, string base64Image2, FeaturesMatchingOptions options = null)
+        public FeaturesMatchingResult MatchImageFeatures(string base64Image1, string base64Image2,
+            FeaturesMatchingOptions options = null)
         {
-            var parameters = new Dictionary<string, object> {
-                { "mode", ComparisonMode.MatchFeatures },
-                { "firstImage", base64Image1 },
-                { "secondImage", base64Image2 }
+            var parameters = new Dictionary<string, object>
+            {
+                {"mode", ComparisonMode.MatchFeatures},
+                {"firstImage", base64Image1},
+                {"secondImage", base64Image2}
             };
 
             if (options != null)
@@ -576,12 +606,14 @@ namespace OpenQA.Selenium.Appium
         /// <param name="partialImage">base64-encoded representation of the partial image</param>
         /// <param name="options">comparison options</param>
         /// <returns>The matching result. The configuration of fields in the result depends on comparison options.</returns>
-        public OccurenceMatchingResult FindImageOccurence(string fullImage, string partialImage, OccurenceMatchingOptions options = null)
+        public OccurenceMatchingResult FindImageOccurence(string fullImage, string partialImage,
+            OccurenceMatchingOptions options = null)
         {
-            var parameters = new Dictionary<string, object> {
-                { "mode", ComparisonMode.MatchTemplate },
-                { "firstImage", fullImage },
-                { "secondImage", partialImage }
+            var parameters = new Dictionary<string, object>
+            {
+                {"mode", ComparisonMode.MatchTemplate},
+                {"firstImage", fullImage},
+                {"secondImage", partialImage}
             };
 
             if (options != null)
@@ -603,13 +635,14 @@ namespace OpenQA.Selenium.Appium
         /// <param name="base64Image2">base64-encoded representation of the second image</param>
         /// <param name="options">comparison options</param>
         /// <returns>Matching result. The configuration of fields in the result depends on comparison options.</returns>
-        public SimilarityMatchingResult GetImagesSimilarity(string base64Image1, string base64Image2, SimilarityMatchingOptions options = null)
+        public SimilarityMatchingResult GetImagesSimilarity(string base64Image1, string base64Image2,
+            SimilarityMatchingOptions options = null)
         {
             var parameters = new Dictionary<string, object>()
             {
-                { "mode", ComparisonMode.GetSimilarity },
-                { "firstImage", base64Image1 },
-                { "secondImage", base64Image2 },
+                {"mode", ComparisonMode.GetSimilarity},
+                {"firstImage", base64Image1},
+                {"secondImage", base64Image2},
             };
 
             if (options != null)
@@ -635,7 +668,8 @@ namespace OpenQA.Selenium.Appium
             return dc.ToCapabilities();
         }
 
-        internal static ReadOnlyCollection<T> ConvertToExtendedWebElementCollection<T>(IEnumerable collection) where T : IWebElement
+        internal static ReadOnlyCollection<T> ConvertToExtendedWebElementCollection<T>(IEnumerable collection)
+            where T : IWebElement
         {
             return collection.Cast<T>().ToList().AsReadOnly();
         }
