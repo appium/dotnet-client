@@ -1,5 +1,5 @@
 ##
-- Add support for retrieving log type and server side logs () resolves #280
+- Add support for retrieving log type and server side logs (#376) resolves #280
 
 ## 4.1.1
 - Resolved #372 by fixing the endpoint for Activating an App
