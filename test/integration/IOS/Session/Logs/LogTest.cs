@@ -11,7 +11,7 @@ namespace Appium.Net.Integration.Tests.IOS.Session.Logs
     internal class LogTest
     {
         private IWebDriver _driver;
-        private AppiumOptions _androidOptions;
+        private AppiumOptions _IosOptions;
         private const string SyslogLogType = "syslog";
         private const string CrashLogType = "crashlog";
         private const string ServerLogType = "server";
@@ -19,10 +19,10 @@ namespace Appium.Net.Integration.Tests.IOS.Session.Logs
         [OneTimeSetUp]
         public void SetUp()
         {
-            _androidOptions = Caps.GetIosCaps(Apps.Get("iosUICatalogApp"));
+            _IosOptions = Caps.GetIosCaps(Apps.Get("iosUICatalogApp"));
             _driver = new IOSDriver<IWebElement>(
                 Env.ServerIsLocal() ? AppiumServers.LocalServiceUri : AppiumServers.RemoteServerUri,
-                _androidOptions);
+                _IosOptions);
         }
 
         [OneTimeTearDown]
