@@ -20,7 +20,6 @@ namespace Appium.Net.Integration.Tests.IOS.Session.Logs
         public void SetUp()
         {
             _androidOptions = Caps.GetIosCaps(Apps.Get("iosUICatalogApp"));
-            _androidOptions.AddAdditionalCapability("newCommandTimeout", 1000);
             _driver = new IOSDriver<IWebElement>(
                 Env.ServerIsLocal() ? AppiumServers.LocalServiceUri : AppiumServers.RemoteServerUri,
                 _androidOptions);

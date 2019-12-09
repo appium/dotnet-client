@@ -21,7 +21,6 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
         public void SetUp()
         {
             _androidOptions = Caps.GetAndroidCaps(Apps.Get("androidApiDemos"));
-            _androidOptions.AddAdditionalCapability("newCommandTimeout", 1000);
             _driver = new AndroidDriver<IWebElement>(
                 Env.ServerIsLocal() ? AppiumServers.LocalServiceUri : AppiumServers.RemoteServerUri,
                 _androidOptions);
