@@ -13,7 +13,6 @@
 //limitations under the License.
 
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace OpenQA.Selenium.Appium
 {
@@ -26,24 +25,21 @@ namespace OpenQA.Selenium.Appium
             Altitude = 0.0;
         }
 
-        [JsonProperty(PropertyName = "latitude")]
         public double Latitude { get; set; }
 
-        [JsonProperty(PropertyName = "longitude")]
         public double Longitude { get; set; }
 
-        [JsonProperty(PropertyName = "altitude")]
         public double Altitude { get; set; }
 
         public Dictionary<string, object> ToDictionary()
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>()
+            var parameters = new Dictionary<string, object>()
             {
                 ["latitude"] = Latitude,
                 ["longitude"] = Longitude,
                 ["altitude"] = Altitude
             };
-            Dictionary<string, object> location = new Dictionary<string, object>()
+            var location = new Dictionary<string, object>()
                 {["location"] = parameters};
             return location;
         }

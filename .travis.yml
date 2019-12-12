@@ -1,3 +1,0 @@
-language: csharp
-solution: ./src/Appium.Net.sln
-os: osx
