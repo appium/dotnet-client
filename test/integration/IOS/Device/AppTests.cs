@@ -9,14 +9,14 @@ using OpenQA.Selenium.Remote;
 
 namespace Appium.Net.Integration.Tests.IOS.Device.App
 {
-    internal class ActivateAppTest
+    internal class AppTests
     {
         private IOSDriver<IWebElement> _driver;
         private AppiumOptions _iosOptions;
         private const string UiCatalogAppTestAppBundleId = "com.example.apple-samplecode.UICatalog";
         private const string IosTestAppBundleId = "io.appium.TestApp";
-        private const string _iosTestAppElement = "show alert";
-        private const string _uiCatalogTestAppElement = "Toolbars";
+        private const string IosTestAppElement = "show alert";
+        private const string UiCatalogTestAppElement = "Toolbars";
 
 
         [OneTimeSetUp]
@@ -42,7 +42,7 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
             Assert.DoesNotThrow(() => _driver.ActivateApp(IosTestAppBundleId));
 
             //Verify the expected app was activated
-            Assert.DoesNotThrow(() => _driver.FindElementByAccessibilityId(_iosTestAppElement));
+            Assert.DoesNotThrow(() => _driver.FindElementByAccessibilityId(IosTestAppElement));
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
                 new Dictionary<string, string> {{"bundleId", IosTestAppBundleId}}));
 
             //Verify the expected app was activated
-            Assert.DoesNotThrow(() => _driver.FindElementByAccessibilityId(_iosTestAppElement));
+            Assert.DoesNotThrow(() => _driver.FindElementByAccessibilityId(IosTestAppElement));
         }
 
         [Test]
@@ -63,13 +63,13 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
             _driver.ActivateApp(IosTestAppBundleId);
 
             //Verify the expected app was activated
-            Assert.DoesNotThrow(() => _driver.FindElementByAccessibilityId(_iosTestAppElement));
+            Assert.DoesNotThrow(() => _driver.FindElementByAccessibilityId(IosTestAppElement));
 
             //Activates Test App to foreground from background
             Assert.DoesNotThrow(() => _driver.ActivateApp(UiCatalogAppTestAppBundleId));
 
             //Verify the expected app was activated
-            Assert.DoesNotThrow(() => _driver.FindElementByAccessibilityId(_uiCatalogTestAppElement));
+            Assert.DoesNotThrow(() => _driver.FindElementByAccessibilityId(UiCatalogTestAppElement));
         }
     }
 }
