@@ -6,7 +6,7 @@ using OpenQA.Selenium.Appium.Android;
 namespace Appium.Net.Integration.Tests.Android.Session.Geolocation
 {
     [TestFixture]
-    internal class LocationTest
+    internal class GeolocationTests
     {
         private AppiumDriver<AndroidElement> _driver;
 
