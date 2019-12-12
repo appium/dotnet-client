@@ -194,6 +194,9 @@ namespace OpenQA.Selenium.Appium
             #region Compare Images
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.CompareImages, "/session/{sessionId}/appium/compare_images" ),
             #endregion
+
+            new AppiumCommand(CommandInfo.GetCommand, DriverCommand.GetAvailableLogTypes, "session/{sessionId}/log/types"),
+            new AppiumCommand(CommandInfo.PostCommand, DriverCommand.GetLog, "session/{sessionId}/log")
         };
 
         /// <summary>
