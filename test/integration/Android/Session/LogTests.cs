@@ -9,7 +9,7 @@ using OpenQA.Selenium.Appium.Android;
 
 namespace Appium.Net.Integration.Tests.Android.Session.Logs
 {
-    internal class LogTest
+    internal class LogTests
     {
         private IWebDriver _driver;
         private AppiumOptions _androidOptions;

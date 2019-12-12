@@ -8,7 +8,7 @@ using OpenQA.Selenium.Appium.iOS;
 
 namespace Appium.Net.Integration.Tests.IOS.Session.Logs
 {
-    internal class LogTest
+    internal class LogTests
     {
         private IWebDriver _driver;
         private AppiumOptions _iosOptions;
