@@ -34,7 +34,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Update="env.json">
+    <None Update="env.json" Condition="Exists('env.json')">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
