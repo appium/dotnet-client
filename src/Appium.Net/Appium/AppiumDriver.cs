@@ -279,7 +279,7 @@ namespace OpenQA.Selenium.Appium
 
         public void BackgroundApp() =>
             Execute(AppiumDriverCommand.BackgroundApp,
-                AppiumCommandExecutionHelper.PrepareArgument("seconds", null));
+                AppiumCommandExecutionHelper.PrepareArgument("seconds", -1));
 
         public void BackgroundApp(int seconds) =>
             Execute(AppiumDriverCommand.BackgroundApp,
