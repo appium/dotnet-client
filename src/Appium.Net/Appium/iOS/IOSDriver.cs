@@ -227,10 +227,5 @@ namespace OpenQA.Selenium.Appium.iOS
         /// </summary>
         /// <returns>The image content of the clipboard as an Image object or null if there is no image on the clipboard</returns>
         public Image GetClipboardImage() => IOSCommandExecutionHelper.GetClipboardImage(this);
-
-        public new void BackgroundApp(int seconds) =>
-            Execute(AppiumDriverCommand.BackgroundApp,
-                AppiumCommandExecutionHelper.PrepareArgument("seconds",
-                    AppiumCommandExecutionHelper.PrepareArgument("timeout", TimeSpan.FromSeconds(seconds).TotalMilliseconds)));
     }
 }
