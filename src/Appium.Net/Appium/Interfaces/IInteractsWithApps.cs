@@ -13,6 +13,7 @@
 //limitations under the License.
 
 using System;
+using System.Runtime.CompilerServices;
 using OpenQA.Selenium.Appium.Enums;
 
 namespace OpenQA.Selenium.Appium.Interfaces
@@ -52,6 +53,12 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// </summary>
         /// <param name="seconds">an integer number containing the number of seconds.</param>
         void BackgroundApp(int seconds);
+
+        /// <summary>
+        /// Backgrounds the current app for the given number of seconds or deactivates app completely if negative number is given. 
+        /// </summary>
+        /// <param name="timepSpan">the timespan of running the app in the background.</param>
+        void BackgroundApp(TimeSpan timepSpan);
 
         /// <summary>
         /// Removes an App.
