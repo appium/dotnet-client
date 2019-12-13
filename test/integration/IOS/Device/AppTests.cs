@@ -5,7 +5,6 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.iOS;
-using OpenQA.Selenium.Remote;
 
 namespace Appium.Net.Integration.Tests.IOS.Device.App
 {
@@ -17,16 +16,16 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
         private const string IosTestAppBundleId = "io.appium.TestApp";
         private const string IosTestAppElement = "show alert";
         private const string UiCatalogTestAppElement = "Toolbars";
-
+        private const string IosDockElement = "Dock";
 
         [OneTimeSetUp]
         public void SetUp()
         {
             _iosOptions = Caps.GetIosCaps(Apps.Get("iosUICatalogApp"));
-            _iosOptions.AddAdditionalCapability("newCommandTimeout", 400000);
             _driver = new IOSDriver<IWebElement>(
                 Env.ServerIsLocal() ? AppiumServers.LocalServiceUri : AppiumServers.RemoteServerUri,
-                _iosOptions, TimeSpan.FromSeconds(120));
+                _iosOptions);
+            _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
         }
 
         [OneTimeTearDown]
@@ -34,6 +33,8 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
         {
             _driver.Dispose();
         }
+
+        #region Activate App
 
         [Test]
         public void CanActivateAppTest()
@@ -71,5 +72,34 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
             //Verify the expected app was activated
             Assert.DoesNotThrow(() => _driver.FindElementByAccessibilityId(UiCatalogTestAppElement));
         }
+
+        #endregion
+
+        #region Background App
+
+        [Test]
+        public void CanBackgroundApp()
+        {
+            Assert.DoesNotThrow(
+                () => _driver.BackgroundApp());
+            Assert.DoesNotThrow(() => _driver.FindElementByAccessibilityId(IosDockElement));
+        }
+
+        [Test]
+        public void CanBackgroundAppToDeactivation()
+        {
+            Assert.DoesNotThrow(
+                () => _driver.BackgroundApp(5));
+        }
+
+        [Test]
+        public void CanBackgroundAppToDeactivationUsingNegativeSecond()
+        {
+            Assert.DoesNotThrow(
+                () => _driver.BackgroundApp(-1));
+            Assert.DoesNotThrow(() => _driver.FindElementByAccessibilityId(IosDockElement));
+        }
+
+        #endregion
     }
 }
