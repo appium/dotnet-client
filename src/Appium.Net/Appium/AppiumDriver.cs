@@ -283,8 +283,7 @@ namespace OpenQA.Selenium.Appium
 
         public void BackgroundApp(int seconds) =>
             Execute(AppiumDriverCommand.BackgroundApp,
-                AppiumCommandExecutionHelper.PrepareArgument("seconds",
-                    TimeSpan.FromSeconds(seconds).TotalSeconds));
+                AppiumCommandExecutionHelper.PrepareArgument("seconds", seconds));
 
         public AppState GetAppState(string appId) =>
             (AppState) Convert.ToInt32(Execute(AppiumDriverCommand.GetAppState,
