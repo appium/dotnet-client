@@ -279,13 +279,12 @@ namespace OpenQA.Selenium.Appium
 
         public void BackgroundApp() =>
             Execute(AppiumDriverCommand.BackgroundApp,
-                AppiumCommandExecutionHelper.PrepareArgument("seconds",
-                    AppiumCommandExecutionHelper.PrepareArgument("timeout", null)));
+                AppiumCommandExecutionHelper.PrepareArgument("seconds", null));
 
         public void BackgroundApp(int seconds) =>
             Execute(AppiumDriverCommand.BackgroundApp,
                 AppiumCommandExecutionHelper.PrepareArgument("seconds",
-                    AppiumCommandExecutionHelper.PrepareArgument("timeout", seconds)));
+                    TimeSpan.FromSeconds(seconds).TotalSeconds));
 
         public AppState GetAppState(string appId) =>
             (AppState) Convert.ToInt32(Execute(AppiumDriverCommand.GetAppState,
@@ -329,13 +328,13 @@ namespace OpenQA.Selenium.Appium
             get
             {
                 var commandResponse = ((IExecuteMethod) this).Execute(AppiumDriverCommand.GetLocation);
-                    var locationValues = commandResponse.Value as Dictionary<string, object>;
-                    return new Location
-                    {
-                        Altitude = Convert.ToDouble(locationValues["altitude"]),
-                        Latitude = Convert.ToDouble(locationValues["latitude"]),
-                        Longitude = Convert.ToDouble(locationValues["longitude"])
-                    };
+                var locationValues = commandResponse.Value as Dictionary<string, object>;
+                return new Location
+                {
+                    Altitude = Convert.ToDouble(locationValues["altitude"]),
+                    Latitude = Convert.ToDouble(locationValues["latitude"]),
+                    Longitude = Convert.ToDouble(locationValues["longitude"])
+                };
             }
             set
             {

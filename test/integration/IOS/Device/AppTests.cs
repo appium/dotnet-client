@@ -86,7 +86,7 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
         }
 
         [Test]
-        public void CanBackgroundAppToDeactivation()
+        public void CanBackgroundAppForSeconds()
         {
             Assert.DoesNotThrow(
                 () => _driver.BackgroundApp(5));
