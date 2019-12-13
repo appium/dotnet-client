@@ -93,6 +93,13 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
         }
 
         [Test]
+        public void CanBackgroundAppForTimeSpan()
+        {
+            Assert.DoesNotThrow(
+                () => _driver.BackgroundApp(TimeSpan.FromSeconds(10)));
+        }
+
+        [Test]
         public void CanBackgroundAppToDeactivationUsingNegativeSecond()
         {
             Assert.DoesNotThrow(
