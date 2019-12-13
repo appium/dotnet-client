@@ -57,7 +57,7 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// <summary>
         /// Backgrounds the current app for the given number of seconds or deactivates app completely if negative number is given. 
         /// </summary>
-        /// <param name="timepSpan">the timespan to run the app in background.</param>
+        /// <param name="timepSpan">the timespan of running the app in the background.</param>
         void BackgroundApp(TimeSpan timepSpan);
 
         /// <summary>
