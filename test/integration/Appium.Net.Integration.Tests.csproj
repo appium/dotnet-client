@@ -38,4 +38,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Mac\" />
+  </ItemGroup>
 </Project>
