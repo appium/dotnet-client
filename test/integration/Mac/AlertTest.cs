@@ -6,7 +6,6 @@ using OpenQA.Selenium.Appium.Mac;
 
 namespace Appium.Net.Integration.Tests.Mac
 {
-    [Ignore("Ignore tests for macOS on CI")]
     public class FindElementTest
     {
         private AppiumDriver<MacElement> _driver;
