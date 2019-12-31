@@ -11,20 +11,23 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
-namespace OpenQA.Selenium.Appium.Enums
+using OpenQA.Selenium.Appium.Enums;
+using OpenQA.Selenium.Appium.Interfaces;
+using OpenQA.Selenium.Remote;
+using System.Collections.Generic;
+
+namespace OpenQA.Selenium.Appium.Mac
 {
-    public sealed class MobilePlatform
+    public class MacElement : AppiumWebElement
     {
-        public const string Android = "Android";
-
-        public const string IOS = "iOS";
-
-        public const string MacOS = "Mac";
-
-        public const string Windows = "Windows";
-
-        public const string Tizen = "Tizen";
-
-        //FireFoxOS and WinPhone will be added when there will be the supporting of appropriate mobile OS.
+        /// <summary>
+        /// Initializes a new instance of the MacElement class.
+        /// </summary>
+        /// <param name="parent">Driver in use.</param>
+        /// <param name="id">ID of the element.</param>
+        public MacElement(RemoteWebDriver parent, string id)
+            : base(parent, id)
+        {
+        }
     }
 }

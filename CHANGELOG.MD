@@ -1,4 +1,5 @@
 ##
+- Add MacDriver to support [mac driver](https://github.com/appium/appium-mac-driver) (#383)
 - Add support for retrieving log type and server side logs (#376) resolves #280
 - Resolved #306 by updating the way appium's Location endpoint response is mapped to the client's Location model
 
