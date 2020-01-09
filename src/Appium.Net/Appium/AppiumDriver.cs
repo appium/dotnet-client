@@ -33,6 +33,7 @@ namespace OpenQA.Selenium.Appium
     public abstract class AppiumDriver<W> : RemoteWebDriver, IFindsById, IFindsByClassName, IFindsByName,
         IFindsByTagName, IExecuteMethod, IFindsByFluentSelector<W>,
         IHasSessionDetails,
+        IHasLocation,
         IFindByAccessibilityId<W>,
         IHidesKeyboard, IInteractsWithFiles,
         IInteractsWithApps, IPerformsTouchActions, IRotatable, IContextAware, IGenericSearchContext<W>,
