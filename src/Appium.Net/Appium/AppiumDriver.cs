@@ -323,7 +323,26 @@ namespace OpenQA.Selenium.Appium
             return (Dictionary<string, object>) Execute(AppiumDriverCommand.GetAppStrings, parameters).Value;
         }
 
-        public void HideKeyboard() => AppiumCommandExecutionHelper.HideKeyboard(this, null, null);
+        /// <summary>
+        /// Hides the device keyboard.
+        /// </summary>
+        public void HideKeyboard()
+            => AppiumCommandExecutionHelper.HideKeyboard(this, null, null);
+
+        /// <summary>
+        /// Hides the device keyboard.
+        /// </summary>
+        /// <param name="key">The button pressed by the mobile driver to attempt hiding the keyboard.</param>
+        public void HideKeyboard(string key)
+            => AppiumCommandExecutionHelper.HideKeyboard(executeMethod: this, key: key);
+
+        /// <summary>
+        /// Hides the device keyboard.
+        /// </summary>
+        /// <param name="strategy">Hide keyboard strategy (optional, UIAutomation only). Available strategies - 'press', 'pressKey', 'swipeDown', 'tapOut', 'tapOutside', 'default'.</param>
+        /// <param name="key">The button pressed by the mobile driver to attempt hiding the keyboard.</param>
+        public void HideKeyboard(string strategy, string key)
+            => AppiumCommandExecutionHelper.HideKeyboard(executeMethod: this, strategy: strategy, key: key);
 
         /// <summary>
         /// GPS Location
@@ -669,7 +688,6 @@ namespace OpenQA.Selenium.Appium
         {
             return collection.Cast<T>().ToList().AsReadOnly();
         }
-
         #endregion
     }
 }
