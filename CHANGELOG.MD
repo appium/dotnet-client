@@ -1,4 +1,5 @@
 ##
+- IPerformsTouchActions no longer implement (inherit) IExecuteMethod - inheritance redundancy and a cleaner interface; Resolve (#389)
 - IHidesKeyboard is now exposes "key" and "strategy" overloads; Resolve (#390)
 - IHidesKeyboard no longer implement (inherit) IExecuteMethod - inheritance redundancy and a cleaner interface; Resolve (#389)
 - Add MacDriver to support [mac driver](https://github.com/appium/appium-mac-driver) (#383)
