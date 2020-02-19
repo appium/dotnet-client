@@ -8,6 +8,7 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
+using OpenQA.Selenium.Appium.MultiTouch;
 
 namespace Appium.Net.Integration.Tests.PageObjects
 {
@@ -104,7 +105,7 @@ namespace Appium.Net.Integration.Tests.PageObjects
             {
                 hourString = alarmTime.ToString("HH", fi);
             }
-            
+
             _hourSelector.FindElementByName(hourString).Click();
             _minuteSelector.FindElementByName(minuteString).Click();
 
@@ -120,7 +121,12 @@ namespace Appium.Net.Integration.Tests.PageObjects
         {
             var alarmEntry = _driver.FindElementByName(alarmName);
 
-            _driver.Mouse.ContextClick(alarmEntry.Coordinates);
+            new TouchAction(_driver)
+                .Press(
+                    x: alarmEntry.Coordinates.LocationInViewport.X,
+                    y: alarmEntry.Coordinates.LocationInViewport.X)
+                .Release();
+
             _driver.FindElementByName("Delete").Click();
         }
     }

@@ -679,7 +679,7 @@ namespace OpenQA.Selenium.Appium
 
         internal static ICapabilities SetPlatformToCapabilities(DriverOptions dc, string desiredPlatform)
         {
-            dc.AddAdditionalCapability(MobileCapabilityType.PlatformName, desiredPlatform);
+            dc.PlatformName = desiredPlatform;
             return dc.ToCapabilities();
         }
 

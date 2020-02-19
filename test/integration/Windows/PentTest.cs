@@ -259,8 +259,24 @@ namespace Appium.Net.Integration.Tests.Windows
         {
             if (newStickyNoteSession != null)
             {
-                // Create a new Sticky Note by pressing Ctrl + N
-                newStickyNoteSession.Keyboard.SendKeys(Keys.Control + "d" + Keys.Control);
+                Actions actionDown = new Actions(newStickyNoteSession);
+                Actions actionUp = new Actions(newStickyNoteSession);
+
+                actionDown
+                    .KeyDown(Keys.Control)
+                    .KeyDown("d")
+                    .KeyDown(Keys.Control)
+                    .Build();
+
+                actionUp
+                    .KeyUp(Keys.Control)
+                    .KeyUp("d")
+                    .KeyUp(Keys.Control)
+                    .Build();
+
+                actionDown.Perform();
+                actionUp.Perform();
+
                 Thread.Sleep(TimeSpan.FromSeconds(2));
 
                 try

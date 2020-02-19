@@ -20,6 +20,7 @@ using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
+using OpenQA.Selenium.Appium.MultiTouch;
 using OpenQA.Selenium.Appium.Windows;
 
 namespace Appium.Net.Integration.Tests.Windows
@@ -70,7 +71,12 @@ namespace Appium.Net.Integration.Tests.Windows
             var alarmEntries = AlarmClockSession.FindElementsByName("Windows Application Driver Test Alarm");
             foreach (var alarmEntry in alarmEntries)
             {
-                AlarmClockSession.Mouse.ContextClick(alarmEntry.Coordinates);
+                new TouchAction(AlarmClockSession)
+                    .Press(
+                        x: alarmEntry.Coordinates.LocationInViewport.X,
+                        y: alarmEntry.Coordinates.LocationInViewport.X)
+                    .Release();
+                
                 AlarmClockSession.FindElementByName("Delete").Click();
             }
 
