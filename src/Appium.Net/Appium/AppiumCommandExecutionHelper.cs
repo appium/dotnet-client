@@ -22,7 +22,7 @@ using OpenQA.Selenium.Appium.Enums;
 
 namespace OpenQA.Selenium.Appium
 {
-    public static class AppiumCommandExecutionHelper
+    public class AppiumCommandExecutionHelper
     {
         #region Device Commands
 
