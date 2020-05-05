@@ -99,6 +99,8 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/device/app_state"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.HideKeyboard,
                 "/session/{sessionId}/appium/device/hide_keyboard"),
+            new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.IsKeyboardShown,
+                "/session/{sessionId}/appium/device/is_keyboard_shown"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.OpenNotifications,
                 "/session/{sessionId}/appium/device/open_notifications"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.StartActivity,

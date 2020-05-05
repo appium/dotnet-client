@@ -35,5 +35,11 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// <param name="strategy">Hide keyboard strategy (optional, UIAutomation only). Available strategies - 'press', 'pressKey', 'swipeDown', 'tapOut', 'tapOutside', 'default'.</param>
         /// <param name="key">The button pressed by the mobile driver to attempt hiding the keyboard.</param>
         void HideKeyboard(string strategy, string key);
+
+        /// <summary>
+        /// Whether or not the soft keyboard is shown
+        /// </summary>
+        /// <returns><see cref="true"/> if keyboard is shown, <see cref="false"/> if not.</returns>
+        bool IsKeyboardShown();
     }
 }
