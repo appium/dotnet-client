@@ -22,7 +22,7 @@ using OpenQA.Selenium.Appium.Enums;
 
 namespace OpenQA.Selenium.Appium
 {
-    public class AppiumCommandExecutionHelper
+    public static class AppiumCommandExecutionHelper
     {
         #region Device Commands
 
@@ -60,6 +60,12 @@ namespace OpenQA.Selenium.Appium
                 parameters.Add("keyName", key);
             }
             executeMethod.Execute(AppiumDriverCommand.HideKeyboard, parameters);
+        }
+
+        public static bool IsKeyboardShown(IExecuteMethod executeMethod)
+        {
+            var response = executeMethod.Execute(AppiumDriverCommand.IsKeyboardShown);
+            return (bool)response.Value;
         }
 
         public static void Lock(IExecuteMethod executeMethod, int seconds) =>

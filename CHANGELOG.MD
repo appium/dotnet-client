@@ -6,6 +6,7 @@
 - Add support for retrieving log type and server side logs (#376) resolves #280
 - Resolved #306 by updating the way appium's Location endpoint response is mapped to the client's Location model
 - Location property under AppiumDriver is now exposable by IHasLocation interface; Resolve (#386)
+- Resolve #364. Add IsKeyboardShown to IHidesKeyboard intefrace; Add IsKeyboardShown command 
 
 ## 4.1.1
 - Resolved #372 by fixing the endpoint for Activating an App
