@@ -17,7 +17,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
         {
             var app = Apps.Get("androidApiDemos");
             var capabilities =
-                Caps.GetAndroidCaps(app);
+                Caps.GetAndroidUIAutomatorCaps(app);
 
             AndroidDriver<AppiumWebElement> driver = null;
             try
@@ -35,8 +35,8 @@ namespace Appium.Net.Integration.Tests.ServerTests
         public void StartingAndroidAppWithCapabilitiesAndServiceTest()
         {
             var capabilities = Env.ServerIsRemote()
-                ? Caps.GetAndroidCaps(Apps.Get("androidApiDemos"))
-                : Caps.GetAndroidCaps(Apps.Get("androidApiDemos"));
+                ? Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"))
+                : Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
 
 
             var argCollector = new OptionCollector()
@@ -62,8 +62,8 @@ namespace Appium.Net.Integration.Tests.ServerTests
             var app = Apps.Get("androidApiDemos");
 
             var serverCapabilities = Env.ServerIsRemote()
-                ? Caps.GetAndroidCaps(Apps.Get("androidApiDemos"))
-                : Caps.GetAndroidCaps(Apps.Get("androidApiDemos"));
+                ? Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"))
+                : Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
 
             var clientCapabilities = new AppiumOptions();
             clientCapabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppPackage, "io.appium.android.apis");
@@ -131,8 +131,8 @@ namespace Appium.Net.Integration.Tests.ServerTests
         {
             var capabilities = Env.ServerIsRemote()
                 ? //it will be a cause of error
-                Caps.GetAndroidCaps(Apps.Get("androidApiDemos"))
-                : Caps.GetAndroidCaps(Apps.Get("androidApiDemos"));
+                Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"))
+                : Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
             capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "iPhone Simulator");
             capabilities.AddAdditionalCapability(MobileCapabilityType.PlatformName, MobilePlatform.IOS);
 

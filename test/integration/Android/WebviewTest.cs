@@ -18,8 +18,8 @@ namespace Appium.Net.Integration.Tests.Android
         public void BeforeAll()
         {
             var capabilities = Env.ServerIsRemote()
-                ? Caps.GetAndroidCaps(Apps.Get("selendroidTestApp"))
-                : Caps.GetAndroidCaps(Apps.Get("selendroidTestApp"));
+                ? Caps.GetAndroidUIAutomatorCaps(Apps.Get("selendroidTestApp"))
+                : Caps.GetAndroidUIAutomatorCaps(Apps.Get("selendroidTestApp"));
             capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppPackage, "io.selendroid.testapp");
             capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppActivity, ".WebViewActivity");
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;

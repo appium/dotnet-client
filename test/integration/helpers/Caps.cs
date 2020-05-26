@@ -17,10 +17,19 @@ namespace Appium.Net.Integration.Tests.helpers
             return capabilities;
         }
 
-        public static AppiumOptions GetAndroidCaps(string app)
+        public static AppiumOptions GetAndroidUIAutomatorCaps(string app)
         {
             var capabilities = new AppiumOptions();
             capabilities.AddAdditionalCapability(MobileCapabilityType.AutomationName, AutomationName.AndroidUIAutomator2);
+            capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "Android Emulator");
+            capabilities.AddAdditionalCapability(MobileCapabilityType.App, app);
+            return capabilities;
+        }
+
+        public static AppiumOptions GetAndroidEspressoCaps(string app)
+        {
+            var capabilities = new AppiumOptions();
+            capabilities.AddAdditionalCapability(MobileCapabilityType.AutomationName, AutomationName.AndroidEspresso);
             capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "Android Emulator");
             capabilities.AddAdditionalCapability(MobileCapabilityType.App, app);
             return capabilities;

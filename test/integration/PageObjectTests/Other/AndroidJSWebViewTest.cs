@@ -17,8 +17,8 @@ namespace Appium.Net.Integration.Tests.PageObjectTests.Other
         public void BeforeAll()
         {
             var capabilities = Env.ServerIsRemote()
-                ? Caps.GetAndroidCaps(Apps.Get("selendroidTestApp"))
-                : Caps.GetAndroidCaps(Apps.Get("selendroidTestApp"));
+                ? Caps.GetAndroidUIAutomatorCaps(Apps.Get("selendroidTestApp"))
+                : Caps.GetAndroidUIAutomatorCaps(Apps.Get("selendroidTestApp"));
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
             _driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
             _pageObject = new AndroidJavaScriptTestPageObject(_driver);
