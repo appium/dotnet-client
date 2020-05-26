@@ -167,6 +167,11 @@ namespace OpenQA.Selenium.Appium
         public const string HideKeyboard = "hideKeyboard";
 
         /// <summary>
+        /// Whether or not the soft keyboard is shown
+        /// </summary>
+        public const string IsKeyboardShown = "isKeyboardShown";
+
+        /// <summary>
         ///  Open Notifications Command
         /// </summary>
         public const string OpenNotifications = "openNotifications";

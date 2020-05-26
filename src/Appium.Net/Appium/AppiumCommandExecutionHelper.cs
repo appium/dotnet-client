@@ -62,6 +62,12 @@ namespace OpenQA.Selenium.Appium
             executeMethod.Execute(AppiumDriverCommand.HideKeyboard, parameters);
         }
 
+        public static bool IsKeyboardShown(IExecuteMethod executeMethod)
+        {
+            var response = executeMethod.Execute(AppiumDriverCommand.IsKeyboardShown);
+            return (bool)response.Value;
+        }
+
         public static void Lock(IExecuteMethod executeMethod, int seconds) =>
             executeMethod.Execute(AppiumDriverCommand.LockDevice,
                 new Dictionary<string, object>()
