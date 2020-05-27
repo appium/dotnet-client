@@ -20,7 +20,7 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
         [OneTimeSetUp]
         public void SetUp()
         {
-            _androidOptions = Caps.GetAndroidCaps(Apps.Get("androidApiDemos"));
+            _androidOptions = Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
             _driver = new AndroidDriver<IWebElement>(
                 Env.ServerIsLocal() ? AppiumServers.LocalServiceUri : AppiumServers.RemoteServerUri,
                 _androidOptions);

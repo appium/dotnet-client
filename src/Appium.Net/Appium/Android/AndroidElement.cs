@@ -20,7 +20,7 @@ using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium.Android
 {
-    public class AndroidElement : AppiumWebElement, IFindByAndroidUIAutomator<AppiumWebElement>
+    public class AndroidElement : AppiumWebElement, IFindByAndroidUIAutomator<AppiumWebElement>, IFindByAndroidDataMatcher<AppiumWebElement>
     {
         /// <summary>
         /// Initializes a new instance of the AndroidElement class.
@@ -41,6 +41,16 @@ namespace OpenQA.Selenium.Appium.Android
             FindElements(MobileSelector.AndroidUIAutomator, selector);
 
         #endregion IFindByAndroidUIAutomator Members
+
+        #region IFindByAndroidDataMatcher Members
+
+        public AppiumWebElement FindElementByAndroidDataMatcher(string selector) =>
+            FindElement(MobileSelector.AndroidDataMatcher, selector);
+
+        public IReadOnlyCollection<AppiumWebElement> FindElementsByAndroidDataMatcher(string selector) =>
+            FindElements(MobileSelector.AndroidDataMatcher, selector);
+
+        #endregion IFindByAndroidDataMatcher Members
 
         public void ReplaceValue(string value) => AndroidCommandExecutionHelper.ReplaceValue(this, Id, value);
     }

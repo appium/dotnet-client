@@ -25,7 +25,7 @@ using OpenQA.Selenium.Appium.Android.Enums;
 
 namespace OpenQA.Selenium.Appium.Android
 {
-    public class AndroidDriver<W> : AppiumDriver<W>, IFindByAndroidUIAutomator<W>, IStartsActivity,
+    public class AndroidDriver<W> : AppiumDriver<W>, IFindByAndroidUIAutomator<W>, IFindByAndroidDataMatcher<W>, IStartsActivity,
         IHasNetworkConnection, IHasClipboard,
         ISendsKeyEvents,
         IPushesFiles, IHasSettings where W : IWebElement
@@ -136,6 +136,16 @@ namespace OpenQA.Selenium.Appium.Android
             ConvertToExtendedWebElementCollection<W>(FindElements(MobileSelector.AndroidUIAutomator, selector));
 
         #endregion IFindByAndroidUIAutomator Members
+
+        #region IFindByAndroidDataMatcher Members
+
+        public W FindElementByAndroidDataMatcher(string selector) =>
+            FindElement(MobileSelector.AndroidDataMatcher, selector);
+
+        public IReadOnlyCollection<W> FindElementsByAndroidDataMatcher(string selector) =>
+            ConvertToExtendedWebElementCollection<W>(FindElements(MobileSelector.AndroidDataMatcher, selector));
+
+        #endregion IFindByAndroidDataMatcher Members
 
         public void StartActivity(string appPackage, string appActivity, string appWaitPackage = "",
             string appWaitActivity = "", bool stopApp = true) =>

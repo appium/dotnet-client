@@ -19,7 +19,7 @@ namespace Appium.Net.Integration.Tests.Android.Device.App
         [OneTimeSetUp]
         public void SetUp()
         {
-            _androidOptions = Caps.GetAndroidCaps(Apps.Get(Apps.androidApiDemos));
+            _androidOptions = Caps.GetAndroidUIAutomatorCaps(Apps.Get(Apps.androidApiDemos));
             _driver = new AndroidDriver<IWebElement>(
                 Env.ServerIsLocal() ? AppiumServers.LocalServiceUri : AppiumServers.RemoteServerUri,
                 _androidOptions);

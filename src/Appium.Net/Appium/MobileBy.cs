@@ -87,6 +87,15 @@ namespace OpenQA.Selenium.Appium
         public static By AndroidUIAutomator(string selector) => new ByAndroidUIAutomator(selector);
 
         /// <summary>
+        /// This method creates a <see cref="OpenQA.Selenium.By"/> strategy
+        /// that searches for elements using Espresso's Data Matcher.
+        /// <see cref="http://appium.io/docs/en/writing-running-appium/android/espresso-datamatcher-selector"/>
+        /// </summary>
+        /// <param name="selector">The selector to use in finding the element.</param>
+        /// <returns></returns>
+        public static By AndroidDataMatcher(string selector) => new ByAndroidDataMatcher(selector);
+
+        /// <summary>
         /// This method creates a <see cref="OpenQA.Selenium.By"/> strategy 
         /// that searches for elements using iOS UI automation.
         /// <see cref="https://developer.apple.com/library/tvos/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/UIAutomation.html"/>
@@ -173,6 +182,38 @@ namespace OpenQA.Selenium.Appium
 
         public override string ToString() =>
             $"ByAndroidUIAutomator({selector})";
+    }
+
+    /// <summary>
+    /// Finds element when the Espresso's Data Matcher selector has the specified value.
+    /// <see cref="http://appium.io/docs/en/writing-running-appium/android/espresso-datamatcher-selector"/>
+    /// </summary>
+    public class ByAndroidDataMatcher : MobileBy
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ByAndroidDataMatcher"/> class.
+        /// </summary>
+        /// <param name="selector">The selector to use in finding the element.</param>
+        public ByAndroidDataMatcher(string selector) : base(selector, MobileSelector.AndroidDataMatcher)
+        {
+        }
+
+        public override IWebElement FindElement(ISearchContext context)
+        {
+            if (context is IFindByAndroidDataMatcher<IWebElement> finder)
+                return finder.FindElementByAndroidDataMatcher(selector);
+            return base.FindElement(context);
+        }
+
+        public override ReadOnlyCollection<IWebElement> FindElements(ISearchContext context)
+        {
+            if (context is IFindByAndroidDataMatcher<IWebElement> finder)
+                return finder.FindElementsByAndroidDataMatcher(selector).ToList().AsReadOnly();
+            return base.FindElements(context);
+        }
+
+        public override string ToString() =>
+            $"ByAndroidDataMatcher({selector})";
     }
 
     /// <summary>
