@@ -7,6 +7,7 @@
 - Resolved #306 by updating the way appium's Location endpoint response is mapped to the client's Location model
 - Location property under AppiumDriver is now exposable by IHasLocation interface; Resolve (#386)
 - Resolve #364. Add IsKeyboardShown to IHidesKeyboard intefrace; Add IsKeyboardShown command 
+- Added AndroidDataMatcher selector strategy #408
 
 ## 4.1.1
 - Resolved #372 by fixing the endpoint for Activating an App
