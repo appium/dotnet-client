@@ -1,8 +1,10 @@
 ﻿using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
+using OpenQA.Selenium.Appium.Android.UiAutomator;
 
 namespace Appium.Net.Integration.Tests.Android
 {
@@ -42,6 +44,16 @@ namespace Appium.Net.Integration.Tests.Android
             By byAndroidUiAutomator = new ByAndroidUIAutomator("new UiSelector().clickable(true)");
             Assert.IsNotNull(_driver.FindElementById("android:id/content").FindElement(byAndroidUiAutomator).Text);
             Assert.GreaterOrEqual(_driver.FindElementById("android:id/content").FindElements(byAndroidUiAutomator).Count,
+                1);
+        }
+
+        [Test]
+        public void FindByAndroidUiAutomatorBuilderTest()
+        {
+            By byAndroidUiAutomator = new ByAndroidUIAutomator(new AndroidUiSelector().IsClickable(true));
+            Assert.IsNotNull(_driver.FindElementById("android:id/content").FindElement(byAndroidUiAutomator).Text);
+            Assert.GreaterOrEqual(
+                _driver.FindElementById("android:id/content").FindElements(byAndroidUiAutomator).Count,
                 1);
         }
 
@@ -87,6 +99,17 @@ namespace Appium.Net.Integration.Tests.Android
             var list = _driver.FindElement(By.Id("android:id/list"));
             var locator = new ByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView("
                                                    + "new UiSelector().text(\"Radio Group\"));");
+            var radioGroup = list.FindElement(locator);
+            Assert.NotNull(radioGroup.Location);
+        }
+
+        [Test]
+        public void ScrollingToSubElementUsingBuilder()
+        {
+            _driver.FindElementByAccessibilityId("Views").Click();
+            var list = _driver.FindElement(By.Id("android:id/list"));
+            var locator = new ByAndroidUIAutomator(new AndroidUiScrollable()
+                .ScrollIntoView(new AndroidUiSelector().TextEquals("Radio Group")));
             var radioGroup = list.FindElement(locator);
             Assert.NotNull(radioGroup.Location);
         }

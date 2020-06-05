@@ -87,6 +87,15 @@ namespace OpenQA.Selenium.Appium
         public static By AndroidUIAutomator(string selector) => new ByAndroidUIAutomator(selector);
 
         /// <summary>
+        /// This method creates a <see cref="OpenQA.Selenium.By"/> strategy 
+        /// that searches for elements using Android UI automation framework.
+        /// <see cref="http://developer.android.com/intl/ru/tools/testing-support-library/index.html#uia-apis"/>
+        /// </summary>
+        /// <param name="selector">The selector to use in finding the element.</param>
+        /// <returns></returns>
+        public static By AndroidUIAutomator(IUiAutomatorStatementBuilder selector) => new ByAndroidUIAutomator(selector);
+
+        /// <summary>
         /// This method creates a <see cref="OpenQA.Selenium.By"/> strategy
         /// that searches for elements using Espresso's Data Matcher.
         /// <see cref="http://appium.io/docs/en/writing-running-appium/android/espresso-datamatcher-selector"/>
@@ -161,6 +170,14 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <param name="selector">The selector to use in finding the element.</param>
         public ByAndroidUIAutomator(string selector) : base(selector, MobileSelector.AndroidUIAutomator)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ByAndroidUIAutomator"/> class.
+        /// </summary>
+        /// <param name="selector">The selector to use in finding the element.</param>
+        public ByAndroidUIAutomator(IUiAutomatorStatementBuilder selector) : base(selector.Compile(), MobileSelector.AndroidUIAutomator)
         {
         }
 
