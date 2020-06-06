@@ -177,7 +177,7 @@ namespace OpenQA.Selenium.Appium
         /// Initializes a new instance of the <see cref="ByAndroidUIAutomator"/> class.
         /// </summary>
         /// <param name="selector">The selector to use in finding the element.</param>
-        public ByAndroidUIAutomator(IUiAutomatorStatementBuilder selector) : base(selector.Compile(), MobileSelector.AndroidUIAutomator)
+        public ByAndroidUIAutomator(IUiAutomatorStatementBuilder selector) : base(selector.Build(), MobileSelector.AndroidUIAutomator)
         {
         }
 

@@ -44,7 +44,7 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <param name="uiSelector"></param>
         public AndroidUiScrollable(AndroidUiSelector uiSelector)
         {
-            _builder = new StringBuilder().AppendFormat("new UiScrollable({0})", uiSelector.Compile());
+            _builder = new StringBuilder().AppendFormat("new UiScrollable({0})", uiSelector.Build());
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiScrollable#scrollintoview</remarks>
         public AndroidUiScrollable ScrollIntoView(AndroidUiSelector uiSelector)
         {
-            _builder.AppendFormat(".scrollIntoView({0})", uiSelector.Compile());
+            _builder.AppendFormat(".scrollIntoView({0})", uiSelector.Build());
             return this;
         }
 
@@ -83,7 +83,7 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
             return this;
         }
 
-        public string Compile()
+        public string Build()
         {
             return Compile(false);
         }
