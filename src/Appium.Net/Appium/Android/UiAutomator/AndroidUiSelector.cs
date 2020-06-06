@@ -46,7 +46,7 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// </param>
         public AndroidUiSelector(AndroidUiSelector selector)
         {
-            _builder = new StringBuilder(selector.Compile());
+            _builder = new StringBuilder(selector.Build());
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#childselector</remarks>
         public AndroidUiSelector ChildSelector(AndroidUiSelector selector)
         {
-            _builder.AppendFormat(".childSelector({0})", selector.Compile());
+            _builder.AppendFormat(".childSelector({0})", selector.Build());
             return this;
         }
 
@@ -251,7 +251,7 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#fromparent</remarks>
         public AndroidUiSelector FromParent(AndroidUiSelector selector)
         {
-            _builder.AppendFormat(".fromParent({0})", selector.Compile());
+            _builder.AppendFormat(".fromParent({0})", selector.Build());
             return this;
         }
 
@@ -456,7 +456,7 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// been added to this instance.
         /// </summary>
         /// <returns></returns>
-        public string Compile()
+        public string Build()
         {
             return _builder.ToString();
         }
