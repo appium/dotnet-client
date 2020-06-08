@@ -439,6 +439,19 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         }
 
         /// <summary>
+        /// Set the search criteria to match visible text in a widget that is prefixed by the text parameter.
+        /// The matching is case-insensitive.
+        /// Maps to the UiSelector.textStartsWith(String) method.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiSelector#textstartswith</remarks>
+        public AndroidUiSelector TextStartsWith(string text)
+        {
+            _builder.AppendFormat(".textStartsWith(\"{0}\")", text);
+            return this;
+        }
+
+        /// <summary>
         /// Append raw text to this <see cref="AndroidUiSelector"/> instance. The target language is Java.
         /// Text entered here will not be checked for validity. Use this at your own risk.
         /// </summary>
