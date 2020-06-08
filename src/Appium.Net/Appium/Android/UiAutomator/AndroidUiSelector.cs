@@ -12,7 +12,6 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-using System;
 using System.Text;
 using OpenQA.Selenium.Appium.Interfaces;
 
@@ -47,9 +46,7 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// </param>
         public AndroidUiSelector(AndroidUiSelector selector)
         {
-            _ = selector ?? throw new ArgumentNullException(nameof(selector));
-
-            _builder = new StringBuilder(selector.Build());
+            _builder = new StringBuilder(selector.RequireNotNull(nameof(selector)).Build());
         }
 
         /// <summary>
@@ -95,9 +92,7 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#childselector</remarks>
         public AndroidUiSelector ChildSelector(AndroidUiSelector selector)
         {
-            _ = selector ?? throw new ArgumentNullException(nameof(selector));
-
-            _builder.AppendFormat(".childSelector({0})", selector.Build());
+            _builder.AppendFormat(".childSelector({0})", selector.RequireNotNull(nameof(selector)).Build());
             return this;
         }
 
@@ -109,9 +104,7 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#classname</remarks>
         public AndroidUiSelector ClassNameEquals(string className)
         {
-            _ = className ?? throw new ArgumentNullException(nameof(className));
-
-            _builder.AppendFormat(".className(\"{0}\")", className);
+            _builder.AppendFormat(".className(\"{0}\")", className.RequireNotNull(nameof(className)));
             return this;
         }
 
@@ -123,9 +116,7 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#classnamematches</remarks>
         public AndroidUiSelector ClassNameMatches(string regex)
         {
-            _ = regex ?? throw new ArgumentNullException(nameof(regex));
-
-            _builder.AppendFormat(".classNameMatches(\"{0}\")", regex);
+            _builder.AppendFormat(".classNameMatches(\"{0}\")", regex.RequireNotNull(nameof(regex)));
             return this;
         }
 
@@ -157,9 +148,7 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#description</remarks>
         public AndroidUiSelector DescriptionEquals(string description)
         {
-            _ = description ?? throw new ArgumentNullException(nameof(description));
-
-            _builder.AppendFormat(".description(\"{0}\")", description);
+            _builder.AppendFormat(".description(\"{0}\")", description.RequireNotNull(nameof(description)));
             return this;
         }
 
@@ -174,9 +163,7 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#descriptioncontains</remarks>
         public AndroidUiSelector DescriptionContains(string description)
         {
-            _ = description ?? throw new ArgumentNullException(nameof(description));
-
-            _builder.AppendFormat(".descriptionContains(\"{0}\")", description);
+            _builder.AppendFormat(".descriptionContains(\"{0}\")", description.RequireNotNull(nameof(description)));
             return this;
         }
 
@@ -191,9 +178,7 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#descriptionmatches</remarks>
         public AndroidUiSelector DescriptionMatches(string description)
         {
-            _ = description ?? throw new ArgumentNullException(nameof(description));
-
-            _builder.AppendFormat(".descriptionMatches(\"{0}\")", description);
+            _builder.AppendFormat(".descriptionMatches(\"{0}\")", description.RequireNotNull(nameof(description)));
             return this;
         }
 
@@ -208,9 +193,7 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#descriptionstartswith</remarks>
         public AndroidUiSelector DescriptionStartsWith(string description)
         {
-            _ = description ?? throw new ArgumentNullException(nameof(description));
-
-            _builder.AppendFormat(".descriptionStartsWith(\"{0}\")", description);
+            _builder.AppendFormat(".descriptionStartsWith(\"{0}\")", description.RequireNotNull(nameof(description)));
             return this;
         }
 
@@ -268,9 +251,7 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#fromparent</remarks>
         public AndroidUiSelector FromParent(AndroidUiSelector selector)
         {
-            _ = selector ?? throw new ArgumentNullException(nameof(selector));
-
-            _builder.AppendFormat(".fromParent({0})", selector.Build());
+            _builder.AppendFormat(".fromParent({0})", selector.RequireNotNull(nameof(selector)).Build());
             return this;
         }
 
@@ -284,10 +265,7 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#index</remarks>
         public AndroidUiSelector Index(int index)
         {
-            if (index < 0)
-                throw new ArgumentOutOfRangeException(nameof(index), "Must be 0 (zero) or greater");
-
-            _builder.AppendFormat(".index({0})", index);
+            _builder.AppendFormat(".index({0})", index.RequireIsPositive(nameof(index)));
             return this;
         }
 
@@ -305,10 +283,7 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#instance</remarks>
         public AndroidUiSelector Instance(int instance)
         {
-            if (instance < 0)
-                throw new ArgumentOutOfRangeException(nameof(instance), "Must be 0 (zero) or greater");
-
-            _builder.AppendFormat(".instance({0})", instance);
+            _builder.AppendFormat(".instance({0})", instance.RequireIsPositive(nameof(instance)));
             return this;
         }
 
@@ -335,9 +310,7 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#packagename</remarks>
         public AndroidUiSelector PackageNameEquals(string packageName)
         {
-            _ = packageName ?? throw new ArgumentNullException(nameof(packageName));
-
-            _builder.AppendFormat(".packageName(\"{0}\")", packageName);
+            _builder.AppendFormat(".packageName(\"{0}\")", packageName.RequireNotNull(nameof(packageName)));
             return this;
         }
 
@@ -349,9 +322,7 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#packagenamematches</remarks>
         public AndroidUiSelector PackageNameMatches(string regex)
         {
-            _ = regex ?? throw new ArgumentNullException(nameof(regex));
-
-            _builder.AppendFormat(".packageNameMatches(\"{0}\")", regex);
+            _builder.AppendFormat(".packageNameMatches(\"{0}\")", regex.RequireNotNull(nameof(regex)));
             return this;
         }
 
@@ -363,9 +334,7 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#resourceid</remarks>
         public AndroidUiSelector ResourceIdEquals(string id)
         {
-            _ = id ?? throw new ArgumentNullException(nameof(id));
-
-            _builder.AppendFormat(".resourceId(\"{0}\")", id);
+            _builder.AppendFormat(".resourceId(\"{0}\")", id.RequireNotNull(nameof(id)));
             return this;
         }
 
@@ -377,9 +346,7 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiSelector.html#resourceidmatches</remarks>
         public AndroidUiSelector ResourceIdMatches(string regex)
         {
-            _ = regex ?? throw new ArgumentNullException(nameof(regex));
-
-            _builder.AppendFormat(".resourceIdMatches(\"{0}\")", regex);
+            _builder.AppendFormat(".resourceIdMatches(\"{0}\")", regex.RequireNotNull(nameof(regex)));
             return this;
         }
 
@@ -426,11 +393,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiSelector.html#text</remarks>
         public AndroidUiSelector AccessibilityIdEquals(string text)
         {
-            _ = text ?? throw new ArgumentNullException(nameof(text));
-
             // these are the same method. this version is only included to prevent confusion
             // since its kinda weird that it handles both text and accessibility-id
-            return TextEquals(text);
+            return TextEquals(text.RequireNotNull(nameof(text)));
         }
 
         /// <summary>
@@ -441,9 +406,7 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiSelector.html#text</remarks>
         public AndroidUiSelector TextEquals(string text)
         {
-            _ = text ?? throw new ArgumentNullException(nameof(text));
-
-            _builder.AppendFormat(".text(\"{0}\")", text);
+            _builder.AppendFormat(".text(\"{0}\")", text.RequireNotNull(nameof(text)));
             return this;
         }
 
@@ -456,9 +419,7 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiSelector.html#textcontains</remarks>
         public AndroidUiSelector TextContains(string text)
         {
-            _ = text ?? throw new ArgumentNullException(nameof(text));
-
-            _builder.AppendFormat(".textContains(\"{0}\")", text);
+            _builder.AppendFormat(".textContains(\"{0}\")", text.RequireNotNull(nameof(text)));
             return this;
         }
 
@@ -473,9 +434,7 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#textmatches</remarks>
         public AndroidUiSelector TextMatches(string regex)
         {
-            _ = regex ?? throw new ArgumentNullException(nameof(regex));
-
-            _builder.AppendFormat(".textMatches(\"{0}\")", regex);
+            _builder.AppendFormat(".textMatches(\"{0}\")", regex.RequireNotNull(nameof(regex)));
             return this;
         }
 
@@ -488,9 +447,7 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiSelector#textstartswith</remarks>
         public AndroidUiSelector TextStartsWith(string text)
         {
-            _ = text ?? throw new ArgumentNullException(nameof(text));
-
-            _builder.AppendFormat(".textStartsWith(\"{0}\")", text);
+            _builder.AppendFormat(".textStartsWith(\"{0}\")", text.RequireNotNull(nameof(text)));
             return this;
         }
 
@@ -503,9 +460,7 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// </param>
         public AndroidUiSelector AddRawText(string text)
         {
-            _ = text ?? throw new ArgumentNullException(nameof(text));
-
-            _builder.Append(text);
+            _builder.Append(text.RequireNotNull(nameof(text)));
             return this;
         }
 
