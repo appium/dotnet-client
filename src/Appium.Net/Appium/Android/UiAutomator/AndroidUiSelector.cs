@@ -12,6 +12,7 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+using System;
 using System.Text;
 using OpenQA.Selenium.Appium.Interfaces;
 
@@ -46,6 +47,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// </param>
         public AndroidUiSelector(AndroidUiSelector selector)
         {
+            if (selector == null)
+                throw new ArgumentNullException(nameof(selector));
+
             _builder = new StringBuilder(selector.Build());
         }
 
@@ -92,6 +96,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#childselector</remarks>
         public AndroidUiSelector ChildSelector(AndroidUiSelector selector)
         {
+            if (selector == null)
+                throw new ArgumentNullException(nameof(selector));
+
             _builder.AppendFormat(".childSelector({0})", selector.Build());
             return this;
         }
@@ -104,6 +111,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#classname</remarks>
         public AndroidUiSelector ClassNameEquals(string className)
         {
+            if (className == null)
+                throw new ArgumentNullException(nameof(className));
+
             _builder.AppendFormat(".className(\"{0}\")", className);
             return this;
         }
@@ -116,6 +126,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#classnamematches</remarks>
         public AndroidUiSelector ClassNameMatches(string regex)
         {
+            if (regex == null)
+                throw new ArgumentNullException(nameof(regex));
+
             _builder.AppendFormat(".classNameMatches(\"{0}\")", regex);
             return this;
         }
@@ -148,6 +161,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#description</remarks>
         public AndroidUiSelector DescriptionEquals(string description)
         {
+            if (description == null)
+                throw new ArgumentNullException(nameof(description));
+
             _builder.AppendFormat(".description(\"{0}\")", description);
             return this;
         }
@@ -163,6 +179,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#descriptioncontains</remarks>
         public AndroidUiSelector DescriptionContains(string description)
         {
+            if (description == null)
+                throw new ArgumentNullException(nameof(description));
+
             _builder.AppendFormat(".descriptionContains(\"{0}\")", description);
             return this;
         }
@@ -178,6 +197,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#descriptionmatches</remarks>
         public AndroidUiSelector DescriptionMatches(string description)
         {
+            if (description == null)
+                throw new ArgumentNullException(nameof(description));
+
             _builder.AppendFormat(".descriptionMatches(\"{0}\")", description);
             return this;
         }
@@ -193,6 +215,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#descriptionstartswith</remarks>
         public AndroidUiSelector DescriptionStartsWith(string description)
         {
+            if (description == null)
+                throw new ArgumentNullException(nameof(description));
+
             _builder.AppendFormat(".descriptionStartsWith(\"{0}\")", description);
             return this;
         }
@@ -251,6 +276,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#fromparent</remarks>
         public AndroidUiSelector FromParent(AndroidUiSelector selector)
         {
+            if (selector == null)
+                throw new ArgumentNullException(nameof(selector));
+
             _builder.AppendFormat(".fromParent({0})", selector.Build());
             return this;
         }
@@ -265,6 +293,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#index</remarks>
         public AndroidUiSelector Index(int index)
         {
+            if (index < 0)
+                throw new ArgumentOutOfRangeException(nameof(index), "Must be 0 (zero) or greater");
+
             _builder.AppendFormat(".index({0})", index);
             return this;
         }
@@ -283,6 +314,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#instance</remarks>
         public AndroidUiSelector Instance(int instance)
         {
+            if (instance < 0)
+                throw new ArgumentOutOfRangeException(nameof(instance), "Must be 0 (zero) or greater");
+
             _builder.AppendFormat(".instance({0})", instance);
             return this;
         }
@@ -310,6 +344,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#packagename</remarks>
         public AndroidUiSelector PackageNameEquals(string packageName)
         {
+            if (packageName == null)
+                throw new ArgumentNullException(nameof(packageName));
+
             _builder.AppendFormat(".packageName(\"{0}\")", packageName);
             return this;
         }
@@ -322,6 +359,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#packagenamematches</remarks>
         public AndroidUiSelector PackageNameMatches(string regex)
         {
+            if (regex == null)
+                throw new ArgumentNullException(nameof(regex));
+
             _builder.AppendFormat(".packageNameMatches(\"{0}\")", regex);
             return this;
         }
@@ -334,6 +374,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#resourceid</remarks>
         public AndroidUiSelector ResourceIdEquals(string id)
         {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+
             _builder.AppendFormat(".resourceId(\"{0}\")", id);
             return this;
         }
@@ -346,6 +389,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiSelector.html#resourceidmatches</remarks>
         public AndroidUiSelector ResourceIdMatches(string regex)
         {
+            if (regex == null)
+                throw new ArgumentNullException(nameof(regex));
+
             _builder.AppendFormat(".resourceIdMatches(\"{0}\")", regex);
             return this;
         }
@@ -393,6 +439,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiSelector.html#text</remarks>
         public AndroidUiSelector AccessibilityIdEquals(string text)
         {
+            if (text == null)
+                throw new ArgumentNullException(nameof(text));
+
             // these are the same method. this version is only included to prevent confusion
             // since its kinda weird that it handles both text and accessibility-id
             return TextEquals(text);
@@ -406,6 +455,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiSelector.html#text</remarks>
         public AndroidUiSelector TextEquals(string text)
         {
+            if (text == null)
+                throw new ArgumentNullException(nameof(text));
+
             _builder.AppendFormat(".text(\"{0}\")", text);
             return this;
         }
@@ -419,6 +471,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiSelector.html#textcontains</remarks>
         public AndroidUiSelector TextContains(string text)
         {
+            if (text == null)
+                throw new ArgumentNullException(nameof(text));
+
             _builder.AppendFormat(".textContains(\"{0}\")", text);
             return this;
         }
@@ -434,6 +489,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#textmatches</remarks>
         public AndroidUiSelector TextMatches(string regex)
         {
+            if (regex == null)
+                throw new ArgumentNullException(nameof(regex));
+
             _builder.AppendFormat(".textMatches(\"{0}\")", regex);
             return this;
         }
@@ -447,6 +505,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiSelector#textstartswith</remarks>
         public AndroidUiSelector TextStartsWith(string text)
         {
+            if (text == null)
+                throw new ArgumentNullException(nameof(text));
+
             _builder.AppendFormat(".textStartsWith(\"{0}\")", text);
             return this;
         }
@@ -460,6 +521,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// </param>
         public AndroidUiSelector AddRawText(string text)
         {
+            if (text == null)
+                throw new ArgumentNullException(nameof(text));
+
             _builder.Append(text);
             return this;
         }

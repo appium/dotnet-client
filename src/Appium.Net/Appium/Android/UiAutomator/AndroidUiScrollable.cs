@@ -47,6 +47,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// </param>
         public AndroidUiScrollable(AndroidUiSelector uiSelector)
         {
+            if (uiSelector == null)
+                throw new ArgumentNullException(nameof(uiSelector));
+
             _builder = new StringBuilder().AppendFormat("new UiScrollable({0})", uiSelector.Build());
         }
 
@@ -91,6 +94,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiScrollable#flingtobeginning</remarks>
         public TerminatedStatementBuilder FlingToBeginning(int maxSwipes)
         {
+            if (maxSwipes < 0)
+                throw new ArgumentOutOfRangeException(nameof(maxSwipes), "Must be 0 (zero) or greater");
+
             var forkedBuilder = new StringBuilder(_builder.ToString());
             forkedBuilder.AppendFormat(".flingToBeginning({0})", maxSwipes);
             return new TerminatedStatementBuilder(forkedBuilder);
@@ -106,6 +112,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiScrollable#flingtoend</remarks>
         public TerminatedStatementBuilder FlingToEnd(int maxSwipes)
         {
+            if (maxSwipes < 0)
+                throw new ArgumentOutOfRangeException(nameof(maxSwipes), "Must be 0 (zero) or greater");
+
             var forkedBuilder = new StringBuilder(_builder.ToString());
             forkedBuilder.AppendFormat(".flingToEnd({0})", maxSwipes);
             return new TerminatedStatementBuilder(forkedBuilder);
@@ -131,6 +140,12 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiScrollable#getchildbydescription_1</remarks>
         public TerminatedStatementBuilder GetChildByDescription(AndroidUiSelector uiSelector, string description, bool allowScrollSearch = true)
         {
+            if (uiSelector == null)
+                throw new ArgumentNullException(nameof(uiSelector));
+
+            if (description == null)
+                throw new ArgumentNullException(nameof(description));
+
             var forkedBuilder = new StringBuilder(_builder.ToString());
             forkedBuilder.AppendFormat(".getChildByDescription({0}, \"{1}\", {2})", 
                 uiSelector.Build(), 
@@ -149,6 +164,12 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiScrollable#getchildbyinstance</remarks>
         public TerminatedStatementBuilder GetChildByInstance(AndroidUiSelector uiSelector, int instance)
         {
+            if (uiSelector == null)
+                throw new ArgumentNullException(nameof(uiSelector));
+
+            if (instance < 0)
+                throw new ArgumentOutOfRangeException(nameof(instance), "Must be 0 (zero) or greater");
+
             var forkedBuilder = new StringBuilder(_builder.ToString());
             forkedBuilder.AppendFormat(".getChildByInstance({0}, {1})", uiSelector.Build(), instance);
             return new TerminatedStatementBuilder(forkedBuilder);
@@ -169,6 +190,12 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         public TerminatedStatementBuilder GetChildByText(AndroidUiSelector uiSelector, string text,
             bool allowScrollSearch = true)
         {
+            if (uiSelector == null)
+                throw new ArgumentNullException(nameof(uiSelector));
+
+            if (text == null)
+                throw new ArgumentNullException(nameof(text));
+
             var forkedBuilder = new StringBuilder(_builder.ToString());
             forkedBuilder.AppendFormat(".getChildByText({0}, \"{1}\", {2})", 
                 uiSelector.Build(), 
@@ -190,6 +217,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiScrollable#scrollbackward</remarks>
         public TerminatedStatementBuilder ScrollBackward(int steps = 55)
         {
+            if (steps < 0)
+                throw new ArgumentOutOfRangeException(nameof(steps), "Must be 0 (zero) or greater");
+
             var forkedBuilder = new StringBuilder(_builder.ToString());
             forkedBuilder.AppendFormat(".scrollBackward({0})", steps);
             return new TerminatedStatementBuilder(forkedBuilder);
@@ -204,6 +234,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiScrollable#scrolldescriptionintoview</remarks>
         public TerminatedStatementBuilder ScrollDescriptionIntoView(string description)
         {
+            if (description == null)
+                throw new ArgumentNullException(nameof(description));
+
             var forkedBuilder = new StringBuilder(_builder.ToString());
             forkedBuilder.AppendFormat(".scrollDescriptionIntoView(\"{0}\")", description);
             return new TerminatedStatementBuilder(forkedBuilder);
@@ -222,6 +255,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiScrollable#scrollforward</remarks>
         public TerminatedStatementBuilder ScrollForward(int steps = 55)
         {
+            if (steps < 0)
+                throw new ArgumentOutOfRangeException(nameof(steps), "Must be 0 (zero) or greater");
+
             var forkedBuilder = new StringBuilder(_builder.ToString());
             forkedBuilder.AppendFormat(".scrollForward({0})", steps);
             return new TerminatedStatementBuilder(forkedBuilder);
@@ -236,6 +272,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiScrollable#scrolltextintoview</remarks>
         public TerminatedStatementBuilder ScrollTextIntoView(string text)
         {
+            if (text == null)
+                throw new ArgumentNullException(nameof(text));
+
             var forkedBuilder = new StringBuilder(_builder.ToString());
             forkedBuilder.AppendFormat(".scrollTextIntoView(\"{0}\")", text);
             return new TerminatedStatementBuilder(forkedBuilder);
@@ -254,6 +293,12 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiScrollable#scrolltobeginning</remarks>
         public TerminatedStatementBuilder ScrollToBeginning(int maxSwipes, int steps = 55)
         {
+            if (maxSwipes < 0)
+                throw new ArgumentOutOfRangeException(nameof(maxSwipes), "Must be 0 (zero) or greater");
+
+            if (steps < 0)
+                throw new ArgumentOutOfRangeException(nameof(steps), "Must be 0 (zero) or greater");
+
             var forkedBuilder = new StringBuilder(_builder.ToString());
             forkedBuilder.AppendFormat(".scrollToBeginning({0}, {1})", maxSwipes, steps);
             return new TerminatedStatementBuilder(forkedBuilder);
@@ -272,6 +317,12 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks></remarks>
         public TerminatedStatementBuilder ScrollToEnd(int maxSwipes, int steps = 55)
         {
+            if (maxSwipes < 0)
+                throw new ArgumentOutOfRangeException(nameof(maxSwipes), "Must be 0 (zero) or greater");
+
+            if (steps < 0)
+                throw new ArgumentOutOfRangeException(nameof(steps), "Must be 0 (zero) or greater");
+
             var forkedBuilder = new StringBuilder(_builder.ToString());
             forkedBuilder.AppendFormat(".scrollToEnd({0}, {1})", maxSwipes, steps);
             return new TerminatedStatementBuilder(forkedBuilder);
@@ -319,6 +370,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks></remarks>
         public AndroidUiScrollable SetMaxSearchSwipes(int swipes)
         {
+            if (swipes < 0)
+                throw new ArgumentOutOfRangeException(nameof(swipes), "Must be 0 (zero) or greater");
+
             _builder.AppendFormat(".setMaxSearchSwipes({0})", swipes);
             return this;
         }
@@ -331,6 +385,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiScrollable#scrollintoview</remarks>
         public TerminatedStatementBuilder ScrollIntoView(AndroidUiSelector uiSelector)
         {
+            if (uiSelector == null)
+                throw new ArgumentNullException(nameof(uiSelector));
+
             var forkedBuilder = new StringBuilder(_builder.ToString());
             forkedBuilder.AppendFormat(".scrollIntoView({0})", uiSelector.Build());
             return new TerminatedStatementBuilder(forkedBuilder);
@@ -345,6 +402,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// </param>
         public AndroidUiScrollable AddRawText(string text)
         {
+            if (text == null)
+                throw new ArgumentNullException(nameof(text));
+
             _builder.Append(text);
             return this;
         }
