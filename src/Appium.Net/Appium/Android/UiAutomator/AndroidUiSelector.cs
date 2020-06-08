@@ -79,7 +79,7 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/androidx/test/uiautomator/UiSelector#checked</remarks>
         public AndroidUiSelector IsChecked(bool value)
         {
-            _builder.AppendFormat(".checkable({0})", value.ToString().ToLowerInvariant());
+            _builder.AppendFormat(".checked({0})", value.ToString().ToLowerInvariant());
             return this;
         }
 
