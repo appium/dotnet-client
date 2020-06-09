@@ -19,7 +19,7 @@ using OpenQA.Selenium.Appium.Interfaces;
 namespace OpenQA.Selenium.Appium.Android.UiAutomator
 {
     /// <summary>
-    /// 
+    /// A convenience class to wrap Android UiScrollable method calls.
     /// </summary>
     /// <remarks>
     /// Docs: https://developer.android.com/reference/android/support/test/uiautomator/UiScrollable
