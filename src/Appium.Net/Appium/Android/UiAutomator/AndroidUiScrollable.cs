@@ -91,9 +91,8 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiScrollable#flingtobeginning</remarks>
         public TerminatedStatementBuilder FlingToBeginning(int maxSwipes)
         {
-            maxSwipes.RequireIsPositive(nameof(maxSwipes));
             var forkedBuilder = new StringBuilder(_builder.ToString());
-            forkedBuilder.AppendFormat(".flingToBeginning({0})", maxSwipes);
+            forkedBuilder.AppendFormat(".flingToBeginning({0})", maxSwipes.RequireIsPositive(nameof(maxSwipes)));
             return new TerminatedStatementBuilder(forkedBuilder);
         }
 
@@ -107,9 +106,8 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiScrollable#flingtoend</remarks>
         public TerminatedStatementBuilder FlingToEnd(int maxSwipes)
         {
-            maxSwipes.RequireIsPositive(nameof(maxSwipes));
             var forkedBuilder = new StringBuilder(_builder.ToString());
-            forkedBuilder.AppendFormat(".flingToEnd({0})", maxSwipes);
+            forkedBuilder.AppendFormat(".flingToEnd({0})", maxSwipes.RequireIsPositive(nameof(maxSwipes)));
             return new TerminatedStatementBuilder(forkedBuilder);
         }
 
@@ -133,13 +131,10 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiScrollable#getchildbydescription_1</remarks>
         public TerminatedStatementBuilder GetChildByDescription(AndroidUiSelector uiSelector, string description, bool allowScrollSearch = true)
         {
-            uiSelector.RequireNotNull(nameof(uiSelector));
-            description.RequireNotNull(nameof(description));
-
             var forkedBuilder = new StringBuilder(_builder.ToString());
             forkedBuilder.AppendFormat(".getChildByDescription({0}, \"{1}\", {2})", 
-                uiSelector.Build(), 
-                description,
+                uiSelector.RequireNotNull(nameof(uiSelector)).Build(), 
+                description.RequireNotNull(nameof(description)),
                 allowScrollSearch.ToString().ToLowerInvariant());
             return new TerminatedStatementBuilder(forkedBuilder);
         }
@@ -154,11 +149,10 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiScrollable#getchildbyinstance</remarks>
         public TerminatedStatementBuilder GetChildByInstance(AndroidUiSelector uiSelector, int instance)
         {
-            uiSelector.RequireNotNull(nameof(uiSelector));
-            instance.RequireIsPositive(nameof(instance));
-
             var forkedBuilder = new StringBuilder(_builder.ToString());
-            forkedBuilder.AppendFormat(".getChildByInstance({0}, {1})", uiSelector.Build(), instance);
+            forkedBuilder.AppendFormat(".getChildByInstance({0}, {1})", 
+                uiSelector.RequireNotNull(nameof(uiSelector)).Build(), 
+                instance.RequireIsPositive(nameof(instance)));
             return new TerminatedStatementBuilder(forkedBuilder);
         }
 
@@ -177,13 +171,10 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         public TerminatedStatementBuilder GetChildByText(AndroidUiSelector uiSelector, string text,
             bool allowScrollSearch = true)
         {
-            uiSelector.RequireNotNull(nameof(uiSelector));
-            text.RequireNotNull(nameof(text));
-
             var forkedBuilder = new StringBuilder(_builder.ToString());
             forkedBuilder.AppendFormat(".getChildByText({0}, \"{1}\", {2})", 
-                uiSelector.Build(), 
-                text, 
+                uiSelector.RequireNotNull(nameof(uiSelector)).Build(), 
+                text.RequireNotNull(nameof(text)),
                 allowScrollSearch.ToString().ToLowerInvariant());
             return new TerminatedStatementBuilder(forkedBuilder);
         }
@@ -201,10 +192,8 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiScrollable#scrollbackward</remarks>
         public TerminatedStatementBuilder ScrollBackward(int steps = 55)
         {
-            steps.RequireIsPositive(nameof(steps));
-
             var forkedBuilder = new StringBuilder(_builder.ToString());
-            forkedBuilder.AppendFormat(".scrollBackward({0})", steps);
+            forkedBuilder.AppendFormat(".scrollBackward({0})", steps.RequireIsPositive(nameof(steps)));
             return new TerminatedStatementBuilder(forkedBuilder);
         }
 
@@ -217,10 +206,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiScrollable#scrolldescriptionintoview</remarks>
         public TerminatedStatementBuilder ScrollDescriptionIntoView(string description)
         {
-            description.RequireNotNull(nameof(description));
-
             var forkedBuilder = new StringBuilder(_builder.ToString());
-            forkedBuilder.AppendFormat(".scrollDescriptionIntoView(\"{0}\")", description);
+            forkedBuilder.AppendFormat(".scrollDescriptionIntoView(\"{0}\")", 
+                description.RequireNotNull(nameof(description)));
             return new TerminatedStatementBuilder(forkedBuilder);
         }
 
@@ -237,10 +225,8 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiScrollable#scrollforward</remarks>
         public TerminatedStatementBuilder ScrollForward(int steps = 55)
         {
-            steps.RequireIsPositive(nameof(steps));
-
             var forkedBuilder = new StringBuilder(_builder.ToString());
-            forkedBuilder.AppendFormat(".scrollForward({0})", steps);
+            forkedBuilder.AppendFormat(".scrollForward({0})", steps.RequireIsPositive(nameof(steps)));
             return new TerminatedStatementBuilder(forkedBuilder);
         }
 
@@ -253,10 +239,8 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiScrollable#scrolltextintoview</remarks>
         public TerminatedStatementBuilder ScrollTextIntoView(string text)
         {
-            text.RequireNotNull(nameof(text));
-
             var forkedBuilder = new StringBuilder(_builder.ToString());
-            forkedBuilder.AppendFormat(".scrollTextIntoView(\"{0}\")", text);
+            forkedBuilder.AppendFormat(".scrollTextIntoView(\"{0}\")", text.RequireNotNull(nameof(text)));
             return new TerminatedStatementBuilder(forkedBuilder);
         }
 
@@ -273,11 +257,10 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiScrollable#scrolltobeginning</remarks>
         public TerminatedStatementBuilder ScrollToBeginning(int maxSwipes, int steps = 55)
         {
-            maxSwipes.RequireIsPositive(nameof(maxSwipes));
-            steps.RequireIsPositive(nameof(steps));
-
             var forkedBuilder = new StringBuilder(_builder.ToString());
-            forkedBuilder.AppendFormat(".scrollToBeginning({0}, {1})", maxSwipes, steps);
+            forkedBuilder.AppendFormat(".scrollToBeginning({0}, {1})", 
+                maxSwipes.RequireIsPositive(nameof(maxSwipes)), 
+                steps.RequireIsPositive(nameof(steps)));
             return new TerminatedStatementBuilder(forkedBuilder);
         }
 
@@ -294,11 +277,10 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks></remarks>
         public TerminatedStatementBuilder ScrollToEnd(int maxSwipes, int steps = 55)
         {
-            maxSwipes.RequireIsPositive(nameof(maxSwipes));
-            steps.RequireIsPositive(nameof(steps));
-
             var forkedBuilder = new StringBuilder(_builder.ToString());
-            forkedBuilder.AppendFormat(".scrollToEnd({0}, {1})", maxSwipes, steps);
+            forkedBuilder.AppendFormat(".scrollToEnd({0}, {1})", 
+                maxSwipes.RequireIsPositive(nameof(maxSwipes)), 
+                steps.RequireIsPositive(nameof(steps)));
             return new TerminatedStatementBuilder(forkedBuilder);
         }
 
@@ -354,10 +336,9 @@ namespace OpenQA.Selenium.Appium.Android.UiAutomator
         /// <remarks>https://developer.android.com/reference/android/support/test/uiautomator/UiScrollable#scrollintoview</remarks>
         public TerminatedStatementBuilder ScrollIntoView(AndroidUiSelector uiSelector)
         {
-            uiSelector.RequireNotNull(nameof(uiSelector));
-
             var forkedBuilder = new StringBuilder(_builder.ToString());
-            forkedBuilder.AppendFormat(".scrollIntoView({0})", uiSelector.Build());
+            forkedBuilder.AppendFormat(".scrollIntoView({0})", 
+                uiSelector.RequireNotNull(nameof(uiSelector)).Build());
             return new TerminatedStatementBuilder(forkedBuilder);
         }
 
