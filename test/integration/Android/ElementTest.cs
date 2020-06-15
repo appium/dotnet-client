@@ -1,6 +1,5 @@
 ﻿using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
@@ -55,6 +54,19 @@ namespace Appium.Net.Integration.Tests.Android
             Assert.GreaterOrEqual(
                 _driver.FindElementById("android:id/content").FindElements(byAndroidUiAutomator).Count,
                 1);
+        }
+
+        [Test]
+        public void CanFindByDescriptionUsingBuilderWhenNewlineCharacterIncluded()
+        {
+            _driver.StartActivity("io.appium.android.apis", ".accessibility.TaskListActivity");
+            By byAndroidUiAutomator = new ByAndroidUIAutomator(new AndroidUiSelector().DescriptionEquals(
+                "1. Enable QueryBack (Settings -> Accessibility -> QueryBack). \n\n" +
+                "2. Enable Explore-by-Touch (Settings -> Accessibility -> Explore by Touch). \n\n" +
+                "3. Touch explore the list."));
+
+            Assert.IsNotNull(_driver.FindElementById("android:id/content").FindElement(byAndroidUiAutomator).Text);
+            Assert.GreaterOrEqual(_driver.FindElementById("android:id/content").FindElements(byAndroidUiAutomator).Count, 1);
         }
 
         [Test]
