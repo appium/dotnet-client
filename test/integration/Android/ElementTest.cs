@@ -70,6 +70,17 @@ namespace Appium.Net.Integration.Tests.Android
         }
 
         [Test]
+        public void CanFindByDescriptionUsingBuilderWhenDoubleQuoteCharacterIncluded()
+        {
+            _driver.StartActivity("io.appium.android.apis", ".text.Link");
+            By byAndroidUiAutomator = new ByAndroidUIAutomator(new AndroidUiSelector()
+                .DescriptionContains("Use a \"tel:\" URL"));
+
+            Assert.IsNotNull(_driver.FindElementById("android:id/content").FindElement(byAndroidUiAutomator).Text);
+            Assert.GreaterOrEqual(_driver.FindElementById("android:id/content").FindElements(byAndroidUiAutomator).Count, 1);
+        }
+
+        [Test]
         public void ReplaceValueTest()
         {
             var originalValue = "original value";
