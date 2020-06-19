@@ -16,7 +16,6 @@ using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Remote;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium.Android
 {
@@ -37,8 +36,14 @@ namespace OpenQA.Selenium.Appium.Android
         public AppiumWebElement FindElementByAndroidUIAutomator(string selector) =>
             FindElement(MobileSelector.AndroidUIAutomator, selector);
 
+        public AppiumWebElement FindElementByAndroidUIAutomator(IUiAutomatorStatementBuilder selector) =>
+            FindElement(MobileSelector.AndroidUIAutomator, selector.Build());
+
         public IReadOnlyCollection<AppiumWebElement> FindElementsByAndroidUIAutomator(string selector) =>
             FindElements(MobileSelector.AndroidUIAutomator, selector);
+
+        public IReadOnlyCollection<AppiumWebElement> FindElementsByAndroidUIAutomator(IUiAutomatorStatementBuilder selector) => 
+            FindElements(MobileSelector.AndroidUIAutomator, selector.Build());
 
         #endregion IFindByAndroidUIAutomator Members
 

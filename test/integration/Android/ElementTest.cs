@@ -3,6 +3,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
+using OpenQA.Selenium.Appium.Android.UiAutomator;
 
 namespace Appium.Net.Integration.Tests.Android
 {
@@ -43,6 +44,40 @@ namespace Appium.Net.Integration.Tests.Android
             Assert.IsNotNull(_driver.FindElementById("android:id/content").FindElement(byAndroidUiAutomator).Text);
             Assert.GreaterOrEqual(_driver.FindElementById("android:id/content").FindElements(byAndroidUiAutomator).Count,
                 1);
+        }
+
+        [Test]
+        public void FindByAndroidUiAutomatorBuilderTest()
+        {
+            By byAndroidUiAutomator = new ByAndroidUIAutomator(new AndroidUiSelector().IsClickable(true));
+            Assert.IsNotNull(_driver.FindElementById("android:id/content").FindElement(byAndroidUiAutomator).Text);
+            Assert.GreaterOrEqual(
+                _driver.FindElementById("android:id/content").FindElements(byAndroidUiAutomator).Count,
+                1);
+        }
+
+        [Test]
+        public void CanFindByDescriptionUsingBuilderWhenNewlineCharacterIncluded()
+        {
+            _driver.StartActivity("io.appium.android.apis", ".accessibility.TaskListActivity");
+            By byAndroidUiAutomator = new ByAndroidUIAutomator(new AndroidUiSelector().DescriptionEquals(
+                "1. Enable QueryBack (Settings -> Accessibility -> QueryBack). \n\n" +
+                "2. Enable Explore-by-Touch (Settings -> Accessibility -> Explore by Touch). \n\n" +
+                "3. Touch explore the list."));
+
+            Assert.IsNotNull(_driver.FindElementById("android:id/content").FindElement(byAndroidUiAutomator).Text);
+            Assert.GreaterOrEqual(_driver.FindElementById("android:id/content").FindElements(byAndroidUiAutomator).Count, 1);
+        }
+
+        [Test]
+        public void CanFindByDescriptionUsingBuilderWhenDoubleQuoteCharacterIncluded()
+        {
+            _driver.StartActivity("io.appium.android.apis", ".text.Link");
+            By byAndroidUiAutomator = new ByAndroidUIAutomator(new AndroidUiSelector()
+                .DescriptionContains("Use a \"tel:\" URL"));
+
+            Assert.IsNotNull(_driver.FindElementById("android:id/content").FindElement(byAndroidUiAutomator).Text);
+            Assert.GreaterOrEqual(_driver.FindElementById("android:id/content").FindElements(byAndroidUiAutomator).Count, 1);
         }
 
         [Test]
@@ -87,6 +122,17 @@ namespace Appium.Net.Integration.Tests.Android
             var list = _driver.FindElement(By.Id("android:id/list"));
             var locator = new ByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView("
                                                    + "new UiSelector().text(\"Radio Group\"));");
+            var radioGroup = list.FindElement(locator);
+            Assert.NotNull(radioGroup.Location);
+        }
+
+        [Test]
+        public void ScrollingToSubElementUsingBuilder()
+        {
+            _driver.FindElementByAccessibilityId("Views").Click();
+            var list = _driver.FindElement(By.Id("android:id/list"));
+            var locator = new ByAndroidUIAutomator(new AndroidUiScrollable()
+                .ScrollIntoView(new AndroidUiSelector().TextEquals("Radio Group")));
             var radioGroup = list.FindElement(locator);
             Assert.NotNull(radioGroup.Location);
         }

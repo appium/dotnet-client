@@ -33,6 +33,14 @@ namespace OpenQA.Selenium.Appium.Interfaces
         W FindElementByAndroidUIAutomator(string selector);
 
         /// <summary>
+        /// Finds the first element in the page that matches the Android UIAutomator selector supplied
+        /// </summary>
+        /// <param name="selector">Selector for the element.</param>
+        /// <returns>IWebElement object so that you can interact that object</returns>
+        W FindElementByAndroidUIAutomator(IUiAutomatorStatementBuilder selector);
+
+
+        /// <summary>
         /// Finds a list of elements that match the Android UIAutomator selector supplied
         /// </summary>
         /// <param name="selector">Selector for the elements.</param>
@@ -44,5 +52,12 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// </code>
         /// </example>
         IReadOnlyCollection<W> FindElementsByAndroidUIAutomator(string selector);
+
+        /// <summary>
+        /// Finds a list of elements that match the Android UIAutomator selector supplied
+        /// </summary>
+        /// <param name="selector">Selector for the elements.</param>
+        /// <returns>ReadOnlyCollection of IWebElement object so that you can interact with those objects</returns>
+        IReadOnlyCollection<W> FindElementsByAndroidUIAutomator(IUiAutomatorStatementBuilder selector);
     }
 }
