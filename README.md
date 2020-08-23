@@ -1,5 +1,10 @@
 # appium-dotnet-driver
 
+[![NuGet version](https://badge.fury.io/nu/Appium.WebDriver.svg)](https://badge.fury.io/nu/Appium.WebDriver)
+[![NuGet Downloads](https://img.shields.io/nuget/dt/Appium.Webdriver.svg)](https://www.nuget.org/packages/Appium.Webdriver)
+
+[![Build Status](https://dev.azure.com/AppiumCI/dotnet-client/_apis/build/status/appium.appium-dotnet-driver?branchName=master)](https://dev.azure.com/AppiumCI/dotnet-client/_build/latest?definitionId=13&branchName=master)
+
 This driver is an extension of the [Selenium](http://docs.seleniumhq.org/) C# client. It has 
 all the functionalities of the regular driver, but add Appium specific methods on top of this.
 
@@ -36,6 +41,11 @@ Xamarin/Mono
 - Open with [Xamarin](http://xamarin.com/)
 - `Rebuild all`
 - `Run tests in test/specs`
+
+JetBrains Rider
+- Open with [Rider](https://www.jetbrains.com/rider/)
+- From the menu `Build -> Rebuild Solution`
+- Run tests in Appium.Net.Integration.Tests
 
 Visual studio
 
