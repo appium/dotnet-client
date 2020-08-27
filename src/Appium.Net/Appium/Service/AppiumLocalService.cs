@@ -13,6 +13,7 @@
 //limitations under the License.
 
 using System;
+using System.Collections.Generic;
 using OpenQA.Selenium.Appium.Service.Exceptions;
 using OpenQA.Selenium.Remote;
 using System.IO;
@@ -29,6 +30,7 @@ namespace OpenQA.Selenium.Appium.Service
         private readonly IPAddress IP;
         private readonly int Port;
         private readonly TimeSpan InitializationTimeout;
+        private readonly IDictionary<string, string> EnvironmentForProcess;
         private Process Service;
 
         /// <summary>
@@ -42,13 +44,15 @@ namespace OpenQA.Selenium.Appium.Service
             string arguments, 
             IPAddress ip, 
             int port,
-            TimeSpan initializationTimeout)
+            TimeSpan initializationTimeout, 
+            IDictionary<string, string> environmentForProcess)
         {
             NodeJS = nodeJS;
             IP = ip;
             Arguments = arguments;
             Port = port;
             InitializationTimeout = initializationTimeout;
+            EnvironmentForProcess = environmentForProcess;
         }
 
         /// <summary>
@@ -80,6 +84,14 @@ namespace OpenQA.Selenium.Appium.Service
             Service.StartInfo.Arguments = Arguments;
             Service.StartInfo.UseShellExecute = false;
             Service.StartInfo.CreateNoWindow = true;
+
+            if (EnvironmentForProcess != null)
+            {
+                foreach (var entry in EnvironmentForProcess)
+                {
+                    Service.StartInfo.EnvironmentVariables[entry.Key] = entry.Value ?? string.Empty;
+                }
+            }
 
             Service.StartInfo.RedirectStandardOutput = true;
             Service.OutputDataReceived += (sender, e) => OutputDataReceived?.Invoke(this, e);
