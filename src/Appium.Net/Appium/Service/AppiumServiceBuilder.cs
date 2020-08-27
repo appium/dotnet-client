@@ -40,6 +40,7 @@ namespace OpenQA.Selenium.Appium.Service
         private FileInfo NodeJS;
         private IDictionary<string, string> EnvironmentForAProcess;
         private string PathToLogFile;
+        private IDictionary<string, string> NodeOptions;
 
 
         private static Process StartSearchingProcess(string file, string arguments)
@@ -306,6 +307,20 @@ namespace OpenQA.Selenium.Appium.Service
             return this;
         }
 
+        /// <summary>
+        /// Command line arguments to pass to NodeJS when it starts up.
+        /// </summary>
+        /// <param name="arguments">
+        /// A collection of argument name and argument value pairs that will be
+        /// passed to NodeJS.
+        /// </param>
+        /// <returns></returns>
+        public AppiumServiceBuilder WithNodeArguments(IDictionary<string, string> arguments)
+        {
+            NodeOptions = arguments;
+            return this;
+        }
+
         private void CheckAppiumJS()
         {
             if (AppiumJS != null)
@@ -450,6 +465,16 @@ namespace OpenQA.Selenium.Appium.Service
             {
                 List<string> argList = new List<string>();
                 CheckAppiumJS();
+
+                if (NodeOptions != null)
+                {
+                    foreach (var argPair in NodeOptions)
+                    {
+                        argList.Add(argPair.Key ?? string.Empty);
+                        argList.Add(argPair.Value ?? string.Empty);
+                    }
+                }
+
                 argList.Add($"\"{AppiumJS.FullName}\"");
                 argList.Add("--port");
                 argList.Add($"\"{Port}\"");
