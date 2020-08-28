@@ -308,7 +308,7 @@ namespace OpenQA.Selenium.Appium.Service
         }
 
         /// <summary>
-        /// Command line arguments to pass to NodeJS when it starts up.
+        /// Command line arguments that will be passed to NodeJS when it starts up.
         /// </summary>
         /// <param name="arguments">
         /// A collection of argument name and argument value pairs that will be
@@ -317,6 +317,19 @@ namespace OpenQA.Selenium.Appium.Service
         /// <returns></returns>
         public AppiumServiceBuilder WithNodeArguments(IDictionary<string, string> arguments)
         {
+            if (arguments == null)
+            {
+                throw new ArgumentNullException(nameof(arguments), "Argument cannot be null");
+            }
+
+            foreach (var key in arguments.Keys)
+            {
+                if (string.IsNullOrEmpty(key))
+                {
+                    throw new ArgumentException("Node arguments cannot have null or empty keys", nameof(arguments));
+                }
+            }
+
             NodeOptions = arguments;
             return this;
         }
@@ -470,8 +483,11 @@ namespace OpenQA.Selenium.Appium.Service
                 {
                     foreach (var argPair in NodeOptions)
                     {
-                        argList.Add(argPair.Key ?? string.Empty);
-                        argList.Add(argPair.Value ?? string.Empty);
+                        argList.Add(argPair.Key);
+                        if (!string.IsNullOrEmpty(argPair.Value))
+                        {
+                            argList.Add(argPair.Value);
+                        }
                     }
                 }
 

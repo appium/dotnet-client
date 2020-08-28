@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Text;
 using System.Threading;
 using Appium.Net.Integration.Tests.Properties;
 using NUnit.Framework;
@@ -9,6 +10,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Service;
+using OpenQA.Selenium.Appium.Service.Exceptions;
 using OpenQA.Selenium.Appium.Service.Options;
 
 namespace Appium.Net.Integration.Tests.ServerTests
@@ -286,6 +288,54 @@ namespace Appium.Net.Integration.Tests.ServerTests
                 }
                 service.Dispose();
             }
+        }
+
+        [Test]
+        public void CheckAbilityToSetNodeArguments()
+        {
+            var service = new AppiumServiceBuilder()
+                .WithStartUpTimeOut(TimeSpan.FromMilliseconds(500)) // we expect the Appium startup to fail, so fail quickly
+                .WithNodeArguments(new Dictionary<string, string>
+                {
+                    // show Node version and exit
+                    {"--version", string.Empty}
+                })
+                .Build();
+
+            var nodeOutput = new StringBuilder();
+            try
+            {
+                service.OutputDataReceived += (o, args) => nodeOutput.AppendLine(args.Data);
+                service.Start();
+            }
+            catch (AppiumServerHasNotBeenStartedLocallyException)
+            {
+                // expected exception, ignore
+            }
+            finally
+            {
+                service.Dispose();
+            }
+
+            Assert.That(nodeOutput.ToString(), Does.Match(@"v\d+\.\d+\.\d+"));
+        }
+
+        [Test]
+        public void AttemptingToSetNodeArgumentsToNullThrowsException()
+        {
+            var serviceBuilder = new AppiumServiceBuilder();
+            Assert.Throws<ArgumentNullException>(() => serviceBuilder.WithNodeArguments(null));
+        }
+
+        [Test]
+        public void AddingNodeArgumentWithEmptyKeyThrowsException()
+        {
+            var serviceBuilder = new AppiumServiceBuilder();
+            Assert.Throws<ArgumentException>(() => serviceBuilder.WithNodeArguments(
+                new Dictionary<string, string>
+                {
+                    { string.Empty, string.Empty }
+                }));
         }
     }
 }
