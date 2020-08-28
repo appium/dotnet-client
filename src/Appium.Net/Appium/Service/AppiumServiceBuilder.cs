@@ -484,7 +484,7 @@ namespace OpenQA.Selenium.Appium.Service
                     foreach (var argPair in NodeOptions)
                     {
                         argList.Add(argPair.Key);
-                        if (!string.IsNullOrEmpty(argPair.Value))
+                        if (!string.IsNullOrWhiteSpace(argPair.Value))
                         {
                             argList.Add(argPair.Value);
                         }
