@@ -322,11 +322,11 @@ namespace OpenQA.Selenium.Appium.Service
                 throw new ArgumentNullException(nameof(arguments), "Argument cannot be null");
             }
 
-            foreach (var arg in arguments)
+            for (var i = 0; i < arguments.Length; i++)
             {
-                if (string.IsNullOrWhiteSpace(arg))
+                if (string.IsNullOrWhiteSpace(arguments[i]))
                 {
-                    throw new ArgumentException("Node arguments cannot be null, empty, or only whitespace.", nameof(arguments));
+                    throw new ArgumentException($"Invalid Node argument at index {i}. Node arguments cannot be null, empty, or only whitespace.", nameof(arguments));
                 }
             }
 
