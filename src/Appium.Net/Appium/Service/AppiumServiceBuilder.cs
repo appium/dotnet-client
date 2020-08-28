@@ -496,7 +496,7 @@ namespace OpenQA.Selenium.Appium.Service
 
                 if (ServerOptions != null)
                 {
-                    argList.AddRange(ServerOptions.Argiments);
+                    argList.AddRange(ServerOptions.Arguments);
                 }
 
                 string result = string.Empty;

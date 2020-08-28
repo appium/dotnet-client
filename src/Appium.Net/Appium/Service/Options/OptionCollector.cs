@@ -176,7 +176,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// <summary>
         /// Builds a sequence of server arguments
         /// </summary>
-        internal IList<string> Argiments
+        internal IList<string> Arguments
         {
             get
             {
