@@ -40,7 +40,7 @@ namespace OpenQA.Selenium.Appium.Service
         private FileInfo NodeJS;
         private IDictionary<string, string> EnvironmentForAProcess;
         private string PathToLogFile;
-        private IDictionary<string, string> NodeOptions;
+        private string[] NodeOptions = new string[0];
 
 
         private static Process StartSearchingProcess(string file, string arguments)
@@ -311,22 +311,22 @@ namespace OpenQA.Selenium.Appium.Service
         /// Command line arguments that will be passed to NodeJS when it starts up.
         /// </summary>
         /// <param name="arguments">
-        /// A collection of argument name and argument value pairs that will be
-        /// passed to NodeJS.
+        /// A collection of arguments that will be passed to NodeJS. Spaces will automatically
+        /// be added between arguments. Arguments cannot be null, empty strings, or only whitespace.
         /// </param>
         /// <returns></returns>
-        public AppiumServiceBuilder WithNodeArguments(IDictionary<string, string> arguments)
+        public AppiumServiceBuilder WithNodeArguments(params string[] arguments)
         {
             if (arguments == null)
             {
                 throw new ArgumentNullException(nameof(arguments), "Argument cannot be null");
             }
 
-            foreach (var key in arguments.Keys)
+            foreach (var arg in arguments)
             {
-                if (string.IsNullOrEmpty(key))
+                if (string.IsNullOrWhiteSpace(arg))
                 {
-                    throw new ArgumentException("Node arguments cannot have null or empty keys", nameof(arguments));
+                    throw new ArgumentException("Node arguments cannot be null, empty, or only whitespace.", nameof(arguments));
                 }
             }
 
@@ -479,17 +479,7 @@ namespace OpenQA.Selenium.Appium.Service
                 List<string> argList = new List<string>();
                 CheckAppiumJS();
 
-                if (NodeOptions != null)
-                {
-                    foreach (var argPair in NodeOptions)
-                    {
-                        argList.Add(argPair.Key);
-                        if (!string.IsNullOrWhiteSpace(argPair.Value))
-                        {
-                            argList.Add(argPair.Value);
-                        }
-                    }
-                }
+                argList.AddRange(NodeOptions);
 
                 argList.Add($"\"{AppiumJS.FullName}\"");
                 argList.Add("--port");

@@ -295,11 +295,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
         {
             var service = new AppiumServiceBuilder()
                 .WithStartUpTimeOut(TimeSpan.FromMilliseconds(500)) // we expect the Appium startup to fail, so fail quickly
-                .WithNodeArguments(new Dictionary<string, string>
-                {
-                    // show Node version and exit
-                    {"--version", string.Empty}
-                })
+                .WithNodeArguments("--version") // show Node version and exit
                 .Build();
 
             var nodeOutput = new StringBuilder();
@@ -324,18 +320,19 @@ namespace Appium.Net.Integration.Tests.ServerTests
         public void AttemptingToSetNodeArgumentsToNullThrowsException()
         {
             var serviceBuilder = new AppiumServiceBuilder();
-            Assert.Throws<ArgumentNullException>(() => serviceBuilder.WithNodeArguments(null));
+            string[] nullArray = null;
+            Assert.Throws<ArgumentNullException>(() => serviceBuilder.WithNodeArguments(nullArray));
         }
 
-        [Test]
-        public void AddingNodeArgumentWithEmptyKeyThrowsException()
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase(" ")]
+        [TestCase("\n")]
+        [TestCase("\t")]
+        public void AddingInvalidNodeArgumentThrowsException(string argument)
         {
             var serviceBuilder = new AppiumServiceBuilder();
-            Assert.Throws<ArgumentException>(() => serviceBuilder.WithNodeArguments(
-                new Dictionary<string, string>
-                {
-                    { string.Empty, string.Empty }
-                }));
+            Assert.Throws<ArgumentException>(() => serviceBuilder.WithNodeArguments(argument));
         }
     }
 }
