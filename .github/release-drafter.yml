@@ -6,7 +6,7 @@ template: |
   $CHANGES
 
 categories:
-  - title: 'Enhancement'
+  - title: 'Enhancements'
     label: 'Enhancement'
   - title: 'Bug Fixes'
     labels:
@@ -18,21 +18,23 @@ categories:
   - title: 'Dependencies'
     labels:
       - 'Dependencies'
-      - 'dependencies'
   - title: 'Pipeline'
     labels:
       - 'Pipeline'
       - 'CI'
+      - 'Build'
 
 version-resolver:
   major:
     labels:
-      - 'type: Breaking'
+      - 'BreakingChange'
   minor:
     labels:
-      - 'type: Feature'
+      - 'Feature'
+      - 'Enhancement'
   patch:
     labels:
-      - 'type: Bug'
-      - 'type: Dependencies'
+      - 'Bug'
+      - 'BugFix'
+      - 'Dependencies'
   default: patch
