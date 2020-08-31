@@ -40,6 +40,7 @@ namespace OpenQA.Selenium.Appium.Service
         private FileInfo NodeJS;
         private IDictionary<string, string> EnvironmentForAProcess;
         private string PathToLogFile;
+        private string[] NodeOptions = new string[0];
 
 
         private static Process StartSearchingProcess(string file, string arguments)
@@ -306,6 +307,37 @@ namespace OpenQA.Selenium.Appium.Service
             return this;
         }
 
+        /// <summary>
+        /// Command line arguments that will be passed to NodeJS when it starts up.
+        /// </summary>
+        /// <param name="arguments">
+        /// A collection of raw string arguments that will be passed to NodeJS.
+        /// Spaces will be automatically added between arguments. You are responsible for
+        /// properly escaping any special characters for your operating system.
+        /// Arguments cannot be null, empty strings, or only whitespace.
+        /// </param>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
+        /// <returns></returns>
+        public AppiumServiceBuilder WithNodeArguments(params string[] arguments)
+        {
+            if (arguments == null)
+            {
+                throw new ArgumentNullException(nameof(arguments), "Argument cannot be null");
+            }
+
+            for (var i = 0; i < arguments.Length; i++)
+            {
+                if (string.IsNullOrWhiteSpace(arguments[i]))
+                {
+                    throw new ArgumentException($"Invalid Node argument at index {i}. Node arguments cannot be null, empty, or only whitespace.", nameof(arguments));
+                }
+            }
+
+            NodeOptions = arguments;
+            return this;
+        }
+
         private void CheckAppiumJS()
         {
             if (AppiumJS != null)
@@ -450,6 +482,9 @@ namespace OpenQA.Selenium.Appium.Service
             {
                 List<string> argList = new List<string>();
                 CheckAppiumJS();
+
+                argList.AddRange(NodeOptions);
+
                 argList.Add($"\"{AppiumJS.FullName}\"");
                 argList.Add("--port");
                 argList.Add($"\"{Port}\"");
@@ -465,7 +500,7 @@ namespace OpenQA.Selenium.Appium.Service
 
                 if (ServerOptions != null)
                 {
-                    argList.AddRange(ServerOptions.Argiments);
+                    argList.AddRange(ServerOptions.Arguments);
                 }
 
                 string result = string.Empty;
