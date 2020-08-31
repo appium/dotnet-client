@@ -311,9 +311,13 @@ namespace OpenQA.Selenium.Appium.Service
         /// Command line arguments that will be passed to NodeJS when it starts up.
         /// </summary>
         /// <param name="arguments">
-        /// A collection of arguments that will be passed to NodeJS. Spaces will automatically
-        /// be added between arguments. Arguments cannot be null, empty strings, or only whitespace.
+        /// A collection of raw string arguments that will be passed to NodeJS.
+        /// Spaces will be automatically added between arguments. You are responsible for
+        /// properly escaping any special characters for your operating system.
+        /// Arguments cannot be null, empty strings, or only whitespace.
         /// </param>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         /// <returns></returns>
         public AppiumServiceBuilder WithNodeArguments(params string[] arguments)
         {
