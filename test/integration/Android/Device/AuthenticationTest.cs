@@ -1,19 +1,14 @@
-using System;
-using System.Text.RegularExpressions;
 using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Enums;
 
-namespace Appium.Net.Integration.Tests.Android
+namespace Appium.Net.Integration.Tests.Android.Device
 {
-    [TestFixture(Category = "Device")]
-    public class DeviceTest
+    public class AuthenticationTest
     {
         private AndroidDriver<IWebElement> _driver;
-        private const string ClipboardTestString = "Hello Clipboard";
-        private const string Base64RegexPattern = @"^[a-zA-Z0-9\+/]*={0,2}$";
 
         [OneTimeSetUp]
         public void BeforeAll()
@@ -43,13 +38,6 @@ namespace Appium.Net.Integration.Tests.Android
             // There's no way to verify sending fingerprint had an effect,
             // so just test that it's successfully called without an exception
             _driver.FingerPrint(1);
-        }
-
-        [Test]
-        public void TestToggleData()
-        {
-            _driver.ToggleData();
-            _driver.ToggleData();
         }
     }
 }

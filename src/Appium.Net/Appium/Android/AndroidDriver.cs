@@ -18,15 +18,15 @@ using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Service;
 using OpenQA.Selenium.Remote;
 using System;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Drawing;
 using OpenQA.Selenium.Appium.Android.Enums;
+using OpenQA.Selenium.Appium.Interactions;
 
 namespace OpenQA.Selenium.Appium.Android
 {
     public class AndroidDriver<W> : AppiumDriver<W>, IFindByAndroidUIAutomator<W>, IFindByAndroidDataMatcher<W>, IStartsActivity,
-        IHasNetworkConnection, IHasClipboard,
+        IHasNetworkConnection, IHasClipboard, INetworkActions,
         ISendsKeyEvents,
         IPushesFiles, IHasSettings where W : IWebElement
     {
@@ -191,10 +191,17 @@ namespace OpenQA.Selenium.Appium.Android
         public void LongPressKeyCode(int keyCode, int metastate = -1) =>
             AppiumCommandExecutionHelper.LongPressKeyCode(this, keyCode, metastate);
 
+        #region Device Network
+
+        public void ToggleAirplaneMode() => AndroidCommandExecutionHelper.ToggleAirplaneMode(this);
+
         /// <summary>
         /// Toggles Location Services.
         /// </summary>
         public void ToggleLocationServices() => AndroidCommandExecutionHelper.ToggleLocationServices(this);
+
+
+        #endregion
 
         /// <summary>
         /// Get test-coverage data
