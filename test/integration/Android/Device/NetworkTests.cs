@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -51,6 +47,19 @@ namespace Appium.Net.Integration.Tests.Android.Device
             Assert.That(currentConnectionType, Is.EqualTo(ConnectionType.AirplaneMode));
 
             androidDriver.ToggleAirplaneMode();
+        }
+
+        [Test]
+        public void CanToggleWifiTest()
+        {
+            var androidDriver = (AndroidDriver<IWebElement>)_driver;
+            var beforeToggleConnectionType = androidDriver.ConnectionType;
+            androidDriver.ToggleWifi();
+
+            var currentConnectionType = androidDriver.ConnectionType;
+            Assert.That(currentConnectionType, Is.Not.EqualTo(beforeToggleConnectionType));
+
+            androidDriver.ToggleWifi();
         }
     }
 }
