@@ -191,9 +191,14 @@ namespace OpenQA.Selenium.Appium.Android
         public void LongPressKeyCode(int keyCode, int metastate = -1) =>
             AppiumCommandExecutionHelper.LongPressKeyCode(this, keyCode, metastate);
 
-        #region Device Network
+        #region Device Network Actions
 
         public void ToggleAirplaneMode() => AndroidCommandExecutionHelper.ToggleAirplaneMode(this);
+
+        public void ToggleWifi() => AndroidCommandExecutionHelper.ToggleAirplaneMode(this);
+
+        public void MakeGsmCall(string phoneNumber, GsmCallActions gsmCallAction) =>
+            AndroidCommandExecutionHelper.GsmCall(this, phoneNumber, gsmCallAction);
 
         /// <summary>
         /// Toggles Location Services.

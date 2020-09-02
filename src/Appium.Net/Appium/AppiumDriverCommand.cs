@@ -45,6 +45,10 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string ToggleAirplaneMode = "toggleAirplaneMode";
 
+        /// <summary>
+        /// Toggle Wifi Command.
+        /// </summary>
+        public const string GsmCall = "gsm_call";
 
         /// <summary>
         /// Toggle Network Data Command

@@ -47,6 +47,8 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/device/toggle_airplane_mode"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ToggleData,
                 "/session/{sessionId}/appium/device/toggle_data"),
+            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.GsmCall,
+                "/session/{sessionId}/appium/device/gsm_call"),
 
             #endregion
 
