@@ -117,6 +117,9 @@ namespace OpenQA.Selenium.Appium.Android
                 PrepareArguments(new[] {"phoneNumber", "action"},
                     new object[] {number, gsmCallAction.ToString().ToLowerInvariant()}));
 
+        public static void SetGsmStrength(IExecuteMethod executeMethod, GsmSignalStrength gsmSignalStrength) =>
+            executeMethod.Execute(AppiumDriverCommand.SetGsmSignalStrength, PrepareArgument("signalStrength", gsmSignalStrength));
+
         #endregion
 
         public static string EndTestCoverage(IExecuteMethod executeMethod, string intent, string path) =>

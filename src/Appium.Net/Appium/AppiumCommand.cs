@@ -53,6 +53,8 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/device/toggle_location_services"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.GsmCall,
                 "/session/{sessionId}/appium/device/gsm_call"),
+            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.SetGsmSignalStrength,
+                "/session/{sessionId}/appium/device/gsm_signal"),
 
             #endregion
 
