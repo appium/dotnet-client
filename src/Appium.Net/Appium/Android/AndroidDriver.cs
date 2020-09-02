@@ -25,8 +25,9 @@ using OpenQA.Selenium.Appium.Android.Enums;
 
 namespace OpenQA.Selenium.Appium.Android
 {
-    public class AndroidDriver<W> : AppiumDriver<W>, IFindByAndroidUIAutomator<W>, IFindByAndroidDataMatcher<W>, IStartsActivity,
-        IHasNetworkConnection, IHasClipboard, IHasPerformanceData,
+    public class AndroidDriver<W> : AppiumDriver<W>, IFindByAndroidUIAutomator<W>, IFindByAndroidDataMatcher<W>,
+        IStartsActivity,
+        IHasNetworkConnection, INetworkActions, IHasClipboard, IHasPerformanceData,
         ISendsKeyEvents,
         IPushesFiles, IHasSettings where W : IWebElement
     {
@@ -191,10 +192,16 @@ namespace OpenQA.Selenium.Appium.Android
         public void LongPressKeyCode(int keyCode, int metastate = -1) =>
             AppiumCommandExecutionHelper.LongPressKeyCode(this, keyCode, metastate);
 
-        /// <summary>
-        /// Toggles Location Services.
-        /// </summary>
+        #region Device Network
+
+        public void ToggleData() =>
+            AndroidCommandExecutionHelper.ToggleData(this);
+
+        public void ToggleAirplaneMode() => AndroidCommandExecutionHelper.ToggleAirplaneMode(this);
+
         public void ToggleLocationServices() => AndroidCommandExecutionHelper.ToggleLocationServices(this);
+
+        #endregion
 
         /// <summary>
         /// Get test-coverage data
@@ -215,7 +222,7 @@ namespace OpenQA.Selenium.Appium.Android
 
         #region Device Performance Data
 
-        public IList<object> GetPerformanceData(string packageName, string performanceDataType) => 
+        public IList<object> GetPerformanceData(string packageName, string performanceDataType) =>
             AndroidCommandExecutionHelper.GetPerformanceData(this, packageName, performanceDataType)
                 ?.ToList();
 
@@ -223,14 +230,15 @@ namespace OpenQA.Selenium.Appium.Android
             int dataReadAttempts)
         {
             if (dataReadAttempts < 1) throw new ArgumentException($"{nameof(dataReadAttempts)} must be greater than 0");
-            return AndroidCommandExecutionHelper.GetPerformanceData(this, packageName, performanceDataType, dataReadAttempts)
+            return AndroidCommandExecutionHelper
+                .GetPerformanceData(this, packageName, performanceDataType, dataReadAttempts)
                 ?.ToList();
         }
-        
+
         public IList<string> GetPerformanceDataTypes() =>
-             AndroidCommandExecutionHelper.GetPerformanceDataTypes(this)
-                 ?.Cast<string>()
-                 .ToList();
+            AndroidCommandExecutionHelper.GetPerformanceDataTypes(this)
+                ?.Cast<string>()
+                .ToList();
 
         #endregion
 
@@ -293,7 +301,8 @@ namespace OpenQA.Selenium.Appium.Android
         /// </summary>
         /// <param name="contentType"></param>
         /// <param name="base64Content"></param>
-        public void SetClipboard(ClipboardContentType contentType, string base64Content) => AppiumCommandExecutionHelper.SetClipboard(this, contentType, base64Content);
+        public void SetClipboard(ClipboardContentType contentType, string base64Content) =>
+            AppiumCommandExecutionHelper.SetClipboard(this, contentType, base64Content);
 
         /// <summary>
         /// Get the content of the clipboard.
@@ -301,14 +310,16 @@ namespace OpenQA.Selenium.Appium.Android
         /// <param name="contentType"></param>
         /// <remarks>Android supports plaintext only</remarks>
         /// <returns>The content of the clipboard as base64-encoded string or an empty string if the clipboard is empty</returns>
-        public string GetClipboard(ClipboardContentType contentType) => AppiumCommandExecutionHelper.GetClipboard(this, contentType);
+        public string GetClipboard(ClipboardContentType contentType) =>
+            AppiumCommandExecutionHelper.GetClipboard(this, contentType);
 
         /// <summary>
         /// Sets text to the clipboard
         /// </summary>
         /// <param name="textContent"></param>
         /// <param name="label">For Android only - A user visible label for the clipboard content.</param>
-        public void SetClipboardText(string textContent, string label) => AppiumCommandExecutionHelper.SetClipboardText(this, textContent, label);
+        public void SetClipboardText(string textContent, string label) =>
+            AppiumCommandExecutionHelper.SetClipboardText(this, textContent, label);
 
         /// <summary>
         /// Get the plaintext content of the clipboard.

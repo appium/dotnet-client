@@ -99,8 +99,16 @@ namespace OpenQA.Selenium.Appium.Android
             }
         }
 
+        #region Device Network
         public static void ToggleLocationServices(IExecuteMethod executeMethod) =>
             executeMethod.Execute(AppiumDriverCommand.ToggleLocationServices);
+
+        public static void ToggleAirplaneMode(IExecuteMethod executeMethod) =>
+            executeMethod.Execute(AppiumDriverCommand.ToggleAirplaneMode);
+
+        public static void ToggleData(IExecuteMethod executeMethod) => executeMethod.Execute(AppiumDriverCommand.ToggleData);
+
+        #endregion
 
         public static string EndTestCoverage(IExecuteMethod executeMethod, string intent, string path) =>
             executeMethod.Execute(AppiumDriverCommand.EndTestCoverage,
