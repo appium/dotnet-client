@@ -203,6 +203,9 @@ namespace OpenQA.Selenium.Appium.Android
 
         public void ToggleLocationServices() => AndroidCommandExecutionHelper.ToggleLocationServices(this);
 
+        public void MakeGsmCall(string phoneNumber, GsmCallActions gsmCallAction) =>
+            AndroidCommandExecutionHelper.GsmCall(this, phoneNumber, gsmCallAction);
+
         #endregion
 
         /// <summary>

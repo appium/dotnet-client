@@ -46,6 +46,11 @@ namespace OpenQA.Selenium.Appium
         public const string ToggleAirplaneMode = "toggleAirplaneMode";
 
         /// <summary>
+        /// Toggle Wifi Command.
+        /// </summary>
+        public const string GsmCall = "gsm_call";
+
+        /// <summary>
         /// Toggle Network Data Command
         /// </summary>
         public static string ToggleData = "toggleData";
@@ -311,9 +316,9 @@ namespace OpenQA.Selenium.Appium
 
         /// <summary>
         /// Represents the fingerPrint command
+        /// </summary>
         public const string FingerPrint = "fingerPrint";
 
-        /// </summary>
 
         public const string ReplaceValue = "replaceValue";
 

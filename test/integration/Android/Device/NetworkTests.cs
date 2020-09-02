@@ -4,6 +4,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
+using OpenQA.Selenium.Appium.Enums;
 
 namespace Appium.Net.Integration.Tests.Android.Device
 {
@@ -18,7 +19,7 @@ namespace Appium.Net.Integration.Tests.Android.Device
             _androidOptions = Caps.GetAndroidUIAutomatorCaps(Apps.Get(Apps.androidApiDemos));
             _driver = new AndroidDriver<IWebElement>(
                 Env.ServerIsLocal() ? AppiumServers.LocalServiceUri : AppiumServers.RemoteServerUri,
-                _androidOptions, TimeSpan.FromSeconds(120));
+                _androidOptions);
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
         }
 
@@ -61,6 +62,20 @@ namespace Appium.Net.Integration.Tests.Android.Device
             Assert.That(currentConnectionType, Is.Not.EqualTo(beforeToggleConnectionType));
 
             androidDriver.ToggleWifi();
+        }
+
+        [Test]
+        public void CanMakeGsmCallTest()
+        {
+            var androidDriver = (AndroidDriver<IWebElement>)_driver;
+
+            Assert.Multiple(() =>
+            {
+                Assert.DoesNotThrow(() => androidDriver.MakeGsmCall("5551234567", GsmCallActions.Call));
+                Assert.DoesNotThrow(() => androidDriver.MakeGsmCall("5551234567", GsmCallActions.Accept));
+                Assert.DoesNotThrow(() => androidDriver.MakeGsmCall("5551234567", GsmCallActions.Cancel));
+                Assert.DoesNotThrow(() => androidDriver.MakeGsmCall("5551234567", GsmCallActions.Hold));
+            });
         }
     }
 }
