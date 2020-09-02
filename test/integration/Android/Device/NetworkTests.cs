@@ -92,5 +92,16 @@ namespace Appium.Net.Integration.Tests.Android.Device
                 Assert.DoesNotThrow(() => androidDriver.SetGsmSignalStrength(GsmSignalStrength.Great));
             });
         }
+
+        [Test]
+        public void CanSetGsmVoiceStateTest()
+        {
+            var androidDriver = (AndroidDriver<IWebElement>)_driver;
+
+            Assert.DoesNotThrow(() =>
+                androidDriver.SetGsmVoice(GsmVoiceState.Roaming));
+
+            androidDriver.SetGsmVoice(GsmVoiceState.On);
+        }
     }
 }

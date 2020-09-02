@@ -56,6 +56,11 @@ namespace OpenQA.Selenium.Appium
         public const string SetGsmSignalStrength = "gsm_signal";
 
         /// <summary>
+        /// Set GSM voice state
+        /// </summary>
+        public static string SetGsmVoiceState = "gsm_voice";
+
+        /// <summary>
         /// Toggle Network Data Command
         /// </summary>
         public static string ToggleData = "toggleData";

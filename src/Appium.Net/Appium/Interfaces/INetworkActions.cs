@@ -55,5 +55,9 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// <param name=""></param>
         /// <param name="gsmSignalStrength"></param>
         void SetGsmSignalStrength(GsmSignalStrength gsmSignalStrength);
+        /// <summary>
+        /// Set GSM voice state (Emulator only)
+        /// </summary>
+        /// <param name="gsmVoiceState"></param>
+        void SetGsmVoice(GsmVoiceState gsmVoiceState);
     }
-}
