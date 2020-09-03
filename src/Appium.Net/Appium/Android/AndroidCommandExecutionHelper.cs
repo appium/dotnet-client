@@ -12,9 +12,11 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+using System;
 using OpenQA.Selenium.Appium.Interfaces;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Linq;
 
 namespace OpenQA.Selenium.Appium.Android
 {
@@ -107,6 +109,18 @@ namespace OpenQA.Selenium.Appium.Android
 
         public static void OpenNotifications(IExecuteMethod executeMethod) =>
             executeMethod.Execute(AppiumDriverCommand.OpenNotifications);
+
+        #region Device Performance
+
+        public static object[] GetPerformanceDataTypes(IExecuteMethod executeMethod) => 
+            executeMethod.Execute(AppiumDriverCommand.GetPerformanceDataTypes).Value as object[];
+
+        public static object[] GetPerformanceData(IExecuteMethod executeMethod, string packageName,
+            string dataType, int dataReadTimeout) => executeMethod.Execute(AppiumDriverCommand.GetPerformanceData,
+            PrepareArguments(new[] {"packageName", "dataType", "dataReadTimeout"},
+                new object[] {packageName, dataType, dataReadTimeout})).Value as object[];
+
+        #endregion
 
         public static bool IsLocked(IExecuteMethod executeMethod) =>
             (bool) executeMethod.Execute(AppiumDriverCommand.IsLocked).Value;

@@ -21,12 +21,13 @@ using System;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using OpenQA.Selenium.Appium.Android.Enums;
 
 namespace OpenQA.Selenium.Appium.Android
 {
     public class AndroidDriver<W> : AppiumDriver<W>, IFindByAndroidUIAutomator<W>, IFindByAndroidDataMatcher<W>, IStartsActivity,
-        IHasNetworkConnection, IHasClipboard,
+        IHasNetworkConnection, IHasClipboard, IHasSupportedPerformanceData,
         ISendsKeyEvents,
         IPushesFiles, IHasSettings where W : IWebElement
     {
@@ -213,7 +214,21 @@ namespace OpenQA.Selenium.Appium.Android
 
         protected override RemoteWebElementFactory CreateElementFactory() => new AndroidElementFactory(this);
 
-        #region locking
+        #region Device Performance Data
+
+        public IList<object> GetSupportPerformanceData(string packageName, string dataType,
+            int dataReadTimeout) =>
+            AndroidCommandExecutionHelper.GetPerformanceData(this, packageName, dataType, dataReadTimeout)
+                .ToList();
+
+        public IList<string> GetSupportedPerformanceDataTypes() =>
+             AndroidCommandExecutionHelper.GetPerformanceDataTypes(this)
+                 .Cast<string>()
+                 .ToList();
+
+        #endregion
+
+        #region Device Interactions
 
         /**
         * This method locks a device.
