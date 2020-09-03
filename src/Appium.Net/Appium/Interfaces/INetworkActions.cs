@@ -24,5 +24,12 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// <param name="phoneNumber"></param>
         /// <param name="gsmCallAction"></param>
         void MakeGsmCall(string phoneNumber, GsmCallActions gsmCallAction);
+
+        /// <summary>
+        /// Simulate an SMS message (Emulator only)
+        /// </summary>
+        /// <param name="phoneNumber"></param>
+        /// <param name="message"></param>
+        void SendSms(string phoneNumber, string message);
     }
 }

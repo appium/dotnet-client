@@ -49,6 +49,8 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/device/toggle_data"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.GsmCall,
                 "/session/{sessionId}/appium/device/gsm_call"),
+            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.SendSms,
+                "/session/{sessionId}/appium/device/send_sms"),
 
             #endregion
 

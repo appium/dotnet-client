@@ -115,6 +115,11 @@ namespace OpenQA.Selenium.Appium.Android
                 PrepareArguments(new[] {"phoneNumber", "action"},
                     new object[] {number, gsmCallAction.ToString().ToLowerInvariant()}));
 
+        public static void SendSms(IExecuteMethod executeMethod, string number, string message) =>
+            executeMethod.Execute(AppiumDriverCommand.SendSms,
+                PrepareArguments(new[] { "phoneNumber", "message" },
+                    new object[] { number, message}));
+
         #endregion
 
         public static string EndTestCoverage(IExecuteMethod executeMethod, string intent, string path) =>
