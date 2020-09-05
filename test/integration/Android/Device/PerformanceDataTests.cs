@@ -4,6 +4,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
+using OpenQA.Selenium.Appium.Android.Enums;
 
 namespace Appium.Net.Integration.Tests.Android.Device
 {
@@ -40,16 +41,17 @@ namespace Appium.Net.Integration.Tests.Android.Device
         public void GetPerformanceDataTest()
         {
             var androidDriver = _driver as AndroidDriver<IWebElement>;
-            var packageName = androidDriver.CurrentPackage;
+            var packageName = androidDriver?.CurrentPackage;
+
             Assert.Multiple(() =>
             {
-                Assert.That(androidDriver.GetPerformanceData(packageName, "cpuinfo", 15),
+                Assert.That(androidDriver?.GetPerformanceData(packageName, PerformanceDataType.CpuInfo, 15),
                     Is.Not.Null.Or.Empty);
-                Assert.That(androidDriver.GetPerformanceData(packageName, "memoryinfo", 5),
+                Assert.That(androidDriver?.GetPerformanceData(packageName, PerformanceDataType.MemoryInfo, 5),
                     Is.Not.Null.Or.Empty);
-                Assert.That(androidDriver.GetPerformanceData(packageName, "batteryinfo", 5),
+                Assert.That(androidDriver?.GetPerformanceData(packageName, PerformanceDataType.BatteryInfo, 5),
                     Is.Not.Null.Or.Empty);
-                Assert.That(androidDriver.GetPerformanceData(packageName, "networkinfo", 5),
+                Assert.That(androidDriver?.GetPerformanceData(packageName, PerformanceDataType.NetworkInfo, 5),
                     Is.Not.Null.Or.Empty);
             });
         }

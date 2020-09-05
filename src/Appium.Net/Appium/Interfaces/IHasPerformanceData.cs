@@ -1,15 +1,17 @@
 ﻿using System.Collections.Generic;
+using OpenQA.Selenium.Appium.Android.Enums;
 
 namespace OpenQA.Selenium.Appium.Interfaces
 {
     public interface IHasSupportedPerformanceData
     {
         /// <summary>
-        /// Returns the information of the system state which is supported to read as like cpu, memory, networ
+        /// Returns the information of the system state which is supported to read e.g. cpu, memory, network
         /// </summary>
         /// <param name="packageName">The package name of the application</param>
-        /// <param name="dataType">The type of system state which wants to read. It should be one of the supported performance data types.</param>
-        /// <param name="dataReadAttempts">The number of attempts to read data in the event of a data read failure (optional). Must be greater than 0. </param>
+        /// <param name="performanceDataType">The type of system state which you want to read, use <see cref="PerformanceDataType"/>
+        /// or call <see cref="GetPerformanceDataTypes"/> to find a list of the supported performance data types.</param>
+        /// <param name="dataReadAttempts">The number of attempts to read data in the event of a data read failure (optional). Must be greater than 0.</param>
         /// <returns>
         /// A table like list of the performance data, The first index of the table represents the type of data.
         /// The remaining index represent the values of the data.
@@ -30,7 +32,7 @@ namespace OpenQA.Selenium.Appium.Interfaces
         ///                      [1478098800, null, null, 4444433, 10227, 1430356, 10493, 0, 3600]]
         ///        in case of cpu info : [[user, kernel], [0.9, 1.3]]
         /// </returns>
-        IList<object> GetPerformanceData(string packageName, string dataType, int dataReadAttempts = 1);
+        IList<object> GetPerformanceData(string packageName, string performanceDataType, int dataReadAttempts = 1);
         
         /// <summary>
         /// Returns the information types of the system state which is supported to read as like cpu, memory, network traffic, and battery
