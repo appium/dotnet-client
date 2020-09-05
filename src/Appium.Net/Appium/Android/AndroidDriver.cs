@@ -18,7 +18,6 @@ using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Service;
 using OpenQA.Selenium.Remote;
 using System;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -216,14 +215,18 @@ namespace OpenQA.Selenium.Appium.Android
 
         #region Device Performance Data
 
-        public IList<object> GetSupportPerformanceData(string packageName, string dataType,
-            int dataReadTimeout) =>
-            AndroidCommandExecutionHelper.GetPerformanceData(this, packageName, dataType, dataReadTimeout)
-                .ToList();
+        public IList<object> GetPerformanceData(string packageName, string dataType,
+            int dataReadAttempts = 1)
+        {
+            if (dataReadAttempts < 1) throw new ArgumentException($"{nameof(dataReadAttempts)} must be greater than 0");
+            return AndroidCommandExecutionHelper.GetPerformanceData(this, packageName, dataType, dataReadAttempts)
+                ?.ToList();
+        }
+            
 
-        public IList<string> GetSupportedPerformanceDataTypes() =>
+        public IList<string> GetPerformanceDataTypes() =>
              AndroidCommandExecutionHelper.GetPerformanceDataTypes(this)
-                 .Cast<string>()
+                 ?.Cast<string>()
                  .ToList();
 
         #endregion

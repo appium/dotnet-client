@@ -30,25 +30,26 @@ namespace Appium.Net.Integration.Tests.Android.Device
         }
 
         [Test]
-        public void GetSupportedPerformanceDataTypesTest()
+        public void GetPerformanceDataTypesTest()
         {
             var androidDriver = _driver as AndroidDriver<IWebElement>;
-            Assert.IsNotNull(androidDriver.GetSupportedPerformanceDataTypes());
+            Assert.IsNotNull(androidDriver.GetPerformanceDataTypes());
         }
 
         [Test]
-        public void GetSupportedPerformanceData()
+        public void GetPerformanceDataTest()
         {
             var androidDriver = _driver as AndroidDriver<IWebElement>;
             var packageName = androidDriver.CurrentPackage;
             Assert.Multiple(() =>
             {
-                // Assert.DoesNotThrow(() => androidDriver.GetSupportPerformanceData(packageName, "cpuinfo", 5));
-                Assert.That(androidDriver.GetSupportPerformanceData(packageName, "memoryinfo", 5),
+                Assert.That(androidDriver.GetPerformanceData(packageName, "cpuinfo", 15),
                     Is.Not.Null.Or.Empty);
-                Assert.That(androidDriver.GetSupportPerformanceData(packageName, "batteryinfo", 5),
+                Assert.That(androidDriver.GetPerformanceData(packageName, "memoryinfo", 5),
                     Is.Not.Null.Or.Empty);
-                Assert.That(androidDriver.GetSupportPerformanceData(packageName, "networkinfo", 5),
+                Assert.That(androidDriver.GetPerformanceData(packageName, "batteryinfo", 5),
+                    Is.Not.Null.Or.Empty);
+                Assert.That(androidDriver.GetPerformanceData(packageName, "networkinfo", 5),
                     Is.Not.Null.Or.Empty);
             });
         }
