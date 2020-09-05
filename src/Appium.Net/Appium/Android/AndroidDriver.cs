@@ -222,8 +222,7 @@ namespace OpenQA.Selenium.Appium.Android
             return AndroidCommandExecutionHelper.GetPerformanceData(this, packageName, dataType, dataReadAttempts)
                 ?.ToList();
         }
-            
-
+        
         public IList<string> GetPerformanceDataTypes() =>
              AndroidCommandExecutionHelper.GetPerformanceDataTypes(this)
                  ?.Cast<string>()
