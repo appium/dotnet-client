@@ -8,7 +8,7 @@ using OpenQA.Selenium.Appium.Android.Enums;
 
 namespace Appium.Net.Integration.Tests.Android.Device
 {
-    internal class PerfomanceDataTests
+    internal class PerformanceDataTests
     {
         private AppiumDriver<IWebElement> _driver;
         private AppiumOptions _androidOptions;
@@ -45,6 +45,7 @@ namespace Appium.Net.Integration.Tests.Android.Device
 
             Assert.Multiple(() =>
             {
+                Assert.That(androidDriver?.GetPerformanceData(packageName, PerformanceDataType.CpuInfo), Is.Not.Null.Or.Empty);
                 Assert.That(androidDriver?.GetPerformanceData(packageName, PerformanceDataType.CpuInfo, 15),
                     Is.Not.Null.Or.Empty);
                 Assert.That(androidDriver?.GetPerformanceData(packageName, PerformanceDataType.MemoryInfo, 5),
