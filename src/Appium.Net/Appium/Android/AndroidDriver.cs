@@ -26,7 +26,7 @@ using OpenQA.Selenium.Appium.Android.Enums;
 namespace OpenQA.Selenium.Appium.Android
 {
     public class AndroidDriver<W> : AppiumDriver<W>, IFindByAndroidUIAutomator<W>, IFindByAndroidDataMatcher<W>, IStartsActivity,
-        IHasNetworkConnection, IHasClipboard, IHasSupportedPerformanceData,
+        IHasNetworkConnection, IHasClipboard, IHasPerformanceData,
         ISendsKeyEvents,
         IPushesFiles, IHasSettings where W : IWebElement
     {
