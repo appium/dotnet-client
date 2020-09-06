@@ -215,8 +215,12 @@ namespace OpenQA.Selenium.Appium.Android
 
         #region Device Performance Data
 
+        public IList<object> GetPerformanceData(string packageName, string performanceDataType) => 
+            AndroidCommandExecutionHelper.GetPerformanceData(this, packageName, performanceDataType)
+                ?.ToList();
+
         public IList<object> GetPerformanceData(string packageName, string performanceDataType,
-            int dataReadAttempts = 1)
+            int dataReadAttempts)
         {
             if (dataReadAttempts < 1) throw new ArgumentException($"{nameof(dataReadAttempts)} must be greater than 0");
             return AndroidCommandExecutionHelper.GetPerformanceData(this, packageName, performanceDataType, dataReadAttempts)

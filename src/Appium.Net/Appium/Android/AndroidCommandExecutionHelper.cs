@@ -112,8 +112,13 @@ namespace OpenQA.Selenium.Appium.Android
 
         #region Device Performance
 
-        public static object[] GetPerformanceDataTypes(IExecuteMethod executeMethod) => 
+        public static object[] GetPerformanceDataTypes(IExecuteMethod executeMethod) =>
             executeMethod.Execute(AppiumDriverCommand.GetPerformanceDataTypes).Value as object[];
+
+        public static object[] GetPerformanceData(IExecuteMethod executeMethod, string packageName,
+            string dataType) => executeMethod.Execute(AppiumDriverCommand.GetPerformanceData,
+            PrepareArguments(new[] {"packageName", "dataType"},
+                new object[] {packageName, dataType})).Value as object[];
 
         public static object[] GetPerformanceData(IExecuteMethod executeMethod, string packageName,
             string dataType, int dataReadTimeout) => executeMethod.Execute(AppiumDriverCommand.GetPerformanceData,
