@@ -38,9 +38,18 @@ namespace OpenQA.Selenium.Appium
 
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.GetClipboard, "/session/{sessionId}/appium/device/get_clipboard"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.SetClipboard, "/session/{sessionId}/appium/device/set_clipboard"),
-            
+
             #endregion
-            
+
+            #region Device -> Network Commands
+
+            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ToggleAirplaneMode,
+                "/session/{sessionId}/appium/device/toggle_airplane_mode"),
+            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ToggleData,
+                "/session/{sessionId}/appium/device/toggle_data"),
+
+            #endregion
+
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ShakeDevice,
                 "/session/{sessionId}/appium/device/shake"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.LockDevice,
