@@ -18,15 +18,15 @@ using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Service;
 using OpenQA.Selenium.Remote;
 using System;
-using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using OpenQA.Selenium.Appium.Android.Enums;
 
 namespace OpenQA.Selenium.Appium.Android
 {
     public class AndroidDriver<W> : AppiumDriver<W>, IFindByAndroidUIAutomator<W>, IFindByAndroidDataMatcher<W>, IStartsActivity,
-        IHasNetworkConnection, IHasClipboard,
+        IHasNetworkConnection, IHasClipboard, IHasPerformanceData,
         ISendsKeyEvents,
         IPushesFiles, IHasSettings where W : IWebElement
     {
@@ -213,7 +213,28 @@ namespace OpenQA.Selenium.Appium.Android
 
         protected override RemoteWebElementFactory CreateElementFactory() => new AndroidElementFactory(this);
 
-        #region locking
+        #region Device Performance Data
+
+        public IList<object> GetPerformanceData(string packageName, string performanceDataType) => 
+            AndroidCommandExecutionHelper.GetPerformanceData(this, packageName, performanceDataType)
+                ?.ToList();
+
+        public IList<object> GetPerformanceData(string packageName, string performanceDataType,
+            int dataReadAttempts)
+        {
+            if (dataReadAttempts < 1) throw new ArgumentException($"{nameof(dataReadAttempts)} must be greater than 0");
+            return AndroidCommandExecutionHelper.GetPerformanceData(this, packageName, performanceDataType, dataReadAttempts)
+                ?.ToList();
+        }
+        
+        public IList<string> GetPerformanceDataTypes() =>
+             AndroidCommandExecutionHelper.GetPerformanceDataTypes(this)
+                 ?.Cast<string>()
+                 .ToList();
+
+        #endregion
+
+        #region Device Interactions
 
         /**
         * This method locks a device.
