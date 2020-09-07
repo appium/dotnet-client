@@ -1,0 +1,21 @@
+Enhancement:
+  title: "^feat:.*"
+
+BugFix:
+  title: "^fix:.*"
+
+Documentation:
+  title: "^docs:.*"
+
+Build:
+  title: "^build:.*"
+
+CI:
+  title: "^ci:.*"
+
+Test:
+  title: "^test:.*"
+
+WIP:
+  title: "^WIP:.*"
+  mergeable: false

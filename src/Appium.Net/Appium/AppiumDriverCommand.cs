@@ -45,7 +45,6 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string ToggleAirplaneMode = "toggleAirplaneMode";
 
-
         /// <summary>
         /// Toggle Network Data Command
         /// </summary>
@@ -195,6 +194,10 @@ namespace OpenQA.Selenium.Appium
 
         public const string SetClipboard = "setClipboard";
 
+        public static string GetPerformanceData = "getPerformanceData";
+
+        public static string GetPerformanceDataTypes = "getSuppportedPerformanceDataTypes";
+
         #endregion Appium Specific extensions to JSONWP Commands
 
         #region TouchActions
@@ -309,6 +312,7 @@ namespace OpenQA.Selenium.Appium
         /// <summary>
         /// Represents the fingerPrint command
         public const string FingerPrint = "fingerPrint";
+
         /// </summary>
 
         public const string ReplaceValue = "replaceValue";

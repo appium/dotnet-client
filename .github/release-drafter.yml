@@ -10,9 +10,7 @@ categories:
     label: 'Enhancement'
   - title: 'Bug Fixes'
     labels:
-      - 'Fix'
-      - 'Bugfix'
-      - 'Bug'
+      - 'BugFix'
   - title: 'Refactor'
     label: 'Refactor'
   - title: 'Dependencies'
@@ -20,7 +18,6 @@ categories:
       - 'Dependencies'
   - title: 'Pipeline'
     labels:
-      - 'Pipeline'
       - 'CI'
       - 'Build'
 
@@ -30,11 +27,9 @@ version-resolver:
       - 'BreakingChange'
   minor:
     labels:
-      - 'Feature'
       - 'Enhancement'
   patch:
     labels:
-      - 'Bug'
       - 'BugFix'
       - 'Dependencies'
   default: patch

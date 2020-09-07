@@ -11,7 +11,6 @@ namespace Appium.Net.Integration.Tests.Android.Device
     {
         private AppiumDriver<IWebElement> _driver;
         private AppiumOptions _androidOptions;
-        private const string ApiDemosPackageName = "io.appium.android.apis";
 
         [OneTimeSetUp]
         public void SetUp()
@@ -19,7 +18,7 @@ namespace Appium.Net.Integration.Tests.Android.Device
             _androidOptions = Caps.GetAndroidUIAutomatorCaps(Apps.Get(Apps.androidApiDemos));
             _driver = new AndroidDriver<IWebElement>(
                 Env.ServerIsLocal() ? AppiumServers.LocalServiceUri : AppiumServers.RemoteServerUri,
-                _androidOptions);
+                _androidOptions, TimeSpan.FromSeconds(120));
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
         }
 
@@ -30,10 +29,12 @@ namespace Appium.Net.Integration.Tests.Android.Device
         }
 
         [Test]
-        public void CanToggleData()
+        public void CanToggleDataTest()
         {
-            _driver.ToggleData();
-            _driver.ToggleData();
+            var androidDriver = (AndroidDriver<IWebElement>)_driver;
+
+            androidDriver.ToggleData();
+            androidDriver.ToggleData();
         }
 
         [Test]
@@ -63,3 +64,4 @@ namespace Appium.Net.Integration.Tests.Android.Device
         }
     }
 }
+
