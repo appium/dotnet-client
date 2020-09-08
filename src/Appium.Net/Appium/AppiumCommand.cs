@@ -47,6 +47,10 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/device/toggle_airplane_mode"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ToggleData,
                 "/session/{sessionId}/appium/device/toggle_data"),
+            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ToggleWiFi,
+                "/session/{sessionId}/appium/device/toggle_wifi"),
+            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ToggleLocationServices,
+                "/session/{sessionId}/appium/device/toggle_location_services"),
 
             #endregion
 
@@ -88,10 +92,6 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/device/pull_file"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.PullFolder,
                 "/session/{sessionId}/appium/device/pull_folder"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ToggleWiFi,
-                "/session/{sessionId}/appium/device/toggle_wifi"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ToggleLocationServices,
-                "/session/{sessionId}/appium/device/toggle_location_services"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.GetPerformanceData,
                 "/session/{sessionId}/appium/getPerformanceData"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.GetPerformanceDataTypes,

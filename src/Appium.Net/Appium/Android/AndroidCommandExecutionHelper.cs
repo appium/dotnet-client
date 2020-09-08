@@ -108,6 +108,9 @@ namespace OpenQA.Selenium.Appium.Android
 
         public static void ToggleData(IExecuteMethod executeMethod) => executeMethod.Execute(AppiumDriverCommand.ToggleData);
 
+        public static void ToggleWifi(IExecuteMethod executeMethod) =>
+            executeMethod.Execute(AppiumDriverCommand.ToggleWiFi);
+
         #endregion
 
         public static string EndTestCoverage(IExecuteMethod executeMethod, string intent, string path) =>
