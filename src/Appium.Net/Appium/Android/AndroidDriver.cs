@@ -218,6 +218,27 @@ namespace OpenQA.Selenium.Appium.Android
 
         #endregion
 
+        #region Device System
+
+        /// <summary>
+        /// Open the notifications 
+        /// </summary>
+        public void OpenNotifications() => AndroidCommandExecutionHelper.OpenNotifications(this);
+
+        /// <summary>
+        /// Retrieve visibility and bounds information of the status and navigation bars
+        /// </summary>
+        /// <returns>A dictionary whose string keys are named <code>statusBar</code><code>navigationBar</code></returns>
+        public IDictionary<string, object> GetSystemBars() => AndroidCommandExecutionHelper.GetSystemBars(this);
+
+        /// <summary>
+        /// Retrieve display density(dpi) of the Android device
+        /// </summary>
+        /// <returns>Retrieve display density(dpi) of the Android device</returns>
+        public float GetDisplayDensity() => AndroidCommandExecutionHelper.GetDisplayDensity(this);
+
+        #endregion
+
         /// <summary>
         /// Get test-coverage data
         /// </summary>
@@ -226,12 +247,6 @@ namespace OpenQA.Selenium.Appium.Android
         /// <return>a base64 string containing the data</return> 
         public string EndTestCoverage(string intent, string path) =>
             AndroidCommandExecutionHelper.EndTestCoverage(this, intent, path);
-
-        /// <summary>
-        /// Open the notifications 
-        /// </summary>
-        public void OpenNotifications() => AndroidCommandExecutionHelper.OpenNotifications(this);
-
 
         protected override RemoteWebElementFactory CreateElementFactory() => new AndroidElementFactory(this);
 

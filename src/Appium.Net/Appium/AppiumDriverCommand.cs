@@ -196,6 +196,21 @@ namespace OpenQA.Selenium.Appium
         public const string OpenNotifications = "openNotifications";
 
         /// <summary>
+        /// Get System Bars
+        /// </summary>
+        public const string SystemBars = "system_bars";
+
+        /// <summary>
+        /// Get the time on the device
+        /// </summary>
+        public const string SystemTime = "system_time";
+
+        /// <summary>
+        /// Get Display Density
+        /// </summary>
+        public const string GetDisplayDensity = "display_density";
+
+        /// <summary>
         /// The Start Activity command
         /// </summary>
         public const string StartActivity = "startActivity";
