@@ -218,8 +218,16 @@ namespace OpenQA.Selenium.Appium.Android
         /// </summary>
         public void OpenNotifications() => AndroidCommandExecutionHelper.OpenNotifications(this);
 
+        /// <summary>
+        /// Retrieve visibility and bounds information of the status and navigation bars
+        /// </summary>
+        /// <returns>A dictionary whose keys are <code>statusBar</code><code>navigationBar</code></returns>
         public IDictionary<string, object> GetSystemBars() => AndroidCommandExecutionHelper.GetSystemBars(this);
 
+        /// <summary>
+        /// Retrieve display density(dpi) of the Android device
+        /// </summary>
+        /// <returns>Retrieve display density(dpi) of the Android device</returns>
         public float GetDisplayDensity() => AndroidCommandExecutionHelper.GetDisplayDensity(this);
 
         #endregion
