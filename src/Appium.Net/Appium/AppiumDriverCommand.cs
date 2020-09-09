@@ -56,6 +56,11 @@ namespace OpenQA.Selenium.Appium
         public const string SendSms = "send_sms";
 
         /// <summary>
+        /// Set GSM signal strength
+        /// </summary>
+        public const string SetGsmSignalStrength = "gsm_signal";
+
+        /// <summary>
         /// Toggle Network Data Command
         /// </summary>
         public static string ToggleData = "toggleData";
@@ -204,6 +209,10 @@ namespace OpenQA.Selenium.Appium
 
         public const string SetClipboard = "setClipboard";
 
+        public static string GetPerformanceData = "getPerformanceData";
+
+        public static string GetPerformanceDataTypes = "getSuppportedPerformanceDataTypes";
+
         #endregion Appium Specific extensions to JSONWP Commands
 
         #region TouchActions
@@ -317,8 +326,9 @@ namespace OpenQA.Selenium.Appium
 
         /// <summary>
         /// Represents the fingerPrint command
-        public const string FingerPrint = "fingerPrint";
         /// </summary>
+        public const string FingerPrint = "fingerPrint";
+
 
         public const string ReplaceValue = "replaceValue";
 

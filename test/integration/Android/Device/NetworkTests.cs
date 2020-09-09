@@ -12,7 +12,6 @@ namespace Appium.Net.Integration.Tests.Android.Device
     {
         private AppiumDriver<IWebElement> _driver;
         private AppiumOptions _androidOptions;
-        private const string ApiDemosPackageName = "io.appium.android.apis";
 
         [OneTimeSetUp]
         public void SetUp()
@@ -31,10 +30,12 @@ namespace Appium.Net.Integration.Tests.Android.Device
         }
 
         [Test]
-        public void CanToggleData()
+        public void CanToggleDataTest()
         {
-            _driver.ToggleData();
-            _driver.ToggleData();
+            var androidDriver = (AndroidDriver<IWebElement>)_driver;
+
+            androidDriver.ToggleData();
+            androidDriver.ToggleData();
         }
 
         [Test]
@@ -54,11 +55,11 @@ namespace Appium.Net.Integration.Tests.Android.Device
         public void CanToggleWifiTest()
         {
             var androidDriver = (AndroidDriver<IWebElement>)_driver;
-
+            var beforeToggleConnectionType = androidDriver.ConnectionType;
             androidDriver.ToggleWifi();
 
             var currentConnectionType = androidDriver.ConnectionType;
-            Assert.That(currentConnectionType, Is.EqualTo(ConnectionType.DataOnly));
+            Assert.That(currentConnectionType, Is.Not.EqualTo(beforeToggleConnectionType));
 
             androidDriver.ToggleWifi();
         }
@@ -74,6 +75,21 @@ namespace Appium.Net.Integration.Tests.Android.Device
                 Assert.DoesNotThrow(() => androidDriver.MakeGsmCall("5551234567", GsmCallActions.Accept));
                 Assert.DoesNotThrow(() => androidDriver.MakeGsmCall("5551234567", GsmCallActions.Cancel));
                 Assert.DoesNotThrow(() => androidDriver.MakeGsmCall("5551234567", GsmCallActions.Hold));
+            });
+        }
+
+        [Test]
+        public void CanSetGsmSignalStrengthTest()
+        {
+            var androidDriver = (AndroidDriver<IWebElement>)_driver;
+
+            Assert.Multiple(() =>
+            {
+                Assert.DoesNotThrow(() => androidDriver.SetGsmSignalStrength(GsmSignalStrength.NoneOrUnknown));
+                Assert.DoesNotThrow(() => androidDriver.SetGsmSignalStrength(GsmSignalStrength.Poor));
+                Assert.DoesNotThrow(() => androidDriver.SetGsmSignalStrength(GsmSignalStrength.Good));
+                Assert.DoesNotThrow(() => androidDriver.SetGsmSignalStrength(GsmSignalStrength.Moderate));
+                Assert.DoesNotThrow(() => androidDriver.SetGsmSignalStrength(GsmSignalStrength.Great));
             });
         }
 
