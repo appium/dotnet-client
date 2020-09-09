@@ -13,8 +13,7 @@ namespace OpenQA.Selenium.Appium.ScreenRecording
         /// <returns>self instance for chaining.</returns>
         public T WithTimeLimit(TimeSpan timeLimit)
         {
-            Parameters["timeLimit"] = timeLimit.TotalSeconds
-                .ToString(CultureInfo.InvariantCulture);
+            Parameters["timeLimit"] = (int)timeLimit.TotalSeconds;;
             return (T) this;
         }
 
