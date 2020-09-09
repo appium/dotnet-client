@@ -98,10 +98,22 @@ namespace Appium.Net.Integration.Tests.Android.Device
         {
             var androidDriver = (AndroidDriver<IWebElement>)_driver;
 
-            Assert.DoesNotThrow(() =>
-                androidDriver.SetGsmVoice(GsmVoiceState.Roaming));
-
-            androidDriver.SetGsmVoice(GsmVoiceState.On);
+            Assert.Multiple(() =>
+                {
+                    Assert.DoesNotThrow(() =>
+                        androidDriver.SetGsmVoice(GsmVoiceState.Unregistered));
+                    Assert.DoesNotThrow(() =>
+                        androidDriver.SetGsmVoice(GsmVoiceState.Home));
+                    Assert.DoesNotThrow(() =>
+                        androidDriver.SetGsmVoice(GsmVoiceState.Roaming));
+                    Assert.DoesNotThrow(() =>
+                        androidDriver.SetGsmVoice(GsmVoiceState.Denied));
+                    Assert.DoesNotThrow(() =>
+                        androidDriver.SetGsmVoice(GsmVoiceState.Off));
+                    Assert.DoesNotThrow(() =>
+                        androidDriver.SetGsmVoice(GsmVoiceState.On));
+                }
+            );
         }
     }
 }
