@@ -221,7 +221,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// <summary>
         /// Retrieve visibility and bounds information of the status and navigation bars
         /// </summary>
-        /// <returns>A dictionary whose keys are <code>statusBar</code><code>navigationBar</code></returns>
+        /// <returns>A dictionary whose string keys are named <code>statusBar</code><code>navigationBar</code></returns>
         public IDictionary<string, object> GetSystemBars() => AndroidCommandExecutionHelper.GetSystemBars(this);
 
         /// <summary>
