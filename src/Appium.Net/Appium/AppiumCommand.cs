@@ -57,6 +57,8 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/device/send_sms"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.SetGsmSignalStrength,
                 "/session/{sessionId}/appium/device/gsm_signal"),
+            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.SetGsmVoiceState,
+                "/session/{sessionId}/appium/device/gsm_voice"),
 
             #endregion
 

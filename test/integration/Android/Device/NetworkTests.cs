@@ -32,7 +32,7 @@ namespace Appium.Net.Integration.Tests.Android.Device
         [Test]
         public void CanToggleDataTest()
         {
-            var androidDriver = (AndroidDriver<IWebElement>)_driver;
+            var androidDriver = (AndroidDriver<IWebElement>) _driver;
 
             androidDriver.ToggleData();
             androidDriver.ToggleData();
@@ -41,10 +41,10 @@ namespace Appium.Net.Integration.Tests.Android.Device
         [Test]
         public void CanToggleAirplaneModeTest()
         {
-            var androidDriver = (AndroidDriver<IWebElement>)_driver;
+            var androidDriver = (AndroidDriver<IWebElement>) _driver;
 
             androidDriver.ToggleAirplaneMode();
-            
+
             var currentConnectionType = androidDriver.ConnectionType;
             Assert.That(currentConnectionType, Is.EqualTo(ConnectionType.AirplaneMode));
 
@@ -54,7 +54,7 @@ namespace Appium.Net.Integration.Tests.Android.Device
         [Test]
         public void CanToggleWifiTest()
         {
-            var androidDriver = (AndroidDriver<IWebElement>)_driver;
+            var androidDriver = (AndroidDriver<IWebElement>) _driver;
             var beforeToggleConnectionType = androidDriver.ConnectionType;
             androidDriver.ToggleWifi();
 
@@ -67,7 +67,7 @@ namespace Appium.Net.Integration.Tests.Android.Device
         [Test]
         public void CanMakeGsmCallTest()
         {
-            var androidDriver = (AndroidDriver<IWebElement>)_driver;
+            var androidDriver = (AndroidDriver<IWebElement>) _driver;
 
             Assert.Multiple(() =>
             {
@@ -81,7 +81,7 @@ namespace Appium.Net.Integration.Tests.Android.Device
         [Test]
         public void CanSetGsmSignalStrengthTest()
         {
-            var androidDriver = (AndroidDriver<IWebElement>)_driver;
+            var androidDriver = (AndroidDriver<IWebElement>) _driver;
 
             Assert.Multiple(() =>
             {
@@ -91,6 +91,29 @@ namespace Appium.Net.Integration.Tests.Android.Device
                 Assert.DoesNotThrow(() => androidDriver.SetGsmSignalStrength(GsmSignalStrength.Moderate));
                 Assert.DoesNotThrow(() => androidDriver.SetGsmSignalStrength(GsmSignalStrength.Great));
             });
+        }
+
+        [Test]
+        public void CanSetGsmVoiceStateTest()
+        {
+            var androidDriver = (AndroidDriver<IWebElement>) _driver;
+
+            Assert.Multiple(() =>
+                {
+                    Assert.DoesNotThrow(() =>
+                        androidDriver.SetGsmVoice(GsmVoiceState.Unregistered));
+                    Assert.DoesNotThrow(() =>
+                        androidDriver.SetGsmVoice(GsmVoiceState.Home));
+                    Assert.DoesNotThrow(() =>
+                        androidDriver.SetGsmVoice(GsmVoiceState.Roaming));
+                    Assert.DoesNotThrow(() =>
+                        androidDriver.SetGsmVoice(GsmVoiceState.Denied));
+                    Assert.DoesNotThrow(() =>
+                        androidDriver.SetGsmVoice(GsmVoiceState.Off));
+                    Assert.DoesNotThrow(() =>
+                        androidDriver.SetGsmVoice(GsmVoiceState.On));
+                }
+            );
         }
 
         [Test]

@@ -213,6 +213,9 @@ namespace OpenQA.Selenium.Appium.Android
         public void SetGsmSignalStrength(GsmSignalStrength gsmSignalStrength)
             => AndroidCommandExecutionHelper.SetGsmStrength(this, gsmSignalStrength);
 
+        public void SetGsmVoice(GsmVoiceState gsmVoiceState) =>
+            AndroidCommandExecutionHelper.SetGsmVoice(this, gsmVoiceState);
+
         #endregion
 
         /// <summary>
