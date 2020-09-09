@@ -36,8 +36,10 @@ namespace OpenQA.Selenium.Appium
 
             #region Clipboard
 
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.GetClipboard, "/session/{sessionId}/appium/device/get_clipboard"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.SetClipboard, "/session/{sessionId}/appium/device/set_clipboard"),
+            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.GetClipboard,
+                "/session/{sessionId}/appium/device/get_clipboard"),
+            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.SetClipboard,
+                "/session/{sessionId}/appium/device/set_clipboard"),
 
             #endregion
 
@@ -55,6 +57,19 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/device/gsm_call"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.SetGsmSignalStrength,
                 "/session/{sessionId}/appium/device/gsm_signal"),
+
+            #endregion
+
+            #region Device System Commands
+
+            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.OpenNotifications,
+                "/session/{sessionId}/appium/device/open_notifications"),
+            new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.SystemTime,
+                "/session/{sessionId}/appium/device/system_time"),
+            new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.SystemBars,
+                "/session/{sessionId}/appium/device/system_bars"),
+            new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetDisplayDensity,
+                "/session/{sessionId}/appium/device/display_density"),
 
             #endregion
 
@@ -118,8 +133,6 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/device/hide_keyboard"),
             new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.IsKeyboardShown,
                 "/session/{sessionId}/appium/device/is_keyboard_shown"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.OpenNotifications,
-                "/session/{sessionId}/appium/device/open_notifications"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.StartActivity,
                 "/session/{sessionId}/appium/device/start_activity"),
             new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetSettings,
@@ -143,6 +156,7 @@ namespace OpenQA.Selenium.Appium
             #endregion Touch Commands
 
             // Enable W3C Actions on AppiumWebDriver
+
             #region W3C Actions
 
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.Actions,
@@ -177,7 +191,7 @@ namespace OpenQA.Selenium.Appium
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.DeactivateEngine,
                 "/session/{sessionId}/ime/deactivate"),
 
-            #endregion Input Method (IME) 
+            #endregion Input Method (IME)
 
             #region Input value
 
@@ -188,13 +202,6 @@ namespace OpenQA.Selenium.Appium
 
             #endregion Input value
 
-            #region Device Time
-
-            new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetDeviceTime,
-                "/session/{sessionId}/appium/device/system_time"),
-
-            #endregion Device Time
-
             #region SeassionData
 
             new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetSession, "/session/{sessionId}/"),
@@ -203,18 +210,24 @@ namespace OpenQA.Selenium.Appium
 
             #region Recording Screen
 
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.StartRecordingScreen, "/session/{sessionId}/appium/start_recording_screen"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.StopRecordingScreen, "/session/{sessionId}/appium/stop_recording_screen"),
+            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.StartRecordingScreen,
+                "/session/{sessionId}/appium/start_recording_screen"),
+            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.StopRecordingScreen,
+                "/session/{sessionId}/appium/stop_recording_screen"),
 
             #endregion Recording Screen
 
             #endregion JSON Wire Protocol Commands
 
             #region Compare Images
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.CompareImages, "/session/{sessionId}/appium/compare_images" ),
+
+            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.CompareImages,
+                "/session/{sessionId}/appium/compare_images"),
+
             #endregion
 
-            new AppiumCommand(CommandInfo.GetCommand, DriverCommand.GetAvailableLogTypes, "session/{sessionId}/log/types"),
+            new AppiumCommand(CommandInfo.GetCommand, DriverCommand.GetAvailableLogTypes,
+                "session/{sessionId}/log/types"),
             new AppiumCommand(CommandInfo.PostCommand, DriverCommand.GetLog, "session/{sessionId}/log")
         };
 
@@ -231,6 +244,7 @@ namespace OpenQA.Selenium.Appium
                 var commandInfo = new CommandInfo(entry.CommandType, entry.ApiEndpoint);
                 repo.TryAddCommand(entry.CommandName, commandInfo);
             }
+
             return repo;
         }
 

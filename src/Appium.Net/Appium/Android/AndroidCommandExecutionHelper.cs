@@ -12,6 +12,7 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+using System;
 using OpenQA.Selenium.Appium.Interfaces;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
@@ -118,7 +119,8 @@ namespace OpenQA.Selenium.Appium.Android
                     new object[] {number, gsmCallAction.ToString().ToLowerInvariant()}));
 
         public static void SetGsmStrength(IExecuteMethod executeMethod, GsmSignalStrength gsmSignalStrength) =>
-            executeMethod.Execute(AppiumDriverCommand.SetGsmSignalStrength, PrepareArgument("signalStrength", gsmSignalStrength));
+            executeMethod.Execute(AppiumDriverCommand.SetGsmSignalStrength,
+                PrepareArgument("signalStrength", gsmSignalStrength));
 
         #endregion
 
@@ -126,9 +128,6 @@ namespace OpenQA.Selenium.Appium.Android
             executeMethod.Execute(AppiumDriverCommand.EndTestCoverage,
                 new Dictionary<string, object>()
                     {["intent"] = intent, ["path"] = path}).Value as string;
-
-        public static void OpenNotifications(IExecuteMethod executeMethod) =>
-            executeMethod.Execute(AppiumDriverCommand.OpenNotifications);
 
         #region Device Performance
 
@@ -144,6 +143,19 @@ namespace OpenQA.Selenium.Appium.Android
             string dataType, int dataReadTimeout) => executeMethod.Execute(AppiumDriverCommand.GetPerformanceData,
             PrepareArguments(new[] {"packageName", "dataType", "dataReadTimeout"},
                 new object[] {packageName, dataType, dataReadTimeout})).Value as object[];
+
+        #endregion
+
+        #region Device System
+
+        public static void OpenNotifications(IExecuteMethod executeMethod) =>
+            executeMethod.Execute(AppiumDriverCommand.OpenNotifications);
+
+        public static IDictionary<string, object> GetSystemBars(IExecuteMethod executeMethod) =>
+            executeMethod.Execute(AppiumDriverCommand.SystemBars).Value as IDictionary<string, object>;
+
+        public static float GetDisplayDensity(IExecuteMethod executeMethod) => Convert.ToSingle(
+            executeMethod.Execute(AppiumDriverCommand.GetDisplayDensity).Value);
 
         #endregion
 
