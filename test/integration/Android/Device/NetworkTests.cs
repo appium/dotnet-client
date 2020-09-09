@@ -77,5 +77,20 @@ namespace Appium.Net.Integration.Tests.Android.Device
                 Assert.DoesNotThrow(() => androidDriver.MakeGsmCall("5551234567", GsmCallActions.Hold));
             });
         }
+
+        [Test]
+        public void CanSetGsmSignalStrengthTest()
+        {
+            var androidDriver = (AndroidDriver<IWebElement>)_driver;
+
+            Assert.Multiple(() =>
+            {
+                Assert.DoesNotThrow(() => androidDriver.SetGsmSignalStrength(GsmSignalStrength.NoneOrUnknown));
+                Assert.DoesNotThrow(() => androidDriver.SetGsmSignalStrength(GsmSignalStrength.Poor));
+                Assert.DoesNotThrow(() => androidDriver.SetGsmSignalStrength(GsmSignalStrength.Good));
+                Assert.DoesNotThrow(() => androidDriver.SetGsmSignalStrength(GsmSignalStrength.Moderate));
+                Assert.DoesNotThrow(() => androidDriver.SetGsmSignalStrength(GsmSignalStrength.Great));
+            });
+        }
     }
 }

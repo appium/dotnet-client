@@ -48,5 +48,12 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// <param name="phoneNumber"></param>
         /// <param name="gsmCallAction"></param>
         void MakeGsmCall(string phoneNumber, GsmCallActions gsmCallAction);
+
+        /// <summary>
+        /// Sets GSM signal strength (Emulator only)
+        /// </summary>
+        /// <param name=""></param>
+        /// <param name="gsmSignalStrength"></param>
+        void SetGsmSignalStrength(GsmSignalStrength gsmSignalStrength);
     }
 }
