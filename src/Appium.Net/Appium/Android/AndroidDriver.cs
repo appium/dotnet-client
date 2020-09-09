@@ -22,7 +22,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using OpenQA.Selenium.Appium.Android.Enums;
-using OpenQA.Selenium.Appium.Interactions;
 
 namespace OpenQA.Selenium.Appium.Android
 {
@@ -192,6 +191,12 @@ namespace OpenQA.Selenium.Appium.Android
 
         public void LongPressKeyCode(int keyCode, int metastate = -1) =>
             AppiumCommandExecutionHelper.LongPressKeyCode(this, keyCode, metastate);
+
+        public void PressKeyCode(KeyEvent keyEvent) =>
+            AppiumCommandExecutionHelper.PressKeyCode(this, keyEvent);
+
+        public void LongPressKeyCode(KeyEvent keyEvent) =>
+            AppiumCommandExecutionHelper.LongPressKeyCode(this, keyEvent);
 
         #region Device Network
 

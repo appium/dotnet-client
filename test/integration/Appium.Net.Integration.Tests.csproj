@@ -40,5 +40,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Mac\" />
+    <Folder Include="Windows\Device\" />
   </ItemGroup>
 </Project>
