@@ -50,6 +50,13 @@ namespace OpenQA.Selenium.Appium.Interfaces
         void MakeGsmCall(string phoneNumber, GsmCallActions gsmCallAction);
 
         /// <summary>
+        /// Simulate an SMS message (Emulator only)
+        /// </summary>
+        /// <param name="phoneNumber"></param>
+        /// <param name="message"></param>
+        void SendSms(string phoneNumber, string message);
+
+        /// <summary>
         /// Sets GSM signal strength (Emulator only)
         /// </summary>
         /// <param name=""></param>

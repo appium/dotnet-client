@@ -50,6 +50,11 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string GsmCall = "gsm_call";
 
+        // /// <summary>
+        // /// Simulate an SMS message
+        // /// </summary>
+        public const string SendSms = "send_sms";
+
         /// <summary>
         /// Set GSM signal strength
         /// </summary>

@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using OpenQA.Selenium.Appium.Android.Enums;
+using OpenQA.Selenium.Appium.Interactions;
 
 namespace OpenQA.Selenium.Appium.Android
 {
@@ -205,6 +206,9 @@ namespace OpenQA.Selenium.Appium.Android
 
         public void MakeGsmCall(string phoneNumber, GsmCallActions gsmCallAction) =>
             AndroidCommandExecutionHelper.GsmCall(this, phoneNumber, gsmCallAction);
+
+        public void SendSms(string phoneNumber, string message) =>
+            AndroidCommandExecutionHelper.SendSms(this, phoneNumber, message);
 
         public void SetGsmSignalStrength(GsmSignalStrength gsmSignalStrength)
             => AndroidCommandExecutionHelper.SetGsmStrength(this, gsmSignalStrength);
