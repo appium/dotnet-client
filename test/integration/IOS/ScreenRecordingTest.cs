@@ -46,7 +46,9 @@ namespace Appium.Net.Integration.Tests.IOS
             _driver.StartRecordingScreen(
                 IOSStartScreenRecordingOptions.GetIosStartScreenRecordingOptions()
                     .WithTimeLimit(TimeSpan.FromSeconds(10))
-                    .WithVideoType(IOSStartScreenRecordingOptions.VideoType.H264));
+                    .WithVideoType(IOSStartScreenRecordingOptions.VideoType.H264)
+                    .WithVideoFps("10")
+                    .WithVideoScale("320:240"));
             Thread.Sleep(1000);
             var result = _driver.StopRecordingScreen();
             Assert.IsNotEmpty(result);

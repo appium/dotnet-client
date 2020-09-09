@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Globalization;
 
 namespace OpenQA.Selenium.Appium.ScreenRecording
 {
-    public abstract class BaseStartScreenRecordingOptions<T> : BaseScreenRecordingOptions<T> where T : BaseStartScreenRecordingOptions<T>
+    public abstract class BaseStartScreenRecordingOptions<T> : BaseScreenRecordingOptions<T>
+        where T : BaseStartScreenRecordingOptions<T>
     {
         /// <summary>
         /// The maximum recording time.
@@ -11,7 +13,7 @@ namespace OpenQA.Selenium.Appium.ScreenRecording
         /// <returns>self instance for chaining.</returns>
         public T WithTimeLimit(TimeSpan timeLimit)
         {
-            Parameters["timeLimit"] = (int) timeLimit.TotalSeconds;
+            Parameters["timeLimit"] = (int)timeLimit.TotalSeconds;;
             return (T) this;
         }
 
