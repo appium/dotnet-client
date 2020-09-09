@@ -119,7 +119,7 @@ namespace Appium.Net.Integration.Tests.Android.Device
         [Test]
         public void CanSendSmsTest()
         {
-            var androidDriver = (AndroidDriver<IWebElement>)_driver;
+            var androidDriver = (AndroidDriver<IWebElement>) _driver;
 
             Assert.DoesNotThrow(() => androidDriver.SendSms("5551234567", "Hey lol"));
         }
