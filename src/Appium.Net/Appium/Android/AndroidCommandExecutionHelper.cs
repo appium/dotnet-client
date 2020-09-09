@@ -12,11 +12,10 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-using System;
 using OpenQA.Selenium.Appium.Interfaces;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.Linq;
+using OpenQA.Selenium.Appium.Enums;
 
 namespace OpenQA.Selenium.Appium.Android
 {
@@ -100,16 +99,23 @@ namespace OpenQA.Selenium.Appium.Android
         }
 
         #region Device Network
+
         public static void ToggleLocationServices(IExecuteMethod executeMethod) =>
             executeMethod.Execute(AppiumDriverCommand.ToggleLocationServices);
 
         public static void ToggleAirplaneMode(IExecuteMethod executeMethod) =>
             executeMethod.Execute(AppiumDriverCommand.ToggleAirplaneMode);
 
-        public static void ToggleData(IExecuteMethod executeMethod) => executeMethod.Execute(AppiumDriverCommand.ToggleData);
+        public static void ToggleData(IExecuteMethod executeMethod) =>
+            executeMethod.Execute(AppiumDriverCommand.ToggleData);
 
         public static void ToggleWifi(IExecuteMethod executeMethod) =>
             executeMethod.Execute(AppiumDriverCommand.ToggleWiFi);
+
+        public static void GsmCall(IExecuteMethod executeMethod, string number, GsmCallActions gsmCallAction) =>
+            executeMethod.Execute(AppiumDriverCommand.GsmCall,
+                PrepareArguments(new[] {"phoneNumber", "action"},
+                    new object[] {number, gsmCallAction.ToString().ToLowerInvariant()}));
 
         #endregion
 

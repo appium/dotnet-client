@@ -12,6 +12,8 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+using OpenQA.Selenium.Appium.Enums;
+
 namespace OpenQA.Selenium.Appium.Interfaces
 {
     public interface INetworkActions
@@ -39,5 +41,12 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// Switch the state of the location service
         /// </summary>
         void ToggleLocationServices();
+
+        /// <summary>
+        /// Make GSM call (Emulator only)
+        /// </summary>
+        /// <param name="phoneNumber"></param>
+        /// <param name="gsmCallAction"></param>
+        void MakeGsmCall(string phoneNumber, GsmCallActions gsmCallAction);
     }
 }
