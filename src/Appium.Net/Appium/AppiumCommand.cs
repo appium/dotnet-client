@@ -55,6 +55,8 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/device/gsm_call"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.SetGsmSignalStrength,
                 "/session/{sessionId}/appium/device/gsm_signal"),
+            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.SetGsmVoiceState,
+                "/session/{sessionId}/appium/device/gsm_voice"),
 
             #endregion
 
@@ -66,10 +68,6 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/device/is_locked"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.UnlockDevice,
                 "/session/{sessionId}/appium/device/unlock"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ToggleAirplaneMode,
-                "/session/{sessionId}/appium/device/toggle_airplane_mode"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ToggleData,
-                "/session/{sessionId}/appium/device/toggle_data"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.PressKeyCode,
                 "/session/{sessionId}/appium/device/press_keycode"),
             new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.LongPressKeyCode,
