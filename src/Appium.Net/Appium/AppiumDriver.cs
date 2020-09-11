@@ -31,7 +31,7 @@ using OpenQA.Selenium.Appium.ImageComparison;
 namespace OpenQA.Selenium.Appium
 {
     public abstract class AppiumDriver<W> : RemoteWebDriver, IFindsById, IFindsByClassName, IFindsByName,
-        IFindsByTagName, IExecuteMethod, IFindsByFluentSelector<W>,
+        IFindsByTagName, IFindsByImage<W>, IExecuteMethod,
         IHasSessionDetails,
         IHasLocation,
         IFindByAccessibilityId<W>,
@@ -191,6 +191,15 @@ namespace OpenQA.Selenium.Appium
             FindElements(MobileSelector.Accessibility, selector);
 
         #endregion IFindByAccessibilityId Members
+
+        #region IFindsByImage Members
+
+        public W FindElementByImage(string base64Template) => FindElement(MobileBy.Image(base64Template));
+
+        public IReadOnlyCollection<W> FindElementsByImage(string base64Template) =>
+            ConvertToExtendedWebElementCollection<W>(FindElements(MobileBy.Image(base64Template)));
+
+        #endregion
 
         #endregion
 
@@ -692,6 +701,7 @@ namespace OpenQA.Selenium.Appium
         {
             return collection.Cast<T>().ToList().AsReadOnly();
         }
+
         #endregion
     }
 }
