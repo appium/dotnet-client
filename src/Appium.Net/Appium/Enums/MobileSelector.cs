@@ -21,6 +21,7 @@ namespace OpenQA.Selenium.Appium.Enums
         public static readonly string ClassName = "class name";
         public static readonly string Name = "name";
         public static readonly string TagName = "tag name";
+        public static readonly string Image = "-image";
         public static readonly string Accessibility = "accessibility id";
         public static readonly string AndroidUIAutomator = "-android uiautomator";
         public static readonly string AndroidDataMatcher = "-android datamatcher";
