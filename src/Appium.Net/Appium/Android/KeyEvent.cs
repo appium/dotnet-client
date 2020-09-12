@@ -56,6 +56,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// Multiple flags can be combined into a single key event
         /// </summary>
         /// <param name="flag">The flag</param>
+        /// <see cref="AndroidKeyCode"/>
         /// <returns></returns>
         public KeyEvent WithFlag(int flag)
         {
