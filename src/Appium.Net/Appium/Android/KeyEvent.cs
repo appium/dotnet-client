@@ -1,30 +1,61 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using OpenQA.Selenium.Appium.Android.Enums;
 
 namespace OpenQA.Selenium.Appium.Android
 {
     public class KeyEvent
     {
-        private int? _keyCode; 
+        private int? _keyCode;
         private int? _metaState;
         private int? _flags;
 
-        public KeyEvent WithKeyCode(int? androidKeyCode)
+        /// <summary>
+        /// Creates a new key event
+        /// </summary>
+        /// <param name="keyCode">The key code. This is mandatory</param>
+        /// <see cref="AndroidKeyCode"/>
+        public KeyEvent(int keyCode)
         {
-            _keyCode = androidKeyCode;
+            _keyCode = keyCode;
+        }
+
+        /// <summary>
+        /// Sets the key code.
+        /// This is mandatory.
+        /// </summary>
+        /// <param name="keyCode">The key code</param>
+        /// <see cref="AndroidKeyCode"/>
+        /// <returns></returns>
+        public KeyEvent WithKeyCode(int keyCode)
+        {
+            _keyCode = keyCode;
             return this;
         }
 
-        public KeyEvent WithMetaState(int? metaState)
+        /// <summary>
+        /// Adds the meta key modifier
+        /// Flags indicating which meta keys are currently pressed.
+        /// Multiple meta key modifier flags can be combined into a single key event
+        /// </summary>
+        /// <param name="keyEventMetaModifier">The meta state</param>
+        /// <see cref="AndroidKeyMetastate"/>
+        /// <returns></returns>
+        public KeyEvent WithMetaKeyModifier(int keyEventMetaModifier)
         {
-            _metaState = metaState;
+            _metaState += keyEventMetaModifier;
             return this;
         }
 
-        public KeyEvent WithFlag(int? flag)
+        /// <summary>
+        /// Adds the flag(s).
+        /// Multiple flags can be combined into a single key event
+        /// </summary>
+        /// <param name="flag">The flag</param>
+        /// <returns></returns>
+        public KeyEvent WithFlag(int flag)
         {
-            _flags = flag;
+            _flags += flag;
             return this;
         }
 
@@ -38,6 +69,5 @@ namespace OpenQA.Selenium.Appium.Android
 
             return builder;
         }
-
     }
 }
