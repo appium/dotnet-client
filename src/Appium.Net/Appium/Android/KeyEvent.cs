@@ -10,6 +10,10 @@ namespace OpenQA.Selenium.Appium.Android
         private int? _metaState;
         private int? _flags;
 
+        public KeyEvent()
+        {
+        }
+
         /// <summary>
         /// Creates a new key event
         /// </summary>

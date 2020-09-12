@@ -67,12 +67,12 @@ namespace Appium.Net.Integration.Tests.Android.Device.Keys
             Assert.Multiple(() =>
             {
                 Assert.DoesNotThrow(() => _driver.PressKeyCode(new KeyEvent().WithKeyCode(AndroidKeyCode.Space)
-                    .WithMetaState(AndroidKeyMetastate.Meta_Shift_On).WithFlag(AndroidKeyCode.FlagSoftKeyboard)));
+                    .WithMetaKeyModifier(AndroidKeyMetastate.Meta_Shift_On).WithFlag(AndroidKeyCode.FlagSoftKeyboard)));
                 Assert.Throws<InvalidOperationException>(() =>
                     _driver.PressKeyCode(new KeyEvent().WithFlag(AndroidKeyCode.Home)));
                 Assert.Throws<InvalidOperationException>(() =>
                     _driver.PressKeyCode(new KeyEvent().WithFlag(AndroidKeyCode.Home)
-                        .WithMetaState(AndroidKeyCode.MetaAlt_ON)));
+                        .WithMetaKeyModifier(AndroidKeyCode.MetaAlt_ON)));
             });
         }
 
@@ -82,12 +82,12 @@ namespace Appium.Net.Integration.Tests.Android.Device.Keys
             Assert.Multiple(() =>
             {
                 Assert.DoesNotThrow(() => _driver.LongPressKeyCode(new KeyEvent().WithKeyCode(AndroidKeyCode.Space)
-                    .WithMetaState(AndroidKeyMetastate.Meta_Shift_On).WithFlag(AndroidKeyCode.FlagLongPress)));
+                    .WithMetaKeyModifier(AndroidKeyMetastate.Meta_Shift_On).WithFlag(AndroidKeyCode.FlagLongPress)));
                 Assert.Throws<InvalidOperationException>(() =>
                     _driver.LongPressKeyCode(new KeyEvent().WithFlag(AndroidKeyCode.Home)));
                 Assert.Throws<InvalidOperationException>(() =>
                     _driver.LongPressKeyCode(new KeyEvent().WithFlag(AndroidKeyCode.Home)
-                        .WithMetaState(AndroidKeyCode.MetaAlt_ON)));
+                        .WithMetaKeyModifier(AndroidKeyCode.MetaAlt_ON)));
             });
         }
     }
