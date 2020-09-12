@@ -44,7 +44,7 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// </param>
         /// <see href="https://github.com/appium/appium/blob/master/docs/en/writing-running-appium/image-comparison.md"> For the documentation on Image Comparison Features</see>
         /// <see href="https://github.com/appium/appium-base-driver/blob/master/lib/basedriver/device-settings.js">For the settings available for lookup fine-tuning</see>
-        /// <returns>A list of elements that match the given selector or an empty list</returns
+        /// <returns>A list of elements that match the given selector or an empty list</returns>
         IReadOnlyCollection<W> FindElementsByImage(string base64Template);
     }
 }

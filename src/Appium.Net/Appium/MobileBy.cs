@@ -381,7 +381,7 @@ namespace OpenQA.Selenium.Appium
         /// <summary>
         /// Initializes a new instance of the <see cref="ByImage"/> class.
         /// </summary>
-        /// <param name="base64Template">Tb64Template base64-encoded template image string.</param>
+        /// <param name="base64Template">base64-encoded template image string.</param>
         public ByImage(string selector) : base(selector, MobileSelector.Image)
         {
         }
