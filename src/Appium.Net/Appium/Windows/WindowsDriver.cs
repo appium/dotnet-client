@@ -156,11 +156,9 @@ namespace OpenQA.Selenium.Appium.Windows
 
         protected override RemoteWebElementFactory CreateElementFactory() => new WindowsElementFactory(this);
 
-        public void PressKeyCode(KeyEvent keyEvent) =>
-            AppiumCommandExecutionHelper.PressKeyCode(this, keyEvent);
+        public void PressKeyCode(KeyEvent keyEvent) => throw new NotImplementedException();
 
-        public void LongPressKeyCode(KeyEvent keyEvent) =>
-            AppiumCommandExecutionHelper.LongPressKeyCode(this, keyEvent);
+        public void LongPressKeyCode(KeyEvent keyEvent) => throw new NotImplementedException();
 
         public void PressKeyCode(int keyCode, int metastate = -1) =>
             AppiumCommandExecutionHelper.PressKeyCode(this, keyCode, metastate);
