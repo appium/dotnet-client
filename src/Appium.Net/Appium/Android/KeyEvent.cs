@@ -47,6 +47,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// <returns></returns>
         public KeyEvent WithMetaKeyModifier(int keyEventMetaModifier)
         {
+            if (_metaState is null) _metaState = 0;
             _metaState |= keyEventMetaModifier;
             return this;
         }
@@ -60,6 +61,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// <returns></returns>
         public KeyEvent WithFlag(int flag)
         {
+            if (_flags is null) _flags = 0;
             _flags |= flag;
             return this;
         }
