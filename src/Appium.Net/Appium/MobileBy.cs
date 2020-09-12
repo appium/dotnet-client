@@ -17,16 +17,17 @@ using OpenQA.Selenium.Appium.Interfaces;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using OpenQA.Selenium.Internal;
 
 namespace OpenQA.Selenium.Appium
 {
     public abstract class MobileBy : By
     {
-        protected readonly string selector = string.Empty;
-        private readonly string SearchingCriteriaName;
+        protected readonly string selector;
+        private readonly string _searchingCriteriaName;
 
 
-        internal MobileBy(string selector, string searchingCriteriaName) : base()
+        internal MobileBy(string selector, string searchingCriteriaName)
         {
             if (string.IsNullOrEmpty(selector))
             {
@@ -34,7 +35,7 @@ namespace OpenQA.Selenium.Appium
             }
 
             this.selector = selector;
-            SearchingCriteriaName = searchingCriteriaName;
+            _searchingCriteriaName = searchingCriteriaName;
         }
 
         /// <summary>
@@ -44,11 +45,10 @@ namespace OpenQA.Selenium.Appium
         /// <returns>The element that matches</returns>
         public override IWebElement FindElement(ISearchContext context)
         {
-            var finder = context as IFindsByFluentSelector<IWebElement>;
-            if (finder != null)
-                return finder.FindElement(SearchingCriteriaName, selector);
+            if (context is IFindsByFluentSelector<IWebElement> finder)
+                return finder.FindElement(_searchingCriteriaName, selector);
             throw new InvalidCastException($"Unable to cast {context.GetType().FullName} " +
-                $"to {nameof(IFindsByFluentSelector<IWebElement>)}");
+                                           $"to {nameof(IFindsByFluentSelector<IWebElement>)}");
         }
 
         /// <summary>
@@ -58,11 +58,10 @@ namespace OpenQA.Selenium.Appium
         /// <returns>A readonly collection of elements that match.</returns>
         public override ReadOnlyCollection<IWebElement> FindElements(ISearchContext context)
         {
-            var finder = context as IFindsByFluentSelector<IWebElement>;
-            if (finder != null)
-                return finder.FindElements(SearchingCriteriaName, selector).ToList().AsReadOnly();
+            if (context is IFindsByFluentSelector<IWebElement> finder)
+                return finder.FindElements(_searchingCriteriaName, selector).ToList().AsReadOnly();
             throw new InvalidCastException($"Unable to cast {context.GetType().FullName} " +
-                $"to {nameof(IFindsByFluentSelector<IWebElement>)}");
+                                           $"to {nameof(IFindsByFluentSelector<IWebElement>)}");
         }
 
         /// <summary>
@@ -93,7 +92,8 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <param name="selector">The selector to use in finding the element.</param>
         /// <returns></returns>
-        public static By AndroidUIAutomator(IUiAutomatorStatementBuilder selector) => new ByAndroidUIAutomator(selector);
+        public static By AndroidUIAutomator(IUiAutomatorStatementBuilder selector) =>
+            new ByAndroidUIAutomator(selector);
 
         /// <summary>
         /// This method creates a <see cref="OpenQA.Selenium.By"/> strategy
@@ -120,6 +120,8 @@ namespace OpenQA.Selenium.Appium
         public static By IosNSPredicate(string selector) => new ByIosNSPredicate(selector);
 
         public static By IosClassChain(string selector) => new ByIosClassChain(selector);
+
+        public static By Image(string selector) => new ByImage(selector);
     }
 
     /// <summary>
@@ -141,16 +143,14 @@ namespace OpenQA.Selenium.Appium
 
         public override IWebElement FindElement(ISearchContext context)
         {
-            var finder = context as IFindByAccessibilityId<IWebElement>;
-            if (finder != null)
+            if (context is IFindByAccessibilityId<IWebElement> finder)
                 return finder.FindElementByAccessibilityId(selector);
             return base.FindElement(context);
         }
 
         public override ReadOnlyCollection<IWebElement> FindElements(ISearchContext context)
         {
-            var finder = context as IFindByAccessibilityId<IWebElement>;
-            if (finder != null)
+            if (context is IFindByAccessibilityId<IWebElement> finder)
                 return finder.FindElementsByAccessibilityId(selector).ToList().AsReadOnly();
             return base.FindElements(context);
         }
@@ -177,22 +177,21 @@ namespace OpenQA.Selenium.Appium
         /// Initializes a new instance of the <see cref="ByAndroidUIAutomator"/> class.
         /// </summary>
         /// <param name="selector">The selector to use in finding the element.</param>
-        public ByAndroidUIAutomator(IUiAutomatorStatementBuilder selector) : base(selector.Build(), MobileSelector.AndroidUIAutomator)
+        public ByAndroidUIAutomator(IUiAutomatorStatementBuilder selector) : base(selector.Build(),
+            MobileSelector.AndroidUIAutomator)
         {
         }
 
         public override IWebElement FindElement(ISearchContext context)
         {
-            var finder = context as IFindByAndroidUIAutomator<IWebElement>;
-            if (finder != null)
+            if (context is IFindByAndroidUIAutomator<IWebElement> finder)
                 return finder.FindElementByAndroidUIAutomator(selector);
             return base.FindElement(context);
         }
 
         public override ReadOnlyCollection<IWebElement> FindElements(ISearchContext context)
         {
-            var finder = context as IFindByAndroidUIAutomator<IWebElement>;
-            if (finder != null)
+            if (context is IFindByAndroidUIAutomator<IWebElement> finder)
                 return finder.FindElementsByAndroidUIAutomator(selector).ToList().AsReadOnly();
             return base.FindElements(context);
         }
@@ -249,16 +248,14 @@ namespace OpenQA.Selenium.Appium
 
         public override IWebElement FindElement(ISearchContext context)
         {
-            var finder = context as IFindByIosUIAutomation<IWebElement>;
-            if (finder != null)
+            if (context is IFindByIosUIAutomation<IWebElement> finder)
                 return finder.FindElementByIosUIAutomation(selector);
             return base.FindElement(context);
         }
 
         public override ReadOnlyCollection<IWebElement> FindElements(ISearchContext context)
         {
-            var finder = context as IFindByIosUIAutomation<IWebElement>;
-            if (finder != null)
+            if (context is IFindByIosUIAutomation<IWebElement> finder)
                 return finder.FindElementsByIosUIAutomation(selector).ToList().AsReadOnly();
             return base.FindElements(context);
         }
@@ -279,16 +276,14 @@ namespace OpenQA.Selenium.Appium
 
         public override IWebElement FindElement(ISearchContext context)
         {
-            var finder = context as IFindByWindowsUIAutomation<IWebElement>;
-            if (finder != null)
+            if (context is IFindByWindowsUIAutomation<IWebElement> finder)
                 return finder.FindElementByWindowsUIAutomation(selector);
             return base.FindElement(context);
         }
 
         public override ReadOnlyCollection<IWebElement> FindElements(ISearchContext context)
         {
-            var finder = context as IFindByWindowsUIAutomation<IWebElement>;
-            if (finder != null)
+            if (context is IFindByWindowsUIAutomation<IWebElement> finder)
                 return finder.FindElementsByWindowsUIAutomation(selector).ToList().AsReadOnly();
             return base.FindElements(context);
         }
@@ -309,16 +304,14 @@ namespace OpenQA.Selenium.Appium
 
         public override IWebElement FindElement(ISearchContext context)
         {
-            var finder = context as IFindByTizenUIAutomation<IWebElement>;
-            if (finder != null)
+            if (context is IFindByTizenUIAutomation<IWebElement> finder)
                 return finder.FindElementByTizenUIAutomation(selector);
             return base.FindElement(context);
         }
 
         public override ReadOnlyCollection<IWebElement> FindElements(ISearchContext context)
         {
-            var finder = context as IFindByTizenUIAutomation<IWebElement>;
-            if (finder != null)
+            if (context is IFindByTizenUIAutomation<IWebElement> finder)
                 return finder.FindElementsByTizenUIAutomation(selector).ToList().AsReadOnly();
             return base.FindElements(context);
         }
@@ -339,16 +332,14 @@ namespace OpenQA.Selenium.Appium
 
         public override IWebElement FindElement(ISearchContext context)
         {
-            var finder = context as IFindsByIosNSPredicate<IWebElement>;
-            if (finder != null)
+            if (context is IFindsByIosNSPredicate<IWebElement> finder)
                 return finder.FindElementByIosNsPredicate(selector);
             return base.FindElement(context);
         }
 
         public override ReadOnlyCollection<IWebElement> FindElements(ISearchContext context)
         {
-            var finder = context as IFindsByIosNSPredicate<IWebElement>;
-            if (finder != null)
+            if (context is IFindsByIosNSPredicate<IWebElement> finder)
                 return finder.FindElementsByIosNsPredicate(selector).ToList().AsReadOnly();
             return base.FindElements(context);
         }
@@ -369,21 +360,47 @@ namespace OpenQA.Selenium.Appium
 
         public override IWebElement FindElement(ISearchContext context)
         {
-            var finder = context as IFindsByIosClassChain<IWebElement>;
-            if (finder != null)
+            if (context is IFindsByIosClassChain<IWebElement> finder)
                 return finder.FindElementByIosClassChain(selector);
             return base.FindElement(context);
         }
 
         public override ReadOnlyCollection<IWebElement> FindElements(ISearchContext context)
         {
-            var finder = context as IFindsByIosClassChain<IWebElement>;
-            if (finder != null)
+            if (context is IFindsByIosClassChain<IWebElement> finder)
                 return finder.FindElementsByIosClassChain(selector).ToList().AsReadOnly();
             return base.FindElements(context);
         }
 
         public override string ToString() =>
             $"ByIosClassChain({selector})";
+    }
+
+    public class ByImage : MobileBy
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ByImage"/> class.
+        /// </summary>
+        /// <param name="base64Template">base64-encoded template image string.</param>
+        public ByImage(string selector) : base(selector, MobileSelector.Image)
+        {
+        }
+
+        public override IWebElement FindElement(ISearchContext context)
+        {
+            if (context is IFindsByImage<IWebElement> finder)
+                return finder.FindElementByImage(selector);
+            return base.FindElement(context);
+        }
+
+        public override ReadOnlyCollection<IWebElement> FindElements(ISearchContext context)
+        {
+            if (context is IFindsByImage<IWebElement> finder)
+                return finder.FindElementsByImage(selector).ToList().AsReadOnly();
+            return base.FindElements(context);
+        }
+
+        public override string ToString() =>
+            $"ByImage({selector})";
     }
 }
