@@ -1,0 +1,32 @@
+name: Build and deploy NuGet package
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+
+    - name: Install dependencies
+      run: dotnet restore src/Appium.Net.sln
+      
+    - name: Build
+      run: |
+        if ("${{github.ref}}".trim() -notmatch '^refs/tags/v(\d+\.\d+\.\d+)$') {
+          exit 1
+        }
+        $version = $matches[1]
+        dotnet build src/Appium.Net.sln --no-restore --configuration Release -p:Version=$version
+        
+    - name: Deploy to nuget
+      run: dotnet nuget push **/*.nupkg --api-key ${{ secrets.NUGET_DEPLOY_KEY }} --source https://api.nuget.org/v3/index.json
