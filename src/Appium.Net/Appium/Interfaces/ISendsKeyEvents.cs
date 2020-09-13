@@ -30,7 +30,7 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// Sends a device long key event with meta state
         /// </summary>
         /// <param name="keyCode">Code for the long key pressed on the Android device</param>
-        /// <param name="metastate">metastate for the long key press</param
+        /// <param name="metastate">metastate for the long key press</param>
         void LongPressKeyCode(int keyCode, int metastate = -1);
 
         /// <summary>
