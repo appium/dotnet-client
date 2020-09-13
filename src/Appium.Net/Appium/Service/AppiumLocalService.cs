@@ -58,10 +58,7 @@ namespace OpenQA.Selenium.Appium.Service
         /// <summary>
         /// The base URL for the managed appium server.
         /// </summary>
-        public Uri ServiceUrl
-        {
-            get { return new Uri($"http://{IP.ToString()}:{Convert.ToString(Port)}/wd/hub"); }
-        }
+        public Uri ServiceUrl => new Uri($"http://{IP.ToString()}:{Convert.ToString(Port)}/wd/hub");
 
         /// <summary>
         /// Event that can be used to capture the output of the service

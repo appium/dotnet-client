@@ -194,8 +194,8 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract
         /// </summary>
         public string ID
         {
-            set { byList.Add(By.Id(value)); }
-            get { return null; }
+            set => byList.Add(By.Id(value));
+            get => null;
         }
 
         /// <summary>
@@ -203,8 +203,8 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract
         /// </summary>
         public string ClassName
         {
-            set { byList.Add(By.ClassName(value)); }
-            get { return null; }
+            set => byList.Add(By.ClassName(value));
+            get => null;
         }
 
         /// <summary>
@@ -212,8 +212,8 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract
         /// </summary>
         public string TagName
         {
-            set { byList.Add(By.TagName(value)); }
-            get { return null; }
+            set => byList.Add(By.TagName(value));
+            get => null;
         }
 
 
@@ -222,8 +222,8 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract
         /// </summary>
         public string XPath
         {
-            set { byList.Add(By.XPath(value)); }
-            get { return null; }
+            set => byList.Add(By.XPath(value));
+            get => null;
         }
     }
 }

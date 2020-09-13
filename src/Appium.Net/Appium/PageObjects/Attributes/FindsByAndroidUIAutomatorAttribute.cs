@@ -25,8 +25,8 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes
         /// </summary>
         public string AndroidUIAutomator
         {
-            set { byList.Add(new ByAndroidUIAutomator(value)); }
-            get { return null; }
+            set => byList.Add(new ByAndroidUIAutomator(value));
+            get => null;
         }
     }
 }

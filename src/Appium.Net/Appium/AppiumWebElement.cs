@@ -414,9 +414,6 @@ namespace OpenQA.Selenium.Appium
 
         public Response Execute(string driverCommand) => Execute(driverCommand, null);
 
-        public new string Id
-        {
-            get { return base.Id; }
-        }
+        public new string Id => base.Id;
     }
 }

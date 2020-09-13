@@ -24,8 +24,8 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract
         /// </summary>
         public string Accessibility
         {
-            set { byList.Add(new ByAccessibilityId(value)); }
-            get { return null; }
+            set => byList.Add(new ByAccessibilityId(value));
+            get => null;
         }
     }
 }

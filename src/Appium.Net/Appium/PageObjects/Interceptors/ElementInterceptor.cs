@@ -15,7 +15,6 @@
 using Castle.DynamicProxy;
 using OpenQA.Selenium.Internal;
 using SeleniumExtras.PageObjects;
-using System;
 using System.Collections.Generic;
 using System.Reflection;
 

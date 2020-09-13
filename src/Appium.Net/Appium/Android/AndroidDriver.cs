@@ -22,7 +22,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using OpenQA.Selenium.Appium.Android.Enums;
-using OpenQA.Selenium.Appium.Interactions;
 
 namespace OpenQA.Selenium.Appium.Android
 {
@@ -167,31 +166,35 @@ namespace OpenQA.Selenium.Appium.Android
                 appWaitPackage, appWaitActivity,
                 intentCategory, intentFlags, intentOptionalArgs, stopApp);
 
-        public string CurrentActivity
-        {
-            get { return AndroidCommandExecutionHelper.GetCurrentActivity(this); }
-        }
+        public string CurrentActivity => AndroidCommandExecutionHelper.GetCurrentActivity(this);
 
-        public string CurrentPackage
-        {
-            get { return AndroidCommandExecutionHelper.GetCurrentPackage(this); }
-        }
+        public string CurrentPackage => AndroidCommandExecutionHelper.GetCurrentPackage(this);
 
         #region Connection Type
 
         public ConnectionType ConnectionType
         {
-            get { return AndroidCommandExecutionHelper.GetConection(this); }
-            set { AndroidCommandExecutionHelper.SetConection(this, value); }
+            get => AndroidCommandExecutionHelper.GetConection(this);
+            set => AndroidCommandExecutionHelper.SetConection(this, value);
         }
 
         #endregion Connection Type
+
+        #region Device Kesys
 
         public void PressKeyCode(int keyCode, int metastate = -1) =>
             AppiumCommandExecutionHelper.PressKeyCode(this, keyCode, metastate);
 
         public void LongPressKeyCode(int keyCode, int metastate = -1) =>
             AppiumCommandExecutionHelper.LongPressKeyCode(this, keyCode, metastate);
+
+        public void PressKeyCode(KeyEvent keyEvent) =>
+            AppiumCommandExecutionHelper.PressKeyCode(this, keyEvent);
+
+        public void LongPressKeyCode(KeyEvent keyEvent) =>
+            AppiumCommandExecutionHelper.LongPressKeyCode(this, keyEvent);
+
+        #endregion
 
         #region Device Network
 
@@ -239,17 +242,6 @@ namespace OpenQA.Selenium.Appium.Android
 
         #endregion
 
-        /// <summary>
-        /// Get test-coverage data
-        /// </summary>
-        /// <param name="intent">a string containing the intent.</param>
-        /// <param name="path">a string containing the path.</param>
-        /// <return>a base64 string containing the data</return> 
-        public string EndTestCoverage(string intent, string path) =>
-            AndroidCommandExecutionHelper.EndTestCoverage(this, intent, path);
-
-        protected override RemoteWebElementFactory CreateElementFactory() => new AndroidElementFactory(this);
-
         #region Device Performance Data
 
         public IList<object> GetPerformanceData(string packageName, string performanceDataType) =>
@@ -292,6 +284,17 @@ namespace OpenQA.Selenium.Appium.Android
 
         #endregion
 
+        /// <summary>
+        /// Get test-coverage data
+        /// </summary>
+        /// <param name="intent">a string containing the intent.</param>
+        /// <param name="path">a string containing the path.</param>
+        /// <return>a base64 string containing the data</return> 
+        public string EndTestCoverage(string intent, string path) =>
+            AndroidCommandExecutionHelper.EndTestCoverage(this, intent, path);
+
+        protected override RemoteWebElementFactory CreateElementFactory() => new AndroidElementFactory(this);
+
         public void SetSetting(string setting, object value) =>
             AndroidCommandExecutionHelper.SetSetting(this, setting, value);
 
@@ -315,7 +318,7 @@ namespace OpenQA.Selenium.Appium.Android
 
         public Dictionary<string, object> Settings
         {
-            get { return AndroidCommandExecutionHelper.GetSettings(this); }
+            get => AndroidCommandExecutionHelper.GetSettings(this);
 
             set
             {

@@ -4,7 +4,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 
-namespace Appium.Net.Integration.Tests.Android
+namespace Appium.Net.Integration.Tests.Android.Device.Keys
 {
     class HideKeyboardTestCase
     {

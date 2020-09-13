@@ -13,7 +13,6 @@
 //limitations under the License.
 
 using System;
-using System.Runtime.CompilerServices;
 using OpenQA.Selenium.Appium.Enums;
 
 namespace OpenQA.Selenium.Appium.Interfaces

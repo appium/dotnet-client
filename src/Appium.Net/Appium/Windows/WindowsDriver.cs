@@ -15,6 +15,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Service;
@@ -154,6 +155,10 @@ namespace OpenQA.Selenium.Appium.Windows
             AppiumCommandExecutionHelper.HideKeyboard(this, strategy, key);
 
         protected override RemoteWebElementFactory CreateElementFactory() => new WindowsElementFactory(this);
+
+        public void PressKeyCode(KeyEvent keyEvent) => throw new NotImplementedException();
+
+        public void LongPressKeyCode(KeyEvent keyEvent) => throw new NotImplementedException();
 
         public void PressKeyCode(int keyCode, int metastate = -1) =>
             AppiumCommandExecutionHelper.PressKeyCode(this, keyCode, metastate);

@@ -26,25 +26,35 @@ namespace OpenQA.Selenium.Appium
     {
         #region Device Commands
 
+        #region Device Key Commands
+
+        public static void PressKeyCode(IExecuteMethod executeMethod, KeyEvent keyEvent) =>
+            executeMethod.Execute(AppiumDriverCommand.PressKeyCode, keyEvent.Build());
+
+        public static void LongPressKeyCode(IExecuteMethod executeMethod, KeyEvent keyEvent) =>
+            executeMethod.Execute(AppiumDriverCommand.LongPressKeyCode, keyEvent.Build());
+
         public static void PressKeyCode(IExecuteMethod executeMethod, int keyCode, int metastate = -1)
         {
             var parameters = new Dictionary<string, object>()
-            { ["keycode"] = keyCode };
+                {["keycode"] = keyCode};
             if (metastate > 0)
             {
                 parameters.Add("metastate", metastate);
             }
+
             executeMethod.Execute(AppiumDriverCommand.PressKeyCode, parameters);
         }
 
         public static void LongPressKeyCode(IExecuteMethod executeMethod, int keyCode, int metastate = -1)
         {
             var parameters = new Dictionary<string, object>()
-            { ["keycode"] = keyCode };
+                {["keycode"] = keyCode};
             if (metastate > 0)
             {
                 parameters.Add("metastate", metastate);
             }
+
             executeMethod.Execute(AppiumDriverCommand.LongPressKeyCode, parameters);
         }
 
@@ -55,41 +65,49 @@ namespace OpenQA.Selenium.Appium
             {
                 parameters.Add("strategy", strategy);
             }
+
             if (key != null)
             {
                 parameters.Add("keyName", key);
             }
+
             executeMethod.Execute(AppiumDriverCommand.HideKeyboard, parameters);
         }
 
         public static bool IsKeyboardShown(IExecuteMethod executeMethod)
         {
             var response = executeMethod.Execute(AppiumDriverCommand.IsKeyboardShown);
-            return (bool)response.Value;
+            return (bool) response.Value;
         }
+
+        #endregion
 
         public static void Lock(IExecuteMethod executeMethod, int seconds) =>
             executeMethod.Execute(AppiumDriverCommand.LockDevice,
                 new Dictionary<string, object>()
-                { ["seconds"] = seconds });
+                    {["seconds"] = seconds});
 
-        public static void SetClipboard(IExecuteMethod executeMethod, ClipboardContentType clipboardContentType, string base64Content)
+        public static void SetClipboard(IExecuteMethod executeMethod, ClipboardContentType clipboardContentType,
+            string base64Content)
         {
             switch (clipboardContentType)
             {
                 case ClipboardContentType.Image:
                 case ClipboardContentType.Url:
                     if (executeMethod.GetType().GetGenericTypeDefinition() == typeof(AndroidDriver<>))
-                    { throw new NotImplementedException($"Android only supports contentType: {nameof(ClipboardContentType.PlainText)}"); }
+                    {
+                        throw new NotImplementedException(
+                            $"Android only supports contentType: {nameof(ClipboardContentType.PlainText)}");
+                    }
 
                     executeMethod.Execute(AppiumDriverCommand.SetClipboard,
-                        PrepareArguments(new[] { "content", "contentType", "label" },
-                            new object[] { base64Content, clipboardContentType.ToString().ToLower(), null }));
+                        PrepareArguments(new[] {"content", "contentType", "label"},
+                            new object[] {base64Content, clipboardContentType.ToString().ToLower(), null}));
                     break;
                 default:
                     executeMethod.Execute(AppiumDriverCommand.SetClipboard,
-                        PrepareArguments(new[] { "content", "contentType", "label" },
-                            new object[] { base64Content, clipboardContentType.ToString().ToLower(), null }));
+                        PrepareArguments(new[] {"content", "contentType", "label"},
+                            new object[] {base64Content, clipboardContentType.ToString().ToLower(), null}));
                     break;
             }
         }
@@ -101,42 +119,55 @@ namespace OpenQA.Selenium.Appium
                 case ClipboardContentType.Image:
                 case ClipboardContentType.Url:
                     if (executeMethod.GetType().GetGenericTypeDefinition() == typeof(AndroidDriver<>))
-                    { throw new NotImplementedException($"Android only supports contentType: {nameof(ClipboardContentType.PlainText)}"); }
-                    return (string)executeMethod.Execute(AppiumDriverCommand.GetClipboard,
+                    {
+                        throw new NotImplementedException(
+                            $"Android only supports contentType: {nameof(ClipboardContentType.PlainText)}");
+                    }
+
+                    return (string) executeMethod.Execute(AppiumDriverCommand.GetClipboard,
                         PrepareArgument("contentType", clipboardContentType.ToString().ToLower())).Value;
                 case ClipboardContentType.PlainText:
-                    return (string)executeMethod.Execute(AppiumDriverCommand.GetClipboard,
+                    return (string) executeMethod.Execute(AppiumDriverCommand.GetClipboard,
                         PrepareArgument("contentType", clipboardContentType.ToString().ToLower())).Value;
                 default:
-                    return (string)executeMethod.Execute(AppiumDriverCommand.GetClipboard,
+                    return (string) executeMethod.Execute(AppiumDriverCommand.GetClipboard,
                         PrepareArgument("contentType", clipboardContentType.ToString().ToLower())).Value;
             }
         }
 
         public static string SetClipboardText(IExecuteMethod executeMethod, string textContent, string label)
         {
-            if (textContent == null) { throw new ArgumentException($"{nameof(textContent)} cannot be null"); }
+            if (textContent == null)
+            {
+                throw new ArgumentException($"{nameof(textContent)} cannot be null");
+            }
+
             var encodedStringContentBytes = Encoding.UTF8.GetBytes(textContent);
 
-            return (string)executeMethod.Execute(AppiumDriverCommand.SetClipboard,
-                PrepareArguments(new[] { "content", "contentType", "label" },
-                    new object[] { Convert.ToBase64String(encodedStringContentBytes), ClipboardContentType.PlainText.ToString().ToLower(), label })).Value;
+            return (string) executeMethod.Execute(AppiumDriverCommand.SetClipboard,
+                PrepareArguments(new[] {"content", "contentType", "label"},
+                    new object[]
+                    {
+                        Convert.ToBase64String(encodedStringContentBytes),
+                        ClipboardContentType.PlainText.ToString().ToLower(), label
+                    })).Value;
         }
 
         public static string GetClipboardText(IExecuteMethod executeMethod)
         {
-            var encodedContentBytes = Convert.FromBase64String(GetClipboard(executeMethod, ClipboardContentType.PlainText));
+            var encodedContentBytes =
+                Convert.FromBase64String(GetClipboard(executeMethod, ClipboardContentType.PlainText));
             return Encoding.UTF8.GetString(encodedContentBytes);
         }
 
         public static void PushFile(IExecuteMethod executeMethod, string pathOnDevice, byte[] base64Data) =>
             executeMethod.Execute(AppiumDriverCommand.PushFile, new Dictionary<string, object>()
-                { ["path"] = pathOnDevice, ["data"] = base64Data });
+                {["path"] = pathOnDevice, ["data"] = base64Data});
 
         public static void FingerPrint(IExecuteMethod executeMethod, int fingerprintId) =>
             executeMethod.Execute(AppiumDriverCommand.FingerPrint, new Dictionary<string, object>()
-                { ["fingerprintId"] = fingerprintId});
-        
+                {["fingerprintId"] = fingerprintId});
+
         public static void PushFile(IExecuteMethod executeMethod, string pathOnDevice, FileInfo file)
         {
             if (file == null)
@@ -164,7 +195,7 @@ namespace OpenQA.Selenium.Appium
         /// <returns></returns>
         internal static Dictionary<string, object> PrepareArgument(string name, object value)
         {
-            return new Dictionary<string, object> { { name, value } };
+            return new Dictionary<string, object> {{name, value}};
         }
 
         /// <summary>

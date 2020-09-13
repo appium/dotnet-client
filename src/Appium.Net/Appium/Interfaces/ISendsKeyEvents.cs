@@ -13,22 +13,36 @@
 //limitations under the License.
 
 
+using OpenQA.Selenium.Appium.Android;
+
 namespace OpenQA.Selenium.Appium.Interfaces
 {
     public interface ISendsKeyEvents : IExecuteMethod
     {
         /// <summary>
-        /// Sends a device key event with metastate
+        /// Sends a device key event with meta state
         /// </summary>
         /// <param name="keyCode">Code for the long key pressed on the Android device</param>
         /// <param name="metastate">metastate for the long key press</param>
-        void PressKeyCode(int keyCode, int metastate = -1);
+        void PressKeyCode(int keyCode, int metastate = 0);
 
         /// <summary>
-        /// Sends a device long key event with metastate
+        /// Sends a device long key event with meta state
         /// </summary>
         /// <param name="keyCode">Code for the long key pressed on the Android device</param>
         /// <param name="metastate">metastate for the long key press</param>
-        void LongPressKeyCode(int keyCode, int metastate = -1);
+        void LongPressKeyCode(int keyCode, int metastate = 0);
+
+        /// <summary>
+        /// Sends a key event to the device under test
+        /// </summary>
+        /// <param name="keyEvent">The generated key event <see cref="KeyEvent"/></param>
+        void PressKeyCode(KeyEvent keyEvent);
+
+        /// <summary>
+        /// Sends a long press key event to the device under test
+        /// </summary>
+        /// <param name="keyEvent">The generated key event <see cref="KeyEvent"/></param>
+        void LongPressKeyCode(KeyEvent keyEvent);
     }
 }

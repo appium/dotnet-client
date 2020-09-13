@@ -10,10 +10,7 @@ namespace OpenQA.Selenium.Appium.ImageComparison
         /// <summary>
         /// The visualization of the matching result represented as base64-encoded PNG image.
         /// </summary>
-        public string Visualization
-        {
-            get { return Result["visualization"].ToString(); }
-        }
+        public string Visualization => Result["visualization"].ToString();
 
         protected Dictionary<string, object> Result { get; }
 

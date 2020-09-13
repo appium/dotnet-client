@@ -12,7 +12,6 @@
 //limitations under the License.
 
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium.Interfaces
 {

@@ -25,8 +25,8 @@ namespace OpenQA.Selenium.Appium.PageObjects.Attributes
         /// </summary>
         public string IosUIAutomation
         {
-            set { byList.Add(new ByIosUIAutomation(value)); }
-            get { return null; }
+            set => byList.Add(new ByIosUIAutomation(value));
+            get => null;
         }
     }
 }

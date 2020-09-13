@@ -19,7 +19,6 @@ using System.Drawing;
 using System.Threading;
 using System.Collections.Generic;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Appium.Interactions;
 using OpenQA.Selenium.Appium.Windows;

@@ -59,10 +59,7 @@ namespace OpenQA.Selenium.Appium.Service
             Service = service;
         }
 
-        public CommandInfoRepository CommandInfoRepository
-        {
-            get { return RealExecutor.CommandInfoRepository; }
-        }
+        public CommandInfoRepository CommandInfoRepository => RealExecutor.CommandInfoRepository;
 
         public Response Execute(Command commandToExecute)
         {
