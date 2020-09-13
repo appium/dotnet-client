@@ -15,7 +15,6 @@ using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Remote;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace OpenQA.Selenium.Appium.Tizen
 {

@@ -13,7 +13,6 @@
 //limitations under the License.
 
 using OpenQA.Selenium.Appium.Interfaces;
-using System;
 using System.IO;
 
 namespace OpenQA.Selenium.Appium.Android.Interfaces

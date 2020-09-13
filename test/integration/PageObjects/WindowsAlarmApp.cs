@@ -7,7 +7,6 @@ using SeleniumExtras.PageObjects;
 using System;
 using System.Globalization;
 using System.Linq;
-using System.Threading;
 
 namespace Appium.Net.Integration.Tests.PageObjects
 {

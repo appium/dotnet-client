@@ -13,11 +13,8 @@
 //limitations under the License.
 
 using OpenQA.Selenium.Appium.Enums;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace OpenQA.Selenium.Appium.Service
 {

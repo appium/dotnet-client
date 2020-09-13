@@ -17,7 +17,6 @@ using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Service;
 using OpenQA.Selenium.Remote;
 using System;
-using System.Collections.ObjectModel;
 using System.Drawing;
 using OpenQA.Selenium.Appium.iOS.Interfaces;
 using System.Collections.Generic;
