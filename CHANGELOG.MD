@@ -1,4 +1,4 @@
-##
+4.2.0
 - IPerformsTouchActions no longer implement (inherit) IExecuteMethod - inheritance redundancy and a cleaner interface; Resolve (#392)
 - IHidesKeyboard is now exposes "key" and "strategy" overloads; Resolve (#390)
 - IHidesKeyboard no longer implement (inherit) IExecuteMethod - inheritance redundancy and a cleaner interface; Resolve (#389)
@@ -8,6 +8,19 @@
 - Location property under AppiumDriver is now exposable by IHasLocation interface; Resolve (#386)
 - Resolve #364. Add IsKeyboardShown to IHidesKeyboard intefrace; Add IsKeyboardShown command 
 - Added AndroidDataMatcher selector strategy #408
+- feat: add ability to send flags to PressKeyCode (#433) @akinsolb
+- feat: Add image locator type (#434) @akinsolb
+- feat: add missing iOS Screen recording options (#432) @akinsolb
+- feat: System Bars & Display Density (#430) @akinsolb
+- feat: Send sms (#431) @akinsolb
+- feat: GSM Voice State (#429) @akinsolb
+- feat: Set Gsm Signal Strength (#428) @akinsolb
+- feat: Make GSM Call (Emulator Only) (#427) @akinsolb
+- feat: Toggle Wifi (#425) @akinsolb
+- feat: add Toggle Airplane Mode & INetworkActions Interface (#423) @akinsolb
+- feat: Get Performance Data & Performance Data Types (#422) @akinsolb
+- feat: Provide way to pass arguments to NodeJS (#417) @sparerd
+- feat: Added builder pattern for creating valid ByAndroidUIAutomator statements (#410) @sparerd
 
 ## 4.1.1
 - Resolved #372 by fixing the endpoint for Activating an App
