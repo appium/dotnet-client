@@ -1,4 +1,4 @@
-4.2.0
+## 4.2.0
 - IPerformsTouchActions no longer implement (inherit) IExecuteMethod - inheritance redundancy and a cleaner interface; Resolve (#392)
 - IHidesKeyboard is now exposes "key" and "strategy" overloads; Resolve (#390)
 - IHidesKeyboard no longer implement (inherit) IExecuteMethod - inheritance redundancy and a cleaner interface; Resolve (#389)
