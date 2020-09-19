@@ -194,10 +194,10 @@ namespace OpenQA.Selenium.Appium
 
         #region IFindsByImage Members
 
-        public W FindElementByImage(string base64Template) => FindElement(MobileBy.Image(base64Template));
+        public W FindElementByImage(string base64Template) => FindElement(MobileSelector.Image, base64Template);
 
         public IReadOnlyCollection<W> FindElementsByImage(string base64Template) =>
-            ConvertToExtendedWebElementCollection<W>(FindElements(MobileBy.Image(base64Template)));
+            ConvertToExtendedWebElementCollection<W>(FindElements(MobileSelector.Image, base64Template));
 
         #endregion
 

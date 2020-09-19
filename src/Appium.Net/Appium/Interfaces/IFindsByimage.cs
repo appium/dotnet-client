@@ -22,8 +22,8 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// <summary>
         /// Performs the lookup for a single element by matching its image template
         /// to the current full screen shot. This type of locator requires OpenCV libraries
-        /// and bindings for NodeJS to be installed on the server machine. ookup options
-        /// fine-tuning might be done via <see cref="IHasSettings.SetSetting"/>. (Supported since Appium 1.8.2)
+        /// and bindings for NodeJS to be installed on the server machine.
+        /// Lookup options fine-tuning might be done via <see cref="IHasSettings.SetSetting"/>. (Supported since Appium 1.8.2)
         /// </summary>
         /// <param name="base64Template">base64-encoded template image string.
         /// Supported image formats are the same as for OpenCV library.
@@ -36,8 +36,8 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// <summary>
         /// Performs the lookup for a list of elements by matching its image template
         /// to the current full screen shot. This type of locator requires OpenCV libraries
-        /// and bindings for NodeJS to be installed on the server machine. ookup options
-        /// fine-tuning might be done via <see cref="IHasSettings.SetSetting"/>. (Supported since Appium 1.8.2)
+        /// and bindings for NodeJS to be installed on the server machine.
+        /// Lookup options fine-tuning might be done via <see cref="IHasSettings.SetSetting"/>. (Supported since Appium 1.8.2)
         /// </summary>
         /// <param name="base64Template">base64-encoded template image string.
         /// Supported image formats are the same as for OpenCV library.
