@@ -91,5 +91,11 @@ namespace OpenQA.Selenium.Appium.Enums
         /// On Android, this will also remove the app after the session is complete. Default false
         /// </summary>
         public static readonly string FullReset = "fullReset";
+
+        /// <summary>
+        /// App or list of apps (as a JSON array) to install prior to running tests. Note that it will not work with
+        /// automationName of Espresso and iOS real devices.
+        /// </summary>
+        public static readonly string OtherApps = "otherApps";
     }
 }
