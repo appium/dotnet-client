@@ -57,6 +57,16 @@ namespace OpenQA.Selenium.Appium.Android
 
         #endregion IFindByAndroidDataMatcher Members
 
+        #region IFindByAndroidViewMatcher Members
+
+        public AppiumWebElement FindElementByAndroidViewMatcher(string selector) =>
+            FindElement(MobileSelector.AndroidViewMatcher, selector);
+
+        public IReadOnlyCollection<AppiumWebElement> FindElementsByAndroidViewMatcher(string selector) =>
+            FindElements(MobileSelector.AndroidViewMatcher, selector);
+
+        #endregion IFindByAndroidViewMatcher Members
+
         public void ReplaceValue(string value) => AndroidCommandExecutionHelper.ReplaceValue(this, Id, value);
     }
 }

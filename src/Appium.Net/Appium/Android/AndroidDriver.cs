@@ -154,6 +154,16 @@ namespace OpenQA.Selenium.Appium.Android
 
         #endregion IFindByAndroidDataMatcher Members
 
+        #region IFindByAndroidViewMatcher Members
+
+        public W FindElementByAndroidViewMatcher(string selector) =>
+            FindElement(MobileSelector.AndroidViewMatcher, selector);
+
+        public IReadOnlyCollection<W> FindElementsByAndroidViewMatcher(string selector) =>
+            ConvertToExtendedWebElementCollection<W>(FindElements(MobileSelector.AndroidViewMatcher, selector));
+
+        #endregion IFindByAndroidViewMatcher Members
+
         public void StartActivity(string appPackage, string appActivity, string appWaitPackage = "",
             string appWaitActivity = "", bool stopApp = true) =>
             AndroidCommandExecutionHelper.StartActivity(this, appPackage, appActivity, appWaitPackage, appWaitActivity,

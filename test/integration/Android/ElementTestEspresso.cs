@@ -43,6 +43,27 @@ namespace Appium.Net.Integration.Tests.Android
                 1);
         }
 
+        [Test]
+        public void FindByAndroidViewMatcherTest()
+        {
+            const string selectorData = @"{
+                'name':'withText',
+                'args':[{
+                    'name':'containsString',
+                    'args':['Preference']
+                    }
+                }]";
+
+            By byAndroidViewMatcher = new ByAndroidViewMatcher(selectorData);
+
+            Assert.AreNotEqual(
+                _driver.FindElementById("android:id/list").FindElement(byAndroidViewMatcher).Text,
+                null);
+            Assert.GreaterOrEqual(
+                _driver.FindElementById("android:id/list").FindElements(byAndroidViewMatcher).Count,
+                1);
+        }
+
         [OneTimeTearDown]
         public void AfterAll()
         {
