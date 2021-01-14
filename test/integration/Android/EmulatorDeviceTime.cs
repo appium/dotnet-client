@@ -3,6 +3,7 @@ using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
+using static System.String;
 
 namespace Appium.Net.Integration.Tests.Android
 {
@@ -35,8 +36,13 @@ namespace Appium.Net.Integration.Tests.Android
         public void DeviceTimeTest()
         {
             var time = _driver.DeviceTime;
-            Console.WriteLine(time);
-            Assert.AreEqual(true, time.Length == 28);
+            Assert.Multiple(() =>
+            {
+                Assert.NotNull(time);
+                Assert.AreNotEqual(Empty, time);
+                Console.WriteLine(time);
+                Assert.NotNull(DateTime.Parse(time));
+            });
         }
     }
 }

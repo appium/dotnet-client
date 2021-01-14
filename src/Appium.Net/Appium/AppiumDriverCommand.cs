@@ -201,7 +201,7 @@ namespace OpenQA.Selenium.Appium
         /// <summary>
         /// Get the time on the device
         /// </summary>
-        public const string SystemTime = "system_time";
+        public const string SystemTime = "getDeviceTime";
 
         /// <summary>
         /// Get Display Density
