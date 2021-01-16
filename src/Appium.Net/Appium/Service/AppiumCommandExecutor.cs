@@ -22,8 +22,9 @@ namespace OpenQA.Selenium.Appium.Service
     {
         private readonly AppiumLocalService Service;
         private readonly Uri URL;
-        private readonly ICommandExecutor RealExecutor;
+        private ICommandExecutor RealExecutor;
         private bool isDisposed;
+        private const string IdempotencyHeader = "X-Idempotency-Key";
 
         private static ICommandExecutor CreateRealExecutor(Uri remoteAddress, TimeSpan commandTimeout)
         {
@@ -34,7 +35,7 @@ namespace OpenQA.Selenium.Appium.Service
             if (null != commandType)
             {
                 commandExecutor =
-                    Activator.CreateInstance(commandType, new object[] {remoteAddress, commandTimeout}) as
+                    Activator.CreateInstance(commandType, new object[] { remoteAddress, commandTimeout }) as
                         ICommandExecutor;
             }
 
@@ -64,23 +65,26 @@ namespace OpenQA.Selenium.Appium.Service
         public Response Execute(Command commandToExecute)
         {
             Response result = null;
-            if (commandToExecute.Name == DriverCommand.NewSession && this.Service != null)
-            {
-                Service.Start();
-            }
 
             try
             {
+                if (commandToExecute.Name == DriverCommand.NewSession)
+                {
+                    Service?.Start();
+                    RealExecutor = ModifyNewSessionHttpRequestHeader(RealExecutor);
+                }
+
                 result = RealExecutor.Execute(commandToExecute);
                 return result;
             }
             catch (Exception e)
             {
-                if ((commandToExecute.Name == DriverCommand.NewSession) && (Service != null))
+                if ((commandToExecute.Name == DriverCommand.NewSession))
                 {
-                    Service.Dispose();
+                    Service?.Dispose();
                 }
-                throw e;
+
+                throw;
             }
             finally
             {
@@ -97,10 +101,17 @@ namespace OpenQA.Selenium.Appium.Service
             }
         }
 
-        public void Dispose()
+        private ICommandExecutor ModifyNewSessionHttpRequestHeader(ICommandExecutor commandExecutor)
         {
-            this.Dispose(true);
+            if (commandExecutor == null) throw new ArgumentNullException(nameof(commandExecutor));
+            var modifiedCommandExecutor = commandExecutor as HttpCommandExecutor;
+            if (modifiedCommandExecutor != null)
+                modifiedCommandExecutor.SendingRemoteHttpRequest += (sender, args) =>
+                    args.Request.Headers.Add(IdempotencyHeader, Guid.NewGuid().ToString());
+            return modifiedCommandExecutor;
         }
+
+        public void Dispose() => Dispose(true);
 
         protected void Dispose(bool disposing)
         {
@@ -108,10 +119,7 @@ namespace OpenQA.Selenium.Appium.Service
             {
                 if (disposing)
                 {
-                    if (Service != null)
-                    {
-                        Service.Dispose();
-                    }
+                    Service?.Dispose();
                 }
 
                 isDisposed = true;
