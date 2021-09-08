@@ -25,7 +25,8 @@ namespace OpenQA.Selenium.Appium
                 throw new ArgumentException("Capability name may not be null an empty string.", "capabilityName");
             }
 
-            this.capabilities[capabilityName] = capabilityValue;
+            var writeable = this.GenerateDesiredCapabilities(true);
+            writeable.SetCapability(capabilityName, capabilityValue);
         }
 
         /// <summary>
@@ -34,7 +35,8 @@ namespace OpenQA.Selenium.Appium
         /// <returns>A desired capability</returns>
         public override ICapabilities ToCapabilities()
         {
-            return this.capabilities;
+            var writeable = this.GenerateDesiredCapabilities(true);
+            return writeable.AsReadOnly();
         }
 
         public Dictionary<string, object> ToDictionary()

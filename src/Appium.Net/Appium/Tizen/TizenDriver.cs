@@ -138,6 +138,6 @@ namespace OpenQA.Selenium.Appium.Tizen
 
         #endregion IFindByTizenUIAutomation Members
 
-        protected override RemoteWebElementFactory CreateElementFactory() => new TizenElementFactory(this);
+        protected override WebElementFactory CreateElementFactory() => new TizenElementFactory(this);
     }
 }

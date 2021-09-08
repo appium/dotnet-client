@@ -60,8 +60,6 @@ namespace OpenQA.Selenium.Appium.Service
             Service = service;
         }
 
-        public CommandInfoRepository CommandInfoRepository => RealExecutor.CommandInfoRepository;
-
         public Response Execute(Command commandToExecute)
         {
             Response result = null;
@@ -124,6 +122,11 @@ namespace OpenQA.Selenium.Appium.Service
 
                 isDisposed = true;
             }
+        }
+
+        public bool TryAddCommand(string commandName, CommandInfo info)
+        {
+            throw new NotImplementedException();
         }
     }
 }

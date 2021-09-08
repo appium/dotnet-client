@@ -102,13 +102,13 @@ namespace Appium.Net.Integration.Tests.PageObjects
 
         [MobileFindsByAll(Android = true)] [FindsByAndroidUIAutomator(ID = "android:id/text1", Priority = 1)]
         //[FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 2)]
-        //Equals method of RemoteWebElement is not consistent for mobile apps
+        //Equals method of WebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
         private IMobileElement<AndroidElement> _matchedToAllLocatorsElement;
 
         [MobileFindsByAll(Android = true)] [FindsByAndroidUIAutomator(ID = "android:id/text1", Priority = 1)]
         //[FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 2)]
-        //Equals method of RemoteWebElement is not consistent for mobile apps
+        //Equals method of WebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
         private IList<AndroidElement> _matchedToAllLocatorsElements;
 
@@ -121,7 +121,7 @@ namespace Appium.Net.Integration.Tests.PageObjects
         [MobileFindsByAll(Android = true)]
         [FindsByAndroidUIAutomator(ID = "android:id/text1", Priority = 1)]
         //[FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 2)]
-        //Equals method of RemoteWebElement is not consistent for mobile apps
+        //Equals method of WebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
         private IMobileElement<AndroidElement> TestMatchedToAllLocatorsElementProperty
         {
@@ -132,7 +132,7 @@ namespace Appium.Net.Integration.Tests.PageObjects
         [MobileFindsByAll(Android = true)]
         [FindsByAndroidUIAutomator(ID = "android:id/text1", Priority = 1)]
         //[FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 2)]
-        //Equals method of RemoteWebElement is not consistent for mobile apps
+        //Equals method of WebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
         private IList<AndroidElement> TestMatchedToAllLocatorsElementsProperty
         {

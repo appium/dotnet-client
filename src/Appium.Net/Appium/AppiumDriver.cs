@@ -30,8 +30,7 @@ using OpenQA.Selenium.Appium.ImageComparison;
 
 namespace OpenQA.Selenium.Appium
 {
-    public abstract class AppiumDriver<W> : RemoteWebDriver, IFindsById, IFindsByClassName, IFindsByName,
-        IFindsByTagName, IFindsByImage<W>, IExecuteMethod,
+    public abstract class AppiumDriver<W> : RemoteWebDriver, IFindsByImage<W>, IExecuteMethod,
         IHasSessionDetails,
         IHasLocation,
         IFindByAccessibilityId<W>,
@@ -49,7 +48,7 @@ namespace OpenQA.Selenium.Appium
             : base(commandExecutor, appiumOptions)
         {
             AppiumCommand.Merge(commandExecutor.CommandInfoRepository);
-            ElementFactory = CreateElementFactory();
+           // ElementFactory = CreateElementFactory();
         }
 
         public AppiumDriver(ICapabilities appiumOptions)
@@ -93,34 +92,6 @@ namespace OpenQA.Selenium.Appium
         }
 
         #endregion Constructors
-
-        #region Overrides to fix "css selector" issue
-
-        IWebElement IFindsByClassName.FindElementByClassName(string className) =>
-            base.FindElement(MobileSelector.ClassName, className);
-
-        ReadOnlyCollection<IWebElement> IFindsByClassName.FindElementsByClassName(string className) =>
-            base.FindElements(MobileSelector.ClassName, className);
-
-        IWebElement IFindsById.FindElementById(string id) =>
-            base.FindElement(MobileSelector.Id, id);
-
-        ReadOnlyCollection<IWebElement> IFindsById.FindElementsById(string id) =>
-            base.FindElements(MobileSelector.Id, id);
-
-        IWebElement IFindsByName.FindElementByName(string name) =>
-            base.FindElement(MobileSelector.Name, name);
-
-        ReadOnlyCollection<IWebElement> IFindsByName.FindElementsByName(string name) =>
-            base.FindElements(MobileSelector.Name, name);
-
-        IWebElement IFindsByTagName.FindElementByTagName(string tagName) =>
-            base.FindElement(MobileSelector.TagName, tagName);
-
-        ReadOnlyCollection<IWebElement> IFindsByTagName.FindElementsByTagName(string tagName) =>
-            base.FindElements(MobileSelector.TagName, tagName);
-
-        #endregion Overrides to fix "css selector" issue
 
         #region Generic FindMethods
 
@@ -505,7 +476,7 @@ namespace OpenQA.Selenium.Appium
 
         #region W3C Actions
 
-        // Replace or hide the original RemoteWebElement.PerformActions base method so that it does not require
+        // Replace or hide the original WebElement.PerformActions base method so that it does not require
         // AppiumDriver to be fully compliant with W3CWireProtocol specification to execute W3C actions command.
         public new void PerformActions(IList<ActionSequence> actionSequenceList)
         {
@@ -688,11 +659,11 @@ namespace OpenQA.Selenium.Appium
 
         #region Support methods
 
-        protected abstract RemoteWebElementFactory CreateElementFactory();
+        protected abstract WebElementFactory CreateElementFactory();
 
         internal static ICapabilities SetPlatformToCapabilities(DriverOptions dc, string desiredPlatform)
         {
-            dc.AddAdditionalCapability(MobileCapabilityType.PlatformName, desiredPlatform);
+            dc.AddAdditionalOption(MobileCapabilityType.PlatformName, desiredPlatform);
             return dc.ToCapabilities();
         }
 

@@ -23,7 +23,7 @@ namespace Appium.Net.Integration.Tests.Windows
     public class ClickElementTest
     {
         private WindowsDriver<WindowsElement> _calculatorSession;
-        protected static RemoteWebElement CalculatorResult;
+        protected static WebElement CalculatorResult;
 
         [OneTimeSetUp]
         public void BeforeAll()
@@ -40,7 +40,7 @@ namespace Appium.Net.Integration.Tests.Windows
 
             _calculatorSession.FindElementByName("Clear").Click();
             _calculatorSession.FindElementByName("Seven").Click();
-            CalculatorResult = _calculatorSession.FindElementByName("Display is 7") as RemoteWebElement;
+            CalculatorResult = _calculatorSession.FindElementByName("Display is 7") as WebElement;
             Assert.IsNotNull(CalculatorResult);
         }
 

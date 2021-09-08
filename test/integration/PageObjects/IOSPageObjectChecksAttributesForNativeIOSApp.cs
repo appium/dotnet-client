@@ -43,12 +43,12 @@ namespace Appium.Net.Integration.Tests.PageObjects
         private IList<IOSElement> MultipleFindByElementsProperty { set; get; }
 
         [MobileFindsByAll(IOS = true)] [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 1)]
-        //Equals method of RemoteWebElement is not consistent for mobile apps
+        //Equals method of WebElement is not consistent for mobile apps
         //The second selector won't be added till the problem is worked out
         private IMobileElement<IOSElement> _matchedToAllLocatorsElement;
 
         [MobileFindsByAll(IOS = true)] [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 1)]
-        //Equals method of RemoteWebElement is not consistent for mobile apps
+        //Equals method of WebElement is not consistent for mobile apps
         //The second selector won't be added till the problem is worked out
         private IList<IOSElement> _matchedToAllLocatorsElements;
 
@@ -56,13 +56,13 @@ namespace Appium.Net.Integration.Tests.PageObjects
 
         [MobileFindsByAll(IOS = true)]
         [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 1)]
-        //Equals method of RemoteWebElement is not consistent for mobile apps
+        //Equals method of WebElement is not consistent for mobile apps
         //The second selector won't be added till the problem is worked out
         private IMobileElement<IOSElement> TestMatchedToAllLocatorsElementProperty { set; get; }
 
         [MobileFindsByAll(IOS = true)]
         [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 1)]
-        //Equals method of RemoteWebElement is not consistent for mobile apps
+        //Equals method of WebElement is not consistent for mobile apps
         //The second selector won't be added till the problem is worked out
         private IList<IOSElement> TestMatchedToAllLocatorsElementsProperty { set; get; }
 

@@ -10,7 +10,7 @@ namespace Appium.Net.Integration.Tests.Windows
     public class ImagesComparisonTest
     {
         private WindowsDriver<WindowsElement> _calculatorSession;
-        protected static RemoteWebElement CalculatorResult;
+        protected static WebElement CalculatorResult;
 
         [OneTimeSetUp]
         public void BeforeAll()

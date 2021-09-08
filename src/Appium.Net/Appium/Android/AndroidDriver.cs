@@ -303,7 +303,7 @@ namespace OpenQA.Selenium.Appium.Android
         public string EndTestCoverage(string intent, string path) =>
             AndroidCommandExecutionHelper.EndTestCoverage(this, intent, path);
 
-        protected override RemoteWebElementFactory CreateElementFactory() => new AndroidElementFactory(this);
+        protected override WebElementFactory CreateElementFactory() => new AndroidElementFactory(this);
 
         public void SetSetting(string setting, object value) =>
             AndroidCommandExecutionHelper.SetSetting(this, setting, value);

@@ -154,7 +154,7 @@ namespace OpenQA.Selenium.Appium.iOS
         public void HideKeyboard(string key, string strategy = null) =>
             AppiumCommandExecutionHelper.HideKeyboard(this, strategy, key);
 
-        protected override RemoteWebElementFactory CreateElementFactory() => new IOSElementFactory(this);
+        protected override WebElementFactory CreateElementFactory() => new IOSElementFactory(this);
 
         /// <summary>
         /// Locks the device.

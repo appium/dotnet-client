@@ -154,7 +154,7 @@ namespace OpenQA.Selenium.Appium.Windows
         public void HideKeyboard(string key, string strategy = null) =>
             AppiumCommandExecutionHelper.HideKeyboard(this, strategy, key);
 
-        protected override RemoteWebElementFactory CreateElementFactory() => new WindowsElementFactory(this);
+        protected override WebElementFactory CreateElementFactory() => new WindowsElementFactory(this);
 
         public void PressKeyCode(KeyEvent keyEvent) => throw new NotImplementedException();
 

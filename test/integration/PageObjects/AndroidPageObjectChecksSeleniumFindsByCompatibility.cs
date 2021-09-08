@@ -83,13 +83,13 @@ namespace Appium.Net.Integration.Tests.PageObjects
 
         [FindsByAll] [FindsBy(How = How.Id, Using = "android:id/text1", Priority = 1)]
         //[FindsBy(How = How.ClassName, Using = "android.widget.TextView", Priority = 2)]
-        //Equals method of RemoteWebElement is not consistent for mobile apps
+        //Equals method of WebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
         private IMobileElement<AndroidElement> _matchedToAllLocatorsElement;
 
         [FindsByAll] [FindsBy(How = How.Id, Using = "android:id/text1", Priority = 1)]
         //[FindsBy(How = How.ClassName, Using = "android.widget.TextView", Priority = 2)]
-        //Equals method of RemoteWebElement is not consistent for mobile apps
+        //Equals method of WebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
         private IList<AndroidElement> _matchedToAllLocatorsElements;
 
@@ -97,14 +97,14 @@ namespace Appium.Net.Integration.Tests.PageObjects
         [FindsByAll]
         [FindsBy(How = How.Id, Using = "android:id/text1", Priority = 1)]
         //[FindsBy(How = How.ClassName, Using = "android.widget.TextView", Priority = 2)]
-        //Equals method of RemoteWebElement is not consistent for mobile apps
+        //Equals method of WebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
         private IMobileElement<AndroidElement> TestMatchedToAllLocatorsElementProperty { set; get; }
 
         [FindsByAll]
         [FindsBy(How = How.Id, Using = "android:id/text1", Priority = 1)]
         //[FindsBy(How = How.ClassName, Using = "android.widget.TextView", Priority = 2)]
-        //Equals method of RemoteWebElement is not consistent for mobile apps
+        //Equals method of WebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
         private IList<AndroidElement> TestMatchedToAllLocatorsElementsProperty { set; get; }
 

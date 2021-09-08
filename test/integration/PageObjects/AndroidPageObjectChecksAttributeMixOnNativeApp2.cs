@@ -146,7 +146,7 @@ namespace Appium.Net.Integration.Tests.PageObjects
         [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[2]", Priority = 3)]
         [FindsByAndroidUIAutomator(ID = "android:id/text1", Priority = 1)]
         //[FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 2)]
-        //Equals method of RemoteWebElement is not consistent for mobile apps
+        //Equals method of WebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
         private IMobileElement<AndroidElement> _matchedToAllLocatorsElement;
 
@@ -159,7 +159,7 @@ namespace Appium.Net.Integration.Tests.PageObjects
         [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[2]", Priority = 3)]
         [FindsByAndroidUIAutomator(ID = "android:id/text1", Priority = 1)]
         //[FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 2)]
-        //Equals method of RemoteWebElement is not consistent for mobile apps
+        //Equals method of WebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
         private IList<AndroidElement> _matchedToAllLocatorsElements;
 
@@ -175,7 +175,7 @@ namespace Appium.Net.Integration.Tests.PageObjects
         [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[2]", Priority = 3)]
         [FindsByAndroidUIAutomator(ID = "android:id/text1", Priority = 1)]
         //[FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 2)]
-        //Equals method of RemoteWebElement is not consistent for mobile apps
+        //Equals method of WebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
         private IMobileElement<AndroidElement> TestMatchedToAllLocatorsElementProperty { set; get; }
 
@@ -189,7 +189,7 @@ namespace Appium.Net.Integration.Tests.PageObjects
         [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[2]", Priority = 3)]
         [FindsByAndroidUIAutomator(ID = "android:id/text1", Priority = 1)]
         //[FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 2)]
-        //Equals method of RemoteWebElement is not consistent for mobile apps
+        //Equals method of WebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
         private IList<AndroidElement> TestMatchedToAllLocatorsElementsProperty { set; get; }
 

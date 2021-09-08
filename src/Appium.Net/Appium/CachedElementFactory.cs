@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace OpenQA.Selenium.Appium
 {
-    public abstract class CachedElementFactory<T> : RemoteWebElementFactory where T : RemoteWebElement, IWebElementCached
+    public abstract class CachedElementFactory<T> : WebElementFactory where T : WebElement, IWebElementCached
     {
         public CachedElementFactory(RemoteWebDriver parentDriver) : base(parentDriver)
         {
@@ -22,10 +22,10 @@ namespace OpenQA.Selenium.Appium
             }
         }
 
-        public override RemoteWebElement CreateElement(Dictionary<string, object> elementDictionary)
+        public override WebElement CreateElement(Dictionary<string, object> elementDictionary)
         {
             string elementId = GetElementId(elementDictionary);
-            T cachedElement = CreateCachedElement(ParentDriver, elementId);
+            T cachedElement = CreateCachedElement(ParentDriver as RemoteWebDriver, elementId);
             if (CacheElementAttributes)
             {
                 cachedElement.SetCacheValues(elementDictionary);

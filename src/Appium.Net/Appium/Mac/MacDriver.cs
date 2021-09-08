@@ -116,6 +116,6 @@ namespace OpenQA.Selenium.Appium.Mac
         }
 
 
-        protected override RemoteWebElementFactory CreateElementFactory() => new MacElementFactory(this);
+        protected override WebElementFactory CreateElementFactory() => new MacElementFactory(this);
     }
 }
