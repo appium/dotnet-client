@@ -35,9 +35,9 @@ namespace Appium.Net.Integration.Tests.Windows
         {
             // Launch the AlarmClock app
             var appCapabilities = new AppiumOptions();
-            appCapabilities.AddAdditionalCapability("app", "Microsoft.WindowsAlarms_8wekyb3d8bbwe!App");
-            appCapabilities.AddAdditionalCapability("platformName", "Windows");
-            appCapabilities.AddAdditionalCapability("deviceName", "WindowsPC");
+            appCapabilities.AddAdditionalOption("app", "Microsoft.WindowsAlarms_8wekyb3d8bbwe!App");
+            appCapabilities.AddAdditionalOption("platformName", "Windows");
+            appCapabilities.AddAdditionalOption("deviceName", "WindowsPC");
 
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
 
@@ -49,8 +49,8 @@ namespace Appium.Net.Integration.Tests.Windows
 
             // Create a session for Desktop
             var desktopCapabilities = new AppiumOptions();
-            desktopCapabilities.AddAdditionalCapability("app", "Root");
-            desktopCapabilities.AddAdditionalCapability("deviceName", "WindowsPC");
+            desktopCapabilities.AddAdditionalOption("app", "Root");
+            desktopCapabilities.AddAdditionalOption("deviceName", "WindowsPC");
 
             DesktopSession =
                 new WindowsDriver<WindowsElement>(serverUri, desktopCapabilities);
@@ -70,7 +70,7 @@ namespace Appium.Net.Integration.Tests.Windows
             var alarmEntries = AlarmClockSession.FindElementsByName("Windows Application Driver Test Alarm");
             foreach (var alarmEntry in alarmEntries)
             {
-                AlarmClockSession.Mouse.ContextClick(alarmEntry.Coordinates);
+             //   AlarmClockSession.Mouse.ContextClick(alarmEntry.Coordinates);
                 AlarmClockSession.FindElementByName("Delete").Click();
             }
 

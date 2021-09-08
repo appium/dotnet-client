@@ -236,8 +236,8 @@ namespace Appium.Net.Integration.Tests.Windows
             var newStickyNoteWindowHandle = openedStickyNotes[0].GetAttribute("NativeWindowHandle");
             newStickyNoteWindowHandle = (int.Parse(newStickyNoteWindowHandle)).ToString("x"); // Convert to Hex
             AppiumOptions appCapabilities = new AppiumOptions();
-            appCapabilities.AddAdditionalCapability("appTopLevelWindow", newStickyNoteWindowHandle);
-            appCapabilities.AddAdditionalCapability("deviceName", "WindowsPC");
+            appCapabilities.AddAdditionalOption("appTopLevelWindow", newStickyNoteWindowHandle);
+            appCapabilities.AddAdditionalOption("deviceName", "WindowsPC");
             newStickyNoteSession = new WindowsDriver<WindowsElement>(serverUri, appCapabilities);
             Assert.IsNotNull(newStickyNoteSession);
 
@@ -259,7 +259,7 @@ namespace Appium.Net.Integration.Tests.Windows
             if (newStickyNoteSession != null)
             {
                 // Create a new Sticky Note by pressing Ctrl + N
-                newStickyNoteSession.Keyboard.SendKeys(Keys.Control + "d" + Keys.Control);
+               /// newStickyNoteSession.Keyboard.SendKeys(Keys.Control + "d" + Keys.Control);
                 Thread.Sleep(TimeSpan.FromSeconds(2));
 
                 try

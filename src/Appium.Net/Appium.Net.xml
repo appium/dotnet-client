@@ -3317,7 +3317,7 @@
             The dictionary of capabilities
             </summary>
         </member>
-        <member name="M:OpenQA.Selenium.Appium.AppiumOptions.AddAdditionalCapability(System.String,System.Object)">
+        <member name="M:OpenQA.Selenium.Appium.AppiumOptions.AddAdditionalOption(System.String,System.Object)">
             <summary>
             Add new capabilities
             </summary>

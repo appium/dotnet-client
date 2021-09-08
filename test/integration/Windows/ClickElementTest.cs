@@ -14,9 +14,9 @@
 
 using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
-using OpenQA.Selenium.Remote;
 
 namespace Appium.Net.Integration.Tests.Windows
 {
@@ -29,9 +29,9 @@ namespace Appium.Net.Integration.Tests.Windows
         public void BeforeAll()
         {
             var appCapabilities = new AppiumOptions();
-            appCapabilities.AddAdditionalCapability("app", "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
-            appCapabilities.AddAdditionalCapability("deviceName", "WindowsPC");
-            appCapabilities.AddAdditionalCapability("platformName", "Windows");
+            appCapabilities.AddAdditionalOption("app", "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
+            appCapabilities.AddAdditionalOption("deviceName", "WindowsPC");
+            appCapabilities.PlatformName = "Windows";
 
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
             _calculatorSession = new WindowsDriver<WindowsElement>(serverUri, appCapabilities,

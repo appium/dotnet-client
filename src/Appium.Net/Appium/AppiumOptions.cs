@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using OpenQA.Selenium.Remote;
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace OpenQA.Selenium.Appium
 {
@@ -35,13 +38,20 @@ namespace OpenQA.Selenium.Appium
         /// <returns>A desired capability</returns>
         public override ICapabilities ToCapabilities()
         {
-            var writeable = this.GenerateDesiredCapabilities(true);
-            return writeable.AsReadOnly();
+            RemoteSessionSettings remote = new RemoteSessionSettings();
+
+            foreach(var keyVal in this.ToDictionary())
+            {
+                remote.AddMetadataSetting(keyVal.Key, keyVal.Value);
+            }
+
+            return remote;
         }
 
-        public Dictionary<string, object> ToDictionary()
+        public IDictionary<string, object> ToDictionary()
         {
-            return this.capabilities.ToDictionary();
+            var writeable = this.GenerateDesiredCapabilities(true);
+            return (writeable.AsReadOnly() as ReadOnlyDesiredCapabilities).ToDictionary();
         }
     }
 }

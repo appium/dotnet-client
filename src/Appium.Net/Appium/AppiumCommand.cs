@@ -12,6 +12,7 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+using OpenQA.Selenium.Appium.Service;
 using OpenQA.Selenium.Remote;
 using System.Collections.Generic;
 
@@ -237,7 +238,7 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <param name="repo">is a CommandInfoRepository instance which is used</param>
         /// <returns>The given CommandInfoRepository instance with added Appium-specific commands</returns>
-        internal static CommandInfoRepository Merge(CommandInfoRepository repo)
+        internal static ICommandExecutor Merge(ICommandExecutor repo)
         {
             foreach (AppiumCommand entry in CommandList)
             {

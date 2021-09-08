@@ -21,10 +21,10 @@ namespace Appium.Net.Integration.Tests.PageObjectTests.IOS
             var capabilities = Caps.GetIosCaps(Apps.Get("iosTestApp"));
             if (Env.ServerIsRemote())
             {
-                capabilities.AddAdditionalCapability("username", Env.GetEnvVar("SAUCE_USERNAME"));
-                capabilities.AddAdditionalCapability("accessKey", Env.GetEnvVar("SAUCE_ACCESS_KEY"));
-                capabilities.AddAdditionalCapability("name", "ios - actions");
-                capabilities.AddAdditionalCapability("tags", new[] {"sample"});
+                capabilities.AddAdditionalOption("username", Env.GetEnvVar("SAUCE_USERNAME"));
+                capabilities.AddAdditionalOption("accessKey", Env.GetEnvVar("SAUCE_ACCESS_KEY"));
+                capabilities.AddAdditionalOption("name", "ios - actions");
+                capabilities.AddAdditionalOption("tags", new[] {"sample"});
             }
 
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;

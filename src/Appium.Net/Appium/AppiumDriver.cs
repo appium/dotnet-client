@@ -16,7 +16,6 @@ using Appium.Interfaces.Generic.SearchContext;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Service;
-using OpenQA.Selenium.Internal;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Remote;
 using System;
@@ -30,7 +29,7 @@ using OpenQA.Selenium.Appium.ImageComparison;
 
 namespace OpenQA.Selenium.Appium
 {
-    public abstract class AppiumDriver<W> : RemoteWebDriver, IFindsByImage<W>, IExecuteMethod,
+    public abstract class AppiumDriver<W> : RemoteWebDriver, IFindsByImage<W>,
         IHasSessionDetails,
         IHasLocation,
         IFindByAccessibilityId<W>,
@@ -47,8 +46,9 @@ namespace OpenQA.Selenium.Appium
         public AppiumDriver(ICommandExecutor commandExecutor, ICapabilities appiumOptions)
             : base(commandExecutor, appiumOptions)
         {
-            AppiumCommand.Merge(commandExecutor.CommandInfoRepository);
-           // ElementFactory = CreateElementFactory();
+            // TODO: Laolu  - Suspect this will an issue
+            AppiumCommand.Merge(commandExecutor);
+            //ElementFactory = CreateElementFactory();
         }
 
         public AppiumDriver(ICapabilities appiumOptions)
@@ -663,7 +663,7 @@ namespace OpenQA.Selenium.Appium
 
         internal static ICapabilities SetPlatformToCapabilities(DriverOptions dc, string desiredPlatform)
         {
-            dc.AddAdditionalOption(MobileCapabilityType.PlatformName, desiredPlatform);
+            dc.PlatformName = desiredPlatform;
             return dc.ToCapabilities();
         }
 

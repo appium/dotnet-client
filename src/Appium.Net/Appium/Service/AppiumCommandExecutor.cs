@@ -103,9 +103,11 @@ namespace OpenQA.Selenium.Appium.Service
         {
             if (commandExecutor == null) throw new ArgumentNullException(nameof(commandExecutor));
             var modifiedCommandExecutor = commandExecutor as HttpCommandExecutor;
-            if (modifiedCommandExecutor != null)
-                modifiedCommandExecutor.SendingRemoteHttpRequest += (sender, args) =>
-                    args.Request.Headers.Add(IdempotencyHeader, Guid.NewGuid().ToString());
+            
+            // TODO: Laolu, this may be pretty big breaking change for us
+            //if (modifiedCommandExecutor != null)
+            //    modifiedCommandExecutor.SendingRemoteHttpRequest += (sender, args) =>
+            //        args.Request.Headers.Add(IdempotencyHeader, Guid.NewGuid().ToString());
             return modifiedCommandExecutor;
         }
 
