@@ -36,7 +36,7 @@ namespace Appium.Net.Integration.Tests.Windows
             // Launch the AlarmClock app
             var appCapabilities = new AppiumOptions();
             appCapabilities.AddAdditionalOption("app", "Microsoft.WindowsAlarms_8wekyb3d8bbwe!App");
-            appCapabilities.AddAdditionalOption("platformName", "Windows");
+            appCapabilities.PlatformName = "Windows";
             appCapabilities.AddAdditionalOption("deviceName", "WindowsPC");
 
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;

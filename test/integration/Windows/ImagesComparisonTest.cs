@@ -18,7 +18,7 @@ namespace Appium.Net.Integration.Tests.Windows
             var appCapabilities = new AppiumOptions();
             appCapabilities.AddAdditionalOption("app", "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
             appCapabilities.AddAdditionalOption("deviceName", "WindowsPC");
-            appCapabilities.AddAdditionalOption("platformName", "Windows");
+            appCapabilities.PlatformName = "Windows";
 
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
             _calculatorSession = new WindowsDriver<WindowsElement>(serverUri, appCapabilities,
