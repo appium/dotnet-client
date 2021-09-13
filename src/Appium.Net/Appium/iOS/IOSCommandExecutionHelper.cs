@@ -89,5 +89,17 @@ namespace OpenQA.Selenium.Appium.iOS
 
             return null;
         }
+
+        public static Dictionary<string, object> GetSettings(IExecuteMethod executeMethod) =>
+            (Dictionary<string, object>)executeMethod.Execute(AppiumDriverCommand.GetSettings).Value;
+
+        public static void SetSetting(IExecuteMethod executeMethod, string setting, object value)
+        {
+            var settings = new Dictionary<string, object>()
+                { [setting] = value };
+            var parameters = new Dictionary<string, object>()
+                { ["settings"] = settings };
+            executeMethod.Execute(AppiumDriverCommand.UpdateSettings, parameters);
+        }
     }
 }

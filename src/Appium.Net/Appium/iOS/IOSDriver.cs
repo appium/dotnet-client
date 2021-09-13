@@ -25,7 +25,7 @@ namespace OpenQA.Selenium.Appium.iOS
 {
     public class IOSDriver<W> : AppiumDriver<W>, IFindByIosUIAutomation<W>, IFindsByIosClassChain<W>,
         IFindsByIosNSPredicate<W>, IHidesKeyboardWithKeyName, IHasClipboard,
-        IShakesDevice, IPerformsTouchID where W : IWebElement
+        IShakesDevice, IPerformsTouchID, IHasSettings where W : IWebElement
     {
         private static readonly string Platform = MobilePlatform.IOS;
 
@@ -148,6 +148,23 @@ namespace OpenQA.Selenium.Appium.iOS
             FindElements(MobileSelector.iOSPredicateString, selector);
 
         #endregion IFindsByIosNSPredicate Members
+
+
+        public void SetSetting(string setting, object value) =>
+            IOSCommandExecutionHelper.SetSetting(this, setting, value);
+
+        public Dictionary<string, object> Settings
+        {
+            get => IOSCommandExecutionHelper.GetSettings(this);
+
+            set
+            {
+                foreach (var entry in value)
+                {
+                    SetSetting(entry.Key, entry.Value);
+                }
+            }
+        }
 
         public void ShakeDevice() => IOSCommandExecutionHelper.ShakeDevice(this);
 
