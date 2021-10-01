@@ -36,8 +36,8 @@ namespace Appium.Net.Integration.Tests.Windows
 {
     public class PenTest : StickyNotesTest
     {
-        private WindowsDriver<WindowsElement> newStickyNoteSession;
-        private WindowsElement inkCanvas;
+        private WindowsDriver<WebElement> newStickyNoteSession;
+        private WebElement inkCanvas;
 
         [Test]
         public void DrawBasicSquare()
@@ -225,7 +225,7 @@ namespace Appium.Net.Integration.Tests.Windows
             Assert.AreEqual(openedStickyNotesWindowsBefore.Count + 1, openedStickyNotesWindowsAfter.Count);
 
             // Identify the newly opened Sticky Note by removing the previously opened ones from the list
-            List<WindowsElement> openedStickyNotes = new List<WindowsElement>(openedStickyNotesWindowsAfter);
+            List<WebElement> openedStickyNotes = new List<WebElement>(openedStickyNotesWindowsAfter);
             foreach (var preExistingStickyNote in openedStickyNotesWindowsBefore)
             {
                 openedStickyNotes.Remove(preExistingStickyNote);
@@ -238,7 +238,7 @@ namespace Appium.Net.Integration.Tests.Windows
             AppiumOptions appCapabilities = new AppiumOptions();
             appCapabilities.AddAdditionalOption("appTopLevelWindow", newStickyNoteWindowHandle);
             appCapabilities.AddAdditionalOption("deviceName", "WindowsPC");
-            newStickyNoteSession = new WindowsDriver<WindowsElement>(serverUri, appCapabilities);
+            newStickyNoteSession = new WindowsDriver<WebElement>(serverUri, appCapabilities);
             Assert.IsNotNull(newStickyNoteSession);
 
             // Resize and re-position the Sticky Notes window we are working with

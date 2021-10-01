@@ -12,8 +12,10 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+using OpenQA.Selenium.Appium.Windows;
 using OpenQA.Selenium.Remote;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace OpenQA.Selenium.Appium.Service
@@ -21,13 +23,17 @@ namespace OpenQA.Selenium.Appium.Service
     internal class AppiumCommandExecutor : ICommandExecutor
     {
         private readonly AppiumLocalService Service;
-        private readonly Uri URL;
+        private static Uri URL;
+        private static TimeSpan CommandTimeout;
+
         private ICommandExecutor RealExecutor;
         private bool isDisposed;
-        private const string IdempotencyHeader = "X-Idempotency-Key";
 
         private static ICommandExecutor CreateRealExecutor(Uri remoteAddress, TimeSpan commandTimeout)
         {
+            URL = remoteAddress;
+            CommandTimeout = commandTimeout;
+
             var seleniumAssembly = Assembly.Load("WebDriver");
             var commandType = seleniumAssembly.GetType("OpenQA.Selenium.Remote.HttpCommandExecutor");
             ICommandExecutor commandExecutor = null;
@@ -66,10 +72,32 @@ namespace OpenQA.Selenium.Appium.Service
 
             try
             {
+                object value;
+
                 if (commandToExecute.Name == DriverCommand.NewSession)
                 {
                     Service?.Start();
                     RealExecutor = ModifyNewSessionHttpRequestHeader(RealExecutor);
+                }
+
+                if (commandToExecute.Parameters.TryGetValue("capabilities", out value) && ((Dictionary<string, object>)commandToExecute.Parameters["capabilities"]).TryGetValue("platformName", out value) && value.ToString().Equals("Windows"))
+                {
+                    var desiredCapabilities = new Dictionary<string, object>();
+
+                    if (((Dictionary<string, object>)(commandToExecute.Parameters["capabilities"])).ContainsKey("app"))
+                    {
+                        desiredCapabilities.Add("app", ((Dictionary<string, object>)(commandToExecute.Parameters["capabilities"]))["app"]);
+                    }
+
+                    if (((Dictionary<string, object>)(commandToExecute.Parameters["capabilities"])).ContainsKey("appTopLevelWindow"))
+                    {
+                        desiredCapabilities.Add("appTopLevelWindow", ((Dictionary<string, object>)(commandToExecute.Parameters["capabilities"]))["appTopLevelWindow"]);
+                    }
+
+                    if (desiredCapabilities.Count > 0)
+                    {
+                        commandToExecute.Parameters.Add("desiredCapabilities", desiredCapabilities);
+                    }
                 }
 
                 result = RealExecutor.Execute(commandToExecute);
@@ -128,7 +156,7 @@ namespace OpenQA.Selenium.Appium.Service
 
         public bool TryAddCommand(string commandName, CommandInfo info)
         {
-            throw new NotImplementedException();
+            return this.RealExecutor.TryAddCommand(commandName, info);
         }
     }
 }

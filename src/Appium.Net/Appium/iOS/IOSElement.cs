@@ -27,7 +27,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// </summary>
         /// <param name="parent">Driver in use.</param>
         /// <param name="id">ID of the element.</param>
-        public IOSElement(RemoteWebDriver parent, string id)
+        public IOSElement(WebDriver parent, string id)
             : base(parent, id)
         {
         }

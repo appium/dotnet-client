@@ -16,6 +16,7 @@
 
 using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
 using System;
@@ -26,7 +27,7 @@ namespace Appium.Net.Integration.Tests.Windows
     {
         private const string StickyNotesAppId = @"Microsoft.MicrosoftStickyNotes_8wekyb3d8bbwe!App";
 
-        protected WindowsDriver<WindowsElement> session;
+        protected WindowsDriver<WebElement> session;
 
         [OneTimeSetUp]
         public void BeforeAll()
@@ -43,7 +44,7 @@ namespace Appium.Net.Integration.Tests.Windows
                     AppiumOptions appCapabilities = new AppiumOptions();
                     appCapabilities.AddAdditionalOption("app", StickyNotesAppId);
                     appCapabilities.AddAdditionalOption("deviceName", "WindowsPC");
-                    session = new WindowsDriver<WindowsElement>(serverUri, appCapabilities);
+                    session = new WindowsDriver<WebElement>(serverUri, appCapabilities);
                 }
                 catch
                 {
@@ -53,7 +54,7 @@ namespace Appium.Net.Integration.Tests.Windows
                     AppiumOptions desktopCapabilities = new AppiumOptions();
                     desktopCapabilities.AddAdditionalOption("app", "Root");
                     desktopCapabilities.AddAdditionalOption("deviceName", "WindowsPC");
-                    var desktopSession = new WindowsDriver<WindowsElement>(serverUri, desktopCapabilities);
+                    var desktopSession = new WindowsDriver<WebElement>(serverUri, desktopCapabilities);
 
                     var StickyNotesTopLevelWindow = desktopSession.FindElementByClassName("Modern_Sticky_Top_Window");
                     var StickyNotesTopLevelWindowHandle = StickyNotesTopLevelWindow.GetAttribute("NativeWindowHandle");
@@ -62,7 +63,7 @@ namespace Appium.Net.Integration.Tests.Windows
                     AppiumOptions appCapabilities = new AppiumOptions();
                     appCapabilities.AddAdditionalOption("appTopLevelWindow", StickyNotesTopLevelWindowHandle);
                     appCapabilities.AddAdditionalOption("deviceName", "WindowsPC");
-                    session = new WindowsDriver<WindowsElement>(serverUri, appCapabilities);
+                    session = new WindowsDriver<WebElement>(serverUri, appCapabilities);
                 }
                 Assert.IsNotNull(session);
 
@@ -92,7 +93,7 @@ namespace Appium.Net.Integration.Tests.Windows
                         AppiumOptions appCapabilities = new AppiumOptions();
                         appCapabilities.AddAdditionalOption("appTopLevelWindow", newStickyNoteWindowHandle);
                         appCapabilities.AddAdditionalOption("deviceName", "WindowsPC");
-                        var stickyNoteSession = new WindowsDriver<WindowsElement>(serverUri, appCapabilities);
+                        var stickyNoteSession = new WindowsDriver<WebElement>(serverUri, appCapabilities);
                         stickyNoteSession.Close();
                     }
                 }

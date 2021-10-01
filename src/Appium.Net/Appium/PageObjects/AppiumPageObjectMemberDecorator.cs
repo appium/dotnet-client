@@ -48,7 +48,7 @@ namespace OpenQA.Selenium.Appium.PageObjects
                     listAvailableElementTypes.Add(typeof(AppiumWebElement));
                     listAvailableElementTypes.Add(typeof(AndroidElement));
                     listAvailableElementTypes.Add(typeof(IOSElement));
-                    listAvailableElementTypes.Add(typeof(WindowsElement));
+                   // listAvailableElementTypes.Add(typeof(WindowsElement));
                 }
 
                 return listAvailableElementTypes;

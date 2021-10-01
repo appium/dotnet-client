@@ -4,24 +4,24 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.ImageComparison;
 using OpenQA.Selenium.Appium.Windows;
+using System;
 
 namespace Appium.Net.Integration.Tests.Windows
 {
     public class ImagesComparisonTest
     {
-        private WindowsDriver<WindowsElement> _calculatorSession;
+        private WindowsDriver<WebElement> _calculatorSession;
         protected static WebElement CalculatorResult;
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            var appCapabilities = new AppiumOptions();
+            var appCapabilities = new WindowsOptions();
             appCapabilities.AddAdditionalOption("app", "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
-            appCapabilities.AddAdditionalOption("deviceName", "WindowsPC");
-            appCapabilities.PlatformName = "Windows";
 
-            var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _calculatorSession = new WindowsDriver<WindowsElement>(serverUri, appCapabilities,
+            var serverUri = new Uri("http://127.0.0.1:4723");
+            //var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
+            _calculatorSession = new WindowsDriver<WebElement>(serverUri, appCapabilities,
                 Env.InitTimeoutSec);
             _calculatorSession.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }

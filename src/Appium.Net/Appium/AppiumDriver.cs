@@ -29,7 +29,7 @@ using OpenQA.Selenium.Appium.ImageComparison;
 
 namespace OpenQA.Selenium.Appium
 {
-    public abstract class AppiumDriver<W> : RemoteWebDriver, IFindsByImage<W>,
+    public abstract class AppiumDriver<W> : WebDriver, IFindsByImage<W>,
         IHasSessionDetails,
         IHasLocation,
         IFindByAccessibilityId<W>,
@@ -118,17 +118,17 @@ namespace OpenQA.Selenium.Appium
         public new ReadOnlyCollection<W> FindElementsById(string id) =>
             ConvertToExtendedWebElementCollection<W>(base.FindElements(MobileSelector.Id, id));
 
-        public new W FindElementByCssSelector(string cssSelector) =>
-            (W) base.FindElementByCssSelector(cssSelector);
+        public new W FindElementByCssSelector(string cssSelector) => throw new NotImplementedException();
+        //(W) base.FindElementByCssSelector(cssSelector);
 
-        public new ReadOnlyCollection<W> FindElementsByCssSelector(string cssSelector) =>
-            ConvertToExtendedWebElementCollection<W>(base.FindElementsByCssSelector(cssSelector));
+        public new ReadOnlyCollection<W> FindElementsByCssSelector(string cssSelector) => throw new NotImplementedException();
+        //ConvertToExtendedWebElementCollection<W>(base.FindElementsByCssSelector(cssSelector));
 
-        public new W FindElementByLinkText(string linkText) =>
-            (W) base.FindElementByLinkText(linkText);
+        public new W FindElementByLinkText(string linkText) => throw new NotImplementedException();
+        //(W) base.FindElementByLinkText(linkText);
 
-        public new ReadOnlyCollection<W> FindElementsByLinkText(string linkText) =>
-            ConvertToExtendedWebElementCollection<W>(base.FindElementsByLinkText(linkText));
+        public new ReadOnlyCollection<W> FindElementsByLinkText(string linkText) => throw new NotImplementedException();
+        //ConvertToExtendedWebElementCollection<W>(base.FindElementsByLinkText(linkText));
 
         public new W FindElementByName(string name) =>
             (W) base.FindElement(MobileSelector.Name, name);
@@ -136,11 +136,11 @@ namespace OpenQA.Selenium.Appium
         public new ReadOnlyCollection<W> FindElementsByName(string name) =>
             ConvertToExtendedWebElementCollection<W>(base.FindElements(MobileSelector.Name, name));
 
-        public new W FindElementByPartialLinkText(string partialLinkText) =>
-            (W) base.FindElementByPartialLinkText(partialLinkText);
+        public new W FindElementByPartialLinkText(string partialLinkText) => throw new NotImplementedException();
+        //(W) base.FindElementByPartialLinkText(partialLinkText);
 
-        public new ReadOnlyCollection<W> FindElementsByPartialLinkText(string partialLinkText) =>
-            ConvertToExtendedWebElementCollection<W>(base.FindElementsByPartialLinkText(partialLinkText));
+        public new ReadOnlyCollection<W> FindElementsByPartialLinkText(string partialLinkText) => throw new NotImplementedException();
+        //ConvertToExtendedWebElementCollection<W>(base.FindElementsByPartialLinkText(partialLinkText));
 
         public new W FindElementByTagName(string tagName) =>
             (W) base.FindElement(MobileSelector.TagName, tagName);
@@ -148,11 +148,11 @@ namespace OpenQA.Selenium.Appium
         public new ReadOnlyCollection<W> FindElementsByTagName(string tagName) =>
             ConvertToExtendedWebElementCollection<W>(base.FindElements(MobileSelector.TagName, tagName));
 
-        public new W FindElementByXPath(string xpath) =>
-            (W) base.FindElementByXPath(xpath);
+        public new W FindElementByXPath(string xpath) => throw new NotImplementedException();
+            //(W) base.FindElementByXPath(xpath);
 
-        public new ReadOnlyCollection<W> FindElementsByXPath(string xpath) =>
-            ConvertToExtendedWebElementCollection<W>(base.FindElementsByXPath(xpath));
+        public new ReadOnlyCollection<W> FindElementsByXPath(string xpath) => throw new NotImplementedException();
+        // ConvertToExtendedWebElementCollection<W>(base.FindElementsByXPath(xpath));
 
         #region IFindByAccessibilityId Members
 

@@ -23,7 +23,7 @@ namespace OpenQA.Selenium.Appium.Mac
         /// </summary>
         /// <param name="parent">Driver in use.</param>
         /// <param name="id">ID of the element.</param>
-        public MacElement(RemoteWebDriver parent, string id)
+        public MacElement(WebDriver parent, string id)
             : base(parent, id)
         {
         }

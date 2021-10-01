@@ -19,12 +19,10 @@ using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Service;
-using OpenQA.Selenium.Remote;
-
 namespace OpenQA.Selenium.Appium.Windows
 {
-    public class WindowsDriver<W> : AppiumDriver<W>, ISendsKeyEvents, IHidesKeyboardWithKeyName,
-        IFindByWindowsUIAutomation<W> where W : IWebElement
+    public class WindowsDriver<W> : AppiumDriver<W>, ISendsKeyEvents, IHidesKeyboardWithKeyName //, IFindByWindowsUIAutomation<W>
+         where W : IWebElement
     {
         private static readonly string Platform = MobilePlatform.Windows;
 
@@ -131,6 +129,25 @@ namespace OpenQA.Selenium.Appium.Windows
 
         #endregion Context
 
+
+
+
+
+
+
+
+        internal static new ICapabilities SetPlatformToCapabilities(DriverOptions dc, string desiredPlatform)
+        {
+            dc.PlatformName = desiredPlatform;
+            return dc.ToCapabilities();
+        }
+
+
+
+
+
+
+
         #region IFindByWindowsUIAutomation Members
 
         /// <summary>
@@ -154,7 +171,8 @@ namespace OpenQA.Selenium.Appium.Windows
         public void HideKeyboard(string key, string strategy = null) =>
             AppiumCommandExecutionHelper.HideKeyboard(this, strategy, key);
 
-        protected override WebElementFactory CreateElementFactory() => new WindowsElementFactory(this);
+      //  protected override WebElementFactory CreateElementFactory() => new WindowsElementFactory(this);
+        protected override WebElementFactory CreateElementFactory() => new WebElementFactory(this);
 
         public void PressKeyCode(KeyEvent keyEvent) => throw new NotImplementedException();
 

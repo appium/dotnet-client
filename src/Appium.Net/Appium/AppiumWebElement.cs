@@ -40,15 +40,14 @@ namespace OpenQA.Selenium.Appium
     /// }
     /// </code>
     /// </example>
-    public abstract class AppiumWebElement : WebElement,
-        IMobileElement<AppiumWebElement>, IWebElementCached
+    public abstract class AppiumWebElement : WebElement , IMobileElement<AppiumWebElement>, IWebElementCached
     {
         /// <summary>
         /// Initializes a new instance of the AppiumWebElement class.
         /// </summary>
         /// <param name="parent">Driver in use.</param>
         /// <param name="id">ID of the element.</param>
-        public AppiumWebElement(RemoteWebDriver parent, string id)
+        public AppiumWebElement(WebDriver parent, string id)
             : base(parent, id)
         {
         }

@@ -17,30 +17,30 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
+using System;
 
 namespace Appium.Net.Integration.Tests.Windows
 {
     public class ClickElementTest
     {
-        private WindowsDriver<WindowsElement> _calculatorSession;
+        private WindowsDriver<WebElement> _calculatorSession;
         protected static WebElement CalculatorResult;
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            var appCapabilities = new AppiumOptions();
+            var appCapabilities = new WindowsOptions();
             appCapabilities.AddAdditionalOption("app", "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
-            appCapabilities.AddAdditionalOption("deviceName", "WindowsPC");
-            appCapabilities.PlatformName = "Windows";
 
-            var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _calculatorSession = new WindowsDriver<WindowsElement>(serverUri, appCapabilities,
+            var serverUri = new Uri("http://127.0.0.1:4723");
+            //var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
+            _calculatorSession = new WindowsDriver<WebElement>(serverUri, appCapabilities,
                 Env.InitTimeoutSec);
             _calculatorSession.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
 
             _calculatorSession.FindElementByName("Clear").Click();
             _calculatorSession.FindElementByName("Seven").Click();
-            CalculatorResult = _calculatorSession.FindElementByName("Display is 7") as WebElement;
+            CalculatorResult = _calculatorSession.FindElementByName("Display is 7");
             Assert.IsNotNull(CalculatorResult);
         }
 

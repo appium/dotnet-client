@@ -4,11 +4,11 @@ namespace OpenQA.Selenium.Appium.Android
 {
     public class AndroidElementFactory : CachedElementFactory<AndroidElement>
     {
-        public AndroidElementFactory(RemoteWebDriver parentDriver) : base(parentDriver)
+        public AndroidElementFactory(WebDriver parentDriver) : base(parentDriver)
         {
         }
 
-        protected override AndroidElement CreateCachedElement(RemoteWebDriver parentDriver, string elementId)
+        protected override AndroidElement CreateCachedElement(WebDriver parentDriver, string elementId)
         {
             return new AndroidElement(parentDriver, elementId);
         }

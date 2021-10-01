@@ -25,7 +25,7 @@ namespace OpenQA.Selenium.Appium.Tizen
         /// </summary>
         /// <param name="parent">Driver in use.</param>
         /// <param name="id">ID of the element.</param>
-        public TizenElement(RemoteWebDriver parent, string id)
+        public TizenElement(WebDriver parent, string id)
             : base(parent, id)
         {
         }
