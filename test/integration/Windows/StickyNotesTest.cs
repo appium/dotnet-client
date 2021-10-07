@@ -52,8 +52,6 @@ namespace Appium.Net.Integration.Tests.Windows
                     // session and create a new session based on the located top window pane.
                     AppiumOptions desktopCapabilities = new AppiumOptions();
                     desktopCapabilities.App = "Root";
-                    //desktopCapabilities.AddAdditionalOption("app", "Root");
-                    //desktopCapabilities.AddAdditionalOption("deviceName", "WindowsPC");
                     var desktopSession = new WindowsDriver(serverUri, desktopCapabilities);
 
                     var StickyNotesTopLevelWindow = desktopSession.FindElementByClassName("Modern_Sticky_Top_Window");
@@ -62,7 +60,6 @@ namespace Appium.Net.Integration.Tests.Windows
 
                     AppiumOptions appCapabilities = new AppiumOptions();
                     appCapabilities.AddAdditionalOption("appTopLevelWindow", StickyNotesTopLevelWindowHandle);
-                    //appCapabilities.AddAdditionalOption("deviceName", "WindowsPC");
                     session = new WindowsDriver(serverUri, appCapabilities);
                 }
                 Assert.IsNotNull(session);
@@ -92,7 +89,6 @@ namespace Appium.Net.Integration.Tests.Windows
 
                         AppiumOptions appCapabilities = new AppiumOptions();
                         appCapabilities.AddAdditionalOption("appTopLevelWindow", newStickyNoteWindowHandle);
-                       // appCapabilities.AddAdditionalOption("deviceName", "WindowsPC");
                         var stickyNoteSession = new WindowsDriver(serverUri, appCapabilities);
                         stickyNoteSession.Close();
                     }

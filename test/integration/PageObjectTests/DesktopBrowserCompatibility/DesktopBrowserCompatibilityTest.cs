@@ -6,7 +6,6 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.PageObjects;
 using OpenQA.Selenium.Appium.PageObjects.Attributes;
 using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Internal;
 using SeleniumExtras.PageObjects;
 
 namespace Appium.Net.Integration.Tests.PageObjectTests.DesktopBrowserCompatibility
