@@ -25,7 +25,7 @@ namespace OpenQA.Selenium.Appium
         public override WebElement CreateElement(Dictionary<string, object> elementDictionary)
         {
             string elementId = GetElementId(elementDictionary);
-            T cachedElement = CreateCachedElement(ParentDriver as WebDriver, elementId);
+            T cachedElement = CreateCachedElement(ParentDriver, elementId);
             if (CacheElementAttributes)
             {
                 cachedElement.SetCacheValues(elementDictionary);

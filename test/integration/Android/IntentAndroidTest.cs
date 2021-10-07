@@ -1,13 +1,13 @@
 ﻿using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
-using OpenQA.Selenium.Appium;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.Android;
 
 namespace Appium.Net.Integration.Tests.Android
 {
     class IntentAndroidTest
     {
-        private AndroidDriver<AppiumWebElement> _driver;
+        private AndroidDriver _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
@@ -16,7 +16,7 @@ namespace Appium.Net.Integration.Tests.Android
                 ? Caps.GetAndroidUIAutomatorCaps(Apps.Get("intentApp"))
                 : Caps.GetAndroidUIAutomatorCaps(Apps.Get("intentApp"));
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver = new AndroidDriver(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 

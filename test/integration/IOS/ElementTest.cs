@@ -8,14 +8,14 @@ namespace Appium.Net.Integration.Tests.IOS
 {
     class ElementTest
     {
-        private AppiumDriver<IOSElement> _driver;
+        private AppiumDriver _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
             var capabilities = Caps.GetIosCaps(Apps.Get("iosTestApp"));
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _driver = new IOSDriver<IOSElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver = new IOSDriver(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 
@@ -52,7 +52,7 @@ namespace Appium.Net.Integration.Tests.IOS
         public void SetImmediateValueTest()
         {
             var slider = _driver.FindElementByClassName("UIASlider");
-            slider.SetImmediateValue("0%");
+            ///// TODO: Implement - slider.SetImmediateValue("0%");
             Assert.AreEqual("0%", slider.GetAttribute("value"));
         }
     }

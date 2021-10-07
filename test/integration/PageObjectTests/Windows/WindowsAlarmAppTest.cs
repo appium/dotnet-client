@@ -1,6 +1,7 @@
 ﻿using Appium.Net.Integration.Tests.helpers;
 using Appium.Net.Integration.Tests.PageObjects;
 using NUnit.Framework;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.PageObjects;
 using OpenQA.Selenium.Appium.Windows;
@@ -10,17 +11,17 @@ namespace Appium.Net.Integration.Tests.PageObjectTests.Windows
 {
     public class WindowsAlarmAppTest
     {
-        private AppiumDriver<AppiumWebElement> _driver;
+        private AppiumDriver _driver;
 
         [SetUp]
         public void Setup()
         {
             var appCapabilities = new AppiumOptions();
-            appCapabilities.AddAdditionalOption("app", "Microsoft.WindowsAlarms_8wekyb3d8bbwe!App");
-
+            appCapabilities.App = "Microsoft.WindowsAlarms_8wekyb3d8bbwe!App";
+            appCapabilities.AddAdditionalOption("deviceName", "WindowsPC");
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
 
-            _driver = new WindowsDriver<AppiumWebElement>(serverUri, appCapabilities);
+            _driver = new WindowsDriver(serverUri, appCapabilities);
         }
 
         [TearDown]

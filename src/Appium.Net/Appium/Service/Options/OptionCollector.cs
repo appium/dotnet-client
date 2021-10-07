@@ -68,7 +68,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
 
                 foreach (var item in result)
                 {
-                    this.options.AddAdditionalOption(item.Key, item.Value);
+                    this.options.AddAdditionalCapability(item.Key, item.Value);
                 }
             }
 

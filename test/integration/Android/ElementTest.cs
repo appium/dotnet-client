@@ -1,6 +1,7 @@
 ﻿using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Android.UiAutomator;
@@ -9,7 +10,7 @@ namespace Appium.Net.Integration.Tests.Android
 {
     public class ElementTest
     {
-        private AndroidDriver<AndroidElement> _driver;
+        private AndroidDriver _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
@@ -17,8 +18,10 @@ namespace Appium.Net.Integration.Tests.Android
             var capabilities = Env.ServerIsRemote()
                 ? Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"))
                 : Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
-            var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _driver = new AndroidDriver<AndroidElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            /// var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
+
+            var serverUri = new System.Uri("http://127.0.0.1:4723/wd/hub");
+            _driver = new AndroidDriver(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 
@@ -95,7 +98,7 @@ namespace Appium.Net.Integration.Tests.Android
 
             Assert.AreEqual(originalValue, editElement.Text);
 
-            editElement.ReplaceValue(replacedValue);
+            ///// TODO: Implement - editElement.ReplaceValue(replacedValue);
 
             Assert.AreEqual(replacedValue, editElement.Text);
         }
@@ -110,7 +113,7 @@ namespace Appium.Net.Integration.Tests.Android
             var editElement =
                 _driver.FindElementByAndroidUIAutomator("resourceId(\"io.appium.android.apis:id/edit\")");
 
-            editElement.SetImmediateValue(value);
+            ///// TODO: Implement - editElement.SetImmediateValue(value);
 
             Assert.AreEqual(value, editElement.Text);
         }

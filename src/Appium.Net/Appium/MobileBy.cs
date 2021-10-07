@@ -27,7 +27,7 @@ namespace OpenQA.Selenium.Appium
         private readonly string _searchingCriteriaName;
 
 
-        internal MobileBy(string selector, string searchingCriteriaName)
+        internal MobileBy(string selector, string searchingCriteriaName) : base(selector, searchingCriteriaName)
         {
             if (string.IsNullOrEmpty(selector))
             {
@@ -38,18 +38,21 @@ namespace OpenQA.Selenium.Appium
             _searchingCriteriaName = searchingCriteriaName;
         }
 
-        /// <summary>
-        /// Find a single element.
-        /// </summary>
-        /// <param name="context">Context used to find the element.</param>
-        /// <returns>The element that matches</returns>
-        public override IWebElement FindElement(ISearchContext context)
-        {
-            if (context is IFindsByFluentSelector<IWebElement> finder)
-                return finder.FindElement(_searchingCriteriaName, selector);
-            throw new InvalidCastException($"Unable to cast {context.GetType().FullName} " +
-                                           $"to {nameof(IFindsByFluentSelector<IWebElement>)}");
-        }
+        ///// <summary>
+        ///// Find a single element.
+        ///// </summary>
+        ///// <param name="context">Context used to find the element.</param>
+        ///// <returns>The element that matches</returns>
+        //public override IWebElement FindElement(ISearchContext context)
+        //{
+        //    var by = new By(_searchingCriteriaName, selector);
+        //    return context.FindElement(new By(_searchingCriteriaName, selector));
+
+        //    //////////if (context is IFindsByFluentSelector<IWebElement> finder)
+        //    //////////    return finder.FindElement(_searchingCriteriaName, selector);
+        //    //////////throw new InvalidCastException($"Unable to cast {context.GetType().FullName} " +
+        //    //////////                               $"to {nameof(IFindsByFluentSelector<IWebElement>)}");
+        //}
 
         /// <summary>
         /// Finds many elements
@@ -191,19 +194,6 @@ namespace OpenQA.Selenium.Appium
         {
         }
 
-        public override IWebElement FindElement(ISearchContext context)
-        {
-            if (context is IFindByAndroidUIAutomator<IWebElement> finder)
-                return finder.FindElementByAndroidUIAutomator(selector);
-            return base.FindElement(context);
-        }
-
-        public override ReadOnlyCollection<IWebElement> FindElements(ISearchContext context)
-        {
-            if (context is IFindByAndroidUIAutomator<IWebElement> finder)
-                return finder.FindElementsByAndroidUIAutomator(selector).ToList().AsReadOnly();
-            return base.FindElements(context);
-        }
 
         public override string ToString() =>
             $"ByAndroidUIAutomator({selector})";

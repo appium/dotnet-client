@@ -23,26 +23,26 @@ namespace Appium.Net.Integration.Tests.PageObjects
         /////////////////////////////////////////////////////////////////
 
         [FindsBy(How = How.ClassName, Using = "android.widget.TextView")]
-        private IMobileElement<AndroidElement> _testMobileElement;
+        private IMobileElement<WebElement> _testMobileElement;
 
         [FindsBy(How = How.ClassName, Using = "android.widget.TextView")]
-        private IList<AndroidElement> _testMobileElements;
+        private IList<WebElement> _testMobileElements;
 
         [FindsBy(How = How.ClassName, Using = "android.widget.TextView")]
-        private IMobileElement<AndroidElement> TestMobileElement { set; get; }
+        private IMobileElement<WebElement> TestMobileElement { set; get; }
 
         [FindsBy(How = How.ClassName, Using = "android.widget.TextView")]
-        private IList<AndroidElement> TestMobileElements { set; get; }
+        private IList<WebElement> TestMobileElements { set; get; }
 
         [FindsBy(How = How.Name, Using = "FakeName", Priority = 1)]
         [FindsBy(How = How.Id, Using = "FakeId", Priority = 2)]
         [FindsBy(How = How.ClassName, Using = "android.widget.TextView", Priority = 3)]
-        private IMobileElement<AndroidElement> _testMultipleElement;
+        private IMobileElement<WebElement> _testMultipleElement;
 
         [FindsBy(How = How.Name, Using = "FakeName", Priority = 1)]
         [FindsBy(How = How.Id, Using = "FakeId", Priority = 2)]
         [FindsBy(How = How.ClassName, Using = "android.widget.TextView", Priority = 3)]
-        private IList<AndroidElement> _testMultipleElements;
+        private IList<WebElement> _testMultipleElements;
 
 
         /////////////////////////////////////////////////////////////////
@@ -50,22 +50,22 @@ namespace Appium.Net.Integration.Tests.PageObjects
         [FindsBy(How = How.Name, Using = "FakeName", Priority = 1)]
         [FindsBy(How = How.Id, Using = "FakeId", Priority = 2)]
         [FindsBy(How = How.ClassName, Using = "android.widget.TextView", Priority = 3)]
-        private IMobileElement<AndroidElement> TestMultipleFindByElementProperty { set; get; }
+        private IMobileElement<WebElement> TestMultipleFindByElementProperty { set; get; }
 
         [FindsBy(How = How.Name, Using = "FakeName", Priority = 1)]
         [FindsBy(How = How.Id, Using = "FakeId", Priority = 2)]
         [FindsBy(How = How.ClassName, Using = "android.widget.TextView", Priority = 3)]
-        private IList<AndroidElement> MultipleFindByElementsProperty { set; get; }
+        private IList<WebElement> MultipleFindByElementsProperty { set; get; }
 
         [FindsBySequence] [FindsBy(How = How.Id, Using = "android:id/content", Priority = 1)]
         [FindsBy(How = How.Id, Using = "android:id/list", Priority = 2)]
         [FindsBy(How = How.ClassName, Using = "android.widget.TextView", Priority = 3)]
-        private IMobileElement<AndroidElement> _foundByChainedSearchElement;
+        private IMobileElement<WebElement> _foundByChainedSearchElement;
 
         [FindsBySequence] [FindsBy(How = How.Id, Using = "android:id/content", Priority = 1)]
         [FindsBy(How = How.Id, Using = "android:id/list", Priority = 2)]
         [FindsBy(How = How.ClassName, Using = "android.widget.TextView", Priority = 3)]
-        private IList<AndroidElement> _foundByChainedSearchElements;
+        private IList<WebElement> _foundByChainedSearchElements;
 
         /////////////////////////////////////////////////////////////////
 
@@ -73,25 +73,25 @@ namespace Appium.Net.Integration.Tests.PageObjects
         [FindsBy(How = How.Id, Using = "android:id/content", Priority = 1)]
         [FindsBy(How = How.Id, Using = "android:id/list", Priority = 2)]
         [FindsBy(How = How.ClassName, Using = "android.widget.TextView", Priority = 3)]
-        private IMobileElement<AndroidElement> TestFoundByChainedSearchElementProperty { set; get; }
+        private IMobileElement<WebElement> TestFoundByChainedSearchElementProperty { set; get; }
 
         [FindsBySequence]
         [FindsBy(How = How.Id, Using = "android:id/content", Priority = 1)]
         [FindsBy(How = How.Id, Using = "android:id/list", Priority = 2)]
         [FindsBy(How = How.ClassName, Using = "android.widget.TextView", Priority = 3)]
-        private IList<AndroidElement> TestFoundByChainedSearchElementsProperty { set; get; }
+        private IList<WebElement> TestFoundByChainedSearchElementsProperty { set; get; }
 
         [FindsByAll] [FindsBy(How = How.Id, Using = "android:id/text1", Priority = 1)]
         //[FindsBy(How = How.ClassName, Using = "android.widget.TextView", Priority = 2)]
         //Equals method of WebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
-        private IMobileElement<AndroidElement> _matchedToAllLocatorsElement;
+        private IMobileElement<WebElement> _matchedToAllLocatorsElement;
 
         [FindsByAll] [FindsBy(How = How.Id, Using = "android:id/text1", Priority = 1)]
         //[FindsBy(How = How.ClassName, Using = "android.widget.TextView", Priority = 2)]
         //Equals method of WebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
-        private IList<AndroidElement> _matchedToAllLocatorsElements;
+        private IList<WebElement> _matchedToAllLocatorsElements;
 
         /////////////////////////////////////////////////////////////////
         [FindsByAll]
@@ -99,14 +99,14 @@ namespace Appium.Net.Integration.Tests.PageObjects
         //[FindsBy(How = How.ClassName, Using = "android.widget.TextView", Priority = 2)]
         //Equals method of WebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
-        private IMobileElement<AndroidElement> TestMatchedToAllLocatorsElementProperty { set; get; }
+        private IMobileElement<WebElement> TestMatchedToAllLocatorsElementProperty { set; get; }
 
         [FindsByAll]
         [FindsBy(How = How.Id, Using = "android:id/text1", Priority = 1)]
         //[FindsBy(How = How.ClassName, Using = "android.widget.TextView", Priority = 2)]
         //Equals method of WebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
-        private IList<AndroidElement> TestMatchedToAllLocatorsElementsProperty { set; get; }
+        private IList<WebElement> TestMatchedToAllLocatorsElementsProperty { set; get; }
 
         public string GetElementText()
         {

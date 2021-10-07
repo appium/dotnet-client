@@ -18,6 +18,7 @@ using OpenQA.Selenium.Appium.iOS;
 using OpenQA.Selenium.Appium.PageObjects.Attributes;
 using OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract;
 using OpenQA.Selenium.Appium.Windows;
+using OpenQA.Selenium.Remote;
 using SeleniumExtras.PageObjects;
 using System;
 using System.Collections.Generic;
@@ -221,15 +222,15 @@ namespace OpenQA.Selenium.Appium.PageObjects
 
             Type driverType = driver.GetType();
 
-            if (GenericsUtility.MatchGenerics(typeof(AndroidDriver<>),
+            if (GenericsUtility.MatchGenerics(typeof(AndroidDriver),
                 AppiumPageObjectMemberDecorator.ListOfAvailableElementTypes, driverType))
                 return MobilePlatform.Android;
 
-            if (GenericsUtility.MatchGenerics(typeof(IOSDriver<>),
+            if (GenericsUtility.MatchGenerics(typeof(IOSDriver),
                 AppiumPageObjectMemberDecorator.ListOfAvailableElementTypes, driverType))
                 return MobilePlatform.IOS;
             
-            if (GenericsUtility.MatchGenerics(typeof(WindowsDriver<>), 
+            if (GenericsUtility.MatchGenerics(typeof(WindowsDriver), 
                 AppiumPageObjectMemberDecorator.ListOfAvailableElementTypes, driverType))
                 return MobilePlatform.Windows;
 

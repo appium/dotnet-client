@@ -72,32 +72,10 @@ namespace OpenQA.Selenium.Appium.Service
 
             try
             {
-                object value;
-
                 if (commandToExecute.Name == DriverCommand.NewSession)
                 {
                     Service?.Start();
                     RealExecutor = ModifyNewSessionHttpRequestHeader(RealExecutor);
-                }
-
-                if (commandToExecute.Parameters.TryGetValue("capabilities", out value) && ((Dictionary<string, object>)commandToExecute.Parameters["capabilities"]).TryGetValue("platformName", out value) && value.ToString().Equals("Windows"))
-                {
-                    var desiredCapabilities = new Dictionary<string, object>();
-
-                    if (((Dictionary<string, object>)(commandToExecute.Parameters["capabilities"])).ContainsKey("app"))
-                    {
-                        desiredCapabilities.Add("app", ((Dictionary<string, object>)(commandToExecute.Parameters["capabilities"]))["app"]);
-                    }
-
-                    if (((Dictionary<string, object>)(commandToExecute.Parameters["capabilities"])).ContainsKey("appTopLevelWindow"))
-                    {
-                        desiredCapabilities.Add("appTopLevelWindow", ((Dictionary<string, object>)(commandToExecute.Parameters["capabilities"]))["appTopLevelWindow"]);
-                    }
-
-                    if (desiredCapabilities.Count > 0)
-                    {
-                        commandToExecute.Parameters.Add("desiredCapabilities", desiredCapabilities);
-                    }
                 }
 
                 result = RealExecutor.Execute(commandToExecute);
@@ -131,11 +109,6 @@ namespace OpenQA.Selenium.Appium.Service
         {
             if (commandExecutor == null) throw new ArgumentNullException(nameof(commandExecutor));
             var modifiedCommandExecutor = commandExecutor as HttpCommandExecutor;
-            
-            // TODO: Laolu, this may be pretty big breaking change for us
-            //if (modifiedCommandExecutor != null)
-            //    modifiedCommandExecutor.SendingRemoteHttpRequest += (sender, args) =>
-            //        args.Request.Headers.Add(IdempotencyHeader, Guid.NewGuid().ToString());
             return modifiedCommandExecutor;
         }
 

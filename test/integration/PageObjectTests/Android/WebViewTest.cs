@@ -3,7 +3,6 @@ using System.Threading;
 using Appium.Net.Integration.Tests.helpers;
 using Appium.Net.Integration.Tests.PageObjects;
 using NUnit.Framework;
-using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.PageObjects;
 using SeleniumExtras.PageObjects;
@@ -12,7 +11,7 @@ namespace Appium.Net.Integration.Tests.PageObjectTests.Android
 {
     public class WebViewTest
     {
-        private AndroidDriver<AppiumWebElement> _driver;
+        private AndroidDriver _driver;
         private AndroidWebView _pageObject;
 
         [OneTimeSetUp]
@@ -22,7 +21,7 @@ namespace Appium.Net.Integration.Tests.PageObjectTests.Android
                 ? Caps.GetAndroidUIAutomatorCaps(Apps.Get("selendroidTestApp"))
                 : Caps.GetAndroidUIAutomatorCaps(Apps.Get("selendroidTestApp"));
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver = new AndroidDriver(serverUri, capabilities, Env.InitTimeoutSec);
             var timeSpan = new TimeOutDuration(new TimeSpan(0, 0, 0, 5, 0));
             _pageObject = new AndroidWebView();
             PageFactory.InitElements(_driver, _pageObject, new AppiumPageObjectMemberDecorator(timeSpan));

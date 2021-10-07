@@ -1,90 +1,64 @@
-﻿using OpenQA.Selenium.Remote;
+﻿using OpenQA.Selenium.Appium.Enums;
+using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace OpenQA.Selenium.Appium
 {
-
     /// <summary>
-    /// Abstract class to manage options specific to Appium-based browsers.
+    /// Generic browser options
     /// </summary>
     public class AppiumOptions : DriverOptions
     {
-
-        // private const string AutomationAppiumOption = "appium:automationName";
-        // private const string DeviceAppiumOption = "appium:deviceName";
-        // private const string AppAppiumOption = "appium:app";
-        private const string PlatformVersionAppiumOption = "appium:platformVersion";
-
-        // private string automationName;
-        //  private string deviceName;
-        // private string app;
-        private string platformVersion;
-
-        private Dictionary<string, object> additionalAppiumOptions = new Dictionary<string, object>();
+        private const string AutomationNameOption = "appium:automationName";
+        private const string DeviceNameOption = "appium:deviceName";
+        private const string AppOption = "appium:app";
+        private const string PlatformVersionOption = "appium:platformVersion";
+        
+        private readonly Dictionary<string, object> additionalAppiumOptions = new Dictionary<string, object>();
 
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AppiumOptions"/> class.
         /// </summary>
-        /// 
-
         public AppiumOptions() : base()
         {
-            // this.AddKnownCapabilityName(this.CapabilityName, "current AppiumOptions class instance");
-            // this.AddKnownCapabilityName(AppiumOptions.AutomationAppiumOption, "AutomationName property");
-            // this.AddKnownCapabilityName(AppiumOptions.DeviceAppiumOption, "DeviceName property");
-            // this.AddKnownCapabilityName(AppiumOptions.AppAppiumOption, "App property");
-            this.AddKnownCapabilityName(AppiumOptions.PlatformVersionAppiumOption, "PlatformVersion property");
+            this.AddKnownCapabilityName(AppiumOptions.AutomationNameOption, "AutomationName property");
+            this.AddKnownCapabilityName(AppiumOptions.DeviceNameOption, "DeviceName property");
+            this.AddKnownCapabilityName(AppiumOptions.AppOption, "Application property");
+            this.AddKnownCapabilityName("app", "Application property");
+            this.AddKnownCapabilityName(AppiumOptions.PlatformVersionOption, "PlatformVersion property");
         }
 
         /// <summary>
-        /// Gets the vendor prefix to apply to Appium-specific capability names.
+        /// Gets the vendor prefix to apply to Chromium-specific capability names.
         /// </summary>
-        protected virtual string VendorPrefix { get; }
-
-        /// <summary>
-        /// Gets the name of the capability used to store Appium options in
-        /// an <see cref="ICapabilities"/> object.
-        /// </summary>
-        public virtual string CapabilityName { get; }
-
+        protected string VendorPrefix
+        {
+            get { return "appium"; }
+        }
 
         /// <summary>
         /// Gets or sets the AutoamtionName of the Appium browser's (e.g. Appium, Selendroid and so on) setting.
         /// </summary>
-        //public string AutomationName
-        //{
-        //    get { return this.automationName; }
-        //    set { this.automationName = value; }
-        //}
+        public string AutomationName  {get; set;}
+
 
         /// <summary>
         /// Gets or sets the DeviceName of the Appium browser's (e.g. Pixel 3XL, Galaxy S20 and so on) setting.
         /// </summary>
-        //public string DeviceName
-        //{
-        //    get { return this.deviceName; }
-        //    set { this.deviceName = value; }
-        //}
+        public string DeviceName  {get; set;}
 
         /// <summary>
         /// Gets or sets the Capability name used for the apllication setting.
         /// </summary>
-        //public string App
-        //{
-        //    get { return this.app; }
-        //    set { this.app = value; }
-        //}
+        public string App {get; set;}
 
         /// <summary>
         /// Gets or sets the PlatformVersion of the Appium browser's (e.g. 10, 11 and so on) setting.
         /// </summary>
-        public string PlatformVersion
-        {
-            get { return this.platformVersion; }
-            set { this.platformVersion = value; }
-        }
+        public string PlatformVersion { get; set; }
 
         /// <summary>
         /// Provides a means to add additional capabilities not yet added as type safe options
@@ -104,7 +78,20 @@ namespace OpenQA.Selenium.Appium
         public void AddAdditionalAppiumOption(string optionName, object optionValue)
         {
             this.ValidateCapabilityName(optionName);
-            this.additionalAppiumOptions[optionName] = optionValue;
+
+            string name;
+
+            if (optionName.Contains(":"))
+            {
+                name = optionName;
+            }
+            else
+            {
+                name = $"{this.VendorPrefix}:{optionName}";
+            }
+
+            this.ValidateCapabilityName(name);
+            this.additionalAppiumOptions[name] = optionValue;
         }
 
         /// <summary>
@@ -115,83 +102,56 @@ namespace OpenQA.Selenium.Appium
         [Obsolete("Use the temporary AddAdditionalOption method or the AddAdditionalChromeOption method for adding additional options")]
         public override void AddAdditionalCapability(string capabilityName, object capabilityValue)
         {
-
-            this.AddAdditionalCapability(capabilityName, capabilityValue, false);
+            this.AddAdditionalAppiumOption(capabilityName, capabilityValue);
         }
 
-        [Obsolete("Use the temporary AddAdditionalOption method or the AddAdditionalChromeOption method for adding additional options")]
-        public void AddAdditionalCapability(string capabilityName, object capabilityValue, bool isGlobalCapability)
-        {
-            if (isGlobalCapability)
-            {
-                this.AddAdditionalOption(capabilityName, capabilityValue);
-            }
-            else
-            {
-                this.AddAdditionalAppiumOption(capabilityName, capabilityValue);
-            }
-        }
-
-        /// <summary>
+        /// <summary
         /// Turn the capabilities into an desired capability
         /// </summary>
         /// <returns>A desired capability</returns>
         public override ICapabilities ToCapabilities()
         {
+            var capabilities = this.GenerateDesiredCapabilities(true);
 
-            Dictionary<string, object> appiumOptions = this.BuildAppiumOptionsDictionary();
-
-            IWritableCapabilities capabilities = this.GenerateDesiredCapabilities(false);
-            capabilities.SetCapability(this.CapabilityName, appiumOptions);
-
-            AddVendorSpecificAppiumCapabilities(capabilities);
-
-            return capabilities.AsReadOnly();
-
-            //RemoteSessionSettings remote = new RemoteSessionSettings();
-
-            //foreach (var keyVal in this.ToDictionary())
-            //{
-            //    remote.AddMetadataSetting(keyVal.Key, keyVal.Value);
-            //}
-
-            //return remote;
-        }
-
-        /// <summary>
-        /// Adds vendor-specific capabilities for Appium-based browsers.
-        /// </summary>
-        /// <param name="capabilities">The capabilities to add.</param>
-        protected virtual void AddVendorSpecificAppiumCapabilities(IWritableCapabilities capabilities)
-        {
-        }
-
-
-        protected virtual Dictionary<string, object> BuildAppiumOptionsDictionary()
-        {
-            Dictionary<string, object> appiumOptions = new Dictionary<string, object>();
-
-
-            //if (!string.IsNullOrEmpty(this.automationName))
-            //{
-            //    appiumOptions[AutomationAppiumOption] = this.automationName;
-            //}
-
-            //if (!string.IsNullOrEmpty(this.deviceName))
-            //{
-            //    appiumOptions[DeviceAppiumOption] = this.deviceName;
-            //}
-            //if (!string.IsNullOrEmpty(this.app))
-            //{
-            //    appiumOptions[AppAppiumOption] = this.app;
-            //}
-            if (!string.IsNullOrEmpty(this.platformVersion))
+            foreach(var option in this.BuildAppiumOptionsDictionary())
             {
-                appiumOptions[PlatformVersionAppiumOption] = this.platformVersion;
+                capabilities.SetCapability(option.Key, option.Value);
             }
 
+            return capabilities;
+        }
 
+        protected virtual Dictionary<string, object> BuildAppiumKnownOptionsDictionary()
+        {
+            Dictionary<string, object> knownOptions = new Dictionary<string, object>();
 
+            if (!string.IsNullOrEmpty(this.App))
+            {
+                knownOptions[AppOption] = this.App;
+            }
+
+            if (!string.IsNullOrEmpty(this.AutomationName))
+            {
+                knownOptions[AutomationNameOption] = this.AutomationName;
+            }
+
+            if (!string.IsNullOrEmpty(this.DeviceName))
+            {
+                knownOptions[DeviceNameOption] = this.DeviceName;
+            }
+
+            if (!string.IsNullOrEmpty(this.PlatformVersion))
+            {
+                knownOptions[PlatformVersionOption] = this.PlatformVersion;
+            }
+
+            return knownOptions;
+
+        }
+
+        private Dictionary<string, object> BuildAppiumOptionsDictionary()
+        {
+            var appiumOptions = BuildAppiumKnownOptionsDictionary();
 
             foreach (KeyValuePair<string, object> pair in this.additionalAppiumOptions)
             {
@@ -201,13 +161,10 @@ namespace OpenQA.Selenium.Appium
             return appiumOptions;
         }
 
-
         public IDictionary<string, object> ToDictionary()
         {
             var writeable = this.GenerateDesiredCapabilities(true);
             return (writeable.AsReadOnly() as ReadOnlyDesiredCapabilities).ToDictionary();
         }
-
-
     }
 }

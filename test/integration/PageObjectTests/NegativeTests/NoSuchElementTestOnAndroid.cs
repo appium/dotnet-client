@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.PageObjects;
 using OpenQA.Selenium.Appium.PageObjects.Attributes;
@@ -13,7 +12,7 @@ namespace Appium.Net.Integration.Tests.PageObjectTests.NegativeTests
 {
     public class NoSuchElementTestOnAndroid
     {
-        private AndroidDriver<AppiumWebElement> _driver;
+        private AndroidDriver _driver;
 
         [FindsBy(How = How.ClassName, Using = "FakeHtmlClass")]
         [FindsByIOSUIAutomation(Accessibility = "FakeAccebility")] private IWebElement _inconsistentElement1;
@@ -34,7 +33,7 @@ namespace Appium.Net.Integration.Tests.PageObjectTests.NegativeTests
                 ? Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"))
                 : Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver = new AndroidDriver(serverUri, capabilities, Env.InitTimeoutSec);
             var timeSpan = new TimeOutDuration(new TimeSpan(0, 0, 0, 5, 0));
             PageFactory.InitElements(_driver, this, new AppiumPageObjectMemberDecorator(timeSpan));
         }

@@ -2,7 +2,6 @@
 using Appium.Net.Integration.Tests.helpers;
 using Appium.Net.Integration.Tests.PageObjects;
 using NUnit.Framework;
-using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.iOS;
 using OpenQA.Selenium.Appium.PageObjects;
 using SeleniumExtras.PageObjects;
@@ -12,7 +11,7 @@ namespace Appium.Net.Integration.Tests.PageObjectTests.IOS
     [TestFixture]
     public class TestThatChecksAttributeMix
     {
-        private IOSDriver<AppiumWebElement> _driver;
+        private IOSDriver _driver;
         private IosPageObjectChecksAttributeMixOnNativeApp _pageObject;
 
         [OneTimeSetUp]
@@ -20,7 +19,7 @@ namespace Appium.Net.Integration.Tests.PageObjectTests.IOS
         {
             var capabilities = Caps.GetIosCaps(Apps.Get("iosTestApp"));
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _driver = new IOSDriver<AppiumWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver = new IOSDriver(serverUri, capabilities, Env.InitTimeoutSec);
             var timeSpan = new TimeOutDuration(new TimeSpan(0, 0, 0, 5, 0));
             _pageObject = new IosPageObjectChecksAttributeMixOnNativeApp();
             PageFactory.InitElements(_driver, _pageObject, new AppiumPageObjectMemberDecorator(timeSpan));

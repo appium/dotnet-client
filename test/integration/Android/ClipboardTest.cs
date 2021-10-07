@@ -11,7 +11,7 @@ namespace Appium.Net.Integration.Tests.Android
     [TestFixture(Category = "Device")]
     public class ClipboardTest
     {
-        private AndroidDriver<IWebElement> _driver;
+        private AndroidDriver _driver;
         private const string ClipboardTestString = "Hello Clipboard";
         private const string Base64RegexPattern = @"^[a-zA-Z0-9\+/]*={0,2}$";
 
@@ -23,7 +23,7 @@ namespace Appium.Net.Integration.Tests.Android
                 : Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
             capabilities.AddAdditionalOption(MobileCapabilityType.FullReset, true);
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _driver = new AndroidDriver<IWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver = new AndroidDriver(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 

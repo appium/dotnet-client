@@ -25,7 +25,7 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// <returns>IWebElement object so that you can interact that object</returns>
         /// <example>
         /// <code>
-        /// IWebDriver driver = new WebDriver(new FirefoxOptions());
+        /// IWebDriver driver = new RemoteWebDriver(new FirefoxOptions());
         /// IWebElement elem = driver.FindElementByAndroidUIAutomator('elements()'))
         /// </code>
         /// </example>
@@ -46,7 +46,7 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// <returns>ReadOnlyCollection of IWebElement object so that you can interact with those objects</returns>
         /// <example>
         /// <code>
-        /// IWebDriver driver = new WebDriver(new FirefoxOptions());
+        /// IWebDriver driver = new RemoteWebDriver(new FirefoxOptions());
         /// ReadOnlyCollection<![CDATA[<IWebElement>]]> elem = driver.FindElementsByAndroidUIAutomator(elements())
         /// </code>
         /// </example>

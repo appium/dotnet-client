@@ -17,7 +17,6 @@ using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Service;
 using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Remote;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,15 +28,15 @@ using OpenQA.Selenium.Appium.ImageComparison;
 
 namespace OpenQA.Selenium.Appium
 {
-    public abstract class AppiumDriver<W> : WebDriver, IFindsByImage<W>,
+    public abstract class AppiumDriver : WebDriver, IFindsByImage<IWebElement>,
         IHasSessionDetails,
         IHasLocation,
-        IFindByAccessibilityId<W>,
+        IFindByAccessibilityId<IWebElement>,
         IHidesKeyboard, IInteractsWithFiles,
-        IInteractsWithApps, IPerformsTouchActions, IRotatable, IContextAware, IGenericSearchContext<W>,
-        IGenericFindsByClassName<W>,
-        IGenericFindsById<W>, IGenericFindsByCssSelector<W>, IGenericFindsByLinkText<W>, IGenericFindsByName<W>,
-        IGenericFindsByPartialLinkText<W>, IGenericFindsByTagName<W>, IGenericFindsByXPath<W> where W : IWebElement
+        IInteractsWithApps, IPerformsTouchActions, IRotatable, IContextAware, IGenericSearchContext<IWebElement>,
+        IGenericFindsByClassName<IWebElement>,
+        IGenericFindsById<IWebElement>, IGenericFindsByCssSelector<IWebElement>, IGenericFindsByLinkText<IWebElement>, IGenericFindsByName<IWebElement>,
+        IGenericFindsByPartialLinkText<IWebElement>, IGenericFindsByTagName<IWebElement>, IGenericFindsByXPath<IWebElement>
     {
         private const string NativeApp = "NATIVE_APP";
 
@@ -46,9 +45,7 @@ namespace OpenQA.Selenium.Appium
         public AppiumDriver(ICommandExecutor commandExecutor, ICapabilities appiumOptions)
             : base(commandExecutor, appiumOptions)
         {
-            // TODO: Laolu  - Suspect this will an issue
             AppiumCommand.Merge(commandExecutor);
-            //ElementFactory = CreateElementFactory();
         }
 
         public AppiumDriver(ICapabilities appiumOptions)
@@ -95,89 +92,82 @@ namespace OpenQA.Selenium.Appium
 
         #region Generic FindMethods
 
-        public new W FindElement(By by) =>
-            (W) base.FindElement(by);
+        public new IWebElement FindElement(By by) =>
+             base.FindElement(by);
 
-        public new ReadOnlyCollection<W> FindElements(By by) =>
-            ConvertToExtendedWebElementCollection<W>(base.FindElements(by));
+        public new ReadOnlyCollection<IWebElement> FindElements(By by) =>
+            ConvertToExtendedWebElementCollection<IWebElement>(base.FindElements(by));
 
-        public new W FindElement(string by, string value) => (W) base.FindElement(by, value);
+        public new IWebElement FindElement(string by, string value) => base.FindElement(by, value);
 
-        public new IReadOnlyCollection<W> FindElements(string selector, string value) =>
-            ConvertToExtendedWebElementCollection<W>(base.FindElements(selector, value));
+        public new IReadOnlyCollection<IWebElement> FindElements(string selector, string value) =>
+            ConvertToExtendedWebElementCollection<IWebElement>(base.FindElements(selector, value));
 
-        public new W FindElementByClassName(string className) =>
-            (W) base.FindElement(MobileSelector.ClassName, className);
+        public IWebElement FindElementByClassName(string className) =>
+             base.FindElement(MobileSelector.ClassName, className);
 
-        public new ReadOnlyCollection<W> FindElementsByClassName(string className) =>
-            ConvertToExtendedWebElementCollection<W>(base.FindElements(MobileSelector.ClassName, className));
+        public ReadOnlyCollection<IWebElement> FindElementsByClassName(string className) =>
+            ConvertToExtendedWebElementCollection<IWebElement>(base.FindElements(MobileSelector.ClassName, className));
 
-        public new W FindElementById(string id) =>
-            (W) base.FindElement(MobileSelector.Id, id);
+        public IWebElement FindElementById(string id) =>
+             base.FindElement(MobileSelector.Id, id);
 
-        public new ReadOnlyCollection<W> FindElementsById(string id) =>
-            ConvertToExtendedWebElementCollection<W>(base.FindElements(MobileSelector.Id, id));
+        public ReadOnlyCollection<IWebElement> FindElementsById(string id) =>
+            ConvertToExtendedWebElementCollection<IWebElement>(base.FindElements(MobileSelector.Id, id));
 
-        public new W FindElementByCssSelector(string cssSelector) => throw new NotImplementedException();
-        //(W) base.FindElementByCssSelector(cssSelector);
+        public IWebElement FindElementByCssSelector(string cssSelector) =>
+             base.FindElement(By.CssSelector(cssSelector));
 
-        public new ReadOnlyCollection<W> FindElementsByCssSelector(string cssSelector) => throw new NotImplementedException();
-        //ConvertToExtendedWebElementCollection<W>(base.FindElementsByCssSelector(cssSelector));
+        public ReadOnlyCollection<IWebElement> FindElementsByCssSelector(string cssSelector) =>
+            ConvertToExtendedWebElementCollection<IWebElement>(base.FindElements(By.CssSelector(cssSelector)));
 
-        public new W FindElementByLinkText(string linkText) => throw new NotImplementedException();
-        //(W) base.FindElementByLinkText(linkText);
+        public IWebElement FindElementByLinkText(string linkText) =>
+             base.FindElement(By.LinkText(linkText));
 
-        public new ReadOnlyCollection<W> FindElementsByLinkText(string linkText) => throw new NotImplementedException();
-        //ConvertToExtendedWebElementCollection<W>(base.FindElementsByLinkText(linkText));
+        public ReadOnlyCollection<IWebElement> FindElementsByLinkText(string linkText) =>
+            ConvertToExtendedWebElementCollection<IWebElement>(base.FindElements(By.LinkText(linkText)));
 
-        public new W FindElementByName(string name) =>
-            (W) base.FindElement(MobileSelector.Name, name);
+        public IWebElement FindElementByName(string name) =>
+             base.FindElement(MobileSelector.Name, name);
 
-        public new ReadOnlyCollection<W> FindElementsByName(string name) =>
-            ConvertToExtendedWebElementCollection<W>(base.FindElements(MobileSelector.Name, name));
+        public ReadOnlyCollection<IWebElement> FindElementsByName(string name) =>
+            ConvertToExtendedWebElementCollection<IWebElement>(base.FindElements(MobileSelector.Name, name));
 
-        public new W FindElementByPartialLinkText(string partialLinkText) => throw new NotImplementedException();
-        //(W) base.FindElementByPartialLinkText(partialLinkText);
+        public IWebElement FindElementByPartialLinkText(string partialLinkText) =>
+             base.FindElement(By.PartialLinkText(partialLinkText));
 
-        public new ReadOnlyCollection<W> FindElementsByPartialLinkText(string partialLinkText) => throw new NotImplementedException();
-        //ConvertToExtendedWebElementCollection<W>(base.FindElementsByPartialLinkText(partialLinkText));
+        public ReadOnlyCollection<IWebElement> FindElementsByPartialLinkText(string partialLinkText) =>
+            ConvertToExtendedWebElementCollection<IWebElement>(base.FindElements(By.PartialLinkText(partialLinkText)));
 
-        public new W FindElementByTagName(string tagName) =>
-            (W) base.FindElement(MobileSelector.TagName, tagName);
+        public IWebElement FindElementByTagName(string tagName) =>
+             base.FindElement(MobileSelector.TagName, tagName);
 
-        public new ReadOnlyCollection<W> FindElementsByTagName(string tagName) =>
-            ConvertToExtendedWebElementCollection<W>(base.FindElements(MobileSelector.TagName, tagName));
+        public ReadOnlyCollection<IWebElement> FindElementsByTagName(string tagName) =>
+            ConvertToExtendedWebElementCollection<IWebElement>(base.FindElements(MobileSelector.TagName, tagName));
 
-        public new W FindElementByXPath(string xpath) => throw new NotImplementedException();
-            //(W) base.FindElementByXPath(xpath);
+        public IWebElement FindElementByXPath(string xpath) =>
+             base.FindElement(By.XPath(xpath));
 
-        public new ReadOnlyCollection<W> FindElementsByXPath(string xpath) => throw new NotImplementedException();
-        // ConvertToExtendedWebElementCollection<W>(base.FindElementsByXPath(xpath));
+        public ReadOnlyCollection<IWebElement> FindElementsByXPath(string xpath) =>
+            ConvertToExtendedWebElementCollection<IWebElement>(base.FindElements(By.XPath(xpath)));
+
+        #endregion
 
         #region IFindByAccessibilityId Members
 
-        public W FindElementByAccessibilityId(string selector) => FindElement(MobileSelector.Accessibility, selector);
+        public IWebElement FindElementByAccessibilityId(string selector) => FindElement(MobileSelector.Accessibility, selector);
 
-        public IReadOnlyCollection<W> FindElementsByAccessibilityId(string selector) =>
+        public IReadOnlyCollection<IWebElement> FindElementsByAccessibilityId(string selector) =>
             FindElements(MobileSelector.Accessibility, selector);
 
         #endregion IFindByAccessibilityId Members
 
         #region IFindsByImage Members
 
-        public W FindElementByImage(string base64Template) => FindElement(MobileSelector.Image, base64Template);
+        public IWebElement FindElementByImage(string base64Template) => FindElement(MobileSelector.Image, base64Template);
 
-        public IReadOnlyCollection<W> FindElementsByImage(string base64Template) =>
-            ConvertToExtendedWebElementCollection<W>(FindElements(MobileSelector.Image, base64Template));
-
-        #endregion
-
-        #endregion
-
-        #region Public Methods
-
-        protected override Response Execute(string driverCommandToExecute, Dictionary<string, object> parameters) =>
-            base.Execute(driverCommandToExecute, parameters);
+        public IReadOnlyCollection<IWebElement> FindElementsByImage(string base64Template) =>
+            ConvertToExtendedWebElementCollection<IWebElement>(FindElements(MobileSelector.Image, base64Template));
 
         Response IExecuteMethod.Execute(string commandName, Dictionary<string, object> parameters) =>
             base.Execute(commandName, parameters);
@@ -476,7 +466,7 @@ namespace OpenQA.Selenium.Appium
 
         #region W3C Actions
 
-        // Replace or hide the original WebElement.PerformActions base method so that it does not require
+        // Replace or hide the original RemoteWebElement.PerformActions base method so that it does not require
         // AppiumDriver to be fully compliant with W3CWireProtocol specification to execute W3C actions command.
         public new void PerformActions(IList<ActionSequence> actionSequenceList)
         {
@@ -658,8 +648,6 @@ namespace OpenQA.Selenium.Appium
         #endregion Public Methods
 
         #region Support methods
-
-        protected abstract WebElementFactory CreateElementFactory();
 
         internal static ICapabilities SetPlatformToCapabilities(DriverOptions dc, string desiredPlatform)
         {

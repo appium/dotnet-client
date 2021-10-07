@@ -1,12 +1,11 @@
 ﻿using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.iOS;
 
-namespace Appium.Net.Integration.Tests.IOS
+namespace Appium.Net.Integration.Tests.iOS
 {
-    public class SearchingClassChainTest
+    public class SettingTest
     {
         private IOSDriver _driver;
 
@@ -30,15 +29,19 @@ namespace Appium.Net.Integration.Tests.IOS
         }
 
         [Test]
-        public void FindByClassChainTest()
+        public void SettingsUpdateTest()
         {
-            var sliderCellStaticTextElements1 = _driver
-                .FindElements(
-                    new ByIosClassChain("**/XCUIElementTypeCell/XCUIElementTypeStaticText[`name == 'Sliders'`]"));
-            Assert.AreEqual(sliderCellStaticTextElements1.Count, 1);
-            var sliderCellStaticTextElements2 = _driver
-                .FindElementsByIosClassChain("**/XCUIElementTypeCell");
-            Assert.AreEqual(sliderCellStaticTextElements2.Count, 18);
+            _driver.SetSetting(
+                setting: "useJSONSource",
+                value: true);
+
+            Assert.IsTrue((bool)_driver.Settings["useJSONSource"]);
+
+            _driver.SetSetting(
+                setting: "useJSONSource",
+                value: false);
+
+            Assert.IsFalse((bool)_driver.Settings["useJSONSource"]);
         }
     }
 }

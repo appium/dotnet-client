@@ -8,7 +8,7 @@ namespace Appium.Net.Integration.Tests.Android.Device
 {
     public class AuthenticationTest
     {
-        private AndroidDriver<IWebElement> _driver;
+        private AndroidDriver _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
@@ -16,7 +16,7 @@ namespace Appium.Net.Integration.Tests.Android.Device
             var capabilities = Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
             capabilities.AddAdditionalOption(MobileCapabilityType.FullReset, true);
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _driver = new AndroidDriver<IWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver = new AndroidDriver(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 

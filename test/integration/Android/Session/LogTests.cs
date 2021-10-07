@@ -21,9 +21,14 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
         public void SetUp()
         {
             _androidOptions = Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
-            _driver = new AndroidDriver<IWebElement>(
-                Env.ServerIsLocal() ? AppiumServers.LocalServiceUri : AppiumServers.RemoteServerUri,
-                _androidOptions);
+            //////_driver = new AndroidDriver(
+            //////    Env.ServerIsLocal() ? AppiumServers.LocalServiceUri : AppiumServers.RemoteServerUri,
+            //////    _androidOptions);
+
+            _driver = new AndroidDriver(new System.Uri("http://127.0.0.1:4723/wd/hub"),  _androidOptions);
+
+
+            ///var serverUri = new System.Uri("http://127.0.0.1:4723/wd/hub");
         }
 
         [OneTimeTearDown]
@@ -91,7 +96,7 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
             Assert.That(match.Success, Is.True, nameof(match.Success));
             bugReportLogPath = match.Value;
 
-            var bugReportLogByteArray = ((AndroidDriver<IWebElement>) _driver).PullFile(bugReportLogPath);
+            var bugReportLogByteArray = ((AndroidDriver) _driver).PullFile(bugReportLogPath);
             Assert.That(bugReportLogByteArray.Length, Is.GreaterThan(1));
         }
     }

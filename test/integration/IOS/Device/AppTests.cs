@@ -10,7 +10,7 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
 {
     internal class AppTests
     {
-        private IOSDriver<IWebElement> _driver;
+        private IOSDriver _driver;
         private AppiumOptions _iosOptions;
         private const string UiCatalogAppTestAppBundleId = "com.example.apple-samplecode.UICatalog";
         private const string IosTestAppBundleId = "io.appium.TestApp";
@@ -22,7 +22,7 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
         public void SetUp()
         {
             _iosOptions = Caps.GetIosCaps(Apps.Get("iosUICatalogApp"));
-            _driver = new IOSDriver<IWebElement>(
+            _driver = new IOSDriver(
                 Env.ServerIsLocal() ? AppiumServers.LocalServiceUri : AppiumServers.RemoteServerUri,
                 _iosOptions);
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
