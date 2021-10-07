@@ -21,14 +21,9 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
         public void SetUp()
         {
             _androidOptions = Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
-            //////_driver = new AndroidDriver(
-            //////    Env.ServerIsLocal() ? AppiumServers.LocalServiceUri : AppiumServers.RemoteServerUri,
-            //////    _androidOptions);
-
-            _driver = new AndroidDriver(new System.Uri("http://127.0.0.1:4723/wd/hub"),  _androidOptions);
-
-
-            ///var serverUri = new System.Uri("http://127.0.0.1:4723/wd/hub");
+            _driver = new AndroidDriver(
+                Env.ServerIsLocal() ? AppiumServers.LocalServiceUri : AppiumServers.RemoteServerUri,
+                _androidOptions);
         }
 
         [OneTimeTearDown]
