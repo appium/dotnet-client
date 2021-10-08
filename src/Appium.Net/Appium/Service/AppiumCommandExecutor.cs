@@ -20,35 +20,28 @@ namespace OpenQA.Selenium.Appium.Service
     internal class AppiumCommandExecutor : ICommandExecutor
     {
         private readonly AppiumLocalService Service;
-        private static Uri URL;
-        private static TimeSpan CommandTimeout;
-
         private ICommandExecutor RealExecutor;
         private bool isDisposed;
         private const string IdempotencyHeader = "X-Idempotency-Key";
 
         private static ICommandExecutor CreateRealExecutor(Uri remoteAddress, TimeSpan commandTimeout)
         {
-            URL = remoteAddress;
-            CommandTimeout = commandTimeout;
-
             return new HttpCommandExecutor(remoteAddress, commandTimeout);
         }
 
-        private AppiumCommandExecutor(Uri url, ICommandExecutor realExecutor)
+        private AppiumCommandExecutor(ICommandExecutor realExecutor)
         {
-            URL = url;
             RealExecutor = realExecutor;
         }
 
         internal AppiumCommandExecutor(Uri url, TimeSpan timeForTheServerResponding)
-            : this(url, CreateRealExecutor(url, timeForTheServerResponding))
+            : this(CreateRealExecutor(url, timeForTheServerResponding))
         {
             Service = null;
         }
 
         internal AppiumCommandExecutor(AppiumLocalService service, TimeSpan timeForTheServerResponding)
-            : this(service.ServiceUrl, CreateRealExecutor(service.ServiceUrl, timeForTheServerResponding))
+            : this(CreateRealExecutor(service.ServiceUrl, timeForTheServerResponding))
         {
             Service = service;
         }
