@@ -23,9 +23,12 @@ namespace OpenQA.Selenium.Appium.PageObjects
         {
             foreach (var type in possibleParameters)
             {
-                Type fullType = generalType.MakeGenericType(type);
-                if (fullType.Equals(targetType))
-                    return true;
+                if (!generalType.IsEquivalentTo(type) && !generalType.IsAssignableFrom(type) && !type.IsAssignableFrom(generalType))
+                {
+                    Type fullType = generalType.MakeGenericType(type);
+                    if (fullType.Equals(targetType))
+                        return true;
+                }
             }
 
             return false;

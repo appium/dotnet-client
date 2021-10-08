@@ -42,7 +42,7 @@ namespace Appium.Net.Integration.Tests.Windows
                     // Note: All sticky note windows are parented to Modern_Sticky_Top_Window pane
                     AppiumOptions appCapabilities = new AppiumOptions();
                     appCapabilities.App = StickyNotesAppId;
-                    appCapabilities.AddAdditionalOption("deviceName", "WindowsPC");
+                    appCapabilities.DeviceName = "WindowsPC";
                     session = new WindowsDriver(serverUri, appCapabilities);
                 }
                 catch
@@ -59,7 +59,7 @@ namespace Appium.Net.Integration.Tests.Windows
                     StickyNotesTopLevelWindowHandle = (int.Parse(StickyNotesTopLevelWindowHandle)).ToString("x"); // Convert to Hex
 
                     AppiumOptions appCapabilities = new AppiumOptions();
-                    appCapabilities.AddAdditionalOption("appTopLevelWindow", StickyNotesTopLevelWindowHandle);
+                    appCapabilities.AddAdditionalAppiumOption("appTopLevelWindow", StickyNotesTopLevelWindowHandle);
                     session = new WindowsDriver(serverUri, appCapabilities);
                 }
                 Assert.IsNotNull(session);
@@ -88,7 +88,7 @@ namespace Appium.Net.Integration.Tests.Windows
                         newStickyNoteWindowHandle = (int.Parse(newStickyNoteWindowHandle)).ToString("x"); // Convert to Hex
 
                         AppiumOptions appCapabilities = new AppiumOptions();
-                        appCapabilities.AddAdditionalOption("appTopLevelWindow", newStickyNoteWindowHandle);
+                        appCapabilities.AddAdditionalAppiumOption("appTopLevelWindow", newStickyNoteWindowHandle);
                         var stickyNoteSession = new WindowsDriver(serverUri, appCapabilities);
                         stickyNoteSession.Close();
                     }

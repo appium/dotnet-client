@@ -236,8 +236,8 @@ namespace Appium.Net.Integration.Tests.Windows
             var newStickyNoteWindowHandle = openedStickyNotes[0].GetAttribute("NativeWindowHandle");
             newStickyNoteWindowHandle = (int.Parse(newStickyNoteWindowHandle)).ToString("x"); // Convert to Hex
             AppiumOptions appCapabilities = new AppiumOptions();
-            appCapabilities.AddAdditionalOption("appTopLevelWindow", newStickyNoteWindowHandle);
-            appCapabilities.AddAdditionalOption("deviceName", "WindowsPC");
+            appCapabilities.AddAdditionalAppiumOption("appTopLevelWindow", newStickyNoteWindowHandle);
+            appCapabilities.DeviceName = "WindowsPC";
             newStickyNoteSession = new WindowsDriver(serverUri, appCapabilities);
             Assert.IsNotNull(newStickyNoteSession);
 

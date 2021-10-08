@@ -14,7 +14,7 @@ namespace Appium.Net.Integration.Tests.Mac
         public void BeforeAll()
         {
             var capabilities = new AppiumOptions();
-            capabilities.AddAdditionalOption(MobileCapabilityType.DeviceName, "Mac"); // Requires until Appium 1.15.1
+            capabilities.DeviceName = "Mac"; // Requires until Appium 1.15.1
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
             _driver = new MacDriver(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;

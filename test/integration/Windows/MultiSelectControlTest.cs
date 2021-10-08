@@ -48,7 +48,7 @@ namespace Appium.Net.Integration.Tests.Windows
             // Create a session for Desktop
             var desktopCapabilities = new AppiumOptions();
             desktopCapabilities.App = "Root";
-            desktopCapabilities.AddAdditionalOption("deviceName", "WindowsPC");
+            desktopCapabilities.DeviceName = "WindowsPC";
 
             DesktopSession =
                 new WindowsDriver(serverUri, desktopCapabilities);

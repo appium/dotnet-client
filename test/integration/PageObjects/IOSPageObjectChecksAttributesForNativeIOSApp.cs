@@ -10,12 +10,12 @@ namespace Appium.Net.Integration.Tests.PageObjects
         /////////////////////////////////////////////////////////////////
 
         [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[0]")]
-        private IMobileElement<WebElement> _testMobileElement;
+        private IWebElement _testMobileElement;
 
         [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[0]")] private IList<WebElement> _testMobileElements;
 
         [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[0]")]
-        private IMobileElement<WebElement> TestMobileElement { set; get; }
+        private IWebElement TestMobileElement { set; get; }
 
         [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[0]")]
         private IList<WebElement> TestMobileElements { set; get; }
@@ -23,7 +23,7 @@ namespace Appium.Net.Integration.Tests.PageObjects
         [FindsByIOSUIAutomation(ID = "FakeID", Priority = 1)]
         [FindsByIOSUIAutomation(ClassName = "UIAUAIFakeClass", Priority = 2)]
         [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 3)]
-        private IMobileElement<WebElement> _testMultipleElement;
+        private IWebElement _testMultipleElement;
 
         [FindsByIOSUIAutomation(ID = "FakeID", Priority = 1)]
         [FindsByIOSUIAutomation(ClassName = "UIAUAIFakeClass", Priority = 2)]
@@ -35,7 +35,7 @@ namespace Appium.Net.Integration.Tests.PageObjects
         [FindsByIOSUIAutomation(ID = "FakeID", Priority = 1)]
         [FindsByIOSUIAutomation(ClassName = "UIAUAIFakeClass", Priority = 2)]
         [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 3)]
-        private IMobileElement<WebElement> TestMultipleFindByElementProperty { set; get; }
+        private IWebElement TestMultipleFindByElementProperty { set; get; }
 
         [FindsByIOSUIAutomation(ID = "FakeID", Priority = 1)]
         [FindsByIOSUIAutomation(ClassName = "UIAUAIFakeClass", Priority = 2)]
@@ -45,7 +45,7 @@ namespace Appium.Net.Integration.Tests.PageObjects
         [MobileFindsByAll(IOS = true)] [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 1)]
         //Equals method of WebElement is not consistent for mobile apps
         //The second selector won't be added till the problem is worked out
-        private IMobileElement<WebElement> _matchedToAllLocatorsElement;
+        private IWebElement _matchedToAllLocatorsElement;
 
         [MobileFindsByAll(IOS = true)] [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 1)]
         //Equals method of WebElement is not consistent for mobile apps
@@ -58,7 +58,7 @@ namespace Appium.Net.Integration.Tests.PageObjects
         [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 1)]
         //Equals method of WebElement is not consistent for mobile apps
         //The second selector won't be added till the problem is worked out
-        private IMobileElement<WebElement> TestMatchedToAllLocatorsElementProperty { set; get; }
+        private IWebElement TestMatchedToAllLocatorsElementProperty { set; get; }
 
         [MobileFindsByAll(IOS = true)]
         [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 1)]

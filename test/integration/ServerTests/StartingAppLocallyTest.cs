@@ -66,8 +66,8 @@ namespace Appium.Net.Integration.Tests.ServerTests
                 : Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
 
             var clientCapabilities = new AppiumOptions();
-            clientCapabilities.AddAdditionalOption(AndroidMobileCapabilityType.AppPackage, "io.appium.android.apis");
-            clientCapabilities.AddAdditionalOption(AndroidMobileCapabilityType.AppActivity, ".view.WebView1");
+            clientCapabilities.AddAdditionalAppiumOption(AndroidMobileCapabilityType.AppPackage, "io.appium.android.apis");
+            clientCapabilities.AddAdditionalAppiumOption(AndroidMobileCapabilityType.AppActivity, ".view.WebView1");
 
             var argCollector = new OptionCollector().AddCapabilities(serverCapabilities);
             var builder = new AppiumServiceBuilder().WithArguments(argCollector);
@@ -133,8 +133,8 @@ namespace Appium.Net.Integration.Tests.ServerTests
                 ? //it will be a cause of error
                 Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"))
                 : Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
-            capabilities.AddAdditionalOption(MobileCapabilityType.DeviceName, "iPhone Simulator");
-            capabilities.AddAdditionalOption(MobileCapabilityType.PlatformName, MobilePlatform.IOS);
+            capabilities.DeviceName = "iPhone Simulator";
+            capabilities.AddAdditionalAppiumOption(MobileCapabilityType.PlatformName, MobilePlatform.IOS);
 
             var builder = new AppiumServiceBuilder();
             var service = builder.Build();

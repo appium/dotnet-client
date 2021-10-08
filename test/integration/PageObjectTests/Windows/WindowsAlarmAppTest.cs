@@ -17,7 +17,7 @@ namespace Appium.Net.Integration.Tests.PageObjectTests.Windows
         {
             var appCapabilities = new AppiumOptions();
             appCapabilities.App = "Microsoft.WindowsAlarms_8wekyb3d8bbwe!App";
-            appCapabilities.AddAdditionalOption("deviceName", "WindowsPC");
+            appCapabilities.DeviceName = "WindowsPC";
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
 
             _driver = new WindowsDriver(serverUri, appCapabilities);

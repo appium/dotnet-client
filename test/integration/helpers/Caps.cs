@@ -12,7 +12,7 @@ namespace Appium.Net.Integration.Tests.helpers
             capabilities.DeviceName = "iPhone X";
             capabilities.PlatformVersion = "12.0";
             capabilities.App = app;
-            capabilities.AddAdditionalOption(IOSMobileCapabilityType.LaunchTimeout, Env.InitTimeoutSec.TotalMilliseconds);
+            capabilities.AddAdditionalAppiumOption(IOSMobileCapabilityType.LaunchTimeout, Env.InitTimeoutSec.TotalMilliseconds);
 
             return capabilities;
         }

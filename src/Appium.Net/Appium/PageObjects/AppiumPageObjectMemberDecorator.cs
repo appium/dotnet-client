@@ -66,7 +66,11 @@ namespace OpenQA.Selenium.Appium.PageObjects
         {
             if (typeof(IWebElement).Equals(targetType))
                 return targetType;
+            else if (typeof(WebElement).Equals(targetType))
+                return targetType;
             else if (GenericsUtility.MatchGenerics(typeof(IWebElement), ListOfAvailableElementTypes, targetType))
+                return targetType;
+            else if (GenericsUtility.MatchGenerics(typeof(WebElement), ListOfAvailableElementTypes, targetType))
                 return targetType;
 
             return null;

@@ -12,7 +12,7 @@ namespace Appium.Net.Integration.Tests.PageObjects
         [FindsBy(How = How.Id, Using = "FakeHTMLid", Priority = 1)]
         [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[0]")]
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/text1\")")]
-        private IMobileElement<WebElement> _testMobileElement;
+        private IWebElement _testMobileElement;
 
         [FindsBy(How = How.Id, Using = "FakeHTMLid", Priority = 1)]
         [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[0]")]
@@ -22,7 +22,7 @@ namespace Appium.Net.Integration.Tests.PageObjects
         [FindsBy(How = How.Id, Using = "FakeHTMLid", Priority = 1)]
         [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[0]")]
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/text1\")")]
-        private IMobileElement<WebElement> TestMobileElement { set; get; }
+        private IWebElement TestMobileElement { set; get; }
 
         [FindsBy(How = How.Id, Using = "FakeHTMLid", Priority = 1)]
         [FindsByIOSUIAutomation(IosUIAutomation = ".elements()[0]")]
@@ -38,7 +38,7 @@ namespace Appium.Net.Integration.Tests.PageObjects
         [FindsByAndroidUIAutomator(AndroidUIAutomator = "new UiSelector().resourceId(\"android:id/fakeId\")",
             Priority = 1)] [FindsByAndroidUIAutomator(ID = "FakeId", Priority = 2)]
         [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 3)]
-        private IMobileElement<WebElement> _testMultipleElement;
+        private IWebElement _testMultipleElement;
 
         [FindsBy(How = How.Id, Using = "FakeHTMLid", Priority = 1)]
         [FindsBy(How = How.ClassName, Using = "FakeHTMLClass", Priority = 2)]
@@ -64,7 +64,7 @@ namespace Appium.Net.Integration.Tests.PageObjects
             Priority = 1)]
         [FindsByAndroidUIAutomator(ID = "FakeId", Priority = 2)]
         [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 3)]
-        private IMobileElement<WebElement> TestMultipleFindByElementProperty { set; get; }
+        private IWebElement TestMultipleFindByElementProperty { set; get; }
 
         [FindsBy(How = How.Id, Using = "FakeHTMLid", Priority = 1)]
         [FindsBy(How = How.ClassName, Using = "FakeHTMLClass", Priority = 2)]
@@ -87,7 +87,7 @@ namespace Appium.Net.Integration.Tests.PageObjects
         //The second selector won't be added till the problem is worked out
         [FindsByAndroidUIAutomator(ID = "android:id/text1", Priority = 1)]
         [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 1)]
-        private IMobileElement<WebElement> _matchedToAllLocatorsElement;
+        private IWebElement _matchedToAllLocatorsElement;
 
         [FindsByAll] [MobileFindsByAll(Android = true, IOS = true)]
         [FindsBy(How = How.Id, Using = "FakeHTMLid", Priority = 1)]
@@ -111,7 +111,7 @@ namespace Appium.Net.Integration.Tests.PageObjects
         //The second selector won't be added till the problem is worked out
         [FindsByAndroidUIAutomator(ID = "android:id/text1", Priority = 1)]
         [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 1)]
-        private IMobileElement<WebElement> TestMatchedToAllLocatorsElementProperty { set; get; }
+        private IWebElement TestMatchedToAllLocatorsElementProperty { set; get; }
 
         [FindsByAll]
         [MobileFindsByAll(Android = true, IOS = true)]

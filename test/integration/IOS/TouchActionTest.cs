@@ -18,10 +18,10 @@ namespace Appium.Net.Integration.Tests.IOS
             var capabilities = Caps.GetIosCaps(Apps.Get("iosTestApp"));
             if (Env.ServerIsRemote())
             {
-                capabilities.AddAdditionalOption("username", Env.GetEnvVar("SAUCE_USERNAME"));
-                capabilities.AddAdditionalOption("accessKey", Env.GetEnvVar("SAUCE_ACCESS_KEY"));
-                capabilities.AddAdditionalOption("name", "ios - actions");
-                capabilities.AddAdditionalOption("tags", new[] {"sample"});
+                capabilities.AddAdditionalAppiumOption("username", Env.GetEnvVar("SAUCE_USERNAME"));
+                capabilities.AddAdditionalAppiumOption("accessKey", Env.GetEnvVar("SAUCE_ACCESS_KEY"));
+                capabilities.AddAdditionalAppiumOption("name", "ios - actions");
+                capabilities.AddAdditionalAppiumOption("tags", new[] {"sample"});
             }
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
             _driver = new IOSDriver(serverUri, capabilities, Env.InitTimeoutSec);

@@ -20,7 +20,7 @@ namespace Appium.Net.Integration.Tests.Android
             var capabilities = Env.ServerIsRemote()
                 ? Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"))
                 : Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
-            capabilities.AddAdditionalOption(MobileCapabilityType.FullReset, true);
+            capabilities.AddAdditionalAppiumOption(MobileCapabilityType.FullReset, true);
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
             _driver = new AndroidDriver(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
