@@ -22,6 +22,7 @@ using System.Collections.Generic;
 
 namespace OpenQA.Selenium.Appium.iOS
 {
+
     public class IOSDriver : AppiumDriver, IFindByIosUIAutomation<IWebElement>, IFindsByIosClassChain<IWebElement>,
         IFindsByIosNSPredicate<IWebElement>, IHidesKeyboardWithKeyName, IHasClipboard,
         IShakesDevice, IPerformsTouchID, IHasSettings

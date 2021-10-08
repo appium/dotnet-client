@@ -1,5 +1,6 @@
 ﻿using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
+
 using OpenQA.Selenium.Appium.iOS;
 
 namespace Appium.Net.Integration.Tests.iOS
@@ -13,6 +14,7 @@ namespace Appium.Net.Integration.Tests.iOS
         {
             var capabilities = Caps.GetIosCaps(Apps.Get("iosUICatalogApp"));
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
+
             _driver = new IOSDriver(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
