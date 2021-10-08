@@ -25,10 +25,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using OpenQA.Selenium.Appium.ImageComparison;
+using OpenQA.Selenium.Internal;
 
 namespace OpenQA.Selenium.Appium
 {
     public abstract class AppiumDriver : WebDriver, IFindsByImage<IWebElement>,
+        IFindsByClassName, IFindsById, IFindsByName, IFindsByTagName,
         IHasSessionDetails,
         IHasLocation,
         IFindByAccessibilityId<IWebElement>,
@@ -89,6 +91,34 @@ namespace OpenQA.Selenium.Appium
         }
 
         #endregion Constructors
+
+                #region Overrides to fix "css selector" issue
+
+        IWebElement IFindsByClassName.FindElementByClassName(string className) =>
+            base.FindElement(MobileSelector.ClassName, className);
+
+        ReadOnlyCollection<IWebElement> IFindsByClassName.FindElementsByClassName(string className) =>
+            base.FindElements(MobileSelector.ClassName, className);
+
+        IWebElement IFindsById.FindElementById(string id) =>
+            base.FindElement(MobileSelector.Id, id);
+
+        ReadOnlyCollection<IWebElement> IFindsById.FindElementsById(string id) =>
+            base.FindElements(MobileSelector.Id, id);
+
+        IWebElement IFindsByName.FindElementByName(string name) =>
+            base.FindElement(MobileSelector.Name, name);
+
+        ReadOnlyCollection<IWebElement> IFindsByName.FindElementsByName(string name) =>
+            base.FindElements(MobileSelector.Name, name);
+
+        IWebElement IFindsByTagName.FindElementByTagName(string tagName) =>
+            base.FindElement(MobileSelector.TagName, tagName);
+
+        ReadOnlyCollection<IWebElement> IFindsByTagName.FindElementsByTagName(string tagName) =>
+            base.FindElements(MobileSelector.TagName, tagName);
+
+        #endregion Overrides to fix "css selector" issue
 
         #region Generic FindMethods
 

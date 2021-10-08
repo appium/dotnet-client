@@ -1,8 +1,6 @@
-﻿using OpenQA.Selenium.Appium.Enums;
-using OpenQA.Selenium.Remote;
+﻿using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 
 namespace OpenQA.Selenium.Appium
 {
@@ -11,6 +9,7 @@ namespace OpenQA.Selenium.Appium
     /// </summary>
     public class AppiumOptions : DriverOptions
     {
+        private const string VendorPrefix = "appium";
         private const string AutomationNameOption = "appium:automationName";
         private const string DeviceNameOption = "appium:deviceName";
         private const string AppOption = "appium:app";
@@ -27,16 +26,8 @@ namespace OpenQA.Selenium.Appium
             this.AddKnownCapabilityName(AppiumOptions.AutomationNameOption, "AutomationName property");
             this.AddKnownCapabilityName(AppiumOptions.DeviceNameOption, "DeviceName property");
             this.AddKnownCapabilityName(AppiumOptions.AppOption, "Application property");
-            this.AddKnownCapabilityName("app", "Application property");
             this.AddKnownCapabilityName(AppiumOptions.PlatformVersionOption, "PlatformVersion property");
-        }
-
-        /// <summary>
-        /// Gets the vendor prefix to apply to Chromium-specific capability names.
-        /// </summary>
-        protected string VendorPrefix
-        {
-            get { return "appium"; }
+            this.AddKnownCapabilityName("app", "Application property");
         }
 
         /// <summary>
@@ -77,8 +68,6 @@ namespace OpenQA.Selenium.Appium
         /// webdriver executable.</remarks>
         public void AddAdditionalAppiumOption(string optionName, object optionValue)
         {
-            this.ValidateCapabilityName(optionName);
-
             string name;
 
             if (optionName.Contains(":"))
@@ -87,7 +76,7 @@ namespace OpenQA.Selenium.Appium
             }
             else
             {
-                name = $"{this.VendorPrefix}:{optionName}";
+                name = $"{VendorPrefix}:{optionName}";
             }
 
             this.ValidateCapabilityName(name);
@@ -99,7 +88,7 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <param name="capabilityName">Capability name</param>
         /// <param name="capabilityValue">Capabilities value, which cannot be null or empty</param>
-        [Obsolete("Use the temporary AddAdditionalOption method or the AddAdditionalChromeOption method for adding additional options")]
+        [Obsolete("Use the temporary AddAdditionalOption method or the AddAdditionalAppiumOption method for adding additional options")]
         public override void AddAdditionalCapability(string capabilityName, object capabilityValue)
         {
             this.AddAdditionalAppiumOption(capabilityName, capabilityValue);
