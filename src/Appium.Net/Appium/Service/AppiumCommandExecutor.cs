@@ -12,11 +12,8 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-using OpenQA.Selenium.Appium.Windows;
 using OpenQA.Selenium.Remote;
 using System;
-using System.Collections.Generic;
-using System.Reflection;
 
 namespace OpenQA.Selenium.Appium.Service
 {
@@ -28,6 +25,7 @@ namespace OpenQA.Selenium.Appium.Service
 
         private ICommandExecutor RealExecutor;
         private bool isDisposed;
+        private const string IdempotencyHeader = "X-Idempotency-Key";
 
         private static ICommandExecutor CreateRealExecutor(Uri remoteAddress, TimeSpan commandTimeout)
         {
@@ -98,6 +96,8 @@ namespace OpenQA.Selenium.Appium.Service
         {
             if (commandExecutor == null) throw new ArgumentNullException(nameof(commandExecutor));
             var modifiedCommandExecutor = commandExecutor as HttpCommandExecutor;
+            modifiedCommandExecutor.SendingRemoteHttpRequest += (sender, args) =>
+                    args.AddHeader(IdempotencyHeader, Guid.NewGuid().ToString());
             return modifiedCommandExecutor;
         }
 
