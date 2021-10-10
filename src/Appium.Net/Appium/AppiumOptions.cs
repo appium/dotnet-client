@@ -14,7 +14,7 @@ namespace OpenQA.Selenium.Appium
         private const string DeviceNameOption = "appium:deviceName";
         private const string AppOption = "appium:app";
         private const string PlatformVersionOption = "appium:platformVersion";
-        
+
         private readonly Dictionary<string, object> additionalAppiumOptions = new Dictionary<string, object>();
 
 
@@ -33,18 +33,18 @@ namespace OpenQA.Selenium.Appium
         /// <summary>
         /// Gets or sets the AutoamtionName of the Appium browser's (e.g. Appium, Selendroid and so on) setting.
         /// </summary>
-        public string AutomationName  {get; set;}
+        public string AutomationName { get; set; }
 
 
         /// <summary>
         /// Gets or sets the DeviceName of the Appium browser's (e.g. Pixel 3XL, Galaxy S20 and so on) setting.
         /// </summary>
-        public string DeviceName  {get; set;}
+        public string DeviceName { get; set; }
 
         /// <summary>
         /// Gets or sets the Capability name used for the apllication setting.
         /// </summary>
-        public string App {get; set;}
+        public string App { get; set; }
 
         /// <summary>
         /// Gets or sets the PlatformVersion of the Appium browser's (e.g. 10, 11 and so on) setting.
@@ -107,7 +107,7 @@ namespace OpenQA.Selenium.Appium
         {
             var capabilities = this.GenerateDesiredCapabilities(true);
 
-            foreach(var option in this.BuildAppiumOptionsDictionary())
+            foreach (var option in this.BuildAppiumOptionsDictionary())
             {
                 capabilities.SetCapability(option.Key, option.Value);
             }

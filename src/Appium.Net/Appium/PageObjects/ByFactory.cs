@@ -220,29 +220,17 @@ namespace OpenQA.Selenium.Appium.PageObjects
             if (driver == null)
                 return null;
 
-            if (driver is AndroidDriver)
-            {
-                return MobilePlatform.Android;
-            }else if (driver is IOSDriver)
-            {
-                return MobilePlatform.IOS;
-            }
-            if (driver is WindowsDriver)
-            {
-                return MobilePlatform.Windows;
-            }
-            
             Type driverType = driver.GetType();
 
-            if (GenericsUtility.MatchGenerics(typeof(AndroidDriver),
+            if (GenericsUtility.MatchGenerics(typeof(AndroidDriver<>),
                 AppiumPageObjectMemberDecorator.ListOfAvailableElementTypes, driverType))
                 return MobilePlatform.Android;
 
-            if (GenericsUtility.MatchGenerics(typeof(IOSDriver),
+            if (GenericsUtility.MatchGenerics(typeof(IOSDriver<>),
                 AppiumPageObjectMemberDecorator.ListOfAvailableElementTypes, driverType))
                 return MobilePlatform.IOS;
             
-            if (GenericsUtility.MatchGenerics(typeof(WindowsDriver), 
+            if (GenericsUtility.MatchGenerics(typeof(WindowsDriver<>), 
                 AppiumPageObjectMemberDecorator.ListOfAvailableElementTypes, driverType))
                 return MobilePlatform.Windows;
 

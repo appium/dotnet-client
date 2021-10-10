@@ -15,12 +15,14 @@
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Service;
+using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
 
 namespace OpenQA.Selenium.Appium.Tizen
 {
-    public class TizenDriver: AppiumDriver, IFindByTizenUIAutomation<IWebElement>
+    public class TizenDriver<W> : AppiumDriver<W>, IFindByTizenUIAutomation<W>
+         where W : IWebElement
     {
         private static readonly string Platform = MobilePlatform.Tizen;
 
@@ -123,7 +125,7 @@ namespace OpenQA.Selenium.Appium.Tizen
         /// </summary>
         /// <param name="selector">a Tizen UIAutomation selector</param>
         /// <returns>IWebElement object so that you can interact that object</returns>
-        public IWebElement FindElementByTizenUIAutomation(string selector) =>
+        public W FindElementByTizenUIAutomation(string selector) =>
             FindElement(MobileSelector.TizenUIAutomation, selector);
 
         /// <summary>
@@ -131,9 +133,11 @@ namespace OpenQA.Selenium.Appium.Tizen
         /// </summary>
         /// <param name="selector">a Tizen UIAutomation selector</param>
         /// <returns>ReadOnlyCollection of IWebElement objects so that you can interact with those objects</returns>
-        public IReadOnlyCollection<IWebElement> FindElementsByTizenUIAutomation(string selector) =>
+        public IReadOnlyCollection<W> FindElementsByTizenUIAutomation(string selector) =>
             FindElements(MobileSelector.TizenUIAutomation, selector);
 
         #endregion IFindByTizenUIAutomation Members
+
+        protected override WebElementFactory CreateElementFactory() => new TizenElementFactory(this as WebDriver);
     }
 }

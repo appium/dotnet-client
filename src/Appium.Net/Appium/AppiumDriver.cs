@@ -16,7 +16,9 @@ using Appium.Interfaces.Generic.SearchContext;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Service;
+using OpenQA.Selenium.Internal;
 using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Remote;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -25,20 +27,19 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using OpenQA.Selenium.Appium.ImageComparison;
-using OpenQA.Selenium.Internal;
 
 namespace OpenQA.Selenium.Appium
 {
-    public abstract class AppiumDriver : WebDriver, IFindsByImage<IWebElement>,
-        IFindsByClassName, IFindsById, IFindsByName, IFindsByTagName,
+    public abstract class AppiumDriver<W> : WebDriver, IFindsById, IFindsByClassName, IFindsByName,
+        IFindsByTagName, IFindsByImage<W>, IExecuteMethod,
         IHasSessionDetails,
         IHasLocation,
-        IFindByAccessibilityId<IWebElement>,
+        IFindByAccessibilityId<W>,
         IHidesKeyboard, IInteractsWithFiles,
-        IInteractsWithApps, IPerformsTouchActions, IRotatable, IContextAware, IGenericSearchContext<IWebElement>,
-        IGenericFindsByClassName<IWebElement>,
-        IGenericFindsById<IWebElement>, IGenericFindsByCssSelector<IWebElement>, IGenericFindsByLinkText<IWebElement>, IGenericFindsByName<IWebElement>,
-        IGenericFindsByPartialLinkText<IWebElement>, IGenericFindsByTagName<IWebElement>, IGenericFindsByXPath<IWebElement>
+        IInteractsWithApps, IPerformsTouchActions, IRotatable, IContextAware, IGenericSearchContext<W>,
+        IGenericFindsByClassName<W>,
+        IGenericFindsById<W>, IGenericFindsByCssSelector<W>, IGenericFindsByLinkText<W>, IGenericFindsByName<W>,
+        IGenericFindsByPartialLinkText<W>, IGenericFindsByTagName<W>, IGenericFindsByXPath<W> where W : IWebElement
     {
         private const string NativeApp = "NATIVE_APP";
 
@@ -47,7 +48,7 @@ namespace OpenQA.Selenium.Appium
         public AppiumDriver(ICommandExecutor commandExecutor, ICapabilities appiumOptions)
             : base(commandExecutor, appiumOptions)
         {
-            AppiumCommand.Merge(commandExecutor);
+            ElementFactory = CreateElementFactory();
         }
 
         public AppiumDriver(ICapabilities appiumOptions)
@@ -92,7 +93,7 @@ namespace OpenQA.Selenium.Appium
 
         #endregion Constructors
 
-                #region Overrides to fix "css selector" issue
+        #region Overrides to fix "css selector" issue
 
         IWebElement IFindsByClassName.FindElementByClassName(string className) =>
             base.FindElement(MobileSelector.ClassName, className);
@@ -122,82 +123,89 @@ namespace OpenQA.Selenium.Appium
 
         #region Generic FindMethods
 
-        public new IWebElement FindElement(By by) =>
-             base.FindElement(by);
+        public new W FindElement(By by) =>
+            (W)base.FindElement(by);
 
-        public new ReadOnlyCollection<IWebElement> FindElements(By by) =>
-            ConvertToExtendedWebElementCollection<IWebElement>(base.FindElements(by));
+        public new ReadOnlyCollection<W> FindElements(By by) =>
+            ConvertToExtendedWebElementCollection<W>(base.FindElements(by));
 
-        public new IWebElement FindElement(string by, string value) => base.FindElement(by, value);
+        public new W FindElement(string by, string value) => (W)base.FindElement(by, value);
 
-        public new IReadOnlyCollection<IWebElement> FindElements(string selector, string value) =>
-            ConvertToExtendedWebElementCollection<IWebElement>(base.FindElements(selector, value));
+        public new IReadOnlyCollection<W> FindElements(string selector, string value) =>
+            ConvertToExtendedWebElementCollection<W>(base.FindElements(selector, value));
 
-        public IWebElement FindElementByClassName(string className) =>
-             base.FindElement(MobileSelector.ClassName, className);
+        public W FindElementByClassName(string className) =>
+            (W)base.FindElement(MobileSelector.ClassName, className);
 
-        public ReadOnlyCollection<IWebElement> FindElementsByClassName(string className) =>
-            ConvertToExtendedWebElementCollection<IWebElement>(base.FindElements(MobileSelector.ClassName, className));
+        public ReadOnlyCollection<W> FindElementsByClassName(string className) =>
+            ConvertToExtendedWebElementCollection<W>(base.FindElements(MobileSelector.ClassName, className));
 
-        public IWebElement FindElementById(string id) =>
-             base.FindElement(MobileSelector.Id, id);
+        public W FindElementById(string id) =>
+            (W)base.FindElement(MobileSelector.Id, id);
 
-        public ReadOnlyCollection<IWebElement> FindElementsById(string id) =>
-            ConvertToExtendedWebElementCollection<IWebElement>(base.FindElements(MobileSelector.Id, id));
+        public ReadOnlyCollection<W> FindElementsById(string id) =>
+            ConvertToExtendedWebElementCollection<W>(base.FindElements(MobileSelector.Id, id));
 
-        public IWebElement FindElementByCssSelector(string cssSelector) =>
-             base.FindElement(By.CssSelector(cssSelector));
+        public W FindElementByCssSelector(string cssSelector) =>
+            (W)base.FindElement("css selector", cssSelector);
 
-        public ReadOnlyCollection<IWebElement> FindElementsByCssSelector(string cssSelector) =>
-            ConvertToExtendedWebElementCollection<IWebElement>(base.FindElements(By.CssSelector(cssSelector)));
+        public ReadOnlyCollection<W> FindElementsByCssSelector(string cssSelector) =>
+            ConvertToExtendedWebElementCollection<W>(base.FindElements("css selector", cssSelector));
 
-        public IWebElement FindElementByLinkText(string linkText) =>
-             base.FindElement(By.LinkText(linkText));
+        public W FindElementByLinkText(string linkText) =>
+            (W)base.FindElement("link text", linkText);
 
-        public ReadOnlyCollection<IWebElement> FindElementsByLinkText(string linkText) =>
-            ConvertToExtendedWebElementCollection<IWebElement>(base.FindElements(By.LinkText(linkText)));
+        public ReadOnlyCollection<W> FindElementsByLinkText(string linkText) =>
+            ConvertToExtendedWebElementCollection<W>(base.FindElements("link text", linkText));
 
-        public IWebElement FindElementByName(string name) =>
-             base.FindElement(MobileSelector.Name, name);
+        public W FindElementByName(string name) =>
+            (W)base.FindElement(MobileSelector.Name, name);
 
-        public ReadOnlyCollection<IWebElement> FindElementsByName(string name) =>
-            ConvertToExtendedWebElementCollection<IWebElement>(base.FindElements(MobileSelector.Name, name));
+        public ReadOnlyCollection<W> FindElementsByName(string name) =>
+            ConvertToExtendedWebElementCollection<W>(base.FindElements(MobileSelector.Name, name));
 
-        public IWebElement FindElementByPartialLinkText(string partialLinkText) =>
-             base.FindElement(By.PartialLinkText(partialLinkText));
+        public W FindElementByPartialLinkText(string partialLinkText) =>
+            (W)base.FindElement("partial link text", partialLinkText);
 
-        public ReadOnlyCollection<IWebElement> FindElementsByPartialLinkText(string partialLinkText) =>
-            ConvertToExtendedWebElementCollection<IWebElement>(base.FindElements(By.PartialLinkText(partialLinkText)));
+        public ReadOnlyCollection<W> FindElementsByPartialLinkText(string partialLinkText) =>
+            ConvertToExtendedWebElementCollection<W>(base.FindElements("partial link text", partialLinkText));
 
-        public IWebElement FindElementByTagName(string tagName) =>
-             base.FindElement(MobileSelector.TagName, tagName);
+        public W FindElementByTagName(string tagName) =>
+            (W)base.FindElement(MobileSelector.TagName, tagName);
 
-        public ReadOnlyCollection<IWebElement> FindElementsByTagName(string tagName) =>
-            ConvertToExtendedWebElementCollection<IWebElement>(base.FindElements(MobileSelector.TagName, tagName));
+        public ReadOnlyCollection<W> FindElementsByTagName(string tagName) =>
+            ConvertToExtendedWebElementCollection<W>(base.FindElements(MobileSelector.TagName, tagName));
 
-        public IWebElement FindElementByXPath(string xpath) =>
-             base.FindElement(By.XPath(xpath));
+        public W FindElementByXPath(string xpath) =>
+            (W)base.FindElement("xpath", xpath);
 
-        public ReadOnlyCollection<IWebElement> FindElementsByXPath(string xpath) =>
-            ConvertToExtendedWebElementCollection<IWebElement>(base.FindElements(By.XPath(xpath)));
-
-        #endregion
+        public ReadOnlyCollection<W> FindElementsByXPath(string xpath) =>
+            ConvertToExtendedWebElementCollection<W>(base.FindElements("xpath", xpath));
 
         #region IFindByAccessibilityId Members
 
-        public IWebElement FindElementByAccessibilityId(string selector) => FindElement(MobileSelector.Accessibility, selector);
+        public W FindElementByAccessibilityId(string selector) => FindElement(MobileSelector.Accessibility, selector);
 
-        public IReadOnlyCollection<IWebElement> FindElementsByAccessibilityId(string selector) =>
+        public IReadOnlyCollection<W> FindElementsByAccessibilityId(string selector) =>
             FindElements(MobileSelector.Accessibility, selector);
 
         #endregion IFindByAccessibilityId Members
 
         #region IFindsByImage Members
 
-        public IWebElement FindElementByImage(string base64Template) => FindElement(MobileSelector.Image, base64Template);
+        public W FindElementByImage(string base64Template) => FindElement(MobileSelector.Image, base64Template);
 
-        public IReadOnlyCollection<IWebElement> FindElementsByImage(string base64Template) =>
-            ConvertToExtendedWebElementCollection<IWebElement>(FindElements(MobileSelector.Image, base64Template));
+        public IReadOnlyCollection<W> FindElementsByImage(string base64Template) =>
+            ConvertToExtendedWebElementCollection<W>(FindElements(MobileSelector.Image, base64Template));
+
+        #endregion
+
+        #endregion
+
+        #region Public Methods
+
+        protected override Response Execute(string driverCommandToExecute, Dictionary<string, object> parameters) =>
+            base.Execute(driverCommandToExecute, parameters);
 
         Response IExecuteMethod.Execute(string commandName, Dictionary<string, object> parameters) =>
             base.Execute(commandName, parameters);
@@ -239,7 +247,7 @@ namespace OpenQA.Selenium.Appium
 
         public bool TerminateApp(string appId, TimeSpan timeout) =>
             Convert.ToBoolean(Execute(AppiumDriverCommand.TerminateApp,
-                    AppiumCommandExecutionHelper.PrepareArguments(new string[] {"appId", "options"},
+                    AppiumCommandExecutionHelper.PrepareArguments(new string[] { "appId", "options" },
                         new object[]
                             {appId, new Dictionary<string, object>() {{"timeout", (long) timeout.TotalMilliseconds}}}))
                 .Value.ToString());
@@ -265,11 +273,11 @@ namespace OpenQA.Selenium.Appium
         public void PushFile(string pathOnDevice, FileInfo file) =>
             AppiumCommandExecutionHelper.PushFile(this, pathOnDevice, file);
 
-        public void LaunchApp() => ((IExecuteMethod) this).Execute(AppiumDriverCommand.LaunchApp);
+        public void LaunchApp() => ((IExecuteMethod)this).Execute(AppiumDriverCommand.LaunchApp);
 
-        public void CloseApp() => ((IExecuteMethod) this).Execute(AppiumDriverCommand.CloseApp);
+        public void CloseApp() => ((IExecuteMethod)this).Execute(AppiumDriverCommand.CloseApp);
 
-        public void ResetApp() => ((IExecuteMethod) this).Execute(AppiumDriverCommand.ResetApp);
+        public void ResetApp() => ((IExecuteMethod)this).Execute(AppiumDriverCommand.ResetApp);
 
         public void FingerPrint(int fingerprintId) =>
             AppiumCommandExecutionHelper.FingerPrint(this, fingerprintId);
@@ -289,7 +297,7 @@ namespace OpenQA.Selenium.Appium
                 AppiumCommandExecutionHelper.PrepareArgument("seconds", timeSpan.TotalSeconds));
 
         public AppState GetAppState(string appId) =>
-            (AppState) Convert.ToInt32(Execute(AppiumDriverCommand.GetAppState,
+            (AppState)Convert.ToInt32(Execute(AppiumDriverCommand.GetAppState,
                 AppiumCommandExecutionHelper.PrepareArgument("appId", appId)).Value.ToString());
 
         /// <summary>
@@ -317,7 +325,7 @@ namespace OpenQA.Selenium.Appium
                 parameters = null;
             }
 
-            return (Dictionary<string, object>) Execute(AppiumDriverCommand.GetAppStrings, parameters).Value;
+            return (Dictionary<string, object>)Execute(AppiumDriverCommand.GetAppStrings, parameters).Value;
         }
 
         /// <summary>
@@ -355,7 +363,7 @@ namespace OpenQA.Selenium.Appium
         {
             get
             {
-                var commandResponse = ((IExecuteMethod) this).Execute(AppiumDriverCommand.GetLocation);
+                var commandResponse = ((IExecuteMethod)this).Execute(AppiumDriverCommand.GetLocation);
                 var locationValues = commandResponse.Value as Dictionary<string, object>;
                 return new Location
                 {
@@ -379,7 +387,7 @@ namespace OpenQA.Selenium.Appium
         {
             get
             {
-                var commandResponse = ((IExecuteMethod) this).Execute(AppiumDriverCommand.GetContext);
+                var commandResponse = ((IExecuteMethod)this).Execute(AppiumDriverCommand.GetContext);
                 return commandResponse.Value as string;
             }
             set
@@ -393,7 +401,7 @@ namespace OpenQA.Selenium.Appium
         {
             get
             {
-                var commandResponse = ((IExecuteMethod) this).Execute(AppiumDriverCommand.Contexts);
+                var commandResponse = ((IExecuteMethod)this).Execute(AppiumDriverCommand.Contexts);
                 var contexts = new List<string>();
                 var objects = commandResponse.Value as object[];
 
@@ -414,7 +422,7 @@ namespace OpenQA.Selenium.Appium
         {
             get
             {
-                var commandResponse = ((IExecuteMethod) this).Execute(AppiumDriverCommand.GetOrientation);
+                var commandResponse = ((IExecuteMethod)this).Execute(AppiumDriverCommand.GetOrientation);
                 return (commandResponse.Value as string).ConvertToScreenOrientation();
             }
             set
@@ -436,7 +444,7 @@ namespace OpenQA.Selenium.Appium
         public List<string> GetIMEAvailableEngines()
         {
             var retVal = new List<string>();
-            var commandResponse = ((IExecuteMethod) this).Execute(AppiumDriverCommand.GetAvailableEngines);
+            var commandResponse = ((IExecuteMethod)this).Execute(AppiumDriverCommand.GetAvailableEngines);
             var objectArr = commandResponse.Value as object[];
             if (null != objectArr)
             {
@@ -451,14 +459,14 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <returns>Active IME Engine</returns>
         public string GetIMEActiveEngine() =>
-            ((IExecuteMethod) this).Execute(AppiumDriverCommand.GetActiveEngine).Value as string;
+            ((IExecuteMethod)this).Execute(AppiumDriverCommand.GetActiveEngine).Value as string;
 
         /// <summary>
         /// Is the IME active on the device (NOTE: on Android, this is always true)
         /// </summary>
         /// <returns>true if IME is active, false otherwise</returns>
         public bool IsIMEActive() =>
-            (bool) (((IExecuteMethod) this).Execute(AppiumDriverCommand.IsIMEActive).Value);
+            (bool)(((IExecuteMethod)this).Execute(AppiumDriverCommand.IsIMEActive).Value);
 
         /// <summary>
         /// Activate the given IME on Device
@@ -472,7 +480,7 @@ namespace OpenQA.Selenium.Appium
         /// Deactivate the currently Active IME Engine on device
         /// </summary>
         public void DeactiveIMEEngine() =>
-            ((IExecuteMethod) this).Execute(AppiumDriverCommand.DeactivateEngine);
+            ((IExecuteMethod)this).Execute(AppiumDriverCommand.DeactivateEngine);
 
         #endregion Input Method (IME)
 
@@ -524,7 +532,7 @@ namespace OpenQA.Selenium.Appium
         /// Gets device date and time for both iOS(Supports only real device) and Android devices
         /// </summary>
         /// <returns>A string which consists of date and time</returns>
-        public string DeviceTime => ((IExecuteMethod) this).Execute(AppiumDriverCommand.GetDeviceTime).Value.ToString();
+        public string DeviceTime => ((IExecuteMethod)this).Execute(AppiumDriverCommand.GetDeviceTime).Value.ToString();
 
         #endregion Device Time
 
@@ -535,7 +543,7 @@ namespace OpenQA.Selenium.Appium
             get
             {
                 var session =
-                    (IDictionary<string, object>) ((IExecuteMethod) this).Execute(AppiumDriverCommand.GetSession)
+                    (IDictionary<string, object>)((IExecuteMethod)this).Execute(AppiumDriverCommand.GetSession)
                     .Value;
                 return new ReadOnlyDictionary<string, object>(session.Where(entry =>
                 {
@@ -566,7 +574,7 @@ namespace OpenQA.Selenium.Appium
         #region Recording Screen
 
         public string StartRecordingScreen() =>
-            ((IExecuteMethod) this).Execute(AppiumDriverCommand.StartRecordingScreen).Value.ToString();
+            ((IExecuteMethod)this).Execute(AppiumDriverCommand.StartRecordingScreen).Value.ToString();
 
         public string StartRecordingScreen(IScreenRecordingOptions options)
         {
@@ -575,7 +583,7 @@ namespace OpenQA.Selenium.Appium
         }
 
         public string StopRecordingScreen() =>
-            ((IExecuteMethod) this).Execute(AppiumDriverCommand.StopRecordingScreen).Value.ToString();
+            ((IExecuteMethod)this).Execute(AppiumDriverCommand.StopRecordingScreen).Value.ToString();
 
         public string StopRecordingScreen(IScreenRecordingOptions options)
         {
@@ -678,6 +686,8 @@ namespace OpenQA.Selenium.Appium
         #endregion Public Methods
 
         #region Support methods
+
+        protected new abstract WebElementFactory CreateElementFactory();
 
         internal static ICapabilities SetPlatformToCapabilities(DriverOptions dc, string desiredPlatform)
         {

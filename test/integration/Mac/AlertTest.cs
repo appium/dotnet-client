@@ -8,15 +8,15 @@ namespace Appium.Net.Integration.Tests.Mac
 {
     public class FindElementTest
     {
-        private AppiumDriver _driver;
+        private AppiumDriver<MacElement> _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
             var capabilities = new AppiumOptions();
-            capabilities.DeviceName = "Mac"; // Requires until Appium 1.15.1
+            capabilities.AddAdditionalAppiumOption(MobileCapabilityType.DeviceName, "Mac"); // Requires until Appium 1.15.1
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _driver = new MacDriver(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver = new MacDriver<MacElement>(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 

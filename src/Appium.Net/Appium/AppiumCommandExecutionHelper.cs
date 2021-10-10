@@ -94,7 +94,7 @@ namespace OpenQA.Selenium.Appium
             {
                 case ClipboardContentType.Image:
                 case ClipboardContentType.Url:
-                    if (executeMethod.GetType() == typeof(AndroidDriver) || executeMethod.GetType().GetGenericTypeDefinition() == typeof(AndroidDriver))
+                    if (executeMethod.GetType().GetGenericTypeDefinition() == typeof(AndroidDriver<>))
                     {
                         throw new NotImplementedException(
                             $"Android only supports contentType: {nameof(ClipboardContentType.PlainText)}");
@@ -118,7 +118,7 @@ namespace OpenQA.Selenium.Appium
             {
                 case ClipboardContentType.Image:
                 case ClipboardContentType.Url:
-                    if (executeMethod.GetType() == typeof(AndroidDriver) || executeMethod.GetType().GetGenericTypeDefinition() == typeof(AndroidDriver))
+                    if (executeMethod.GetType().GetGenericTypeDefinition() == typeof(AndroidDriver<>))
                     {
                         throw new NotImplementedException(
                             $"Android only supports contentType: {nameof(ClipboardContentType.PlainText)}");

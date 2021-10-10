@@ -3,13 +3,14 @@ using System.Threading;
 using Appium.Net.Integration.Tests.helpers;
 using Appium.Net.Integration.Tests.PageObjects;
 using NUnit.Framework;
+using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 
 namespace Appium.Net.Integration.Tests.PageObjectTests.Other
 {
     class AndroidJsWebViewTest
     {
-        private AndroidDriver _driver;
+        private AndroidDriver<AppiumWebElement> _driver;
         private AndroidJavaScriptTestPageObject _pageObject;
 
         [OneTimeSetUp]
@@ -19,7 +20,7 @@ namespace Appium.Net.Integration.Tests.PageObjectTests.Other
                 ? Caps.GetAndroidUIAutomatorCaps(Apps.Get("selendroidTestApp"))
                 : Caps.GetAndroidUIAutomatorCaps(Apps.Get("selendroidTestApp"));
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _driver = new AndroidDriver(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
             _pageObject = new AndroidJavaScriptTestPageObject(_driver);
             _driver.StartActivity("io.selendroid.testapp", ".WebViewActivity");
         }

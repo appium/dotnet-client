@@ -1,5 +1,6 @@
 ﻿using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.iOS;
 using OpenQA.Selenium.Appium.Interfaces;
@@ -10,7 +11,7 @@ namespace Appium.Net.Integration.Tests.IOS
     [TestFixture]
     public class TouchActionTest
     {
-        private AppiumDriver _driver;
+        private AppiumDriver<IWebElement> _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
@@ -24,7 +25,7 @@ namespace Appium.Net.Integration.Tests.IOS
                 capabilities.AddAdditionalAppiumOption("tags", new[] {"sample"});
             }
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _driver = new IOSDriver(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver = new IOSDriver<IWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait= Env.ImplicitTimeoutSec;
         }
 

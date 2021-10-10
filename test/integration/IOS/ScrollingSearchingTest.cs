@@ -7,14 +7,14 @@ namespace Appium.Net.Integration.Tests.IOS
 {
     public class ScrollingSearchingTest
     {
-        private IOSDriver _driver;
+        private IOSDriver<AppiumWebElement> _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
             var capabilities = Caps.GetIosCaps(Apps.Get("iosUICatalogApp"));
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _driver = new IOSDriver(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver = new IOSDriver<AppiumWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 

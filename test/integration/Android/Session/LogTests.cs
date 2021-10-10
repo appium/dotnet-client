@@ -21,7 +21,7 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
         public void SetUp()
         {
             _androidOptions = Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
-            _driver = new AndroidDriver(
+            _driver = new AndroidDriver<IWebElement>(
                 Env.ServerIsLocal() ? AppiumServers.LocalServiceUri : AppiumServers.RemoteServerUri,
                 _androidOptions);
         }
@@ -91,7 +91,7 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
             Assert.That(match.Success, Is.True, nameof(match.Success));
             bugReportLogPath = match.Value;
 
-            var bugReportLogByteArray = ((AndroidDriver) _driver).PullFile(bugReportLogPath);
+            var bugReportLogByteArray = ((AndroidDriver<IWebElement>) _driver).PullFile(bugReportLogPath);
             Assert.That(bugReportLogByteArray.Length, Is.GreaterThan(1));
         }
     }

@@ -29,20 +29,20 @@ using OpenQA.Selenium.Appium.Windows;
 // up to OpenQA.Selenium.Interactions and this alias can simply be removed.
 using PointerInputDevice = OpenQA.Selenium.Appium.Interactions.PointerInputDevice;
 using NUnit.Framework;
-using Appium.Net.Integration.Tests.helpers;
 using OpenQA.Selenium.Appium;
+using Appium.Net.Integration.Tests.helpers;
 
 namespace Appium.Net.Integration.Tests.Windows
 {
     public class PenTest : StickyNotesTest
     {
-        private WindowsDriver newStickyNoteSession;
-        private IWebElement inkCanvas;
+        private WindowsDriver<WindowsElement> newStickyNoteSession;
+        private WindowsElement inkCanvas;
 
         [Test]
         public void DrawBasicSquare()
         {
-            Point canvasCoordinate = (inkCanvas as WebElement).Coordinates.LocationInViewport;
+            Point canvasCoordinate = inkCanvas.Coordinates.LocationInViewport;
             Size squareSize = new Size(inkCanvas.Size.Width * 3 / 5, inkCanvas.Size.Height * 3 / 5);
             Point A = new Point(canvasCoordinate.X + inkCanvas.Size.Width / 5, canvasCoordinate.Y + inkCanvas.Size.Height / 5);
 
@@ -89,7 +89,7 @@ namespace Appium.Net.Integration.Tests.Windows
         [Test]
         public void DrawBasicSquareWithExtraAttributes()
         {
-            Point canvasCoordinate = (inkCanvas as WebElement).Coordinates.LocationInViewport;
+            Point canvasCoordinate = inkCanvas.Coordinates.LocationInViewport;
             Size squareSize = new Size(inkCanvas.Size.Width * 3 / 5, inkCanvas.Size.Height * 3 / 5);
             Point A = new Point(canvasCoordinate.X + inkCanvas.Size.Width / 5, canvasCoordinate.Y + inkCanvas.Size.Height / 5);
 
@@ -225,7 +225,7 @@ namespace Appium.Net.Integration.Tests.Windows
             Assert.AreEqual(openedStickyNotesWindowsBefore.Count + 1, openedStickyNotesWindowsAfter.Count);
 
             // Identify the newly opened Sticky Note by removing the previously opened ones from the list
-            List<IWebElement> openedStickyNotes = new List<IWebElement>(openedStickyNotesWindowsAfter);
+            List<WindowsElement> openedStickyNotes = new List<WindowsElement>(openedStickyNotesWindowsAfter);
             foreach (var preExistingStickyNote in openedStickyNotesWindowsBefore)
             {
                 openedStickyNotes.Remove(preExistingStickyNote);
@@ -238,7 +238,7 @@ namespace Appium.Net.Integration.Tests.Windows
             AppiumOptions appCapabilities = new AppiumOptions();
             appCapabilities.AddAdditionalAppiumOption("appTopLevelWindow", newStickyNoteWindowHandle);
             appCapabilities.DeviceName = "WindowsPC";
-            newStickyNoteSession = new WindowsDriver(serverUri, appCapabilities);
+            newStickyNoteSession = new WindowsDriver<WindowsElement>(serverUri, appCapabilities);
             Assert.IsNotNull(newStickyNoteSession);
 
             // Resize and re-position the Sticky Notes window we are working with
@@ -259,7 +259,8 @@ namespace Appium.Net.Integration.Tests.Windows
             if (newStickyNoteSession != null)
             {
                 // Create a new Sticky Note by pressing Ctrl + N
-                new Actions(newStickyNoteSession).SendKeys(Keys.Control + "d" + Keys.Control).Perform();
+                /////// TODO - Implement for Appium
+                //// newStickyNoteSession.Keyboard.SendKeys(Keys.Control + "d" + Keys.Control);
                 Thread.Sleep(TimeSpan.FromSeconds(2));
 
                 try

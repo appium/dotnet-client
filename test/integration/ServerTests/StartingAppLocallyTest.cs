@@ -19,10 +19,10 @@ namespace Appium.Net.Integration.Tests.ServerTests
             var capabilities =
                 Caps.GetAndroidUIAutomatorCaps(app);
 
-            AndroidDriver driver = null;
+            AndroidDriver<AppiumWebElement> driver = null;
             try
             {
-                driver = new AndroidDriver(capabilities);
+                driver = new AndroidDriver<AppiumWebElement>(capabilities);
                 driver.CloseApp();
             }
             finally
@@ -43,10 +43,10 @@ namespace Appium.Net.Integration.Tests.ServerTests
                 .AddArguments(GeneralOptionList.OverrideSession()).AddArguments(GeneralOptionList.StrictCaps());
             var builder = new AppiumServiceBuilder().WithArguments(argCollector);
 
-            AndroidDriver driver = null;
+            AndroidDriver<AppiumWebElement> driver = null;
             try
             {
-                driver = new AndroidDriver(builder, capabilities);
+                driver = new AndroidDriver<AppiumWebElement>(builder, capabilities);
                 driver.CloseApp();
             }
             finally
@@ -72,10 +72,10 @@ namespace Appium.Net.Integration.Tests.ServerTests
             var argCollector = new OptionCollector().AddCapabilities(serverCapabilities);
             var builder = new AppiumServiceBuilder().WithArguments(argCollector);
 
-            AndroidDriver driver = null;
+            AndroidDriver<AppiumWebElement> driver = null;
             try
             {
-                driver = new AndroidDriver(builder, clientCapabilities);
+                driver = new AndroidDriver<AppiumWebElement>(builder, clientCapabilities);
                 driver.CloseApp();
             }
             finally
@@ -91,10 +91,10 @@ namespace Appium.Net.Integration.Tests.ServerTests
             var capabilities =
                 Caps.GetIosCaps(app);
 
-            IOSDriver driver = null;
+            IOSDriver<AppiumWebElement> driver = null;
             try
             {
-                driver = new IOSDriver(capabilities, Env.InitTimeoutSec);
+                driver = new IOSDriver<AppiumWebElement>(capabilities, Env.InitTimeoutSec);
                 driver.CloseApp();
             }
             finally
@@ -114,10 +114,10 @@ namespace Appium.Net.Integration.Tests.ServerTests
                 .AddArguments(GeneralOptionList.OverrideSession()).AddArguments(GeneralOptionList.StrictCaps());
 
             var builder = new AppiumServiceBuilder().WithArguments(argCollector);
-            IOSDriver driver = null;
+            IOSDriver<AppiumWebElement> driver = null;
             try
             {
-                driver = new IOSDriver(builder, capabilities, Env.InitTimeoutSec);
+                driver = new IOSDriver<AppiumWebElement>(builder, capabilities, Env.InitTimeoutSec);
                 driver.CloseApp();
             }
             finally
@@ -133,19 +133,19 @@ namespace Appium.Net.Integration.Tests.ServerTests
                 ? //it will be a cause of error
                 Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"))
                 : Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
-            capabilities.DeviceName = "iPhone Simulator";
+            capabilities.AddAdditionalAppiumOption(MobileCapabilityType.DeviceName, "iPhone Simulator");
             capabilities.AddAdditionalAppiumOption(MobileCapabilityType.PlatformName, MobilePlatform.IOS);
 
             var builder = new AppiumServiceBuilder();
             var service = builder.Build();
             service.Start();
 
-            IOSDriver driver = null;
+            IOSDriver<AppiumWebElement> driver = null;
             try
             {
                 try
                 {
-                    driver = new IOSDriver(service, capabilities);
+                    driver = new IOSDriver<AppiumWebElement>(service, capabilities);
                 }
                 catch (Exception e)
                 {

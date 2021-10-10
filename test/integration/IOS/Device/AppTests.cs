@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.iOS;
 
@@ -9,7 +10,7 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
 {
     internal class AppTests
     {
-        private IOSDriver _driver;
+        private IOSDriver<IWebElement> _driver;
         private AppiumOptions _iosOptions;
         private const string UiCatalogAppTestAppBundleId = "com.example.apple-samplecode.UICatalog";
         private const string IosTestAppBundleId = "io.appium.TestApp";
@@ -21,7 +22,7 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
         public void SetUp()
         {
             _iosOptions = Caps.GetIosCaps(Apps.Get("iosUICatalogApp"));
-            _driver = new IOSDriver(
+            _driver = new IOSDriver<IWebElement>(
                 Env.ServerIsLocal() ? AppiumServers.LocalServiceUri : AppiumServers.RemoteServerUri,
                 _iosOptions);
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);

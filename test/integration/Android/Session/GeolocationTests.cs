@@ -8,7 +8,7 @@ namespace Appium.Net.Integration.Tests.Android.Session.Geolocation
     [TestFixture]
     internal class GeolocationTests
     {
-        private AppiumDriver _driver;
+        private AppiumDriver<AndroidElement> _driver;
 
         [SetUp]
         public void BeforeAll()
@@ -17,7 +17,7 @@ namespace Appium.Net.Integration.Tests.Android.Session.Geolocation
                 ? Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"))
                 : Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _driver = new AndroidDriver(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver = new AndroidDriver<AndroidElement>(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 

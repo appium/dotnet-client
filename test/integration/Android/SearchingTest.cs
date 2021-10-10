@@ -9,7 +9,7 @@ namespace Appium.Net.Integration.Tests.Android
     [TestFixture]
     public class SearchingTest
     {
-        private AndroidDriver _driver;
+        private AndroidDriver<AndroidElement> _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
@@ -18,7 +18,7 @@ namespace Appium.Net.Integration.Tests.Android
                 ? Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"))
                 : Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _driver = new AndroidDriver(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver = new AndroidDriver<AndroidElement>(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 

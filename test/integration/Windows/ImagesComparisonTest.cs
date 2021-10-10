@@ -9,7 +9,7 @@ namespace Appium.Net.Integration.Tests.Windows
 {
     public class ImagesComparisonTest
     {
-        private WindowsDriver _calculatorSession;
+        private WindowsDriver<WindowsElement> _calculatorSession;
         protected static WebElement CalculatorResult;
 
         [OneTimeSetUp]
@@ -17,8 +17,11 @@ namespace Appium.Net.Integration.Tests.Windows
         {
             var appCapabilities = new AppiumOptions();
             appCapabilities.App = "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App";
+            appCapabilities.DeviceName = "WindowsPC";
+            appCapabilities.PlatformName ="Windows";
+
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _calculatorSession = new WindowsDriver(serverUri, appCapabilities,
+            _calculatorSession = new WindowsDriver<WindowsElement>(serverUri, appCapabilities,
                 Env.InitTimeoutSec);
             _calculatorSession.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }

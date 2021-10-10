@@ -25,11 +25,11 @@ using OpenQA.Selenium.Appium.Android.Enums;
 
 namespace OpenQA.Selenium.Appium.Android
 {
-    public class AndroidDriver : AppiumDriver, IFindByAndroidUIAutomator<IWebElement>, IFindByAndroidDataMatcher<IWebElement>,
+    public class AndroidDriver<W> : AppiumDriver<W>, IFindByAndroidUIAutomator<W>, IFindByAndroidDataMatcher<W>,
         IStartsActivity,
         IHasNetworkConnection, INetworkActions, IHasClipboard, IHasPerformanceData,
         ISendsKeyEvents,
-        IPushesFiles, IHasSettings
+        IPushesFiles, IHasSettings where W : IWebElement
     {
         private static readonly string Platform = MobilePlatform.Android;
 
@@ -130,37 +130,37 @@ namespace OpenQA.Selenium.Appium.Android
 
         #region IFindByAndroidUIAutomator Members
 
-        public IWebElement FindElementByAndroidUIAutomator(string selector) =>
+        public W FindElementByAndroidUIAutomator(string selector) =>
             FindElement(MobileSelector.AndroidUIAutomator, selector);
 
-        public IWebElement FindElementByAndroidUIAutomator(IUiAutomatorStatementBuilder selector) =>
+        public W FindElementByAndroidUIAutomator(IUiAutomatorStatementBuilder selector) =>
             FindElement(MobileSelector.AndroidUIAutomator, selector.Build());
 
-        public IReadOnlyCollection<IWebElement> FindElementsByAndroidUIAutomator(string selector) =>
-            ConvertToExtendedWebElementCollection<IWebElement>(FindElements(MobileSelector.AndroidUIAutomator, selector));
+        public IReadOnlyCollection<W> FindElementsByAndroidUIAutomator(string selector) =>
+            ConvertToExtendedWebElementCollection<W>(FindElements(MobileSelector.AndroidUIAutomator, selector));
 
-        public IReadOnlyCollection<IWebElement> FindElementsByAndroidUIAutomator(IUiAutomatorStatementBuilder selector) =>
-            ConvertToExtendedWebElementCollection<IWebElement>(FindElements(MobileSelector.AndroidUIAutomator, selector.Build()));
+        public IReadOnlyCollection<W> FindElementsByAndroidUIAutomator(IUiAutomatorStatementBuilder selector) =>
+            ConvertToExtendedWebElementCollection<W>(FindElements(MobileSelector.AndroidUIAutomator, selector.Build()));
 
         #endregion IFindByAndroidUIAutomator Members
 
         #region IFindByAndroidDataMatcher Members
 
-        public IWebElement FindElementByAndroidDataMatcher(string selector) =>
+        public W FindElementByAndroidDataMatcher(string selector) =>
             FindElement(MobileSelector.AndroidDataMatcher, selector);
 
-        public IReadOnlyCollection<IWebElement> FindElementsByAndroidDataMatcher(string selector) =>
-            ConvertToExtendedWebElementCollection<IWebElement>(FindElements(MobileSelector.AndroidDataMatcher, selector));
+        public IReadOnlyCollection<W> FindElementsByAndroidDataMatcher(string selector) =>
+            ConvertToExtendedWebElementCollection<W>(FindElements(MobileSelector.AndroidDataMatcher, selector));
 
         #endregion IFindByAndroidDataMatcher Members
 
         #region IFindByAndroidViewMatcher Members
 
-        public IWebElement FindElementByAndroidViewMatcher(string selector) =>
+        public W FindElementByAndroidViewMatcher(string selector) =>
             FindElement(MobileSelector.AndroidViewMatcher, selector);
 
-        public IReadOnlyCollection<IWebElement> FindElementsByAndroidViewMatcher(string selector) =>
-            ConvertToExtendedWebElementCollection<IWebElement>(FindElements(MobileSelector.AndroidViewMatcher, selector));
+        public IReadOnlyCollection<W> FindElementsByAndroidViewMatcher(string selector) =>
+            ConvertToExtendedWebElementCollection<W>(FindElements(MobileSelector.AndroidViewMatcher, selector));
 
         #endregion IFindByAndroidViewMatcher Members
 
@@ -195,12 +195,11 @@ namespace OpenQA.Selenium.Appium.Android
         public void PressKeyCode(int keyCode, int metastate = -1) =>
             AppiumCommandExecutionHelper.PressKeyCode(this, keyCode, metastate);
 
-        public void PressKeyCode(KeyEvent keyEvent) =>
-            AppiumCommandExecutionHelper.PressKeyCode(this, keyEvent);
-
         public void LongPressKeyCode(int keyCode, int metastate = -1) =>
             AppiumCommandExecutionHelper.LongPressKeyCode(this, keyCode, metastate);
 
+        public void PressKeyCode(KeyEvent keyEvent) =>
+            AppiumCommandExecutionHelper.PressKeyCode(this, keyEvent);
 
         public void LongPressKeyCode(KeyEvent keyEvent) =>
             AppiumCommandExecutionHelper.LongPressKeyCode(this, keyEvent);
@@ -303,6 +302,8 @@ namespace OpenQA.Selenium.Appium.Android
         /// <return>a base64 string containing the data</return> 
         public string EndTestCoverage(string intent, string path) =>
             AndroidCommandExecutionHelper.EndTestCoverage(this, intent, path);
+
+        protected override WebElementFactory CreateElementFactory() => new AndroidElementFactory(this);
 
         public void SetSetting(string setting, object value) =>
             AndroidCommandExecutionHelper.SetSetting(this, setting, value);

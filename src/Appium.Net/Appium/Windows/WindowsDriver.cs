@@ -19,18 +19,21 @@ using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Service;
+using OpenQA.Selenium.Remote;
 
 namespace OpenQA.Selenium.Appium.Windows
 {
-    public class WindowsDriver : AppiumDriver, ISendsKeyEvents, IHidesKeyboardWithKeyName,
-        IFindByWindowsUIAutomation<IWebElement>
+    public class WindowsDriver<W> : AppiumDriver<W>, ISendsKeyEvents, IHidesKeyboardWithKeyName,
+        IFindByWindowsUIAutomation<W> where W : IWebElement
     {
+        private static readonly string Platform = MobilePlatform.Windows;
+
         /// <summary>
         /// Initializes a new instance of the WindowsDriver class using Appium options
         /// </summary>
         /// <param name="AppiumOptions">An <see cref="AppiumOptions"/> object containing the Appium options of the browser.</param>
         public WindowsDriver(AppiumOptions AppiumOptions)
-            : base(SetPlatformToCapabilities(AppiumOptions, MobilePlatform.Windows))
+            : base(SetPlatformToCapabilities(AppiumOptions, Platform))
         {
         }
 
@@ -40,7 +43,7 @@ namespace OpenQA.Selenium.Appium.Windows
         /// <param name="AppiumOptions">An <see cref="ICapabilities"/> object containing the Appium options.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
         public WindowsDriver(AppiumOptions AppiumOptions, TimeSpan commandTimeout)
-            : base(SetPlatformToCapabilities(AppiumOptions, MobilePlatform.Windows), commandTimeout)
+            : base(SetPlatformToCapabilities(AppiumOptions, Platform), commandTimeout)
         {
         }
 
@@ -50,7 +53,7 @@ namespace OpenQA.Selenium.Appium.Windows
         /// <param name="builder"> object containing settings of the Appium local service which is going to be started</param>
         /// <param name="AppiumOptions">An <see cref="ICapabilities"/> object containing the Appium options.</param>
         public WindowsDriver(AppiumServiceBuilder builder, AppiumOptions AppiumOptions)
-            : base(builder, SetPlatformToCapabilities(AppiumOptions, MobilePlatform.Windows))
+            : base(builder, SetPlatformToCapabilities(AppiumOptions, Platform))
         {
         }
 
@@ -62,7 +65,7 @@ namespace OpenQA.Selenium.Appium.Windows
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
         public WindowsDriver(AppiumServiceBuilder builder, AppiumOptions AppiumOptions,
             TimeSpan commandTimeout)
-            : base(builder, SetPlatformToCapabilities(AppiumOptions, MobilePlatform.Windows), commandTimeout)
+            : base(builder, SetPlatformToCapabilities(AppiumOptions, Platform), commandTimeout)
         {
         }
 
@@ -72,7 +75,7 @@ namespace OpenQA.Selenium.Appium.Windows
         /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
         /// <param name="AppiumOptions">An <see cref="AppiumOptions"/> object containing the Appium options.</param>
         public WindowsDriver(Uri remoteAddress, AppiumOptions AppiumOptions)
-            : base(remoteAddress, SetPlatformToCapabilities(AppiumOptions, MobilePlatform.Windows))
+            : base(remoteAddress, SetPlatformToCapabilities(AppiumOptions, Platform))
         {
         }
 
@@ -82,7 +85,7 @@ namespace OpenQA.Selenium.Appium.Windows
         /// <param name="service">the specified Appium local service</param>
         /// <param name="AppiumOptions">An <see cref="ICapabilities"/> object containing the Appium options of the browser.</param>
         public WindowsDriver(AppiumLocalService service, AppiumOptions AppiumOptions)
-            : base(service, SetPlatformToCapabilities(AppiumOptions, MobilePlatform.Windows))
+            : base(service, SetPlatformToCapabilities(AppiumOptions, Platform))
         {
         }
 
@@ -93,7 +96,7 @@ namespace OpenQA.Selenium.Appium.Windows
         /// <param name="AppiumOptions">An <see cref="AppiumOptions"/> object containing the Appium options.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
         public WindowsDriver(Uri remoteAddress, AppiumOptions AppiumOptions, TimeSpan commandTimeout)
-            : base(remoteAddress, SetPlatformToCapabilities(AppiumOptions, MobilePlatform.Windows), commandTimeout)
+            : base(remoteAddress, SetPlatformToCapabilities(AppiumOptions, Platform), commandTimeout)
         {
         }
 
@@ -105,7 +108,7 @@ namespace OpenQA.Selenium.Appium.Windows
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
         public WindowsDriver(AppiumLocalService service, AppiumOptions AppiumOptions,
             TimeSpan commandTimeout)
-            : base(service, SetPlatformToCapabilities(AppiumOptions, MobilePlatform.Windows), commandTimeout)
+            : base(service, SetPlatformToCapabilities(AppiumOptions, Platform), commandTimeout)
         {
         }
 
@@ -135,7 +138,7 @@ namespace OpenQA.Selenium.Appium.Windows
         /// </summary>
         /// <param name="selector">a Windows UIAutomation selector</param>
         /// <returns>IWebElement object so that you can interact that object</returns>
-        public IWebElement FindElementByWindowsUIAutomation(string selector) =>
+        public W FindElementByWindowsUIAutomation(string selector) =>
             FindElement(MobileSelector.WindowsUIAutomation, selector);
 
         /// <summary>
@@ -143,13 +146,15 @@ namespace OpenQA.Selenium.Appium.Windows
         /// </summary>
         /// <param name="selector">a Windows UIAutomation selector</param>
         /// <returns>ReadOnlyCollection of IWebElement objects so that you can interact with those objects</returns>
-        public IReadOnlyCollection<IWebElement> FindElementsByWindowsUIAutomation(string selector) =>
+        public IReadOnlyCollection<W> FindElementsByWindowsUIAutomation(string selector) =>
             FindElements(MobileSelector.WindowsUIAutomation, selector);
 
         #endregion IFindByWindowsUIAutomation Members
 
-        public new void HideKeyboard(string key, string strategy = null) =>
+        public void HideKeyboard(string key, string strategy = null) =>
             AppiumCommandExecutionHelper.HideKeyboard(this, strategy, key);
+
+        protected override WebElementFactory CreateElementFactory() => new WindowsElementFactory(this);
 
         public void PressKeyCode(KeyEvent keyEvent) => throw new NotImplementedException();
 

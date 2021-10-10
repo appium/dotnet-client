@@ -30,7 +30,7 @@ namespace OpenQA.Selenium.Appium.PageObjects
 
             // Search context it is not only Webdriver. Webelement is search context
             // too.
-            // RemoteWebElement and AppiumWebElement implement IWrapsDriver
+            // WebElement and AppiumWebElement implement IWrapsDriver
             if ((context as IWrapsDriver) != null)
                 return UnpackWebdriver(((IWrapsDriver) context)
                     .WrappedDriver);

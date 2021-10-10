@@ -23,7 +23,7 @@ namespace Appium.Net.Integration.Tests.Android
             capabilities.AddAdditionalAppiumOption(AndroidMobileCapabilityType.AppPackage, "io.selendroid.testapp");
             capabilities.AddAdditionalAppiumOption(AndroidMobileCapabilityType.AppActivity, ".WebViewActivity");
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _driver = new AndroidDriver(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver = new AndroidDriver<IWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 

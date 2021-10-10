@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.iOS;
 
@@ -13,7 +14,7 @@ namespace Appium.Net.Integration.Tests.IOS
     [TestFixture(Category = "Device")]
     public class ClipboardTest
     {
-        private IOSDriver _driver;
+        private IOSDriver<IWebElement> _driver;
         private const string ClipboardTestString = "Hello Clipboard";
         private const string Base64RegexPattern = @"^[a-zA-Z0-9\+/]*={0,2}$";
 
@@ -24,7 +25,7 @@ namespace Appium.Net.Integration.Tests.IOS
             capabilities.AddAdditionalAppiumOption(MobileCapabilityType.FullReset, true);
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
 
-            _driver = new IOSDriver(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver = new IOSDriver<IWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 

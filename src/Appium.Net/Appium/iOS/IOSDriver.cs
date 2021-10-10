@@ -15,6 +15,7 @@
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Service;
+using OpenQA.Selenium.Remote;
 using System;
 using System.Drawing;
 using OpenQA.Selenium.Appium.iOS.Interfaces;
@@ -22,10 +23,9 @@ using System.Collections.Generic;
 
 namespace OpenQA.Selenium.Appium.iOS
 {
-
-    public class IOSDriver : AppiumDriver, IFindByIosUIAutomation<IWebElement>, IFindsByIosClassChain<IWebElement>,
-        IFindsByIosNSPredicate<IWebElement>, IHidesKeyboardWithKeyName, IHasClipboard,
-        IShakesDevice, IPerformsTouchID, IHasSettings
+    public class IOSDriver<W> : AppiumDriver<W>, IFindByIosUIAutomation<W>, IFindsByIosClassChain<W>,
+        IFindsByIosNSPredicate<W>, IHidesKeyboardWithKeyName, IHasClipboard,
+        IShakesDevice, IPerformsTouchID, IHasSettings where W : IWebElement
     {
         private static readonly string Platform = MobilePlatform.IOS;
 
@@ -123,28 +123,28 @@ namespace OpenQA.Selenium.Appium.iOS
 
         #region IFindByIosUIAutomation Members
 
-        public IWebElement FindElementByIosUIAutomation(string selector) => FindElement(MobileSelector.iOSAutomatoion, selector);
+        public W FindElementByIosUIAutomation(string selector) => FindElement(MobileSelector.iOSAutomatoion, selector);
 
-        public IReadOnlyCollection<IWebElement> FindElementsByIosUIAutomation(string selector) =>
+        public IReadOnlyCollection<W> FindElementsByIosUIAutomation(string selector) =>
             FindElements(MobileSelector.iOSAutomatoion, selector);
 
         #endregion IFindByIosUIAutomation Members
 
         #region IFindsByIosClassChain Members
 
-        public IWebElement FindElementByIosClassChain(string selector) => FindElement(MobileSelector.iOSClassChain, selector);
+        public W FindElementByIosClassChain(string selector) => FindElement(MobileSelector.iOSClassChain, selector);
 
-        public IReadOnlyCollection<IWebElement> FindElementsByIosClassChain(string selector) =>
+        public IReadOnlyCollection<W> FindElementsByIosClassChain(string selector) =>
             FindElements(MobileSelector.iOSClassChain, selector);
 
         #endregion IFindsByIosClassChain Members
 
         #region IFindsByIosNSPredicate Members
 
-        public IWebElement FindElementByIosNsPredicate(string selector) =>
+        public W FindElementByIosNsPredicate(string selector) =>
             FindElement(MobileSelector.iOSPredicateString, selector);
 
-        public IReadOnlyCollection<IWebElement> FindElementsByIosNsPredicate(string selector) =>
+        public IReadOnlyCollection<W> FindElementsByIosNsPredicate(string selector) =>
             FindElements(MobileSelector.iOSPredicateString, selector);
 
         #endregion IFindsByIosNSPredicate Members
@@ -168,8 +168,10 @@ namespace OpenQA.Selenium.Appium.iOS
 
         public void ShakeDevice() => IOSCommandExecutionHelper.ShakeDevice(this);
 
-        public new void HideKeyboard(string key, string strategy = null) =>
+        public void HideKeyboard(string key, string strategy = null) =>
             AppiumCommandExecutionHelper.HideKeyboard(this, strategy, key);
+
+        protected override WebElementFactory CreateElementFactory() => new IOSElementFactory(this as WebDriver);
 
         /// <summary>
         /// Locks the device.
@@ -177,13 +179,13 @@ namespace OpenQA.Selenium.Appium.iOS
         /// <param name="seconds">The number of seconds during which the device need to be locked for.</param>
         public void Lock(int seconds) => AppiumCommandExecutionHelper.Lock(this, seconds);
 
-        public void Lock() => IOSCommandExecutionHelper.Lock(this);
+        public void PerformTouchID(bool match) => IOSCommandExecutionHelper.PerformTouchID(this, match);
 
         public bool IsLocked() => IOSCommandExecutionHelper.IsLocked(this);
 
         public void Unlock() => IOSCommandExecutionHelper.Unlock(this);
 
-        public void PerformTouchID(bool match) => IOSCommandExecutionHelper.PerformTouchID(this, match);
+        public void Lock() => IOSCommandExecutionHelper.Lock(this);
 
         /// <summary>
         /// Sets the content to the clipboard

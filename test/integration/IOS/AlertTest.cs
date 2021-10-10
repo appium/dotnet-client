@@ -8,14 +8,14 @@ namespace Appium.Net.Integration.Tests.IOS
 {
     public class AlertTest
     {
-        private AppiumDriver _driver;
+        private AppiumDriver<IOSElement> _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
             var capabilities = Caps.GetIosCaps(Apps.Get("iosTestApp"));
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _driver = new IOSDriver(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver = new IOSDriver<IOSElement>(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 

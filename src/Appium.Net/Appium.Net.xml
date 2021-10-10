@@ -159,7 +159,7 @@
             </summary>
             <returns>The image content of the clipboard as base64-encoded string or null if there is no image on the clipboard</returns>
         </member>
-        <member name="M:OpenQA.Selenium.Appium.Android.AndroidElement.#ctor(OpenQA.Selenium.Remote.RemoteWebDriver,System.String)">
+        <member name="M:OpenQA.Selenium.Appium.Android.AndroidElement.#ctor(OpenQA.Selenium.Remote.WebDriver,System.String)">
             <summary>
             Initializes a new instance of the AndroidElement class.
             </summary>
@@ -3348,7 +3348,7 @@
             </code>
             </example>
         </member>
-        <member name="M:OpenQA.Selenium.Appium.AppiumWebElement.#ctor(OpenQA.Selenium.Remote.RemoteWebDriver,System.String)">
+        <member name="M:OpenQA.Selenium.Appium.AppiumWebElement.#ctor(OpenQA.Selenium.Remote.WebDriver,System.String)">
             <summary>
             Initializes a new instance of the AppiumWebElement class.
             </summary>
@@ -4265,7 +4265,7 @@
             <returns>IWebElement object so that you can interact that object</returns>
             <example>
             <code>
-            IWebDriver driver = new RemoteWebDriver(new DriverOptions());
+            IWebDriver driver = new WebDriver(new DriverOptions());
             IWebElement elem = driver.FindElementByAndroidDataMatcher('elements()'))
             </code>
             </example>
@@ -4278,7 +4278,7 @@
             <returns>ReadOnlyCollection of IWebElement object so that you can interact with those objects</returns>
             <example>
             <code>
-            IWebDriver driver = new RemoteWebDriver(new FirefoxOptions());
+            IWebDriver driver = new WebDriver(new FirefoxOptions());
             ReadOnlyCollection<![CDATA[<IWebElement>]]> elem = driver.FindElementsByAndroidDataMatcher(elements())
             </code>
             </example>
@@ -4291,7 +4291,7 @@
             <returns>IWebElement object so that you can interact that object</returns>
             <example>
             <code>
-            IWebDriver driver = new RemoteWebDriver(new FirefoxOptions());
+            IWebDriver driver = new WebDriver(new FirefoxOptions());
             IWebElement elem = driver.FindElementByAndroidUIAutomator('elements()'))
             </code>
             </example>
@@ -4311,7 +4311,7 @@
             <returns>ReadOnlyCollection of IWebElement object so that you can interact with those objects</returns>
             <example>
             <code>
-            IWebDriver driver = new RemoteWebDriver(new FirefoxOptions());
+            IWebDriver driver = new WebDriver(new FirefoxOptions());
             ReadOnlyCollection<![CDATA[<IWebElement>]]> elem = driver.FindElementsByAndroidUIAutomator(elements())
             </code>
             </example>
@@ -5035,7 +5035,7 @@
             </summary>
             <returns>The image content of the clipboard as an Image object or null if there is no image on the clipboard</returns>
         </member>
-        <member name="M:OpenQA.Selenium.Appium.iOS.IOSElement.#ctor(OpenQA.Selenium.Remote.RemoteWebDriver,System.String)">
+        <member name="M:OpenQA.Selenium.Appium.iOS.IOSElement.#ctor(OpenQA.Selenium.Remote.WebDriver,System.String)">
             <summary>
             Initializes a new instance of the IOSElement class.
             </summary>
@@ -5182,7 +5182,7 @@
             <param name="AppiumOptions">An <see cref="T:OpenQA.Selenium.ICapabilities"/> object containing the Appium options.</param>
             <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
         </member>
-        <member name="M:OpenQA.Selenium.Appium.Mac.MacElement.#ctor(OpenQA.Selenium.Remote.RemoteWebDriver,System.String)">
+        <member name="M:OpenQA.Selenium.Appium.Mac.MacElement.#ctor(OpenQA.Selenium.Remote.WebDriver,System.String)">
             <summary>
             Initializes a new instance of the MacElement class.
             </summary>
@@ -6230,7 +6230,7 @@
             <param name="selector">a Tizen UIAutomation selector</param>
             <returns>ReadOnlyCollection of IWebElement objects so that you can interact with those objects</returns>
         </member>
-        <member name="M:OpenQA.Selenium.Appium.Tizen.TizenElement.#ctor(OpenQA.Selenium.Remote.RemoteWebDriver,System.String)">
+        <member name="M:OpenQA.Selenium.Appium.Tizen.TizenElement.#ctor(OpenQA.Selenium.Remote.WebDriver,System.String)">
             <summary>
             Initializes a new instance of the TizenElement class.
             </summary>

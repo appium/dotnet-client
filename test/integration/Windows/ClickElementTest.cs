@@ -22,25 +22,25 @@ namespace Appium.Net.Integration.Tests.Windows
 {
     public class ClickElementTest
     {
-        private WindowsDriver _calculatorSession;
-        protected static IWebElement CalculatorResult;
+        private WindowsDriver<WindowsElement> _calculatorSession;
+        protected static WebElement CalculatorResult;
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            var appCapabilities = new AppiumOptions
-            {
-                App = "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"
-            };
+            var appCapabilities = new AppiumOptions();
+            appCapabilities.App = "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App";
+            appCapabilities.DeviceName = "WindowsPC";
+            appCapabilities.PlatformName ="Windows";
 
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _calculatorSession = new WindowsDriver(serverUri, appCapabilities,
+            _calculatorSession = new WindowsDriver<WindowsElement>(serverUri, appCapabilities,
                 Env.InitTimeoutSec);
             _calculatorSession.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
 
             _calculatorSession.FindElementByName("Clear").Click();
             _calculatorSession.FindElementByName("Seven").Click();
-            CalculatorResult = _calculatorSession.FindElementByName("Display is 7");
+            CalculatorResult = _calculatorSession.FindElementByName("Display is 7") as WebElement;
             Assert.IsNotNull(CalculatorResult);
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Enums;
 
@@ -10,7 +11,7 @@ namespace Appium.Net.Integration.Tests.Android
     public class SessionDetailTest
     {
         
-        private AndroidDriver _driver;
+        private AndroidDriver<IWebElement> _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
@@ -19,7 +20,7 @@ namespace Appium.Net.Integration.Tests.Android
                 ? Caps.GetAndroidUIAutomatorCaps(Apps.Get("selendroidTestApp"))
                 : Caps.GetAndroidUIAutomatorCaps(Apps.Get("selendroidTestApp"));
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _driver = new AndroidDriver(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver = new AndroidDriver<IWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
         

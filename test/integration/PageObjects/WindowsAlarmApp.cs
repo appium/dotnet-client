@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
+using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.PageObjects;
 using OpenQA.Selenium.Appium.PageObjects.Attributes;
 using SeleniumExtras.PageObjects;
@@ -12,35 +13,35 @@ namespace Appium.Net.Integration.Tests.PageObjects
     public class WindowsAlarmApp
     {
         [FindsByWindowsAutomation(Accessibility = "AlarmButton")]
-        private IWebElement _alarmTab;
+        private IMobileElement<AppiumWebElement> _alarmTab;
 
         [FindsByWindowsAutomation(Accessibility = "ClockButton")]
-        private IWebElement _clockTab;
+        private IMobileElement<AppiumWebElement> _clockTab;
 
         [FindsByWindowsAutomation(Accessibility = "WorldClockItemGrid")]
-        private IWebElement _worldClock;
+        private IMobileElement<AppiumWebElement> _worldClock;
 
         [FindsByWindowsAutomation(Accessibility = "AddAlarmButton")]
-        private IWebElement _addAlarmButton;
+        private IMobileElement<AppiumWebElement> _addAlarmButton;
 
         [FindsByWindowsAutomation(Accessibility = "AlarmNameTextBox")]
-        private IWebElement _alarmNameTextBox;
+        private IMobileElement<AppiumWebElement> _alarmNameTextBox;
 
         [FindsByWindowsAutomation(Accessibility = "PeriodLoopingSelector")]
-        private IWebElement _periodSelector;
+        private IMobileElement<AppiumWebElement> _periodSelector;
 
         [FindsByWindowsAutomation(Accessibility = "HourLoopingSelector")]
-        private IWebElement _hourSelector;
+        private IMobileElement<AppiumWebElement> _hourSelector;
 
         [FindsByWindowsAutomation(Accessibility = "MinuteLoopingSelector")]
-        private IWebElement _minuteSelector;
+        private IMobileElement<AppiumWebElement> _minuteSelector;
 
         [FindsByWindowsAutomation(Accessibility = "AlarmSaveButton")]
-        private IWebElement _saveButton;
+        private IMobileElement<AppiumWebElement> _saveButton;
 
-        private AppiumDriver _driver;
+        private AppiumDriver<AppiumWebElement> _driver;
 
-        public WindowsAlarmApp(AppiumDriver driver, TimeOutDuration timeout)
+        public WindowsAlarmApp(AppiumDriver<AppiumWebElement> driver, TimeOutDuration timeout)
         {
             _driver = driver;
 
@@ -118,12 +119,8 @@ namespace Appium.Net.Integration.Tests.PageObjects
         {
             var alarmEntry = _driver.FindElementByName(alarmName);
 
-            //// TODO: Implement - _driver.Mouse.ContextClick(alarmEntry.Coordinates);
-            /// or new Actions(_driver).ContextClick(alarmEntry).Perform();
-            //// Will not work until context clicks get added to 
-            ///https://github.com/appium/appium-windows-driver
-            ///or WinAppDriver becomes W3C compliant
-
+            /////// TODO - Implement for Appium
+            ////// _driver.Mouse.ContextClick(alarmEntry.Coordinates);
             _driver.FindElementByName("Delete").Click();
         }
     }
