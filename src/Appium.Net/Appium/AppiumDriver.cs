@@ -48,6 +48,7 @@ namespace OpenQA.Selenium.Appium
         public AppiumDriver(ICommandExecutor commandExecutor, ICapabilities appiumOptions)
             : base(commandExecutor, appiumOptions)
         {
+            AppiumCommand.Merge(commandExecutor);
             ElementFactory = CreateElementFactory();
         }
 
