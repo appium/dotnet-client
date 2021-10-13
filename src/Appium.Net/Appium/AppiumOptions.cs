@@ -68,17 +68,7 @@ namespace OpenQA.Selenium.Appium
         /// webdriver executable.</remarks>
         public void AddAdditionalAppiumOption(string optionName, object optionValue)
         {
-            string name;
-
-            if (optionName.Contains(":"))
-            {
-                name = optionName;
-            }
-            else
-            {
-                name = $"{VendorPrefix}:{optionName}";
-            }
-
+            string name = optionName.Contains(":") ? optionName : $"{VendorPrefix}:{optionName}";
             this.ValidateCapabilityName(name);
             this.additionalAppiumOptions[name] = optionValue;
         }
