@@ -1,5 +1,4 @@
-﻿using OpenQA.Selenium.Remote;
-
+﻿
 namespace OpenQA.Selenium.Appium.Android
 {
     public class AndroidElementFactory : CachedElementFactory<AndroidElement>

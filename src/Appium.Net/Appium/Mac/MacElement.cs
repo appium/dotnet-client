@@ -12,8 +12,6 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-using OpenQA.Selenium.Remote;
-
 namespace OpenQA.Selenium.Appium.Mac
 {
     public class MacElement : AppiumWebElement

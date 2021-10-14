@@ -14,7 +14,6 @@
 
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Service;
-using OpenQA.Selenium.Remote;
 using System;
 
 namespace OpenQA.Selenium.Appium.Mac

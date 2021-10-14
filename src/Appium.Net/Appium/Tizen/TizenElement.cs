@@ -13,7 +13,6 @@
 //limitations under the License.
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
-using OpenQA.Selenium.Remote;
 using System.Collections.Generic;
 
 namespace OpenQA.Selenium.Appium.Tizen

@@ -15,8 +15,6 @@
 using OpenQA.Selenium.Appium.Interfaces;
 using System.Collections.Generic;
 using System.Reflection;
-using OpenQA.Selenium.Remote;
-using OpenQA.Selenium.Internal;
 
 namespace OpenQA.Selenium.Appium.MultiTouch
 {

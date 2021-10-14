@@ -19,7 +19,6 @@ using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Service;
-using OpenQA.Selenium.Remote;
 
 namespace OpenQA.Selenium.Appium.Windows
 {

@@ -18,8 +18,6 @@ using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.iOS;
 using OpenQA.Selenium.Appium.PageObjects.Interceptors;
 using OpenQA.Selenium.Appium.PageObjects.Attributes;
-using OpenQA.Selenium.Internal;
-using OpenQA.Selenium.Remote;
 using SeleniumExtras.PageObjects;
 using System;
 using System.Collections.Generic;

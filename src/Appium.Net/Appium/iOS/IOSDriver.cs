@@ -15,7 +15,6 @@
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Service;
-using OpenQA.Selenium.Remote;
 using System;
 using System.Drawing;
 using OpenQA.Selenium.Appium.iOS.Interfaces;

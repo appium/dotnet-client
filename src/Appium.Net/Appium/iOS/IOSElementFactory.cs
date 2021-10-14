@@ -1,5 +1,4 @@
-﻿using OpenQA.Selenium.Remote;
-
+﻿
 namespace OpenQA.Selenium.Appium.iOS
 {
     public class IOSElementFactory : CachedElementFactory<IOSElement>

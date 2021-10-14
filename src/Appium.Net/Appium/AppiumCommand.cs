@@ -12,7 +12,6 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-using OpenQA.Selenium.Remote;
 using System.Collections.Generic;
 
 namespace OpenQA.Selenium.Appium

@@ -1,5 +1,4 @@
-﻿using OpenQA.Selenium.Remote;
-
+﻿
 namespace OpenQA.Selenium.Appium.Windows
 {
     public class WindowsElementFactory : CachedElementFactory<WindowsElement>

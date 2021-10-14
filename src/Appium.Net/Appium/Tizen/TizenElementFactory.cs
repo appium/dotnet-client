@@ -1,5 +1,4 @@
-﻿using OpenQA.Selenium.Remote;
-
+﻿
 namespace OpenQA.Selenium.Appium.Tizen
 {
     public class TizenElementFactory : CachedElementFactory<TizenElement>
