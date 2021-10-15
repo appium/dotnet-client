@@ -13,14 +13,12 @@
 //limitations under the License.
 
 using OpenQA.Selenium.Appium.Interfaces;
-using OpenQA.Selenium.Internal;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections;
-using OpenQA.Selenium.Appium.Enums;
-using System;
 using System.Drawing;
-using Appium.Interfaces.Generic.SearchContext;
+using System.Linq;
 
 namespace OpenQA.Selenium.Appium
 {
@@ -216,7 +214,12 @@ namespace OpenQA.Selenium.Appium
 
         IReadOnlyCollection<AppiumWebElement> IFindsByFluentSelector<AppiumWebElement>.FindElements(string selector, string value)
         {
-            return (IReadOnlyCollection<AppiumWebElement>)base.FindElements(selector, value);
+            return ConvertToExtendedWebElementCollection(base.FindElements(selector, value));
+        }
+
+        internal static ReadOnlyCollection<AppiumWebElement> ConvertToExtendedWebElementCollection(IEnumerable collection)
+        {
+            return collection.Cast<AppiumWebElement>().ToList().AsReadOnly();
         }
 
         public new string Id => base.Id;

@@ -17,7 +17,6 @@ using OpenQA.Selenium.Appium.Interfaces;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using OpenQA.Selenium.Internal;
 
 namespace OpenQA.Selenium.Appium
 {
@@ -25,20 +24,6 @@ namespace OpenQA.Selenium.Appium
     {
         protected readonly string selector;
         private readonly string _searchingCriteriaName;
-
-        public static new By Name(string selector) => new ByName(selector);
-
-
-
-
-
-
-
-
-
-
-
-
 
         internal MobileBy(string selector, string searchingCriteriaName)
         {
@@ -144,6 +129,10 @@ namespace OpenQA.Selenium.Appium
         public static By IosClassChain(string selector) => new ByIosClassChain(selector);
 
         public static By Image(string selector) => new ByImage(selector);
+
+        public static new By Name(string selector) => new ByName(selector);
+
+        public static new By Id(string selector) => new ById(selector);
     }
 
     /// <summary>
@@ -458,53 +447,29 @@ namespace OpenQA.Selenium.Appium
             $"ByImage({selector})";
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public class ByName : MobileBy
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ByName"/> class.
         /// </summary>
-        /// <param name="base64Template">base64-encoded template image string.</param>
+        /// <param name="selector">Name selector.</param>
         public ByName(string selector) : base(selector, MobileSelector.Name)
         {
         }
-
-        //public override IWebElement FindElement(ISearchContext context)
-        //{
-        //    if (context is IFindsByName<IWebElement> finder)
-        //        return finder.FindElementByImage(selector);
-        //    return base.FindElement(context);
-        //}
-
-        //public override ReadOnlyCollection<IWebElement> FindElements(ISearchContext context)
-        //{
-        //    if (context is IFindsByImage<IWebElement> finder)
-        //        return finder.FindElementsByImage(selector).ToList().AsReadOnly();
-        //    return base.FindElements(context);
-        //}
-
         public override string ToString() =>
-            $"Name({selector})";
+            $"ByName({selector})";
+    }
+
+    public class ById : MobileBy
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ById"/> class.
+        /// </summary>
+        /// <param name="selector">Id selector.</param>
+        public ById(string selector) : base(selector, MobileSelector.Id)
+        {
+        }
+        public override string ToString() =>
+            $"ById({selector})";
     }
 }
