@@ -8,14 +8,14 @@ namespace Appium.Net.Integration.Tests.IOS
 {
     class ElementTest
     {
-        private AppiumDriver<IOSElement> _driver;
+        private AppiumDriver _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
             var capabilities = Caps.GetIosCaps(Apps.Get("iosTestApp"));
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _driver = new IOSDriver<IOSElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver = new IOSDriver(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 
@@ -33,9 +33,9 @@ namespace Appium.Net.Integration.Tests.IOS
         public void FindByAccessibilityIdTest()
         {
             By byAccessibilityId = new ByAccessibilityId("ComputeSumButton");
-            Assert.AreNotEqual(_driver.FindElementsByClassName("UIAWindow")[1].FindElement(byAccessibilityId).Text,
+            Assert.AreNotEqual(_driver.FindElements(MobileBy.ClassName("UIAWindow"))[1].FindElement(byAccessibilityId).Text,
                 null);
-            Assert.GreaterOrEqual(_driver.FindElementsByClassName("UIAWindow")[1].FindElements(byAccessibilityId).Count,
+            Assert.GreaterOrEqual(_driver.FindElements(MobileBy.ClassName("UIAWindow"))[1].FindElements(byAccessibilityId).Count,
                 1);
         }
 
@@ -43,15 +43,15 @@ namespace Appium.Net.Integration.Tests.IOS
         public void FindByByIosUiAutomationTest()
         {
             By byIosUiAutomation = new ByIosUIAutomation(".elements().withName(\"Answer\")");
-            Assert.IsNotNull(_driver.FindElementsByClassName("UIAWindow")[1].FindElement(byIosUiAutomation).Text);
-            Assert.GreaterOrEqual(_driver.FindElementsByClassName("UIAWindow")[1].FindElements(byIosUiAutomation).Count,
+            Assert.IsNotNull(_driver.FindElements(MobileBy.ClassName("UIAWindow"))[1].FindElement(byIosUiAutomation).Text);
+            Assert.GreaterOrEqual(_driver.FindElements(MobileBy.ClassName("UIAWindow"))[1].FindElements(byIosUiAutomation).Count,
                 1);
         }
 
         [Test]
         public void SetImmediateValueTest()
         {
-            var slider = _driver.FindElementByClassName("UIASlider");
+            var slider = _driver.FindElement(MobileBy.ClassName("UIASlider"));
             slider.SetImmediateValue("0%");
             Assert.AreEqual("0%", slider.GetAttribute("value"));
         }

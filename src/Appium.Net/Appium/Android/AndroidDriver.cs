@@ -24,11 +24,11 @@ using OpenQA.Selenium.Appium.Android.Enums;
 
 namespace OpenQA.Selenium.Appium.Android
 {
-    public class AndroidDriver<W> : AppiumDriver<W>, IFindByAndroidUIAutomator<W>, IFindByAndroidDataMatcher<W>,
+    public class AndroidDriver : AppiumDriver,
         IStartsActivity,
         IHasNetworkConnection, INetworkActions, IHasClipboard, IHasPerformanceData,
         ISendsKeyEvents,
-        IPushesFiles, IHasSettings where W : IWebElement
+        IPushesFiles, IHasSettings
     {
         private static readonly string Platform = MobilePlatform.Android;
 
@@ -126,42 +126,6 @@ namespace OpenQA.Selenium.Appium.Android
             : base(service, SetPlatformToCapabilities(driverOptions, Platform), commandTimeout)
         {
         }
-
-        #region IFindByAndroidUIAutomator Members
-
-        public W FindElementByAndroidUIAutomator(string selector) =>
-            FindElement(MobileSelector.AndroidUIAutomator, selector);
-
-        public W FindElementByAndroidUIAutomator(IUiAutomatorStatementBuilder selector) =>
-            FindElement(MobileSelector.AndroidUIAutomator, selector.Build());
-
-        public IReadOnlyCollection<W> FindElementsByAndroidUIAutomator(string selector) =>
-            ConvertToExtendedWebElementCollection<W>(FindElements(MobileSelector.AndroidUIAutomator, selector));
-
-        public IReadOnlyCollection<W> FindElementsByAndroidUIAutomator(IUiAutomatorStatementBuilder selector) =>
-            ConvertToExtendedWebElementCollection<W>(FindElements(MobileSelector.AndroidUIAutomator, selector.Build()));
-
-        #endregion IFindByAndroidUIAutomator Members
-
-        #region IFindByAndroidDataMatcher Members
-
-        public W FindElementByAndroidDataMatcher(string selector) =>
-            FindElement(MobileSelector.AndroidDataMatcher, selector);
-
-        public IReadOnlyCollection<W> FindElementsByAndroidDataMatcher(string selector) =>
-            ConvertToExtendedWebElementCollection<W>(FindElements(MobileSelector.AndroidDataMatcher, selector));
-
-        #endregion IFindByAndroidDataMatcher Members
-
-        #region IFindByAndroidViewMatcher Members
-
-        public W FindElementByAndroidViewMatcher(string selector) =>
-            FindElement(MobileSelector.AndroidViewMatcher, selector);
-
-        public IReadOnlyCollection<W> FindElementsByAndroidViewMatcher(string selector) =>
-            ConvertToExtendedWebElementCollection<W>(FindElements(MobileSelector.AndroidViewMatcher, selector));
-
-        #endregion IFindByAndroidViewMatcher Members
 
         public void StartActivity(string appPackage, string appActivity, string appWaitPackage = "",
             string appWaitActivity = "", bool stopApp = true) =>
@@ -301,8 +265,6 @@ namespace OpenQA.Selenium.Appium.Android
         /// <return>a base64 string containing the data</return> 
         public string EndTestCoverage(string intent, string path) =>
             AndroidCommandExecutionHelper.EndTestCoverage(this, intent, path);
-
-        protected override WebElementFactory CreateElementFactory() => new AndroidElementFactory(this);
 
         public void SetSetting(string setting, object value) =>
             AndroidCommandExecutionHelper.SetSetting(this, setting, value);

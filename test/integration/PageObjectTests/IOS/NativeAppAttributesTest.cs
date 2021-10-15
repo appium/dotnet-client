@@ -12,7 +12,7 @@ namespace Appium.Net.Integration.Tests.PageObjectTests.IOS
     [TestFixture]
     public class NativeAppAttributesTest
     {
-        private IOSDriver<AppiumWebElement> _driver;
+        private IOSDriver _driver;
         private IosPageObjectChecksAttributesForNativeIosApp _pageObject;
 
         [OneTimeSetUp]
@@ -28,7 +28,7 @@ namespace Appium.Net.Integration.Tests.PageObjectTests.IOS
             }
 
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _driver = new IOSDriver<AppiumWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver = new IOSDriver(serverUri, capabilities, Env.InitTimeoutSec);
             var timeSpan = new TimeOutDuration(new TimeSpan(0, 0, 0, 5, 0));
             _pageObject = new IosPageObjectChecksAttributesForNativeIosApp();
             PageFactory.InitElements(_driver, _pageObject, new AppiumPageObjectMemberDecorator(timeSpan));

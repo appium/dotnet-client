@@ -9,7 +9,7 @@ namespace Appium.Net.Integration.Tests.Android
 {
     public class ElementTest
     {
-        private AndroidDriver<AndroidElement> _driver;
+        private AndroidDriver _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
@@ -18,7 +18,7 @@ namespace Appium.Net.Integration.Tests.Android
                 ? Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"))
                 : Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _driver = new AndroidDriver<AndroidElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver = new AndroidDriver(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 
@@ -32,8 +32,9 @@ namespace Appium.Net.Integration.Tests.Android
         public void FindByAccessibilityIdTest()
         {
             By byAccessibilityId = new ByAccessibilityId("Graphics");
-            Assert.AreNotEqual(_driver.FindElementById("android:id/content").FindElement(byAccessibilityId).Text, null);
-            Assert.GreaterOrEqual(_driver.FindElementById("android:id/content").FindElements(byAccessibilityId).Count,
+            Assert.AreNotEqual(_driver.FindElement(MobileBy.Id("android:id/content")).FindElement(byAccessibilityId).Text, null);
+            Assert.AreNotEqual(_driver.FindElement(MobileBy.Id("android:id/content")).Text, null);
+            Assert.GreaterOrEqual(_driver.FindElement(MobileBy.Id("android:id/content")).FindElements(byAccessibilityId).Count,
                 1);
         }
 
@@ -41,8 +42,8 @@ namespace Appium.Net.Integration.Tests.Android
         public void FindByAndroidUiAutomatorTest()
         {
             By byAndroidUiAutomator = new ByAndroidUIAutomator("new UiSelector().clickable(true)");
-            Assert.IsNotNull(_driver.FindElementById("android:id/content").FindElement(byAndroidUiAutomator).Text);
-            Assert.GreaterOrEqual(_driver.FindElementById("android:id/content").FindElements(byAndroidUiAutomator).Count,
+            Assert.IsNotNull(_driver.FindElement(MobileBy.Id("android:id/content")).FindElement(byAndroidUiAutomator).Text);
+            Assert.GreaterOrEqual(_driver.FindElement(MobileBy.Id("android:id/content")).FindElements(byAndroidUiAutomator).Count,
                 1);
         }
 
@@ -50,9 +51,9 @@ namespace Appium.Net.Integration.Tests.Android
         public void FindByAndroidUiAutomatorBuilderTest()
         {
             By byAndroidUiAutomator = new ByAndroidUIAutomator(new AndroidUiSelector().IsClickable(true));
-            Assert.IsNotNull(_driver.FindElementById("android:id/content").FindElement(byAndroidUiAutomator).Text);
+            Assert.IsNotNull(_driver.FindElement(MobileBy.Id("android:id/content")).FindElement(byAndroidUiAutomator).Text);
             Assert.GreaterOrEqual(
-                _driver.FindElementById("android:id/content").FindElements(byAndroidUiAutomator).Count,
+                _driver.FindElement(MobileBy.Id("android:id/content")).FindElements(byAndroidUiAutomator).Count,
                 1);
         }
 
@@ -65,8 +66,8 @@ namespace Appium.Net.Integration.Tests.Android
                 "2. Enable Explore-by-Touch (Settings -> Accessibility -> Explore by Touch). \n\n" +
                 "3. Touch explore the list."));
 
-            Assert.IsNotNull(_driver.FindElementById("android:id/content").FindElement(byAndroidUiAutomator).Text);
-            Assert.GreaterOrEqual(_driver.FindElementById("android:id/content").FindElements(byAndroidUiAutomator).Count, 1);
+            Assert.IsNotNull(_driver.FindElement(MobileBy.Id("android:id/content")).FindElement(byAndroidUiAutomator).Text);
+            Assert.GreaterOrEqual(_driver.FindElement(MobileBy.Id("android:id/content")).FindElements(byAndroidUiAutomator).Count, 1);
         }
 
         [Test]
@@ -76,8 +77,8 @@ namespace Appium.Net.Integration.Tests.Android
             By byAndroidUiAutomator = new ByAndroidUIAutomator(new AndroidUiSelector()
                 .DescriptionContains("Use a \"tel:\" URL"));
 
-            Assert.IsNotNull(_driver.FindElementById("android:id/content").FindElement(byAndroidUiAutomator).Text);
-            Assert.GreaterOrEqual(_driver.FindElementById("android:id/content").FindElements(byAndroidUiAutomator).Count, 1);
+            Assert.IsNotNull(_driver.FindElement(MobileBy.Id("android:id/content")).FindElement(byAndroidUiAutomator).Text);
+            Assert.GreaterOrEqual(_driver.FindElement(MobileBy.Id("android:id/content")).FindElements(byAndroidUiAutomator).Count, 1);
         }
 
         [Test]
@@ -89,13 +90,14 @@ namespace Appium.Net.Integration.Tests.Android
             _driver.StartActivity("io.appium.android.apis", ".view.Controls1");
 
             var editElement =
-                _driver.FindElementByAndroidUIAutomator("resourceId(\"io.appium.android.apis:id/edit\")");
+                _driver.FindElement(MobileBy.AndroidUIAutomator("resourceId(\"io.appium.android.apis:id/edit\")"));
 
             editElement.SendKeys(originalValue);
 
             Assert.AreEqual(originalValue, editElement.Text);
 
-            editElement.ReplaceValue(replacedValue);
+            /////// TODO: Implement
+            // editElement.ReplaceValue(replacedValue);
 
             Assert.AreEqual(replacedValue, editElement.Text);
         }
@@ -108,7 +110,7 @@ namespace Appium.Net.Integration.Tests.Android
             _driver.StartActivity("io.appium.android.apis", ".view.Controls1");
 
             var editElement =
-                _driver.FindElementByAndroidUIAutomator("resourceId(\"io.appium.android.apis:id/edit\")");
+                _driver.FindElement(MobileBy.AndroidUIAutomator("resourceId(\"io.appium.android.apis:id/edit\")"));
 
             editElement.SetImmediateValue(value);
 
@@ -118,7 +120,7 @@ namespace Appium.Net.Integration.Tests.Android
         [Test]
         public void ScrollingToSubElement()
         {
-            _driver.FindElementByAccessibilityId("Views").Click();
+            _driver.FindElement(MobileBy.AccessibilityId("Views")).Click();
             var list = _driver.FindElement(By.Id("android:id/list"));
             var locator = new ByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView("
                                                    + "new UiSelector().text(\"Radio Group\"));");
@@ -129,7 +131,7 @@ namespace Appium.Net.Integration.Tests.Android
         [Test]
         public void ScrollingToSubElementUsingBuilder()
         {
-            _driver.FindElementByAccessibilityId("Views").Click();
+            _driver.FindElement(MobileBy.AccessibilityId("Views")).Click();
             var list = _driver.FindElement(By.Id("android:id/list"));
             var locator = new ByAndroidUIAutomator(new AndroidUiScrollable()
                 .ScrollIntoView(new AndroidUiSelector().TextEquals("Radio Group")));

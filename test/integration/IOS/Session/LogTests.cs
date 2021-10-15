@@ -20,7 +20,7 @@ namespace Appium.Net.Integration.Tests.IOS.Session.Logs
         public void SetUp()
         {
             _iosOptions = Caps.GetIosCaps(Apps.Get("iosUICatalogApp"));
-            _driver = new IOSDriver<IWebElement>(
+            _driver = new IOSDriver(
                 Env.ServerIsLocal() ? AppiumServers.LocalServiceUri : AppiumServers.RemoteServerUri,
                 _iosOptions);
         }

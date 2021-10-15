@@ -22,7 +22,7 @@ namespace Appium.Net.Integration.Tests.Windows
 {
     public class ClickElementTest
     {
-        private WindowsDriver<WindowsElement> _calculatorSession;
+        private WindowsDriver _calculatorSession;
         protected static WebElement CalculatorResult;
 
         [OneTimeSetUp]
@@ -31,16 +31,16 @@ namespace Appium.Net.Integration.Tests.Windows
             var appCapabilities = new AppiumOptions();
             appCapabilities.App = "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App";
             appCapabilities.DeviceName = "WindowsPC";
-            appCapabilities.PlatformName ="Windows";
+            appCapabilities.PlatformName = "Windows";
 
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _calculatorSession = new WindowsDriver<WindowsElement>(serverUri, appCapabilities,
+            _calculatorSession = new WindowsDriver(serverUri, appCapabilities,
                 Env.InitTimeoutSec);
             _calculatorSession.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
 
-            _calculatorSession.FindElementByName("Clear").Click();
-            _calculatorSession.FindElementByName("Seven").Click();
-            CalculatorResult = _calculatorSession.FindElementByName("Display is 7") as WebElement;
+            _calculatorSession.FindElement(MobileBy.Name("Clear")).Click();
+            _calculatorSession.FindElement(MobileBy.Name("Seven")).Click();
+            CalculatorResult = _calculatorSession.FindElement(MobileBy.Name("Display is 7")) as WebElement;
             Assert.IsNotNull(CalculatorResult);
         }
 
@@ -56,64 +56,64 @@ namespace Appium.Net.Integration.Tests.Windows
         [SetUp]
         public void SetUp()
         {
-            _calculatorSession.FindElementByName("Clear").Click();
+            _calculatorSession.FindElement(MobileBy.Name("Clear")).Click();
             Assert.AreEqual("Display is 0", CalculatorResult.Text);
         }
 
         [Test]
         public void Addition()
         {
-            _calculatorSession.FindElementByName("One").Click();
-            _calculatorSession.FindElementByName("Plus").Click();
-            _calculatorSession.FindElementByName("Seven").Click();
-            _calculatorSession.FindElementByName("Equals").Click();
+            _calculatorSession.FindElement(MobileBy.Name("One")).Click();
+            _calculatorSession.FindElement(MobileBy.Name("Plus")).Click();
+            _calculatorSession.FindElement(MobileBy.Name("Seven")).Click();
+            _calculatorSession.FindElement(MobileBy.Name("Equals")).Click();
             Assert.AreEqual("Display is 8", CalculatorResult.Text);
         }
 
         [Test]
         public void Combination()
         {
-            _calculatorSession.FindElementByName("Seven").Click();
-            _calculatorSession.FindElementByName("Multiply by").Click();
-            _calculatorSession.FindElementByName("Nine").Click();
-            _calculatorSession.FindElementByName("Plus").Click();
-            _calculatorSession.FindElementByName("One").Click();
-            _calculatorSession.FindElementByName("Equals").Click();
-            _calculatorSession.FindElementByName("Divide by").Click();
-            _calculatorSession.FindElementByName("Eight").Click();
-            _calculatorSession.FindElementByName("Equals").Click();
+            _calculatorSession.FindElement(MobileBy.Name("Seven")).Click();
+            _calculatorSession.FindElement(MobileBy.Name("Multiply by")).Click();
+            _calculatorSession.FindElement(MobileBy.Name("Nine")).Click();
+            _calculatorSession.FindElement(MobileBy.Name("Plus")).Click();
+            _calculatorSession.FindElement(MobileBy.Name("One")).Click();
+            _calculatorSession.FindElement(MobileBy.Name("Equals")).Click();
+            _calculatorSession.FindElement(MobileBy.Name("Divide by")).Click();
+            _calculatorSession.FindElement(MobileBy.Name("Eight")).Click();
+            _calculatorSession.FindElement(MobileBy.Name("Equals")).Click();
             Assert.AreEqual("Display is 8", CalculatorResult.Text);
         }
 
         [Test]
         public void Division()
         {
-            _calculatorSession.FindElementByName("Eight").Click();
-            _calculatorSession.FindElementByName("Eight").Click();
-            _calculatorSession.FindElementByName("Divide by").Click();
-            _calculatorSession.FindElementByName("One").Click();
-            _calculatorSession.FindElementByName("One").Click();
-            _calculatorSession.FindElementByName("Equals").Click();
+            _calculatorSession.FindElement(MobileBy.Name("Eight")).Click();
+            _calculatorSession.FindElement(MobileBy.Name("Eight")).Click();
+            _calculatorSession.FindElement(MobileBy.Name("Divide by")).Click();
+            _calculatorSession.FindElement(MobileBy.Name("One")).Click();
+            _calculatorSession.FindElement(MobileBy.Name("One")).Click();
+            _calculatorSession.FindElement(MobileBy.Name("Equals")).Click();
             Assert.AreEqual("Display is 8", CalculatorResult.Text);
         }
 
         [Test]
         public void Multiplication()
         {
-            _calculatorSession.FindElementByName("Nine").Click();
-            _calculatorSession.FindElementByName("Multiply by").Click();
-            _calculatorSession.FindElementByName("Nine").Click();
-            _calculatorSession.FindElementByName("Equals").Click();
+            _calculatorSession.FindElement(MobileBy.Name("Nine")).Click();
+            _calculatorSession.FindElement(MobileBy.Name("Multiply by")).Click();
+            _calculatorSession.FindElement(MobileBy.Name("Nine")).Click();
+            _calculatorSession.FindElement(MobileBy.Name("Equals")).Click();
             Assert.AreEqual("Display is 81", CalculatorResult.Text);
         }
 
         [Test]
         public void Subtraction()
         {
-            _calculatorSession.FindElementByName("Nine").Click();
-            _calculatorSession.FindElementByName("Minus").Click();
-            _calculatorSession.FindElementByName("One").Click();
-            _calculatorSession.FindElementByName("Equals").Click();
+            _calculatorSession.FindElement(MobileBy.Name("Nine")).Click();
+            _calculatorSession.FindElement(MobileBy.Name("Minus")).Click();
+            _calculatorSession.FindElement(MobileBy.Name("One")).Click();
+            _calculatorSession.FindElement(MobileBy.Name("Equals")).Click();
             Assert.AreEqual("Display is 8", CalculatorResult.Text);
         }
     }

@@ -13,35 +13,35 @@ namespace Appium.Net.Integration.Tests.PageObjects
     public class WindowsAlarmApp
     {
         [FindsByWindowsAutomation(Accessibility = "AlarmButton")]
-        private IMobileElement<AppiumWebElement> _alarmTab;
+        private IMobileElement _alarmTab;
 
         [FindsByWindowsAutomation(Accessibility = "ClockButton")]
-        private IMobileElement<AppiumWebElement> _clockTab;
+        private IMobileElement _clockTab;
 
         [FindsByWindowsAutomation(Accessibility = "WorldClockItemGrid")]
-        private IMobileElement<AppiumWebElement> _worldClock;
+        private IMobileElement _worldClock;
 
         [FindsByWindowsAutomation(Accessibility = "AddAlarmButton")]
-        private IMobileElement<AppiumWebElement> _addAlarmButton;
+        private IMobileElement _addAlarmButton;
 
         [FindsByWindowsAutomation(Accessibility = "AlarmNameTextBox")]
-        private IMobileElement<AppiumWebElement> _alarmNameTextBox;
+        private IMobileElement _alarmNameTextBox;
 
         [FindsByWindowsAutomation(Accessibility = "PeriodLoopingSelector")]
-        private IMobileElement<AppiumWebElement> _periodSelector;
+        private IMobileElement _periodSelector;
 
         [FindsByWindowsAutomation(Accessibility = "HourLoopingSelector")]
-        private IMobileElement<AppiumWebElement> _hourSelector;
+        private IMobileElement _hourSelector;
 
         [FindsByWindowsAutomation(Accessibility = "MinuteLoopingSelector")]
-        private IMobileElement<AppiumWebElement> _minuteSelector;
+        private IMobileElement _minuteSelector;
 
         [FindsByWindowsAutomation(Accessibility = "AlarmSaveButton")]
-        private IMobileElement<AppiumWebElement> _saveButton;
+        private IMobileElement _saveButton;
 
-        private AppiumDriver<AppiumWebElement> _driver;
+        private AppiumDriver _driver;
 
-        public WindowsAlarmApp(AppiumDriver<AppiumWebElement> driver, TimeOutDuration timeout)
+        public WindowsAlarmApp(AppiumDriver driver, TimeOutDuration timeout)
         {
             _driver = driver;
 
@@ -97,31 +97,31 @@ namespace Appium.Net.Integration.Tests.PageObjects
 
             try
             {
-                _periodSelector.FindElementByName(period).Click();
+                _periodSelector.FindElement(MobileBy.Name(period)).Click();
             }
             catch (NoSuchElementException)
             {
                 hourString = alarmTime.ToString("HH", fi);
             }
             
-            _hourSelector.FindElementByName(hourString).Click();
-            _minuteSelector.FindElementByName(minuteString).Click();
+            _hourSelector.FindElement(MobileBy.Name(hourString)).Click();
+            _minuteSelector.FindElement(MobileBy.Name(minuteString)).Click();
 
             _saveButton.Click();
         }
 
         public bool HasAlarmWithName(string alarmName)
         {
-            return _driver.FindElementByName(alarmName).Displayed;
+            return _driver.FindElement(MobileBy.Name(alarmName)).Displayed;
         }
 
         public void DeleteAlarmWithName(string alarmName)
         {
-            var alarmEntry = _driver.FindElementByName(alarmName);
+            var alarmEntry = _driver.FindElement(MobileBy.Name(alarmName));
 
             /////// TODO - Implement for Appium
             ////// _driver.Mouse.ContextClick(alarmEntry.Coordinates);
-            _driver.FindElementByName("Delete").Click();
+            _driver.FindElement(MobileBy.Name("Delete")).Click();
         }
     }
 }

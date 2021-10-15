@@ -94,7 +94,7 @@ namespace Appium.Net.Integration.Tests.PageObjects
         //[FindsByAndroidUIAutomator(ID = "waitingButtonTest", Priority = 2)]
         //Equals method of WebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
-        private IMobileElement<IWebElement> _matchedToAllLocatorsElement;
+        private IMobileElement _matchedToAllLocatorsElement;
 
         [MobileFindsByAll(Selendroid = true)]
         [FindsBySelendroid(LinkText = "Press to throw unhandled exception", Priority = 1)]

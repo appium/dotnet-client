@@ -8,7 +8,7 @@ namespace Appium.Net.Integration.Tests.Mac
 {
     public class FindElementTest
     {
-        private AppiumDriver<MacElement> _driver;
+        private AppiumDriver _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
@@ -16,7 +16,7 @@ namespace Appium.Net.Integration.Tests.Mac
             var capabilities = new AppiumOptions();
             capabilities.AddAdditionalAppiumOption(MobileCapabilityType.DeviceName, "Mac"); // Requires until Appium 1.15.1
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _driver = new MacDriver<MacElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver = new MacDriver(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 
@@ -33,7 +33,7 @@ namespace Appium.Net.Integration.Tests.Mac
         [Test]
         public void ClickFinderIconOnDoc()
         {
-            _driver.FindElementByXPath("/AXApplication[@AXTitle='Dock']/AXList[0]/AXDockItem[@AXTitle='Finder']").Click();
+            _driver.FindElement(MobileBy.XPath("/AXApplication[@AXTitle='Dock']/AXList[0]/AXDockItem[@AXTitle='Finder']")).Click();
         }
     }
 }

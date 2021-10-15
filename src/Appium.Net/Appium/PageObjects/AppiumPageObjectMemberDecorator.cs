@@ -44,9 +44,6 @@ namespace OpenQA.Selenium.Appium.PageObjects
                     listAvailableElementTypes.Add(typeof(IWebElement));
                     listAvailableElementTypes.Add(typeof(WebElement));
                     listAvailableElementTypes.Add(typeof(AppiumWebElement));
-                    listAvailableElementTypes.Add(typeof(AndroidElement));
-                    listAvailableElementTypes.Add(typeof(IOSElement));
-                    listAvailableElementTypes.Add(typeof(WindowsElement));
                 }
 
                 return listAvailableElementTypes;
@@ -68,7 +65,7 @@ namespace OpenQA.Selenium.Appium.PageObjects
         {
             if (typeof(IWebElement).Equals(targetType))
                 return targetType;
-            else if (GenericsUtility.MatchGenerics(typeof(IMobileElement<>), ListOfAvailableElementTypes, targetType))
+            else if (GenericsUtility.MatchGenerics(typeof(IMobileElement), ListOfAvailableElementTypes, targetType))
                 return targetType;
 
             return null;

@@ -11,7 +11,7 @@ namespace Appium.Net.Integration.Tests.Android
     [TestFixture]
     public class TouchActionTest
     {
-        private AndroidDriver<AppiumWebElement> _driver;
+        private AndroidDriver _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
@@ -20,7 +20,7 @@ namespace Appium.Net.Integration.Tests.Android
                 ? Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"))
                 : Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver = new AndroidDriver(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
             _driver.CloseApp();
         }
@@ -50,14 +50,14 @@ namespace Appium.Net.Integration.Tests.Android
         [Test]
         public void SimpleTouchActionTestCase()
         {
-            IList<AppiumWebElement> els = _driver.FindElementsByClassName("android.widget.TextView");
+            IList<AppiumWebElement> els = _driver.FindElements(MobileBy.ClassName("android.widget.TextView"));
 
             var number1 = els.Count;
 
             var tap = new TouchAction(_driver);
             tap.Tap(els[4], 10, 5, 2).Perform();
 
-            els = _driver.FindElementsByClassName("android.widget.TextView");
+            els = _driver.FindElements(MobileBy.ClassName("android.widget.TextView"));
 
             Assert.AreNotEqual(number1, els.Count);
         }
@@ -65,7 +65,7 @@ namespace Appium.Net.Integration.Tests.Android
         [Test]
         public void ComplexTouchActionTestCase()
         {
-            IList<AppiumWebElement> els = _driver.FindElementsByClassName("android.widget.TextView");
+            IList<AppiumWebElement> els = _driver.FindElements(MobileBy.ClassName("android.widget.TextView"));
             var loc1 = els[7].Location;
             var target = els[1];
             var loc2 = target.Location;           
@@ -78,7 +78,7 @@ namespace Appium.Net.Integration.Tests.Android
         [Test]
         public void SingleMultiActionTestCase()
         {
-            IList<AppiumWebElement> els = _driver.FindElementsByClassName("android.widget.TextView");
+            IList<AppiumWebElement> els = _driver.FindElements(MobileBy.ClassName("android.widget.TextView"));
             var loc1 = els[7].Location;
             var target = els[1];
             var loc2 = target.Location;
@@ -97,7 +97,7 @@ namespace Appium.Net.Integration.Tests.Android
         public void SequentalMultiActionTestCase()
         {
             var originalActivity = _driver.CurrentActivity;
-            IList<AppiumWebElement> els = _driver.FindElementsByClassName("android.widget.TextView");
+            IList<AppiumWebElement> els = _driver.FindElements(MobileBy.ClassName("android.widget.TextView"));
             var multiTouch = new MultiAction(_driver);
 
             var tap1 = new TouchAction(_driver);
@@ -106,7 +106,7 @@ namespace Appium.Net.Integration.Tests.Android
             multiTouch.Add(tap1).Add(tap1).Perform();
 
             Thread.Sleep(2500);
-            els = _driver.FindElementsByClassName("android.widget.TextView");
+            els = _driver.FindElements(MobileBy.ClassName("android.widget.TextView"));
 
             var tap2 = new TouchAction(_driver);
             tap2.Press(els[1]).Wait(1500).Release();

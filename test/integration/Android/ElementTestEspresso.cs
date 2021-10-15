@@ -8,14 +8,14 @@ namespace Appium.Net.Integration.Tests.Android
 {
     public class ElementTestEspresso
     {
-        private AndroidDriver<AndroidElement> _driver;
+        private AndroidDriver _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
             var capabilities = Caps.GetAndroidEspressoCaps(Apps.Get("androidApiDemos"));
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _driver = new AndroidDriver<AndroidElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver = new AndroidDriver(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 
@@ -36,10 +36,10 @@ namespace Appium.Net.Integration.Tests.Android
             By byAndroidDataMatcher = new ByAndroidDataMatcher(selectorData);
 
             Assert.AreNotEqual(
-                _driver.FindElementById("android:id/list").FindElement(byAndroidDataMatcher).Text,
+                _driver.FindElement(MobileBy.Id("android:id/list")).FindElement(byAndroidDataMatcher).Text,
                 null);
             Assert.GreaterOrEqual(
-                _driver.FindElementById("android:id/list").FindElements(byAndroidDataMatcher).Count,
+                _driver.FindElement(MobileBy.Id("android:id/list")).FindElements(byAndroidDataMatcher).Count,
                 1);
         }
 
@@ -57,10 +57,10 @@ namespace Appium.Net.Integration.Tests.Android
             By byAndroidViewMatcher = new ByAndroidViewMatcher(selectorData);
 
             Assert.AreNotEqual(
-                _driver.FindElementById("android:id/list").FindElement(byAndroidViewMatcher).Text,
+                _driver.FindElement(MobileBy.Id("android:id/list")).FindElement(byAndroidViewMatcher).Text,
                 null);
             Assert.GreaterOrEqual(
-                _driver.FindElementById("android:id/list").FindElements(byAndroidViewMatcher).Count,
+                _driver.FindElement(MobileBy.Id("android:id/list")).FindElements(byAndroidViewMatcher).Count,
                 1);
         }
 

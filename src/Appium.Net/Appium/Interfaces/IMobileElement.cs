@@ -12,21 +12,13 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-using Appium.Interfaces.Generic.SearchContext;
-
 namespace OpenQA.Selenium.Appium.Interfaces
 {
     /// <summary>
     /// This interface extends IWebElement and defines specific behavior
     /// for mobile.
     /// </summary>
-    public interface IMobileElement<W> : IFindByAccessibilityId<W>, IGenericSearchContext<W>,
-        IGenericFindsByClassName<W>,
-        IGenericFindsById<W>, IGenericFindsByCssSelector<W>, IGenericFindsByLinkText<W>,
-        IGenericFindsByName<W>,
-        IGenericFindsByPartialLinkText<W>, IGenericFindsByTagName<W>, IGenericFindsByXPath<W>, IWebElement,
-        IExecuteMethod
-        where W : IWebElement
+    public interface IMobileElement : IWebElement, IExecuteMethod
     {
     }
 }

@@ -8,7 +8,7 @@ namespace Appium.Net.Integration.Tests.IOS
 {
     class SearchingTest
     {
-        private IOSDriver<IOSElement> _driver;
+        private IOSDriver _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
@@ -22,7 +22,7 @@ namespace Appium.Net.Integration.Tests.IOS
                 capabilities.AddAdditionalAppiumOption("tags", new[] {"sample"});
             }
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _driver = new IOSDriver<IOSElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver = new IOSDriver(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 

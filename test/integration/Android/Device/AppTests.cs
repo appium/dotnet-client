@@ -9,7 +9,7 @@ namespace Appium.Net.Integration.Tests.Android.Device.App
 {
     internal class AppTests
     {
-        private AppiumDriver<IWebElement> _driver;
+        private AppiumDriver _driver;
         private AppiumOptions _androidOptions;
         private const string IntentAppPackageName = "com.prgguru.android";
         private const string ApiDemosPackageName = "io.appium.android.apis";
@@ -20,7 +20,7 @@ namespace Appium.Net.Integration.Tests.Android.Device.App
         public void SetUp()
         {
             _androidOptions = Caps.GetAndroidUIAutomatorCaps(Apps.Get(Apps.androidApiDemos));
-            _driver = new AndroidDriver<IWebElement>(
+            _driver = new AndroidDriver(
                 Env.ServerIsLocal() ? AppiumServers.LocalServiceUri : AppiumServers.RemoteServerUri,
                 _androidOptions);
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
@@ -41,7 +41,7 @@ namespace Appium.Net.Integration.Tests.Android.Device.App
             Assert.DoesNotThrow(() => _driver.ActivateApp(IntentAppPackageName));
 
             //Verify the expected app was activated
-            Assert.DoesNotThrow(() => _driver.FindElementById(IntentAppElement));
+            Assert.DoesNotThrow(() => _driver.FindElement(MobileBy.Id(IntentAppElement)));
         }
 
         [Test]
@@ -51,13 +51,14 @@ namespace Appium.Net.Integration.Tests.Android.Device.App
             _driver.ActivateApp(IntentAppPackageName);
 
             //Verify the expected app was activated
-            Assert.DoesNotThrow(() => _driver.FindElementById(IntentAppElement));
+            Assert.DoesNotThrow(() => _driver.FindElement(MobileBy.Id(IntentAppElement)));
 
             //Activates Test App to foreground from background
             Assert.DoesNotThrow(() => _driver.ActivateApp(ApiDemosPackageName));
 
             //Verify the expected app was activated
-            Assert.DoesNotThrow(() => _driver.FindElementByAccessibilityId(ApiDemoElement));
+            Assert.DoesNotThrow(() => _driver.FindElement(MobileBy.AccessibilityId(ApiDemoElement)));
+            Assert.DoesNotThrow(() => _driver.FindElement(MobileBy.AccessibilityId(ApiDemoElement)));
         }
 
         #endregion
