@@ -18,7 +18,6 @@ using OpenQA.Selenium.Appium.iOS;
 using OpenQA.Selenium.Appium.PageObjects.Attributes;
 using OpenQA.Selenium.Appium.PageObjects.Attributes.Abstract;
 using OpenQA.Selenium.Appium.Windows;
-using OpenQA.Selenium.Remote;
 using SeleniumExtras.PageObjects;
 using System;
 using System.Collections.Generic;

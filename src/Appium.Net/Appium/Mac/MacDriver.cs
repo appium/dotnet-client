@@ -14,7 +14,6 @@
 
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Service;
-using OpenQA.Selenium.Remote;
 using System;
 
 namespace OpenQA.Selenium.Appium.Mac
@@ -116,6 +115,6 @@ namespace OpenQA.Selenium.Appium.Mac
         }
 
 
-        protected override RemoteWebElementFactory CreateElementFactory() => new MacElementFactory(this);
+        protected override WebElementFactory CreateElementFactory() => new MacElementFactory(this as WebDriver);
     }
 }

@@ -12,12 +12,12 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-using System;
-using System.Collections.Generic;
 using OpenQA.Selenium.Appium.Service.Exceptions;
 using OpenQA.Selenium.Remote;
-using System.IO;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Net;
 using System.Runtime.CompilerServices;
 

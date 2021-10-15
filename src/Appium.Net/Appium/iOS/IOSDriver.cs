@@ -15,7 +15,6 @@
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Service;
-using OpenQA.Selenium.Remote;
 using System;
 using System.Drawing;
 using OpenQA.Selenium.Appium.iOS.Interfaces;
@@ -171,7 +170,7 @@ namespace OpenQA.Selenium.Appium.iOS
         public void HideKeyboard(string key, string strategy = null) =>
             AppiumCommandExecutionHelper.HideKeyboard(this, strategy, key);
 
-        protected override RemoteWebElementFactory CreateElementFactory() => new IOSElementFactory(this);
+        protected override WebElementFactory CreateElementFactory() => new IOSElementFactory(this as WebDriver);
 
         /// <summary>
         /// Locks the device.

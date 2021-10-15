@@ -1,17 +1,16 @@
 ﻿using OpenQA.Selenium.Appium.Interfaces;
-using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
 
 namespace OpenQA.Selenium.Appium
 {
-    public abstract class CachedElementFactory<T> : RemoteWebElementFactory where T : RemoteWebElement, IWebElementCached
+    public abstract class CachedElementFactory<T> : WebElementFactory where T : WebElement, IWebElementCached
     {
-        public CachedElementFactory(RemoteWebDriver parentDriver) : base(parentDriver)
+        public CachedElementFactory(WebDriver parentDriver) : base(parentDriver)
         {
         }
 
-        protected abstract T CreateCachedElement(RemoteWebDriver parentDriver, string elementId);
+        protected abstract T CreateCachedElement(WebDriver parentDriver, string elementId);
 
         public virtual bool CacheElementAttributes
         {
@@ -22,7 +21,7 @@ namespace OpenQA.Selenium.Appium
             }
         }
 
-        public override RemoteWebElement CreateElement(Dictionary<string, object> elementDictionary)
+        public override WebElement CreateElement(Dictionary<string, object> elementDictionary)
         {
             string elementId = GetElementId(elementDictionary);
             T cachedElement = CreateCachedElement(ParentDriver, elementId);

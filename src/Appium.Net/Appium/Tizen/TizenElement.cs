@@ -13,7 +13,6 @@
 //limitations under the License.
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
-using OpenQA.Selenium.Remote;
 using System.Collections.Generic;
 
 namespace OpenQA.Selenium.Appium.Tizen
@@ -25,7 +24,7 @@ namespace OpenQA.Selenium.Appium.Tizen
         /// </summary>
         /// <param name="parent">Driver in use.</param>
         /// <param name="id">ID of the element.</param>
-        public TizenElement(RemoteWebDriver parent, string id)
+        public TizenElement(WebDriver parent, string id)
             : base(parent, id)
         {
         }

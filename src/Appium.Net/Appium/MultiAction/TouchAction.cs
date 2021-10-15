@@ -15,8 +15,6 @@
 using OpenQA.Selenium.Appium.Interfaces;
 using System.Collections.Generic;
 using System.Reflection;
-using OpenQA.Selenium.Remote;
-using OpenQA.Selenium.Internal;
 
 namespace OpenQA.Selenium.Appium.MultiTouch
 {
@@ -28,9 +26,9 @@ namespace OpenQA.Selenium.Appium.MultiTouch
 
             private string GetIdForElement(IWebElement el)
             {
-                RemoteWebElement remoteWebElement = el as RemoteWebElement;
-                if (remoteWebElement != null)
-                    return (string) typeof(OpenQA.Selenium.Remote.RemoteWebElement).GetProperty("Id",
+                WebElement WebElement = el as WebElement;
+                if (WebElement != null)
+                    return (string) typeof(OpenQA.Selenium.WebElement).GetProperty("Id",
                         BindingFlags.NonPublic |
                         BindingFlags.Instance).GetValue(el, null);
 

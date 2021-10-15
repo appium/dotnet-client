@@ -22,7 +22,7 @@ namespace Appium.Net.Integration.Tests.IOS
         public void Setup()
         {
             var capabilities = Caps.GetIosCaps(Apps.Get("iosUICatalogApp"));
-            capabilities.AddAdditionalCapability(MobileCapabilityType.FullReset, true);
+            capabilities.AddAdditionalAppiumOption(MobileCapabilityType.FullReset, true);
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
 
             _driver = new IOSDriver<IWebElement>(serverUri, capabilities, Env.InitTimeoutSec);

@@ -13,7 +13,6 @@
 //limitations under the License.
 
 using OpenQA.Selenium.Appium.Interfaces;
-using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Appium.Enums;
 using System.Collections.Generic;
 
@@ -21,7 +20,7 @@ namespace OpenQA.Selenium.Appium.Windows
 {
     public class WindowsElement : AppiumWebElement, IFindByWindowsUIAutomation<AppiumWebElement>
     {
-        public WindowsElement(RemoteWebDriver parent, string id)
+        public WindowsElement(WebDriver parent, string id)
             : base(parent, id)
         {
         }

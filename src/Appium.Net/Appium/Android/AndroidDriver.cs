@@ -16,7 +16,6 @@ using OpenQA.Selenium.Appium.Android.Interfaces;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Service;
-using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -303,7 +302,7 @@ namespace OpenQA.Selenium.Appium.Android
         public string EndTestCoverage(string intent, string path) =>
             AndroidCommandExecutionHelper.EndTestCoverage(this, intent, path);
 
-        protected override RemoteWebElementFactory CreateElementFactory() => new AndroidElementFactory(this);
+        protected override WebElementFactory CreateElementFactory() => new AndroidElementFactory(this);
 
         public void SetSetting(string setting, object value) =>
             AndroidCommandExecutionHelper.SetSetting(this, setting, value);

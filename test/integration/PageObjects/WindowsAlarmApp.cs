@@ -119,7 +119,8 @@ namespace Appium.Net.Integration.Tests.PageObjects
         {
             var alarmEntry = _driver.FindElementByName(alarmName);
 
-            _driver.Mouse.ContextClick(alarmEntry.Coordinates);
+            /////// TODO - Implement for Appium
+            ////// _driver.Mouse.ContextClick(alarmEntry.Coordinates);
             _driver.FindElementByName("Delete").Click();
         }
     }

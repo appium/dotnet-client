@@ -188,11 +188,11 @@ namespace Appium.Net.Integration.Tests.ServerTests
         public void CheckAbilityToStartServiceUsingCapabilities()
         {
             var capabilities = new AppiumOptions();
-            capabilities.AddAdditionalCapability(MobileCapabilityType.PlatformName, "Android");
-            capabilities.AddAdditionalCapability(MobileCapabilityType.FullReset, true);
-            capabilities.AddAdditionalCapability(MobileCapabilityType.NewCommandTimeout, 60);
-            capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppPackage, "io.appium.android.apis");
-            capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppActivity, ".view.WebView1");
+            capabilities.AddAdditionalAppiumOption(MobileCapabilityType.PlatformName, "Android");
+            capabilities.AddAdditionalAppiumOption(MobileCapabilityType.FullReset, true);
+            capabilities.AddAdditionalAppiumOption(MobileCapabilityType.NewCommandTimeout, 60);
+            capabilities.AddAdditionalAppiumOption(AndroidMobileCapabilityType.AppPackage, "io.appium.android.apis");
+            capabilities.AddAdditionalAppiumOption(AndroidMobileCapabilityType.AppActivity, ".view.WebView1");
 
             var args = new OptionCollector().AddCapabilities(capabilities);
             AppiumLocalService service = null;
@@ -212,11 +212,11 @@ namespace Appium.Net.Integration.Tests.ServerTests
         public void CheckAbilityToStartServiceUsingCapabilitiesAndFlags()
         {
             var capabilities = new AppiumOptions();
-            capabilities.AddAdditionalCapability(MobileCapabilityType.PlatformName, "Android");
-            capabilities.AddAdditionalCapability(MobileCapabilityType.FullReset, true);
-            capabilities.AddAdditionalCapability(MobileCapabilityType.NewCommandTimeout, 60);
-            capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppPackage, "io.appium.android.apis");
-            capabilities.AddAdditionalCapability(AndroidMobileCapabilityType.AppActivity, ".view.WebView1");
+            capabilities.AddAdditionalAppiumOption(MobileCapabilityType.PlatformName, "Android");
+            capabilities.AddAdditionalAppiumOption(MobileCapabilityType.FullReset, true);
+            capabilities.AddAdditionalAppiumOption(MobileCapabilityType.NewCommandTimeout, 60);
+            capabilities.AddAdditionalAppiumOption(AndroidMobileCapabilityType.AppPackage, "io.appium.android.apis");
+            capabilities.AddAdditionalAppiumOption(AndroidMobileCapabilityType.AppActivity, ".view.WebView1");
 
             var args = new OptionCollector().AddCapabilities(capabilities)
                 .AddArguments(GeneralOptionList.CallbackAddress(_testIp))

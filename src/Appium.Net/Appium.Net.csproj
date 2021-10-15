@@ -8,7 +8,7 @@
     <Product>Appium-Dotnet-Driver</Product>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Copyright>Copyright © 2020</Copyright>
+    <Copyright>Copyright © 2021</Copyright>
     <PackageProjectUrl>https://github.com/appium/appium-dotnet-driver</PackageProjectUrl>
     <RepositoryUrl>https://github.com/appium/appium-dotnet-driver</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -48,9 +48,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
-    <PackageReference Include="Selenium.Support" Version="3.141.0" />
-    <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
+    <PackageReference Include="Selenium.Support" Version="4.0.0" />
+    <PackageReference Include="Selenium.WebDriver" Version="4.0.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -14,7 +14,6 @@
 
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
-using OpenQA.Selenium.Remote;
 using System.Collections.Generic;
 
 namespace OpenQA.Selenium.Appium.Android
@@ -26,7 +25,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// </summary>
         /// <param name="parent">Driver in use.</param>
         /// <param name="id">ID of the element.</param>
-        public AndroidElement(RemoteWebDriver parent, string id)
+        public AndroidElement(WebDriver parent, string id)
             : base(parent, id)
         {
         }

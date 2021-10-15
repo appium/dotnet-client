@@ -18,8 +18,6 @@ using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.iOS;
 using OpenQA.Selenium.Appium.PageObjects.Interceptors;
 using OpenQA.Selenium.Appium.PageObjects.Attributes;
-using OpenQA.Selenium.Internal;
-using OpenQA.Selenium.Remote;
 using SeleniumExtras.PageObjects;
 using System;
 using System.Collections.Generic;
@@ -44,7 +42,7 @@ namespace OpenQA.Selenium.Appium.PageObjects
                 {
                     listAvailableElementTypes = new List<Type>();
                     listAvailableElementTypes.Add(typeof(IWebElement));
-                    listAvailableElementTypes.Add(typeof(RemoteWebElement));
+                    listAvailableElementTypes.Add(typeof(WebElement));
                     listAvailableElementTypes.Add(typeof(AppiumWebElement));
                     listAvailableElementTypes.Add(typeof(AndroidElement));
                     listAvailableElementTypes.Add(typeof(IOSElement));

@@ -12,7 +12,6 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-using OpenQA.Selenium.Remote;
 using System.Collections.Generic;
 
 namespace OpenQA.Selenium.Appium
@@ -26,9 +25,9 @@ namespace OpenQA.Selenium.Appium
         {
             #region Context Commands
 
-            new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.Contexts, "/session/{sessionId}/contexts"),
-            new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetContext, "/session/{sessionId}/context"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.SetContext, "/session/{sessionId}/context"),
+            new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.Contexts, "/session/{sessionId}/contexts"),
+            new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetContext, "/session/{sessionId}/context"),
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.SetContext, "/session/{sessionId}/context"),
 
             #endregion Context Commands
 
@@ -36,121 +35,121 @@ namespace OpenQA.Selenium.Appium
 
             #region Clipboard
 
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.GetClipboard,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GetClipboard,
                 "/session/{sessionId}/appium/device/get_clipboard"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.SetClipboard,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.SetClipboard,
                 "/session/{sessionId}/appium/device/set_clipboard"),
 
             #endregion
 
             #region Device -> Network Commands
 
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ToggleAirplaneMode,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.ToggleAirplaneMode,
                 "/session/{sessionId}/appium/device/toggle_airplane_mode"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ToggleData,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.ToggleData,
                 "/session/{sessionId}/appium/device/toggle_data"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ToggleWiFi,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.ToggleWiFi,
                 "/session/{sessionId}/appium/device/toggle_wifi"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ToggleLocationServices,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.ToggleLocationServices,
                 "/session/{sessionId}/appium/device/toggle_location_services"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.GsmCall,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GsmCall,
                 "/session/{sessionId}/appium/device/gsm_call"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.SendSms,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.SendSms,
                 "/session/{sessionId}/appium/device/send_sms"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.SetGsmSignalStrength,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.SetGsmSignalStrength,
                 "/session/{sessionId}/appium/device/gsm_signal"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.SetGsmVoiceState,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.SetGsmVoiceState,
                 "/session/{sessionId}/appium/device/gsm_voice"),
 
             #endregion
 
             #region Device System Commands
 
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.OpenNotifications,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.OpenNotifications,
                 "/session/{sessionId}/appium/device/open_notifications"),
-            new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.SystemTime,
+            new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.SystemTime,
                 "/session/{sessionId}/appium/device/system_time"),
-            new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.SystemBars,
+            new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.SystemBars,
                 "/session/{sessionId}/appium/device/system_bars"),
-            new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetDisplayDensity,
+            new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetDisplayDensity,
                 "/session/{sessionId}/appium/device/display_density"),
 
             #endregion
 
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ShakeDevice,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.ShakeDevice,
                 "/session/{sessionId}/appium/device/shake"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.LockDevice,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.LockDevice,
                 "/session/{sessionId}/appium/device/lock"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.IsLocked,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.IsLocked,
                 "/session/{sessionId}/appium/device/is_locked"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.UnlockDevice,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.UnlockDevice,
                 "/session/{sessionId}/appium/device/unlock"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.PressKeyCode,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.PressKeyCode,
                 "/session/{sessionId}/appium/device/press_keycode"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.LongPressKeyCode,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.LongPressKeyCode,
                 "/session/{sessionId}/appium/device/long_press_keycode"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.Rotate,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.Rotate,
                 "/session/{sessionId}/appium/device/rotate"),
-            new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetCurrentActivity,
+            new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetCurrentActivity,
                 "/session/{sessionId}/appium/device/current_activity"),
-            new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetCurrentPackage,
+            new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetCurrentPackage,
                 "/session/{sessionId}/appium/device/current_package"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.InstallApp,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.InstallApp,
                 "/session/{sessionId}/appium/device/install_app"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.RemoveApp,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.RemoveApp,
                 "/session/{sessionId}/appium/device/remove_app"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ActivateApp,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.ActivateApp,
                 "/session/{sessionId}/appium/device/activate_app"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.TerminateApp,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.TerminateApp,
                 "/session/{sessionId}/appium/device/terminate_app"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.IsAppInstalled,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.IsAppInstalled,
                 "/session/{sessionId}/appium/device/app_installed"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.PushFile,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.PushFile,
                 "/session/{sessionId}/appium/device/push_file"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.PullFile,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.PullFile,
                 "/session/{sessionId}/appium/device/pull_file"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.PullFolder,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.PullFolder,
                 "/session/{sessionId}/appium/device/pull_folder"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.GetPerformanceData,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GetPerformanceData,
                 "/session/{sessionId}/appium/getPerformanceData"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.GetPerformanceDataTypes,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GetPerformanceDataTypes,
                 "/session/{sessionId}/appium/performanceData/types"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.LaunchApp,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.LaunchApp,
                 "/session/{sessionId}/appium/app/launch"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.CloseApp,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.CloseApp,
                 "/session/{sessionId}/appium/app/close"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ResetApp,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.ResetApp,
                 "/session/{sessionId}/appium/app/reset"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.BackgroundApp,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.BackgroundApp,
                 "/session/{sessionId}/appium/app/background"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.EndTestCoverage,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.EndTestCoverage,
                 "/session/{sessionId}/appium/app/end_test_coverage"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.GetAppStrings,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GetAppStrings,
                 "/session/{sessionId}/appium/app/strings"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.GetAppState,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GetAppState,
                 "/session/{sessionId}/appium/device/app_state"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.HideKeyboard,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.HideKeyboard,
                 "/session/{sessionId}/appium/device/hide_keyboard"),
-            new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.IsKeyboardShown,
+            new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.IsKeyboardShown,
                 "/session/{sessionId}/appium/device/is_keyboard_shown"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.StartActivity,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.StartActivity,
                 "/session/{sessionId}/appium/device/start_activity"),
-            new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetSettings,
+            new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetSettings,
                 "/session/{sessionId}/appium/settings"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.UpdateSettings,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.UpdateSettings,
                 "/session/{sessionId}/appium/settings"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.TouchID,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.TouchID,
                 "/session/{sessionId}/appium/simulator/touch_id"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.FingerPrint,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.FingerPrint,
                 "/session/{sessionId}/appium/device/finger_print"),
 
             #endregion Driver Commands
 
             #region Touch Commands
 
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.PerformMultiAction,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.PerformMultiAction,
                 "/session/{sessionId}/touch/multi/perform"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.PerformTouchAction,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.PerformTouchAction,
                 "/session/{sessionId}/touch/perform"),
 
             #endregion Touch Commands
@@ -159,60 +158,60 @@ namespace OpenQA.Selenium.Appium
 
             #region W3C Actions
 
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.Actions,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.Actions,
                 "/session/{sessionId}/actions"),
 
             #endregion W3C Actions
 
             #region JSON Wire Protocol Commands
 
-            new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetOrientation,
+            new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetOrientation,
                 "/session/{sessionId}/orientation"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.SetOrientation,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.SetOrientation,
                 "/session/{sessionId}/orientation"),
-            new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetConnectionType,
+            new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetConnectionType,
                 "/session/{sessionId}/network_connection"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.SetConnectionType,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.SetConnectionType,
                 "/session/{sessionId}/network_connection"),
-            new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetLocation, "/session/{sessionId}/location"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.SetLocation,
+            new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetLocation, "/session/{sessionId}/location"),
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.SetLocation,
                 "/session/{sessionId}/location"),
 
             #region Input Method (IME)
 
-            new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetAvailableEngines,
+            new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetAvailableEngines,
                 "/session/{sessionId}/ime/available_engines"),
-            new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetActiveEngine,
+            new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetActiveEngine,
                 "/session/{sessionId}/ime/active_engine"),
-            new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.IsIMEActive,
+            new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.IsIMEActive,
                 "/session/{sessionId}/ime/activated"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ActivateEngine,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.ActivateEngine,
                 "/session/{sessionId}/ime/activate"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.DeactivateEngine,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.DeactivateEngine,
                 "/session/{sessionId}/ime/deactivate"),
 
             #endregion Input Method (IME)
 
             #region Input value
 
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.ReplaceValue,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.ReplaceValue,
                 "/session/{sessionId}/appium/element/{id}/replace_value"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.SetValue,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.SetValue,
                 "/session/{sessionId}/appium/element/{id}/value"),
 
             #endregion Input value
 
             #region SeassionData
 
-            new AppiumCommand(CommandInfo.GetCommand, AppiumDriverCommand.GetSession, "/session/{sessionId}/"),
+            new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetSession, "/session/{sessionId}/"),
 
             #endregion SeassionData
 
             #region Recording Screen
 
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.StartRecordingScreen,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.StartRecordingScreen,
                 "/session/{sessionId}/appium/start_recording_screen"),
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.StopRecordingScreen,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.StopRecordingScreen,
                 "/session/{sessionId}/appium/stop_recording_screen"),
 
             #endregion Recording Screen
@@ -221,14 +220,14 @@ namespace OpenQA.Selenium.Appium
 
             #region Compare Images
 
-            new AppiumCommand(CommandInfo.PostCommand, AppiumDriverCommand.CompareImages,
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.CompareImages,
                 "/session/{sessionId}/appium/compare_images"),
 
             #endregion
 
-            new AppiumCommand(CommandInfo.GetCommand, DriverCommand.GetAvailableLogTypes,
+            new AppiumCommand(HttpCommandInfo.GetCommand, DriverCommand.GetAvailableLogTypes,
                 "session/{sessionId}/log/types"),
-            new AppiumCommand(CommandInfo.PostCommand, DriverCommand.GetLog, "session/{sessionId}/log")
+            new AppiumCommand(HttpCommandInfo.PostCommand, DriverCommand.GetLog, "session/{sessionId}/log")
         };
 
         /// <summary>
@@ -237,11 +236,11 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         /// <param name="repo">is a CommandInfoRepository instance which is used</param>
         /// <returns>The given CommandInfoRepository instance with added Appium-specific commands</returns>
-        internal static CommandInfoRepository Merge(CommandInfoRepository repo)
+        internal static ICommandExecutor Merge(ICommandExecutor repo)
         {
             foreach (AppiumCommand entry in CommandList)
             {
-                var commandInfo = new CommandInfo(entry.CommandType, entry.ApiEndpoint);
+                var commandInfo = new HttpCommandInfo(entry.CommandType, entry.ApiEndpoint);
                 repo.TryAddCommand(entry.CommandName, commandInfo);
             }
 

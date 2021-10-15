@@ -15,7 +15,6 @@
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Service;
-using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
 
@@ -138,6 +137,6 @@ namespace OpenQA.Selenium.Appium.Tizen
 
         #endregion IFindByTizenUIAutomation Members
 
-        protected override RemoteWebElementFactory CreateElementFactory() => new TizenElementFactory(this);
+        protected override WebElementFactory CreateElementFactory() => new TizenElementFactory(this as WebDriver);
     }
 }

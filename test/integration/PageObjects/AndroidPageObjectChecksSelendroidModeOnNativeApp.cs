@@ -92,14 +92,14 @@ namespace Appium.Net.Integration.Tests.PageObjects
         [MobileFindsByAll(Selendroid = true)]
         [FindsBySelendroid(LinkText = "Press to throw unhandled exception", Priority = 1)]
         //[FindsByAndroidUIAutomator(ID = "waitingButtonTest", Priority = 2)]
-        //Equals method of RemoteWebElement is not consistent for mobile apps
+        //Equals method of WebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
         private IMobileElement<IWebElement> _matchedToAllLocatorsElement;
 
         [MobileFindsByAll(Selendroid = true)]
         [FindsBySelendroid(LinkText = "Press to throw unhandled exception", Priority = 1)]
         //[FindsByAndroidUIAutomator(ID = "waitingButtonTest", Priority = 2)]
-        //Equals method of RemoteWebElement is not consistent for mobile apps
+        //Equals method of WebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
         private IList<IWebElement> _matchedToAllLocatorsElements;
 
@@ -108,14 +108,14 @@ namespace Appium.Net.Integration.Tests.PageObjects
         [MobileFindsByAll(Selendroid = true)]
         [FindsBySelendroid(LinkText = "Press to throw unhandled exception", Priority = 1)]
         //[FindsByAndroidUIAutomator(ID = "waitingButtonTest", Priority = 2)]
-        //Equals method of RemoteWebElement is not consistent for mobile apps
+        //Equals method of WebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
         private IWebElement TestMatchedToAllLocatorsElementProperty { set; get; }
 
         [MobileFindsByAll(Selendroid = true)]
         [FindsBySelendroid(LinkText = "Press to throw unhandled exception", Priority = 1)]
         //[FindsByAndroidUIAutomator(ID = "waitingButtonTest", Priority = 2)]
-        //Equals method of RemoteWebElement is not consistent for mobile apps
+        //Equals method of WebElement is not consistent for mobile apps
         //The second selector will be commented till the problem is worked out
         private IList<IWebElement> TestMatchedToAllLocatorsElementsProperty { set; get; }
 

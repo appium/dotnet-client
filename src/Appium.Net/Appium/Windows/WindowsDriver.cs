@@ -19,7 +19,6 @@ using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Service;
-using OpenQA.Selenium.Remote;
 
 namespace OpenQA.Selenium.Appium.Windows
 {
@@ -154,7 +153,7 @@ namespace OpenQA.Selenium.Appium.Windows
         public void HideKeyboard(string key, string strategy = null) =>
             AppiumCommandExecutionHelper.HideKeyboard(this, strategy, key);
 
-        protected override RemoteWebElementFactory CreateElementFactory() => new WindowsElementFactory(this);
+        protected override WebElementFactory CreateElementFactory() => new WindowsElementFactory(this);
 
         public void PressKeyCode(KeyEvent keyEvent) => throw new NotImplementedException();
 

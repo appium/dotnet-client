@@ -8,11 +8,11 @@ namespace Appium.Net.Integration.Tests.helpers
         public static AppiumOptions GetIosCaps(string app)
         {
             var capabilities = new AppiumOptions();
-            capabilities.AddAdditionalCapability(MobileCapabilityType.AutomationName, AutomationName.iOSXcuiTest);
-            capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "iPhone X");
-            capabilities.AddAdditionalCapability(MobileCapabilityType.PlatformVersion, "12.0");
-            capabilities.AddAdditionalCapability(MobileCapabilityType.App, app);
-            capabilities.AddAdditionalCapability(IOSMobileCapabilityType.LaunchTimeout, Env.InitTimeoutSec.TotalMilliseconds);
+            capabilities.AutomationName = AutomationName.iOSXcuiTest;
+            capabilities.DeviceName = "iPhone X";
+            capabilities.PlatformVersion = "12.0";
+            capabilities.App = app;
+            capabilities.AddAdditionalAppiumOption(IOSMobileCapabilityType.LaunchTimeout, Env.InitTimeoutSec.TotalMilliseconds);
 
             return capabilities;
         }
@@ -20,18 +20,18 @@ namespace Appium.Net.Integration.Tests.helpers
         public static AppiumOptions GetAndroidUIAutomatorCaps(string app)
         {
             var capabilities = new AppiumOptions();
-            capabilities.AddAdditionalCapability(MobileCapabilityType.AutomationName, AutomationName.AndroidUIAutomator2);
-            capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "Android Emulator");
-            capabilities.AddAdditionalCapability(MobileCapabilityType.App, app);
+            capabilities.AutomationName = AutomationName.AndroidUIAutomator2;
+            capabilities.DeviceName = "Android Emulator";
+            capabilities.App = app;
             return capabilities;
         }
 
         public static AppiumOptions GetAndroidEspressoCaps(string app)
         {
             var capabilities = new AppiumOptions();
-            capabilities.AddAdditionalCapability(MobileCapabilityType.AutomationName, AutomationName.AndroidEspresso);
-            capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, "Android Emulator");
-            capabilities.AddAdditionalCapability(MobileCapabilityType.App, app);
+            capabilities.AutomationName = AutomationName.AndroidEspresso;
+            capabilities.DeviceName = "Android Emulator";
+            capabilities.App = app;
             return capabilities;
         }
     }

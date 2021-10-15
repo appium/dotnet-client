@@ -83,7 +83,7 @@ namespace Appium.Net.Integration.Tests.PageObjects
         [FindsBy(How = How.ClassName, Using = "FakeHTMLClass", Priority = 2)]
         [FindsBy(How = How.XPath, Using = ".//fakeTag", Priority = 3)]
         [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 1)]
-        //Equals method of RemoteWebElement is not consistent for mobile apps
+        //Equals method of WebElement is not consistent for mobile apps
         //The second selector won't be added till the problem is worked out
         [FindsByAndroidUIAutomator(ID = "android:id/text1", Priority = 1)]
         [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 1)]
@@ -94,7 +94,7 @@ namespace Appium.Net.Integration.Tests.PageObjects
         [FindsBy(How = How.ClassName, Using = "FakeHTMLClass", Priority = 2)]
         [FindsBy(How = How.XPath, Using = ".//fakeTag", Priority = 3)]
         [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 1)]
-        //Equals method of RemoteWebElement is not consistent for mobile apps
+        //Equals method of WebElement is not consistent for mobile apps
         //The second selector won't be added till the problem is worked out
         [FindsByAndroidUIAutomator(ID = "android:id/text1", Priority = 1)]
         [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 1)]
@@ -107,7 +107,7 @@ namespace Appium.Net.Integration.Tests.PageObjects
         [FindsBy(How = How.ClassName, Using = "FakeHTMLClass", Priority = 2)]
         [FindsBy(How = How.XPath, Using = ".//fakeTag", Priority = 3)]
         [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 1)]
-        //Equals method of RemoteWebElement is not consistent for mobile apps
+        //Equals method of WebElement is not consistent for mobile apps
         //The second selector won't be added till the problem is worked out
         [FindsByAndroidUIAutomator(ID = "android:id/text1", Priority = 1)]
         [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 1)]
@@ -119,7 +119,7 @@ namespace Appium.Net.Integration.Tests.PageObjects
         [FindsBy(How = How.ClassName, Using = "FakeHTMLClass", Priority = 2)]
         [FindsBy(How = How.XPath, Using = ".//fakeTag", Priority = 3)]
         [FindsByIOSUIAutomation(ClassName = "UIAButton", Priority = 1)]
-        //Equals method of RemoteWebElement is not consistent for mobile apps
+        //Equals method of WebElement is not consistent for mobile apps
         //The second selector won't be added till the problem is worked out
         [FindsByAndroidUIAutomator(ID = "android:id/text1", Priority = 1)]
         [FindsByAndroidUIAutomator(ClassName = "android.widget.TextView", Priority = 1)]

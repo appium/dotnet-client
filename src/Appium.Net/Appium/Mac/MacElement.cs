@@ -12,8 +12,6 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-using OpenQA.Selenium.Remote;
-
 namespace OpenQA.Selenium.Appium.Mac
 {
     public class MacElement : AppiumWebElement
@@ -23,7 +21,7 @@ namespace OpenQA.Selenium.Appium.Mac
         /// </summary>
         /// <param name="parent">Driver in use.</param>
         /// <param name="id">ID of the element.</param>
-        public MacElement(RemoteWebDriver parent, string id)
+        public MacElement(WebDriver parent, string id)
             : base(parent, id)
         {
         }

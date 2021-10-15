@@ -48,9 +48,9 @@ namespace OpenQA.Selenium.Appium.Service.Options
             }
             else
             {
-                Dictionary<string, object> originalDictionary = this.options.ToDictionary();
-                Dictionary<string, object> givenDictionary = options.ToDictionary();
-                Dictionary<string, object> result = new Dictionary<string, object>(originalDictionary);
+                IDictionary<string, object> originalDictionary = this.options.ToDictionary();
+                IDictionary<string, object> givenDictionary = options.ToDictionary();
+                IDictionary<string, object> result = new Dictionary<string, object>(originalDictionary);
 
                 foreach (var item in givenDictionary)
                 {
@@ -81,7 +81,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
 
             if (options != null)
             {
-                Dictionary<string, object> capabilitiesDictionary = options.ToDictionary();
+                IDictionary<string, object> capabilitiesDictionary = options.ToDictionary();
 
                 foreach (var item in capabilitiesDictionary)
                 {
@@ -132,7 +132,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
 
             if (options != null)
             {
-                Dictionary<string, object> capabilitiesDictionary = options.ToDictionary();
+                IDictionary<string, object> capabilitiesDictionary = options.ToDictionary();
 
                 foreach (var item in capabilitiesDictionary)
                 {
