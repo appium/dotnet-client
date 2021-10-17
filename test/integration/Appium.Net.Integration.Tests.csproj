@@ -4,11 +4,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="apps\**" />
-    <Compile Remove="Windows\Device\**" />
     <EmbeddedResource Remove="apps\**" />
-    <EmbeddedResource Remove="Windows\Device\**" />
     <None Remove="apps\**" />
-    <None Remove="Windows\Device\**" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Castle.Core" Version="4.3.1" />
