@@ -29,7 +29,6 @@ using OpenQA.Selenium.Appium.Windows;
 // up to OpenQA.Selenium.Interactions and this alias can simply be removed.
 using PointerInputDevice = OpenQA.Selenium.Appium.Interactions.PointerInputDevice;
 using NUnit.Framework;
-using OpenQA.Selenium.Appium;
 using Appium.Net.Integration.Tests.helpers;
 
 namespace Appium.Net.Integration.Tests.Windows
@@ -235,10 +234,13 @@ namespace Appium.Net.Integration.Tests.Windows
             // Create a new session based from the newly opened Sticky Notes window
             var newStickyNoteWindowHandle = openedStickyNotes[0].GetAttribute("NativeWindowHandle");
             newStickyNoteWindowHandle = (int.Parse(newStickyNoteWindowHandle)).ToString("x"); // Convert to Hex
-            AppiumOptions appCapabilities = new AppiumOptions();
-            appCapabilities.AddAdditionalCapability("appTopLevelWindow", newStickyNoteWindowHandle);
-            appCapabilities.AddAdditionalCapability("deviceName", "WindowsPC");
-            newStickyNoteSession = new WindowsDriver<WindowsElement>(serverUri, appCapabilities);
+            var options = new WindowsOptions
+            {
+                AppTopLevelWindow = newStickyNoteWindowHandle,
+                DeviceName = "WindowsPC"
+            };
+
+            newStickyNoteSession = new WindowsDriver<WindowsElement>(serverUri, options);
             Assert.IsNotNull(newStickyNoteSession);
 
             // Resize and re-position the Sticky Notes window we are working with

@@ -26,7 +26,6 @@ namespace Appium.Net.Integration.Tests.Windows
 {
     public class MultiSelectControlTest
     {
-        private WindowsDriver<WindowsElement> _driver;
         protected static WindowsDriver<WindowsElement> AlarmClockSession;
         protected static WindowsDriver<WindowsElement> DesktopSession;
 
@@ -34,26 +33,29 @@ namespace Appium.Net.Integration.Tests.Windows
         public void Setup()
         {
             // Launch the AlarmClock app
-            var appCapabilities = new AppiumOptions();
-            appCapabilities.AddAdditionalCapability("app", "Microsoft.WindowsAlarms_8wekyb3d8bbwe!App");
-            appCapabilities.AddAdditionalCapability("platformName", "Windows");
-            appCapabilities.AddAdditionalCapability("deviceName", "WindowsPC");
+            var alarmOptions = new WindowsOptions
+            {
+                App = "Microsoft.WindowsAlarms_8wekyb3d8bbwe!App",
+                DeviceName = "WindowsPC"
+            };
 
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
 
             AlarmClockSession =
-                new WindowsDriver<WindowsElement>(serverUri, appCapabilities);
+                new WindowsDriver<WindowsElement>(serverUri, alarmOptions);
 
             Assert.IsNotNull(AlarmClockSession);
             AlarmClockSession.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
 
             // Create a session for Desktop
-            var desktopCapabilities = new AppiumOptions();
-            desktopCapabilities.AddAdditionalCapability("app", "Root");
-            desktopCapabilities.AddAdditionalCapability("deviceName", "WindowsPC");
-
+            var rootOptions = new WindowsOptions
+            {
+                App = "Root",
+                DeviceName = "WindowsPC"
+            };
+            
             DesktopSession =
-                new WindowsDriver<WindowsElement>(serverUri, desktopCapabilities);
+                new WindowsDriver<WindowsElement>(serverUri, rootOptions);
             Assert.IsNotNull(DesktopSession);
 
             // Ensure app is started in the default main page

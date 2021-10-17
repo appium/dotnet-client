@@ -14,7 +14,6 @@
 
 using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
-using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
 using OpenQA.Selenium.Remote;
 
@@ -23,18 +22,21 @@ namespace Appium.Net.Integration.Tests.Windows
     public class ClickElementTest
     {
         private WindowsDriver<WindowsElement> _calculatorSession;
+        private const string CalculatorAppId = "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App";
         protected static RemoteWebElement CalculatorResult;
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            var appCapabilities = new AppiumOptions();
-            appCapabilities.AddAdditionalCapability("app", "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App");
-            appCapabilities.AddAdditionalCapability("deviceName", "WindowsPC");
-            appCapabilities.AddAdditionalCapability("platformName", "Windows");
+            var options = new WindowsOptions
+            {
+                App = CalculatorAppId,
+                DeviceName = "WindowsPC",
+                WaitForAppLaunchTimeout = 30
+            };
 
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _calculatorSession = new WindowsDriver<WindowsElement>(serverUri, appCapabilities,
+            _calculatorSession = new WindowsDriver<WindowsElement>(serverUri, options,
                 Env.InitTimeoutSec);
             _calculatorSession.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
 
@@ -56,7 +58,7 @@ namespace Appium.Net.Integration.Tests.Windows
         [SetUp]
         public void SetUp()
         {
-            _calculatorSession.FindElementByName("Clear").Click();
+            _calculatorSession.FindElementByName("Clear entry").Click();
             Assert.AreEqual("Display is 0", CalculatorResult.Text);
         }
 
