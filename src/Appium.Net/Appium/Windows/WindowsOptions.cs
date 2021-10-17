@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Globalization;
+using OpenQA.Selenium.Remote;
 using static System.String;
 
 namespace OpenQA.Selenium.Appium.Windows
 {
     public class WindowsOptions : AppiumOptions
     {
-        private new string VendorPrefix = "ms";
         private const string PlatformNameOption = "platformName";
-        private new const string AutomationNameOption = "automationName";
-        private new const string AppOption = "app";
+        private const string AutomationNameOption = "automationName";
+        private const string AppOption = "app";
         private const string AppArgumentsOption = "appArguments";
         private const string AppTopLevelWindowOption = "appTopLevelWindow";
         private const string AppWorkingDirOption = "appWorkingDir";
@@ -44,7 +45,11 @@ namespace OpenQA.Selenium.Appium.Windows
         /// In such case the session will be invoked without any explicit target application (actually, it will be Explorer).
         /// Either this option or <see cref="AppTopLevelWindow"/> must be provided on session startup.
         /// </summary>
-        public new string App { get; set; }
+        public new string App
+        {
+            get => base.App;
+            set => base.App = value;
+        }
 
         /// <summary>
         /// Application arguments string, for example "/?"
@@ -97,11 +102,10 @@ namespace OpenQA.Selenium.Appium.Windows
         public string PreRunScript { get; set; }
 
         /// <summary>
-        ///An object containing either script or command key.
+        /// An object containing either script or command key.
         /// The value of each key must be a valid PowerShell script or command to be executed after WinAppDriver session is stopped.
         /// </summary>
         public string PostRunScript { get; set; }
-
 
         [Obsolete(
             "Use the temporary AddAdditionalOption method or the browser-specific method for adding additional options")]
@@ -109,7 +113,7 @@ namespace OpenQA.Selenium.Appium.Windows
         {
             if (IsNullOrEmpty(capabilityName))
             {
-                throw new ArgumentException("Capability name may not be null an empty string.", "capabilityName");
+                throw new ArgumentException(Format(CultureInfo.InvariantCulture, "Capability name may not be null or an empty string."), nameof(capabilityName));
             }
 
             AddAdditionalOption(capabilityName, capabilityValue);
@@ -117,22 +121,7 @@ namespace OpenQA.Selenium.Appium.Windows
 
         public override ICapabilities ToCapabilities()
         {
-            var capabilities = GenerateDesiredCapabilities(false);
-
-            if (!IsNullOrEmpty(PlatformName))
-            {
-                capabilities.SetCapability(PlatformNameOption, PlatformName);
-            }
-
-            if (!IsNullOrEmpty(AutomationName))
-            {
-                capabilities.SetCapability(AutomationNameOption, AutomationName);
-            }
-
-            if (!IsNullOrEmpty(App))
-            {
-                capabilities.SetCapability(AppOption, App);
-            }
+            var capabilities = base.ToCapabilities() as DesiredCapabilities;
 
             if (!IsNullOrEmpty(AppArguments))
             {

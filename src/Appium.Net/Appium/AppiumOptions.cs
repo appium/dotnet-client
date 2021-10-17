@@ -9,11 +9,11 @@ namespace OpenQA.Selenium.Appium
     /// </summary>
     public class AppiumOptions : DriverOptions
     {
+        private const string VendorPrefix = "appium";
+        private const string AutomationNameOption = "appium:automationName";
         private const string DeviceNameOption = "appium:deviceName";
+        private const string AppOption = "appium:app";
         private const string PlatformVersionOption = "appium:platformVersion";
-        protected string VendorPrefix = "appium";
-        protected const string AutomationNameOption = "appium:automationName";
-        protected internal const string AppOption = "appium:app";
 
         protected readonly Dictionary<string, object> additionalAppiumOptions = new Dictionary<string, object>();
 
@@ -129,7 +129,7 @@ namespace OpenQA.Selenium.Appium
             return knownOptions;
         }
 
-        protected Dictionary<string, object> BuildAppiumOptionsDictionary()
+        private Dictionary<string, object> BuildAppiumOptionsDictionary()
         {
             var appiumOptions = BuildAppiumKnownOptionsDictionary();
 
