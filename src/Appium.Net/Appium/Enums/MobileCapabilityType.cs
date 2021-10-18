@@ -19,7 +19,7 @@ namespace OpenQA.Selenium.Appium.Enums
         /// <summary>
         /// Capability name used for the apllication setting.
         /// </summary>
-        public static readonly string App = "app";
+        public static readonly string App = "appium:app";
 
         /// <summary>
         /// Capability name used for the target platform name setting.
@@ -29,17 +29,17 @@ namespace OpenQA.Selenium.Appium.Enums
         /// <summary>
         /// Capability name used for the target platform version setting.
         /// </summary>
-        public static readonly string PlatformVersion = "platformVersion";
+        public static readonly string PlatformVersion = "appium:platformVersion";
 
         /// <summary>
-        /// Capability name used for the automation name (e.g. Appium, Selendroid and so on) setting.
+        /// Capability name used for the device name (e.g. Pixel 3XL, Galaxy S20 and so on) setting.
         /// </summary>
-        public static readonly string DeviceName = "deviceName";
+        public static readonly string DeviceName = "appium:deviceName";
 
         /// <summary>
         /// Time out for the waiting for a new command.
         /// </summary>
-        public static readonly string NewCommandTimeout = "newCommandTimeout";
+        public static readonly string NewCommandTimeout = "appium:newCommandTimeout";
 
         /// <summary>
         /// Name of mobile web browser to automate. Should be an empty string if automating an app instead.
@@ -49,7 +49,7 @@ namespace OpenQA.Selenium.Appium.Enums
         /// <summary>
         /// Capability name used for the automation name (e.g. Appium, Selendroid and so on) setting.
         /// </summary>
-        public static readonly string AutomationName = "automationName";
+        public static readonly string AutomationName = "appium:automationName";
 
         /// <summary>
         /// Capability name used for the setting up of the required appium version.
@@ -59,17 +59,17 @@ namespace OpenQA.Selenium.Appium.Enums
         // <summary>
         /// Unique device identifier of the connected physical device
         /// </summary>
-        public static readonly string Udid = "udid";
+        public static readonly string Udid = "appium:udid";
 
         /// <summary>
         /// (Sim/Emu-only) Language to set for the simulator / emulator
         /// </summary>
-        public static readonly string Language = "language";
+        public static readonly string Language = "appium:language";
 
         /// <summary>
         /// (Sim/Emu-only) Locale to set for the simulator / emulator
         /// </summary>
-        public static readonly string Locale = "locale";
+        public static readonly string Locale = "appium:locale";
 
         /// <summary>
         /// (Sim/Emu-only) start in a certain orientation
@@ -79,23 +79,23 @@ namespace OpenQA.Selenium.Appium.Enums
         /// <summary>
         ///  Move directly into Webview context. Default false
         /// </summary>
-        public static readonly string AutoWebview = "autoWebview";
+        public static readonly string AutoWebview = "appium:autoWebview";
 
         /// <summary>
         /// Don't reset app state before this session. Default false
         /// </summary>
-        public static readonly string NoReset = "noReset";
+        public static readonly string NoReset = "appium:noReset";
 
         /// <summary>
         /// (iOS) Delete the entire simulator folder. (Android) Reset app state by uninstalling app instead of clearing app data.
         /// On Android, this will also remove the app after the session is complete. Default false
         /// </summary>
-        public static readonly string FullReset = "fullReset";
+        public static readonly string FullReset = "appium:fullReset";
 
         /// <summary>
         /// App or list of apps (as a JSON array) to install prior to running tests. Note that it will not work with
         /// automationName of Espresso and iOS real devices.
         /// </summary>
-        public static readonly string OtherApps = "otherApps";
+        public static readonly string OtherApps = "appium:otherApps";
     }
 }
