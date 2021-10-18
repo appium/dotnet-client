@@ -12,11 +12,9 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-using Appium.Interfaces.Generic.SearchContext;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Service;
-using OpenQA.Selenium.Internal;
 using OpenQA.Selenium.Interactions;
 using System;
 using System.Collections;
@@ -29,15 +27,11 @@ using OpenQA.Selenium.Appium.ImageComparison;
 
 namespace OpenQA.Selenium.Appium
 {
-    public abstract class AppiumDriver<W> : WebDriver, IFindsByImage<W>,
+    public abstract class AppiumDriver : WebDriver,
         IHasSessionDetails,
         IHasLocation,
-        IFindByAccessibilityId<W>,
-        IHidesKeyboard, IInteractsWithFiles,
-        IInteractsWithApps, IPerformsTouchActions, IRotatable, IContextAware, IGenericSearchContext<W>,
-        IGenericFindsByClassName<W>,
-        IGenericFindsById<W>, IGenericFindsByCssSelector<W>, IGenericFindsByLinkText<W>, IGenericFindsByName<W>,
-        IGenericFindsByPartialLinkText<W>, IGenericFindsByTagName<W>, IGenericFindsByXPath<W> where W : IWebElement
+        IHidesKeyboard, IInteractsWithFiles, IFindsByFluentSelector<AppiumWebElement>,
+        IInteractsWithApps, IPerformsTouchActions, IRotatable, IContextAware
     {
         private const string NativeApp = "NATIVE_APP";
 
@@ -92,87 +86,6 @@ namespace OpenQA.Selenium.Appium
 
         #endregion Constructors
 
-        #region Generic FindMethods
-
-        public new W FindElement(By by) =>
-            (W)base.FindElement(by);
-
-        public new ReadOnlyCollection<W> FindElements(By by) =>
-            ConvertToExtendedWebElementCollection<W>(base.FindElements(by));
-
-        public new W FindElement(string by, string value) => (W)base.FindElement(by, value);
-
-        public new IReadOnlyCollection<W> FindElements(string selector, string value) =>
-            ConvertToExtendedWebElementCollection<W>(base.FindElements(selector, value));
-
-        public W FindElementByClassName(string className) =>
-            (W)base.FindElement(MobileSelector.ClassName, className);
-
-        public ReadOnlyCollection<W> FindElementsByClassName(string className) =>
-            ConvertToExtendedWebElementCollection<W>(base.FindElements(MobileSelector.ClassName, className));
-
-        public W FindElementById(string id) =>
-            (W)base.FindElement(MobileSelector.Id, id);
-
-        public ReadOnlyCollection<W> FindElementsById(string id) =>
-            ConvertToExtendedWebElementCollection<W>(base.FindElements(MobileSelector.Id, id));
-
-        public W FindElementByCssSelector(string cssSelector) =>
-            (W)base.FindElement("css selector", cssSelector);
-
-        public ReadOnlyCollection<W> FindElementsByCssSelector(string cssSelector) =>
-            ConvertToExtendedWebElementCollection<W>(base.FindElements("css selector", cssSelector));
-
-        public W FindElementByLinkText(string linkText) =>
-            (W)base.FindElement("link text", linkText);
-
-        public ReadOnlyCollection<W> FindElementsByLinkText(string linkText) =>
-            ConvertToExtendedWebElementCollection<W>(base.FindElements("link text", linkText));
-
-        public W FindElementByName(string name) =>
-            (W)base.FindElement(MobileSelector.Name, name);
-
-        public ReadOnlyCollection<W> FindElementsByName(string name) =>
-            ConvertToExtendedWebElementCollection<W>(base.FindElements(MobileSelector.Name, name));
-
-        public W FindElementByPartialLinkText(string partialLinkText) =>
-            (W)base.FindElement("partial link text", partialLinkText);
-
-        public ReadOnlyCollection<W> FindElementsByPartialLinkText(string partialLinkText) =>
-            ConvertToExtendedWebElementCollection<W>(base.FindElements("partial link text", partialLinkText));
-
-        public W FindElementByTagName(string tagName) =>
-            (W)base.FindElement(MobileSelector.TagName, tagName);
-
-        public ReadOnlyCollection<W> FindElementsByTagName(string tagName) =>
-            ConvertToExtendedWebElementCollection<W>(base.FindElements(MobileSelector.TagName, tagName));
-
-        public W FindElementByXPath(string xpath) =>
-            (W)base.FindElement("xpath", xpath);
-
-        public ReadOnlyCollection<W> FindElementsByXPath(string xpath) =>
-            ConvertToExtendedWebElementCollection<W>(base.FindElements("xpath", xpath));
-
-        #region IFindByAccessibilityId Members
-
-        public W FindElementByAccessibilityId(string selector) => FindElement(MobileSelector.Accessibility, selector);
-
-        public IReadOnlyCollection<W> FindElementsByAccessibilityId(string selector) =>
-            FindElements(MobileSelector.Accessibility, selector);
-
-        #endregion IFindByAccessibilityId Members
-
-        #region IFindsByImage Members
-
-        public W FindElementByImage(string base64Template) => FindElement(MobileSelector.Image, base64Template);
-
-        public IReadOnlyCollection<W> FindElementsByImage(string base64Template) =>
-            ConvertToExtendedWebElementCollection<W>(FindElements(MobileSelector.Image, base64Template));
-
-        #endregion
-
-        #endregion
-
         #region Public Methods
 
         protected override Response Execute(string driverCommandToExecute, Dictionary<string, object> parameters) =>
@@ -180,6 +93,21 @@ namespace OpenQA.Selenium.Appium
 
         Response IExecuteMethod.Execute(string commandName, Dictionary<string, object> parameters) =>
             base.Execute(commandName, parameters);
+
+
+        #region Generic FindMethods
+
+        public new AppiumWebElement FindElement(By by) =>
+            (AppiumWebElement)base.FindElement(by);
+
+        public new ReadOnlyCollection<AppiumWebElement> FindElements(By by) =>
+            ConvertToExtendedWebElementCollection<AppiumWebElement>(base.FindElements(by));
+
+        public new AppiumWebElement FindElement(string by, string value) => (AppiumWebElement)base.FindElement(by, value);
+
+        public new IReadOnlyCollection<AppiumWebElement> FindElements(string selector, string value) =>
+            ConvertToExtendedWebElementCollection<AppiumWebElement>(base.FindElements(selector, value));
+        #endregion Generic FindMethods
 
         Response IExecuteMethod.Execute(string driverCommand) => Execute(driverCommand, null);
 
@@ -658,7 +586,7 @@ namespace OpenQA.Selenium.Appium
 
         #region Support methods
 
-        protected new abstract WebElementFactory CreateElementFactory();
+        protected WebElementFactory CreateElementFactory() => new AppiumElementFactory(this);
 
         internal static ICapabilities SetPlatformToCapabilities(DriverOptions dc, string desiredPlatform)
         {

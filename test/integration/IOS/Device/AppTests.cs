@@ -10,7 +10,7 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
 {
     internal class AppTests
     {
-        private IOSDriver<IWebElement> _driver;
+        private IOSDriver _driver;
         private AppiumOptions _iosOptions;
         private const string UiCatalogAppTestAppBundleId = "com.example.apple-samplecode.UICatalog";
         private const string IosTestAppBundleId = "io.appium.TestApp";
@@ -22,7 +22,7 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
         public void SetUp()
         {
             _iosOptions = Caps.GetIosCaps(Apps.Get("iosUICatalogApp"));
-            _driver = new IOSDriver<IWebElement>(
+            _driver = new IOSDriver(
                 Env.ServerIsLocal() ? AppiumServers.LocalServiceUri : AppiumServers.RemoteServerUri,
                 _iosOptions);
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
@@ -43,7 +43,7 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
             Assert.DoesNotThrow(() => _driver.ActivateApp(IosTestAppBundleId));
 
             //Verify the expected app was activated
-            Assert.DoesNotThrow(() => _driver.FindElementByAccessibilityId(IosTestAppElement));
+            Assert.DoesNotThrow(() => _driver.FindElement(MobileBy.AccessibilityId(IosTestAppElement)));
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
                 new Dictionary<string, string> {{"bundleId", IosTestAppBundleId}}));
 
             //Verify the expected app was activated
-            Assert.DoesNotThrow(() => _driver.FindElementByAccessibilityId(IosTestAppElement));
+            Assert.DoesNotThrow(() => _driver.FindElement(MobileBy.AccessibilityId(IosTestAppElement)));
         }
 
         [Test]
@@ -64,13 +64,13 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
             _driver.ActivateApp(IosTestAppBundleId);
 
             //Verify the expected app was activated
-            Assert.DoesNotThrow(() => _driver.FindElementByAccessibilityId(IosTestAppElement));
+            Assert.DoesNotThrow(() => _driver.FindElement(MobileBy.AccessibilityId(IosTestAppElement)));
 
             //Activates Test App to foreground from background
             Assert.DoesNotThrow(() => _driver.ActivateApp(UiCatalogAppTestAppBundleId));
 
             //Verify the expected app was activated
-            Assert.DoesNotThrow(() => _driver.FindElementByAccessibilityId(UiCatalogTestAppElement));
+            Assert.DoesNotThrow(() => _driver.FindElement(MobileBy.AccessibilityId(UiCatalogTestAppElement)));
         }
 
         #endregion
@@ -82,7 +82,7 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
         {
             Assert.DoesNotThrow(
                 () => _driver.BackgroundApp());
-            Assert.DoesNotThrow(() => _driver.FindElementByAccessibilityId(IosDockElement));
+            Assert.DoesNotThrow(() => _driver.FindElement(MobileBy.AccessibilityId(IosDockElement)));
         }
 
         [Test]
@@ -104,7 +104,7 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
         {
             Assert.DoesNotThrow(
                 () => _driver.BackgroundApp(-1));
-            Assert.DoesNotThrow(() => _driver.FindElementByAccessibilityId(IosDockElement));
+            Assert.DoesNotThrow(() => _driver.FindElement(MobileBy.AccessibilityId(IosDockElement)));
         }
 
         #endregion

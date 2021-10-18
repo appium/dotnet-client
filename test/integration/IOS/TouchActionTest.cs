@@ -11,7 +11,7 @@ namespace Appium.Net.Integration.Tests.IOS
     [TestFixture]
     public class TouchActionTest
     {
-        private AppiumDriver<IWebElement> _driver;
+        private AppiumDriver _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
@@ -25,7 +25,7 @@ namespace Appium.Net.Integration.Tests.IOS
                 capabilities.AddAdditionalAppiumOption("tags", new[] {"sample"});
             }
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _driver = new IOSDriver<IWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver = new IOSDriver(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait= Env.ImplicitTimeoutSec;
         }
 
@@ -42,26 +42,26 @@ namespace Appium.Net.Integration.Tests.IOS
         [Test]
         public void SimpleActionTestCase()
         {
-            _driver.FindElementById("TextField1").Clear();
-            _driver.FindElementById("TextField1").SendKeys("1");
-            _driver.FindElementById("TextField2").Clear();
-            _driver.FindElementById("TextField2").SendKeys("3");
-            var el = _driver.FindElementByAccessibilityId("ComputeSumButton");
+            _driver.FindElement(MobileBy.Id("TextField1")).Clear();
+            _driver.FindElement(MobileBy.Id("TextField1")).SendKeys("1");
+            _driver.FindElement(MobileBy.Id("TextField2")).Clear();
+            _driver.FindElement(MobileBy.Id("TextField2")).SendKeys("3");
+            var el = _driver.FindElement(MobileBy.AccessibilityId("ComputeSumButton"));
             ITouchAction action = new TouchAction(_driver);
             action.Press(el, 10, 10).Release();
             action.Perform();
             const string str = "4";
-            Assert.AreEqual(_driver.FindElementByXPath("//*[@name = \"Answer\"]").Text, str);
+            Assert.AreEqual(_driver.FindElement(MobileBy.XPath("//*[@name = \"Answer\"]")).Text, str);
         }
 
         [Test]
         public void MultiActionTestCase()
         {
-            _driver.FindElementById("TextField1").Clear();
-            _driver.FindElementById("TextField1").SendKeys("2");
-            _driver.FindElementById("TextField2").Clear();
-            _driver.FindElementById("TextField2").SendKeys("4");
-            var el = _driver.FindElementByAccessibilityId("ComputeSumButton");
+            _driver.FindElement(MobileBy.Id("TextField1")).Clear();
+            _driver.FindElement(MobileBy.Id("TextField1")).SendKeys("2");
+            _driver.FindElement(MobileBy.Id("TextField2")).Clear();
+            _driver.FindElement(MobileBy.Id("TextField2")).SendKeys("4");
+            var el = _driver.FindElement(MobileBy.AccessibilityId("ComputeSumButton"));
             ITouchAction a1 = new TouchAction(_driver);
             a1.Tap(el, 10, 10);
             ITouchAction a2 = new TouchAction(_driver);
@@ -70,7 +70,7 @@ namespace Appium.Net.Integration.Tests.IOS
             m.Add(a1).Add(a2);
             m.Perform();
             const string str = "6";
-            Assert.AreEqual(_driver.FindElementByXPath("//*[@name = \"Answer\"]").Text, str);
+            Assert.AreEqual(_driver.FindElement(MobileBy.XPath("//*[@name = \"Answer\"]")).Text, str);
         }
     }
 }

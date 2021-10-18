@@ -13,14 +13,12 @@
 //limitations under the License.
 
 using OpenQA.Selenium.Appium.Interfaces;
-using OpenQA.Selenium.Internal;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections;
-using OpenQA.Selenium.Appium.Enums;
-using System;
 using System.Drawing;
-using Appium.Interfaces.Generic.SearchContext;
+using System.Linq;
 
 namespace OpenQA.Selenium.Appium
 {
@@ -40,9 +38,7 @@ namespace OpenQA.Selenium.Appium
     /// }
     /// </code>
     /// </example>
-    public abstract class AppiumWebElement : WebElement,
-            IMobileElement<AppiumWebElement>, IWebElementCached,
-            IFindsById, IFindsByClassName, IFindsByName, IFindsByTagName
+    public class AppiumWebElement : WebElement, IFindsByFluentSelector<AppiumWebElement>, IWebElementCached
     {
         /// <summary>
         /// Initializes a new instance of the AppiumWebElement class.
@@ -203,215 +199,28 @@ namespace OpenQA.Selenium.Appium
 
         #endregion
 
-        #region FindMethods
-
-        #region Overrides to fix "css selector" issue
-
-        IWebElement IFindsByClassName.FindElementByClassName(string className) =>
-            base.FindElement(MobileSelector.ClassName, className);
-
-        ReadOnlyCollection<IWebElement> IFindsByClassName.FindElementsByClassName(string className) =>
-            base.FindElements(MobileSelector.ClassName, className);
-
-        IWebElement IFindsById.FindElementById(string id) =>
-            base.FindElement(MobileSelector.Id, id);
-
-        ReadOnlyCollection<IWebElement> IFindsById.FindElementsById(string id) =>
-            base.FindElements(MobileSelector.Id, id);
-
-        IWebElement IFindsByName.FindElementByName(string name) =>
-            base.FindElement(MobileSelector.Name, name);
-
-        ReadOnlyCollection<IWebElement> IFindsByName.FindElementsByName(string name) =>
-            base.FindElements(MobileSelector.Name, name);
-
-        IWebElement IFindsByTagName.FindElementByTagName(string tagName) =>
-            base.FindElement(MobileSelector.TagName, tagName);
-
-        ReadOnlyCollection<IWebElement> IFindsByTagName.FindElementsByTagName(string tagName) =>
-            base.FindElements(MobileSelector.TagName, tagName);
-
-        #endregion Overrides to fix "css selector" issue
-
-
-        #region IFindByAccessibilityId Members
-
-        public AppiumWebElement FindElementByAccessibilityId(string selector) =>
-            FindElement(MobileSelector.Accessibility, selector);
-
-        public IReadOnlyCollection<AppiumWebElement> FindElementsByAccessibilityId(string selector) =>
-            ConvertToExtendedWebElementCollection(FindElements(MobileSelector.Accessibility, selector));
-
-        #endregion IFindByAccessibilityId Members
-
-        /// <summary>
-        /// Finds the first element in the page that matches the OpenQA.Selenium.By object 
-        /// </summary>
-        /// <param name="by">Mechanism to find element</param>
-        /// <returns>first element found</returns>
-        public new AppiumWebElement FindElement(By by) => (AppiumWebElement)base.FindElement(by);
-
-        /// <summary>
-        /// Find the elements on the page by using the <see cref="T:OpenQA.Selenium.By"/> object and returns a ReadonlyCollection of the Elements on the page 
-        /// </summary>
-        /// <param name="by">Mechanism to find element</param>
-        /// <returns>ReadOnlyCollection of elements found</returns
-        public new ReadOnlyCollection<AppiumWebElement> FindElements(By by) =>
-            ConvertToExtendedWebElementCollection(base.FindElements(by));
-
-        public new AppiumWebElement FindElement(string by, string value) =>
-            (AppiumWebElement)base.FindElement(by, value);
-
-        public new IReadOnlyCollection<AppiumWebElement> FindElements(string selector, string value) =>
-            ConvertToExtendedWebElementCollection(base.FindElements(selector, value));
-
-        /// <summary>
-        /// Finds the first element in the page that matches the class name supplied
-        /// </summary>
-        /// <param name="className">CSS class name on the element</param>
-        /// <returns>first element found</returns
-        public AppiumWebElement FindElementByClassName(string className) =>
-            (AppiumWebElement)base.FindElement(MobileSelector.ClassName, className);
-
-        /// <summary>
-        /// Finds a list of elements that match the class name supplied
-        /// </summary>
-        /// <param name="className">CSS class name on the element</param>
-        /// <returns>ReadOnlyCollection of elements found</returns
-        public ReadOnlyCollection<AppiumWebElement> FindElementsByClassName(string className) =>
-            ConvertToExtendedWebElementCollection(base.FindElements(MobileSelector.ClassName, className));
-
-        /// <summary>
-        /// Finds the first element in the page that matches the ID supplied
-        /// </summary>
-        /// <param name="id">ID of the element</param>
-        /// <returns>First element found</returns>
-        public AppiumWebElement FindElementById(string id) =>
-            (AppiumWebElement)base.FindElement(MobileSelector.Id, id);
-
-        /// <summary>
-        /// Finds a list of elements that match the ID supplied
-        /// </summary>
-        /// <param name="id">ID of the element</param>
-        /// <returns>ReadOnlyCollection of elements found</returns>
-        public ReadOnlyCollection<AppiumWebElement> FindElementsById(string id) =>
-            ConvertToExtendedWebElementCollection(base.FindElements(MobileSelector.Id, id));
-
-        /// <summary>
-        /// Finds the first element matching the specified CSS selector
-        /// </summary>
-        /// <param name="cssSelector">The CSS selector to match</param>
-        /// <returns>First element found</returns>
-        public AppiumWebElement FindElementByCssSelector(string cssSelector) =>
-            (AppiumWebElement)base.FindElement(By.CssSelector(cssSelector));
-
-        /// <summary>
-        /// Finds a list of elements that match the CSS selector
-        /// </summary>
-        /// <param name="cssSelector">The CSS selector to match</param>
-        /// <returns>ReadOnlyCollection of elements found</returns>
-        public ReadOnlyCollection<AppiumWebElement> FindElementsByCssSelector(string cssSelector) =>
-            ConvertToExtendedWebElementCollection(base.FindElements(By.CssSelector(cssSelector)));
-
-        /// <summary>
-        /// Finds the first of elements that match the link text supplied
-        /// </summary>
-        /// <param name="linkText">Link text of element</param>
-        /// <returns>First element found</returns>
-        public AppiumWebElement FindElementByLinkText(string linkText) =>
-            (AppiumWebElement)base.FindElement(By.LinkText(linkText));
-
-        /// <summary>
-        /// Finds a list of elements that match the link text supplied
-        /// </summary>
-        /// <param name="linkText">Link text of element</param>
-        /// <returns>ReadOnlyCollection of elements found</returns>
-        public ReadOnlyCollection<AppiumWebElement> FindElementsByLinkText(string linkText) =>
-            ConvertToExtendedWebElementCollection(base.FindElements(By.LinkText(linkText)));
-
-        /// <summary>
-        /// Finds the first of elements that match the name supplied
-        /// </summary>
-        /// <param name="name">Name of the element on the page</param>
-        /// <returns>First element found</returns>
-        public AppiumWebElement FindElementByName(string name) =>
-            (AppiumWebElement)base.FindElement(MobileSelector.Name, name);
-
-        /// <summary>
-        /// Finds a list of elements that match the name supplied
-        /// </summary>
-        /// <param name="name">Name of the element on the page</param>
-        /// <returns>ReadOnlyCollection of elements found</returns>
-        public ReadOnlyCollection<AppiumWebElement> FindElementsByName(string name) =>
-            ConvertToExtendedWebElementCollection(base.FindElements(MobileSelector.Name, name));
-
-        /// <summary>
-        /// Finds the first of elements that match the part of the link text supplied
-        /// </summary>
-        /// <param name="partialLinkText">Part of the link text</param>
-        /// <returns>First element found</returns>
-        public AppiumWebElement FindElementByPartialLinkText(string partialLinkText) =>
-            (AppiumWebElement)base.FindElement(By.PartialLinkText(partialLinkText));
-
-        /// <summary>
-        /// Finds a list of elements that match the part of the link text supplied
-        /// </summary>
-        /// <param name="partialLinkText">Part of the link text</param>
-        /// <returns>ReadOnlyCollection of elements found</returns>
-        public ReadOnlyCollection<AppiumWebElement> FindElementsByPartialLinkText(string partialLinkText) =>
-            ConvertToExtendedWebElementCollection(base.FindElements(By.PartialLinkText(partialLinkText)));
-
-        /// <summary>
-        /// Finds the first of elements that match the DOM Tag supplied
-        /// </summary>
-        /// <param name="tagName">DOM tag name of the element being searched</param>
-        /// <returns>First element found</returns>
-        public AppiumWebElement FindElementByTagName(string tagName) =>
-            (AppiumWebElement)base.FindElement(MobileSelector.TagName, tagName);
-
-        /// <summary>
-        /// Finds a list of elements that match the DOM Tag supplied
-        /// </summary>
-        /// <param name="tagName">DOM tag name of the element being searched</param>
-        /// <returns>ReadOnlyCollection of elements found</returns>
-        public ReadOnlyCollection<AppiumWebElement> FindElementsByTagName(string tagName) =>
-            ConvertToExtendedWebElementCollection(FindElements(MobileSelector.TagName, tagName));
-
-        /// <summary>
-        /// Finds the first of elements that match the XPath supplied
-        /// </summary>
-        /// <param name="xpath">xpath to the element</param>
-        /// <returns>First element found</returns>
-        public AppiumWebElement FindElementByXPath(string xpath) =>
-            (AppiumWebElement)base.FindElement(By.XPath(xpath));
-
-        /// <summary>
-        /// Finds a list of elements that match the XPath supplied
-        /// </summary>
-        /// <param name="xpath">xpath to the element</param>
-        /// <returns>ReadOnlyCollection of elements found</returns>
-        public ReadOnlyCollection<AppiumWebElement> FindElementsByXPath(string xpath) =>
-            ConvertToExtendedWebElementCollection(base.FindElements(By.XPath(xpath)));
-
-        #endregion
-
         public void SetImmediateValue(string value) => Execute(AppiumDriverCommand.SetValue,
             new Dictionary<string, object>() { ["id"] = Id, ["value"] = value });
-
-        private ReadOnlyCollection<AppiumWebElement> ConvertToExtendedWebElementCollection(IEnumerable list)
-        {
-            List<AppiumWebElement> result = new List<AppiumWebElement>();
-            foreach (var element in list)
-            {
-                result.Add((AppiumWebElement)element);
-            }
-            return result.AsReadOnly();
-        }
 
         public new Response Execute(string commandName, Dictionary<string, object> parameters) =>
             base.Execute(commandName, parameters);
 
         public Response Execute(string driverCommand) => Execute(driverCommand, null);
+
+        AppiumWebElement IFindsByFluentSelector<AppiumWebElement>.FindElement(string by, string value)
+        {
+            return (AppiumWebElement)base.FindElement(by, value);
+        }
+
+        IReadOnlyCollection<AppiumWebElement> IFindsByFluentSelector<AppiumWebElement>.FindElements(string selector, string value)
+        {
+            return ConvertToExtendedWebElementCollection(base.FindElements(selector, value));
+        }
+
+        internal static ReadOnlyCollection<AppiumWebElement> ConvertToExtendedWebElementCollection(IEnumerable collection)
+        {
+            return collection.Cast<AppiumWebElement>().ToList().AsReadOnly();
+        }
 
         public new string Id => base.Id;
     }

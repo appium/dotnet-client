@@ -10,7 +10,7 @@ namespace Appium.Net.Integration.Tests.Android.Device
 {
     internal class PerformanceDataTests
     {
-        private AppiumDriver<IWebElement> _driver;
+        private AppiumDriver _driver;
         private AppiumOptions _androidOptions;
 
 
@@ -18,7 +18,7 @@ namespace Appium.Net.Integration.Tests.Android.Device
         public void SetUp()
         {
             _androidOptions = Caps.GetAndroidUIAutomatorCaps(Apps.Get(Apps.androidApiDemos));
-            _driver = new AndroidDriver<IWebElement>(
+            _driver = new AndroidDriver(
                 Env.ServerIsLocal() ? AppiumServers.LocalServiceUri : AppiumServers.RemoteServerUri,
                 _androidOptions);
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
@@ -33,14 +33,14 @@ namespace Appium.Net.Integration.Tests.Android.Device
         [Test]
         public void GetPerformanceDataTypesTest()
         {
-            var androidDriver = _driver as AndroidDriver<IWebElement>;
+            var androidDriver = _driver as AndroidDriver;
             Assert.IsNotNull(androidDriver.GetPerformanceDataTypes());
         }
 
         [Test]
         public void GetPerformanceDataTest()
         {
-            var androidDriver = _driver as AndroidDriver<IWebElement>;
+            var androidDriver = _driver as AndroidDriver;
             var packageName = androidDriver?.CurrentPackage;
 
             Assert.Multiple(() =>

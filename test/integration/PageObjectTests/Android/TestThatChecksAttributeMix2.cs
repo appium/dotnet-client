@@ -12,7 +12,7 @@ namespace Appium.Net.Integration.Tests.PageObjectTests.Android
     [TestFixture]
     public class TestThatChecksAttributeMix2
     {
-        private AndroidDriver<AppiumWebElement> _driver;
+        private AndroidDriver _driver;
         private AndroidPageObjectChecksAttributeMixOnNativeApp2 _pageObject;
 
         [OneTimeSetUp]
@@ -22,7 +22,7 @@ namespace Appium.Net.Integration.Tests.PageObjectTests.Android
                 ? Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"))
                 : Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver = new AndroidDriver(serverUri, capabilities, Env.InitTimeoutSec);
             var timeSpan = new TimeOutDuration(new TimeSpan(0, 0, 0, 5, 0));
             _pageObject = new AndroidPageObjectChecksAttributeMixOnNativeApp2();
             PageFactory.InitElements(_driver, _pageObject, new AppiumPageObjectMemberDecorator(timeSpan));

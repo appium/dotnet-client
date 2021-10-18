@@ -7,7 +7,7 @@ namespace Appium.Net.Integration.Tests.Android
 {
     class IntentAndroidTest
     {
-        private AndroidDriver<AppiumWebElement> _driver;
+        private AndroidDriver _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
@@ -16,7 +16,7 @@ namespace Appium.Net.Integration.Tests.Android
                 ? Caps.GetAndroidUIAutomatorCaps(Apps.Get("intentApp"))
                 : Caps.GetAndroidUIAutomatorCaps(Apps.Get("intentApp"));
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _driver = new AndroidDriver<AppiumWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver = new AndroidDriver(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 
@@ -27,7 +27,7 @@ namespace Appium.Net.Integration.Tests.Android
                 null, null,
                 "android.intent.category.DEFAULT", "0x4000000",
                 "--es \"USERNAME\" \"AppiumIntentTest\" -t \"text/plain\"");
-            Assert.AreEqual(_driver.FindElementById("com.prgguru.android:id/textView1").Text,
+            Assert.AreEqual(_driver.FindElement(MobileBy.Id("com.prgguru.android:id/textView1")).Text,
                 "Welcome AppiumIntentTest");
         }
 

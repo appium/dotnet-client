@@ -17,7 +17,6 @@ using OpenQA.Selenium.Appium.Interfaces;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using OpenQA.Selenium.Internal;
 
 namespace OpenQA.Selenium.Appium
 {
@@ -25,7 +24,6 @@ namespace OpenQA.Selenium.Appium
     {
         protected readonly string selector;
         private readonly string _searchingCriteriaName;
-
 
         internal MobileBy(string selector, string searchingCriteriaName)
         {
@@ -131,6 +129,10 @@ namespace OpenQA.Selenium.Appium
         public static By IosClassChain(string selector) => new ByIosClassChain(selector);
 
         public static By Image(string selector) => new ByImage(selector);
+
+        public static new By Name(string selector) => new ByName(selector);
+
+        public static new By Id(string selector) => new ById(selector);
     }
 
     /// <summary>
@@ -443,5 +445,31 @@ namespace OpenQA.Selenium.Appium
 
         public override string ToString() =>
             $"ByImage({selector})";
+    }
+
+    public class ByName : MobileBy
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ByName"/> class.
+        /// </summary>
+        /// <param name="selector">Name selector.</param>
+        public ByName(string selector) : base(selector, MobileSelector.Name)
+        {
+        }
+        public override string ToString() =>
+            $"ByName({selector})";
+    }
+
+    public class ById : MobileBy
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ById"/> class.
+        /// </summary>
+        /// <param name="selector">Id selector.</param>
+        public ById(string selector) : base(selector, MobileSelector.Id)
+        {
+        }
+        public override string ToString() =>
+            $"ById({selector})";
     }
 }

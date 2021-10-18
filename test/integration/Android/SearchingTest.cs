@@ -9,7 +9,7 @@ namespace Appium.Net.Integration.Tests.Android
     [TestFixture]
     public class SearchingTest
     {
-        private AndroidDriver<AndroidElement> _driver;
+        private AndroidDriver _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
@@ -18,7 +18,7 @@ namespace Appium.Net.Integration.Tests.Android
                 ? Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"))
                 : Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _driver = new AndroidDriver<AndroidElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver = new AndroidDriver(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 
@@ -58,18 +58,18 @@ namespace Appium.Net.Integration.Tests.Android
         public void FindByXPathTest()
         {
             var byXPath = "//android.widget.TextView[contains(@text, 'Animat')]";
-            Assert.IsNotNull(_driver.FindElementByXPath(byXPath).Text);
-            Assert.AreEqual(_driver.FindElementsByXPath(byXPath).Count, 1);
+            Assert.IsNotNull(_driver.FindElement(MobileBy.XPath( byXPath)).Text);
+            Assert.AreEqual(1, _driver.FindElements(MobileBy.XPath(byXPath)).Count);
         }
 
         [Test]
         public void FindScrollable()
         {
-            _driver.FindElementByAccessibilityId("Views").Click();
+            _driver.FindElement(MobileBy.AccessibilityId("Views")).Click();
             var radioGroup = _driver
-                .FindElementByAndroidUIAutomator("new UiScrollable(new UiSelector()"
+                .FindElement(MobileBy.AndroidUIAutomator("new UiScrollable(new UiSelector()"
                                                  + ".resourceId(\"android:id/list\")).scrollIntoView("
-                                                 + "new UiSelector().text(\"Radio Group\"));");
+                                                 + "new UiSelector().text(\"Radio Group\"));"));
             Assert.NotNull(radioGroup.Location);
         }
     }

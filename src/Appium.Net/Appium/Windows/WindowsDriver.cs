@@ -22,8 +22,7 @@ using OpenQA.Selenium.Appium.Service;
 
 namespace OpenQA.Selenium.Appium.Windows
 {
-    public class WindowsDriver<W> : AppiumDriver<W>, ISendsKeyEvents, IHidesKeyboardWithKeyName,
-        IFindByWindowsUIAutomation<W> where W : IWebElement
+    public class WindowsDriver : AppiumDriver, ISendsKeyEvents, IHidesKeyboardWithKeyName
     {
         private static readonly string Platform = MobilePlatform.Windows;
 
@@ -130,30 +129,8 @@ namespace OpenQA.Selenium.Appium.Windows
 
         #endregion Context
 
-        #region IFindByWindowsUIAutomation Members
-
-        /// <summary>
-        /// Finds the first of elements that match the Windows UIAutomation selector supplied
-        /// </summary>
-        /// <param name="selector">a Windows UIAutomation selector</param>
-        /// <returns>IWebElement object so that you can interact that object</returns>
-        public W FindElementByWindowsUIAutomation(string selector) =>
-            FindElement(MobileSelector.WindowsUIAutomation, selector);
-
-        /// <summary>
-        /// Finds a list of elements that match the Windows UIAutomation selector supplied
-        /// </summary>
-        /// <param name="selector">a Windows UIAutomation selector</param>
-        /// <returns>ReadOnlyCollection of IWebElement objects so that you can interact with those objects</returns>
-        public IReadOnlyCollection<W> FindElementsByWindowsUIAutomation(string selector) =>
-            FindElements(MobileSelector.WindowsUIAutomation, selector);
-
-        #endregion IFindByWindowsUIAutomation Members
-
         public void HideKeyboard(string key, string strategy = null) =>
             AppiumCommandExecutionHelper.HideKeyboard(this, strategy, key);
-
-        protected override WebElementFactory CreateElementFactory() => new WindowsElementFactory(this);
 
         public void PressKeyCode(KeyEvent keyEvent) => throw new NotImplementedException();
 

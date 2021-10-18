@@ -18,7 +18,7 @@ using System;
 
 namespace OpenQA.Selenium.Appium.Mac
 {
-    public class MacDriver<W> : AppiumDriver<W> where W : IWebElement
+    public class MacDriver : AppiumDriver
     {
         private static readonly string Platform = MobilePlatform.MacOS;
 
@@ -113,8 +113,5 @@ namespace OpenQA.Selenium.Appium.Mac
             : base(service, SetPlatformToCapabilities(AppiumOptions, Platform), commandTimeout)
         {
         }
-
-
-        protected override WebElementFactory CreateElementFactory() => new MacElementFactory(this as WebDriver);
     }
 }

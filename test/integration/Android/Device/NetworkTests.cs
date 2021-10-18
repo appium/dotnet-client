@@ -10,14 +10,14 @@ namespace Appium.Net.Integration.Tests.Android.Device
 {
     internal class NetworkTests
     {
-        private AppiumDriver<IWebElement> _driver;
+        private AppiumDriver _driver;
         private AppiumOptions _androidOptions;
 
         [OneTimeSetUp]
         public void SetUp()
         {
             _androidOptions = Caps.GetAndroidUIAutomatorCaps(Apps.Get(Apps.androidApiDemos));
-            _driver = new AndroidDriver<IWebElement>(
+            _driver = new AndroidDriver(
                 Env.ServerIsLocal() ? AppiumServers.LocalServiceUri : AppiumServers.RemoteServerUri,
                 _androidOptions);
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
@@ -32,7 +32,7 @@ namespace Appium.Net.Integration.Tests.Android.Device
         [Test]
         public void CanToggleDataTest()
         {
-            var androidDriver = (AndroidDriver<IWebElement>) _driver;
+            var androidDriver = (AndroidDriver) _driver;
 
             androidDriver.ToggleData();
             androidDriver.ToggleData();
@@ -41,7 +41,7 @@ namespace Appium.Net.Integration.Tests.Android.Device
         [Test]
         public void CanToggleAirplaneModeTest()
         {
-            var androidDriver = (AndroidDriver<IWebElement>) _driver;
+            var androidDriver = (AndroidDriver) _driver;
 
             androidDriver.ToggleAirplaneMode();
 
@@ -54,7 +54,7 @@ namespace Appium.Net.Integration.Tests.Android.Device
         [Test]
         public void CanToggleWifiTest()
         {
-            var androidDriver = (AndroidDriver<IWebElement>) _driver;
+            var androidDriver = (AndroidDriver) _driver;
             var beforeToggleConnectionType = androidDriver.ConnectionType;
             androidDriver.ToggleWifi();
 
@@ -67,7 +67,7 @@ namespace Appium.Net.Integration.Tests.Android.Device
         [Test]
         public void CanMakeGsmCallTest()
         {
-            var androidDriver = (AndroidDriver<IWebElement>) _driver;
+            var androidDriver = (AndroidDriver) _driver;
 
             Assert.Multiple(() =>
             {
@@ -81,7 +81,7 @@ namespace Appium.Net.Integration.Tests.Android.Device
         [Test]
         public void CanSetGsmSignalStrengthTest()
         {
-            var androidDriver = (AndroidDriver<IWebElement>) _driver;
+            var androidDriver = (AndroidDriver) _driver;
 
             Assert.Multiple(() =>
             {
@@ -96,7 +96,7 @@ namespace Appium.Net.Integration.Tests.Android.Device
         [Test]
         public void CanSetGsmVoiceStateTest()
         {
-            var androidDriver = (AndroidDriver<IWebElement>) _driver;
+            var androidDriver = (AndroidDriver) _driver;
 
             Assert.Multiple(() =>
                 {
@@ -119,7 +119,7 @@ namespace Appium.Net.Integration.Tests.Android.Device
         [Test]
         public void CanSendSmsTest()
         {
-            var androidDriver = (AndroidDriver<IWebElement>) _driver;
+            var androidDriver = (AndroidDriver) _driver;
 
             Assert.DoesNotThrow(() => androidDriver.SendSms("5551234567", "Hey lol"));
         }

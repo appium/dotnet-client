@@ -7,14 +7,14 @@ namespace Appium.Net.Integration.Tests.IOS
 {
     internal class LockDeviceTest
     {
-        private IOSDriver<IWebElement> _driver;
+        private IOSDriver _driver;
 
         [SetUp]
         public void TestSetup()
         {
             var capabilities = Caps.GetIosCaps(Apps.Get("iosWebviewApp"));
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _driver = new IOSDriver<IWebElement>(serverUri, capabilities, Env.InitTimeoutSec);
+            _driver = new IOSDriver(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 

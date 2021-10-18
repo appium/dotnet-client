@@ -22,9 +22,8 @@ using System.Collections.Generic;
 
 namespace OpenQA.Selenium.Appium.iOS
 {
-    public class IOSDriver<W> : AppiumDriver<W>, IFindByIosUIAutomation<W>, IFindsByIosClassChain<W>,
-        IFindsByIosNSPredicate<W>, IHidesKeyboardWithKeyName, IHasClipboard,
-        IShakesDevice, IPerformsTouchID, IHasSettings where W : IWebElement
+    public class IOSDriver : AppiumDriver, IHidesKeyboardWithKeyName, IHasClipboard,
+        IShakesDevice, IPerformsTouchID, IHasSettings
     {
         private static readonly string Platform = MobilePlatform.IOS;
 
@@ -120,35 +119,6 @@ namespace OpenQA.Selenium.Appium.iOS
         {
         }
 
-        #region IFindByIosUIAutomation Members
-
-        public W FindElementByIosUIAutomation(string selector) => FindElement(MobileSelector.iOSAutomatoion, selector);
-
-        public IReadOnlyCollection<W> FindElementsByIosUIAutomation(string selector) =>
-            FindElements(MobileSelector.iOSAutomatoion, selector);
-
-        #endregion IFindByIosUIAutomation Members
-
-        #region IFindsByIosClassChain Members
-
-        public W FindElementByIosClassChain(string selector) => FindElement(MobileSelector.iOSClassChain, selector);
-
-        public IReadOnlyCollection<W> FindElementsByIosClassChain(string selector) =>
-            FindElements(MobileSelector.iOSClassChain, selector);
-
-        #endregion IFindsByIosClassChain Members
-
-        #region IFindsByIosNSPredicate Members
-
-        public W FindElementByIosNsPredicate(string selector) =>
-            FindElement(MobileSelector.iOSPredicateString, selector);
-
-        public IReadOnlyCollection<W> FindElementsByIosNsPredicate(string selector) =>
-            FindElements(MobileSelector.iOSPredicateString, selector);
-
-        #endregion IFindsByIosNSPredicate Members
-
-
         public void SetSetting(string setting, object value) =>
             IOSCommandExecutionHelper.SetSetting(this, setting, value);
 
@@ -169,8 +139,6 @@ namespace OpenQA.Selenium.Appium.iOS
 
         public void HideKeyboard(string key, string strategy = null) =>
             AppiumCommandExecutionHelper.HideKeyboard(this, strategy, key);
-
-        protected override WebElementFactory CreateElementFactory() => new IOSElementFactory(this as WebDriver);
 
         /// <summary>
         /// Locks the device.
