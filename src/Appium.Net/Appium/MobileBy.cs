@@ -480,9 +480,9 @@ namespace OpenQA.Selenium.Appium
     public class ByTagName : MobileBy
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ById"/> class.
+        /// Initializes a new instance of the <see cref="ByTagName"/> class.
         /// </summary>
-        /// <param name="selector">Id selector.</param>
+        /// <param name="selector">Tag name selector.</param>
         public ByTagName(string selector) : base(selector, MobileSelector.TagName)
         {
         }
@@ -493,9 +493,9 @@ namespace OpenQA.Selenium.Appium
     public class ByClassName : MobileBy
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ById"/> class.
+        /// Initializes a new instance of the <see cref="ByClassName"/> class.
         /// </summary>
-        /// <param name="selector">Id selector.</param>
+        /// <param name="selector">Class name selector.</param>
         public ByClassName(string selector) : base(selector, MobileSelector.ClassName)
         {
         }
