@@ -133,6 +133,10 @@ namespace OpenQA.Selenium.Appium
         public static new By Name(string selector) => new ByName(selector);
 
         public static new By Id(string selector) => new ById(selector);
+
+        public static new By ClassName(string selector) => new ByClassName(selector);
+
+        public static new By TagName(string selector) => new ByTagName(selector);
     }
 
     /// <summary>
@@ -471,5 +475,31 @@ namespace OpenQA.Selenium.Appium
         }
         public override string ToString() =>
             $"ById({selector})";
+    }
+
+    public class ByTagName : MobileBy
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ById"/> class.
+        /// </summary>
+        /// <param name="selector">Id selector.</param>
+        public ByTagName(string selector) : base(selector, MobileSelector.TagName)
+        {
+        }
+        public override string ToString() =>
+            $"ByTagName({selector})";
+    }
+
+    public class ByClassName : MobileBy
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ById"/> class.
+        /// </summary>
+        /// <param name="selector">Id selector.</param>
+        public ByClassName(string selector) : base(selector, MobileSelector.ClassName)
+        {
+        }
+        public override string ToString() =>
+            $"ByClassName({selector})";
     }
 }

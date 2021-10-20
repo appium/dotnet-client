@@ -71,6 +71,16 @@ namespace Appium.Net.Integration.Tests.Windows
         }
 
         [Test]
+        public void AdditionWithCompoundBys()
+        {
+            _calculatorSession.FindElement(MobileBy.ClassName("ApplicationFrameWindow")).FindElement(MobileBy.Name("One")).Click();
+            _calculatorSession.FindElement(MobileBy.AccessibilityId("plusButton")).Click();
+            _calculatorSession.FindElement(MobileBy.Name("Calculator")).FindElement(MobileBy.Name("Five")).Click();
+            _calculatorSession.FindElement(MobileBy.Name("Equals")).Click();
+            Assert.AreEqual("Display is 6", CalculatorResult.Text);
+        }
+
+        [Test]
         public void Combination()
         {
             _calculatorSession.FindElement(MobileBy.Name("Seven")).Click();
