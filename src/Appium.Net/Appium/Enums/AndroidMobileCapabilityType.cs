@@ -201,10 +201,6 @@ namespace OpenQA.Selenium.Appium.Enums
          */
         public static readonly string RECREATE_CHROME_DRIVER_SESSIONS = "recreateChromeDriverSessions";
 
-        [System.Obsolete("Support for Selendroid is deprecated and will be removed in the next release")]
-        public static readonly string 
-            SELENDROID_PORT = "selendroidPort";
-
         /// <summary>
         /// In a web context, use native (adb) method for taking a screenshot, rather than proxying
         /// to ChromeDriver, default false.

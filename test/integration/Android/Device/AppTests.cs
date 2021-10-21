@@ -76,14 +76,14 @@ namespace Appium.Net.Integration.Tests.Android.Device.App
         public void CanBackgroundAppForSeconds()
         {
             Assert.DoesNotThrow(
-                () => _driver.BackgroundApp(5));
+                () => _driver.BackgroundApp(TimeSpan.FromSeconds(5)));
         }
 
         [Test]
         public void CanBackgroundAppToDeactivationUsingNegativeSecond()
         {
             Assert.DoesNotThrow(
-                () => _driver.BackgroundApp(-1));
+                () => _driver.BackgroundApp(-TimeSpan.FromSeconds(-1)));
         }
 
         #endregion

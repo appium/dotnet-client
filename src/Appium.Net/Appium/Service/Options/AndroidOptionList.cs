@@ -34,17 +34,6 @@ namespace OpenQA.Selenium.Appium.Service.Options
         public static KeyValuePair<string, string> BootstrapPort(string value) =>
             GetKeyValuePairUsingDefaultValue("--bootstrap-port", value, "4724");
 
-
-        ///<summary>
-        /// Local port used for communication with Selendroid<br/>
-        /// Sample:<br/>
-        /// --selendroid-port 8080
-        ///</summary>
-        ///
-        [Obsolete("Support for Selendroid is deprecated and will be removed in the next release")]
-        public static KeyValuePair<string, string> SelendroidPort(string value) =>
-            GetKeyValuePairUsingDefaultValue("--selendroid-port", value, "8080");
-
         ///<summary>
         /// If set, prevents Appium from killing the adb server
         /// instance<br/>

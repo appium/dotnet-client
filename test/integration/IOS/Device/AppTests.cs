@@ -89,7 +89,7 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
         public void CanBackgroundAppForSeconds()
         {
             Assert.DoesNotThrow(
-                () => _driver.BackgroundApp(5));
+                () => _driver.BackgroundApp(TimeSpan.FromSeconds(5)));
         }
 
         [Test]
@@ -103,7 +103,7 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
         public void CanBackgroundAppToDeactivationUsingNegativeSecond()
         {
             Assert.DoesNotThrow(
-                () => _driver.BackgroundApp(-1));
+                () => _driver.BackgroundApp(TimeSpan.FromSeconds(-1)));
             Assert.DoesNotThrow(() => _driver.FindElement(MobileBy.AccessibilityId(IosDockElement)));
         }
 
