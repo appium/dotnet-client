@@ -30,7 +30,7 @@ namespace OpenQA.Selenium.Appium
     public abstract class AppiumDriver : WebDriver,
         IHasSessionDetails,
         IHasLocation,
-        IHidesKeyboard, IInteractsWithFiles, IFindsByFluentSelector<AppiumWebElement>,
+        IHidesKeyboard, IInteractsWithFiles, IFindsByFluentSelector<AppiumElement>,
         IInteractsWithApps, IPerformsTouchActions, IRotatable, IContextAware
     {
         private const string NativeApp = "NATIVE_APP";
@@ -97,16 +97,16 @@ namespace OpenQA.Selenium.Appium
 
         #region Generic FindMethods
 
-        public new AppiumWebElement FindElement(By by) =>
-            (AppiumWebElement)base.FindElement(by);
+        public new AppiumElement FindElement(By by) =>
+            (AppiumElement)base.FindElement(by);
 
-        public new ReadOnlyCollection<AppiumWebElement> FindElements(By by) =>
-            ConvertToExtendedWebElementCollection<AppiumWebElement>(base.FindElements(by));
+        public new ReadOnlyCollection<AppiumElement> FindElements(By by) =>
+            ConvertToExtendedWebElementCollection<AppiumElement>(base.FindElements(by));
 
-        public new AppiumWebElement FindElement(string by, string value) => (AppiumWebElement)base.FindElement(by, value);
+        public new AppiumElement FindElement(string by, string value) => (AppiumElement)base.FindElement(by, value);
 
-        public new IReadOnlyCollection<AppiumWebElement> FindElements(string selector, string value) =>
-            ConvertToExtendedWebElementCollection<AppiumWebElement>(base.FindElements(selector, value));
+        public new IReadOnlyCollection<AppiumElement> FindElements(string selector, string value) =>
+            ConvertToExtendedWebElementCollection<AppiumElement>(base.FindElements(selector, value));
         #endregion Generic FindMethods
 
         Response IExecuteMethod.Execute(string driverCommand) => Execute(driverCommand, null);

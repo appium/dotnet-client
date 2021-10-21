@@ -107,7 +107,7 @@ namespace Appium.Net.Integration.Tests.Windows
         public string ReadLocalTime()
         {
             var localTimeText = "";
-            AppiumWebElement worldClockPivotItem =
+            AppiumElement worldClockPivotItem =
                 AlarmClockSession.FindElement(MobileBy.AccessibilityId("ClockButton"));
             if (worldClockPivotItem != null)
             {
@@ -144,7 +144,7 @@ namespace Appium.Net.Integration.Tests.Windows
                 AlarmClockSession.FindElement(MobileBy.AccessibilityId("AlarmNameTextBox")).Clear();
                 AlarmClockSession.FindElement(MobileBy.AccessibilityId("AlarmNameTextBox"))
                     .SendKeys("Windows Application Driver Test Alarm");
-                AppiumWebElement periodSelector = null;
+                AppiumElement periodSelector = null;
                 try
                 {
                     periodSelector = AlarmClockSession.FindElement(MobileBy.AccessibilityId("PeriodLoopingSelector"));
@@ -166,7 +166,7 @@ namespace Appium.Net.Integration.Tests.Windows
         {
             try
             {
-                AppiumWebElement newNotification = DesktopSession.FindElement(MobileBy.Name("New notification"));
+                AppiumElement newNotification = DesktopSession.FindElement(MobileBy.Name("New notification"));
                 Assert.IsTrue(newNotification.FindElement(MobileBy.AccessibilityId("MessageText")).Text
                     .Contains("Windows Application Driver Test Alarm"));
                 newNotification.FindElement(MobileBy.Name("Dismiss")).Click();
@@ -181,7 +181,7 @@ namespace Appium.Net.Integration.Tests.Windows
             // Try to return to main page in case application is started in nested view
             try
             {
-                AppiumWebElement backButton = null;
+                AppiumElement backButton = null;
                 do
                 {
                     backButton = AlarmClockSession.FindElement(MobileBy.AccessibilityId("Back"));
