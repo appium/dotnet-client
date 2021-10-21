@@ -19,8 +19,6 @@ namespace OpenQA.Selenium.Appium.Enums
     public sealed class AutomationName
     {
         public static readonly string Appium = "Appium";
-        [Obsolete("Support for Selendroid is deprecated and will be removed in the next release")]
-        public static readonly string Selendroid = "Selendroid";
         public static readonly string iOSXcuiTest = "XCuiTest";
         public static readonly string AndroidUIAutomator2 = "UIAutomator2";
         public static readonly string AndroidEspresso = "Espresso";

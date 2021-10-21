@@ -185,12 +185,6 @@ namespace OpenQA.Selenium.Appium
             Execute(AppiumDriverCommand.BackgroundApp,
                 AppiumCommandExecutionHelper.PrepareArgument("seconds", -1));
 
-        [Obsolete(
-            "This method is obsolete & will be removed in the next major release. Call BackgroundApp(TimeSpan) instead.")]
-        public void BackgroundApp(int seconds) =>
-            Execute(AppiumDriverCommand.BackgroundApp,
-                AppiumCommandExecutionHelper.PrepareArgument("seconds", seconds));
-
         public void BackgroundApp(TimeSpan timeSpan) =>
             Execute(AppiumDriverCommand.BackgroundApp,
                 AppiumCommandExecutionHelper.PrepareArgument("seconds", timeSpan.TotalSeconds));
