@@ -23,7 +23,7 @@ using System.Linq;
 namespace OpenQA.Selenium.Appium
 {
     /// <summary>
-    /// AppiumWebElement allows you to have access to specific items that are found on the page.
+    /// AppiumElement allows you to have access to specific items that are found on the page.
     /// </summary>
     /// <seealso cref="IWebElement"/>
     /// <seealso cref="ILocatable"/>
@@ -33,19 +33,19 @@ namespace OpenQA.Selenium.Appium
     /// public void TestGoogle()
     /// {
     ///     driver = new AppiumDriver();
-    ///     AppiumWebElement elem = driver.FindElement(By.Name("q"));
+    ///     AppiumElement elem = driver.FindElement(By.Name("q"));
     ///     elem.SendKeys("Cheese please!");
     /// }
     /// </code>
     /// </example>
-    public class AppiumWebElement : WebElement, IFindsByFluentSelector<AppiumWebElement>, IWebElementCached
+    public class AppiumElement : WebElement, IFindsByFluentSelector<AppiumElement>, IWebElementCached
     {
         /// <summary>
-        /// Initializes a new instance of the AppiumWebElement class.
+        /// Initializes a new instance of the AppiumElement class.
         /// </summary>
         /// <param name="parent">Driver in use.</param>
         /// <param name="id">ID of the element.</param>
-        public AppiumWebElement(WebDriver parent, string id)
+        public AppiumElement(WebDriver parent, string id)
             : base(parent, id)
         {
         }
@@ -207,19 +207,19 @@ namespace OpenQA.Selenium.Appium
 
         public Response Execute(string driverCommand) => Execute(driverCommand, null);
 
-        AppiumWebElement IFindsByFluentSelector<AppiumWebElement>.FindElement(string by, string value)
+        AppiumElement IFindsByFluentSelector<AppiumElement>.FindElement(string by, string value)
         {
-            return (AppiumWebElement)base.FindElement(by, value);
+            return (AppiumElement)base.FindElement(by, value);
         }
 
-        IReadOnlyCollection<AppiumWebElement> IFindsByFluentSelector<AppiumWebElement>.FindElements(string selector, string value)
+        IReadOnlyCollection<AppiumElement> IFindsByFluentSelector<AppiumElement>.FindElements(string selector, string value)
         {
             return ConvertToExtendedWebElementCollection(base.FindElements(selector, value));
         }
 
-        internal static ReadOnlyCollection<AppiumWebElement> ConvertToExtendedWebElementCollection(IEnumerable collection)
+        internal static ReadOnlyCollection<AppiumElement> ConvertToExtendedWebElementCollection(IEnumerable collection)
         {
-            return collection.Cast<AppiumWebElement>().ToList().AsReadOnly();
+            return collection.Cast<AppiumElement>().ToList().AsReadOnly();
         }
 
         public new string Id => base.Id;

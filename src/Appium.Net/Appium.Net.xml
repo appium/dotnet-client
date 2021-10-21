@@ -3330,9 +3330,9 @@
             </summary>
             <returns>A desired capability</returns>
         </member>
-        <member name="T:OpenQA.Selenium.Appium.AppiumWebElement">
+        <member name="T:OpenQA.Selenium.Appium.AppiumElement">
             <summary>
-            AppiumWebElement allows you to have access to specific items that are found on the page.
+            AppiumElement allows you to have access to specific items that are found on the page.
             </summary>
             <seealso cref="T:OpenQA.Selenium.IWebElement"/>
             <seealso cref="T:OpenQA.Selenium.ILocatable"/>
@@ -3342,122 +3342,122 @@
             public void TestGoogle()
             {
                 driver = new AppiumDriver();
-                AppiumWebElement elem = driver.FindElement(By.Name("q"));
+                AppiumElement elem = driver.FindElement(By.Name("q"));
                 elem.SendKeys("Cheese please!");
             }
             </code>
             </example>
         </member>
-        <member name="M:OpenQA.Selenium.Appium.AppiumWebElement.#ctor(OpenQA.Selenium.Remote.WebDriver,System.String)">
+        <member name="M:OpenQA.Selenium.Appium.AppiumElement.#ctor(OpenQA.Selenium.Remote.WebDriver,System.String)">
             <summary>
-            Initializes a new instance of the AppiumWebElement class.
+            Initializes a new instance of the AppiumElement class.
             </summary>
             <param name="parent">Driver in use.</param>
             <param name="id">ID of the element.</param>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:OpenQA.Selenium.Appium.AppiumWebElement.Rotate(System.Collections.Generic.Dictionary{System.String,System.Int32})" -->
-        <member name="M:OpenQA.Selenium.Appium.AppiumWebElement.FindElement(OpenQA.Selenium.By)">
+        <!-- Badly formed XML comment ignored for member "M:OpenQA.Selenium.Appium.AppiumElement.Rotate(System.Collections.Generic.Dictionary{System.String,System.Int32})" -->
+        <member name="M:OpenQA.Selenium.Appium.AppiumElement.FindElement(OpenQA.Selenium.By)">
             <summary>
             Finds the first element in the page that matches the OpenQA.Selenium.By object 
             </summary>
             <param name="by">Mechanism to find element</param>
             <returns>first element found</returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:OpenQA.Selenium.Appium.AppiumWebElement.FindElements(OpenQA.Selenium.By)" -->
-        <!-- Badly formed XML comment ignored for member "M:OpenQA.Selenium.Appium.AppiumWebElement.FindElementByClassName(System.String)" -->
-        <!-- Badly formed XML comment ignored for member "M:OpenQA.Selenium.Appium.AppiumWebElement.FindElementsByClassName(System.String)" -->
-        <member name="M:OpenQA.Selenium.Appium.AppiumWebElement.FindElementById(System.String)">
+        <!-- Badly formed XML comment ignored for member "M:OpenQA.Selenium.Appium.AppiumElement.FindElements(OpenQA.Selenium.By)" -->
+        <!-- Badly formed XML comment ignored for member "M:OpenQA.Selenium.Appium.AppiumElement.FindElementByClassName(System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:OpenQA.Selenium.Appium.AppiumElement.FindElementsByClassName(System.String)" -->
+        <member name="M:OpenQA.Selenium.Appium.AppiumElement.FindElementById(System.String)">
             <summary>
             Finds the first element in the page that matches the ID supplied
             </summary>
             <param name="id">ID of the element</param>
             <returns>First element found</returns>
         </member>
-        <member name="M:OpenQA.Selenium.Appium.AppiumWebElement.FindElementsById(System.String)">
+        <member name="M:OpenQA.Selenium.Appium.AppiumElement.FindElementsById(System.String)">
             <summary>
             Finds a list of elements that match the ID supplied
             </summary>
             <param name="id">ID of the element</param>
             <returns>ReadOnlyCollection of elements found</returns>
         </member>
-        <member name="M:OpenQA.Selenium.Appium.AppiumWebElement.FindElementByCssSelector(System.String)">
+        <member name="M:OpenQA.Selenium.Appium.AppiumElement.FindElementByCssSelector(System.String)">
             <summary>
             Finds the first element matching the specified CSS selector
             </summary>
             <param name="cssSelector">The CSS selector to match</param>
             <returns>First element found</returns>
         </member>
-        <member name="M:OpenQA.Selenium.Appium.AppiumWebElement.FindElementsByCssSelector(System.String)">
+        <member name="M:OpenQA.Selenium.Appium.AppiumElement.FindElementsByCssSelector(System.String)">
             <summary>
             Finds a list of elements that match the CSS selector
             </summary>
             <param name="cssSelector">The CSS selector to match</param>
             <returns>ReadOnlyCollection of elements found</returns>
         </member>
-        <member name="M:OpenQA.Selenium.Appium.AppiumWebElement.FindElementByLinkText(System.String)">
+        <member name="M:OpenQA.Selenium.Appium.AppiumElement.FindElementByLinkText(System.String)">
             <summary>
             Finds the first of elements that match the link text supplied
             </summary>
             <param name="linkText">Link text of element</param>
             <returns>First element found</returns>
         </member>
-        <member name="M:OpenQA.Selenium.Appium.AppiumWebElement.FindElementsByLinkText(System.String)">
+        <member name="M:OpenQA.Selenium.Appium.AppiumElement.FindElementsByLinkText(System.String)">
             <summary>
             Finds a list of elements that match the link text supplied
             </summary>
             <param name="linkText">Link text of element</param>
             <returns>ReadOnlyCollection of elements found</returns>
         </member>
-        <member name="M:OpenQA.Selenium.Appium.AppiumWebElement.FindElementByName(System.String)">
+        <member name="M:OpenQA.Selenium.Appium.AppiumElement.FindElementByName(System.String)">
             <summary>
             Finds the first of elements that match the name supplied
             </summary>
             <param name="name">Name of the element on the page</param>
             <returns>First element found</returns>
         </member>
-        <member name="M:OpenQA.Selenium.Appium.AppiumWebElement.FindElementsByName(System.String)">
+        <member name="M:OpenQA.Selenium.Appium.AppiumElement.FindElementsByName(System.String)">
             <summary>
             Finds a list of elements that match the name supplied
             </summary>
             <param name="name">Name of the element on the page</param>
             <returns>ReadOnlyCollection of elements found</returns>
         </member>
-        <member name="M:OpenQA.Selenium.Appium.AppiumWebElement.FindElementByPartialLinkText(System.String)">
+        <member name="M:OpenQA.Selenium.Appium.AppiumElement.FindElementByPartialLinkText(System.String)">
             <summary>
             Finds the first of elements that match the part of the link text supplied
             </summary>
             <param name="partialLinkText">Part of the link text</param>
             <returns>First element found</returns>
         </member>
-        <member name="M:OpenQA.Selenium.Appium.AppiumWebElement.FindElementsByPartialLinkText(System.String)">
+        <member name="M:OpenQA.Selenium.Appium.AppiumElement.FindElementsByPartialLinkText(System.String)">
             <summary>
             Finds a list of elements that match the part of the link text supplied
             </summary>
             <param name="partialLinkText">Part of the link text</param>
             <returns>ReadOnlyCollection of elements found</returns>
         </member>
-        <member name="M:OpenQA.Selenium.Appium.AppiumWebElement.FindElementByTagName(System.String)">
+        <member name="M:OpenQA.Selenium.Appium.AppiumElement.FindElementByTagName(System.String)">
             <summary>
             Finds the first of elements that match the DOM Tag supplied
             </summary>
             <param name="tagName">DOM tag name of the element being searched</param>
             <returns>First element found</returns>
         </member>
-        <member name="M:OpenQA.Selenium.Appium.AppiumWebElement.FindElementsByTagName(System.String)">
+        <member name="M:OpenQA.Selenium.Appium.AppiumElement.FindElementsByTagName(System.String)">
             <summary>
             Finds a list of elements that match the DOM Tag supplied
             </summary>
             <param name="tagName">DOM tag name of the element being searched</param>
             <returns>ReadOnlyCollection of elements found</returns>
         </member>
-        <member name="M:OpenQA.Selenium.Appium.AppiumWebElement.FindElementByXPath(System.String)">
+        <member name="M:OpenQA.Selenium.Appium.AppiumElement.FindElementByXPath(System.String)">
             <summary>
             Finds the first of elements that match the XPath supplied
             </summary>
             <param name="xpath">xpath to the element</param>
             <returns>First element found</returns>
         </member>
-        <member name="M:OpenQA.Selenium.Appium.AppiumWebElement.FindElementsByXPath(System.String)">
+        <member name="M:OpenQA.Selenium.Appium.AppiumElement.FindElementsByXPath(System.String)">
             <summary>
             Finds a list of elements that match the XPath supplied
             </summary>
