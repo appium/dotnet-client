@@ -52,6 +52,15 @@ namespace OpenQA.Selenium.Appium
         public string PlatformVersion { get; set; }
 
         /// <summary>
+        /// Gets or sets the Browser name of the Appium browser's (e.g. Chrome, Safari and so on) setting.
+        /// </summary>
+        public new string BrowserName 
+        { 
+            get { return base.BrowserName; } 
+            set { base.BrowserName = value; } 
+        }
+
+        /// <summary>
         /// Provides a means to add additional capabilities not yet added as type safe options
         /// for the Appium driver.
         /// </summary>
