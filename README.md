@@ -61,6 +61,9 @@ Visual studio
 
 
 ### To Release a New Version
+
+Auto release follow the rule in github/labeler.yml
+
 - update assemblyInfo.cs, RELEASE_NOTES.md, and appium-dotnet-driver.nuspec with new new version number and release details, then check it in
 - pull new code
 - `Rebuild All` with `Release` target.
