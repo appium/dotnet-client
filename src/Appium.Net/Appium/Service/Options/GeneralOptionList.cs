@@ -155,5 +155,11 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// </summary>
         public static KeyValuePair<string, string> AsyncTrace() =>
             new KeyValuePair<string, string>("--async-trace", string.Empty);
+            
+        // <summary>
+        /// Enables NodeJS memory dumps collection feature.
+        /// </summary>
+        public static KeyValuePair<string, string> RelaxedSecurity() =>
+            new KeyValuePair<string, string>("--relaxed-security", string.Empty);
     }
 }
