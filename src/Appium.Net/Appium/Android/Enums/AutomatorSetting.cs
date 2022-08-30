@@ -17,10 +17,10 @@ namespace OpenQA.Selenium.Appium.Android.Enums
     public sealed class AutomatorSetting
     {
         public static readonly string IgnoreUnimportantViews = "ignoreUnimportantViews";
-        public static readonly string WaitForIDLETimeout = "setWaitForIdleTimeout";
-        public static readonly string WaitForSelectorTimeout = "setWaitForSelectorTimeout";
-        public static readonly string WaitScrollAcknowledgmentTimeout = "setScrollAcknowledgmentTimeout";
-        public static readonly string WaitActionAcknowledgmentTimeout = "setActionAcknowledgmentTimeout";
-        public static readonly string KeyInjectionDelay = "setKeyInjectionDelay";
+        public static readonly string WaitForIDLETimeout = "waitForIdleTimeout";
+        public static readonly string WaitForSelectorTimeout = "waitForSelectorTimeout";
+        public static readonly string WaitScrollAcknowledgmentTimeout = "scrollAcknowledgmentTimeout";
+        public static readonly string WaitActionAcknowledgmentTimeout = "actionAcknowledgmentTimeout";
+        public static readonly string KeyInjectionDelay = "keyInjectionDelay";
     }
 }

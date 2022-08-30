@@ -32,7 +32,7 @@ Note: we will NOT publish a signed version of this assembly since the dependenci
 
 [Read Wiki](https://github.com/appium/appium-dotnet-driver/wiki)
 
-[See samples here](https://github.com/appium/sample-code/tree/master/sample-code/examples/dotnet/AppiumDotNetSample)
+[See samples here](https://github.com/appium/appium-dotnet-driver/tree/master/test/integration)
 
 
 ## Dev Build+Test 
@@ -61,6 +61,9 @@ Visual studio
 
 
 ### To Release a New Version
+
+Auto release follow the rule in github/labeler.yml
+
 - update assemblyInfo.cs, RELEASE_NOTES.md, and appium-dotnet-driver.nuspec with new new version number and release details, then check it in
 - pull new code
 - `Rebuild All` with `Release` target.
