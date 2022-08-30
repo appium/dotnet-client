@@ -32,7 +32,7 @@ Note: we will NOT publish a signed version of this assembly since the dependenci
 
 [Read Wiki](https://github.com/appium/appium-dotnet-driver/wiki)
 
-[See samples here](https://github.com/appium/sample-code/tree/master/sample-code/examples/dotnet/AppiumDotNetSample)
+[See samples here](https://github.com/appium/appium-dotnet-driver/tree/master/test/integration)
 
 
 ## Dev Build+Test 
