@@ -155,13 +155,6 @@ namespace OpenQA.Selenium.Appium
                 () => base.GetCssValue(propertyName)
             )?.ToString();
 
-        [Obsolete("Use the GetProperty method instead.")]
-        //TODO: Need to decide if we are keeping the new name , although we dont really have DOM in Mobile Apps
-        public override string GetDomProperty(string propertyName) => CacheValue(
-                "property/" + propertyName,
-                () => base.GetDomProperty(propertyName)
-            )?.ToString();
-
         //TODO: Add Integrations tests 
         public string GetProperty(string propertyName) => CacheValue(
                 "property/" + propertyName,
