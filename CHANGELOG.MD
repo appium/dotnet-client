@@ -1,3 +1,45 @@
+## 5.0.0 Beta 1
+- chore: remove redundant pageobject feature by @akinsolb in #472
+- fix: Add and test missing mobile Bys by @TroyWalshProf in #477
+- fix: Allow users to connect to mobile web browsers by @TroyWalshProf in #478
+- refactor!: Rename AppiumWebElement AppiumElement by @TroyWalshProf in #481
+
+## 5.0.0 Alpha 2
+
+- build: reenable GeneratePackageOnBuild by @akinsolb in #449
+- feat: Add idempotency header to request for new sessions by @akinsolb in #450
+- Settings implementation for iOS driver by @LyubomirStoimchev in #466
+- refactor!: Update to work with Selenium 4 (with element factory) by @TroyWalshProf in #469
+- chore: Update MobileCapabilityType to support W3C protocol by @Dor-bl in #475
+- chore: drop FindElementBy* and FindElementsBy* by @TroyWalshProf in #470
+
+## 5.0.0 Alpha
+
+- refactor: Update to work with Selenium 4 (with element factory) (#469)
+- Get proect to build
+- Use new platform setting  more consistantly
+- Get WinAppTests kind of working
+- Drop one off web elements
+- Add 'App' as a known capablity
+- Transition from AddAdditionalCapability to AddAdditionalOption
+- Use Selenium 4 RC2 and remove extra using statements
+- Cleanup mobile selectors and image compare test
+- Fix mobile By bug
+- Undo local test code
+- Address PR comments
+- Add back IdempotencyHeader
+- PR related cleanup
+- Update to latest Selenium RC
+- Update PageObjects code to work with new Element and driver paradigm
+- Update tests to leverage configuration DeviceName and AddAdditionalAppiumOption
+- Work with web element factory
+- Update to work with upcoming RC4
+- Move to official release as there will be no RC4
+- Update copyright
+- Put Newtonsoft back
+- Use ternary operator
+- Remove outdated using statements
+
 ## 4.2.0
 - IPerformsTouchActions no longer implement (inherit) IExecuteMethod - inheritance redundancy and a cleaner interface; Resolve (#392)
 - IHidesKeyboard is now exposes "key" and "strategy" overloads; Resolve (#390)
