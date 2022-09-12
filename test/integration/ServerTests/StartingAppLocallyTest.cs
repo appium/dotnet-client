@@ -133,7 +133,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
                 ? //it will be a cause of error
                 Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"))
                 : Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
-            capabilities.AddAdditionalAppiumOption(MobileCapabilityType.DeviceName, "iPhone Simulator");
+            capabilities.DeviceName = "iPhone Simulator";
             capabilities.AddAdditionalAppiumOption(MobileCapabilityType.PlatformName, MobilePlatform.IOS);
 
             var builder = new AppiumServiceBuilder();
