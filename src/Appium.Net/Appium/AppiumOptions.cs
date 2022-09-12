@@ -82,17 +82,6 @@ namespace OpenQA.Selenium.Appium
             this.additionalAppiumOptions[name] = optionValue;
         }
 
-        /// <summary>
-        /// Add new capabilities
-        /// </summary>
-        /// <param name="capabilityName">Capability name</param>
-        /// <param name="capabilityValue">Capabilities value, which cannot be null or empty</param>
-        [Obsolete("Use the the AddAdditionalAppiumOption method for adding additional options")]
-        public override void AddAdditionalCapability(string capabilityName, object capabilityValue)
-        {
-            this.AddAdditionalAppiumOption(capabilityName, capabilityValue);
-        }
-
         public override void AddAdditionalOption(string optionName, object optionValue)
         {
             throw new NotImplementedException("Use the the AddAdditionalAppiumOption method for adding additional options");

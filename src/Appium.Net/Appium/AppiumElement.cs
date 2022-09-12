@@ -155,9 +155,10 @@ namespace OpenQA.Selenium.Appium
                 () => base.GetCssValue(propertyName)
             )?.ToString();
 
-        public override string GetProperty(string propertyName) => CacheValue(
+        //TODO: Add Integrations tests 
+        public string GetProperty(string propertyName) => CacheValue(
                 "property/" + propertyName,
-                () => base.GetProperty(propertyName)
+                () => base.GetDomProperty(propertyName)
             )?.ToString();
 
         protected virtual object CacheValue(string key, Func<object> getter)
