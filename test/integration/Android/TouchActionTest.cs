@@ -55,7 +55,8 @@ namespace Appium.Net.Integration.Tests.Android
             var number1 = els.Count;
 
             var tap = new TouchAction(_driver);
-            tap.Tap(els[4], 10, 5, 2).Perform();
+            tap.Tap(els[4], 8, 5, 2);
+            tap.Perform();
 
             els = _driver.FindElements(MobileBy.ClassName("android.widget.TextView"));
 
@@ -65,6 +66,10 @@ namespace Appium.Net.Integration.Tests.Android
         [Test]
         public void ComplexTouchActionTestCase()
         {
+            AppiumElement ViewsElem = _driver.FindElement(MobileBy.AccessibilityId("Views"));
+            var tap = new TouchAction(_driver);
+            tap.Tap(ViewsElem).Wait(200);
+            tap.Perform();
             IList<AppiumElement> els = _driver.FindElements(MobileBy.ClassName("android.widget.TextView"));
             var loc1 = els[7].Location;
             var target = els[1];
@@ -78,8 +83,12 @@ namespace Appium.Net.Integration.Tests.Android
         [Test]
         public void SingleMultiActionTestCase()
         {
+            AppiumElement ViewsElem = _driver.FindElement(MobileBy.AccessibilityId("Views"));
+            var tap = new TouchAction(_driver);
+            tap.Tap(ViewsElem).Wait(200);
+            tap.Perform();
             IList<AppiumElement> els = _driver.FindElements(MobileBy.ClassName("android.widget.TextView"));
-            var loc1 = els[7].Location;
+            var loc1 = els[8].Location;
             var target = els[1];
             var loc2 = target.Location;
 
