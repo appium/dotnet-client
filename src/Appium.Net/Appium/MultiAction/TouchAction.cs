@@ -28,7 +28,7 @@ namespace OpenQA.Selenium.Appium.MultiTouch
             {
                 WebElement WebElement = el as WebElement;
                 if (WebElement != null)
-                    return (string) typeof(OpenQA.Selenium.WebElement).GetProperty("Id",
+                    return (string)typeof(WebElement).GetProperty("Id",
                         BindingFlags.NonPublic |
                         BindingFlags.Instance).GetValue(el, null);
 
