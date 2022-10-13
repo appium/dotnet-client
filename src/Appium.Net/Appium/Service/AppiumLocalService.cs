@@ -58,7 +58,7 @@ namespace OpenQA.Selenium.Appium.Service
         /// <summary>
         /// The base URL for the managed appium server.
         /// </summary>
-        public Uri ServiceUrl => new Uri($"http://{IP.ToString()}:{Convert.ToString(Port)}/wd/hub");
+        public Uri ServiceUrl => new Uri($"http://{IP}:{Convert.ToString(Port)}");
 
         /// <summary>
         /// Event that can be used to capture the output of the service
@@ -184,17 +184,17 @@ namespace OpenQA.Selenium.Appium.Service
             Uri service = ServiceUrl;
             if (service.IsLoopback || IP.ToString().Equals(AppiumServiceConstants.DefaultLocalIPAddress))
             {
-                status = new Uri("http://localhost:" + Convert.ToString(Port) + "/wd/hub/status");
+                status = new Uri("http://localhost:" + Convert.ToString(Port) + "/status");
             }
             else
             {
-                status = new Uri(service.ToString() + "/status");
+                status = new Uri(service.ToString() + "status");
             }
 
             DateTime endTime = DateTime.Now.Add(this.InitializationTimeout);
             while (!pinged & DateTime.Now < endTime)
             {
-                HttpWebRequest request = (HttpWebRequest) HttpWebRequest.Create(status);
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(status);
                 HttpWebResponse response = null;
                 try
                 {
