@@ -21,6 +21,11 @@ namespace OpenQA.Selenium.Appium.Enums
     public sealed class IOSMobileCapabilityType
     {
         /// <summary>
+        /// Amount of time in ms to wait for Simulator to startup before assuming it hung and failing the session. Default is 120000ms (2 minutes).
+        /// </summary>
+        public static readonly string SimulatorStartupTimeout = "simulatorStartupTimeout";
+
+        /// <summary>
         /// (Sim-only) Calendar format to set for the iOS Simulator
         /// </summary>
         public static readonly string CalendarFormat = "calendarFormat";
