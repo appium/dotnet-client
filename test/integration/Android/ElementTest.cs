@@ -96,7 +96,6 @@ namespace Appium.Net.Integration.Tests.Android
 
             Assert.AreEqual(originalValue, editElement.Text);
 
-            /////// TODO: Implement
             editElement.ReplaceValue(replacedValue);
 
             Assert.AreEqual(replacedValue, editElement.Text);
