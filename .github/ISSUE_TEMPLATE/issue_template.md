@@ -1,3 +1,12 @@
+---
+name: Bug Report
+about: File a bug report
+title: "[Bug]: "
+labels: ["bug"]
+assignees: ''
+
+---
+
 ## Description
 
 Please describe the issue. It may be a bug description. So then please briefly describe the steps that you were trying to perform and what happened instead.
