@@ -1,12 +1,3 @@
----
-name: ISSUE_TEMPLATE.md
-about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
-
----
-
 ## Description
 
 Please describe the issue. It may be a bug description. So then please briefly describe the steps that you were trying to perform and what happened instead.
