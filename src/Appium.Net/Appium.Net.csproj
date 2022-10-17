@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net48</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <RootNamespace>OpenQA.Selenium</RootNamespace>
     <Company>Appium Commiters</Company>
     <Product>Appium-Dotnet-Driver</Product>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Copyright>Copyright © 2022</Copyright>
+    <Copyright>Copyright © 2020</Copyright>
     <PackageProjectUrl>https://github.com/appium/appium-dotnet-driver</PackageProjectUrl>
     <RepositoryUrl>https://github.com/appium/appium-dotnet-driver</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -29,7 +29,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
     <DocumentationFile>Appium.Net.xml</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net48|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net45|AnyCPU'">
     <DocumentationFile>Appium.Net.xml</DocumentationFile>
   </PropertyGroup>
 
