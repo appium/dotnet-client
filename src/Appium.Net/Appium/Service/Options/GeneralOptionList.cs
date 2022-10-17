@@ -20,7 +20,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
     ///<summary>
     /// Here is the list of common Appium server arguments.
     /// All flags are optional, but some are required in conjunction with certain others.
-    /// The full list is available here: http://appium.io/slate/en/master/?ruby#appium-server-arguments
+    /// The full list is available here: https://appium.io/docs/en/writing-running-appium/server-args/
     /// </summary>
     public sealed class GeneralOptionList : BaseOptionList
     {
@@ -29,6 +29,16 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// </summary>
         public static KeyValuePair<string, string> Shell(string value) =>
             GetKeyValuePair("--shell", value);
+
+        /// <summary>
+        /// Initial path segment where the Appium/WebDriver API will be hosted. Every endpoint will be behind this segment. <br/>
+        /// Default: for Appium 2.0: / ; for Appium 1: /wd/hub <br/>
+        /// Example: --base-path /my/path/prefix
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static KeyValuePair<string, string> BasePath(string value) =>
+            GetKeyValuePair("--base-path", value);
 
         ///<summary>
         /// callback IP Address (default: same as address) <br/>

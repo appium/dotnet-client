@@ -185,6 +185,24 @@ namespace Appium.Net.Integration.Tests.ServerTests
         }
 
         [Test]
+        public void CheckAbilityToStartServiceUsingBasePathFlag()
+        {
+            AppiumLocalService service = null;
+            var args = new OptionCollector().AddArguments(GeneralOptionList.BasePath("/wd/hub"));
+            try
+            {
+                service = new AppiumServiceBuilder().WithArguments(args).Build();
+                service.Start();
+                Assert.IsTrue(service.IsRunning);
+            }
+            finally
+            {
+                service?.Dispose();
+            }
+        }
+
+
+        [Test]
         public void CheckAbilityToStartServiceUsingCapabilities()
         {
             var capabilities = new AppiumOptions();
