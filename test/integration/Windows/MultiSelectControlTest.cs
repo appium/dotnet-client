@@ -26,7 +26,6 @@ namespace Appium.Net.Integration.Tests.Windows
 {
     public class MultiSelectControlTest
     {
-        private WindowsDriver _driver;
         protected static WindowsDriver AlarmClockSession;
         protected static WindowsDriver DesktopSession;
 
@@ -38,6 +37,7 @@ namespace Appium.Net.Integration.Tests.Windows
             appCapabilities.App = "Microsoft.WindowsAlarms_8wekyb3d8bbwe!App";
             appCapabilities.PlatformName ="Windows";
             appCapabilities.DeviceName = "WindowsPC";
+            appCapabilities.AddAdditionalAppiumOption("ms:experimental-webdriver", true);
 
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
 
@@ -56,14 +56,11 @@ namespace Appium.Net.Integration.Tests.Windows
                 new WindowsDriver(serverUri, desktopCapabilities);
             Assert.IsNotNull(DesktopSession);
 
-            // Ensure app is started in the default main page
-            ReturnToMainPage();
         }
 
         [OneTimeTearDown]
         public void OneTimeTearDown()
         {
-            ReturnToMainPage();
             SwitchToAlarmTab();
 
             // Delete all created alarms
@@ -72,7 +69,10 @@ namespace Appium.Net.Integration.Tests.Windows
             {
                 /////// TODO - Implement for Appium
                 //// AlarmClockSession.Mouse.ContextClick(alarmEntry.Coordinates);
-                AlarmClockSession.FindElement(MobileBy.Name("Delete")).Click();
+                /// AlarmClockSession.FindElement(MobileBy.AccessibilityId("ContextMenuDelete")).Click();
+                /// For now Click and delete
+                alarmEntry.Click();
+                AlarmClockSession.FindElement(MobileBy.AccessibilityId("DeleteButton")).Click();
             }
 
             AlarmClockSession.Dispose();
@@ -90,6 +90,7 @@ namespace Appium.Net.Integration.Tests.Windows
             // Add an alarm at 1 minute after local time
             SwitchToAlarmTab();
             AddAlarm(localTimeText);
+            Thread.Sleep(300);
             var alarmEntries = AlarmClockSession.FindElements(MobileBy.Name("Windows Application Driver Test Alarm"));
             Assert.IsTrue(alarmEntries.Count > 0);
         }
@@ -111,7 +112,7 @@ namespace Appium.Net.Integration.Tests.Windows
                 AlarmClockSession.FindElement(MobileBy.AccessibilityId("ClockButton"));
             if (worldClockPivotItem != null)
             {
-                localTimeText = AlarmClockSession.FindElement(MobileBy.AccessibilityId("WorldClockItemGrid")).Text;
+                localTimeText = AlarmClockSession.FindElement(MobileBy.AccessibilityId("TimeBlock")).GetDomAttribute("Name");
                 var timeStrings = localTimeText.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries);
 
                 foreach (var timeString in timeStrings)
@@ -141,9 +142,9 @@ namespace Appium.Net.Integration.Tests.Windows
                 var period = alarmTime.ToString("tt", fi);
 
                 AlarmClockSession.FindElement(MobileBy.AccessibilityId("AddAlarmButton")).Click();
-                AlarmClockSession.FindElement(MobileBy.AccessibilityId("AlarmNameTextBox")).Clear();
-                AlarmClockSession.FindElement(MobileBy.AccessibilityId("AlarmNameTextBox"))
-                    .SendKeys("Windows Application Driver Test Alarm");
+                var alarmNameBox = AlarmClockSession.FindElement(MobileBy.Name("Alarm name"));
+                alarmNameBox.Clear();
+                alarmNameBox.SendKeys("Windows Application Driver Test Alarm");
                 AppiumElement periodSelector = null;
                 try
                 {
@@ -154,11 +155,11 @@ namespace Appium.Net.Integration.Tests.Windows
                     hourString = alarmTime.ToString("HH", fi);
                 }
                 periodSelector?.FindElement(MobileBy.Name(period)).Click();
-                AlarmClockSession.FindElement(MobileBy.AccessibilityId("HourLoopingSelector")).FindElement(MobileBy.Name(hourString)).Click();
-                AlarmClockSession.FindElement(MobileBy.AccessibilityId("MinuteLoopingSelector")).FindElement(MobileBy.Name(minuteString))
-                    .Click();
+                AlarmClockSession.FindElement(MobileBy.AccessibilityId("HourPicker")).SendKeys(hourString);
+                AlarmClockSession.FindElement(MobileBy.AccessibilityId("MinutePicker")).Click();
+                AlarmClockSession.FindElement(MobileBy.AccessibilityId("MinutePicker")).SendKeys(minuteString);
                 Thread.Sleep(500);
-                AlarmClockSession.FindElement(MobileBy.AccessibilityId("AlarmSaveButton")).Click();
+                AlarmClockSession.FindElement(MobileBy.AccessibilityId("PrimaryButton")).Click();
             }
         }
 
@@ -170,23 +171,6 @@ namespace Appium.Net.Integration.Tests.Windows
                 Assert.IsTrue(newNotification.FindElement(MobileBy.AccessibilityId("MessageText")).Text
                     .Contains("Windows Application Driver Test Alarm"));
                 newNotification.FindElement(MobileBy.Name("Dismiss")).Click();
-            }
-            catch
-            {
-            }
-        }
-
-        private static void ReturnToMainPage()
-        {
-            // Try to return to main page in case application is started in nested view
-            try
-            {
-                AppiumElement backButton = null;
-                do
-                {
-                    backButton = AlarmClockSession.FindElement(MobileBy.AccessibilityId("Back"));
-                    backButton.Click();
-                } while (backButton != null);
             }
             catch
             {
