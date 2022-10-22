@@ -186,7 +186,7 @@ namespace OpenQA.Selenium.Appium.Service
 
         private string ParseBasePath()
         {
-            if (ArgsList.Contains("--base-path"))        
+            if (ArgsList.Contains("--base-path"))
             {
                 return GetArgsValue("--base-path");
             }
@@ -206,8 +206,10 @@ namespace OpenQA.Selenium.Appium.Service
             Uri status;
             Uri service = ServiceUrl;
 
-            GenerateArgsList();
-
+            if (ArgsList == null)
+            {
+                GenerateArgsList();
+            }
             string basePath = ParseBasePath();
             bool defBasePath = basePath.Equals(AppiumServiceConstants.DefaultBasePath);
 
