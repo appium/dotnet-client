@@ -33,6 +33,7 @@ namespace OpenQA.Selenium.Appium.Service
         private readonly TimeSpan InitializationTimeout;
         private readonly IDictionary<string, string> EnvironmentForProcess;
         private Process Service;
+        private List<string> ArgsList;
 
         /// <summary>
         /// Creates an instance of AppiumLocalService without special settings
@@ -175,30 +176,37 @@ namespace OpenQA.Selenium.Appium.Service
                 return Ping(new TimeSpan(0, 0, 0, 0, 500));
             }
         }
+
         private string GetArgsValue(string argStr)
         {
             int idx;
-            List<string> args = Arguments.Split(' ').ToList();
-            idx= args.IndexOf(argStr);
-            return args[idx + 1];
+            idx= ArgsList.IndexOf(argStr);
+            return ArgsList[idx + 1];
         }
+
         private string ParseBasePath()
         {
-            if (Arguments.Contains("--base-path"))
+            if (ArgsList.Contains("--base-path"))        
             {
                 return GetArgsValue("--base-path");
             }
-            else if (Arguments.Contains("-pa"))
+            else if (ArgsList.Contains("-pa"))
             {
                 return GetArgsValue("-pa");
             }
             return AppiumServiceConstants.DefaultBasePath;
         }
+
+        private void GenerateArgsList()
+        {
+           ArgsList = Arguments.Split(' ').ToList();
+        }
         private Uri CreateStatusUrl()
         {
             Uri status;
-
             Uri service = ServiceUrl;
+
+            GenerateArgsList();
 
             string basePath = ParseBasePath();
             bool defBasePath = basePath.Equals(AppiumServiceConstants.DefaultBasePath);
