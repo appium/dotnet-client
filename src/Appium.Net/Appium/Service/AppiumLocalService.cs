@@ -133,7 +133,7 @@ namespace OpenQA.Selenium.Appium.Service
             {
                 Service.Kill();
             }
-            catch (Exception ignored)
+            catch
             {
             }
             finally
@@ -247,7 +247,7 @@ namespace OpenQA.Selenium.Appium.Service
 
             status = CreateStatusUrl();
 
-            DateTime endTime = DateTime.Now.Add(this.InitializationTimeout);
+            DateTime endTime = DateTime.Now.Add(span);
             while (!pinged & DateTime.Now < endTime)
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(status);
@@ -259,7 +259,7 @@ namespace OpenQA.Selenium.Appium.Service
                         pinged = true;
                     }
                 }
-                catch (Exception e)
+                catch
                 {
                     pinged = false;
                 }
