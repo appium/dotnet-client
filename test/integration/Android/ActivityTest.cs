@@ -9,6 +9,7 @@ namespace Appium.Net.Integration.Tests.Android
     public class ActivityTest
     {
         private AndroidDriver _driver;
+        private const string ContactsActivity = ".activities.PeopleActivity";
 
         [OneTimeSetUp]
         public void BeforeAll()
@@ -67,11 +68,11 @@ namespace Appium.Net.Integration.Tests.Android
 
             Assert.AreEqual(_driver.CurrentActivity, ".ApiDemos");
 
-            _driver.StartActivity("com.android.contacts", ".ContactsListActivity");
+            _driver.StartActivity("com.android.contacts", ContactsActivity);
 
-            Assert.AreEqual(_driver.CurrentActivity, ".ContactsListActivity");
+            Assert.AreEqual(_driver.CurrentActivity, ContactsActivity);
             _driver.PressKeyCode(AndroidKeyCode.Back);
-            Assert.AreEqual(_driver.CurrentActivity, ".ContactsListActivity");
+            Assert.AreEqual(_driver.CurrentActivity, ".ApiDemos");
         }
 
         [Test]
@@ -81,10 +82,10 @@ namespace Appium.Net.Integration.Tests.Android
 
             Assert.AreEqual(_driver.CurrentActivity, ".accessibility.AccessibilityNodeProviderActivity");
 
-            _driver.StartActivity("com.android.contacts", ".ContactsListActivity", "com.android.contacts",
-                ".ContactsListActivity", false);
+            _driver.StartActivity("com.android.contacts", ContactsActivity, "com.android.contacts",
+                ContactsActivity, false);
 
-            Assert.AreEqual(_driver.CurrentActivity, ".ContactsListActivity");
+            Assert.AreEqual(_driver.CurrentActivity, ContactsActivity);
             _driver.PressKeyCode(AndroidKeyCode.Back);
             Assert.AreEqual(_driver.CurrentActivity, ".accessibility.AccessibilityNodeProviderActivity");
         }
