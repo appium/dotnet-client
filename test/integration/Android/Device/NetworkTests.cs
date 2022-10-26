@@ -26,7 +26,10 @@ namespace Appium.Net.Integration.Tests.Android.Device
         [OneTimeTearDown]
         public void TearDown()
         {
-            _driver.Dispose();
+            if (_driver != null)
+            {
+                _driver.Dispose();
+            }            
         }
 
         [Test]
@@ -35,7 +38,11 @@ namespace Appium.Net.Integration.Tests.Android.Device
             var androidDriver = (AndroidDriver) _driver;
 
             androidDriver.ToggleData();
+            ConnectionType currentConnectionType = androidDriver.ConnectionType;
+            Assert.That(currentConnectionType, Is.EqualTo(ConnectionType.WifiOnly));
             androidDriver.ToggleData();
+            currentConnectionType = androidDriver.ConnectionType;
+            Assert.That(currentConnectionType, Is.EqualTo(ConnectionType.AllNetworkOn));
         }
 
         [Test]
