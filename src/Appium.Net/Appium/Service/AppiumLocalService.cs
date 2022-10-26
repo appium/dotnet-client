@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
 
@@ -32,6 +33,7 @@ namespace OpenQA.Selenium.Appium.Service
         private readonly TimeSpan InitializationTimeout;
         private readonly IDictionary<string, string> EnvironmentForProcess;
         private Process Service;
+        private List<string> ArgsList;
 
         /// <summary>
         /// Creates an instance of AppiumLocalService without special settings
@@ -40,11 +42,11 @@ namespace OpenQA.Selenium.Appium.Service
         public static AppiumLocalService BuildDefaultService() => new AppiumServiceBuilder().Build();
 
         internal AppiumLocalService(
-            FileInfo nodeJS, 
-            string arguments, 
-            IPAddress ip, 
+            FileInfo nodeJS,
+            string arguments,
+            IPAddress ip,
             int port,
-            TimeSpan initializationTimeout, 
+            TimeSpan initializationTimeout,
             IDictionary<string, string> environmentForProcess)
         {
             NodeJS = nodeJS;
@@ -58,7 +60,7 @@ namespace OpenQA.Selenium.Appium.Service
         /// <summary>
         /// The base URL for the managed appium server.
         /// </summary>
-        public Uri ServiceUrl => new Uri($"http://{IP.ToString()}:{Convert.ToString(Port)}/wd/hub");
+        public Uri ServiceUrl => new Uri($"http://{IP}:{Convert.ToString(Port)}");
 
         /// <summary>
         /// Event that can be used to capture the output of the service
@@ -131,7 +133,7 @@ namespace OpenQA.Selenium.Appium.Service
             {
                 Service.Kill();
             }
-            catch (Exception ignored)
+            catch
             {
             }
             finally
@@ -175,26 +177,80 @@ namespace OpenQA.Selenium.Appium.Service
             }
         }
 
+        private string GetArgsValue(string argStr)
+        {
+            int idx;
+            idx= ArgsList.IndexOf(argStr);
+            return ArgsList[idx + 1];
+        }
+
+        private string ParseBasePath()
+        {
+            if (ArgsList.Contains("--base-path"))
+            {
+                return GetArgsValue("--base-path");
+            }
+            else if (ArgsList.Contains("-pa"))
+            {
+                return GetArgsValue("-pa");
+            }
+            return AppiumServiceConstants.DefaultBasePath;
+        }
+
+        private void GenerateArgsList()
+        {
+           ArgsList = Arguments.Split(' ').ToList();
+        }
+        private Uri CreateStatusUrl()
+        {
+            Uri status;
+            Uri service = ServiceUrl;
+
+            if (ArgsList == null)
+            {
+                GenerateArgsList();
+            }
+            string basePath = ParseBasePath();
+            bool defBasePath = basePath.Equals(AppiumServiceConstants.DefaultBasePath);
+
+            if (service.IsLoopback || IP.ToString().Equals(AppiumServiceConstants.DefaultLocalIPAddress))
+            {
+                var tmpStatus = "http://localhost:" + Convert.ToString(Port);
+                if (defBasePath)
+                {
+                    status = new Uri(tmpStatus + AppiumServiceConstants.StatusUrl);
+                }
+                else
+                {
+                    status = new Uri(tmpStatus + basePath + AppiumServiceConstants.StatusUrl);
+                }
+            }
+            else
+            {
+                if (defBasePath)
+                {
+                    status = new Uri(service, AppiumServiceConstants.StatusUrl);
+                }
+                else
+                {
+                    status = new Uri(service, basePath + AppiumServiceConstants.StatusUrl);
+                }
+            }
+            return status;
+        }
+
         private bool Ping(TimeSpan span)
         {
             bool pinged = false;
 
             Uri status;
 
-            Uri service = ServiceUrl;
-            if (service.IsLoopback || IP.ToString().Equals(AppiumServiceConstants.DefaultLocalIPAddress))
-            {
-                status = new Uri("http://localhost:" + Convert.ToString(Port) + "/wd/hub/status");
-            }
-            else
-            {
-                status = new Uri(service.ToString() + "/status");
-            }
+            status = CreateStatusUrl();
 
-            DateTime endTime = DateTime.Now.Add(this.InitializationTimeout);
+            DateTime endTime = DateTime.Now.Add(span);
             while (!pinged & DateTime.Now < endTime)
             {
-                HttpWebRequest request = (HttpWebRequest) HttpWebRequest.Create(status);
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(status);
                 HttpWebResponse response = null;
                 try
                 {
@@ -203,7 +259,7 @@ namespace OpenQA.Selenium.Appium.Service
                         pinged = true;
                     }
                 }
-                catch (Exception e)
+                catch
                 {
                     pinged = false;
                 }
