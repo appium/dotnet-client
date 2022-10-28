@@ -10,7 +10,7 @@ all the functionalities of the regular driver, but add Appium specific methods o
 
 > **Note**
 >
-> The last stable version(v4.3.2) supports the legacy Selenium 3.150.0.<br/>	 
+> The last stable version(v4.4.0) supports the legacy Selenium 3.150.0.<br/>	 
 > In case you would like to use this client with Selenium 4.0 and above, please use the latest beta version(v5.0.0). <br/>
 > We are well aware this project is not actively maintained, therefore any contributors are more than welcomed to assist with this project.
 
