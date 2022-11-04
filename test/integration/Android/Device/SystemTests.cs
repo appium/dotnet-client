@@ -1,7 +1,6 @@
 ﻿using System;
 using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
-using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 
@@ -40,6 +39,13 @@ namespace Appium.Net.Integration.Tests.Android.Device
         {
             var androidDriver = (AndroidDriver) _driver;
             Assert.That(androidDriver.GetDisplayDensity(), Is.Not.EqualTo(0));
+        }
+
+        [Test]
+        public void CanOpenNotificationsTest()
+        {
+            var androidDriver = (AndroidDriver)_driver;
+            androidDriver.OpenNotifications();
         }
     }
 }
