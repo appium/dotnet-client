@@ -1,4 +1,4 @@
-# appium-dotnet-driver
+# dotnet-client
 
 [![NuGet Badge](https://buildstats.info/nuget/Appium.Webdriver)](https://www.nuget.org/packages/Appium.Webdriver/)
 [![Build Status](https://dev.azure.com/AppiumCI/dotnet-client/_apis/build/status/appium.appium-dotnet-driver?branchName=master)](https://dev.azure.com/AppiumCI/dotnet-client/_build/latest?definitionId=13&branchName=master)
