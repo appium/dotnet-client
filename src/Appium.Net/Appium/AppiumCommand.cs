@@ -145,15 +145,6 @@ namespace OpenQA.Selenium.Appium
 
             #endregion Driver Commands
 
-            #region Touch Commands
-
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.PerformMultiAction,
-                "/session/{sessionId}/touch/multi/perform"),
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.PerformTouchAction,
-                "/session/{sessionId}/touch/perform"),
-
-            #endregion Touch Commands
-
             // Enable W3C Actions on AppiumWebDriver
 
             #region W3C Actions
