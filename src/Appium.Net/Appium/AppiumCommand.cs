@@ -144,6 +144,17 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/device/finger_print"),
 
             #endregion Driver Commands
+            
+            // touch commands are deprecated, Please use the W3C Actions instead.
+            //TODO: Remove this region once we deprecate the touch actions
+            #region Touch Commands
+
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.PerformMultiAction,
+                "/session/{sessionId}/touch/multi/perform"),
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.PerformTouchAction,
+                "/session/{sessionId}/touch/perform"),
+
+            #endregion Touch Commands
 
             // Enable W3C Actions on AppiumWebDriver
 

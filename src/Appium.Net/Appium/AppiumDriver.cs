@@ -31,7 +31,7 @@ namespace OpenQA.Selenium.Appium
         IHasSessionDetails,
         IHasLocation,
         IHidesKeyboard, IInteractsWithFiles, IFindsByFluentSelector<AppiumElement>,
-        IInteractsWithApps, IRotatable, IContextAware
+        IInteractsWithApps, IPerformsTouchActions, IRotatable, IContextAware
     {
         private const string NativeApp = "NATIVE_APP";
 
