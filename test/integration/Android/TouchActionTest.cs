@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
@@ -8,6 +9,8 @@ using OpenQA.Selenium.Appium.MultiTouch;
 
 namespace Appium.Net.Integration.Tests.Android
 {
+    [Obsolete("Touch Actions are deprecated")]
+    //TODO: remove this test once we deprecate touch actions
     [TestFixture]
     public class TouchActionTest
     {

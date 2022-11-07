@@ -5,10 +5,13 @@ using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.iOS;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.MultiTouch;
+using System;
 
 namespace Appium.Net.Integration.Tests.IOS
 {
     [TestFixture]
+    [Obsolete("Touch Actions are deprecated")]
+    //TODO: remove this test once we deprecate touch actions
     public class TouchActionTest
     {
         private AppiumDriver _driver;

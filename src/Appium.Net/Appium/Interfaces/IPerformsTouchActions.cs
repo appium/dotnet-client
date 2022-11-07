@@ -13,11 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+using System;
+
 namespace OpenQA.Selenium.Appium.Interfaces
 {
     /// <summary>
     /// Provides a mechanism for building advanced interactions with the browser/application.
     /// </summary>
+    [Obsolete("Touch Actions are deprecated in W3C spec, please use W3C actions instead")]
     public interface IPerformsTouchActions
     {
         /// <summary>

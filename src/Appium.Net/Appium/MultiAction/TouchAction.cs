@@ -13,11 +13,13 @@
 //limitations under the License.
 
 using OpenQA.Selenium.Appium.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 
 namespace OpenQA.Selenium.Appium.MultiTouch
 {
+    [Obsolete("TouchAction is deprecated, please use W3C actions instead: http://appium.io/docs/en/commands/interactions/actions/")]
     public class TouchAction : ITouchAction
     {
         internal class Step
