@@ -3,7 +3,7 @@
 [![NuGet Badge](https://buildstats.info/nuget/Appium.Webdriver)](https://www.nuget.org/packages/Appium.Webdriver/)
 [![Build Status](https://dev.azure.com/AppiumCI/dotnet-client/_apis/build/status/appium.appium-dotnet-driver?branchName=master)](https://dev.azure.com/AppiumCI/dotnet-client/_build/latest?definitionId=13&branchName=master)
 
-[![NuGet Badge](https://buildstats.info/nuget/Appium.Webdriver?includePreReleases=true)](https://www.nuget.org/packages/Appium.Webdriver)
+[![NuGet Badge](https://buildstats.info/nuget/Appium.Webdriver?includePreReleases=true)](https://www.nuget.org/packages/Appium.WebDriver/5.0.0-beta02)
 
 
 This driver is an extension of the [Selenium](http://docs.seleniumhq.org/) C# client. It has 
