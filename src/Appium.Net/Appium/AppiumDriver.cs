@@ -377,8 +377,9 @@ namespace OpenQA.Selenium.Appium
 
         #endregion Input Method (IME)
 
-        #region Multi Actions
-
+        #region (Deprecated) Multi Actions
+        // TODO: Remove this region once we deprecate the touch actions
+        // Please use the W3C Actions instead.
         public void PerformMultiAction(IMultiAction multiAction)
         {
             if (multiAction == null) return;
@@ -393,7 +394,7 @@ namespace OpenQA.Selenium.Appium
             Execute(AppiumDriverCommand.PerformTouchAction, parameters);
         }
 
-        #endregion Multi Actions
+        #endregion (Deprecated) Multi Actions
 
         #region W3C Actions
 
