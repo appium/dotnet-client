@@ -9,8 +9,8 @@
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Copyright>Copyright © 2020</Copyright>
-    <PackageProjectUrl>https://github.com/appium/appium-dotnet-driver</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/appium/appium-dotnet-driver</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/appium/dotnet-client</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/appium/dotnet-client</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
