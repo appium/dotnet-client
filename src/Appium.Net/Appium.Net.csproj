@@ -5,10 +5,10 @@
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <RootNamespace>OpenQA.Selenium</RootNamespace>
     <Company>Appium Commiters</Company>
-    <Product>Appium-Dotnet-Driver</Product>
+    <Product>Dotnet-Client</Product>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Copyright>Copyright © 2020</Copyright>
+    <Copyright>Copyright © 2022</Copyright>
     <PackageProjectUrl>https://github.com/appium/dotnet-client</PackageProjectUrl>
     <RepositoryUrl>https://github.com/appium/dotnet-client</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
