@@ -380,13 +380,14 @@ namespace OpenQA.Selenium.Appium
         #region (Deprecated) Multi Actions
         // TODO: Remove this region once we deprecate the touch actions
         // Please use the W3C Actions instead.
+        [Obsolete("Touch Actions are deprecated in W3C spec, please use W3C actions instead")]
         public void PerformMultiAction(IMultiAction multiAction)
         {
             if (multiAction == null) return;
             var parameters = multiAction.GetParameters();
             Execute(AppiumDriverCommand.PerformMultiAction, parameters);
         }
-
+        [Obsolete("Touch Actions are deprecated in W3C spec, please use W3C actions instead")]
         public void PerformTouchAction(ITouchAction touchAction)
         {
             if (touchAction == null) return;
