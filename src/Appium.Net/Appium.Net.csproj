@@ -32,9 +32,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net48|AnyCPU'">
     <DocumentationFile>Appium.Net.xml</DocumentationFile>
   </PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net45|AnyCPU'">
-		<DocumentationFile>Appium.Net.xml</DocumentationFile>
-	</PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net45|AnyCPU'">
+    <DocumentationFile>Appium.Net.xml</DocumentationFile>
+  </PropertyGroup>
 	
 	<ItemGroup>
     <None Include="LICENSE.txt" Pack="true" PackagePath="" />
