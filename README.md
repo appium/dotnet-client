@@ -1,12 +1,19 @@
-# appium-dotnet-driver
+# dotnet-client
 
-[![NuGet version](https://badge.fury.io/nu/Appium.WebDriver.svg)](https://badge.fury.io/nu/Appium.WebDriver)
-[![NuGet Downloads](https://img.shields.io/nuget/dt/Appium.Webdriver.svg)](https://www.nuget.org/packages/Appium.Webdriver)
-
+[![NuGet Badge](https://buildstats.info/nuget/Appium.Webdriver)](https://www.nuget.org/packages/Appium.Webdriver/)
 [![Build Status](https://dev.azure.com/AppiumCI/dotnet-client/_apis/build/status/appium.appium-dotnet-driver?branchName=master)](https://dev.azure.com/AppiumCI/dotnet-client/_build/latest?definitionId=13&branchName=master)
+
+[![NuGet Badge](https://buildstats.info/nuget/Appium.Webdriver?includePreReleases=true)](https://www.nuget.org/packages/Appium.WebDriver/5.0.0-beta02)
+
 
 This driver is an extension of the [Selenium](http://docs.seleniumhq.org/) C# client. It has 
 all the functionalities of the regular driver, but add Appium specific methods on top of this.
+
+> **Note**
+>
+> The last stable version(v4.4.0) supports the legacy Selenium 3.150.0.<br/>	 
+> In case you would like to use this client with Selenium 4.0 and above, please use the latest beta version(v5.0.0). <br/>
+> We are well aware this project is not actively maintained, therefore any contributors are more than welcomed to assist with this project.
 
 ## NuGet
 

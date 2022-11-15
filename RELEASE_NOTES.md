@@ -1,5 +1,27 @@
 # Release Notes
-## *4.0.0.1 (under construction yet)*
+## *5.0.0-beta2*
+- [Enhancements] Add ReplaceValue method by @Dor-bl in #530
+- [UPDATES:]
+	- Target .NET Framework 4.8 v5 by @Dor-bl in #510
+	- Update azure-pipelines.yml by @Dor-bl in #516
+	- Update Microsoft.NET.Test.Sdk to 17.3.1 in /test/integration by @Dor-bl in #519
+	- Update ApiDemos-debug 5.0 by @Dor-bl in #526
+	- Update NUnit Packages in /test/integration by @Dor-bl in #522
+	- 
+- [BREAKING CHANGE] Bump Selenium from 4.0.0 to 4.5.1 by @Dor-bl in #537	
+- [BREAKING CHANGE] Migrate AppiumLocalService to Appium 2 by @Dor-bl in #529
+
+## *4.4.0*
+- [Enhancement] Updated GeneralOptionList.cs by adding relaxed-security option for AppiumServiceBuilder (#505) @APX403
+- [Enhancement] Add simulatorStartupTimeout iOS capability (#512) @a7medev
+- [PipeLine] Update azure-pipelines.yml (#511) @Dor-bl
+- [Fix] Typo fix on Readme.md (#538) @Dor-bl
+- [Update] Update ApiDemos-debug (#525) @Dor-bl
+- [Docs:]
+	- Update remote Appium server section (#509) @Dor-bl
+	- Update Sample link (#508) @Dor-bl
+	- new version of Issue template (#533) @Dor-bl
+	- Add Note message to README (#531) @Dor-bl
 
 ## *4.0.0.1-beta*
  - [Enhancement] The searching by ios class chain was implemented.
