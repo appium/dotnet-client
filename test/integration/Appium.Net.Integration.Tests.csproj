@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net48</TargetFrameworks>
+    <TargetFrameworks>net48;net45</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="apps\**" />

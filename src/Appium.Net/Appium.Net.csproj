@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net48</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net48;net45</TargetFrameworks>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <RootNamespace>OpenQA.Selenium</RootNamespace>
     <Company>Appium Commiters</Company>
@@ -32,7 +32,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net48|AnyCPU'">
     <DocumentationFile>Appium.Net.xml</DocumentationFile>
   </PropertyGroup>
-
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net45|AnyCPU'">
+		<DocumentationFile>Appium.Net.xml</DocumentationFile>
+	</PropertyGroup>
+	
 	<ItemGroup>
     <None Include="LICENSE.txt" Pack="true" PackagePath="" />
   </ItemGroup>
