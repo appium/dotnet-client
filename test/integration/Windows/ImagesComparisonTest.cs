@@ -18,14 +18,13 @@ namespace Appium.Net.Integration.Tests.Windows
             var appCapabilities = new AppiumOptions();
             appCapabilities.App = "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App";
             appCapabilities.DeviceName = "WindowsPC";
-            appCapabilities.PlatformName ="Windows";
-            appCapabilities.AutomationName= "Windows";
+            appCapabilities.PlatformName = "Windows";
+            appCapabilities.AutomationName = "Windows";
 
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
             _calculatorSession = new WindowsDriver(serverUri, appCapabilities,
                 Env.InitTimeoutSec);
             _calculatorSession.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
-            _calculatorSession.LaunchApp();
         }
 
         [OneTimeTearDown]
