@@ -7,7 +7,7 @@ using OpenQA.Selenium.Appium.Windows;
 
 namespace Appium.Net.Integration.Tests.Windows
 {
-    public class ImagesComparisonTest
+    public class ImagesComparisonTests
     {
         private WindowsDriver _calculatorSession;
         protected static WebElement CalculatorResult;
@@ -19,11 +19,13 @@ namespace Appium.Net.Integration.Tests.Windows
             appCapabilities.App = "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App";
             appCapabilities.DeviceName = "WindowsPC";
             appCapabilities.PlatformName ="Windows";
+            appCapabilities.AutomationName= "Windows";
 
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
             _calculatorSession = new WindowsDriver(serverUri, appCapabilities,
                 Env.InitTimeoutSec);
             _calculatorSession.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
+            _calculatorSession.LaunchApp();
         }
 
         [OneTimeTearDown]
