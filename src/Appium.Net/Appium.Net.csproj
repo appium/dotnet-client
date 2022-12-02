@@ -33,7 +33,11 @@
     <DocumentationFile>Appium.Net.xml</DocumentationFile>
   </PropertyGroup>
 
-	<ItemGroup>
+  <PropertyGroup>
+	<LangVersion>8.0</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
     <None Include="LICENSE.txt" Pack="true" PackagePath="" />
   </ItemGroup>
 
