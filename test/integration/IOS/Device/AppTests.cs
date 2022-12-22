@@ -45,7 +45,17 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
             //Verify the expected app was activated
             Assert.DoesNotThrow(() => _driver.FindElementByAccessibilityId(IosTestAppElement));
         }
+        
+        [Test]
+        public void CanActivateAppWithTimeoutTest()
+        {
+            //Activate an app to foreground
+            Assert.DoesNotThrow(() => _driver.ActivateApp(IosTestAppBundleId, TimeSpan.FromSeconds(20)));
 
+            //Verify the expected app was activated
+            Assert.DoesNotThrow(() => _driver.FindElementById(IosTestAppBundleId));
+        }
+        
         [Test]
         public void CanActivateViaScriptAppTest()
         {
