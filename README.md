@@ -62,7 +62,7 @@ Visual studio
 ## Nuget Deployment (for maintainers)
 
 ### To Setup Nuget 
-- Download [Nuget exe](http://nuget.org/nuget.exe).
+- Download [Nuget exe](https://dist.nuget.org/win-x86-commandline/latest/nuget.exe).
 - Setup the Api Key ([see here](http://docs.nuget.org/docs/creating-packages/creating-and-publishing-a-package#api-key)).
 - `alias NuGet='mono <Nuget Path>/NuGet.exe'`
 
