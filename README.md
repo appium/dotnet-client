@@ -63,6 +63,7 @@ Visual studio
 
 ### To Setup Nuget 
 - Download [Nuget exe](http://nuget.org/nuget.exe).
+- Install the nuget.exe CLI for your preffered OS. [install NuGet CLI](https://learn.microsoft.com/en-us/nuget/install-nuget-client-tools#nugetexe-cli)
 - Setup the Api Key ([see here](http://docs.nuget.org/docs/creating-packages/creating-and-publishing-a-package#api-key)).
 - `alias NuGet='mono <Nuget Path>/NuGet.exe'`
 
