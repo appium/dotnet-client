@@ -59,10 +59,10 @@ Visual studio
 - Open with [Visual Studio](https://www.visualstudio.com/)
 - build solution
 
-## Nuget Deployment (for maintainers)
+## NuGet Deployment (for maintainers)
 
-### To Setup Nuget 
-- Download [Nuget exe](http://nuget.org/nuget.exe).
+### To Setup NuGet 
+- Download [NuGet exe](http://nuget.org/nuget.exe).
 - [install the NuGet CLI](https://learn.microsoft.com/en-us/nuget/install-nuget-client-tools#nugetexe-cli) for your preffered OS. 
 - Setup the Api Key ([see here](http://docs.nuget.org/docs/creating-packages/creating-and-publishing-a-package#api-key)).
 - `alias NuGet='mono <Nuget Path>/NuGet.exe'`
