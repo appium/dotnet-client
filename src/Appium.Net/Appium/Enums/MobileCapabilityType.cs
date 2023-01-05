@@ -61,7 +61,7 @@ namespace OpenQA.Selenium.Appium.Enums
 
         /// <summary>
         /// Unique device identifier of the connected physical device
-        /// </summary>        
+        /// </summary>
         public static readonly string Udid = "appium:udid";
 
         /// <summary>
