@@ -4,7 +4,7 @@
 //information regarding copyright ownership.
 //You may obtain a copy of the License at
 //
-///   http://www.apache.org/licenses/LICENSE-2.0
+//   http://www.apache.org/licenses/LICENSE-2.0
 //
 //Unless required by applicable law or agreed to in writing, software
 //distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,6 +13,9 @@
 //limitations under the License.
 namespace OpenQA.Selenium.Appium.Android
 {
+    /// <summary>
+    /// Some common key codes for Android Key Events.
+    /// </summary>
     public sealed class AndroidKeyCode
     {
 
@@ -452,7 +455,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// </summary>
         public static readonly int KeycodeButton_THUMBR = 107;
 
-        /// </summary>
+        /// <summary>
         /// Key code constant: X Button key. On a game controller, the X button should be either the button labeled X or the first button on the upper row of controller buttons.
         /// (0x00000063)
         /// </summary>
@@ -722,7 +725,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// </summary>
         public static readonly int Keycode_F8 = 138;
 
-        /// </summary>
+        /// <summary>
         /// Key code constant: F9 key.
         /// (0x0000008b)
         /// </summary>
@@ -1025,7 +1028,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// <summary>
         /// Key code constant: Number modifier key. Used to enter numeric symbols. This key is not Num Lock; it is more like Keycode_ALT_LEFT and is public static readonly int erpreted as an ALT key by MetaKeyKeyListener.
         /// (0x0000004e)
-        /// <summary>
+        /// </summary>
         public static readonly int Keycode_NUM = 78;
 
         /// <summary>
@@ -1145,7 +1148,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// <summary>
         /// Key code constant: Numeric keypad '-' key (for subtraction).
         /// (0x0000009c)
-        /// <summary>
+        /// </summary>
         public static readonly int KeycodeNumpad_SUBTRACT = 156;
 
         /// <summary>
