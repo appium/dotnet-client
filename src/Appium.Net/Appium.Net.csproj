@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net48;net45</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net48</TargetFrameworks>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <RootNamespace>OpenQA.Selenium</RootNamespace>
     <Company>Appium Commiters</Company>
     <Product>Dotnet-Client</Product>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Copyright>Copyright © 2022</Copyright>
+    <Copyright>Copyright © 2023</Copyright>
     <PackageProjectUrl>https://github.com/appium/dotnet-client</PackageProjectUrl>
     <RepositoryUrl>https://github.com/appium/dotnet-client</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -30,9 +30,6 @@
     <DocumentationFile>Appium.Net.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net48|AnyCPU'">
-    <DocumentationFile>Appium.Net.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net45|AnyCPU'">
     <DocumentationFile>Appium.Net.xml</DocumentationFile>
   </PropertyGroup>
 
