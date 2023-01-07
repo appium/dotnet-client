@@ -241,6 +241,12 @@ namespace OpenQA.Selenium.Appium
 
         public void ActivateApp(string appId) =>
             Execute(AppiumDriverCommand.ActivateApp, AppiumCommandExecutionHelper.PrepareArgument("appId", appId));
+        
+        public void ActivateApp(string appId, TimeSpan timeout) =>
+            Execute(AppiumDriverCommand.ActivateApp,
+                    AppiumCommandExecutionHelper.PrepareArguments(new string[] {"appId", "options"},
+                        new object[]
+                            {appId, new Dictionary<string, object>() {{"timeout", (long) timeout.TotalMilliseconds}}}));
 
         public bool TerminateApp(string appId) =>
             Convert.ToBoolean(Execute(AppiumDriverCommand.TerminateApp,
