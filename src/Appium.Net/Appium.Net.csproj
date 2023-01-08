@@ -8,7 +8,7 @@
     <Product>Appium-Dotnet-Driver</Product>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Copyright>Copyright © 2022</Copyright>
+    <Copyright>Copyright © 2023</Copyright>
     <PackageProjectUrl>https://github.com/appium/appium-dotnet-driver</PackageProjectUrl>
     <RepositoryUrl>https://github.com/appium/appium-dotnet-driver</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
