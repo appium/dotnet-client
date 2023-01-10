@@ -15,18 +15,26 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 3.1.101
+        dotnet-version: 3.1.x
 
     - name: Install dependencies
       run: dotnet restore src/Appium.Net.sln
       
     - name: Build
       run: |
-        if ("${{github.ref}}".trim() -notmatch '^refs/tags/v(\d+\.\d+\.\d+)$') {
-          exit 1
+        if ("${{github.ref}}".trim() -notmatch '^refs\/tags\/v(((0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*))(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)$') {
+          Write-Host "Failed to find a tag with a value compatible with Sementic Versioning.\nEnsure the Sementic Versioning regex above matches the tag created for the release!"; exit 1
         }
-        $version = $matches[1]
-        dotnet build src/Appium.Net.sln --no-restore --configuration Release -p:Version=$version
+        else {
+            $versionPrefix = $matches[2]
+            $dotnetBuildCmd = "dotnet build src/Appium.Net.sln --configuration Release -p:VersionPrefix=${versionPrefix}"
+            if ($matches.Count -eq 7) { 
+                $versionSuffix = $matches[6]
+                $dotnetBuildCmd += " --version-suffix ${versionSuffix}"
+                }
+            }
+        Write-Host $dotnetBuildCmd
+        Invoke-Expression $dotnetBuildCmd
         
     - name: Deploy to nuget
       run: dotnet nuget push **/*.nupkg --api-key ${{ secrets.NUGET_DEPLOY_KEY }} --source https://api.nuget.org/v3/index.json
