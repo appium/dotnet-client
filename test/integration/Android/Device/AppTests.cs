@@ -48,10 +48,10 @@ namespace Appium.Net.Integration.Tests.Android.Device.App
         public void CanActivateAppWithTimeoutTest()
         {
             //Activate an app to foreground
-            Assert.DoesNotThrow(() => _driver.ActivateApp(IntentAppPackageName, TimeSpan.FromSeconds(20)));
+            Assert.DoesNotThrow(() => _driver.ActivateApp(ApiDemosPackageName, TimeSpan.FromSeconds(20)));
 
             //Verify the expected app was activated
-            Assert.DoesNotThrow(() => _driver.FindElement(MobileBy.Id(IntentAppElement)));
+            Assert.DoesNotThrow(() => _driver.FindElement(MobileBy.AccessibilityId(ApiDemoElement)));
         }
         [Test]
         public void CanActivateAppFromBackgroundTest()
