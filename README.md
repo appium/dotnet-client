@@ -16,10 +16,11 @@ all the functionalities of the regular driver, but add Appium specific methods o
 > In case you would like to use this client with Selenium 4.0 and above, please use the latest beta version(v5.0.0). <br/>
 > We are well aware this project is not actively maintained, therefore any contributors are more than welcomed to assist with this project.
 
-## Appium server compatibility  
+## Appium server compatibility for v5.x 
 
-In case you are using the latest beta version v5.x, please be aware you will have to upgrade your appium server to 2.x. due to a breaking change on the default server base path. <br/>
-Regardless it's highly recommended you move to appium 2.x since appium 1.x is no longet maintained. <br/>
+In case you are using the latest beta client v5.x please be aware you will either have to upgrade your appium server to 2.x or add the base-path argument:
+`appium --base-path=/wd/hub`, due to a breaking change on the default server base path. <br/>
+Regardless, it's highly recommended you move to appium 2.x since appium 1.x is no longer maintained. <br/>
 For more details about how to migrate to 2.x, see the following link : [appium 2.x migrating](https://appium.github.io/appium/docs/en/2.0/guides/migrating-1-to-2/)
 
 ## NuGet
