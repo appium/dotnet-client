@@ -8,6 +8,13 @@
 This driver is an extension of the [Selenium](http://docs.seleniumhq.org/) C# client. It has 
 all the functionalities of the regular driver, but add Appium specific methods on top of this.
 
+## Appium server compatibility for v5.x 
+
+In case you are using the latest beta client v5.x please be aware you will either have to upgrade your appium server to 2.x or add the base-path argument:
+`appium --base-path=/wd/hub`, due to a breaking change on the default server base path. <br/>
+Regardless, it's highly recommended you move to appium 2.x since appium 1.x is no longer maintained. <br/>
+For more details about how to migrate to 2.x, see the following link : [appium 2.x migrating](https://appium.github.io/appium/docs/en/2.0/guides/migrating-1-to-2/)
+
 ## NuGet
 
 NuGet Package: [](http://www.nuget.org/packages/Appium.WebDriver/)
