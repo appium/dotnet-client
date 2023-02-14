@@ -1,10 +1,9 @@
-﻿using System;
-using System.Text.RegularExpressions;
-using Appium.Net.Integration.Tests.helpers;
+﻿using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
-using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Enums;
+using System;
+using System.Text.RegularExpressions;
 
 namespace Appium.Net.Integration.Tests.Android
 {
