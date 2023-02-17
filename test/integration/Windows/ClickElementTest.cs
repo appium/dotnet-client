@@ -29,6 +29,7 @@ namespace Appium.Net.Integration.Tests.Windows
         public void BeforeAll()
         {
             var appCapabilities = new AppiumOptions();
+            appCapabilities.AutomationName = "Windows";
             appCapabilities.App = "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App";
             appCapabilities.DeviceName = "WindowsPC";
             appCapabilities.PlatformName = "Windows";
