@@ -41,7 +41,7 @@ namespace Appium.Net.Integration.Tests.Windows
 
             _calculatorSession.FindElement(MobileBy.Name("Clear")).Click();
             _calculatorSession.FindElement(MobileBy.Name("Seven")).Click();
-            CalculatorResult = _calculatorSession.FindElement(MobileBy.Name("Display is 7")) as WebElement;
+            CalculatorResult = _calculatorSession.FindElement(MobileBy.Name("Display is 7"));
             Assert.IsNotNull(CalculatorResult);
         }
 
