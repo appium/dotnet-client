@@ -16,6 +16,7 @@ namespace Appium.Net.Integration.Tests.Android.Device.App
         {
             _androidOptions = new AppiumOptions();
             _androidOptions.BrowserName = "Chrome";
+            _androidOptions.AutomationName = "UiAutomator2";
 
             _driver = new AndroidDriver(
                 Env.ServerIsLocal() ? AppiumServers.LocalServiceUri : AppiumServers.RemoteServerUri,
@@ -26,7 +27,7 @@ namespace Appium.Net.Integration.Tests.Android.Device.App
         [OneTimeTearDown]
         public void TearDown()
         {
-            _driver.Dispose();
+            _driver?.Dispose();
         }
 
         [Test]
