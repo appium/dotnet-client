@@ -43,6 +43,7 @@ namespace Appium.Net.Integration.Tests.Windows
                     AppiumOptions appCapabilities = new AppiumOptions();
                     appCapabilities.App = StickyNotesAppId;
                     appCapabilities.DeviceName = "WindowsPC";
+                    appCapabilities.AutomationName = "Windows";
                     session = new WindowsDriver(serverUri, appCapabilities);
                 }
                 catch
@@ -53,6 +54,7 @@ namespace Appium.Net.Integration.Tests.Windows
                     AppiumOptions desktopCapabilities = new AppiumOptions();
                     desktopCapabilities.App = "Root";
                     desktopCapabilities.DeviceName = "WindowsPC";
+                    desktopCapabilities.AutomationName = "Windows";
                     var desktopSession = new WindowsDriver(serverUri, desktopCapabilities);
 
                     var StickyNotesTopLevelWindow = desktopSession.FindElement(MobileBy.ClassName("Modern_Sticky_Top_Window"));
