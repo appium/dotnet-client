@@ -178,10 +178,11 @@ namespace OpenQA.Selenium.Appium
         public void PushFile(string pathOnDevice, FileInfo file) =>
             AppiumCommandExecutionHelper.PushFile(this, pathOnDevice, file);
 
+        [Obsolete("Legacy app management helpers are deprecated, please use ActivateApp instead")]
         public void LaunchApp() => ((IExecuteMethod)this).Execute(AppiumDriverCommand.LaunchApp);
-
+        [Obsolete("Legacy app management helpers are deprecated, please use TerminateApp instead")]
         public void CloseApp() => ((IExecuteMethod)this).Execute(AppiumDriverCommand.CloseApp);
-
+        [Obsolete("Legacy app management helpers are deprecated , please use W3C actions instead")]
         public void ResetApp() => ((IExecuteMethod)this).Execute(AppiumDriverCommand.ResetApp);
 
         public void FingerPrint(int fingerprintId) =>

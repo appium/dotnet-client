@@ -141,5 +141,19 @@ namespace OpenQA.Selenium.Appium.Windows
 
         public void LongPressKeyCode(int keyCode, int metastate = -1) =>
             AppiumCommandExecutionHelper.LongPressKeyCode(this, keyCode, metastate);
+
+        #region App management
+
+        public new void LaunchApp()
+        {
+            ((IExecuteMethod)this).Execute(AppiumDriverCommand.LaunchApp);
+        }
+
+        public new void CloseApp()
+        {
+            ((IExecuteMethod)this).Execute(AppiumDriverCommand.CloseApp);
+        }
+
+        #endregion App management
     }
 }
