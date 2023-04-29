@@ -114,12 +114,18 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/getPerformanceData"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GetPerformanceDataTypes,
                 "/session/{sessionId}/appium/performanceData/types"),
+
+            #region (Deprecated) legacy app management
+
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.LaunchApp,
                 "/session/{sessionId}/appium/app/launch"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.CloseApp,
                 "/session/{sessionId}/appium/app/close"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.ResetApp,
                 "/session/{sessionId}/appium/app/reset"),
+
+            #endregion (Deprecated) legacy app management
+
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.BackgroundApp,
                 "/session/{sessionId}/appium/app/background"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.EndTestCoverage,
@@ -144,8 +150,6 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/device/finger_print"),
 
             #endregion Driver Commands
-
-            
             
             #region (Deprecated) Touch Commands 
             // TODO: Remove this region once we deprecate the touch actions
