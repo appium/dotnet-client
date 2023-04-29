@@ -6,6 +6,8 @@
 ![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Appium.WebDriver)
 [![Build Status](https://dev.azure.com/AppiumCI/dotnet-client/_apis/build/status/appium.dotnet-client?branchName=release%2F5.0.0)](https://dev.azure.com/AppiumCI/dotnet-client/_build/latest?definitionId=68&branchName=release%2F5.0.0)
 
+[![Build and deploy NuGet package](https://github.com/appium/dotnet-client/actions/workflows/release-nuget.yml/badge.svg)](https://github.com/appium/dotnet-client/actions/workflows/release-nuget.yml)
+
 
 This driver is an extension of the [Selenium](http://docs.seleniumhq.org/) C# client. It has 
 all the functionalities of the regular driver, but add Appium specific methods on top of this.
