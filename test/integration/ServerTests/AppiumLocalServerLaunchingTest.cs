@@ -201,6 +201,22 @@ namespace Appium.Net.Integration.Tests.ServerTests
             }
         }
 
+        [Test]
+        public void CheckAbilityToStartServiceUsingPortAndBasePathOptions()
+        {
+            AppiumLocalService service = null;
+            var arguments = new OptionCollector().AddArguments(GeneralOptionList.BasePath("/wd/hub"));
+            try
+            {
+                service = new AppiumServiceBuilder().UsingPort(4723).WithArguments(arguments).Build();
+                service.Start();
+                Assert.IsTrue(service.IsRunning);
+            }
+            finally
+            {
+                service?.Dispose();
+            }
+        }
 
         [Test]
         public void CheckAbilityToStartServiceUsingCapabilities()
