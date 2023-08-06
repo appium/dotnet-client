@@ -12,8 +12,10 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+using Newtonsoft.Json;
 using OpenQA.Selenium.Remote;
 using System;
+using System.Collections.Generic;
 
 namespace OpenQA.Selenium.Appium.Service
 {
@@ -23,6 +25,8 @@ namespace OpenQA.Selenium.Appium.Service
         private ICommandExecutor RealExecutor;
         private bool isDisposed;
         private const string IdempotencyHeader = "X-Idempotency-Key";
+
+        private TimeSpan CommandTimeout;
 
         private static ICommandExecutor CreateRealExecutor(Uri remoteAddress, TimeSpan commandTimeout)
         {
@@ -37,12 +41,14 @@ namespace OpenQA.Selenium.Appium.Service
         internal AppiumCommandExecutor(Uri url, TimeSpan timeForTheServerResponding)
             : this(CreateRealExecutor(url, timeForTheServerResponding))
         {
+            CommandTimeout = timeForTheServerResponding;
             Service = null;
         }
 
         internal AppiumCommandExecutor(AppiumLocalService service, TimeSpan timeForTheServerResponding)
             : this(CreateRealExecutor(service.ServiceUrl, timeForTheServerResponding))
         {
+            CommandTimeout = timeForTheServerResponding;
             Service = service;
         }
 
@@ -56,9 +62,15 @@ namespace OpenQA.Selenium.Appium.Service
                 {
                     Service?.Start();
                     RealExecutor = ModifyNewSessionHttpRequestHeader(RealExecutor);
+
+                    result = RealExecutor.Execute(commandToExecute);
+                    RealExecutor = UpdateAsDirectConnectURL(result.ToString(), CommandTimeout);
+                }
+                else
+                {
+                    result = RealExecutor.Execute(commandToExecute);
                 }
 
-                result = RealExecutor.Execute(commandToExecute);
                 return result;
             }
             catch (Exception e)
@@ -89,10 +101,28 @@ namespace OpenQA.Selenium.Appium.Service
         {
             if (commandExecutor == null) throw new ArgumentNullException(nameof(commandExecutor));
             var modifiedCommandExecutor = commandExecutor as HttpCommandExecutor;
+            
             modifiedCommandExecutor.SendingRemoteHttpRequest += (sender, args) =>
                     args.AddHeader(IdempotencyHeader, Guid.NewGuid().ToString());
+
             return modifiedCommandExecutor;
         }
+
+        private ICommandExecutor UpdateAsDirectConnectURL(string responseBody, TimeSpan commandTimeout)
+        {
+
+            Console.WriteLine("====responseBody==");
+            Console.WriteLine(responseBody);
+
+            //Dictionary<string, string> newSessionResponse = JsonConvert.DeserializeObject<Dictionary<string, string>>(responseBody);
+            Console.WriteLine("===newSessionResponse===");
+            //Console.WriteLine(newSessionResponse);
+
+            var url = new Uri("https://localhost");
+
+            return new HttpCommandExecutor(url, commandTimeout);
+        }
+
 
         public void Dispose() => Dispose(true);
 
