@@ -64,7 +64,10 @@ namespace OpenQA.Selenium.Appium.Service
                     RealExecutor = ModifyNewSessionHttpRequestHeader(RealExecutor);
 
                     result = RealExecutor.Execute(commandToExecute);
-                    RealExecutor = UpdateAsDirectConnectURL(result.ToString(), CommandTimeout);
+                    var enabled = false;
+                    if (enabled == true) {
+                        RealExecutor = UpdateAsDirectConnectURL(result, CommandTimeout);
+                    }
                 }
                 else
                 {
@@ -108,18 +111,23 @@ namespace OpenQA.Selenium.Appium.Service
             return modifiedCommandExecutor;
         }
 
-        private ICommandExecutor UpdateAsDirectConnectURL(string responseBody, TimeSpan commandTimeout)
+        private ICommandExecutor UpdateAsDirectConnectURL(Response response, TimeSpan commandTimeout)
         {
 
-            Console.WriteLine("====responseBody==");
-            Console.WriteLine(responseBody);
+            System.Diagnostics.Debug.WriteLine("===response value==");
+
+            ;
+            System.Diagnostics.Debug.WriteLine((((Dictionary<string, object>)response.Value)["appium:directConnectHost"]).ToString());
 
             //Dictionary<string, string> newSessionResponse = JsonConvert.DeserializeObject<Dictionary<string, string>>(responseBody);
-            Console.WriteLine("===newSessionResponse===");
+            System.Diagnostics.Debug.WriteLine("===newSessionResponse===");
             //Console.WriteLine(newSessionResponse);
 
-            var url = new Uri("https://localhost");
-
+            var url = new Uri(
+                (((Dictionary<string, object>)response.Value)["appium:directConnectProtocol"]).ToString() + "://"
+                + (((Dictionary<string, object>)response.Value)["appium:directConnectHost"]).ToString() + ":" + (((Dictionary<string, object>)response.Value)["appium:directConnectPort"]).ToString()
+                + (((Dictionary<string, object>)response.Value)["appium:directConnectPath"]).ToString()
+            );
             return new HttpCommandExecutor(url, commandTimeout);
         }
 
