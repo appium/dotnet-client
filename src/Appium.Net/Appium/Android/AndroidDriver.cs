@@ -128,23 +128,23 @@ namespace OpenQA.Selenium.Appium.Android
         }
 
 
-        public AndroidDriver(Uri remoteAddress, DriverOptions driverOptions, bool isDirectConnectEnabled)
-            : base(remoteAddress, SetPlatformToCapabilities(driverOptions, Platform), isDirectConnectEnabled)
+        public AndroidDriver(Uri remoteAddress, DriverOptions driverOptions, AppiumClientConfig clientConfig)
+            : base(remoteAddress, SetPlatformToCapabilities(driverOptions, Platform), clientConfig)
         {
         }
 
-        public AndroidDriver(AppiumLocalService service, DriverOptions driverOptions, bool isDirectConnectEnabled)
-            : base(service, SetPlatformToCapabilities(driverOptions, Platform), isDirectConnectEnabled)
+        public AndroidDriver(AppiumLocalService service, DriverOptions driverOptions, AppiumClientConfig clientConfig)
+            : base(service, SetPlatformToCapabilities(driverOptions, Platform), clientConfig)
         {
         }
 
-        public AndroidDriver(Uri remoteAddress, DriverOptions driverOptions, TimeSpan commandTimeout, bool isDirectConnectEnabled)
-            : base(remoteAddress, SetPlatformToCapabilities(driverOptions, Platform), commandTimeout, isDirectConnectEnabled)
+        public AndroidDriver(Uri remoteAddress, DriverOptions driverOptions, TimeSpan commandTimeout, AppiumClientConfig clientConfig)
+            : base(remoteAddress, SetPlatformToCapabilities(driverOptions, Platform), commandTimeout, clientConfig)
         {
         }
 
-        public AndroidDriver(AppiumLocalService service, DriverOptions driverOptions, TimeSpan commandTimeout, bool isDirectConnectEnabled)
-            : base(service, SetPlatformToCapabilities(driverOptions, Platform), commandTimeout, isDirectConnectEnabled)
+        public AndroidDriver(AppiumLocalService service, DriverOptions driverOptions, TimeSpan commandTimeout, AppiumClientConfig clientConfig)
+            : base(service, SetPlatformToCapabilities(driverOptions, Platform), commandTimeout, clientConfig)
         {
         }
 

@@ -19,54 +19,13 @@ using System.Collections.Generic;
 
 namespace OpenQA.Selenium.Appium.Service
 {
-    public class DirectConnect
-    {
-        private const string DIRECT_CONNECT_PROTOCOL = "directConnectProtocol";
-        private const string DIRECT_CONNECT_HOST = "directConnectHost";
-        private const string DIRECT_CONNECT_PORT = "directConnectPort";
-        private const string DIRECT_CONNECT_PATH = "directConnectPath";
-
-        private readonly string Protocol;
-        private readonly string Host;
-        private readonly string Port;
-        private readonly string Path;
-
-        internal DirectConnect(Response response)
-        {
-
-            this.Protocol = GetDirectConnectValue((Dictionary<string, object>)response.Value, DIRECT_CONNECT_PROTOCOL);
-            this.Host = GetDirectConnectValue((Dictionary<string, object>)response.Value, DIRECT_CONNECT_HOST);
-            this.Port = GetDirectConnectValue((Dictionary<string, object>)response.Value, DIRECT_CONNECT_PORT);
-            this.Path = GetDirectConnectValue((Dictionary<string, object>)response.Value, DIRECT_CONNECT_PATH);
-        }
-
-        public Uri GetUri() {
-            if (this.Protocol == null || this.Host == null || this.Port == null || this.Path == null) {
-                return null;
-            }
-            return new Uri(this.Protocol + "://" + this.Host + ":" + this.Port + this.Path);
-        }
-
-        internal string GetDirectConnectValue(Dictionary<string, object> value, string keyName)
-        {
-            if (value.ContainsKey("appium:" + keyName))
-            {
-                return value[keyName].ToString();
-            }
-
-            if (value.ContainsKey(keyName)) {
-                return value[keyName].ToString();
-            }
-            return null;
-        }
-    }
     internal class AppiumCommandExecutor : ICommandExecutor
     {
         private readonly AppiumLocalService Service;
         private ICommandExecutor RealExecutor;
         private bool isDisposed;
         private const string IdempotencyHeader = "X-Idempotency-Key";
-        private bool IsDirectConnectEnabled;
+        private AppiumClientConfig ClientConfig;
 
         private TimeSpan CommandTimeout;
 
@@ -80,20 +39,20 @@ namespace OpenQA.Selenium.Appium.Service
             RealExecutor = realExecutor;
         }
 
-        internal AppiumCommandExecutor(Uri url, TimeSpan timeForTheServerResponding, bool isDirectConnectEnabled)
+        internal AppiumCommandExecutor(Uri url, TimeSpan timeForTheServerResponding, AppiumClientConfig clientConfig)
             : this(CreateRealExecutor(url, timeForTheServerResponding))
         {
             CommandTimeout = timeForTheServerResponding;
             Service = null;
-            IsDirectConnectEnabled = isDirectConnectEnabled;
+            ClientConfig = clientConfig;
         }
 
-        internal AppiumCommandExecutor(AppiumLocalService service, TimeSpan timeForTheServerResponding, bool isDirectConnectEnabled)
+        internal AppiumCommandExecutor(AppiumLocalService service, TimeSpan timeForTheServerResponding, AppiumClientConfig clientConfig)
             : this(CreateRealExecutor(service.ServiceUrl, timeForTheServerResponding))
         {
             CommandTimeout = timeForTheServerResponding;
             Service = service;
-            IsDirectConnectEnabled = isDirectConnectEnabled;
+            ClientConfig = clientConfig;
         }
 
         public Response Execute(Command commandToExecute)
@@ -108,7 +67,7 @@ namespace OpenQA.Selenium.Appium.Service
                     RealExecutor = ModifyNewSessionHttpRequestHeader(RealExecutor);
 
                     result = RealExecutor.Execute(commandToExecute);
-                    if (IsDirectConnectEnabled == true) {
+                    if (ClientConfig.DirectConnect == true) {
                         var newExecutor = UpdateAsDirectConnectURL(result, CommandTimeout);
                         if (newExecutor != null) {
                             RealExecutor = newExecutor;

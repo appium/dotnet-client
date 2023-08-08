@@ -75,33 +75,33 @@ namespace OpenQA.Selenium.Appium
         }
 
         public AppiumDriver(Uri remoteAddress, ICapabilities appiumOptions, TimeSpan commandTimeout)
-            : this(remoteAddress, appiumOptions, DefaultCommandTimeout, false)
+            : this(remoteAddress, appiumOptions, DefaultCommandTimeout, AppiumClientConfig.DefaultConfig())
         {
         }
 
         public AppiumDriver(AppiumLocalService service, ICapabilities appiumOptions, TimeSpan commandTimeout)
-            : this(service, appiumOptions, DefaultCommandTimeout, false)
+            : this(service, appiumOptions, DefaultCommandTimeout, AppiumClientConfig.DefaultConfig())
         {
         }
 
 
-        public AppiumDriver(Uri remoteAddress, ICapabilities appiumOptions, bool isDirectConnectEnabled)
-            : this(new AppiumCommandExecutor(remoteAddress, DefaultCommandTimeout, isDirectConnectEnabled), appiumOptions)
+        public AppiumDriver(Uri remoteAddress, ICapabilities appiumOptions, AppiumClientConfig clientConfig)
+            : this(new AppiumCommandExecutor(remoteAddress, DefaultCommandTimeout, clientConfig), appiumOptions)
         {
         }
 
-        public AppiumDriver(AppiumLocalService service, ICapabilities appiumOptions, bool isDirectConnectEnabled)
-            : this(new AppiumCommandExecutor(service, DefaultCommandTimeout, isDirectConnectEnabled), appiumOptions)
+        public AppiumDriver(AppiumLocalService service, ICapabilities appiumOptions, AppiumClientConfig clientConfig)
+            : this(new AppiumCommandExecutor(service, DefaultCommandTimeout, clientConfig), appiumOptions)
         {
         }
 
-        public AppiumDriver(Uri remoteAddress, ICapabilities appiumOptions, TimeSpan commandTimeout, bool isDirectConnectEnabled)
-            : this(new AppiumCommandExecutor(remoteAddress, commandTimeout, isDirectConnectEnabled), appiumOptions)
+        public AppiumDriver(Uri remoteAddress, ICapabilities appiumOptions, TimeSpan commandTimeout, AppiumClientConfig clientConfig)
+            : this(new AppiumCommandExecutor(remoteAddress, commandTimeout, clientConfig), appiumOptions)
         {
         }
 
-        public AppiumDriver(AppiumLocalService service, ICapabilities appiumOptions, TimeSpan commandTimeout, bool isDirectConnectEnabled)
-            : this(new AppiumCommandExecutor(service, commandTimeout, isDirectConnectEnabled), appiumOptions)
+        public AppiumDriver(AppiumLocalService service, ICapabilities appiumOptions, TimeSpan commandTimeout, AppiumClientConfig clientConfig)
+            : this(new AppiumCommandExecutor(service, commandTimeout, clientConfig), appiumOptions)
         {
         }
 

@@ -1,0 +1,63 @@
+﻿//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//See the NOTICE file distributed with this work for additional
+//information regarding copyright ownership.
+//You may obtain a copy of the License at
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
+
+using Newtonsoft.Json;
+using OpenQA.Selenium.Remote;
+using System;
+using System.Collections.Generic;
+
+namespace OpenQA.Selenium.Appium.Service
+{
+    internal class DirectConnect
+    {
+        private const string DIRECT_CONNECT_PROTOCOL = "directConnectProtocol";
+        private const string DIRECT_CONNECT_HOST = "directConnectHost";
+        private const string DIRECT_CONNECT_PORT = "directConnectPort";
+        private const string DIRECT_CONNECT_PATH = "directConnectPath";
+
+        private readonly string Protocol;
+        private readonly string Host;
+        private readonly string Port;
+        private readonly string Path;
+
+        internal DirectConnect(Response response)
+        {
+
+            this.Protocol = GetDirectConnectValue((Dictionary<string, object>)response.Value, DIRECT_CONNECT_PROTOCOL);
+            this.Host = GetDirectConnectValue((Dictionary<string, object>)response.Value, DIRECT_CONNECT_HOST);
+            this.Port = GetDirectConnectValue((Dictionary<string, object>)response.Value, DIRECT_CONNECT_PORT);
+            this.Path = GetDirectConnectValue((Dictionary<string, object>)response.Value, DIRECT_CONNECT_PATH);
+        }
+
+        public Uri GetUri() {
+            if (this.Protocol == null || this.Host == null || this.Port == null || this.Path == null) {
+                return null;
+            }
+            return new Uri(this.Protocol + "://" + this.Host + ":" + this.Port + this.Path);
+        }
+
+        internal string GetDirectConnectValue(Dictionary<string, object> value, string keyName)
+        {
+            if (value.ContainsKey("appium:" + keyName))
+            {
+                return value[keyName].ToString();
+            }
+
+            if (value.ContainsKey(keyName)) {
+                return value[keyName].ToString();
+            }
+            return null;
+        }
+    }
+}
