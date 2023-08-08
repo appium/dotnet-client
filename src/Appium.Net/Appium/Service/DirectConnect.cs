@@ -29,6 +29,10 @@ namespace OpenQA.Selenium.Appium.Service
         private readonly string Port;
         private readonly string Path;
 
+
+        /// <summary>
+        /// Create a direct connect instance from the given received response.
+        /// </summary>
         public DirectConnect(Response response)
         {
 
@@ -38,12 +42,16 @@ namespace OpenQA.Selenium.Appium.Service
             this.Path = GetDirectConnectValue((Dictionary<string, object>)response.Value, DIRECT_CONNECT_PATH);
         }
 
+        /// <summary>
+        ///  Returns a URL instance built with members in the DirectConnect instance.
+        /// </summary>
+        /// <returns>A Uri instance</returns>
         public Uri GetUri() {
             if (this.Protocol == null || this.Host == null || this.Port == null || this.Path == null) {
                 return null;
             }
 
-            if (this.Protocol == "http")
+            if (this.Protocol != "https")
             {
                 return null;
             }
@@ -51,7 +59,7 @@ namespace OpenQA.Selenium.Appium.Service
             return new Uri(this.Protocol + "://" + this.Host + ":" + this.Port + this.Path);
         }
 
-        internal string GetDirectConnectValue(Dictionary<string, object> value, string keyName)
+        private string GetDirectConnectValue(Dictionary<string, object> value, string keyName)
         {
             if (value.ContainsKey("appium:" + keyName))
             {

@@ -68,11 +68,10 @@ namespace OpenQA.Selenium.Appium.Service
 
                     result = RealExecutor.Execute(commandToExecute);
                     if (ClientConfig.DirectConnect == true) {
-                        var newExecutor = UpdateAsDirectConnectURL(result, CommandTimeout);
+                        var newExecutor = GetNewExecutorWithDirectConnect(result, CommandTimeout);
                         if (newExecutor != null) {
                             RealExecutor = newExecutor;
                         }
-                        
                     }
                 }
                 else
@@ -117,7 +116,10 @@ namespace OpenQA.Selenium.Appium.Service
             return modifiedCommandExecutor;
         }
 
-        private ICommandExecutor UpdateAsDirectConnectURL(Response response, TimeSpan commandTimeout)
+        /// <summary>
+        /// Returns a new command executor if the responsed had directConnect.
+        /// </summary>
+        private ICommandExecutor GetNewExecutorWithDirectConnect(Response response, TimeSpan commandTimeout)
         {
             var newUri = new DirectConnect(response).GetUri();
             if (newUri != null) {
@@ -126,7 +128,6 @@ namespace OpenQA.Selenium.Appium.Service
 
             return null;
         }
-
 
         public void Dispose() => Dispose(true);
 
