@@ -127,6 +127,28 @@ namespace OpenQA.Selenium.Appium.Android
         {
         }
 
+
+        public AndroidDriver(Uri remoteAddress, DriverOptions driverOptions, bool isDirectConnectEnabled)
+            : base(remoteAddress, SetPlatformToCapabilities(driverOptions, Platform), isDirectConnectEnabled)
+        {
+        }
+
+        public AndroidDriver(AppiumLocalService service, DriverOptions driverOptions, bool isDirectConnectEnabled)
+            : base(service, SetPlatformToCapabilities(driverOptions, Platform), isDirectConnectEnabled)
+        {
+        }
+
+        public AndroidDriver(Uri remoteAddress, DriverOptions driverOptions, TimeSpan commandTimeout, bool isDirectConnectEnabled)
+            : base(remoteAddress, SetPlatformToCapabilities(driverOptions, Platform), commandTimeout, isDirectConnectEnabled)
+        {
+        }
+
+        public AndroidDriver(AppiumLocalService service, DriverOptions driverOptions, TimeSpan commandTimeout, bool isDirectConnectEnabled)
+            : base(service, SetPlatformToCapabilities(driverOptions, Platform), commandTimeout, isDirectConnectEnabled)
+        {
+        }
+
+
         public void StartActivity(string appPackage, string appActivity, string appWaitPackage = "",
             string appWaitActivity = "", bool stopApp = true) =>
             AndroidCommandExecutionHelper.StartActivity(this, appPackage, appActivity, appWaitPackage, appWaitActivity,

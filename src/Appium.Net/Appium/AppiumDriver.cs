@@ -75,14 +75,36 @@ namespace OpenQA.Selenium.Appium
         }
 
         public AppiumDriver(Uri remoteAddress, ICapabilities appiumOptions, TimeSpan commandTimeout)
-            : this(new AppiumCommandExecutor(remoteAddress, commandTimeout), appiumOptions)
+            : this(remoteAddress, appiumOptions, DefaultCommandTimeout, false)
         {
         }
 
         public AppiumDriver(AppiumLocalService service, ICapabilities appiumOptions, TimeSpan commandTimeout)
-            : this(new AppiumCommandExecutor(service, commandTimeout), appiumOptions)
+            : this(service, appiumOptions, DefaultCommandTimeout, false)
         {
         }
+
+
+        public AppiumDriver(Uri remoteAddress, ICapabilities appiumOptions, bool isDirectConnectEnabled)
+            : this(new AppiumCommandExecutor(remoteAddress, DefaultCommandTimeout, isDirectConnectEnabled), appiumOptions)
+        {
+        }
+
+        public AppiumDriver(AppiumLocalService service, ICapabilities appiumOptions, bool isDirectConnectEnabled)
+            : this(new AppiumCommandExecutor(service, DefaultCommandTimeout, isDirectConnectEnabled), appiumOptions)
+        {
+        }
+
+        public AppiumDriver(Uri remoteAddress, ICapabilities appiumOptions, TimeSpan commandTimeout, bool isDirectConnectEnabled)
+            : this(new AppiumCommandExecutor(remoteAddress, commandTimeout, isDirectConnectEnabled), appiumOptions)
+        {
+        }
+
+        public AppiumDriver(AppiumLocalService service, ICapabilities appiumOptions, TimeSpan commandTimeout, bool isDirectConnectEnabled)
+            : this(new AppiumCommandExecutor(service, commandTimeout, isDirectConnectEnabled), appiumOptions)
+        {
+        }
+
 
         #endregion Constructors
 
