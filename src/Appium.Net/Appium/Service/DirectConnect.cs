@@ -12,14 +12,12 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-using Newtonsoft.Json;
-using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
 
 namespace OpenQA.Selenium.Appium.Service
 {
-    internal class DirectConnect
+    public class DirectConnect
     {
         private const string DIRECT_CONNECT_PROTOCOL = "directConnectProtocol";
         private const string DIRECT_CONNECT_HOST = "directConnectHost";
@@ -31,7 +29,7 @@ namespace OpenQA.Selenium.Appium.Service
         private readonly string Port;
         private readonly string Path;
 
-        internal DirectConnect(Response response)
+        public DirectConnect(Response response)
         {
 
             this.Protocol = GetDirectConnectValue((Dictionary<string, object>)response.Value, DIRECT_CONNECT_PROTOCOL);
@@ -44,6 +42,12 @@ namespace OpenQA.Selenium.Appium.Service
             if (this.Protocol == null || this.Host == null || this.Port == null || this.Path == null) {
                 return null;
             }
+
+            if (this.Protocol == "http")
+            {
+                return null;
+            }
+
             return new Uri(this.Protocol + "://" + this.Host + ":" + this.Port + this.Path);
         }
 
@@ -51,12 +55,13 @@ namespace OpenQA.Selenium.Appium.Service
         {
             if (value.ContainsKey("appium:" + keyName))
             {
-                return value[keyName].ToString();
+                return value["appium:" + keyName].ToString();
             }
 
             if (value.ContainsKey(keyName)) {
                 return value[keyName].ToString();
             }
+
             return null;
         }
     }
