@@ -24,8 +24,6 @@ namespace Appium.Net.Integration.Tests.ServerTests
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            byte[] bytes = null;
-
             var isWindows = Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows);
             var isMacOs = Platform.CurrentPlatform.IsPlatformType(PlatformType.Mac);
             var isLinux = Platform.CurrentPlatform.IsPlatformType(PlatformType.Linux);
@@ -43,6 +41,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
             }
             Console.WriteLine(_testIp);
 
+            byte[] bytes;
             if (isWindows)
             {
                 bytes = Resources.PathToWindowsNode;
