@@ -46,19 +46,19 @@ namespace Appium.Net.Integration.Tests.ServerTests
             if (isWindows)
             {
                 bytes = Resources.PathToWindowsNode;
-                _pathToCustomizedAppiumJs = System.Text.Encoding.UTF8.GetString(bytes);
+                _pathToCustomizedAppiumJs = Encoding.UTF8.GetString(bytes);
                 return;
             }
             if (isMacOs)
             {
                 bytes = Resources.PathToMacOSNode;
-                _pathToCustomizedAppiumJs = System.Text.Encoding.UTF8.GetString(bytes);
+                _pathToCustomizedAppiumJs = Encoding.UTF8.GetString(bytes);
                 return;
             }
             if (isLinux)
             {
                 bytes = Resources.PathToLinuxNode;
-                _pathToCustomizedAppiumJs = System.Text.Encoding.UTF8.GetString(bytes);
+                _pathToCustomizedAppiumJs = Encoding.UTF8.GetString(bytes);
                 return;
             }
         }
