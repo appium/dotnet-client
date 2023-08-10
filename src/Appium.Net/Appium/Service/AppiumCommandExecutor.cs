@@ -25,6 +25,7 @@ namespace OpenQA.Selenium.Appium.Service
         private ICommandExecutor RealExecutor;
         private bool isDisposed;
         private const string IdempotencyHeader = "X-Idempotency-Key";
+        private const int MaxRetryAttempts = 3;
         private AppiumClientConfig ClientConfig;
 
         private TimeSpan CommandTimeout;
@@ -59,13 +60,44 @@ namespace OpenQA.Selenium.Appium.Service
         {
             Response result = null;
 
-            try
+            for (int attempt = 1; attempt <= MaxRetryAttempts; attempt++)
             {
-                if (commandToExecute.Name == DriverCommand.NewSession)
+                try
                 {
-                    Service?.Start();
-                    RealExecutor = ModifyNewSessionHttpRequestHeader(RealExecutor);
+                    HandleNewSessionCommand(commandToExecute);
 
+                    result = RealExecutor.Execute(commandToExecute);
+
+                    HandleCommandCompletion(commandToExecute, result);
+
+                    if (result.Status == WebDriverResult.Success)
+                    {
+                        return result;
+                    }
+                }
+                catch (Exception)
+                {
+                    HandleCommandException(commandToExecute);
+                    throw;
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Handles a new session command.
+        /// If the command is a NewSession command, it starts the service if not already started,
+        /// and modifies the HTTP request header of the real executor for a new session.
+        /// </summary>
+        /// <param name="command">The command to handle.</param>
+        private void HandleNewSessionCommand(Command command)
+        {
+            if (command.Name == DriverCommand.NewSession)
+            {
+                Service?.Start();
+                RealExecutor = ModifyNewSessionHttpRequestHeader(RealExecutor);
+            }
+        }
                     result = RealExecutor.Execute(commandToExecute);
                     RealExecutor = UpdateExecutor(result, RealExecutor);
                 }
@@ -83,20 +115,37 @@ namespace OpenQA.Selenium.Appium.Service
                     Service?.Dispose();
                 }
 
-                throw;
-            }
-            finally
+        /// <summary>
+        /// Handles the completion of a command.
+        /// If the result indicates a failure for a NewSession command, disposes the resources.
+        /// If the command is a Quit command, disposes the resources.
+        /// </summary>
+        /// <param name="command">The command that was executed.</param>
+        /// <param name="result">The result of the command execution.</param>
+        private void HandleCommandCompletion(Command command, Response result)
+        {
+            if (result != null && result.Status != WebDriverResult.Success &&
+                command.Name == DriverCommand.NewSession)
             {
-                if (result != null && result.Status != WebDriverResult.Success &&
-                    commandToExecute.Name == DriverCommand.NewSession)
-                {
-                    Dispose();
-                }
+                Dispose();
+            }
 
-                if (commandToExecute.Name == DriverCommand.Quit)
-                {
-                    Dispose();
-                }
+            if (command.Name == DriverCommand.Quit)
+            {
+                Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Handles exceptions that occur while processing a command.
+        /// If the command is a new session command, it disposes the resources.
+        /// </summary>
+        /// <param name="command">The command to handle.</param>
+        private void HandleCommandException(Command command)
+        {
+            if (command.Name == DriverCommand.NewSession)
+            {
+                Dispose();
             }
         }
 
