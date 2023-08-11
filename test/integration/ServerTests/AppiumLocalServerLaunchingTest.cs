@@ -24,8 +24,6 @@ namespace Appium.Net.Integration.Tests.ServerTests
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            byte[] bytes = null;
-
             var isWindows = Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows);
             var isMacOs = Platform.CurrentPlatform.IsPlatformType(PlatformType.Mac);
             var isLinux = Platform.CurrentPlatform.IsPlatformType(PlatformType.Linux);
@@ -43,22 +41,23 @@ namespace Appium.Net.Integration.Tests.ServerTests
             }
             Console.WriteLine(_testIp);
 
+            byte[] bytes;
             if (isWindows)
             {
                 bytes = Resources.PathToWindowsNode;
-                _pathToCustomizedAppiumJs = System.Text.Encoding.UTF8.GetString(bytes);
+                _pathToCustomizedAppiumJs = Encoding.UTF8.GetString(bytes);
                 return;
             }
             if (isMacOs)
             {
                 bytes = Resources.PathToMacOSNode;
-                _pathToCustomizedAppiumJs = System.Text.Encoding.UTF8.GetString(bytes);
+                _pathToCustomizedAppiumJs = Encoding.UTF8.GetString(bytes);
                 return;
             }
             if (isLinux)
             {
                 bytes = Resources.PathToLinuxNode;
-                _pathToCustomizedAppiumJs = System.Text.Encoding.UTF8.GetString(bytes);
+                _pathToCustomizedAppiumJs = Encoding.UTF8.GetString(bytes);
                 return;
             }
         }
