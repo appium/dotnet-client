@@ -59,6 +59,12 @@ namespace OpenQA.Selenium.Appium.Service
             return new Uri(this.Protocol + "://" + this.Host + ":" + this.Port + this.Path);
         }
 
+        /// <summary>
+        ///  Returns a value of  instance built with members in the DirectConnect instance.
+        /// </summary>
+        /// <param name="value">The value of the 'value' key in the response body.</param>
+        /// <param name="keyName">The key name to get the value.</param>
+        /// <returns>A string value or null</returns>
         private string GetDirectConnectValue(Dictionary<string, object> value, string keyName)
         {
             if (value.ContainsKey("appium:" + keyName))
