@@ -67,12 +67,7 @@ namespace OpenQA.Selenium.Appium.Service
                     RealExecutor = ModifyNewSessionHttpRequestHeader(RealExecutor);
 
                     result = RealExecutor.Execute(commandToExecute);
-                    if (ClientConfig.DirectConnect == true) {
-                        var newExecutor = GetNewExecutorWithDirectConnect(result, CommandTimeout);
-                        if (newExecutor != null) {
-                            RealExecutor = newExecutor;
-                        }
-                    }
+                    RealExecutor = UpdateExecutor(result, RealExecutor);
                 }
                 else
                 {
@@ -116,14 +111,36 @@ namespace OpenQA.Selenium.Appium.Service
             return modifiedCommandExecutor;
         }
 
+
+        /// <summary>
+        /// Return an instance of AppiumCommandExecutor.
+        /// If the executor can use as-is, this method will return the given executor without any updates.
+        /// </summary>
+        /// <param name="result">The result of the command execution.</param>
+        /// <param name="currentExecutor">Current AppiumCommandExecutor instance.</param>
+        private AppiumCommandExecutor UpdateExecutor(Response result, AppiumCommandExecutor currentExecutor)
+        {
+            if (ClientConfig.DirectConnect == false) {
+                return currentExecutor;
+            }
+
+            var newExecutor = GetNewExecutorWithDirectConnect(result);
+            if ( == null) {
+                return currentExecutor;
+            }
+
+            return newExecutor;
+        }
+
         /// <summary>
         /// Returns a new command executor if the responsed had directConnect.
         /// </summary>
-        private ICommandExecutor GetNewExecutorWithDirectConnect(Response response, TimeSpan commandTimeout)
+        /// <param name="result">The result of the command execution.</param>
+        private ICommandExecutor GetNewExecutorWithDirectConnect(Response response)
         {
             var newUri = new DirectConnect(response).GetUri();
             if (newUri != null) {
-                return new HttpCommandExecutor(newUri, commandTimeout);
+                return new HttpCommandExecutor(newUri, CommandTimeout);
             }
 
             return null;

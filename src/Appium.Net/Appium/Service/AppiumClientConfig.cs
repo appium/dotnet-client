@@ -17,10 +17,6 @@ namespace OpenQA.Selenium.Appium.Service
 
     public class AppiumClientConfig
     {
-        public AppiumClientConfig()
-        {
-        }
-
         /// <summary>
         /// Return the default Appium Client Config
         /// </summary>
