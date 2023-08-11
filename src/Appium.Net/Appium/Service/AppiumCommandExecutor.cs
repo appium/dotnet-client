@@ -117,7 +117,7 @@ namespace OpenQA.Selenium.Appium.Service
         /// If the executor can use as-is, this method will return the given executor without any updates.
         /// </summary>
         /// <param name="result">The result of the command execution.</param>
-        /// <param name="currentExecutor">Current AppiumCommandExecutor instance.</param>
+        /// <param name="currentExecutor">Current ICommandExecutor instance.</param>
         private ICommandExecutor UpdateExecutor(Response result, ICommandExecutor currentExecutor)
         {
             if (ClientConfig.DirectConnect == false) {
