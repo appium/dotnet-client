@@ -118,6 +118,7 @@ namespace OpenQA.Selenium.Appium.Service
         /// </summary>
         /// <param name="result">The result of the command execution.</param>
         /// <param name="currentExecutor">Current ICommandExecutor instance.</param>
+        /// <returns>A ICommandExecutor instance</returns>
         private ICommandExecutor UpdateExecutor(Response result, ICommandExecutor currentExecutor)
         {
             if (ClientConfig.DirectConnect == false) {
@@ -133,9 +134,10 @@ namespace OpenQA.Selenium.Appium.Service
         }
 
         /// <summary>
-        /// Returns a new command executor if the responsed had directConnect.
+        /// Returns a new command executor if the response had directConnect.
         /// </summary>
         /// <param name="result">The result of the command execution.</param>
+        /// <returns>A ICommandExecutor instance or null</returns>
         private ICommandExecutor GetNewExecutorWithDirectConnect(Response response)
         {
             var newUri = new DirectConnect(response).GetUri();
