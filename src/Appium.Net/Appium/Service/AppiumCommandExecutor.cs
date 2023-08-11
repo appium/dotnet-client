@@ -118,14 +118,14 @@ namespace OpenQA.Selenium.Appium.Service
         /// </summary>
         /// <param name="result">The result of the command execution.</param>
         /// <param name="currentExecutor">Current AppiumCommandExecutor instance.</param>
-        private AppiumCommandExecutor UpdateExecutor(Response result, AppiumCommandExecutor currentExecutor)
+        private ICommandExecutor UpdateExecutor(Response result, ICommandExecutor currentExecutor)
         {
             if (ClientConfig.DirectConnect == false) {
                 return currentExecutor;
             }
 
             var newExecutor = GetNewExecutorWithDirectConnect(result);
-            if ( == null) {
+            if (newExecutor == null) {
                 return currentExecutor;
             }
 
