@@ -119,6 +119,53 @@ namespace OpenQA.Selenium.Appium.iOS
         {
         }
 
+
+        /// <summary>
+        /// Initializes a new instance of the IOSDriver class using the specified remote address, Appium options and AppiumClientConfig.
+        /// </summary>
+        /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
+        /// <param name="driverOptions">An <see cref="DriverOptions"/> object containing the Appium options.</param>
+        /// <param name="clientConfig">An instance of <see cref="AppiumClientConfig"/></param>
+        public IOSDriver(Uri remoteAddress, DriverOptions driverOptions, AppiumClientConfig clientConfig)
+            : base(remoteAddress, SetPlatformToCapabilities(driverOptions, Platform), clientConfig)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the IOSDriver class using the specified Appium local service, Appium options and AppiumClientConfig,
+        /// </summary>
+        /// <param name="service">the specified Appium local service</param>
+        /// <param name="driverOptions">An <see cref="ICapabilities"/> object containing the Appium options.</param>
+        /// <param name="clientConfig">An instance of <see cref="AppiumClientConfig"/></param>
+        public IOSDriver(AppiumLocalService service, DriverOptions driverOptions, AppiumClientConfig clientConfig)
+            : base(service, SetPlatformToCapabilities(driverOptions, Platform), clientConfig)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the IOSDriver class using the specified remote address, Appium options, command timeout and AppiumClientConfig.
+        /// </summary>
+        /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
+        /// <param name="driverOptions">An <see cref="DriverOptions"/> object containing the Appium options.</param>
+        /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
+        /// <param name="clientConfig">An instance of <see cref="AppiumClientConfig"/></param>
+        public IOSDriver(Uri remoteAddress, DriverOptions driverOptions, TimeSpan commandTimeout, AppiumClientConfig clientConfig)
+            : base(remoteAddress, SetPlatformToCapabilities(driverOptions, Platform), commandTimeout, clientConfig)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the IOSDriver class using the specified Appium local service, Appium options, command timeout and AppiumClientConfig,
+        /// </summary>
+        /// <param name="service">the specified Appium local service</param>
+        /// <param name="driverOptions">An <see cref="ICapabilities"/> object containing the Appium options.</param>
+        /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
+        /// <param name="clientConfig">An instance of <see cref="AppiumClientConfig"/></param>
+        public IOSDriver(AppiumLocalService service, DriverOptions driverOptions, TimeSpan commandTimeout, AppiumClientConfig clientConfig)
+            : base(service, SetPlatformToCapabilities(driverOptions, Platform), commandTimeout, clientConfig)
+        {
+        }
+
         public void SetSetting(string setting, object value) =>
             IOSCommandExecutionHelper.SetSetting(this, setting, value);
 

@@ -12,8 +12,10 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+using Newtonsoft.Json;
 using OpenQA.Selenium.Remote;
 using System;
+using System.Collections.Generic;
 
 namespace OpenQA.Selenium.Appium.Service
 {
@@ -23,6 +25,9 @@ namespace OpenQA.Selenium.Appium.Service
         private ICommandExecutor RealExecutor;
         private bool isDisposed;
         private const string IdempotencyHeader = "X-Idempotency-Key";
+        private AppiumClientConfig ClientConfig;
+
+        private TimeSpan CommandTimeout;
 
         private static ICommandExecutor CreateRealExecutor(Uri remoteAddress, TimeSpan commandTimeout)
         {
@@ -34,16 +39,20 @@ namespace OpenQA.Selenium.Appium.Service
             RealExecutor = realExecutor;
         }
 
-        internal AppiumCommandExecutor(Uri url, TimeSpan timeForTheServerResponding)
+        internal AppiumCommandExecutor(Uri url, TimeSpan timeForTheServerResponding, AppiumClientConfig clientConfig)
             : this(CreateRealExecutor(url, timeForTheServerResponding))
         {
+            CommandTimeout = timeForTheServerResponding;
             Service = null;
+            ClientConfig = clientConfig;
         }
 
-        internal AppiumCommandExecutor(AppiumLocalService service, TimeSpan timeForTheServerResponding)
+        internal AppiumCommandExecutor(AppiumLocalService service, TimeSpan timeForTheServerResponding, AppiumClientConfig clientConfig)
             : this(CreateRealExecutor(service.ServiceUrl, timeForTheServerResponding))
         {
+            CommandTimeout = timeForTheServerResponding;
             Service = service;
+            ClientConfig = clientConfig;
         }
 
         public Response Execute(Command commandToExecute)
@@ -56,9 +65,15 @@ namespace OpenQA.Selenium.Appium.Service
                 {
                     Service?.Start();
                     RealExecutor = ModifyNewSessionHttpRequestHeader(RealExecutor);
+
+                    result = RealExecutor.Execute(commandToExecute);
+                    RealExecutor = UpdateExecutor(result, RealExecutor);
+                }
+                else
+                {
+                    result = RealExecutor.Execute(commandToExecute);
                 }
 
-                result = RealExecutor.Execute(commandToExecute);
                 return result;
             }
             catch (Exception e)
@@ -89,9 +104,48 @@ namespace OpenQA.Selenium.Appium.Service
         {
             if (commandExecutor == null) throw new ArgumentNullException(nameof(commandExecutor));
             var modifiedCommandExecutor = commandExecutor as HttpCommandExecutor;
+            
             modifiedCommandExecutor.SendingRemoteHttpRequest += (sender, args) =>
                     args.AddHeader(IdempotencyHeader, Guid.NewGuid().ToString());
+
             return modifiedCommandExecutor;
+        }
+
+
+        /// <summary>
+        /// Return an instance of AppiumCommandExecutor.
+        /// If the executor can use as-is, this method will return the given executor without any updates.
+        /// </summary>
+        /// <param name="result">The result of the command execution.</param>
+        /// <param name="currentExecutor">Current ICommandExecutor instance.</param>
+        /// <returns>A ICommandExecutor instance</returns>
+        private ICommandExecutor UpdateExecutor(Response result, ICommandExecutor currentExecutor)
+        {
+            if (ClientConfig.DirectConnect == false) {
+                return currentExecutor;
+            }
+
+            var newExecutor = GetNewExecutorWithDirectConnect(result);
+            if (newExecutor == null) {
+                return currentExecutor;
+            }
+
+            return newExecutor;
+        }
+
+        /// <summary>
+        /// Returns a new command executor if the response had directConnect.
+        /// </summary>
+        /// <param name="result">The result of the command execution.</param>
+        /// <returns>A ICommandExecutor instance or null</returns>
+        private ICommandExecutor GetNewExecutorWithDirectConnect(Response response)
+        {
+            var newUri = new DirectConnect(response).GetUri();
+            if (newUri != null) {
+                return new HttpCommandExecutor(newUri, CommandTimeout);
+            }
+
+            return null;
         }
 
         public void Dispose() => Dispose(true);

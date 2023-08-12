@@ -75,14 +75,36 @@ namespace OpenQA.Selenium.Appium
         }
 
         public AppiumDriver(Uri remoteAddress, ICapabilities appiumOptions, TimeSpan commandTimeout)
-            : this(new AppiumCommandExecutor(remoteAddress, commandTimeout), appiumOptions)
+            : this(remoteAddress, appiumOptions, DefaultCommandTimeout, AppiumClientConfig.DefaultConfig())
         {
         }
 
         public AppiumDriver(AppiumLocalService service, ICapabilities appiumOptions, TimeSpan commandTimeout)
-            : this(new AppiumCommandExecutor(service, commandTimeout), appiumOptions)
+            : this(service, appiumOptions, DefaultCommandTimeout, AppiumClientConfig.DefaultConfig())
         {
         }
+
+
+        public AppiumDriver(Uri remoteAddress, ICapabilities appiumOptions, AppiumClientConfig clientConfig)
+            : this(new AppiumCommandExecutor(remoteAddress, DefaultCommandTimeout, clientConfig), appiumOptions)
+        {
+        }
+
+        public AppiumDriver(AppiumLocalService service, ICapabilities appiumOptions, AppiumClientConfig clientConfig)
+            : this(new AppiumCommandExecutor(service, DefaultCommandTimeout, clientConfig), appiumOptions)
+        {
+        }
+
+        public AppiumDriver(Uri remoteAddress, ICapabilities appiumOptions, TimeSpan commandTimeout, AppiumClientConfig clientConfig)
+            : this(new AppiumCommandExecutor(remoteAddress, commandTimeout, clientConfig), appiumOptions)
+        {
+        }
+
+        public AppiumDriver(AppiumLocalService service, ICapabilities appiumOptions, TimeSpan commandTimeout, AppiumClientConfig clientConfig)
+            : this(new AppiumCommandExecutor(service, commandTimeout, clientConfig), appiumOptions)
+        {
+        }
+
 
         #endregion Constructors
 
