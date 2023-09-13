@@ -31,7 +31,7 @@ namespace Appium.Net.Integration.Tests.Android
         }
 
         [TearDown]
-        public void TearDowwn()
+        public void TearDown()
         {
             _driver.TerminateApp(AppId);
         }
