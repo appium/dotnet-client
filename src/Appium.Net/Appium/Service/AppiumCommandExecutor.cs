@@ -12,10 +12,8 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-using Newtonsoft.Json;
 using OpenQA.Selenium.Remote;
 using System;
-using System.Collections.Generic;
 
 namespace OpenQA.Selenium.Appium.Service
 {
@@ -64,9 +62,16 @@ namespace OpenQA.Selenium.Appium.Service
             {
                 try
                 {
-                    HandleNewSessionCommand(commandToExecute);
-
-                    result = RealExecutor.Execute(commandToExecute);
+                    bool newSession = HandleNewSessionCommand(commandToExecute);
+                    if (newSession)
+                    {
+                        result = RealExecutor.Execute(commandToExecute);
+                        RealExecutor = UpdateExecutor(result, RealExecutor);
+                    }
+                    else
+                    {
+                        result = RealExecutor.Execute(commandToExecute);
+                    }
 
                     HandleCommandCompletion(commandToExecute, result);
 
@@ -75,10 +80,12 @@ namespace OpenQA.Selenium.Appium.Service
                         return result;
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    HandleCommandException(commandToExecute);
-                    throw;
+                    if (attempt == MaxRetryAttempts)
+                    {
+                        HandleCommandException(commandToExecute);
+                    }       
                 }
             }
             return result;
@@ -90,30 +97,16 @@ namespace OpenQA.Selenium.Appium.Service
         /// and modifies the HTTP request header of the real executor for a new session.
         /// </summary>
         /// <param name="command">The command to handle.</param>
-        private void HandleNewSessionCommand(Command command)
+        private bool HandleNewSessionCommand(Command command)
         {
             if (command.Name == DriverCommand.NewSession)
             {
                 Service?.Start();
                 RealExecutor = ModifyNewSessionHttpRequestHeader(RealExecutor);
+                return true;
             }
+            return false;
         }
-                    result = RealExecutor.Execute(commandToExecute);
-                    RealExecutor = UpdateExecutor(result, RealExecutor);
-                }
-                else
-                {
-                    result = RealExecutor.Execute(commandToExecute);
-                }
-
-                return result;
-            }
-            catch (Exception e)
-            {
-                if ((commandToExecute.Name == DriverCommand.NewSession))
-                {
-                    Service?.Dispose();
-                }
 
         /// <summary>
         /// Handles the completion of a command.
@@ -153,7 +146,7 @@ namespace OpenQA.Selenium.Appium.Service
         {
             if (commandExecutor == null) throw new ArgumentNullException(nameof(commandExecutor));
             var modifiedCommandExecutor = commandExecutor as HttpCommandExecutor;
-            
+
             modifiedCommandExecutor.SendingRemoteHttpRequest += (sender, args) =>
                     args.AddHeader(IdempotencyHeader, Guid.NewGuid().ToString());
 
@@ -170,12 +163,14 @@ namespace OpenQA.Selenium.Appium.Service
         /// <returns>A ICommandExecutor instance</returns>
         private ICommandExecutor UpdateExecutor(Response result, ICommandExecutor currentExecutor)
         {
-            if (ClientConfig.DirectConnect == false) {
+            if (ClientConfig.DirectConnect == false)
+            {
                 return currentExecutor;
             }
 
             var newExecutor = GetNewExecutorWithDirectConnect(result);
-            if (newExecutor == null) {
+            if (newExecutor == null)
+            {
                 return currentExecutor;
             }
 
@@ -185,12 +180,13 @@ namespace OpenQA.Selenium.Appium.Service
         /// <summary>
         /// Returns a new command executor if the response had directConnect.
         /// </summary>
-        /// <param name="result">The result of the command execution.</param>
+        /// <param name="response">The result of the command execution.</param>
         /// <returns>A ICommandExecutor instance or null</returns>
         private ICommandExecutor GetNewExecutorWithDirectConnect(Response response)
         {
             var newUri = new DirectConnect(response).GetUri();
-            if (newUri != null) {
+            if (newUri != null)
+            {
                 return new HttpCommandExecutor(newUri, CommandTimeout);
             }
 
