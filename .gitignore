@@ -17,3 +17,4 @@ packages
 env.json
 .vscode/
 *.user
+*.log
