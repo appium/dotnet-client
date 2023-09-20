@@ -75,12 +75,12 @@ namespace OpenQA.Selenium.Appium
         }
 
         public AppiumDriver(Uri remoteAddress, ICapabilities appiumOptions, TimeSpan commandTimeout)
-            : this(remoteAddress, appiumOptions, DefaultCommandTimeout, AppiumClientConfig.DefaultConfig())
+            : this(remoteAddress, appiumOptions, commandTimeout, AppiumClientConfig.DefaultConfig())
         {
         }
 
         public AppiumDriver(AppiumLocalService service, ICapabilities appiumOptions, TimeSpan commandTimeout)
-            : this(service, appiumOptions, DefaultCommandTimeout, AppiumClientConfig.DefaultConfig())
+            : this(service, appiumOptions, commandTimeout, AppiumClientConfig.DefaultConfig())
         {
         }
 
