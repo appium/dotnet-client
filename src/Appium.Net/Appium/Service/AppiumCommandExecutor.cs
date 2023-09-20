@@ -23,7 +23,6 @@ namespace OpenQA.Selenium.Appium.Service
         private ICommandExecutor RealExecutor;
         private bool isDisposed;
         private const string IdempotencyHeader = "X-Idempotency-Key";
-        private const int MaxRetryAttempts = 3;
         private AppiumClientConfig ClientConfig;
 
         private TimeSpan CommandTimeout;
@@ -58,45 +57,33 @@ namespace OpenQA.Selenium.Appium.Service
         {
             Response result = null;
 
-            for (int attempt = 1; attempt <= MaxRetryAttempts; attempt++)
+            try
             {
-                try
+                bool newSession = HandleNewSessionCommand(commandToExecute);
+                result = RealExecutor.Execute(commandToExecute);
+                if (newSession)
                 {
-                    bool newSession = HandleNewSessionCommand(commandToExecute);
-                    if (newSession)
-                    {
-                        result = RealExecutor.Execute(commandToExecute);
-                        RealExecutor = UpdateExecutor(result, RealExecutor);
-                    }
-                    else
-                    {
-                        result = RealExecutor.Execute(commandToExecute);
-                    }
-
-                    HandleCommandCompletion(commandToExecute, result);
-
-                    if (result.Status == WebDriverResult.Success)
-                    {
-                        return result;
-                    }
+                    RealExecutor = UpdateExecutor(result, RealExecutor);
                 }
-                catch (Exception ex)
-                {
-                    if (attempt == MaxRetryAttempts)
-                    {
-                        HandleCommandException(commandToExecute);
-                    }       
-                }
+                return result;
             }
-            return result;
+            catch (Exception e)
+            {
+                HandleCommandException(commandToExecute);
+
+                throw;
+            }
+            finally
+            {
+                HandleCommandCompletion(commandToExecute, result);
+            }
         }
 
         /// <summary>
-        /// Handles a new session command.
-        /// If the command is a NewSession command, it starts the service if not already started,
-        /// and modifies the HTTP request header of the real executor for a new session.
+        /// Handles a new session command, starts the service, and modifies the HTTP request header if necessary.
         /// </summary>
-        /// <param name="command">The command to handle.</param>
+        /// <param name="command">The command to be handled.</param>
+        /// <returns>True if the command is a new session command and the service was started; otherwise, false.</returns>
         private bool HandleNewSessionCommand(Command command)
         {
             if (command.Name == DriverCommand.NewSession)
@@ -130,18 +117,22 @@ namespace OpenQA.Selenium.Appium.Service
         }
 
         /// <summary>
-        /// Handles exceptions that occur while processing a command.
-        /// If the command is a new session command, it disposes the resources.
+        /// Handles exceptions that occur while executing a command.
         /// </summary>
-        /// <param name="command">The command to handle.</param>
+        /// <param name="command">The command that caused the exception.</param>
         private void HandleCommandException(Command command)
         {
             if (command.Name == DriverCommand.NewSession)
             {
-                Dispose();
-            }
+                Service?.Dispose();
+            }  
         }
 
+        /// <summary>
+        /// Modifies the HTTP request header for a new session in the command executor.
+        /// </summary>
+        /// <param name="commandExecutor">The command executor to be modified.</param>
+        /// <returns>The modified command executor with the updated HTTP request header.</returns>
         private ICommandExecutor ModifyNewSessionHttpRequestHeader(ICommandExecutor commandExecutor)
         {
             if (commandExecutor == null) throw new ArgumentNullException(nameof(commandExecutor));
@@ -152,7 +143,6 @@ namespace OpenQA.Selenium.Appium.Service
 
             return modifiedCommandExecutor;
         }
-
 
         /// <summary>
         /// Return an instance of AppiumCommandExecutor.
