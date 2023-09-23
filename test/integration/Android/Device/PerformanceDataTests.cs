@@ -1,7 +1,6 @@
 ﻿using System;
 using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
-using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Android.Enums;
@@ -27,7 +26,7 @@ namespace Appium.Net.Integration.Tests.Android.Device
         [OneTimeTearDown]
         public void TearDown()
         {
-            _driver.Dispose();
+            _driver?.Dispose();
         }
 
         [Test]
@@ -55,6 +54,6 @@ namespace Appium.Net.Integration.Tests.Android.Device
                 Assert.That(androidDriver?.GetPerformanceData(packageName, PerformanceDataType.NetworkInfo, 5),
                     Is.Not.Null.Or.Empty);
             });
-        }
+        } 
     }
 }
