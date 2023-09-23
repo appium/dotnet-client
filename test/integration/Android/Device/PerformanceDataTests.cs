@@ -54,6 +54,6 @@ namespace Appium.Net.Integration.Tests.Android.Device
                 Assert.That(androidDriver?.GetPerformanceData(packageName, PerformanceDataType.NetworkInfo, 5),
                     Is.Not.Null.Or.Empty);
             });
-        } 
+        }
     }
 }
