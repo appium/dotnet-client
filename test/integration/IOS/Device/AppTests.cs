@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Appium.Net.Integration.Tests.helpers;
+﻿using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
-using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.iOS;
+using System;
+using System.Collections.Generic;
 
 namespace Appium.Net.Integration.Tests.IOS.Device.App
 {
@@ -46,6 +45,16 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
             Assert.DoesNotThrow(() => _driver.FindElement(MobileBy.AccessibilityId(IosTestAppElement)));
         }
 
+        [Test]
+        public void CanActivateAppWithTimeoutTest()
+        {
+            //Activate an app to foreground
+            Assert.DoesNotThrow(() => _driver.ActivateApp(IosTestAppBundleId, TimeSpan.FromSeconds(20)));
+
+            //Verify the expected app was activated
+            Assert.DoesNotThrow(() => _driver.FindElement(MobileBy.AccessibilityId(IosTestAppElement)));
+        }
+        
         [Test]
         public void CanActivateViaScriptAppTest()
         {

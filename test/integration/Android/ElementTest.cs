@@ -4,6 +4,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Android.UiAutomator;
+using System.Collections.Generic;
 
 namespace Appium.Net.Integration.Tests.Android
 {
@@ -96,25 +97,12 @@ namespace Appium.Net.Integration.Tests.Android
 
             Assert.AreEqual(originalValue, editElement.Text);
 
-            editElement.ReplaceValue(replacedValue);
+            _driver.ExecuteScript("mobile: replaceElementValue",
+                new Dictionary<string, string> { { "elementId", editElement.Id } , { "text", replacedValue } });
 
             Assert.AreEqual(replacedValue, editElement.Text);
         }
 
-        [Test]
-        public void SetImmediateValueTest()
-        {
-            var value = "new value";
-
-            _driver.StartActivity("io.appium.android.apis", ".view.Controls1");
-
-            var editElement =
-                _driver.FindElement(MobileBy.AndroidUIAutomator("resourceId(\"io.appium.android.apis:id/edit\")"));
-
-            editElement.SetImmediateValue(value);
-
-            Assert.AreEqual(value, editElement.Text);
-        }
 
         [Test]
         public void ScrollingToSubElement()

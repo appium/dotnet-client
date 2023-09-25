@@ -1,13 +1,12 @@
-﻿using System;
+﻿using Appium.Net.Integration.Tests.helpers;
+using NUnit.Framework;
+using OpenQA.Selenium.Appium.Enums;
+using OpenQA.Selenium.Appium.iOS;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using Appium.Net.Integration.Tests.helpers;
-using NUnit.Framework;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Appium.Enums;
-using OpenQA.Selenium.Appium.iOS;
 
 namespace Appium.Net.Integration.Tests.IOS
 {
@@ -48,7 +47,7 @@ namespace Appium.Net.Integration.Tests.IOS
         [Test]
         public void WhenSetClipboardContentTypeIsUrl_GetClipboardShouldReturnEncodedBase64String()
         {
-            const string urlString = "https://github.com/appium/appium-dotnet-driver";
+            const string urlString = "https://github.com/appium/dotnet-client";
             var base64String = Convert.ToBase64String(Encoding.UTF8.GetBytes(urlString));
             _driver.SetClipboard(ClipboardContentType.Url, base64String);
 
@@ -59,7 +58,7 @@ namespace Appium.Net.Integration.Tests.IOS
         [Test]
         public void WhenSetClipboardUrl_GetClipboardUrlShouldReturnUrl()
         {
-            const string urlString = "https://github.com/appium/appium-dotnet-driver";
+            const string urlString = "https://github.com/appium/dotnet-client";
             _driver.SetClipboardUrl(urlString);
 
             Assert.That(() => _driver.GetClipboardUrl(), Does.Match(urlString));

@@ -176,6 +176,7 @@ namespace OpenQA.Selenium.Appium.Android
         public static void Unlock(IExecuteMethod executeMethod) =>
             executeMethod.Execute(AppiumDriverCommand.UnlockDevice);
 
+        [Obsolete("The ReplaceValue method is deprecated and will be removed in future versions. Please use the following command extensions: 'mobile: replaceElementValue' instead \r\n See https://github.com/appium/appium-uiautomator2-driver#mobile-replaceelementvalue")]
         public static void ReplaceValue(IExecuteMethod executeMethod, string elementId, string value) =>
             executeMethod.Execute(AppiumDriverCommand.ReplaceValue,
                 new Dictionary<string, object>()

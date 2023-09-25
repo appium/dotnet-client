@@ -48,12 +48,5 @@ namespace Appium.Net.Integration.Tests.IOS
                 1);
         }
 
-        [Test]
-        public void SetImmediateValueTest()
-        {
-            var slider = _driver.FindElement(MobileBy.ClassName("UIASlider"));
-            slider.SetImmediateValue("0%");
-            Assert.AreEqual("0%", slider.GetAttribute("value"));
-        }
     }
 }

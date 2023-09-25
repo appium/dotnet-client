@@ -14,6 +14,9 @@
 
 namespace OpenQA.Selenium.Appium.Enums
 {
+    /// <summary>
+    /// The list of common capabilities. Read: https://appium.github.io/appium/docs/en/2.0/guides/caps/
+    /// </summary>
     public sealed class MobileCapabilityType
     {
         /// <summary>
@@ -56,7 +59,7 @@ namespace OpenQA.Selenium.Appium.Enums
         /// </summary>
         public static readonly string AppiumVersion = "appium-version";
 
-        // <summary>
+        /// <summary>
         /// Unique device identifier of the connected physical device
         /// </summary>
         public static readonly string Udid = "appium:udid";

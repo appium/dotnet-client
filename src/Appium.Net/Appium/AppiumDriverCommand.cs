@@ -143,6 +143,8 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string ToggleLocationServices = "toggleLocationServices";
 
+        #region (Deprecated) legacy app management
+
         /// <summary>
         /// Launch App Command.
         /// </summary>
@@ -157,6 +159,8 @@ namespace OpenQA.Selenium.Appium
         /// Reset App Command.
         /// </summary>
         public const string ResetApp = "resetApp";
+
+        #endregion (Deprecated) legacy app management
 
         /// <summary>
         ///  Background App Command.
@@ -349,10 +353,13 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string FingerPrint = "fingerPrint";
 
+        #region (Deprecated) Input value
 
         public const string ReplaceValue = "replaceValue";
 
         public const string SetValue = "setValue";
+
+        #endregion (Deprecated) Input value
 
         public const string GetDeviceTime = "getDeviceTime";
 

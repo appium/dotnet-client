@@ -75,14 +75,36 @@ namespace OpenQA.Selenium.Appium
         }
 
         public AppiumDriver(Uri remoteAddress, ICapabilities appiumOptions, TimeSpan commandTimeout)
-            : this(new AppiumCommandExecutor(remoteAddress, commandTimeout), appiumOptions)
+            : this(remoteAddress, appiumOptions, commandTimeout, AppiumClientConfig.DefaultConfig())
         {
         }
 
         public AppiumDriver(AppiumLocalService service, ICapabilities appiumOptions, TimeSpan commandTimeout)
-            : this(new AppiumCommandExecutor(service, commandTimeout), appiumOptions)
+            : this(service, appiumOptions, commandTimeout, AppiumClientConfig.DefaultConfig())
         {
         }
+
+
+        public AppiumDriver(Uri remoteAddress, ICapabilities appiumOptions, AppiumClientConfig clientConfig)
+            : this(new AppiumCommandExecutor(remoteAddress, DefaultCommandTimeout, clientConfig), appiumOptions)
+        {
+        }
+
+        public AppiumDriver(AppiumLocalService service, ICapabilities appiumOptions, AppiumClientConfig clientConfig)
+            : this(new AppiumCommandExecutor(service, DefaultCommandTimeout, clientConfig), appiumOptions)
+        {
+        }
+
+        public AppiumDriver(Uri remoteAddress, ICapabilities appiumOptions, TimeSpan commandTimeout, AppiumClientConfig clientConfig)
+            : this(new AppiumCommandExecutor(remoteAddress, commandTimeout, clientConfig), appiumOptions)
+        {
+        }
+
+        public AppiumDriver(AppiumLocalService service, ICapabilities appiumOptions, TimeSpan commandTimeout, AppiumClientConfig clientConfig)
+            : this(new AppiumCommandExecutor(service, commandTimeout, clientConfig), appiumOptions)
+        {
+        }
+
 
         #endregion Constructors
 
@@ -139,6 +161,12 @@ namespace OpenQA.Selenium.Appium
 
         public void ActivateApp(string appId) =>
             Execute(AppiumDriverCommand.ActivateApp, AppiumCommandExecutionHelper.PrepareArgument("appId", appId));
+        
+        public void ActivateApp(string appId, TimeSpan timeout) =>
+            Execute(AppiumDriverCommand.ActivateApp,
+                    AppiumCommandExecutionHelper.PrepareArguments(new string[] {"appId", "options"},
+                        new object[]
+                            {appId, new Dictionary<string, object>() {{"timeout", (long) timeout.TotalMilliseconds}}}));
 
         public bool TerminateApp(string appId) =>
             Convert.ToBoolean(Execute(AppiumDriverCommand.TerminateApp,
@@ -172,10 +200,11 @@ namespace OpenQA.Selenium.Appium
         public void PushFile(string pathOnDevice, FileInfo file) =>
             AppiumCommandExecutionHelper.PushFile(this, pathOnDevice, file);
 
+        [Obsolete("The LaunchApp API is deprecated and will be removed in future versions. Please use ActivateApp instead \r\n See https://github.com/appium/appium/issues/15807")]
         public void LaunchApp() => ((IExecuteMethod)this).Execute(AppiumDriverCommand.LaunchApp);
-
+        [Obsolete("The CloseApp API is deprecated and will be removed in future versions. Please use TerminateApp instead \r\n See https://github.com/appium/appium/issues/15807")]
         public void CloseApp() => ((IExecuteMethod)this).Execute(AppiumDriverCommand.CloseApp);
-
+        [Obsolete("The ResetApp API is deprecated and will be removed in future versions. Please use TerminateApp & ActivateApp instead \r\n See https://github.com/appium/appium/issues/15807")]
         public void ResetApp() => ((IExecuteMethod)this).Execute(AppiumDriverCommand.ResetApp);
 
         public void FingerPrint(int fingerprintId) =>
