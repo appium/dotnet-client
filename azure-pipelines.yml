@@ -29,12 +29,11 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
     
-- powershell: |
-    choco install nodejs -y
+- powershell: 
     npm install -g appium
-  displayName: 'Install Node.js and Appium'
+  displayName: 'Install Appium'
 
-- script: appium
+- script: start appium
   displayName: 'Start Appium Server'
 
 - task: DotNetCoreCLI@2
