@@ -28,6 +28,15 @@ steps:
     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site" /m'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+    
+- task: NodeToolInstaller@1
+  inputs:
+    versionSpec: "16.x" 
+
+- script: npm install -g appium
+
+- script: appium
+  displayName: 'Start Appium Server'
 
 - task: DotNetCoreCLI@2
   displayName: 'Run unit tests - $(buildConfiguration)'
