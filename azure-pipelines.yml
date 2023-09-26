@@ -29,11 +29,10 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
     
-- task: NodeToolInstaller@1
-  inputs:
-    versionSpec: "16.x" 
-
-- script: npm install -g appium
+- powershell: |
+    choco install nodejs -y
+    npm install -g appium
+  displayName: 'Install Node.js and Appium'
 
 - script: appium
   displayName: 'Start Appium Server'
