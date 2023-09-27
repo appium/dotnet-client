@@ -6,7 +6,7 @@ using OpenQA.Selenium.Appium.iOS;
 
 namespace Appium.Net.Integration.Tests.IOS
 {
-    public class AlertTest
+    public class AlertTests
     {
         private AppiumDriver _driver;
 
@@ -32,17 +32,26 @@ namespace Appium.Net.Integration.Tests.IOS
         [Test]
         public void AcceptAlertTest()
         {
-            _driver.FindElement(new ByIosUIAutomation(".elements().withName(\"show alert\")")).Click();
-            Thread.Sleep(10000);
+            _driver.FindElement(MobileBy.IosNSPredicate("label == 'show alert'")).Click();
+            Thread.Sleep(5000);
             _driver.SwitchTo().Alert().Accept();
         }
 
         [Test]
         public void DismissAlertTest()
         {
-            _driver.FindElement(new ByIosUIAutomation(".elements().withName(\"show alert\")")).Click();
-            Thread.Sleep(10000);
+            _driver.FindElement(MobileBy.IosNSPredicate("label == 'show alert'")).Click();
+            Thread.Sleep(5000);
             _driver.SwitchTo().Alert().Dismiss();
+        }
+
+        [Test]
+        public void TextAlertTest()
+        {
+            _driver.FindElement(MobileBy.IosNSPredicate("label == 'show alert'")).Click();
+            Thread.Sleep(500);
+            string alertText = _driver.SwitchTo().Alert().Text;
+            Assert.AreEqual("Cool title\r\nthis alert is so cool.", alertText);
         }
     }
 }
