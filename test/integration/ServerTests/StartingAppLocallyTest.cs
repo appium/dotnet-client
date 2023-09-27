@@ -104,7 +104,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
         }
 
         [Test]
-        public void StartingIosAppWithCapabilitiesAndServiseTest()
+        public void StartingIosAppWithCapabilitiesAndServiceTest()
         {
             var app = Apps.Get("iosTestApp");
             var capabilities =
@@ -127,7 +127,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
         }
 
         [Test]
-        public void CheckThatServiseIsNotRunWhenTheCreatingOfANewSessionIsFailed()
+        public void CheckThatServiceIsNotRunWhenTheCreatingOfANewSessionIsFailed()
         {
             var capabilities = Env.ServerIsRemote()
                 ? //it will be a cause of error
