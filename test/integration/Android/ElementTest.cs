@@ -126,6 +126,22 @@ namespace Appium.Net.Integration.Tests.Android
             Assert.NotNull(radioGroup.Location);
         }
 
+        [Test]
+        public void FindAppiumElementUsingNestedElement()
+        {
+            var myElement = _driver.FindElement(MobileBy.Id("android:id/content"));
+            AppiumElement nestedElement = myElement.FindElement(By.Id("android:id/text1"));
+            Assert.NotNull(nestedElement);
+        }
+
+        [Test]
+        public void FindAppiumElementsListUsingNestedElement()
+        {
+            var myElement = _driver.FindElement(MobileBy.Id("android:id/content"));
+            IList<AppiumElement> myDerivedElements = myElement.FindElements(By.Id("android:id/text1"));
+            Assert.AreNotEqual(myDerivedElements.Count,0);
+        }
+
         [OneTimeTearDown]
         public void AfterAll()
         {
