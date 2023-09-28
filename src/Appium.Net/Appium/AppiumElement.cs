@@ -220,10 +220,30 @@ namespace OpenQA.Selenium.Appium
 
         IReadOnlyCollection<AppiumElement> IFindsByFluentSelector<AppiumElement>.FindElements(string selector, string value)
         {
-            return ConvertToExtendedWebElementCollection(base.FindElements(selector, value));
+            return ConvertToAppiumElementCollection(base.FindElements(selector, value));
         }
 
-        internal static ReadOnlyCollection<AppiumElement> ConvertToExtendedWebElementCollection(IEnumerable collection)
+        /// <summary>
+        /// Finds the first element that matches the specified <paramref name="by"/> selector and returns it as an <see cref="AppiumElement"/>.
+        /// </summary>
+        /// <param name="by">The <see cref="By"/> selector used to locate the element.</param>
+        /// <returns>The first <see cref="AppiumElement"/> that matches the <paramref name="by"/> selector.</returns>
+        public new AppiumElement FindElement(By by)
+        {
+            return (AppiumElement)base.FindElement(by);
+        }
+
+        /// <summary>
+        /// Finds all elements that match the specified <paramref name="by"/> selector and returns them as a read-only collection of <see cref="AppiumElement"/>.
+        /// </summary>
+        /// <param name="by">The <see cref="By"/> selector used to locate the elements.</param>
+        /// <returns>A read-only collection of <see cref="AppiumElement"/> objects matching the <paramref name="by"/> selector.</returns>
+        public new ReadOnlyCollection<AppiumElement> FindElements(By by)
+        {
+            return ConvertToAppiumElementCollection(base.FindElements(by));
+        }
+
+        internal static ReadOnlyCollection<AppiumElement> ConvertToAppiumElementCollection(IEnumerable collection)
         {
             return collection.Cast<AppiumElement>().ToList().AsReadOnly();
         }
