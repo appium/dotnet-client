@@ -1,7 +1,7 @@
 # appium-dotnet-driver
 
 ![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Appium.WebDriver)
-[![Build Status](https://dev.azure.com/AppiumCI/dotnet-client/_apis/build/status/appium.dotnet-client?branchName=release%2F5.0.0)](https://dev.azure.com/AppiumCI/dotnet-client/_build/latest?definitionId=68&branchName=release%2F5.0.0)
+[![Build Status](https://dev.azure.com/AppiumCI/dotnet-client/_apis/build/status/appium.dotnet-client?branchName=main)](https://dev.azure.com/AppiumCI/dotnet-client/_build/latest?definitionId=68&branchName=main)
 
 [![NuGet Downloads](https://img.shields.io/nuget/dt/Appium.Webdriver.svg)](https://www.nuget.org/packages/Appium.Webdriver)
 
