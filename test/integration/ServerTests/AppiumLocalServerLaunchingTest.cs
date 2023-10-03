@@ -4,9 +4,8 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading;
-using Appium.Net.Integration.Tests.Properties;
+using Appium.Net.Integration.Tests.Helpers;
 using NUnit.Framework;
-using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Service;
@@ -24,9 +23,6 @@ namespace Appium.Net.Integration.Tests.ServerTests
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            var isWindows = Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows);
-            var isMacOs = Platform.CurrentPlatform.IsPlatformType(PlatformType.Mac);
-            var isLinux = Platform.CurrentPlatform.IsPlatformType(PlatformType.Linux);
 
             IPHostEntry host;
             var hostName = Dns.GetHostName();
@@ -41,25 +37,8 @@ namespace Appium.Net.Integration.Tests.ServerTests
             }
             Console.WriteLine(_testIp);
 
-            byte[] bytes;
-            if (isWindows)
-            {
-                bytes = Resources.PathToWindowsNode;
-                _pathToCustomizedAppiumJs = Encoding.UTF8.GetString(bytes);
-                return;
-            }
-            if (isMacOs)
-            {
-                bytes = Resources.PathToMacOSNode;
-                _pathToCustomizedAppiumJs = Encoding.UTF8.GetString(bytes);
-                return;
-            }
-            if (isLinux)
-            {
-                bytes = Resources.PathToLinuxNode;
-                _pathToCustomizedAppiumJs = Encoding.UTF8.GetString(bytes);
-                return;
-            }
+            Paths paths = new Paths();
+            _pathToCustomizedAppiumJs = paths.PathToCustomizedAppiumJs;
         }
 
         [Test]
