@@ -18,11 +18,11 @@ namespace Appium.Net.Integration.Tests.helpers
                 npmPath = GetNpmExecutablePath();
             }
 
-            string result = RunCommand(npmPath, "list -g --depth=0");
-            string[] lines = result?.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-            string npmPrefixPath = lines.FirstOrDefault();
+            string npmPrefixPath = RunCommand(npmPath, "-g root");
+            //string[] lines = result?.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            //string npmPrefixPath = lines.FirstOrDefault();
 
-            return npmPrefixPath;
+            return npmPrefixPath.Trim();
         }
 
         private static string RunCommand(string command, string arguments)
