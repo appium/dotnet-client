@@ -66,6 +66,11 @@ namespace Appium.Net.Integration.Tests.helpers
 
             npmPath = lines?.FirstOrDefault(line => line.EndsWith("npm.cmd"));
 
+            if (string.IsNullOrWhiteSpace(npmPath))
+            {
+                throw new ApplicationException("NPM path not found.");
+            }
+
             return npmPath;
         }
     }
