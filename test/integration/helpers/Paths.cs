@@ -31,8 +31,9 @@ namespace Appium.Net.Integration.Tests.Helpers
             appiumJsPath = Encoding.UTF8.GetString(bytes); 
 
             npmPath = Npm.GetNpmPrefixPath();
-            _pathToAppiumPackageIndex = Path.Combine(npmPath, appiumJsPath);
 
+            string tempPath = Path.Combine(npmPath, appiumJsPath);
+            _pathToAppiumPackageIndex = tempPath.Replace("\\", "/");
         }
     }
 }
