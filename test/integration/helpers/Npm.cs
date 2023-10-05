@@ -61,8 +61,6 @@ namespace Appium.Net.Integration.Tests.helpers
         {
             string result = RunCommand("where", "npm");
             string npmPath;
-            /*string command = envPlatform.IsPlatformType(PlatformType.Unix) || envPlatform.IsPlatformType(PlatformType.Mac) ? "which" : "where";
-            string result =  RunCommand(command, "npm");*/
 
             string[] lines = result?.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
 
