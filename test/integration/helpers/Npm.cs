@@ -19,8 +19,6 @@ namespace Appium.Net.Integration.Tests.helpers
             }
 
             string npmPrefixPath = RunCommand(npmPath, "-g root");
-            //string[] lines = result?.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-            //string npmPrefixPath = lines.FirstOrDefault();
 
             return npmPrefixPath.Trim();
         }
