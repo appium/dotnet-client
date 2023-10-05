@@ -23,12 +23,11 @@ namespace Appium.Net.Integration.Tests.helpers
             return npmPrefixPath.Trim();
         }
 
-        private static string RunCommand(string command, string arguments)
+        private static string RunCommand(string command, string arguments, int timeoutMilliseconds = 30000)
         {
-            int timeoutMilliseconds = 30000;
             try
             {
-                Process process = new Process
+                using (Process process = new Process
                 {
                     StartInfo = new ProcessStartInfo
                     {
@@ -38,22 +37,22 @@ namespace Appium.Net.Integration.Tests.helpers
                         UseShellExecute = false,
                         CreateNoWindow = true,
                     }
-                };
+                })
+                {
+                    process.Start();
+                    string output = process.StandardOutput.ReadToEnd();
+                    process.WaitForExit(timeoutMilliseconds);
 
-                process.Start();
-                string output = process.StandardOutput.ReadToEnd();
-                process.WaitForExit(timeoutMilliseconds);
-
-                return output;
+                    return output;
+                }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine($"Error executing command: {ex.Message}");
-                return null;
+                throw new NpmNotFoundException();
             }
         }
 
-        private static string GetNpmExecutablePath()
+            private static string GetNpmExecutablePath()
         {
             string result = RunCommand("where", "npm");
             string npmPath;
