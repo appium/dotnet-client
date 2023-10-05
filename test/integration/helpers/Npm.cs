@@ -11,19 +11,16 @@ namespace Appium.Net.Integration.Tests.helpers
         public static string GetNpmPrefixPath()
         {
 
-            string npmPath;
+            string npmPath = "npm";
 
             if (Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows))
             {
                 npmPath = GetNpmExecutablePath();
             }
-            else
-            {
-                npmPath = "npm";
-            }
+
             string result = RunCommand(npmPath, "list -g --depth=0");
             string[] lines = result?.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-            string npmPrefixPath = lines[0];
+            string npmPrefixPath = lines.FirstOrDefault();
 
             return npmPrefixPath;
         }
