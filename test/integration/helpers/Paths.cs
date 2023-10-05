@@ -23,14 +23,10 @@ namespace Appium.Net.Integration.Tests.Helpers
 
         private void GetAppiumJsPath()
         {
-            byte[] bytes;
-            string appiumJsPath;
-            string npmPath;
-           
-            bytes = Resources.PathToNode;
-            appiumJsPath = Encoding.UTF8.GetString(bytes); 
+            byte[] bytes = Resources.PathToNode;
+            string appiumJsPath = Encoding.UTF8.GetString(bytes);
 
-            npmPath = Npm.GetNpmPrefixPath();
+            string npmPath = Npm.GetNpmPrefixPath();
 
             string tempPath = Path.Combine(npmPath, appiumJsPath);
             _pathToAppiumPackageIndex = tempPath.Replace("\\", "/");
