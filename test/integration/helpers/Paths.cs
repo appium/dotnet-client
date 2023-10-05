@@ -15,13 +15,13 @@ namespace Appium.Net.Integration.Tests.Helpers
             {
                 if (_pathToAppiumPackageIndex == null)
                 {
-                    GetAppiumJsPath();
+                    GetAppiumPackageIndexPath();
                 }
                 return _pathToAppiumPackageIndex;
             }
         }
 
-        private void GetAppiumJsPath()
+        private void GetAppiumPackageIndexPath()
         {
             byte[] bytes = Resources.PathToNode;
             string appiumJsPath = Encoding.UTF8.GetString(bytes);
