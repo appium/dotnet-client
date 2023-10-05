@@ -12,12 +12,20 @@ namespace Appium.Net.Integration.Tests.helpers
         public static string GetNpmPrefixPath()
         {
             envPlatform = Platform.CurrentPlatform;
-            string npmPath = GetNpmExecutablePath();
-            string result = RunCommand(npmPath, "config get prefix");
+            string npmPath;
+            if (envPlatform.IsPlatformType(PlatformType.Windows))
+            {
+                npmPath = GetNpmExecutablePath();
+            }
+            else
+            {
+                npmPath = "npm";
+            }
+            string result = RunCommand(npmPath, "list -g --depth=0");
+            string[] lines = result?.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            string npmPrefixPath = lines[0];
 
-            result = result.Trim();
-
-            return result;
+            return npmPrefixPath;
         }
 
         private static string RunCommand(string command, string arguments)
@@ -51,19 +59,15 @@ namespace Appium.Net.Integration.Tests.helpers
 
         private static string GetNpmExecutablePath()
         {
+            string result = RunCommand("where", "npm");
             string npmPath;
-            string command = envPlatform.IsPlatformType(PlatformType.Unix) || envPlatform.IsPlatformType(PlatformType.Mac) ? "which" : "where";
-            string result =  RunCommand(command, "npm");
+            /*string command = envPlatform.IsPlatformType(PlatformType.Unix) || envPlatform.IsPlatformType(PlatformType.Mac) ? "which" : "where";
+            string result =  RunCommand(command, "npm");*/
 
             string[] lines = result?.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-            if (envPlatform.IsPlatformType(PlatformType.Windows))
-            {
-                npmPath = lines?.FirstOrDefault(line => line.EndsWith("npm.cmd"));
-            }
-            else 
-            {
-                npmPath = lines?.FirstOrDefault(line => line.EndsWith("npm"));
-            }
+
+            npmPath = lines?.FirstOrDefault(line => line.EndsWith("npm.cmd"));
+
             return npmPath;
         }
     }
