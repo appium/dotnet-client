@@ -69,52 +69,17 @@ namespace Appium.Net.Integration.Tests.Properties {
                 return ((byte[])(obj));
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        [Obsolete]
-        public static byte[] PathToLinuxNode {
+        public static byte[] PathToNode {
             get {
-                object obj = ResourceManager.GetObject("PathToLinuxNode", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        [Obsolete]
-        public static byte[] PathToMacOSNode {
-            get {
-                object obj = ResourceManager.GetObject("PathToMacOSNode", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        [Obsolete]
-        public static byte[] PathToWindowsNode {
-            get {
-                object obj = ResourceManager.GetObject("PathToWindowsNode", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        public static byte[] PathToNode
-        {
-            get
-            {
                 object obj = ResourceManager.GetObject("PathToNode", resourceCulture);
                 return ((byte[])(obj));
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
