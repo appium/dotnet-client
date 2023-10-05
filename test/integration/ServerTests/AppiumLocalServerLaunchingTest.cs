@@ -17,7 +17,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
     [TestFixture]
     public class AppiumLocalServerLaunchingTest
     {
-        private string _pathToCustomizedAppiumJs;
+        private string _pathToAppiumPackageIndex;
         private string _testIp;
 
         [OneTimeSetUp]
@@ -38,7 +38,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
             Console.WriteLine(_testIp);
 
             Paths paths = new Paths();
-            _pathToCustomizedAppiumJs = paths.PathToCustomizedAppiumJs;
+            _pathToAppiumPackageIndex = paths.PathToAppiumPackageIndex;
         }
 
         [Test]
@@ -84,7 +84,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
             AppiumLocalService service = null;
             try
             {
-                var definedNode = _pathToCustomizedAppiumJs;
+                var definedNode = _pathToAppiumPackageIndex;
                 Environment.SetEnvironmentVariable(AppiumServiceConstants.AppiumBinaryPath, definedNode);
                 service = AppiumLocalService.BuildDefaultService();
                 service.Start();
@@ -103,7 +103,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
             AppiumLocalService service = null;
             try
             {
-                service = new AppiumServiceBuilder().WithAppiumJS(new FileInfo(_pathToCustomizedAppiumJs)).Build();
+                service = new AppiumServiceBuilder().WithAppiumJS(new FileInfo(_pathToAppiumPackageIndex)).Build();
                 service.Start();
                 Assert.AreEqual(true, service.IsRunning);
             }

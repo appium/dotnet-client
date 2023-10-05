@@ -7,17 +7,17 @@ namespace Appium.Net.Integration.Tests.Helpers
 {
     internal class Paths
     {
-        private string _pathToCustomizedAppiumJs;
+        private string _pathToAppiumPackageIndex;
 
-        public string PathToCustomizedAppiumJs
+        public string PathToAppiumPackageIndex
         {
             get
             {
-                if (_pathToCustomizedAppiumJs == null)
+                if (_pathToAppiumPackageIndex == null)
                 {
                     GetAppiumJsPath();
                 }
-                return _pathToCustomizedAppiumJs;
+                return _pathToAppiumPackageIndex;
             }
         }
 
@@ -31,7 +31,7 @@ namespace Appium.Net.Integration.Tests.Helpers
             appiumJsPath = Encoding.UTF8.GetString(bytes); 
 
             npmPath = Npm.GetNpmPrefixPath();
-            _pathToCustomizedAppiumJs = Path.Combine(npmPath, appiumJsPath);
+            _pathToAppiumPackageIndex = Path.Combine(npmPath, appiumJsPath);
 
         }
     }
