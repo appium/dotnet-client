@@ -7,13 +7,13 @@ namespace Appium.Net.Integration.Tests.helpers
 {
     internal class Npm
     {
-        static private Platform envPlatform;
 
         public static string GetNpmPrefixPath()
         {
-            envPlatform = Platform.CurrentPlatform;
+
             string npmPath;
-            if (envPlatform.IsPlatformType(PlatformType.Windows))
+
+            if (Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows))
             {
                 npmPath = GetNpmExecutablePath();
             }
@@ -30,6 +30,7 @@ namespace Appium.Net.Integration.Tests.helpers
 
         private static string RunCommand(string command, string arguments)
         {
+            int timeoutMilliseconds = 30000;
             try
             {
                 Process process = new Process
@@ -46,7 +47,7 @@ namespace Appium.Net.Integration.Tests.helpers
 
                 process.Start();
                 string output = process.StandardOutput.ReadToEnd();
-                process.WaitForExit();
+                process.WaitForExit(timeoutMilliseconds);
 
                 return output;
             }
