@@ -8,5 +8,10 @@ namespace Appium.Net.Integration.Tests.helpers
             : base("Node Package Manager (npm) cannot be found. Make sure Node.js is installed and present in PATH.")
         {
         }
+
+        public NpmNotFoundException(string message)
+            : base(message)
+        {
+        }
     }
 }
