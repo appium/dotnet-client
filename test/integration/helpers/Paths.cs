@@ -23,7 +23,7 @@ namespace Appium.Net.Integration.Tests.Helpers
 
         private void GetAppiumPackageIndexPath()
         {
-            byte[] bytes = Resources.PathToNode;
+            byte[] bytes = Resources.PathToPackageIndex;
             string appiumJsPath = Encoding.UTF8.GetString(bytes);
 
             string npmPath = Npm.GetNpmPrefixPath();
