@@ -20,11 +20,11 @@ namespace Appium.Net.Integration.Tests.helpers
                 {
                     _testApps = new Dictionary<string, string>
                     {
-                        {iosTestApp, "https://github.com/appium/dotnet-client/tree/master/test/integration/apps/archives/TestApp.app.zip?raw=true"},
-                        {iosWebviewApp, "https://github.com/appium/dotnet-client/tree/master/test/integration/apps/archives/WebViewApp.app.zip?raw=true"},
-                        {iosUICatalogApp, "https://github.com/appium/dotnet-client/tree/master/test/integration/apps/archives/UICatalog.app.zip?raw=true"},
-                        {androidApiDemos, "https://github.com/appium/dotnet-client/tree/master/test/integration/apps/archives/ApiDemos-debug.zip?raw=true"},
-                        {vodqaApp, "https://github.com/appium/dotnet-client/tree/master/test/integration/apps/archives/vodqa.zip?raw=true"}
+                        {iosTestApp, "https://github.com/appium/dotnet-client/blob/main/test/integration/apps/archives/TestApp.app.zip?raw=true"},
+                        {iosWebviewApp, "https://github.com/appium/dotnet-client/blob/main/test/integration/apps/archives/WebViewApp.app.zip?raw=true"},
+                        {iosUICatalogApp, "https://github.com/appium/dotnet-client/blob/main/test/integration/apps/archives/UICatalog.app.zip?raw=true"},
+                        {androidApiDemos, "https://github.com/appium/dotnet-client/blob/main/test/integration/apps/archives/ApiDemos-debug.zip?raw=true"},
+                        {vodqaApp, "https://github.com/appium/dotnet-client/blob/main/test/integration/apps/archives/vodqa.zip?raw=true"}
                     };
                 }
                 else
