@@ -1,5 +1,4 @@
-﻿using OpenQA.Selenium;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Linq;
 
@@ -10,14 +9,7 @@ namespace Appium.Net.Integration.Tests.helpers
 
         public static string GetNpmPrefixPath()
         {
-
-            string npmPath = "npm";
-
-            if (Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows))
-            {
-                npmPath = GetNpmExecutablePath();
-            }
-
+            string npmPath = GetNpmExecutablePath();
             string npmPrefixPath = RunCommand(npmPath, "-g root");
 
             return npmPrefixPath.Trim();
@@ -60,21 +52,35 @@ namespace Appium.Net.Integration.Tests.helpers
             }
         }
 
-            private static string GetNpmExecutablePath()
+        private static string GetNpmExecutablePath()
         {
-            string result = RunCommand("where", "npm");
+            string commandName = IsWindows() ? "where" : "which";
+            string result = RunCommand(commandName, "npm");
+
             string npmPath;
 
             string[] lines = result?.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
 
-            npmPath = lines?.FirstOrDefault(line => line.EndsWith("npm.cmd"));
+            if (IsWindows())
+            {
+                npmPath = lines?.FirstOrDefault(line => !string.IsNullOrWhiteSpace(line) && line.EndsWith("npm.cmd"));
+            }
+            else
+            {
+                npmPath = lines?.FirstOrDefault(line => !string.IsNullOrWhiteSpace(line));
+            }
 
             if (string.IsNullOrWhiteSpace(npmPath))
             {
-                throw new NpmNotFoundException($"NPM executable not found at path: {npmPath}. Please make sure the NPM executable is installed and check the configured path.");
+                throw new NpmNotFoundException("NPM executable not found. Please make sure the NPM executable is installed and check the configured path.");
             }
 
             return npmPath;
+        }
+
+        private static bool IsWindows()
+        {
+            return Environment.OSVersion.Platform == PlatformID.Win32NT;
         }
     }
 }
