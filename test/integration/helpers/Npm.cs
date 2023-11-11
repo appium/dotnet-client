@@ -72,7 +72,7 @@ namespace Appium.Net.Integration.Tests.helpers
 
             if (string.IsNullOrWhiteSpace(npmPath))
             {
-                throw new NpmNotFoundException("NPM executable not found. Please make sure the NPM executable is installed and check the configured path.");
+                throw new NpmNotFoundException("NPM executable not found. Please make sure the NPM executable is installed and check the configured PATH environment variable.");
             }
 
             return npmPath;
