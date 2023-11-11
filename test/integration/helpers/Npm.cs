@@ -34,6 +34,7 @@ namespace Appium.Net.Integration.Tests.helpers
                         FileName = command,
                         Arguments = arguments,
                         RedirectStandardOutput = true,
+                        RedirectStandardError = true,
                         UseShellExecute = false,
                         CreateNoWindow = true,
                     }
@@ -41,7 +42,14 @@ namespace Appium.Net.Integration.Tests.helpers
                 {
                     process.Start();
                     string output = process.StandardOutput.ReadToEnd();
+                    string errorOutput = process.StandardError.ReadToEnd();
                     process.WaitForExit(timeoutMilliseconds);
+
+                    int exitCode = process.ExitCode;
+                    if (exitCode != 0)
+                    {
+                        throw new ApplicationException($"Command exited with code {exitCode}. Error: {errorOutput}");
+                    }
 
                     return output;
                 }
