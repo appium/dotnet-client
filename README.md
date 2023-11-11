@@ -4,6 +4,8 @@
 [![Build Status](https://dev.azure.com/AppiumCI/dotnet-client/_apis/build/status/appium.dotnet-client?branchName=main)](https://dev.azure.com/AppiumCI/dotnet-client/_build/latest?definitionId=68&branchName=main)
 
 [![NuGet Downloads](https://img.shields.io/nuget/dt/Appium.Webdriver.svg)](https://www.nuget.org/packages/Appium.Webdriver)
+[![License](https://img.shields.io/badge/License-Apache_2.0-lightblue.svg)](https://opensource.org/licenses/Apache-2.0)
+
 
 [![Build and deploy NuGet package](https://github.com/appium/dotnet-client/actions/workflows/release-nuget.yml/badge.svg)](https://github.com/appium/dotnet-client/actions/workflows/release-nuget.yml)
 
