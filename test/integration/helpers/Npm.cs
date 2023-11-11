@@ -40,7 +40,7 @@ namespace Appium.Net.Integration.Tests.helpers
                     int exitCode = process.ExitCode;
                     if (exitCode != 0)
                     {
-                        throw new ApplicationException($"Command exited with code {exitCode}. Error: {errorOutput}");
+                        throw new ApplicationException($"Command: {command} exited with code {exitCode}. Error: {errorOutput}");
                     }
 
                     return output;
