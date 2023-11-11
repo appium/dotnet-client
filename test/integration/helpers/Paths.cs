@@ -1,8 +1,5 @@
 ﻿using Appium.Net.Integration.Tests.helpers;
-using Appium.Net.Integration.Tests.Properties;
-using System;
 using System.IO;
-using System.Text;
 
 namespace Appium.Net.Integration.Tests.Helpers
 {
@@ -23,19 +20,14 @@ namespace Appium.Net.Integration.Tests.Helpers
         }
 
         /// <summary>
-        /// Combines the path components from the appiumJsPath with the npmPath.
+        /// Initializes the Appium package index path by combining the components "appium" and "index.js" with the npm prefix path.
         /// </summary>
         /// <remarks>
-        /// This function reads a byte array from the PathToPackageIndex resource, converts it to a string,
-        /// processes the relative path to remove '\r\n', and combines it with the npm prefix path.
-        /// The resulting combined path is assigned to the _pathToAppiumPackageIndex variable.
+        /// This method sets the _pathToAppiumPackageIndex variable by combining the specified components with the npm prefix path.
         /// </remarks>
         private void InitAppiumPackageIndexPath()
         {
-            byte[] bytes = Resources.PathToPackageIndex;
-            string appiumJsPath = Encoding.UTF8.GetString(bytes);
-            string[] appiumJsPathComponents = appiumJsPath.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-
+            string[] appiumJsPathComponents = { "appium", "index.js" }; 
             string npmPath = Npm.GetNpmPrefixPath();
 
             _pathToAppiumPackageIndex = Path.Combine(npmPath, Path.Combine(appiumJsPathComponents));

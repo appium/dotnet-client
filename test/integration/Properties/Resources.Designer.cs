@@ -73,16 +73,6 @@ namespace Appium.Net.Integration.Tests.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        public static byte[] PathToPackageIndex {
-            get {
-                object obj = ResourceManager.GetObject("PathToPackageIndex", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
         public static byte[] TestApp_app {
             get {
                 object obj = ResourceManager.GetObject("TestApp_app", resourceCulture);
