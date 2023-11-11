@@ -16,7 +16,7 @@ namespace Appium.Net.Integration.Tests.Helpers
             {
                 if (_pathToAppiumPackageIndex == null)
                 {
-                    GetAppiumPackageIndexPath();
+                    InitAppiumPackageIndexPath();
                 }
                 return _pathToAppiumPackageIndex;
             }
@@ -30,7 +30,7 @@ namespace Appium.Net.Integration.Tests.Helpers
         /// processes the relative path to remove '\r\n', and combines it with the npm prefix path.
         /// The resulting combined path is assigned to the _pathToAppiumPackageIndex variable.
         /// </remarks>
-        private void GetAppiumPackageIndexPath()
+        private void InitAppiumPackageIndexPath()
         {
             byte[] bytes = Resources.PathToPackageIndex;
             string appiumJsPath = Encoding.UTF8.GetString(bytes);
