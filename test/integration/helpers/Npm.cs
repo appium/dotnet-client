@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 
@@ -35,21 +36,39 @@ namespace Appium.Net.Integration.Tests.helpers
                     process.Start();
                     string output = process.StandardOutput.ReadToEnd();
                     string errorOutput = process.StandardError.ReadToEnd();
-                    process.WaitForExit(timeoutMilliseconds);
+                    _ = process.WaitForExit(timeoutMilliseconds);
 
                     int exitCode = process.ExitCode;
-                    if (exitCode != 0)
+                    if (exitCode == 1)
                     {
-                        throw new ApplicationException($"Command: {command} exited with code {exitCode}. Error: {errorOutput}");
+                        throw new NpmUnknownCommandException($"Command: `{arguments}` exited with code {exitCode}. Error: {output}");
+                    }
+                    else if (exitCode != 0)
+                    {
+                        throw new ApplicationException($"Command: `{command}` exited with code {exitCode}. Error: {errorOutput}");
                     }
 
                     return output;
                 }
             }
+            catch (ApplicationException ex)
+            {
+                throw ex;
+            }
+
+            catch (Win32Exception)
+            {
+                throw;
+            }
+            catch (NpmUnknownCommandException)
+            {
+                throw;
+            }
             catch (Exception)
             {
                 throw new NpmNotFoundException();
             }
+
         }
 
         private static string GetNpmExecutablePath()
