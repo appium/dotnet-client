@@ -37,8 +37,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
             }
             Console.WriteLine(_testIp);
 
-            Paths paths = new Paths();
-            _pathToAppiumPackageIndex = paths.PathToAppiumPackageIndex;
+            _pathToAppiumPackageIndex = new Paths().PathToAppiumPackageIndex;
         }
 
         [Test]
