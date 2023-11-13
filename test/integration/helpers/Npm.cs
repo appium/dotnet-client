@@ -41,7 +41,14 @@ namespace Appium.Net.Integration.Tests.helpers
                     int exitCode = process.ExitCode;
                     if (exitCode == 1)
                     {
-                        throw new NpmUnknownCommandException($"Command: `{arguments}` exited with code {exitCode}. Error: {output}");
+                        if (command.Contains("npm"))
+                        {
+                            throw new NpmUnknownCommandException($"Command: `{arguments}` exited with code {exitCode}. Error: {output}");
+                        }
+                        else
+                        {
+                            throw new Exception($"Command: '{command} {arguments}` exited with code {exitCode}. Error: {errorOutput}");
+                        }
                     }
                     else if (exitCode != 0)
                     {
@@ -51,22 +58,25 @@ namespace Appium.Net.Integration.Tests.helpers
                     return output;
                 }
             }
-            catch (ApplicationException ex)
+            catch (ApplicationException)
             {
-                throw ex;
+                throw;
             }
 
             catch (Win32Exception)
             {
-                throw;
+                if (command.Contains("npm"))
+                {
+                    throw new NpmNotFoundException();
+                }
+                else
+                {
+                    throw;
+                }
             }
             catch (NpmUnknownCommandException)
             {
                 throw;
-            }
-            catch (Exception)
-            {
-                throw new NpmNotFoundException();
             }
 
         }
