@@ -53,7 +53,7 @@ namespace Appium.Net.Integration.Tests.helpers
             catch (Win32Exception ex) when (command.Contains("npm"))
             {
                 Console.WriteLine(ex.Message);
-                throw new NpmNotFoundException($"mpm not found under {command}", ex);
+                throw new NpmNotFoundException($"npm not found under {command}", ex);
             }
         }
 
