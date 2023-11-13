@@ -13,5 +13,10 @@ namespace Appium.Net.Integration.Tests.helpers
             : base(message)
         {
         }
+
+        public NpmNotFoundException(string message, Exception innerException)
+        : base(message, innerException)
+        {
+        }
     }
 }

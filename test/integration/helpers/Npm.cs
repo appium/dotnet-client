@@ -1,7 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace Appium.Net.Integration.Tests.helpers
 {
@@ -39,46 +41,20 @@ namespace Appium.Net.Integration.Tests.helpers
                     _ = process.WaitForExit(timeoutMilliseconds);
 
                     int exitCode = process.ExitCode;
-                    if (exitCode == 1)
+                    if ((exitCode == 1) && command.Contains("npm"))
                     {
-                        if (command.Contains("npm"))
-                        {
-                            throw new NpmUnknownCommandException($"Command: `{arguments}` exited with code {exitCode}. Error: {output}");
-                        }
-                        else
-                        {
-                            throw new Exception($"Command: '{command} {arguments}` exited with code {exitCode}. Error: {errorOutput}");
-                        }
-                    }
-                    else if (exitCode != 0)
-                    {
-                        throw new ApplicationException($"Command: `{command}` exited with code {exitCode}. Error: {errorOutput}");
+                        Console.WriteLine($"npm Error upon command: `{arguments}`. {output}");
+                        throw new NpmUnknownCommandException($"Command: `{arguments}` exited with code {exitCode}. Error: {output}");
                     }
 
                     return output;
                 }
             }
-            catch (ApplicationException)
+            catch (Win32Exception ex) when (command.Contains("npm"))
             {
-                throw;
+                Console.WriteLine(ex.Message);
+                throw new NpmNotFoundException($"mpm not found under {command}", ex);
             }
-
-            catch (Win32Exception)
-            {
-                if (command.Contains("npm"))
-                {
-                    throw new NpmNotFoundException();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            catch (NpmUnknownCommandException)
-            {
-                throw;
-            }
-
         }
 
         private static string GetNpmExecutablePath()
