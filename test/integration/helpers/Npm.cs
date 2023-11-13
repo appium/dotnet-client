@@ -1,9 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
 
 namespace Appium.Net.Integration.Tests.helpers
 {
