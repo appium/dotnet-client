@@ -20,6 +20,8 @@ namespace Appium.Net.Integration.Tests.helpers
 
         private static string RunCommand(string command, string arguments, int timeoutMilliseconds = 30000)
         {
+            int exitCode;
+            string output;
             try
             {
                 using (Process process = new Process
@@ -36,20 +38,22 @@ namespace Appium.Net.Integration.Tests.helpers
                 })
                 {
                     process.Start();
-                    string output = process.StandardOutput.ReadToEnd();
+
+                    output = process.StandardOutput.ReadToEnd();
                     string errorOutput = process.StandardError.ReadToEnd();
                     _ = process.WaitForExit(timeoutMilliseconds);
 
-                    int exitCode = process.ExitCode;
-                    if ((exitCode == 1) && command.Contains("npm"))
-                    {
-                        Console.WriteLine($"npm Error upon command: `{arguments}`. {output}");
-                        throw new NpmUnknownCommandException($"Command: `{arguments}` exited with code {exitCode}. Error: {output}");
-                    }
-
-                    return output;
+                    exitCode = process.ExitCode;
                 }
+                if ((exitCode == 1) && command.Contains("npm"))
+                {
+                    Console.WriteLine($"npm Error upon command: `{arguments}`. {output}");
+                    throw new NpmUnknownCommandException($"Command: `{arguments}` exited with code {exitCode}. Error: {output}");
+                }
+
+                return output;
             }
+
             catch (Win32Exception ex) when (command.Contains("npm"))
             {
                 Console.WriteLine(ex.Message);
