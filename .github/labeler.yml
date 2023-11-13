@@ -16,6 +16,9 @@ CI:
 Test:
   title: "^test:.*"
 
+Chore:
+  title: "^chore:.*"
+
 WIP:
   title: "^WIP:.*"
   mergeable: false
