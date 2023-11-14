@@ -33,9 +33,6 @@ steps:
     npm install -g appium
   displayName: 'Install Appium'
 
-#- script: start appium
-#  displayName: 'Start Appium Server'
-
 - task: DotNetCoreCLI@2
   displayName: 'Run unit tests - $(buildConfiguration)'
   inputs:
