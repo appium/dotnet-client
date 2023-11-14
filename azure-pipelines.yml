@@ -33,13 +33,10 @@ steps:
     npm install -g appium
   displayName: 'Install Appium'
 
-- script: start appium
-  displayName: 'Start Appium Server'
-
 - task: DotNetCoreCLI@2
   displayName: 'Run unit tests - $(buildConfiguration)'
   inputs:
     command: 'test'
-    arguments: '--no-build --configuration $(buildConfiguration) --filter Name~CheckAbilityToBuildDefaultService'
+    arguments: '--no-build --configuration $(buildConfiguration) --filter AppiumLocalServerLaunchingTest'
     publishTestResults: true
     projects: '**/*.Tests.csproj'
