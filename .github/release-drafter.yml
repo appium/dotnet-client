@@ -33,3 +33,6 @@ version-resolver:
       - 'BugFix'
       - 'Dependencies'
   default: patch
+  
+prerelease: true
+prerelease-identifier: 'rc'
