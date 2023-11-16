@@ -1,25 +1,45 @@
 name-template: 'v$RESOLVED_VERSION'
 tag-template: 'v$RESOLVED_VERSION'
 template: |
-  # What's Changed
+  # Release Notes - Version v$RESOLVED_VERSION
 
-  $CHANGES
+  ## What's Changed
+
+  ### Enhancements
+  $ENHANCEMENTS
+
+  ### Bug Fixes
+  $BUG_FIXES
+
+  ### Refactors
+  $REFACTORS
+
+  ### Dependencies
+  $DEPENDENCIES
+
+  ### Pipeline
+  $PIPELINE
 
 categories:
   - title: 'Enhancements'
     label: 'Enhancement'
+    description: 'New features or improvements.'
   - title: 'Bug Fixes'
     labels:
       - 'BugFix'
-  - title: 'Refactor'
+    description: 'Fixes for reported issues.'
+  - title: 'Refactors'
     label: 'Refactor'
+    description: 'Code restructuring without changing its external behavior.'
   - title: 'Dependencies'
     labels:
       - 'Dependencies'
+    description: 'Updates to project dependencies.'
   - title: 'Pipeline'
     labels:
       - 'CI'
       - 'Build'
+    description: 'Changes related to the build and CI/CD pipeline.'
 
 version-resolver:
   major:
