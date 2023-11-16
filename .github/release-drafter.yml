@@ -20,6 +20,8 @@ categories:
     labels:
       - 'CI'
       - 'Build'
+  - title: '🧰 Maintenance'
+    label: 'Chore'  
 
 version-resolver:
   major:
