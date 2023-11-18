@@ -1,10 +1,13 @@
-# appium-dotnet-driver
+# appium-dotnet-client
 
 ![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Appium.WebDriver)
 [![Build and deploy NuGet package](https://github.com/appium/dotnet-client/actions/workflows/release-nuget.yml/badge.svg)](https://github.com/appium/dotnet-client/actions/workflows/release-nuget.yml)
 [![NuGet Downloads](https://img.shields.io/nuget/dt/Appium.Webdriver.svg)](https://www.nuget.org/packages/Appium.Webdriver)
 
 [![Build Status](https://dev.azure.com/AppiumCI/dotnet-client/_apis/build/status/appium.dotnet-client?branchName=main)](https://dev.azure.com/AppiumCI/dotnet-client/_build/latest?definitionId=68&branchName=main)
+
+[![Help Wanted](https://img.shields.io/github/issues-raw/appium/dotnet-client/HelpWanted?style=plastic&logo=github&logoColor=blue&label=Help%20Wanted%20issues&color=red
+)](https://github.com/appium/dotnet-client/issues?q=is%3Aopen+is%3Aissue+label%3AHelpWanted)
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-lightblue.svg)](https://opensource.org/licenses/Apache-2.0)
 
