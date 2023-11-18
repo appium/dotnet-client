@@ -1,6 +1,6 @@
 # appium-dotnet-client
 
-![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Appium.WebDriver)
+[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Appium.WebDriver)](https://www.nuget.org/packages/Appium.WebDriver/absoluteLatest)
 [![Build and deploy NuGet package](https://github.com/appium/dotnet-client/actions/workflows/release-nuget.yml/badge.svg)](https://github.com/appium/dotnet-client/actions/workflows/release-nuget.yml)
 [![NuGet Downloads](https://img.shields.io/nuget/dt/Appium.Webdriver.svg)](https://www.nuget.org/packages/Appium.Webdriver)
 
