@@ -14,7 +14,7 @@ updates:
     # Files stored in test/integration directory
     directory: "/test/integration" 
     schedule:
-      interval: "daily"
+      interval: "monthly"
 
   - package-ecosystem: "github-actions"
     # Workflow files stored in the

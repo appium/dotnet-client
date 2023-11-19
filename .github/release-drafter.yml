@@ -20,6 +20,8 @@ categories:
     labels:
       - 'CI'
       - 'Build'
+  - title: '🧰 Maintenance'
+    label: 'Chore'  
 
 version-resolver:
   major:
@@ -33,3 +35,6 @@ version-resolver:
       - 'BugFix'
       - 'Dependencies'
   default: patch
+  
+prerelease: true
+prerelease-identifier: 'rc'
