@@ -5,7 +5,7 @@ using OpenQA.Selenium.Appium.Android;
 
 namespace Appium.Net.Integration.Tests.Android.Device.Keys
 {
-    class HideKeyboardTestCase
+    class KeyboardTests
     {
         private AndroidDriver _driver;
 
@@ -34,8 +34,21 @@ namespace Appium.Net.Integration.Tests.Android.Device.Keys
         public void HideKeyBoardTestCase()
         {
             _driver.StartActivity("io.appium.android.apis", ".app.CustomTitle");
-            _driver.FindElement(By.Id("io.appium.android.apis:id/left_text_edit")).Clear();
+            var text_edit_btn = By.Id("io.appium.android.apis:id/left_text_edit");
+            _driver.FindElement(text_edit_btn).Clear();
+            _driver.FindElement(text_edit_btn).Click();
             _driver.HideKeyboard();
+        }
+
+        [Test]
+        public void IsKeyBoardShownTestCase()
+        {
+            _driver.StartActivity("io.appium.android.apis", ".app.CustomTitle");
+            var text_edit_btn = By.Id("io.appium.android.apis:id/left_text_edit");
+            _driver.FindElement(text_edit_btn).Clear();
+            _driver.FindElement(text_edit_btn).Click();
+            bool keyboard_bool = _driver.IsKeyboardShown();
+            Assert.IsTrue(keyboard_bool);
         }
     }
 }
