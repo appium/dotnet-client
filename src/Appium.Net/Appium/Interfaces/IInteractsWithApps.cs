@@ -38,11 +38,6 @@ namespace OpenQA.Selenium.Appium.Interfaces
         bool IsAppInstalled(string bundleId);
 
         /// <summary>
-        /// Resets the current app.
-        /// </summary>
-        void ResetApp();
-
-        /// <summary>
         /// Deactivates app completely (as "Home" button does).  
         /// </summary>
         void BackgroundApp();
