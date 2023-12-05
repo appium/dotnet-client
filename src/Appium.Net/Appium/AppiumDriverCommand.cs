@@ -155,11 +155,6 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string CloseApp = "closeApp";
 
-        /// <summary>
-        /// Reset App Command.
-        /// </summary>
-        public const string ResetApp = "resetApp";
-
         #endregion (Deprecated) legacy app management
 
         /// <summary>
