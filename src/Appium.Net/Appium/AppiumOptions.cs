@@ -42,7 +42,7 @@ namespace OpenQA.Selenium.Appium
         public string DeviceName { get; set; }
 
         /// <summary>
-        /// Gets or sets the Capability name used for the apllication setting.
+        /// Gets or sets the Capability name used for the application setting.
         /// </summary>
         public string App { get; set; }
 
@@ -84,11 +84,11 @@ namespace OpenQA.Selenium.Appium
 
         public override void AddAdditionalOption(string optionName, object optionValue)
         {
-            throw new NotImplementedException("Use the the AddAdditionalAppiumOption method for adding additional options");
+            throw new NotImplementedException("Use the AddAdditionalAppiumOption method for adding additional options");
         }
 
         /// <summary
-        /// Turn the capabilities into an desired capability
+        /// Turn the capabilities into a desired capability
         /// </summary>
         /// <returns>A desired capability</returns>
         public override ICapabilities ToCapabilities()
