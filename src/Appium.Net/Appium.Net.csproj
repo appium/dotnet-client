@@ -63,8 +63,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Selenium.Support" Version="4.15.0" />
-    <PackageReference Include="Selenium.WebDriver" Version="4.15.0" />
+    <PackageReference Include="Selenium.Support" Version="4.16.1" />
+    <PackageReference Include="Selenium.WebDriver" Version="4.16.1" />
   </ItemGroup>
 
   <ItemGroup>
