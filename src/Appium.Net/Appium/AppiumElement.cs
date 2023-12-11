@@ -181,11 +181,20 @@ namespace OpenQA.Selenium.Appium
         #region MJSonMethods
 
         /// <summary>
-        /// Rotates Device.
+        /// Rotates the device.
         /// </summary>
-        /// <param name="opts">rotations options like the following:
-        /// new Dictionary<string, int> {{"x", 114}, {"y", 198}, {"duration", 5}, 
-        /// {"radius", 3}, {"rotation", 220}, {"touchCount", 2}}
+        /// <param name="opts">
+        /// Rotations options like the following:
+        /// <example>
+        /// new Dictionary&lt;string, int&gt; {
+        ///     {"x", 114},
+        ///     {"y", 198},
+        ///     {"duration", 5},
+        ///     {"radius", 3},
+        ///     {"rotation", 220},
+        ///     {"touchCount", 2}
+        /// }
+        /// </example>
         /// </param>
         public void Rotate(Dictionary<string, int> opts)
         {
