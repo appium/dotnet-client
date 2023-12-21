@@ -38,7 +38,7 @@ namespace Appium.Net.Integration.Tests.Android
             _driver.StartRecordingScreen();
             Thread.Sleep(1000);
             var result = _driver.StopRecordingScreen();
-            Assert.IsNotEmpty(result);
+            Assert.That(result, Is.Not.Empty);
         }
         
         [Test]
@@ -51,7 +51,7 @@ namespace Appium.Net.Integration.Tests.Android
                     .WithVideoSize("720x1280"));
             Thread.Sleep(1000);
             var result = _driver.StopRecordingScreen();
-            Assert.IsNotEmpty(result);
+            Assert.That(result, Is.Not.Empty);
         }
     }
 }

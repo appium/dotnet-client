@@ -66,7 +66,7 @@ namespace Appium.Net.Integration.Tests.Windows
                     appCapabilities.DeviceName = "WindowsPC";
                     session = new WindowsDriver(serverUri, appCapabilities);
                 }
-                Assert.IsNotNull(session);
+                Assert.That(session, Is.Not.Null);
 
                 // Set implicit timeout to 1.5 seconds to make element search to retry every 500 ms for at most three times
                 session.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(1.5);

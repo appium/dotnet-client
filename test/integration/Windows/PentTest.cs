@@ -213,16 +213,16 @@ namespace Appium.Net.Integration.Tests.Windows
 
             // Preserve existing or previously opened Sticky Notes by keeping track of them on initialize
             var openedStickyNotesWindowsBefore = session.FindElements(MobileBy.ClassName("ApplicationFrameWindow"));
-            Assert.IsNotNull(openedStickyNotesWindowsBefore);
-            Assert.IsTrue(openedStickyNotesWindowsBefore.Count > 0);
+            Assert.That(openedStickyNotesWindowsBefore, Is.Not.Null);
+            Assert.That(openedStickyNotesWindowsBefore.Count > 0, Is.True);
 
             // Create a new Sticky Note by pressing Ctrl + N
             openedStickyNotesWindowsBefore[0].SendKeys(Keys.Control + "n" + Keys.Control);
             Thread.Sleep(TimeSpan.FromSeconds(2));
 
             var openedStickyNotesWindowsAfter = session.FindElements(MobileBy.ClassName("ApplicationFrameWindow"));
-            Assert.IsNotNull(openedStickyNotesWindowsAfter);
-            Assert.AreEqual(openedStickyNotesWindowsBefore.Count + 1, openedStickyNotesWindowsAfter.Count);
+            Assert.That(openedStickyNotesWindowsAfter, Is.Not.Null);
+            Assert.That(openedStickyNotesWindowsAfter.Count, Is.EqualTo(openedStickyNotesWindowsBefore.Count + 1));
 
             // Identify the newly opened Sticky Note by removing the previously opened ones from the list
             List<AppiumElement> openedStickyNotes = new List<AppiumElement>(openedStickyNotesWindowsAfter);
@@ -230,7 +230,7 @@ namespace Appium.Net.Integration.Tests.Windows
             {
                 openedStickyNotes.Remove(preExistingStickyNote);
             }
-            Assert.AreEqual(1, openedStickyNotes.Count);
+            Assert.That(openedStickyNotes.Count, Is.EqualTo(1));
 
             // Create a new session based from the newly opened Sticky Notes window
             var newStickyNoteWindowHandle = openedStickyNotes[0].GetAttribute("NativeWindowHandle");
@@ -239,7 +239,7 @@ namespace Appium.Net.Integration.Tests.Windows
             appCapabilities.AddAdditionalAppiumOption("appTopLevelWindow", newStickyNoteWindowHandle);
             appCapabilities.DeviceName = "WindowsPC";
             newStickyNoteSession = new WindowsDriver(serverUri, appCapabilities);
-            Assert.IsNotNull(newStickyNoteSession);
+            Assert.That(newStickyNoteSession, Is.Not.Null);
 
             // Resize and re-position the Sticky Notes window we are working with
             newStickyNoteSession.Manage().Window.Size = new Size(stickyNoteWidth, stickyNoteHeight);
@@ -248,9 +248,9 @@ namespace Appium.Net.Integration.Tests.Windows
             // Verify that this Sticky Notes is indeed new. Newly created Sticky Notes has both
             // RichEditBox and InkCanvas in the UI tree. Once modified by a pen or key input,
             // it will only contain one or the other.
-            Assert.IsNotNull(newStickyNoteSession.FindElement(MobileBy.AccessibilityId("RichEditBox")));
+            Assert.That(newStickyNoteSession.FindElement(MobileBy.AccessibilityId("RichEditBox")), Is.Not.Null);
             inkCanvas = newStickyNoteSession.FindElement(MobileBy.AccessibilityId("InkCanvas"));
-            Assert.IsNotNull(inkCanvas);
+            Assert.That(inkCanvas, Is.Not.Null);
         }
 
         [TearDown]
@@ -272,6 +272,7 @@ namespace Appium.Net.Integration.Tests.Windows
             }
 
             inkCanvas = null;
+            newStickyNoteSession?.Quit();
         }
     }
 }
