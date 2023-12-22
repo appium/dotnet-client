@@ -62,12 +62,20 @@ namespace Appium.Net.Integration.Tests.ServerTests
             var service = AppiumLocalService.BuildDefaultService();
             var lines = new List<string>();
 
-            service.OutputDataReceived += (sender, e) => { lines.Add(e.Data); Console.Out.WriteLine(e.Data); };
+            ManualResetEvent dataReceivedEvent = new ManualResetEvent(false);
+
+            service.OutputDataReceived += (sender, e) =>
+            {
+                lines.Add(e.Data);
+                Console.Out.WriteLine(e.Data);
+                dataReceivedEvent.Set();
+            };
 
             try
             {
                 service.Start();
                 Assert.That(service.IsRunning, Is.EqualTo(true));
+                dataReceivedEvent.WaitOne(TimeSpan.FromSeconds(10));
             }
             finally
             {
@@ -276,8 +284,8 @@ namespace Appium.Net.Integration.Tests.ServerTests
                 service.Start();
                 Assert.Multiple(() =>
                 {
-                    Assert.That(log.Exists);
-                    Assert.That(log.Length > 0); //There should be Appium greeting messages
+                    Assert.That(log.Exists, Is.True);
+                    Assert.That(log.Length, Is.GreaterThan(0)); //There should be Appium greeting messages
                 });
             }
             finally
