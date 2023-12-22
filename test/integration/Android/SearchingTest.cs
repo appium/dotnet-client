@@ -44,7 +44,7 @@ namespace Appium.Net.Integration.Tests.Android
             By byAccessibilityId = new ByAccessibilityId("Graphics");
             Assert.Multiple(() =>
             {
-                Assert.That(Is.Not.EqualTo(_driver.FindElement(byAccessibilityId).Text), null);
+                Assert.That(_driver.FindElement(byAccessibilityId).Text, Is.EqualTo("Graphics"));
                 Assert.That(_driver.FindElements(byAccessibilityId), Is.Not.Empty);
             });
         }
@@ -66,8 +66,8 @@ namespace Appium.Net.Integration.Tests.Android
             var byXPath = "//android.widget.TextView[contains(@text, 'Animat')]";
             Assert.Multiple(() =>
             {
-                Assert.That(_driver.FindElement(MobileBy.XPath(byXPath)).Text, Is.Not.Null);
-                Assert.That(_driver.FindElements(MobileBy.XPath(byXPath)).Count, Is.EqualTo(1));
+                Assert.That(_driver.FindElement(By.XPath(byXPath)).Text, Is.Not.Null);
+                Assert.That(_driver.FindElements(By.XPath(byXPath)), Has.Count.EqualTo(1));
             });
         }
 
