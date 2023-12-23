@@ -60,7 +60,7 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
         }
 
         /// <summary>
-        /// In order for this test to pass, need to run appium server as followes: `appium --allow-insecure get_server_logs`
+        /// For this test to pass, need to run the appium server as follows: `appium --allow-insecure get_server_logs`
         /// </summary>
         [Test]
         public void CanCaptureServerTest()
