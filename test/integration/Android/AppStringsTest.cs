@@ -32,13 +32,13 @@ namespace Appium.Net.Integration.Tests.Android
         [Test]
         public void GetAppStrings()
         {
-            Assert.AreNotSame(0, _driver.GetAppStringDictionary().Count);
+            Assert.That(_driver.GetAppStringDictionary(), Is.Not.Empty);
         }
 
         [Test]
         public void GetAppStringsUsingLang()
         {
-            Assert.AreNotSame(0, _driver.GetAppStringDictionary("en").Count);
+            Assert.That(_driver.GetAppStringDictionary("en"), Is.Not.Empty);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace Appium.Net.Integration.Tests.Android
         {
             var rotatable = ((IRotatable) _driver);
             rotatable.Orientation = ScreenOrientation.Portrait;
-            Assert.AreEqual(ScreenOrientation.Portrait, rotatable.Orientation);
+            Assert.That(rotatable.Orientation, Is.EqualTo(ScreenOrientation.Portrait));
         }
     }
 }

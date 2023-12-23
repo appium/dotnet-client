@@ -35,14 +35,14 @@ namespace Appium.Net.Integration.Tests.Android
         public void GetDeviceUdidTest()
         {
             var deviceUiid = _driver.SessionDetails["deviceUDID"].ToString();
-            Assert.NotNull(deviceUiid);
+            Assert.That(deviceUiid, Is.Not.Null);
         }
 
         [Test]
         public void GetDeviceDictionaryData()
         {
             var dictionary = (Dictionary<string, object>) _driver.SessionDetails["desired"];
-            Assert.AreNotEqual(dictionary.Count, 0);
+            Assert.That(dictionary.Count, Is.Not.EqualTo(0));
         }
     }
 }

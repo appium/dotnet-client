@@ -63,7 +63,7 @@ namespace Appium.Net.Integration.Tests.Android
 
             els = _driver.FindElements(MobileBy.ClassName("android.widget.TextView"));
 
-            Assert.AreNotEqual(number1, els.Count);
+            Assert.That(els.Count, Is.Not.EqualTo(number1));
         }
 
         [Test]
@@ -80,7 +80,7 @@ namespace Appium.Net.Integration.Tests.Android
             var touchAction = new TouchAction(_driver);
             touchAction.Press(loc1.X, loc1.Y).Wait(800)
                 .MoveTo(loc2.X, loc2.Y).Release().Perform();
-            Assert.AreNotEqual(loc2.Y, target.Location.Y);
+            Assert.That(target.Location.Y, Is.Not.EqualTo(loc2.Y));
         }
 
         [Test]
@@ -102,7 +102,7 @@ namespace Appium.Net.Integration.Tests.Android
 
             var multiAction = new MultiAction(_driver);
             multiAction.Add(swipe).Perform();
-            Assert.AreNotEqual(loc2.Y, target.Location.Y);
+            Assert.That(target.Location.Y, Is.Not.EqualTo(loc2.Y));
         }
 
         [Test]
@@ -113,7 +113,7 @@ namespace Appium.Net.Integration.Tests.Android
             var multiTouch = new MultiAction(_driver);
 
             var tap1 = new TouchAction(_driver);
-            tap1.Press(els[5]).Wait(1500).Release();
+            tap1.Press(els[6]).Wait(1500).Release();
 
             multiTouch.Add(tap1).Add(tap1).Perform();
 
@@ -127,7 +127,7 @@ namespace Appium.Net.Integration.Tests.Android
             multiTouch2.Add(tap2).Add(tap2).Perform();
 
             Thread.Sleep(2500);
-            Assert.AreNotEqual(originalActivity, _driver.CurrentActivity);
+            Assert.That(_driver.CurrentActivity, Is.Not.EqualTo(originalActivity));
         }
     }
 }

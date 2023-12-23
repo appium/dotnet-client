@@ -48,7 +48,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
             try
             {
                 service.Start();
-                Assert.AreEqual(true, service.IsRunning);
+                Assert.That(service.IsRunning, Is.EqualTo(true));
             }
             finally
             {
@@ -62,19 +62,27 @@ namespace Appium.Net.Integration.Tests.ServerTests
             var service = AppiumLocalService.BuildDefaultService();
             var lines = new List<string>();
 
-            service.OutputDataReceived += (sender, e) => { lines.Add(e.Data); Console.Out.WriteLine(e.Data); };
+            ManualResetEvent dataReceivedEvent = new ManualResetEvent(false);
+
+            service.OutputDataReceived += (sender, e) =>
+            {
+                lines.Add(e.Data);
+                Console.Out.WriteLine(e.Data);
+                dataReceivedEvent.Set();
+            };
 
             try
             {
                 service.Start();
-                Assert.AreEqual(true, service.IsRunning);
+                Assert.That(service.IsRunning, Is.EqualTo(true));
+                dataReceivedEvent.WaitOne(TimeSpan.FromSeconds(10));
             }
             finally
             {
                 service.Dispose();
             }
 
-            Assert.IsNotEmpty(lines);
+            Assert.That(lines, Is.Not.Empty);
         }
 
         [Test]
@@ -87,7 +95,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
                 Environment.SetEnvironmentVariable(AppiumServiceConstants.AppiumBinaryPath, definedNode);
                 service = AppiumLocalService.BuildDefaultService();
                 service.Start();
-                Assert.AreEqual(true, service.IsRunning);
+                Assert.That(service.IsRunning, Is.EqualTo(true));
             }
             finally
             {
@@ -104,7 +112,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
             {
                 service = new AppiumServiceBuilder().WithAppiumJS(new FileInfo(_pathToAppiumPackageIndex)).Build();
                 service.Start();
-                Assert.AreEqual(true, service.IsRunning);
+                Assert.That(service.IsRunning, Is.EqualTo(true));
             }
             finally
             {
@@ -120,7 +128,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
             {
                 service = new AppiumServiceBuilder().UsingAnyFreePort().Build();
                 service.Start();
-                Assert.AreEqual(true, service.IsRunning);
+                Assert.That(service.IsRunning, Is.EqualTo(true));
             }
             finally
             {
@@ -135,7 +143,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
             try
             {
                 service.Start();
-                Assert.IsTrue(service.IsRunning);
+                Assert.That(service.IsRunning);
             }
             finally
             {
@@ -153,7 +161,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
             {
                 service = new AppiumServiceBuilder().WithArguments(args).Build();
                 service.Start();
-                Assert.IsTrue(service.IsRunning);
+                Assert.That(service.IsRunning);
             }
             finally
             {
@@ -170,7 +178,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
             {
                 service = new AppiumServiceBuilder().WithArguments(args).Build();
                 service.Start();
-                Assert.IsTrue(service.IsRunning);
+                Assert.That(service.IsRunning);
             }
             finally
             {
@@ -195,7 +203,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
             {
                 service = new AppiumServiceBuilder().WithArguments(args).Build();
                 service.Start();
-                Assert.IsTrue(service.IsRunning);
+                Assert.That(service.IsRunning);
             }
             finally
             {
@@ -221,7 +229,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
             {
                 service = new AppiumServiceBuilder().WithArguments(args).Build();
                 service.Start();
-                Assert.IsTrue(service.IsRunning);
+                Assert.That(service.IsRunning);
             }
             finally
             {
@@ -235,7 +243,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
             var service = AppiumLocalService.BuildDefaultService();
             service.Start();
             service.Dispose();
-            Assert.IsTrue(!service.IsRunning);
+            Assert.That(!service.IsRunning);
         }
 
         [Test]
@@ -256,10 +264,13 @@ namespace Appium.Net.Integration.Tests.ServerTests
             service3.Dispose();
             Thread.Sleep(1000);
             service4.Dispose();
-            Assert.IsTrue(!service1.IsRunning);
-            Assert.IsTrue(!service2.IsRunning);
-            Assert.IsTrue(!service3.IsRunning);
-            Assert.IsTrue(!service4.IsRunning);
+            Assert.Multiple(() =>
+            {
+                Assert.That(!service1.IsRunning);
+                Assert.That(!service2.IsRunning);
+                Assert.That(!service3.IsRunning);
+                Assert.That(!service4.IsRunning);
+            });
         }
 
 
@@ -271,8 +282,11 @@ namespace Appium.Net.Integration.Tests.ServerTests
             try
             {
                 service.Start();
-                Assert.IsTrue(log.Exists);
-                Assert.IsTrue(log.Length > 0); //There should be Appium greeting messages
+                Assert.Multiple(() =>
+                {
+                    Assert.That(log.Exists, Is.True);
+                    Assert.That(log.Length, Is.GreaterThan(0)); //There should be Appium greeting messages
+                });
             }
             finally
             {

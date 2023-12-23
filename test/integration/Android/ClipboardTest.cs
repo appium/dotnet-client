@@ -30,10 +30,11 @@ namespace Appium.Net.Integration.Tests.Android
             _driver?.LaunchApp();
         }
 
-        [TearDown]
-        public void TearDown()
+        [OneTimeTearDown]
+        public void OneTimeTearDown()
         {
             _driver?.CloseApp();
+            _driver?.Quit();
         }
 
         [Test]

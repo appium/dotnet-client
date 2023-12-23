@@ -54,7 +54,7 @@ namespace Appium.Net.Integration.Tests.IOS
             action.Press(el, 10, 10).Release();
             action.Perform();
             const string str = "4";
-            Assert.AreEqual(_driver.FindElement(MobileBy.XPath("//*[@name = \"Answer\"]")).Text, str);
+            Assert.That(_driver.FindElement(MobileBy.XPath("//*[@name = \"Answer\"]")).Text, Is.EqualTo(str));
         }
 
         [Test]
@@ -73,7 +73,7 @@ namespace Appium.Net.Integration.Tests.IOS
             m.Add(a1).Add(a2);
             m.Perform();
             const string str = "6";
-            Assert.AreEqual(_driver.FindElement(MobileBy.XPath("//*[@name = \"Answer\"]")).Text, str);
+            Assert.That(_driver.FindElement(MobileBy.XPath("//*[@name = \"Answer\"]")).Text, Is.EqualTo(str));
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Appium.Net.Integration.Tests.Android.Device.App
         public void Browser()
         {
             _driver.Navigate().GoToUrl("https://github.com/appium");
-            Assert.IsNotEmpty(_driver.PageSource);
+            Assert.That(_driver.PageSource, Is.Not.Empty);
         }
     }
 }

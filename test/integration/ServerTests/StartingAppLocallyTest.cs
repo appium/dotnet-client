@@ -151,7 +151,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
                 }
                 catch (Exception e)
                 {
-                    Assert.IsTrue(!service.IsRunning);
+                    Assert.That(!service.IsRunning);
                     return;
                 }
                 throw new Exception("Any exception was expected");

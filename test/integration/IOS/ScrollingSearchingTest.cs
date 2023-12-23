@@ -34,7 +34,7 @@ namespace Appium.Net.Integration.Tests.IOS
             var slider = _driver
                 .FindElement(new ByIosUIAutomation(".tableViews()[0]"
                                                    + ".scrollToElementWithPredicate(\"name CONTAINS 'Slider'\")"));
-            Assert.AreEqual(slider.GetAttribute("name"), "Sliders");
+            Assert.That(slider.GetAttribute("name"), Is.EqualTo("Sliders"));
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace Appium.Net.Integration.Tests.IOS
             var table = _driver.FindElement(new ByIosUIAutomation(".tableViews()[0]"));
             var slider = table.FindElement(
                 new ByIosUIAutomation(".scrollToElementWithPredicate(\"name CONTAINS 'Slider'\")"));
-            Assert.AreEqual(slider.GetAttribute("name"), "Sliders");
+            Assert.That(slider.GetAttribute("name"), Is.EqualTo("Sliders"));
         }
     }
 }

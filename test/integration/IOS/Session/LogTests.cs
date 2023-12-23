@@ -39,7 +39,7 @@ namespace Appium.Net.Integration.Tests.IOS.Session.Logs
             Assert.Multiple(() =>
             {
                 Assert.That(logs.AvailableLogTypes, Is.Not.Null);
-                Assert.That(availableLogTypes.Count, Is.GreaterThan(0), nameof(availableLogTypes));
+                Assert.That(availableLogTypes, Is.Not.Empty, nameof(availableLogTypes));
             });
             Console.WriteLine(@"Available log types:");
             foreach (var logType in availableLogTypes)
@@ -53,7 +53,7 @@ namespace Appium.Net.Integration.Tests.IOS.Session.Logs
         {
             var availableLogTypes = _driver.Manage().Logs.AvailableLogTypes;
             Assert.That(availableLogTypes, Is.Not.Null);
-            CollectionAssert.Contains(availableLogTypes, SyslogLogType);
+            Assert.That(availableLogTypes, Has.Member(SyslogLogType));
 
             Assert.DoesNotThrow(() => _driver.Manage().Logs.GetLog(SyslogLogType));
         }
@@ -63,7 +63,7 @@ namespace Appium.Net.Integration.Tests.IOS.Session.Logs
         {
             var availableLogTypes = _driver.Manage().Logs.AvailableLogTypes;
             Assert.That(availableLogTypes, Is.Not.Null);
-            CollectionAssert.Contains(availableLogTypes, CrashLogType);
+            Assert.That(availableLogTypes, Has.Member(CrashLogType));
 
             Assert.DoesNotThrow(() => _driver.Manage().Logs.GetLog(CrashLogType));
         }
@@ -73,7 +73,7 @@ namespace Appium.Net.Integration.Tests.IOS.Session.Logs
         {
             var availableLogTypes = _driver.Manage().Logs.AvailableLogTypes;
             Assert.That(availableLogTypes, Is.Not.Null);
-            CollectionAssert.Contains(availableLogTypes, ServerLogType);
+            Assert.That(availableLogTypes, Has.Member(ServerLogType));
 
             var appiumServerLog = _driver.Manage().Logs.GetLog(LogType.Server);
             Assert.That(appiumServerLog, Is.Not.Null.And.Count.GreaterThan(1));

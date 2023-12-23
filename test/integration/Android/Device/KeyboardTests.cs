@@ -48,7 +48,7 @@ namespace Appium.Net.Integration.Tests.Android.Device.Keys
             _driver.FindElement(text_edit_btn).Clear();
             _driver.FindElement(text_edit_btn).Click();
             bool keyboard_bool = _driver.IsKeyboardShown();
-            Assert.IsTrue(keyboard_bool);
+            Assert.That(keyboard_bool);
         }
     }
 }

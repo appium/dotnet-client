@@ -37,7 +37,7 @@ namespace Appium.Net.Integration.Tests.IOS
             _driver.StartRecordingScreen();
             Thread.Sleep(1000);
             var result = _driver.StopRecordingScreen();
-            Assert.IsNotEmpty(result);
+            Assert.That(result, Is.Not.Empty);
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace Appium.Net.Integration.Tests.IOS
                     .WithVideoScale("320:240"));
             Thread.Sleep(1000);
             var result = _driver.StopRecordingScreen();
-            Assert.IsNotEmpty(result);
+            Assert.That(result, Is.Not.Empty);
         }
     }
 }

@@ -52,7 +52,7 @@ namespace Appium.Net.Integration.Tests.IOS
             el.SendKeys("Appium");
             el.SendKeys(Keys.Return);
             Thread.Sleep(1000);
-            Assert.IsTrue(_driver.Title.Contains("Appium"));
+            Assert.That(_driver.Title.Contains("Appium"));
         }
     }
 }

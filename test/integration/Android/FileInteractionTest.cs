@@ -40,7 +40,7 @@ namespace Appium.Net.Integration.Tests.Android
             _driver.PushFile("/data/local/tmp/remote.txt", data);
             var returnDataBytes = _driver.PullFile("/data/local/tmp/remote.txt");
             var returnedData = Encoding.UTF8.GetString(returnDataBytes);
-            Assert.AreEqual(data, returnedData);
+            Assert.That(returnedData, Is.EqualTo(data));
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace Appium.Net.Integration.Tests.Android
             _driver.PushFile("/data/local/tmp/remote.txt", Convert.FromBase64String(base64));
             var returnDataBytes = _driver.PullFile("/data/local/tmp/remote.txt");
             var returnedData = Encoding.UTF8.GetString(returnDataBytes);
-            Assert.AreEqual(data, returnedData);
+            Assert.That(returnedData, Is.EqualTo(data));
         }
 
         [Test]
@@ -73,9 +73,8 @@ namespace Appium.Net.Integration.Tests.Android
                 _driver.PushFile("/data/local/tmp/remote.txt", file);
                 var returnDataBytes = _driver.PullFile("/data/local/tmp/remote.txt");
                 var returnedData = Encoding.UTF8.GetString(returnDataBytes);
-                Assert.AreEqual(
-                    "The eventual code is no more than the deposit of your understanding. ~E. W. Dijkstra",
-                    returnedData);
+                Assert.That(
+                    returnedData, Is.EqualTo("The eventual code is no more than the deposit of your understanding. ~E. W. Dijkstra"));
             }
             finally
             {

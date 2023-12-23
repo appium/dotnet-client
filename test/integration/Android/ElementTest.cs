@@ -33,29 +33,35 @@ namespace Appium.Net.Integration.Tests.Android
         public void FindByAccessibilityIdTest()
         {
             By byAccessibilityId = new ByAccessibilityId("Graphics");
-            Assert.AreNotEqual(_driver.FindElement(MobileBy.Id("android:id/content")).FindElement(byAccessibilityId).Text, null);
-            Assert.AreNotEqual(_driver.FindElement(MobileBy.Id("android:id/content")).Text, null);
-            Assert.GreaterOrEqual(_driver.FindElement(MobileBy.Id("android:id/content")).FindElements(byAccessibilityId).Count,
-                1);
+            Assert.Multiple(() =>
+            {
+                Assert.That(_driver.FindElement(MobileBy.Id("android:id/content")).FindElement(byAccessibilityId).Text, Is.Not.EqualTo(null));
+                Assert.That(_driver.FindElement(MobileBy.Id("android:id/content")).Text, Is.Not.EqualTo(null));
+                Assert.That(_driver.FindElement(MobileBy.Id("android:id/content")).FindElements(byAccessibilityId), Is.Not.Empty);
+            });
         }
 
         [Test]
         public void FindByAndroidUiAutomatorTest()
         {
             By byAndroidUiAutomator = new ByAndroidUIAutomator("new UiSelector().clickable(true)");
-            Assert.IsNotNull(_driver.FindElement(MobileBy.Id("android:id/content")).FindElement(byAndroidUiAutomator).Text);
-            Assert.GreaterOrEqual(_driver.FindElement(MobileBy.Id("android:id/content")).FindElements(byAndroidUiAutomator).Count,
-                1);
+            Assert.Multiple(() =>
+            {
+                Assert.That(_driver.FindElement(MobileBy.Id("android:id/content")).FindElement(byAndroidUiAutomator).Text, Is.Not.Null);
+                Assert.That(_driver.FindElement(MobileBy.Id("android:id/content")).FindElements(byAndroidUiAutomator), Is.Not.Empty);
+            });
         }
 
         [Test]
         public void FindByAndroidUiAutomatorBuilderTest()
         {
             By byAndroidUiAutomator = new ByAndroidUIAutomator(new AndroidUiSelector().IsClickable(true));
-            Assert.IsNotNull(_driver.FindElement(MobileBy.Id("android:id/content")).FindElement(byAndroidUiAutomator).Text);
-            Assert.GreaterOrEqual(
-                _driver.FindElement(MobileBy.Id("android:id/content")).FindElements(byAndroidUiAutomator).Count,
-                1);
+            Assert.Multiple(() =>
+            {
+                Assert.That(_driver.FindElement(MobileBy.Id("android:id/content")).FindElement(byAndroidUiAutomator).Text, Is.Not.Null);
+                Assert.That(
+                    _driver.FindElement(MobileBy.Id("android:id/content")).FindElements(byAndroidUiAutomator), Is.Not.Empty);
+            });
         }
 
         [Test]
@@ -67,8 +73,11 @@ namespace Appium.Net.Integration.Tests.Android
                 "2. Enable Explore-by-Touch (Settings -> Accessibility -> Explore by Touch). \n\n" +
                 "3. Touch explore the list."));
 
-            Assert.IsNotNull(_driver.FindElement(MobileBy.Id("android:id/content")).FindElement(byAndroidUiAutomator).Text);
-            Assert.GreaterOrEqual(_driver.FindElement(MobileBy.Id("android:id/content")).FindElements(byAndroidUiAutomator).Count, 1);
+            Assert.Multiple(() =>
+            {
+                Assert.That(_driver.FindElement(MobileBy.Id("android:id/content")).FindElement(byAndroidUiAutomator).Text, Is.Not.Null);
+                Assert.That(_driver.FindElement(MobileBy.Id("android:id/content")).FindElements(byAndroidUiAutomator), Is.Not.Empty);
+            });
         }
 
         [Test]
@@ -78,8 +87,11 @@ namespace Appium.Net.Integration.Tests.Android
             By byAndroidUiAutomator = new ByAndroidUIAutomator(new AndroidUiSelector()
                 .DescriptionContains("Use a \"tel:\" URL"));
 
-            Assert.IsNotNull(_driver.FindElement(MobileBy.Id("android:id/content")).FindElement(byAndroidUiAutomator).Text);
-            Assert.GreaterOrEqual(_driver.FindElement(MobileBy.Id("android:id/content")).FindElements(byAndroidUiAutomator).Count, 1);
+            Assert.Multiple(() =>
+            {
+                Assert.That(_driver.FindElement(MobileBy.Id("android:id/content")).FindElement(byAndroidUiAutomator).Text, Is.Not.Null);
+                Assert.That(_driver.FindElement(MobileBy.Id("android:id/content")).FindElements(byAndroidUiAutomator), Is.Not.Empty);
+            });
         }
 
         [Test]
@@ -95,12 +107,12 @@ namespace Appium.Net.Integration.Tests.Android
 
             editElement.SendKeys(originalValue);
 
-            Assert.AreEqual(originalValue, editElement.Text);
+            Assert.That(editElement.Text, Is.EqualTo(originalValue));
 
             _driver.ExecuteScript("mobile: replaceElementValue",
                 new Dictionary<string, string> { { "elementId", editElement.Id } , { "text", replacedValue } });
 
-            Assert.AreEqual(replacedValue, editElement.Text);
+            Assert.That(editElement.Text, Is.EqualTo(replacedValue));
         }
 
 
@@ -112,7 +124,11 @@ namespace Appium.Net.Integration.Tests.Android
             var locator = new ByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView("
                                                    + "new UiSelector().text(\"Radio Group\"));");
             var radioGroup = list.FindElement(locator);
-            Assert.NotNull(radioGroup.Location);
+            Assert.Multiple(() =>
+            {
+                Assert.That(radioGroup.Location.X, Is.GreaterThanOrEqualTo(0));
+                Assert.That(radioGroup.Location.Y, Is.GreaterThanOrEqualTo(0));
+            });
         }
 
         [Test]
@@ -123,7 +139,11 @@ namespace Appium.Net.Integration.Tests.Android
             var locator = new ByAndroidUIAutomator(new AndroidUiScrollable()
                 .ScrollIntoView(new AndroidUiSelector().TextEquals("Radio Group")));
             var radioGroup = list.FindElement(locator);
-            Assert.NotNull(radioGroup.Location);
+            Assert.Multiple(() =>
+            {
+                Assert.That(radioGroup.Location.X, Is.GreaterThanOrEqualTo(0));
+                Assert.That(radioGroup.Location.Y, Is.GreaterThanOrEqualTo(0));
+            });
         }
 
         [Test]
@@ -131,7 +151,7 @@ namespace Appium.Net.Integration.Tests.Android
         {
             var myElement = _driver.FindElement(MobileBy.Id("android:id/content"));
             AppiumElement nestedElement = myElement.FindElement(By.Id("android:id/text1"));
-            Assert.NotNull(nestedElement);
+            Assert.That(nestedElement, Is.Not.Null);
         }
 
         [Test]
@@ -139,7 +159,7 @@ namespace Appium.Net.Integration.Tests.Android
         {
             var myElement = _driver.FindElement(MobileBy.Id("android:id/content"));
             IList<AppiumElement> myDerivedElements = myElement.FindElements(By.Id("android:id/text1"));
-            Assert.AreNotEqual(myDerivedElements.Count,0);
+            Assert.That(myDerivedElements, Is.Not.Empty);
         }
 
         [OneTimeTearDown]

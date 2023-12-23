@@ -51,7 +51,7 @@ namespace Appium.Net.Integration.Tests.IOS
             _driver.FindElement(MobileBy.IosNSPredicate("label == 'show alert'")).Click();
             Thread.Sleep(500);
             string alertText = _driver.SwitchTo().Alert().Text;
-            Assert.AreEqual("Cool title\r\nthis alert is so cool.", alertText);
+            Assert.That(alertText, Is.EqualTo("Cool title\r\nthis alert is so cool."));
         }
     }
 }

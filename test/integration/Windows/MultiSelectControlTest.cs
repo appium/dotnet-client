@@ -33,10 +33,13 @@ namespace Appium.Net.Integration.Tests.Windows
         public void Setup()
         {
             // Launch the AlarmClock app
-            var appCapabilities = new AppiumOptions();
-            appCapabilities.App = "Microsoft.WindowsAlarms_8wekyb3d8bbwe!App";
-            appCapabilities.PlatformName ="Windows";
-            appCapabilities.DeviceName = "WindowsPC";
+            var appCapabilities = new AppiumOptions
+            {
+                App = "Microsoft.WindowsAlarms_8wekyb3d8bbwe!App",
+                PlatformName = "Windows",
+                DeviceName = "WindowsPC",
+                AutomationName = "Windows"
+            };
             appCapabilities.AddAdditionalAppiumOption("ms:experimental-webdriver", true);
 
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
@@ -44,17 +47,20 @@ namespace Appium.Net.Integration.Tests.Windows
             AlarmClockSession =
                 new WindowsDriver(serverUri, appCapabilities);
 
-            Assert.IsNotNull(AlarmClockSession);
+            Assert.That(AlarmClockSession, Is.Not.Null);
             AlarmClockSession.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
 
             // Create a session for Desktop
-            var desktopCapabilities = new AppiumOptions();
-            desktopCapabilities.App = "Root";
-            desktopCapabilities.DeviceName = "WindowsPC";
+            var desktopCapabilities = new AppiumOptions
+            {
+                App = "Root",
+                DeviceName = "WindowsPC",
+                AutomationName = "Windows"
+            };
 
             DesktopSession =
                 new WindowsDriver(serverUri, desktopCapabilities);
-            Assert.IsNotNull(DesktopSession);
+            Assert.That(DesktopSession, Is.Not.Null);
 
         }
 
@@ -77,6 +83,8 @@ namespace Appium.Net.Integration.Tests.Windows
 
             AlarmClockSession.Dispose();
             AlarmClockSession = null;
+            DesktopSession.Dispose();
+            DesktopSession = null;
         }
 
         [Test]
@@ -85,14 +93,14 @@ namespace Appium.Net.Integration.Tests.Windows
             // Read the current local time
             SwitchToWorldClockTab();
             var localTimeText = ReadLocalTime();
-            Assert.IsTrue(localTimeText.Length > 0);
+            Assert.That(localTimeText.Length > 0);
 
             // Add an alarm at 1 minute after local time
             SwitchToAlarmTab();
             AddAlarm(localTimeText);
             Thread.Sleep(300);
             var alarmEntries = AlarmClockSession.FindElements(MobileBy.Name("Windows Application Driver Test Alarm"));
-            Assert.IsTrue(alarmEntries.Count > 0);
+            Assert.That(alarmEntries.Count > 0);
         }
 
         public static void SwitchToAlarmTab()
@@ -168,7 +176,7 @@ namespace Appium.Net.Integration.Tests.Windows
             try
             {
                 AppiumElement newNotification = DesktopSession.FindElement(MobileBy.Name("New notification"));
-                Assert.IsTrue(newNotification.FindElement(MobileBy.AccessibilityId("MessageText")).Text
+                Assert.That(newNotification.FindElement(MobileBy.AccessibilityId("MessageText")).Text
                     .Contains("Windows Application Driver Test Alarm"));
                 newNotification.FindElement(MobileBy.Name("Dismiss")).Click();
             }

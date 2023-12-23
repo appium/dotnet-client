@@ -31,19 +31,19 @@ namespace Appium.Net.Integration.Tests.IOS
         [Test]
         public void GetAppStrings()
         {
-            Assert.AreNotSame(0, _driver.GetAppStringDictionary().Count);
+            Assert.That(_driver.GetAppStringDictionary(), Is.Not.Empty);
         }
 
         [Test]
         public void GetAppStringsUsingLang()
         {
-            Assert.AreNotSame(0, _driver.GetAppStringDictionary("en").Count);
+            Assert.That(_driver.GetAppStringDictionary("en"), Is.Not.Empty);
         }
 
         [Test]
         public void GetAppStringsUsingLangAndFileStrings()
         {
-            Assert.AreNotSame(0, _driver.GetAppStringDictionary("en", "Localizable.strings").Count);
+            Assert.That(_driver.GetAppStringDictionary("en", "Localizable.strings"), Is.Not.Empty);
         }
     }
 }
