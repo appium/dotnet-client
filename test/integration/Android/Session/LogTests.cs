@@ -59,6 +59,9 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
             Assert.DoesNotThrow(() => _driver.Manage().Logs.GetLog(LogcatLogType));
         }
 
+        /// <summary>
+        /// For this test to pass, need to run the appium server as follows: `appium --allow-insecure get_server_logs`
+        /// </summary>
         [Test]
         public void CanCaptureServerTest()
         {
