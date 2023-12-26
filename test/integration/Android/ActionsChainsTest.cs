@@ -82,7 +82,7 @@ namespace Appium.Net.Integration.Tests.Android
 
             els = _driver.FindElements(MobileBy.ClassName("android.widget.TextView"));
 
-            Assert.AreNotEqual(number1, els.Count);
+            Assert.That(els, Has.Count.Not.EqualTo(number1));
         }
 
         [Test]
@@ -125,8 +125,11 @@ namespace Appium.Net.Integration.Tests.Android
 
             _driver.PerformActions(sequenceActions);
 
-            Assert.AreNotEqual(loc1.Y, origin.Location.Y);
-            Assert.AreNotEqual(loc2.Y, target.Location.Y);
+            Assert.Multiple(() =>
+            {
+                Assert.That(origin.Location.Y, Is.Not.EqualTo(loc1.Y));
+                Assert.That(target.Location.Y, Is.Not.EqualTo(loc2.Y));
+            });
 
         }
 
@@ -155,7 +158,6 @@ namespace Appium.Net.Integration.Tests.Android
             actionBuilder.AddActions(Tapinteractions);
 
             var sequence = actionBuilder.ToActionSequenceList();
-
             _driver.PerformActions(sequence);
 
             IList<AppiumElement> els = _driver.FindElements(MobileBy.ClassName("android.widget.TextView"));
@@ -178,11 +180,13 @@ namespace Appium.Net.Integration.Tests.Android
             actionBuilder.AddActions(interactions);
 
             var sequenceActions = actionBuilder.ToActionSequenceList();
-
             _driver.PerformActions(sequenceActions);
 
-            Assert.AreNotEqual(loc1.Y, origin.Location.Y);
-            Assert.AreNotEqual(loc2.Y, target.Location.Y);
+            Assert.Multiple(() =>
+            {
+                Assert.That(origin.Location.Y, Is.Not.EqualTo(loc1.Y));
+                Assert.That(target.Location.Y, Is.Not.EqualTo(loc2.Y));
+            });
 
         }
     }
