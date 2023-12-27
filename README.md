@@ -11,23 +11,61 @@
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-lightblue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-
 This driver is an extension of the [Selenium](http://docs.seleniumhq.org/) C# client. It has 
 all the functionalities of the regular driver, but add Appium-specific methods on top of this.
 
-## Appium server compatibility for v5.x 
+ ## v5 Release Candidate 
+ 
+> [!IMPORTANT]
+> ### Appium server compatibility for v5.x
+> 
+> In case you are using the latest beta client v5.x please be aware you will either have to upgrade your appium server to 2.x or add the base-path argument:
+> `appium --base-path=/wd/hub`, due to a breaking change on the default server base path. <br/>
+> Regardless, moving to appium 2.x is highly recommended since appium 1.x is no longer maintained. <br/>
+> For more details about how to migrate to 2.x, see the following link : [appium 2.x migrating](https://appium.github.io/appium/docs/en/2.0/guides/migrating-1-to-2/)
 
-In case you are using the latest beta client v5.x please be aware you will either have to upgrade your appium server to 2.x or add the base-path argument:
-`appium --base-path=/wd/hub`, due to a breaking change on the default server base path. <br/>
-Regardless, it's highly recommended you move to appium 2.x since appium 1.x is no longer maintained. <br/>
-For more details about how to migrate to 2.x, see the following link : [appium 2.x migrating](https://appium.github.io/appium/docs/en/2.0/guides/migrating-1-to-2/)
+> [!CAUTION]
+> ### Deprecated Methods
+> 
+> - `MultiAction` and `TouchAction` are deprecated. Please use W3C WebDriver actions or mobile: extensions.
+> - `LaunchApp`, `CloseApp`, and `reset` are deprecated. 
+> - The `ReplaceValue` method is deprecated and will be removed in future versions. Please use the following command extensions: 'mobile: replaceElementValue' instead.
+> - The `SetImmediateValue` method is deprecated and will be removed in future versions. Please use 'SendKeys' instead.
 
-## WinAppDriver Notice!
+> #### Additional Information
+> W3C Actions: https://www.selenium.dev/documentation/webdriver/actions_api  <br/>
+> App management: Please read [issue #15807](https://github.com/appium/appium/issues/15807) for more details
 
-Due to the fact that [WinAppDriver](https://github.com/microsoft/WinAppDriver) has been abandoned by MS, running Appium dotnet-client 5.x with WAD will not work since it has not been updated to support the W3C protocol. <br/>
-In order to run appium on Windows Applications, you will need to use [appium-windows-driver](https://github.com/appium/appium-windows-driver) which will basically act as a proxy to WAD.
-Examples of running Windows Applications with dotnet-client can be found here: [windows Integration test 5.0.0](https://github.com/appium/dotnet-client/tree/release/5.0.0/test/integration/Windows) <br/>
-Regardless, feel free to open an issue on the [WAD](https://github.com/microsoft/WinAppDriver/issues) repository that will help get MS to open-source that project.
+### Migration Guide to W3C actions
+```csharp
+  using OpenQA.Selenium.Interactions;
+  
+  var touch = new PointerInputDevice(PointerKind.Touch, "finger");
+  var sequence = new ActionSequence(touch);
+  var move = touch.CreatePointerMove(elementToTouch, elementToTouch.Location.X, elementToTouch.Location.Y,TimeSpan.FromSeconds(1));
+  var actionPress = touch.CreatePointerDown(MouseButton.Touch);
+  var pause = touch.CreatePause(TimeSpan.FromMilliseconds(250));
+  var actionRelease = touch.CreatePointerUp(MouseButton.Touch);
+ 
+  sequence.AddAction(move);
+  sequence.AddAction(actionPress);
+  sequence.AddAction(pause);
+  sequence.AddAction(actionRelease);
+  
+  var actions_seq = new List<ActionSequence>
+  {
+      sequence
+  };
+ 
+  _driver.PerformActions(actions_seq);
+ ```
+
+>  [!WARNING]
+> ### WinAppDriver Notice!
+> Because [WinAppDriver](https://github.com/microsoft/WinAppDriver) has been abandoned by MS, running Appium dotnet-client 5.x with WAD will not work since it has not been updated to support the W3C protocol. <br/>
+> To run appium on Windows Applications, you will need to use [appium-windows-driver](https://github.com/appium/appium-windows-driver) which will act as a proxy to WAD.
+> Examples of running Windows Applications with dotnet-client can be found here: [windows Integration test 5.0.0](https://github.com/appium/dotnet-client/tree/release/5.0.0/test/integration/Windows) <br/>
+> Regardless, feel free to open an issue on the [WAD](https://github.com/microsoft/WinAppDriver/issues) repository that will help get MS to open-source that project.
 
 ## NuGet
 
@@ -48,7 +86,7 @@ Note: we will NOT publish a signed version of this assembly since the dependenci
 
 - You need to add the following namespace line: `using OpenQA.Selenium.Appium;`.
 - Use the `AppiumDriver` class/subclass to construct the driver. It works the same as the Selenium Webdriver, except that
- the ports are defaulted to Appium values, and the driver does not know how to start the Appium on its own.
+ the ports are defaulted to Appium values, and the driver does not know how to start the Appium independently.
 - To use the Appium methods on Element, you need to specify the parameter of `AppiumDriver` or its subclasses.
 
 [Read Wiki](https://github.com/appium/appium-dotnet-driver/wiki)
@@ -79,7 +117,6 @@ Visual Studio
 - Download [Nuget exe](http://nuget.org/nuget.exe).
 - Setup the Api Key ([see here](http://docs.nuget.org/docs/creating-packages/creating-and-publishing-a-package#api-key)).
 - `alias NuGet='mono <Nuget Path>/NuGet.exe'`
-
 
 ### To Release a New Version
 - update assemblyInfo.cs, RELEASE_NOTES.md, and appium-dotnet-driver.nuspec with the new version number and release details, then check it in
