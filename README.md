@@ -28,10 +28,10 @@ all the functionalities of the regular driver, but add Appium-specific methods o
 > ### Deprecated Methods
 > 
 > - `MultiAction` and `TouchAction` are deprecated. Please use W3C WebDriver actions or mobile: extensions.
-> - `LaunchApp`, `CloseApp`, and `reset` are deprecated. 
+> - `LaunchApp`, `CloseApp`, and `reset` are deprecated, please read each deprecation message as an alternative method.
 > - The `ReplaceValue` method is deprecated and will be removed in future versions. Please use the following command extensions: 'mobile: replaceElementValue' instead.
 > - The `SetImmediateValue` method is deprecated and will be removed in future versions. Please use 'SendKeys' instead.
-
+>
 > #### Additional Information
 > W3C Actions: https://www.selenium.dev/documentation/webdriver/actions_api  <br/>
 > App management: Please read [issue #15807](https://github.com/appium/appium/issues/15807) for more details
