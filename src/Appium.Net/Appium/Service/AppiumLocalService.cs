@@ -146,7 +146,6 @@ namespace OpenQA.Selenium.Appium.Service
 
             try
             {
-                SharedHttpClient.Dispose();
                 Service.Kill();
             }
             catch
