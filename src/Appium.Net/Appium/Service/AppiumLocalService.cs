@@ -284,7 +284,7 @@ namespace OpenQA.Selenium.Appium.Service
 
         private static async Task<HttpResponseMessage> GetHttpResponseAsync(Uri status)
         {
-            HttpResponseMessage response = await SharedHttpClient.GetAsync(status);
+            HttpResponseMessage response = await SharedHttpClient.GetAsync(status).ConfigureAwait(false);
             return response;
         }
     }
