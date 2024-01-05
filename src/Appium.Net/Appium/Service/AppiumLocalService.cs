@@ -127,7 +127,7 @@ namespace OpenQA.Selenium.Appium.Service
                 throw new AppiumServerHasNotBeenStartedLocallyException(msgTxt, e);
             }
 
-            isLaunched = Ping(InitializationTimeout).Result;
+            isLaunched = PingAsync(InitializationTimeout).Result;
             if (!isLaunched)
             {
                 DestroyProcess();
@@ -146,6 +146,7 @@ namespace OpenQA.Selenium.Appium.Service
 
             try
             {
+                SharedHttpClient.Dispose();
                 Service.Kill();
             }
             catch
@@ -188,7 +189,7 @@ namespace OpenQA.Selenium.Appium.Service
                     return false;
                 }
 
-                return Ping(new TimeSpan(0, 0, 0, 0, 500)).Result;
+                return PingAsync(new TimeSpan(0, 0, 0, 0, 500)).Result;
             }
         }
 
@@ -254,7 +255,7 @@ namespace OpenQA.Selenium.Appium.Service
             return status;
         }
 
-        private async Task<bool> Ping(TimeSpan span)
+        private async Task<bool> PingAsync(TimeSpan span)
         {
             bool pinged = false;
 
@@ -284,7 +285,7 @@ namespace OpenQA.Selenium.Appium.Service
 
         private static async Task<HttpResponseMessage> GetHttpResponseAsync(Uri status)
         {
-            HttpResponseMessage response = await SharedHttpClient.GetAsync(status);
+            HttpResponseMessage response = await SharedHttpClient.GetAsync(status).ConfigureAwait(false);
             return response;
         }
     }
