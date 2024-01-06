@@ -198,8 +198,13 @@ namespace OpenQA.Selenium.Appium.Service
                     return false;
                 }
 
-                return PingAsync(new TimeSpan(0, 0, 0, 0, 500)).Result;
+                return IsRunningAsync(TimeSpan.FromMilliseconds(500)).GetAwaiter().GetResult();
             }
+        }
+
+        private async Task<bool> IsRunningAsync(TimeSpan timeout)
+        { 
+            return await PingAsync(timeout);
         }
 
         private string GetArgsValue(string argStr)
