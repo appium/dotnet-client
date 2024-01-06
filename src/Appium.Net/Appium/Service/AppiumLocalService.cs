@@ -83,10 +83,20 @@ namespace OpenQA.Selenium.Appium.Service
         public event DataReceivedEventHandler OutputDataReceived;
 
         /// <summary>
-        /// Starts the defined appium server
+        /// Starts the defined Appium server.
+        /// <remarks>
+        /// <para>
+        /// This method executes the synchronous version of starting the Appium server.
+        /// </para>
+        /// </remarks>
         /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void Start()
+        {
+            StartAsync().GetAwaiter().GetResult();
+        }
+
+        private async Task StartAsync()
         {
             if (IsRunning)
             {
@@ -127,7 +137,7 @@ namespace OpenQA.Selenium.Appium.Service
                 throw new AppiumServerHasNotBeenStartedLocallyException(msgTxt, e);
             }
 
-            isLaunched = PingAsync(InitializationTimeout).Result;
+            isLaunched = await PingAsync(InitializationTimeout);
             if (!isLaunched)
             {
                 DestroyProcess();
