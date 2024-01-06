@@ -37,7 +37,7 @@ namespace OpenQA.Selenium.Appium.Service
         private readonly int Port;
         private readonly TimeSpan InitializationTimeout;
         private readonly IDictionary<string, string> EnvironmentForProcess;
-        private static readonly HttpClient SharedHttpClient;
+        private static HttpClient SharedHttpClient;
         private Process Service;
         private List<string> ArgsList;
 
@@ -46,15 +46,6 @@ namespace OpenQA.Selenium.Appium.Service
         /// </summary>
         /// <returns>An instance of AppiumLocalService without special settings</returns>
         public static AppiumLocalService BuildDefaultService() => new AppiumServiceBuilder().Build();
-
-        static AppiumLocalService()
-        {
-            SocketsHttpHandler handler = new SocketsHttpHandler
-            {
-                PooledConnectionLifetime = TimeSpan.FromMinutes(2)
-            };
-            SharedHttpClient = new HttpClient(handler);
-        }
 
         internal AppiumLocalService(
             FileInfo nodeJS,
@@ -70,8 +61,17 @@ namespace OpenQA.Selenium.Appium.Service
             Port = port;
             InitializationTimeout = initializationTimeout;
             EnvironmentForProcess = environmentForProcess;
+            SharedHttpClient = CreateHttpClientInstance();
         }
 
+        private static HttpClient CreateHttpClientInstance()
+        {
+            SocketsHttpHandler handler = new SocketsHttpHandler
+            {
+                PooledConnectionLifetime = TimeSpan.FromMinutes(2)
+            };
+            return SharedHttpClient = new HttpClient(handler);
+        }
         /// <summary>
         /// The base URL for the managed appium server.
         /// </summary>
