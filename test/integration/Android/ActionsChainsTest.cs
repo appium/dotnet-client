@@ -1,4 +1,18 @@
-﻿using Appium.Net.Integration.Tests.helpers;
+﻿//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//See the NOTICE file distributed with this work for additional
+//information regarding copyright ownership.
+//You may obtain a copy of the License at
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
+
+using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium;
@@ -6,13 +20,13 @@ using System.Collections.Generic;
 using OpenQA.Selenium.Interactions;
 using System;
 using System.Drawing;
+using System.Threading;
 using OpenQA.Selenium.Appium.Interactions;
 // Define an alias to OpenQA.Selenium.Appium.Interactions.PointerInputDevice to hide
 // inherited OpenQA.Selenium.Interactions.PointerInputDevice that causes ambiguity.
 // In the future, all functions of OpenQA.Selenium.Appium.Interactions should be moved
 // up to OpenQA.Selenium.Interactions and this alias can simply be removed.
 using PointerInputDevice = OpenQA.Selenium.Appium.Interactions.PointerInputDevice;
-using System.Threading;
 
 namespace Appium.Net.Integration.Tests.Android
 {
