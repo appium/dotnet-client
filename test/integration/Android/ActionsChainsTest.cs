@@ -5,8 +5,14 @@ using OpenQA.Selenium.Appium;
 using System.Collections.Generic;
 using OpenQA.Selenium.Interactions;
 using System;
-using static OpenQA.Selenium.Interactions.PointerInputDevice;
+using System.Drawing;
+using OpenQA.Selenium.Appium.Interactions;
+// Define an alias to OpenQA.Selenium.Appium.Interactions.PointerInputDevice to hide
+// inherited OpenQA.Selenium.Interactions.PointerInputDevice that causes ambiguity.
+// In the future, all functions of OpenQA.Selenium.Appium.Interactions should be moved
+// up to OpenQA.Selenium.Interactions and this alias can simply be removed.
 using PointerInputDevice = OpenQA.Selenium.Appium.Interactions.PointerInputDevice;
+using System.Threading;
 
 namespace Appium.Net.Integration.Tests.Android
 {
@@ -58,15 +64,10 @@ namespace Appium.Net.Integration.Tests.Android
             var touch = new PointerInputDevice(PointerKind.Touch, "finger");
             var sequence = new ActionSequence(touch);
 
-            PointerEventProperties pointerEventProperties = new PointerEventProperties
-            {
-                Pressure = 1
-            };
-
             var move = touch.CreatePointerMove(elementToTouch, elementToTouch.Location.X, elementToTouch.Location.Y,TimeSpan.FromSeconds(1));
-            var actionPress = touch.CreatePointerDown(MouseButton.Touch, pointerEventProperties);
+            var actionPress = touch.CreatePointerDown(PointerButton.TouchContact);
             var pause = touch.CreatePause(TimeSpan.FromMilliseconds(250));
-            var actionRelease = touch.CreatePointerUp(MouseButton.Touch);
+            var actionRelease = touch.CreatePointerUp(PointerButton.TouchContact);
 
             sequence.AddAction(move);
             sequence.AddAction(actionPress);
@@ -86,6 +87,41 @@ namespace Appium.Net.Integration.Tests.Android
         }
 
         [Test]
+        public void TouchByCoordinatesTestCase()
+        {
+            IList<AppiumElement> els = _driver.FindElements(MobileBy.ClassName("android.widget.TextView"));
+            var number1 = els.Count;
+
+            var touch = new PointerInputDevice(PointerKind.Touch, "finger");
+            var sequence = new ActionSequence(touch);
+
+            Point point = new()
+            {
+                X = 148,
+                Y = 400
+            };
+
+            Interaction move = touch.CreatePointerMove(CoordinateOrigin.Viewport, point.X, point.Y, TimeSpan.Zero);
+            Interaction actionPress = touch.CreatePointerDown(PointerButton.TouchContact);
+            Interaction actionRelease = touch.CreatePointerUp(PointerButton.TouchContact);
+
+            sequence.AddAction(move);
+            sequence.AddAction(actionPress);
+            sequence.AddAction(actionRelease);
+
+            var actions_seq = new List<ActionSequence>
+            {
+                sequence
+            };
+
+            _driver.PerformActions(actions_seq);
+            Thread.Sleep(1000);
+            els = _driver.FindElements(MobileBy.ClassName("android.widget.TextView"));
+
+            Assert.That(els, Has.Count.Not.EqualTo(number1));
+        }
+
+        [Test]
         public void ScrollActionTestCase()
         {
             AppiumElement ViewsElem = _driver.FindElement(MobileBy.AccessibilityId("Views"));
@@ -96,11 +132,11 @@ namespace Appium.Net.Integration.Tests.Android
 
             var moveAction = touch.CreatePointerMove(ViewsElem, 0, 0, TimeSpan.FromMilliseconds(0));
             actionBuilder.AddAction(moveAction);
-            var tapAction = touch.CreatePointerDown(MouseButton.Touch);
+            var tapAction = touch.CreatePointerDown(PointerButton.TouchContact);
             actionBuilder.AddAction(tapAction);
             var tapActionPause= touch.CreatePause(TimeSpan.FromMilliseconds(200));
             actionBuilder.AddAction(tapActionPause);
-            var tapActionUp = touch.CreatePointerUp(MouseButton.Touch);
+            var tapActionUp = touch.CreatePointerUp(PointerButton.TouchContact);
             actionBuilder.AddAction(tapActionUp);
 
             var sequence = actionBuilder.ToActionSequenceList();
@@ -116,10 +152,10 @@ namespace Appium.Net.Integration.Tests.Android
             actionBuilder.ClearSequences();
 
             actionBuilder.AddAction(touch.CreatePointerMove(origin, 0,0, TimeSpan.FromMilliseconds(800)));
-            actionBuilder.AddAction(touch.CreatePointerDown(MouseButton.Touch));
+            actionBuilder.AddAction(touch.CreatePointerDown(PointerButton.TouchContact));
             actionBuilder.AddAction(touch.CreatePause(TimeSpan.FromMilliseconds(800)));
             actionBuilder.AddAction(touch.CreatePointerMove(target, 0, 0, TimeSpan.FromMilliseconds(800)));
-            actionBuilder.AddAction(touch.CreatePointerUp(MouseButton.Touch));
+            actionBuilder.AddAction(touch.CreatePointerUp(PointerButton.TouchContact));
 
             var sequenceActions = actionBuilder.ToActionSequenceList();
 
@@ -143,9 +179,9 @@ namespace Appium.Net.Integration.Tests.Android
             var touch = new PointerInputDevice(PointerKind.Touch, "finger");
 
             var moveAction = touch.CreatePointerMove(ViewsElem, 0, 0, TimeSpan.FromMilliseconds(0));
-            var tapAction = touch.CreatePointerDown(MouseButton.Touch);
-            var tapActionPause = touch.CreatePause(TimeSpan.FromMilliseconds(200));
-            var tapActionUp = touch.CreatePointerUp(MouseButton.Touch);
+            var tapAction = touch.CreatePointerDown(PointerButton.TouchContact);
+            var tapActionPause = touch.CreatePause(TimeSpan.FromMilliseconds(400));
+            var tapActionUp = touch.CreatePointerUp(PointerButton.TouchContact);
 
             Interaction[] Tapinteractions = new Interaction[]
             {
