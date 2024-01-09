@@ -72,6 +72,7 @@ namespace OpenQA.Selenium.Appium.Service
             };
             return SharedHttpClient = new HttpClient(handler);
         }
+
         /// <summary>
         /// The base URL for the managed appium server.
         /// </summary>
@@ -137,7 +138,7 @@ namespace OpenQA.Selenium.Appium.Service
                 throw new AppiumServerHasNotBeenStartedLocallyException(msgTxt, e);
             }
 
-            isLaunched = await PingAsync(InitializationTimeout);
+            isLaunched = await PingAsync(InitializationTimeout).ConfigureAwait(false);
             if (!isLaunched)
             {
                 DestroyProcess();
@@ -203,8 +204,8 @@ namespace OpenQA.Selenium.Appium.Service
         }
 
         private async Task<bool> IsRunningAsync(TimeSpan timeout)
-        { 
-            return await PingAsync(timeout);
+        {
+            return await PingAsync(timeout).ConfigureAwait(false);
         }
 
         private string GetArgsValue(string argStr)
