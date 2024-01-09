@@ -37,7 +37,7 @@ namespace OpenQA.Selenium.Appium.Service
         private readonly int Port;
         private readonly TimeSpan InitializationTimeout;
         private readonly IDictionary<string, string> EnvironmentForProcess;
-        private static HttpClient SharedHttpClient;
+        private readonly HttpClient SharedHttpClient;
         private Process Service;
         private List<string> ArgsList;
 
@@ -61,16 +61,19 @@ namespace OpenQA.Selenium.Appium.Service
             Port = port;
             InitializationTimeout = initializationTimeout;
             EnvironmentForProcess = environmentForProcess;
-            SharedHttpClient = CreateHttpClientInstance();
+            SharedHttpClient = CreateHttpClientInstance;
         }
 
-        private static HttpClient CreateHttpClientInstance()
+        private HttpClient CreateHttpClientInstance
         {
-            SocketsHttpHandler handler = new SocketsHttpHandler
+            get
             {
-                PooledConnectionLifetime = TimeSpan.FromMinutes(2)
-            };
-            return SharedHttpClient = new HttpClient(handler);
+                SocketsHttpHandler handler = new SocketsHttpHandler
+                {
+                    PooledConnectionLifetime = TimeSpan.FromMinutes(2)
+                };
+                return new HttpClient(handler);
+            }
         }
 
         /// <summary>
@@ -164,7 +167,9 @@ namespace OpenQA.Selenium.Appium.Service
             }
             finally
             {
-                Service.Close();
+                Service?.Close();
+
+                SharedHttpClient.Dispose();
             }
         }
 
@@ -298,7 +303,7 @@ namespace OpenQA.Selenium.Appium.Service
             return pinged;
         }
 
-        private static async Task<HttpResponseMessage> GetHttpResponseAsync(Uri status)
+        private async Task<HttpResponseMessage> GetHttpResponseAsync(Uri status)
         {
             HttpResponseMessage response = await SharedHttpClient.GetAsync(status).ConfigureAwait(false);
             return response;
