@@ -20,10 +20,15 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace OpenQA.Selenium.Appium.Service
 {
+    /// <summary>
+    /// Represents a local Appium server service that can be started and stopped programmatically.
+    /// </summary>
     public class AppiumLocalService : ICommandServer
     {
         private readonly FileInfo NodeJS;
@@ -32,6 +37,7 @@ namespace OpenQA.Selenium.Appium.Service
         private readonly int Port;
         private readonly TimeSpan InitializationTimeout;
         private readonly IDictionary<string, string> EnvironmentForProcess;
+        private readonly HttpClient SharedHttpClient;
         private Process Service;
         private List<string> ArgsList;
 
@@ -55,6 +61,19 @@ namespace OpenQA.Selenium.Appium.Service
             Port = port;
             InitializationTimeout = initializationTimeout;
             EnvironmentForProcess = environmentForProcess;
+            SharedHttpClient = CreateHttpClientInstance;
+        }
+
+        private HttpClient CreateHttpClientInstance
+        {
+            get
+            {
+                SocketsHttpHandler handler = new SocketsHttpHandler
+                {
+                    PooledConnectionLifetime = TimeSpan.FromMinutes(2)
+                };
+                return new HttpClient(handler);
+            }
         }
 
         /// <summary>
@@ -68,10 +87,20 @@ namespace OpenQA.Selenium.Appium.Service
         public event DataReceivedEventHandler OutputDataReceived;
 
         /// <summary>
-        /// Starts the defined appium server
+        /// Starts the defined Appium server.
+        /// <remarks>
+        /// <para>
+        /// This method executes the synchronous version of starting the Appium server.
+        /// </para>
+        /// </remarks>
         /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void Start()
+        {
+            StartAsync().GetAwaiter().GetResult();
+        }
+
+        private async Task StartAsync()
         {
             if (IsRunning)
             {
@@ -112,7 +141,7 @@ namespace OpenQA.Selenium.Appium.Service
                 throw new AppiumServerHasNotBeenStartedLocallyException(msgTxt, e);
             }
 
-            isLaunched = Ping(InitializationTimeout);
+            isLaunched = await PingAsync(InitializationTimeout).ConfigureAwait(false);
             if (!isLaunched)
             {
                 DestroyProcess();
@@ -138,7 +167,9 @@ namespace OpenQA.Selenium.Appium.Service
             }
             finally
             {
-                Service.Close();
+                Service?.Close();
+
+                SharedHttpClient.Dispose();
             }
         }
 
@@ -173,14 +204,19 @@ namespace OpenQA.Selenium.Appium.Service
                     return false;
                 }
 
-                return Ping(new TimeSpan(0, 0, 0, 0, 500));
+                return IsRunningAsync(TimeSpan.FromMilliseconds(500)).GetAwaiter().GetResult();
             }
+        }
+
+        private async Task<bool> IsRunningAsync(TimeSpan timeout)
+        {
+            return await PingAsync(timeout).ConfigureAwait(false);
         }
 
         private string GetArgsValue(string argStr)
         {
             int idx;
-            idx= ArgsList.IndexOf(argStr);
+            idx = ArgsList.IndexOf(argStr);
             return ArgsList[idx + 1];
         }
 
@@ -199,7 +235,7 @@ namespace OpenQA.Selenium.Appium.Service
 
         private void GenerateArgsList()
         {
-           ArgsList = Arguments.Split(' ').ToList();
+            ArgsList = Arguments.Split(' ').ToList();
         }
         private Uri CreateStatusUrl()
         {
@@ -215,7 +251,7 @@ namespace OpenQA.Selenium.Appium.Service
 
             if (service.IsLoopback || IP.ToString().Equals(AppiumServiceConstants.DefaultLocalIPAddress))
             {
-                var tmpStatus = "http://localhost:" + Convert.ToString(Port);
+                string tmpStatus = "http://localhost:" + Convert.ToString(Port);
                 if (defBasePath)
                 {
                     status = new Uri(tmpStatus + AppiumServiceConstants.StatusUrl);
@@ -239,7 +275,7 @@ namespace OpenQA.Selenium.Appium.Service
             return status;
         }
 
-        private bool Ping(TimeSpan span)
+        private async Task<bool> PingAsync(TimeSpan span)
         {
             bool pinged = false;
 
@@ -250,28 +286,27 @@ namespace OpenQA.Selenium.Appium.Service
             DateTime endTime = DateTime.Now.Add(span);
             while (!pinged & DateTime.Now < endTime)
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(status);
-                HttpWebResponse response = null;
                 try
                 {
-                    using (response = (HttpWebResponse) request.GetResponse())
+                    HttpResponseMessage response = await GetHttpResponseAsync(status).ConfigureAwait(false);
+
+                    if (response.IsSuccessStatusCode)
                     {
-                        pinged = true;
+                        return true;
                     }
                 }
                 catch
                 {
                     pinged = false;
                 }
-                finally
-                {
-                    if (response != null)
-                    {
-                        response.Close();
-                    }
-                }
             }
             return pinged;
+        }
+
+        private async Task<HttpResponseMessage> GetHttpResponseAsync(Uri status)
+        {
+            HttpResponseMessage response = await SharedHttpClient.GetAsync(status).ConfigureAwait(false);
+            return response;
         }
     }
 }
