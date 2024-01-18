@@ -105,14 +105,15 @@ namespace Appium.Net.Integration.Tests.Android
         {
             IList<AppiumElement> els = _driver.FindElements(MobileBy.ClassName("android.widget.TextView"));
             var number1 = els.Count;
+            var elementToTouch = els[2];
 
             var touch = new PointerInputDevice(PointerKind.Touch, "finger");
             var sequence = new ActionSequence(touch);
 
             Point point = new()
             {
-                X = 148,
-                Y = 400
+                X = (elementToTouch.Rect.X+elementToTouch.Rect.Width)/2,
+                Y = elementToTouch.Rect.Y
             };
 
             Interaction move = touch.CreatePointerMove(CoordinateOrigin.Viewport, point.X, point.Y, TimeSpan.Zero);
