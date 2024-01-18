@@ -31,8 +31,8 @@ namespace Appium.Net.Integration.Tests.Windows
         public void OneTimeTearDown()
         {
             CalculatorResult = null;
-            _calculatorSession.CloseApp();
-            _calculatorSession.Dispose();
+            _calculatorSession?.CloseApp();
+            _calculatorSession?.Dispose();
             _calculatorSession = null;
         }
 
@@ -61,7 +61,8 @@ namespace Appium.Net.Integration.Tests.Windows
 
             Assert.Multiple(() =>
             {
-                Assert.That(occurencesResult.Rect, Is.Not.Empty);
+                Assert.That(occurencesResult.Rect.IsEmpty, Is.False);
+                Assert.That(occurencesResult.Rect.Bottom, Is.GreaterThan(0));
                 Assert.That(occurencesResult.Visualization, Is.Not.Null);
             });
         }
@@ -70,7 +71,8 @@ namespace Appium.Net.Integration.Tests.Windows
         public void FeaturesMatching()
         {
             var screenshot = _calculatorSession.GetScreenshot();
-            var options = new FeaturesMatchingOptions {
+            var options = new FeaturesMatchingOptions
+            {
                 Visualize = true,
                 DetectorName = "ORB",
                 MatchFunc = "BruteForce",
@@ -88,8 +90,8 @@ namespace Appium.Net.Integration.Tests.Windows
             });
             Assert.Multiple(() =>
             {
-                Assert.That(occurencesResult.Rect1.Width, Is.Not.Empty);
-                Assert.That(occurencesResult.Rect2.Height, Is.Not.Empty);
+                Assert.That(occurencesResult.Rect1.Width, Is.Positive);
+                Assert.That(occurencesResult.Rect2.Height, Is.Positive);
             });
         }
     }
