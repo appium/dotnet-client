@@ -3,6 +3,7 @@ using NUnit.Framework;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Enums;
 using System;
+using System.Runtime.Versioning;
 using System.Text.RegularExpressions;
 
 namespace Appium.Net.Integration.Tests.Android
@@ -13,6 +14,7 @@ namespace Appium.Net.Integration.Tests.Android
         private AndroidDriver _driver;
         private const string ClipboardTestString = "Hello Clipboard";
         private const string Base64RegexPattern = @"^[a-zA-Z0-9\+/]*={0,2}$";
+        private readonly string _appId = Apps.GetId(Apps.androidApiDemos);
 
         [OneTimeSetUp]
         public void BeforeAll()
@@ -27,18 +29,18 @@ namespace Appium.Net.Integration.Tests.Android
         [SetUp]
         public void SetUp()
         {
-            _driver?.LaunchApp();
+            _driver?.ActivateApp(_appId);
         }
 
         [OneTimeTearDown]
         public void OneTimeTearDown()
         {
-            _driver?.CloseApp();
+            _driver?.TerminateApp(_appId);
             _driver?.Quit();
         }
 
         [Test]
-        public void WhenSetClipboardContentTypeIsPlainText_GetClipboardShouldReturnEncodedBase64String()
+        public void WhenSetClipboardContentTypeIsPlainTextGetClipboardShouldReturnEncodedBase64String()
         {
             _driver.SetClipboard(ClipboardContentType.PlainText, ClipboardTestString);
             Assert.That(() => Regex.IsMatch(_driver.GetClipboard(ClipboardContentType.PlainText), Base64RegexPattern, RegexOptions.Multiline), 
@@ -46,70 +48,71 @@ namespace Appium.Net.Integration.Tests.Android
         }
 
         [Test]
-        public void WhenClipboardContentTypeIsPlainTextWithLabel_GetClipboardTextShouldReturnActualText()
+        public void WhenClipboardContentTypeIsPlainTextWithLabelGetClipboardTextShouldReturnActualText()
         {
             _driver.SetClipboardText(ClipboardTestString, label:"testing");
             Assert.That(() => _driver.GetClipboardText(), Does.Match(ClipboardTestString));
         }
 
         [Test]
-        public void WhenClipboardContentTypeIsPlainTextWithOutLabel_GetClipboardTextShouldReturnActualText()
+        public void WhenClipboardContentTypeIsPlainTextWithOutLabelGetClipboardTextShouldReturnActualText()
         {
             _driver.SetClipboardText(ClipboardTestString, null);
             Assert.That(() => _driver.GetClipboardText(), Does.Match(ClipboardTestString));
         }
 
         [Test]
-        public void WhenClipboardIsEmpty_GetClipboardShouldReturnEmptyString()
+        public void WhenClipboardIsEmptyGetClipboardShouldReturnEmptyString()
         {
             _driver.SetClipboardText(string.Empty, null);
             Assert.That(() => _driver.GetClipboard(ClipboardContentType.PlainText), Is.Empty);
         }
 
         [Test]
-        public void WhenClipboardIsEmpty_GetClipboardTextShouldReturnEmptyString()
+        public void WhenClipboardIsEmptyGetClipboardTextShouldReturnEmptyString()
         {
             _driver.SetClipboardText(string.Empty, null);
             Assert.That(() => _driver.GetClipboardText(), Is.Empty);
         }
 
         [Test]
-        public void WhenSetClipboardContentTypeIsImage_SetClipboardShouldReturnNotImplementedException()
+        public void WhenSetClipboardContentTypeIsImageSetClipboardShouldReturnNotImplementedException()
         {
             Assert.That(() => _driver.SetClipboard(ClipboardContentType.Image, ClipboardTestString),
                 Throws.TypeOf<NotImplementedException>());
         }
 
         [Test]
-        public void WhenGetClipboardImage_GetClipboardShouldReturnNotImplementedException()
+        [SupportedOSPlatform("windows")]
+        public void WhenGetClipboardImageGetClipboardShouldReturnNotImplementedException()
         {
             Assert.That(() => _driver.GetClipboardImage(),
                 Throws.TypeOf<NotImplementedException>());
         }
 
         [Test]
-        public void WhenGetClipboardUrl_GetClipboardShouldReturnNotImplementedException()
+        public void WhenGetClipboardUrlGetClipboardShouldReturnNotImplementedException()
         {
             Assert.That(() => _driver.GetClipboardUrl(),
                 Throws.TypeOf<NotImplementedException>());
         }
 
         [Test]
-        public void WhenSetClipboardContentTypeIsUrl_SetClipboardShouldReturnNotImplementedException()
+        public void WhenSetClipboardContentTypeIsUrlSetClipboardShouldReturnNotImplementedException()
         {
             Assert.That(() => _driver.SetClipboard(ClipboardContentType.Url, string.Empty),
                 Throws.TypeOf<NotImplementedException>());
         }
 
         [Test]
-        public void WhenClipboardContentTypeIsUrl_GetClipboardShouldReturnNotImplementedException()
+        public void WhenClipboardContentTypeIsUrlGetClipboardShouldReturnNotImplementedException()
         {
             Assert.That(() => _driver.GetClipboard(ClipboardContentType.Url),
                 Throws.TypeOf<NotImplementedException>());
         }
 
         [Test]
-        public void WhenClipboardContentTypeIsImage_GetClipboardShouldReturnNotImplementedException()
+        public void WhenClipboardContentTypeIsImageGetClipboardShouldReturnNotImplementedException()
         {
             Assert.That(() => _driver.GetClipboard(ClipboardContentType.Image),
                 Throws.TypeOf<NotImplementedException>());
