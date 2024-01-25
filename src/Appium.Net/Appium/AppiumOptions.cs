@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 namespace OpenQA.Selenium.Appium
 {
     /// <summary>
-    /// Generic browser options
+    /// Generic driver options
     /// </summary>
     public class AppiumOptions : DriverOptions
     {
@@ -157,21 +157,21 @@ namespace OpenQA.Selenium.Appium
         }
 
         /// <summary>
-        /// Converts the current instance of <see cref="IWritableCapabilities"/> to a dictionary.
+        /// Converts the current instance of <see cref="AppiumOptions"/> to a ReadOnlyDictionary.
         /// </summary>
-        /// <returns>A dictionary representation of the <see cref="IWritableCapabilities"/>.</returns>
+        /// <returns>A ReadOnlyDictionary representation of the <see cref="AppiumOptions"/>.</returns>
         public IDictionary<string, object> ToDictionary()
         {
-            var writeable = GenerateDesiredCapabilities(true);
+            IWritableCapabilities writeable = GenerateDesiredCapabilities(true);
             var baseDict = (writeable.AsReadOnly() as ReadOnlyDesiredCapabilities).ToDictionary();
             return MergeOptionsDictionary(baseDict);
         }
 
         /// <summary>
-        /// Merges the provided base dictionary with the Appium options dictionary.
+        /// Merges the provided <see cref="IWritableCapabilities"/> dictionary with the <see cref="AppiumOptions"/> dictionary.
         /// </summary>
-        /// <param name="baseDict">The base dictionary to merge with the Appium options dictionary.</param>
-        /// <returns>A read-only dictionary representing the merged dictionary.</returns>
+        /// <param name="baseDict">The base <see cref="IWritableCapabilities"/> dictionary.</param>
+        /// <returns>A ReadOnlyDictionary representing the merged <see cref="AppiumOptions"/> dictionary.</returns>
         private IDictionary<string, object> MergeOptionsDictionary(IDictionary<string, object> baseDict)
         {
             Dictionary<string, object> appiumOptionsDict = BuildAppiumOptionsDictionary();
