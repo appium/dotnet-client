@@ -24,10 +24,10 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public AppiumOptions() : base()
         {
-            AddKnownCapabilityName(AppiumOptions.AutomationNameOption, "AutomationName property");
-            AddKnownCapabilityName(AppiumOptions.DeviceNameOption, "DeviceName property");
-            AddKnownCapabilityName(AppiumOptions.AppOption, "Application property");
-            AddKnownCapabilityName(AppiumOptions.PlatformVersionOption, "PlatformVersion property");
+            AddKnownCapabilityName(AutomationNameOption, "AutomationName property");
+            AddKnownCapabilityName(DeviceNameOption, "DeviceName property");
+            AddKnownCapabilityName(AppOption, "Application property");
+            AddKnownCapabilityName(PlatformVersionOption, "PlatformVersion property");
             AddKnownCapabilityName("app", "Application property");
         }
 
