@@ -29,8 +29,9 @@ namespace Appium.Net.Integration.Tests.ServerTests
             var capabilities = new AppiumOptions();
             capabilities.AddAdditionalAppiumOption(AndroidMobileCapabilityType.Avd, "Android_Emulator");
             capabilities.AddAdditionalAppiumOption(AndroidMobileCapabilityType.AppPackage, Apps.GetId(Apps.androidApiDemos));
-            Assert.That(capabilities.ToDictionary, Is.Not.Empty);
-            Assert.That(capabilities.ToDictionary(), Has.Count.GreaterThan(1));
+            var capsDict = capabilities.ToDictionary();
+            Assert.That(capsDict, Is.Not.Empty);
+            Assert.That(capsDict, Has.Count.GreaterThan(1));
         }
 
         [Test]
@@ -39,12 +40,14 @@ namespace Appium.Net.Integration.Tests.ServerTests
             var capabilities = new AppiumOptions
             {
                 AutomationName = AutomationName.Appium,
-                App = Apps.androidApiDemos
+                App = Apps.androidApiDemos,
+                PlatformName = MobilePlatform.Android
             };
             capabilities.AddAdditionalAppiumOption(AndroidMobileCapabilityType.Avd, "Android_Emulator");
             capabilities.AddAdditionalAppiumOption(AndroidMobileCapabilityType.AppPackage, Apps.GetId(Apps.androidApiDemos));
-            Assert.That(capabilities.ToDictionary, Is.Not.Empty);
-            Assert.That(capabilities.ToDictionary(), Has.Count.EqualTo(4));
+            var capsDict = capabilities.ToDictionary();
+            Assert.That(capsDict, Is.Not.Empty);
+            Assert.That(capsDict, Has.Count.EqualTo(5));
         }
     }
 }

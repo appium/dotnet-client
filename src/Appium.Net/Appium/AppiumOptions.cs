@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace OpenQA.Selenium.Appium
 {
@@ -78,7 +79,7 @@ namespace OpenQA.Selenium.Appium
         /// webdriver executable.</remarks>
         public void AddAdditionalAppiumOption(string optionName, object optionValue)
         {
-            string name = optionName.Contains(":") ? optionName : $"{VendorPrefix}:{optionName}";
+            string name = optionName.Contains(':') ? optionName : $"{VendorPrefix}:{optionName}";
             ValidateCapabilityName(name);
             additionalAppiumOptions[name] = optionValue;
         }
@@ -175,13 +176,7 @@ namespace OpenQA.Selenium.Appium
         private IDictionary<string, object> MergeOptionsDictionary(IDictionary<string, object> baseDict)
         {
             Dictionary<string, object> appiumOptionsDict = BuildAppiumOptionsDictionary();
-            var mergedDict = new Dictionary<string, object>(appiumOptionsDict);
-
-            foreach (var kvp in baseDict)
-            {
-                mergedDict.Add(kvp.Key, kvp.Value);
-            }
-
+            var mergedDict = appiumOptionsDict.Concat(baseDict).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             return new ReadOnlyDictionary<string, object>(mergedDict);
         }
 
