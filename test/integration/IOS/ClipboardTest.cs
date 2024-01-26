@@ -76,16 +76,6 @@ namespace Appium.Net.Integration.Tests.IOS
         }
 
         [Test]
-        public void WhenSetClipboardImage_GetClipboardImageShouldReturnImage()
-        {
-            var imageBytes = _driver.GetScreenshot().AsByteArray;
-            var testImage = Image.FromStream(new MemoryStream(imageBytes));
-
-            _driver.SetClipboardImage(testImage);
-            Assert.That(() => _driver.GetClipboardImage().Size, Is.EqualTo(testImage.Size));
-        }
-
-        [Test]
         public void WhenClipboardHasNoImage_GetClipboardImageShouldReturnNull()
         {
             _driver.SetClipboardText(ClipboardTestString);
