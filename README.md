@@ -16,9 +16,9 @@ all the functionalities of the regular driver, but add Appium-specific methods o
 
  ## v5 Release Candidate 
  
+### Appium server compatibility for v5.x
+
 > [!IMPORTANT]
-> ### Appium server compatibility for v5.x
-> 
 > In case you are using the latest beta client v5.x please be aware you will either have to upgrade your appium server to 2.x or add the base-path argument:
 > `appium --base-path=/wd/hub`, due to a breaking change on the default server base path. <br/>
 > Regardless, moving to appium 2.x is highly recommended since appium 1.x is no longer maintained. <br/>
