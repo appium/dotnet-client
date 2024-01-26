@@ -14,27 +14,28 @@
 This driver is an extension of the [Selenium](http://docs.seleniumhq.org/) C# client. It has 
 all the functionalities of the regular driver, but add Appium-specific methods on top of this.
 
- ## v5 Release Candidate 
+## v5 Release Candidate 
  
+### Appium server compatibility for v5.x
+
 > [!IMPORTANT]
-> ### Appium server compatibility for v5.x
-> 
 > In case you are using the latest beta client v5.x please be aware you will either have to upgrade your appium server to 2.x or add the base-path argument:
 > `appium --base-path=/wd/hub`, due to a breaking change on the default server base path. <br/>
 > Regardless, moving to appium 2.x is highly recommended since appium 1.x is no longer maintained. <br/>
 > For more details about how to migrate to 2.x, see the following link : [appium 2.x migrating](https://appium.github.io/appium/docs/en/2.0/guides/migrating-1-to-2/)
 
+
+### Deprecated Methods
+
 > [!CAUTION]
-> ### Deprecated Methods
-> 
 > - `MultiAction` and `TouchAction` are deprecated. Please use W3C WebDriver actions or mobile: extensions.
 > - `LaunchApp`, `CloseApp`, and `reset` are deprecated, please read each deprecation message as an alternative method.
 > - The `ReplaceValue` method is deprecated and will be removed in future versions. Please use the following command extensions: 'mobile: replaceElementValue' instead.
 > - The `SetImmediateValue` method is deprecated and will be removed in future versions. Please use 'SendKeys' instead.
->
-> #### Additional Information
-> W3C Actions: https://www.selenium.dev/documentation/webdriver/actions_api  <br/>
-> App management: Please read [issue #15807](https://github.com/appium/appium/issues/15807) for more details
+
+#### Additional Information
+W3C Actions: https://www.selenium.dev/documentation/webdriver/actions_api  <br/>
+App management: Please read [issue #15807](https://github.com/appium/appium/issues/15807) for more details
 
 ### Migration Guide to W3C actions
 ```csharp
@@ -60,8 +61,9 @@ all the functionalities of the regular driver, but add Appium-specific methods o
   _driver.PerformActions(actions_seq);
  ```
 
->  [!WARNING]
-> ### WinAppDriver Notice!
+### WinAppDriver Notice!
+
+> [!WARNING]
 > Because [WinAppDriver](https://github.com/microsoft/WinAppDriver) has been abandoned by MS, running Appium dotnet-client 5.x with WAD will not work since it has not been updated to support the W3C protocol. <br/>
 > To run appium on Windows Applications, you will need to use [appium-windows-driver](https://github.com/appium/appium-windows-driver) which will act as a proxy to WAD.
 > Examples of running Windows Applications with dotnet-client can be found here: [windows Integration test 5.0.0](https://github.com/appium/dotnet-client/tree/release/5.0.0/test/integration/Windows) <br/>
