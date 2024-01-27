@@ -18,19 +18,19 @@ namespace Appium.Net.Integration.Tests.Android
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
             _driver = new AndroidDriver(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
-            _driver.CloseApp();
+            _driver.TerminateApp(DemoAppPackage);
         }
 
         [SetUp]
         public void SetUp()
         {
-            _driver?.LaunchApp();
+            _driver?.ActivateApp(DemoAppPackage);
         }
 
         [OneTimeTearDown]
         public void TearDowwn()
         {
-            _driver?.CloseApp();
+            _ = (_driver?.TerminateApp(DemoAppPackage));
             _driver?.Quit();
         }
 
