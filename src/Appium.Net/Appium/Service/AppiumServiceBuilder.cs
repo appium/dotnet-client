@@ -40,7 +40,7 @@ namespace OpenQA.Selenium.Appium.Service
         private FileInfo NodeJS;
         private IDictionary<string, string> EnvironmentForAProcess;
         private string PathToLogFile;
-        private string[] NodeOptions = new string[0];
+        private string[] NodeOptions = Array.Empty<string>();
 
 
         private static Process StartSearchingProcess(string file, string arguments)
@@ -75,34 +75,6 @@ namespace OpenQA.Selenium.Appium.Service
             return result;
         }
 
-        private static string ReadErrorStream(Process process)
-        {
-            string result = string.Empty;
-            var errorStream = process.StandardError;
-
-            while (!errorStream.EndOfStream)
-            {
-                string current = errorStream.ReadLine();
-                if (string.IsNullOrEmpty(current))
-                {
-                    continue;
-                }
-                result = result + current + "\n";
-            }
-            return result;
-        }
-
-        private static FileInfo GetTempFile(string extension, byte[] bytes)
-        {
-            Guid guid = Guid.NewGuid();
-            string guidStr = guid.ToString();
-
-            string path = Path.ChangeExtension(Path.GetTempFileName(), guidStr + extension);
-
-            File.WriteAllBytes(path, bytes);
-            return new FileInfo(path);
-        }
-
         private static void ValidateNodeStructure(FileInfo node)
         {
             string absoluteNodePath = node.FullName;
@@ -117,10 +89,9 @@ namespace OpenQA.Selenium.Appium.Service
         private static string FindAFileInPATH(string shortName)
         {
             string path = Environment.GetEnvironmentVariable("PATH");
-            string expandedPath = null;
             if (!string.IsNullOrEmpty(path))
             {
-                expandedPath = Environment.ExpandEnvironmentVariables(path);
+                string expandedPath = Environment.ExpandEnvironmentVariables(path);
                 if (!Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows) &&
                     !expandedPath.Contains(
                         $"{Path.DirectorySeparatorChar}usr{Path.DirectorySeparatorChar}local{Path.DirectorySeparatorChar}bin")
@@ -151,7 +122,7 @@ namespace OpenQA.Selenium.Appium.Service
             return null;
         }
 
-        private FileInfo InstalledNodeInCurrentFileSystem
+        private static FileInfo InstalledNodeInCurrentFileSystem
         {
             get
             {
@@ -159,7 +130,6 @@ namespace OpenQA.Selenium.Appium.Service
                 Process p = null;
 
                 bool isWindows = Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows);
-
                 try
                 {
                     if (isWindows)
@@ -171,13 +141,10 @@ namespace OpenQA.Selenium.Appium.Service
                         p = StartSearchingProcess(AppiumServiceConstants.Bash, "-c \"" + "echo $(npm root -g);\"");
                     }
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    if (p != null)
-                    {
-                        p.Close();
-                    }
-                    throw e;
+                    p?.Close();
+                    throw;
                 }
 
                 nodeInstancePath = GetTheLastStringFromsOutput(p.StandardOutput);
@@ -211,12 +178,12 @@ namespace OpenQA.Selenium.Appium.Service
             }
         }
 
-        private FileInfo DefaultExecutable
+        private static FileInfo DefaultExecutable
         {
             get
             {
                 string appiumJS = Environment.GetEnvironmentVariable(AppiumServiceConstants.NodeBinaryPath);
-                if (!String.IsNullOrEmpty(appiumJS))
+                if (!string.IsNullOrEmpty(appiumJS))
                 {
                     FileInfo result = new FileInfo(appiumJS);
                     if (result.Exists)
@@ -299,9 +266,9 @@ namespace OpenQA.Selenium.Appium.Service
         /// <returns>self-reference</returns>
         public AppiumServiceBuilder WithStartUpTimeOut(TimeSpan startUpTimeout)
         {
-            if (startUpTimeout == null)
+            if (startUpTimeout <= TimeSpan.Zero)
             {
-                throw new ArgumentNullException("A startup timeout should not be NULL");
+                throw new ArgumentOutOfRangeException(nameof(startUpTimeout), "A startup timeout should be a positive TimeSpan value");
             }
             StartUpTimeout = startUpTimeout;
             return this;
@@ -361,13 +328,13 @@ namespace OpenQA.Selenium.Appium.Service
         /// <summary>
         /// Sets which Node.js the builder will use.
         /// </summary>
-        /// <param name="nodeJSExecutable">The executable Node.js to use.</param>
+        /// <param name="nodeJS">The executable Node.js to use.</param>
         /// <returns>self-reference</returns>
         public AppiumServiceBuilder UsingDriverExecutable(FileInfo nodeJS)
         {
             if (nodeJS == null)
             {
-                throw new ArgumentNullException("The nodeJS parameter should not be NULL");
+                throw new ArgumentNullException(nameof(nodeJS), "The nodeJS parameter should not be NULL");
             }
 
             if (!nodeJS.Exists)
@@ -419,10 +386,7 @@ namespace OpenQA.Selenium.Appium.Service
             }
             finally
             {
-                if (sock != null)
-                {
-                    sock.Dispose();
-                }
+                sock?.Dispose();
             }
         }
 
@@ -436,7 +400,7 @@ namespace OpenQA.Selenium.Appium.Service
         {
             if (environment == null)
             {
-                throw new ArgumentNullException("The environment parameter should not be NULL");
+                throw new ArgumentNullException(nameof(environment), "The environment parameter should not be NULL");
             }
 
             var keys = environment.Keys;
@@ -444,7 +408,7 @@ namespace OpenQA.Selenium.Appium.Service
             {
                 if (string.IsNullOrEmpty(key))
                 {
-                    throw new ArgumentNullException("The given environment parameter contains an empty or null key");
+                    throw new ArgumentNullException("The given environment parameter contains an empty or null key", nameof(key));
                 }
             }
 
@@ -453,7 +417,7 @@ namespace OpenQA.Selenium.Appium.Service
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentNullException("The given environment parameter contains an empty or null value");
+                    throw new ArgumentNullException("The given environment parameter contains an empty or null value", nameof(value));
                 }
             }
 
@@ -470,7 +434,7 @@ namespace OpenQA.Selenium.Appium.Service
         {
             if (logFile == null)
             {
-                throw new ArgumentNullException("The logFile parameter should not be NULL");
+                throw new ArgumentNullException(nameof(logFile), "The logFile parameter should not be NULL");
             }
             PathToLogFile = logFile.FullName;
             return this;
@@ -519,11 +483,8 @@ namespace OpenQA.Selenium.Appium.Service
         /// <returns>an instance of AppiumLocalService built using defined parameters</returns>
         public AppiumLocalService Build()
         {
-            if (NodeJS == null)
-            {
-                NodeJS = DefaultExecutable;
-            }
-            return new AppiumLocalService(NodeJS, Args, IPAddress.Parse(this.IpAddress), this.Port, StartUpTimeout, EnvironmentForAProcess);
+            NodeJS ??= DefaultExecutable;
+            return new AppiumLocalService(NodeJS, Args, IPAddress.Parse(IpAddress), Port, StartUpTimeout, EnvironmentForAProcess);
         }
     }
 }
