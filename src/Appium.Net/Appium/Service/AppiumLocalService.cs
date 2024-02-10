@@ -20,7 +20,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+#if NET6_0
 using System.Net.Http;
+#endif
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
@@ -37,7 +39,9 @@ namespace OpenQA.Selenium.Appium.Service
         private readonly int Port;
         private readonly TimeSpan InitializationTimeout;
         private readonly IDictionary<string, string> EnvironmentForProcess;
+#if NET6_0
         private readonly HttpClient SharedHttpClient;
+#endif
         private Process Service;
         private List<string> ArgsList;
 
@@ -61,9 +65,12 @@ namespace OpenQA.Selenium.Appium.Service
             Port = port;
             InitializationTimeout = initializationTimeout;
             EnvironmentForProcess = environmentForProcess;
+#if NET6_0
             SharedHttpClient = CreateHttpClientInstance;
+#endif
         }
 
+#if NET6_0
         private HttpClient CreateHttpClientInstance
         {
             get
@@ -75,7 +82,7 @@ namespace OpenQA.Selenium.Appium.Service
                 return new HttpClient(handler);
             }
         }
-
+#endif
         /// <summary>
         /// The base URL for the managed appium server.
         /// </summary>
@@ -168,8 +175,9 @@ namespace OpenQA.Selenium.Appium.Service
             finally
             {
                 Service?.Close();
-
+#if NET6_0
                 SharedHttpClient.Dispose();
+#endif
             }
         }
 
@@ -288,12 +296,20 @@ namespace OpenQA.Selenium.Appium.Service
             {
                 try
                 {
+#if NET48
+                    HttpWebResponse response = await GetHttpResponse(status);
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        return true;
+                    }
+#elif NET6_0
                     HttpResponseMessage response = await GetHttpResponseAsync(status).ConfigureAwait(false);
 
                     if (response.IsSuccessStatusCode)
                     {
                         return true;
                     }
+#endif
                 }
                 catch
                 {
@@ -302,11 +318,21 @@ namespace OpenQA.Selenium.Appium.Service
             }
             return pinged;
         }
-
-        private async Task<HttpResponseMessage> GetHttpResponseAsync(Uri status)
+#if NET48
+        private async Task<HttpWebResponse> GetHttpResponse(Uri status)
         {
-            HttpResponseMessage response = await SharedHttpClient.GetAsync(status).ConfigureAwait(false);
-            return response;
+            return await Task.Run(() =>
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(status);
+                return (HttpWebResponse)request.GetResponse();
+            });
         }
+#elif NET6_0
+        private async Task<HttpResponseMessage> GetHttpResponseAsync(Uri status)
+            {
+                HttpResponseMessage response = await SharedHttpClient.GetAsync(status).ConfigureAwait(false);
+                return response;
+            }
+#endif
     }
 }
