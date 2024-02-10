@@ -80,7 +80,7 @@ namespace Appium.Net.Integration.Tests.Windows
                 alarmEntry.Click();
                 AlarmClockSession.FindElement(MobileBy.AccessibilityId("DeleteButton")).Click();
             }
-
+            AlarmClockSession.Quit();
             AlarmClockSession.Dispose();
             AlarmClockSession = null;
             DesktopSession.Dispose();
@@ -93,27 +93,27 @@ namespace Appium.Net.Integration.Tests.Windows
             // Read the current local time
             SwitchToWorldClockTab();
             var localTimeText = ReadLocalTime();
-            Assert.That(localTimeText.Length > 0);
+            Assert.That(localTimeText, Is.Not.Empty);
 
             // Add an alarm at 1 minute after local time
             SwitchToAlarmTab();
             AddAlarm(localTimeText);
             Thread.Sleep(300);
             var alarmEntries = AlarmClockSession.FindElements(MobileBy.Name("Windows Application Driver Test Alarm"));
-            Assert.That(alarmEntries.Count > 0);
+            Assert.That(alarmEntries, Is.Not.Empty);
         }
 
-        public static void SwitchToAlarmTab()
+        private static void SwitchToAlarmTab()
         {
             AlarmClockSession.FindElement(MobileBy.AccessibilityId("AlarmButton")).Click();
         }
 
-        public void SwitchToWorldClockTab()
+        private static void SwitchToWorldClockTab()
         {
             AlarmClockSession.FindElement(MobileBy.AccessibilityId("ClockButton")).Click();
         }
 
-        public string ReadLocalTime()
+        private static string ReadLocalTime()
         {
             var localTimeText = "";
             AppiumElement worldClockPivotItem =
@@ -126,7 +126,7 @@ namespace Appium.Net.Integration.Tests.Windows
                 foreach (var timeString in timeStrings)
                 {
                     // Get the time. E.g. "11:32 AM" from "Local time, Monday, February 22, 2016, 11:32 AM, "
-                    if (timeString.Contains(":"))
+                    if (timeString.Contains(':'))
                     {
                         localTimeText = new string(timeString.Trim().Where(c => c < 128).ToArray()); // Remove 8206 character, see https://stackoverflow.com/questions/18298208/strange-error-when-parsing-string-to-date
                         break;
@@ -137,7 +137,7 @@ namespace Appium.Net.Integration.Tests.Windows
             return localTimeText;
         }
 
-        public void AddAlarm(string timeText)
+        private static void AddAlarm(string timeText)
         {
             if (timeText.Length > 0)
             {
@@ -171,7 +171,7 @@ namespace Appium.Net.Integration.Tests.Windows
             }
         }
 
-        public void DismissNotification()
+        private static void DismissNotification()
         {
             try
             {
