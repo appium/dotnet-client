@@ -20,7 +20,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
-#if NET6_0
+#if NET
 using System.Net.Http;
 #endif
 using System.Runtime.CompilerServices;
