@@ -39,7 +39,7 @@ namespace OpenQA.Selenium.Appium.Service
         private readonly int Port;
         private readonly TimeSpan InitializationTimeout;
         private readonly IDictionary<string, string> EnvironmentForProcess;
-#if NET6_0
+#if !NET48
         private readonly HttpClient SharedHttpClient;
 #endif
         private Process Service;
