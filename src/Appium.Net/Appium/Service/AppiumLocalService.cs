@@ -65,12 +65,12 @@ namespace OpenQA.Selenium.Appium.Service
             Port = port;
             InitializationTimeout = initializationTimeout;
             EnvironmentForProcess = environmentForProcess;
-#if NET6_0
+#if !NET48
             SharedHttpClient = CreateHttpClientInstance;
 #endif
         }
 
-#if NET6_0
+#if !NET48
         private HttpClient CreateHttpClientInstance
         {
             get
@@ -175,7 +175,7 @@ namespace OpenQA.Selenium.Appium.Service
             finally
             {
                 Service?.Close();
-#if NET6_0
+#if !NET48
                 SharedHttpClient.Dispose();
 #endif
             }
@@ -302,7 +302,7 @@ namespace OpenQA.Selenium.Appium.Service
                     {
                         return true;
                     }
-#elif NET6_0
+#elif NET
                     HttpResponseMessage response = await GetHttpResponseAsync(status).ConfigureAwait(false);
 
                     if (response.IsSuccessStatusCode)
@@ -327,7 +327,7 @@ namespace OpenQA.Selenium.Appium.Service
                 return (HttpWebResponse)request.GetResponse();
             });
         }
-#elif NET6_0
+#elif NET
         private async Task<HttpResponseMessage> GetHttpResponseAsync(Uri status)
             {
                 HttpResponseMessage response = await SharedHttpClient.GetAsync(status).ConfigureAwait(false);
