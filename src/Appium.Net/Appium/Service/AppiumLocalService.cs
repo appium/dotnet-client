@@ -297,7 +297,7 @@ namespace OpenQA.Selenium.Appium.Service
                 try
                 {
 #if NET48
-                    HttpWebResponse response = await GetHttpResponseAsync(status);
+                    HttpWebResponse response = await GetHttpResponseAsync(status).ConfigureAwait(false);
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
                         return true;
@@ -325,7 +325,7 @@ namespace OpenQA.Selenium.Appium.Service
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(status);
                 return (HttpWebResponse)request.GetResponse();
-            });
+            }).ConfigureAwait(false);
         }
 #else
         private async Task<HttpResponseMessage> GetHttpResponseAsync(Uri status)
