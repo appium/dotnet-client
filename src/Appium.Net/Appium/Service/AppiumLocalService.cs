@@ -327,7 +327,7 @@ namespace OpenQA.Selenium.Appium.Service
                 return (HttpWebResponse)request.GetResponse();
             });
         }
-#elif NET
+#else
         private async Task<HttpResponseMessage> GetHttpResponseAsync(Uri status)
             {
                 HttpResponseMessage response = await SharedHttpClient.GetAsync(status).ConfigureAwait(false);
