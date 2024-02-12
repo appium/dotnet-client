@@ -297,7 +297,7 @@ namespace OpenQA.Selenium.Appium.Service
                 try
                 {
 #if NET48
-                    HttpWebResponse response = await GetHttpResponse(status);
+                    HttpWebResponse response = await GetHttpResponseAsync(status);
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
                         return true;
