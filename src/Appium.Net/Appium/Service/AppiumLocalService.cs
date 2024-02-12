@@ -319,7 +319,7 @@ namespace OpenQA.Selenium.Appium.Service
             return pinged;
         }
 #if NET48
-        private async Task<HttpWebResponse> GetHttpResponse(Uri status)
+        private async Task<HttpWebResponse> GetHttpResponseAsync(Uri status)
         {
             return await Task.Run(() =>
             {
