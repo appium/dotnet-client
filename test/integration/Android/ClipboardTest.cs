@@ -83,7 +83,9 @@ namespace Appium.Net.Integration.Tests.Android
         }
 
         [Test]
+#if !NET48
         [SupportedOSPlatform("windows")]
+#endif
         public void WhenGetClipboardImageGetClipboardShouldReturnNotImplementedException()
         {
             Assert.That(() => _driver.GetClipboardImage(),
