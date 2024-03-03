@@ -63,30 +63,30 @@ namespace OpenQA.Selenium.Appium
         }
 
         /// <summary>
-        /// This method creates a <see cref="OpenQA.Selenium.By"/> strategy 
+        /// This method creates a <see cref="By"/> strategy 
         /// that searches for elements by accessibility id
         /// About Android accessibility
-        /// <see cref="https://developer.android.com/intl/ru/training/accessibility/accessible-app.html"/>
+        /// <see href="https://developer.android.com/intl/ru/training/accessibility/accessible-app.html"/>
         /// About iOS accessibility
-        /// <see cref="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIAccessibilityIdentification_Protocol/index.html"/>
+        /// <see href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIAccessibilityIdentification_Protocol/index.html"/>
         /// </summary>
         /// <param name="selector">The selector to use in finding the element.</param>
         /// <returns></returns>
         public static By AccessibilityId(string selector) => new ByAccessibilityId(selector);
 
         /// <summary>
-        /// This method creates a <see cref="OpenQA.Selenium.By"/> strategy 
+        /// This method creates a <see cref="By"/> strategy 
         /// that searches for elements using Android UI automation framework.
-        /// <see cref="http://developer.android.com/intl/ru/tools/testing-support-library/index.html#uia-apis"/>
+        /// <see href="http://developer.android.com/intl/ru/tools/testing-support-library/index.html#uia-apis"/>
         /// </summary>
         /// <param name="selector">The selector to use in finding the element.</param>
         /// <returns></returns>
         public static By AndroidUIAutomator(string selector) => new ByAndroidUIAutomator(selector);
 
         /// <summary>
-        /// This method creates a <see cref="OpenQA.Selenium.By"/> strategy 
+        /// This method creates a <see cref="By"/> strategy 
         /// that searches for elements using Android UI automation framework.
-        /// <see cref="http://developer.android.com/intl/ru/tools/testing-support-library/index.html#uia-apis"/>
+        /// <see href="http://developer.android.com/intl/ru/tools/testing-support-library/index.html#uia-apis"/>
         /// </summary>
         /// <param name="selector">The selector to use in finding the element.</param>
         /// <returns></returns>
@@ -94,27 +94,27 @@ namespace OpenQA.Selenium.Appium
             new ByAndroidUIAutomator(selector);
 
         /// <summary>
-        /// This method creates a <see cref="OpenQA.Selenium.By"/> strategy
+        /// This method creates a <see cref="By"/> strategy
         /// that searches for elements using Espresso's Data Matcher.
-        /// <see cref="http://appium.io/docs/en/writing-running-appium/android/espresso-datamatcher-selector"/>
+        /// <see href="http://appium.io/docs/en/writing-running-appium/android/espresso-datamatcher-selector"/>
         /// </summary>
         /// <param name="selector">The selector to use in finding the element.</param>
         /// <returns></returns>
         public static By AndroidDataMatcher(string selector) => new ByAndroidDataMatcher(selector);
 
         /// <summary>
-        /// This method creates a <see cref="OpenQA.Selenium.By"/> strategy
+        /// This method creates a <see cref="By"/> strategy
         /// that searches for elements using Espresso's View Matcher.
-        /// <see cref="https://developer.android.com/training/testing/espresso/basics#finding-view"/>
+        /// <see href="https://developer.android.com/training/testing/espresso/basics#finding-view"/>
         /// </summary>
         /// <param name="selector">The selector to use in finding the element.</param>
         /// <returns></returns>
         public static By AndroidViewMatcher(string selector) => new ByAndroidViewMatcher(selector);
 
         /// <summary>
-        /// This method creates a <see cref="OpenQA.Selenium.By"/> strategy 
+        /// This method creates a <see cref="By"/> strategy 
         /// that searches for elements using iOS UI automation.
-        /// <see cref="https://developer.apple.com/library/tvos/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/UIAutomation.html"/>
+        /// <see href="https://developer.apple.com/library/tvos/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/UIAutomation.html"/>
         /// </summary>
         /// <param name="selector">The selector to use in finding the element.</param>
         /// <returns></returns>
@@ -142,9 +142,9 @@ namespace OpenQA.Selenium.Appium
     /// <summary>
     /// Finds element when the Accessibility Id selector has the specified value.
     /// About Android accessibility 
-    /// <see cref="https://developer.android.com/intl/ru/training/accessibility/accessible-app.html"/>
+    /// <see href="https://developer.android.com/intl/ru/training/accessibility/accessible-app.html"/>
     /// About iOS accessibility
-    /// <see cref="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIAccessibilityIdentification_Protocol/index.html"/>
+    /// <see href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIAccessibilityIdentification_Protocol/index.html"/>
     /// </summary>
     public class ByAccessibilityId : MobileBy
     {
@@ -176,7 +176,7 @@ namespace OpenQA.Selenium.Appium
 
     /// <summary>
     /// Finds element when the Android UIAutomator selector has the specified value.
-    /// <see cref="http://developer.android.com/intl/ru/tools/testing-support-library/index.html#uia-apis"/>
+    /// <see href="http://developer.android.com/intl/ru/tools/testing-support-library/index.html#uia-apis"/>
     /// </summary>
     public class ByAndroidUIAutomator : MobileBy
     {
@@ -217,7 +217,7 @@ namespace OpenQA.Selenium.Appium
 
     /// <summary>
     /// Finds element when the Espresso's Data Matcher selector has the specified value.
-    /// <see cref="http://appium.io/docs/en/writing-running-appium/android/espresso-datamatcher-selector"/>
+    /// <see href="http://appium.io/docs/en/writing-running-appium/android/espresso-datamatcher-selector"/>
     /// </summary>
     public class ByAndroidDataMatcher : MobileBy
     {
@@ -249,7 +249,7 @@ namespace OpenQA.Selenium.Appium
 
     /// <summary>
     /// Finds element when the Espresso's View Matcher selector has the specified value.
-    /// <see cref="https://developer.android.com/training/testing/espresso/basics#finding-view"/>
+    /// <see href="https://developer.android.com/training/testing/espresso/basics#finding-view"/>
     /// </summary>
     public class ByAndroidViewMatcher : MobileBy
     {
@@ -281,7 +281,7 @@ namespace OpenQA.Selenium.Appium
 
     /// <summary>
     /// Finds element when the Ios UIAutomation selector has the specified value.
-    /// <see cref="https://developer.apple.com/library/tvos/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/UIAutomation.html"/>
+    /// <see href="https://developer.apple.com/library/tvos/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/UIAutomation.html"/>
     /// </summary>
     public class ByIosUIAutomation : MobileBy
     {
@@ -428,7 +428,7 @@ namespace OpenQA.Selenium.Appium
         /// <summary>
         /// Initializes a new instance of the <see cref="ByImage"/> class.
         /// </summary>
-        /// <param name="base64Template">base64-encoded template image string.</param>
+        /// <param name="selector">Image selector.</param>
         public ByImage(string selector) : base(selector, MobileSelector.Image)
         {
         }
