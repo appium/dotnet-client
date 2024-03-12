@@ -135,33 +135,6 @@ namespace OpenQA.Selenium.Appium
 
         #region MJsonMethod Members
 
-        /// <summary>
-        /// Rotates the device.
-        /// </summary>
-        /// <param name="opts">
-        /// Rotations options like the following:
-        /// <example>
-        /// new Dictionary&lt;string, int&gt; {
-        ///     {"x", 114},
-        ///     {"y", 198},
-        ///     {"duration", 5},
-        ///     {"radius", 3},
-        ///     {"rotation", 220},
-        ///     {"touchCount", 2}
-        /// }
-        /// </example>
-        /// </param>
-        public void Rotate(Dictionary<string, int> opts)
-        {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
-            foreach (KeyValuePair<string, int> opt in opts)
-            {
-                parameters.Add(opt.Key, opt.Value);
-            }
-
-            Execute(AppiumDriverCommand.Rotate, parameters);
-        }
-
         public void InstallApp(string appPath) =>
             Execute(AppiumDriverCommand.InstallApp, AppiumCommandExecutionHelper.PrepareArgument("appPath", appPath));
 

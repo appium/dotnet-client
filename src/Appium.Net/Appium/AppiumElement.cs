@@ -178,37 +178,6 @@ namespace OpenQA.Selenium.Appium
 
         #endregion
 
-        #region MJSonMethods
-
-        /// <summary>
-        /// Rotates the device.
-        /// </summary>
-        /// <param name="opts">
-        /// Rotations options like the following:
-        /// <example>
-        /// new Dictionary&lt;string, int&gt; {
-        ///     {"x", 114},
-        ///     {"y", 198},
-        ///     {"duration", 5},
-        ///     {"radius", 3},
-        ///     {"rotation", 220},
-        ///     {"touchCount", 2}
-        /// }
-        /// </example>
-        /// </param>
-        public void Rotate(Dictionary<string, int> opts)
-        {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
-            foreach (KeyValuePair<string, int> opt in opts)
-            {
-                parameters.Add(opt.Key, opt.Value);
-            }
-            parameters.Add("element", Id);
-            Execute(AppiumDriverCommand.Rotate, parameters);
-        }
-
-        #endregion
-
         [Obsolete("The SetImmediateValue method is deprecated and will be removed in future versions. Please use 'SendKeys' instead.")]
         public void SetImmediateValue(string value) => Execute(AppiumDriverCommand.SetValue,
             new Dictionary<string, object>() { ["id"] = Id, ["value"] = value });
