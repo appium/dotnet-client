@@ -35,7 +35,7 @@ namespace Appium.Net.Integration.Tests.Android
         [Test]
         public void DeviceOrientationTest()
         {
-            var rotatable = ((IRotatable) _driver);
+            IRotatable rotatable = _driver;
             rotatable.Orientation = ScreenOrientation.Portrait;
             Assert.That(rotatable.Orientation, Is.EqualTo(ScreenOrientation.Portrait));
         }
