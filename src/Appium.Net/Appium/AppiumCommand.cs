@@ -88,8 +88,6 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/device/press_keycode"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.LongPressKeyCode,
                 "/session/{sessionId}/appium/device/long_press_keycode"),
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.Rotate,
-                "/session/{sessionId}/appium/device/rotate"),
             new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetCurrentActivity,
                 "/session/{sessionId}/appium/device/current_activity"),
             new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetCurrentPackage,
