@@ -79,11 +79,6 @@ namespace OpenQA.Selenium.Appium
         public const string LongPressKeyCode = "longPressKeyCode";
 
         /// <summary>
-        /// Rotate Command.
-        /// </summary>
-        public const string Rotate = "rotate";
-
-        /// <summary>
         /// Get CurrentActivity Command.
         /// </summary>
         public const string GetCurrentActivity = "getCurrentActivity";
