@@ -8,6 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Appium.Net\appium-icon.png = Appium.Net\appium-icon.png
 		..\azure-pipelines.yml = ..\azure-pipelines.yml
 		..\CHANGELOG.MD = ..\CHANGELOG.MD
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Appium.Net.Integration.Tests", "..\test\integration\Appium.Net.Integration.Tests.csproj", "{278EE5EC-9414-43D8-B8C0-E7B4F8C8D283}"
