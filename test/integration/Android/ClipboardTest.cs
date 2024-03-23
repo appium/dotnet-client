@@ -3,6 +3,7 @@ using NUnit.Framework;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Enums;
 using System;
+using System.Drawing;
 using System.Runtime.Versioning;
 using System.Text.RegularExpressions;
 
@@ -90,6 +91,19 @@ namespace Appium.Net.Integration.Tests.Android
         {
             Assert.That(() => _driver.GetClipboardImage(),
                 Throws.TypeOf<NotImplementedException>());
+        }
+
+        [Test]
+#if !NET48
+        [SupportedOSPlatform("windows")]
+#endif
+        public void WhenSetClipboardImageSetClipboardShouldReturnNotImplementedException()
+        {
+            // Arrange
+            Image testImage = new Bitmap(100, 100); // Create a sample image for testing
+
+            // Act & Assert
+            _ = Assert.Throws<NotImplementedException>(() => _driver.SetClipboardImage(testImage));
         }
 
         [Test]
