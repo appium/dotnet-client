@@ -87,7 +87,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// <summary>
         /// Initializes a new instance of the AndroidDriver class using the specified remote address and Appium options
         /// </summary>
-        /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
+        /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/).</param>
         /// <param name="driverOptions">An <see cref="DriverOptions"/> object containing the Appium options.</param>
         public AndroidDriver(Uri remoteAddress, DriverOptions driverOptions)
             : base(remoteAddress, SetPlatformToCapabilities(driverOptions, Platform))
@@ -107,7 +107,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// <summary>
         /// Initializes a new instance of the AndroidDriver class using the specified remote address, Appium options, and command timeout.
         /// </summary>
-        /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
+        /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/).</param>
         /// <param name="driverOptions">An <see cref="DriverOptions"/> object containing the Appium options.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
         public AndroidDriver(Uri remoteAddress, DriverOptions driverOptions, TimeSpan commandTimeout)
@@ -131,7 +131,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// <summary>
         /// Initializes a new instance of the AndroidDriver class using the specified remote address, Appium options and AppiumClientConfig.
         /// </summary>
-        /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
+        /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/).</param>
         /// <param name="driverOptions">An <see cref="DriverOptions"/> object containing the Appium options.</param>
         /// <param name="clientConfig">An instance of <see cref="AppiumClientConfig"/></param>
         public AndroidDriver(Uri remoteAddress, DriverOptions driverOptions, AppiumClientConfig clientConfig)
@@ -153,7 +153,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// <summary>
         /// Initializes a new instance of the AndroidDriver class using the specified remote address, Appium options, command timeout and AppiumClientConfig.
         /// </summary>
-        /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/wd/hub).</param>
+        /// <param name="remoteAddress">URI containing the address of the WebDriver remote server (e.g. http://127.0.0.1:4723/).</param>
         /// <param name="driverOptions">An <see cref="DriverOptions"/> object containing the Appium options.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
         /// <param name="clientConfig">An instance of <see cref="AppiumClientConfig"/></param>
