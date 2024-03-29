@@ -26,11 +26,6 @@ namespace OpenQA.Selenium.Appium.Interfaces
         void InstallApp(string appPath);
 
         /// <summary>
-        /// Launches the current app.
-        /// </summary>
-        void LaunchApp();
-
-        /// <summary>
         /// Checks If an App Is Installed.
         /// </summary>
         /// <param name="appPath">a string containing the bundle id.</param>

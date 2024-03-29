@@ -115,8 +115,6 @@ namespace OpenQA.Selenium.Appium
 
             #region (Deprecated) legacy app management
 
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.LaunchApp,
-                "/session/{sessionId}/appium/app/launch"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.CloseApp,
                 "/session/{sessionId}/appium/app/close"),
 
