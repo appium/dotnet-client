@@ -92,6 +92,9 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/device/current_activity"),
             new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetCurrentPackage,
                 "/session/{sessionId}/appium/device/current_package"),
+
+            #region Applications Management
+
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.InstallApp,
                 "/session/{sessionId}/appium/device/install_app"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.RemoveApp,
@@ -102,6 +105,11 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/device/terminate_app"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.IsAppInstalled,
                 "/session/{sessionId}/appium/device/app_installed"),
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GetAppState,
+                "/session/{sessionId}/appium/device/app_state"),
+
+	        #endregion
+
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.PushFile,
                 "/session/{sessionId}/appium/device/push_file"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.PullFile,
@@ -128,8 +136,6 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/app/end_test_coverage"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GetAppStrings,
                 "/session/{sessionId}/appium/app/strings"),
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GetAppState,
-                "/session/{sessionId}/appium/device/app_state"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.HideKeyboard,
                 "/session/{sessionId}/appium/device/hide_keyboard"),
             new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.IsKeyboardShown,
