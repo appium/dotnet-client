@@ -265,11 +265,10 @@ namespace OpenQA.Selenium.Appium
 
         /// <summary>
         /// Constructor
-        /// </summary>
         /// <param name="commandType">type of command (get/post/delete)</param>
         /// <param name="command">Command</param>
         /// <param name="apiEndpoint">api endpoint</param>
-        /// <summary>
+        /// </summary>
         public AppiumCommand(string commandType, string command, string apiEndpoint)
         {
             CommandType = commandType;

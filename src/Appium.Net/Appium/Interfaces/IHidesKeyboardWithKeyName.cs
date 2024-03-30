@@ -14,6 +14,9 @@
 
 namespace OpenQA.Selenium.Appium.Interfaces
 {
+    /// <summary>
+    /// Represents an interface for hiding the keyboard with a specific key name.
+    /// </summary>
     public interface IHidesKeyboardWithKeyName : IHidesKeyboard
     {
         /// <summary>
