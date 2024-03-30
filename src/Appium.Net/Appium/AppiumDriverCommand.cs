@@ -141,11 +141,6 @@ namespace OpenQA.Selenium.Appium
         #region (Deprecated) legacy app management
 
         /// <summary>
-        /// Launch App Command.
-        /// </summary>
-        public const string LaunchApp = "launchApp";
-
-        /// <summary>
         /// Close App Command.
         /// </summary>
         public const string CloseApp = "closeApp";
