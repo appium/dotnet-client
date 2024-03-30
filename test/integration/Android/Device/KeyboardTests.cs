@@ -50,5 +50,18 @@ namespace Appium.Net.Integration.Tests.Android.Device.Keys
             bool keyboard_bool = _driver.IsKeyboardShown();
             Assert.That(keyboard_bool);
         }
+
+        [Test]
+        public void HideKeyBoardWithKeyTestCase()
+        {
+            _driver.StartActivity("io.appium.android.apis", ".app.CustomTitle");
+            var text_edit_btn = By.Id("io.appium.android.apis:id/left_text_edit");
+            _driver.FindElement(text_edit_btn).Clear();
+            _driver.FindElement(text_edit_btn).Click();
+            _driver.HideKeyboard("Enter");
+            bool keyboard_bool = _driver.IsKeyboardShown();
+            Assert.That(!keyboard_bool);
+        }
+
     }
 }
