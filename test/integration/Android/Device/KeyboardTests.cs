@@ -47,8 +47,8 @@ namespace Appium.Net.Integration.Tests.Android.Device.Keys
             var text_edit_btn = By.Id("io.appium.android.apis:id/left_text_edit");
             _driver.FindElement(text_edit_btn).Clear();
             _driver.FindElement(text_edit_btn).Click();
-            bool keyboard_bool = _driver.IsKeyboardShown();
-            Assert.That(keyboard_bool);
+            bool is_visible = _driver.IsKeyboardShown();
+            Assert.That(is_visible);
         }
 
         [Test]
@@ -59,8 +59,8 @@ namespace Appium.Net.Integration.Tests.Android.Device.Keys
             _driver.FindElement(text_edit_btn).Clear();
             _driver.FindElement(text_edit_btn).Click();
             _driver.HideKeyboard("Enter");
-            bool keyboard_bool = _driver.IsKeyboardShown();
-            Assert.That(!keyboard_bool);
+            bool is_visible = _driver.IsKeyboardShown();
+            Assert.That(!is_visible);
         }
 
     }
