@@ -199,15 +199,6 @@ namespace OpenQA.Selenium.Appium
 
             #endregion Input Method (IME)
 
-            #region (Deprecated) Input value
-
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.ReplaceValue,
-                "/session/{sessionId}/appium/element/{id}/replace_value"),
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.SetValue,
-                "/session/{sessionId}/appium/element/{id}/value"),
-
-            #endregion (Deprecated) Input value
-
             #region SeassionData
 
             new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetSession, "/session/{sessionId}/"),

@@ -338,14 +338,6 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string FingerPrint = "fingerPrint";
 
-        #region (Deprecated) Input value
-
-        public const string ReplaceValue = "replaceValue";
-
-        public const string SetValue = "setValue";
-
-        #endregion (Deprecated) Input value
-
         public const string GetDeviceTime = "getDeviceTime";
 
         public const string GetSession = "getSession";
