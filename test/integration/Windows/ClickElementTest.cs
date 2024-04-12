@@ -24,15 +24,18 @@ namespace Appium.Net.Integration.Tests.Windows
     {
         private WindowsDriver _calculatorSession;
         protected static WebElement CalculatorResult;
+        private readonly string _appId = "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App";
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            var appCapabilities = new AppiumOptions();
-            appCapabilities.AutomationName = "Windows";
-            appCapabilities.App = "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App";
-            appCapabilities.DeviceName = "WindowsPC";
-            appCapabilities.PlatformName = "Windows";
+            var appCapabilities = new AppiumOptions
+            {
+                AutomationName = "Windows",
+                App = _appId,
+                DeviceName = "WindowsPC",
+                PlatformName = "Windows"
+            };
 
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
             _calculatorSession = new WindowsDriver(serverUri, appCapabilities,
@@ -49,8 +52,8 @@ namespace Appium.Net.Integration.Tests.Windows
         public void OneTimeTearDown()
         {
             CalculatorResult = null;
-            _calculatorSession.CloseApp();
-            _calculatorSession.Dispose();
+            _calculatorSession?.CloseApp();
+            _calculatorSession?.Dispose();
             _calculatorSession = null;
         }
 

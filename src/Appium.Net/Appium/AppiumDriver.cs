@@ -182,9 +182,6 @@ namespace OpenQA.Selenium.Appium
         public void PushFile(string pathOnDevice, FileInfo file) =>
             AppiumCommandExecutionHelper.PushFile(this, pathOnDevice, file);
 
-        [Obsolete("The CloseApp API is deprecated and will be removed in future versions. Please use TerminateApp instead \r\n See https://github.com/appium/appium/issues/15807")]
-        public void CloseApp() => ((IExecuteMethod)this).Execute(AppiumDriverCommand.CloseApp);
-
         public void FingerPrint(int fingerprintId) =>
             AppiumCommandExecutionHelper.FingerPrint(this, fingerprintId);
 

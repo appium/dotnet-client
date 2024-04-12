@@ -138,15 +138,6 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string ToggleLocationServices = "toggleLocationServices";
 
-        #region (Deprecated) legacy app management
-
-        /// <summary>
-        /// Close App Command.
-        /// </summary>
-        public const string CloseApp = "closeApp";
-
-        #endregion (Deprecated) legacy app management
-
         /// <summary>
         ///  Background App Command.
         /// </summary>

@@ -121,12 +121,12 @@ namespace OpenQA.Selenium.Appium
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GetPerformanceDataTypes,
                 "/session/{sessionId}/appium/performanceData/types"),
 
-            #region (Deprecated) legacy app management
+            #region (WinAppDriver) legacy app management
 
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.CloseApp,
+            new AppiumCommand(HttpCommandInfo.PostCommand, WindowsDriverCommand.CloseApp,
                 "/session/{sessionId}/appium/app/close"),
 
-            #endregion (Deprecated) legacy app management
+            #endregion (WinAppDriver) legacy app management
 
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.BackgroundApp,
                 "/session/{sessionId}/appium/app/background"),
