@@ -57,7 +57,6 @@ namespace Appium.Net.Integration.Tests.ServerTests
             }
         }
 
-
         [Test]
         public void StartingAndroidAppWithCapabilitiesOnTheServerSideTest()
         {
@@ -97,7 +96,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
             try
             {
                 driver = new IOSDriver(capabilities, Env.InitTimeoutSec);
-                driver.CloseApp();
+                driver.TerminateApp(Apps.GetId("iosTestApp"));
             }
             finally
             {
@@ -120,7 +119,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
             try
             {
                 driver = new IOSDriver(builder, capabilities, Env.InitTimeoutSec);
-                driver.CloseApp();
+                driver.TerminateApp(Apps.GetId("iosTestApp"));
             }
             finally
             {
