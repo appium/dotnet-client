@@ -71,11 +71,6 @@ namespace OpenQA.Selenium.Appium.Interfaces
         bool TerminateApp(string appId, TimeSpan timeout);
 
         /// <summary>
-        /// Closes the current app.
-        /// </summary>
-        void CloseApp();
-
-        /// <summary>
         /// Gets the State of the app.
         /// </summary>
         /// <param name="appId">a string containing the id of the app.</param>

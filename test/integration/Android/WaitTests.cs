@@ -13,14 +13,15 @@ namespace Appium.Net.Integration.Tests.Android
     {
         private AndroidDriver _driver;
         private WebDriverWait _waitDriver;
-        private TimeSpan _driverTimeOut = TimeSpan.FromSeconds(5);
+        private readonly TimeSpan _driverTimeOut = TimeSpan.FromSeconds(5);
+        private readonly string _appKey = "androidApiDemos";
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
             var capabilities = Env.ServerIsRemote()
-                ? Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"))
-                : Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
+                ? Caps.GetAndroidUIAutomatorCaps(Apps.Get(_appKey))
+                : Caps.GetAndroidUIAutomatorCaps(Apps.Get(_appKey));
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
             _driver = new AndroidDriver(serverUri, capabilities, Env.InitTimeoutSec);
         }
@@ -28,7 +29,7 @@ namespace Appium.Net.Integration.Tests.Android
         [SetUp]
         public void SetUp()
         {
-            _driver.StartActivity("io.appium.android.apis", ".ApiDemos");
+            _driver.StartActivity(Apps.GetId(_appKey), ".ApiDemos");
             _waitDriver = new WebDriverWait(_driver, _driverTimeOut);
             _waitDriver.IgnoreExceptionTypes(typeof(NoSuchElementException));
         }
@@ -53,7 +54,7 @@ namespace Appium.Net.Integration.Tests.Android
         [Test]
         public void WebDriverWaitIsWaitingTestCase()
         {
-            Stopwatch stopWatch = new Stopwatch();
+            Stopwatch stopWatch = new();
             stopWatch.Start();
 
             try
@@ -76,7 +77,7 @@ namespace Appium.Net.Integration.Tests.Android
         {
             if (_driver != null)
             {
-                _driver.CloseApp();
+                _ = _driver.TerminateApp(Apps.GetId(_appKey));
                 _driver?.Quit();
             }   
             if (!Env.ServerIsRemote())
