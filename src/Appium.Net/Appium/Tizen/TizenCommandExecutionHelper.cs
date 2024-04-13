@@ -20,11 +20,6 @@ namespace OpenQA.Selenium.Appium.Tizen
 {
     public sealed class TizenCommandExecutionHelper : AppiumCommandExecutionHelper
     {
-        [Obsolete("The ReplaceValue method is deprecated and will be removed in future versions. Please use the following command extensions: 'mobile: replaceElementValue' instead \r\n See https://github.com/appium/appium-uiautomator2-driver#mobile-replaceelementvalue")]
-        public static void ReplaceValue(IExecuteMethod executeMethod, string elementId, string value) =>
-            executeMethod.Execute(AppiumDriverCommand.ReplaceValue,
-                new Dictionary<string, object>()
-                { ["id"] = elementId, ["value"] = new string[] { value } });
 
         public static void SetAttribute(IExecuteMethod executeMethod, string elementId, string name, string value)
         {
