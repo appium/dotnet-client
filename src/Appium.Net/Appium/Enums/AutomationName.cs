@@ -12,8 +12,6 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-using System;
-
 namespace OpenQA.Selenium.Appium.Enums
 {
     public sealed class AutomationName
@@ -23,5 +21,6 @@ namespace OpenQA.Selenium.Appium.Enums
         public static readonly string AndroidUIAutomator2 = "UIAutomator2";
         public static readonly string AndroidEspresso = "Espresso";
         public static readonly string YouiEngine = "youiengine";
+        public static readonly string Mac2 = "mac2";
     }
 }

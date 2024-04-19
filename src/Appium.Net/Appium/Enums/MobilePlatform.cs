@@ -19,7 +19,7 @@ namespace OpenQA.Selenium.Appium.Enums
 
         public const string IOS = "iOS";
 
-        public const string MacOS = "Mac";
+        public const string MacOS = "mac";
 
         public const string Windows = "Windows";
 
