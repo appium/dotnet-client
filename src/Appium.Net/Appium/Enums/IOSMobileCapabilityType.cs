@@ -16,7 +16,7 @@ namespace OpenQA.Selenium.Appium.Enums
 {
     /// <summary>
     /// The list of iOS-specific capabilities
-    /// Read: https://github.com/appium/appium/blob/1.5/docs/en/writing-running-appium/caps.md#ios-only
+    /// Read: https://github.com/appium/appium-xcuitest-driver/blob/master/docs/capabilities.md
     /// </summary>
     public sealed class IOSMobileCapabilityType
     {
@@ -63,12 +63,12 @@ namespace OpenQA.Selenium.Appium.Enums
         public static readonly string AutoDismissAlerts = "autoDismissAlerts";
 
         /// <summary>
-        /// Use native intruments lib (ie disable instruments-without-delay).
+        /// Use native instruments lib (ie disable instruments-without-delay).
         /// </summary>
         public static readonly string NativeInstrumentsLib = "nativeInstrumentsLib";
 
         /// <summary>
-        /// (Sim-only) Enable "real", non-javascript-based web taps in Safari.
+        /// (Sim-only) Enable "real", non-JavaScript-based web taps in Safari.
         /// Default: false.
         /// Warning: depending on viewport size/ratio this might not accurately tap an element
         /// </summary>
@@ -80,7 +80,7 @@ namespace OpenQA.Selenium.Appium.Enums
         public static readonly string SafariInitialUrl = "safariInitialUrl";
 
         /// <summary>
-        /// (Sim-only) Allow javascript to open new windows in Safari. Default keeps current sim setting
+        /// (Sim-only) Allow JavaScript to open new windows in Safari. Default keeps current sim setting
         /// </summary>
         public static readonly string SafariAllowPopups = "safariAllowPopups";
 

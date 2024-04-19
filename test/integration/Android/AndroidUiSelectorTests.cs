@@ -18,203 +18,203 @@ namespace Appium.Net.Integration.Tests.Android
         public void NewSelectorStartsWithJustConstructorCall()
         {
             var statement = _sut.Build();
-            Assert.AreEqual(CtorStatement, statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement));
         }
 
         [Test]
         public void IsCheckableAddsCorrectCallToStatement()
         {
             var statement = _sut.IsCheckable(true).Build();
-            Assert.AreEqual(CtorStatement + ".checkable(true)", statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement + ".checkable(true)"));
         }
 
         [Test]
         public void IsCheckedAddsCorrectCallToStatement()
         {
             var statement = _sut.IsChecked(false).Build();
-            Assert.AreEqual(CtorStatement + ".checked(false)", statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement + ".checked(false)"));
         }
 
         [Test]
         public void ChildSelectorAddsCorrectCallToStatement()
         {
             var statement = _sut.ChildSelector(new AndroidUiSelector()).Build();
-            Assert.AreEqual(CtorStatement + $".childSelector({CtorStatement})", statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement + $".childSelector({CtorStatement})"));
         }
 
         [Test]
         public void ClassNameEqualsAddsCorrectCallToStatement()
         {
             var statement = _sut.ClassNameEquals("Class1").Build();
-            Assert.AreEqual(CtorStatement + ".className(\"Class1\")", statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement + ".className(\"Class1\")"));
         }
 
         [Test]
         public void ClassNameMatchesAddsCorrectCallToStatement()
         {
             var statement = _sut.ClassNameMatches("regex").Build();
-            Assert.AreEqual(CtorStatement + ".classNameMatches(\"regex\")", statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement + ".classNameMatches(\"regex\")"));
         }
 
         [Test]
         public void IsClickableAddsCorrectCallToStatement()
         {
             var statement = _sut.IsClickable(true).Build();
-            Assert.AreEqual(CtorStatement + ".clickable(true)", statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement + ".clickable(true)"));
         }
 
         [Test]
         public void DescriptionEqualsAddsCorrectCallToStatement()
         {
             var statement = _sut.DescriptionEquals("Desc").Build();
-            Assert.AreEqual(CtorStatement + ".description(\"Desc\")", statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement + ".description(\"Desc\")"));
         }
 
         [Test]
         public void DescriptionContainsAddsCorrectCallToStatement()
         {
             var statement = _sut.DescriptionContains("Val").Build();
-            Assert.AreEqual(CtorStatement + ".descriptionContains(\"Val\")", statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement + ".descriptionContains(\"Val\")"));
         }
 
         [Test]
         public void DescriptionMatchesAddsCorrectCallToStatement()
         {
             var statement = _sut.DescriptionMatches("regex").Build();
-            Assert.AreEqual(CtorStatement + ".descriptionMatches(\"regex\")", statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement + ".descriptionMatches(\"regex\")"));
         }
 
         [Test]
         public void DescriptionStartsWithAddsCorrectCallToStatement()
         {
             var statement = _sut.DescriptionStartsWith("Hello").Build();
-            Assert.AreEqual(CtorStatement + ".descriptionStartsWith(\"Hello\")", statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement + ".descriptionStartsWith(\"Hello\")"));
         }
 
         [Test]
         public void IsEnabledAddsCorrectCallToStatement()
         {
             var statement = _sut.IsEnabled(true).Build();
-            Assert.AreEqual(CtorStatement + ".enabled(true)", statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement + ".enabled(true)"));
         }
 
         [Test]
         public void IsFocusableAddsCorrectCallToStatement()
         {
             var statement = _sut.IsFocusable(true).Build();
-            Assert.AreEqual(CtorStatement + ".focusable(true)", statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement + ".focusable(true)"));
         }
 
         [Test]
         public void IsFocusedAddsCorrectCallToStatement()
         {
             var statement = _sut.IsFocused(false).Build();
-            Assert.AreEqual(CtorStatement + ".focused(false)", statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement + ".focused(false)"));
         }
 
         [Test]
         public void FromParentAddsCorrectCallToStatement()
         {
             var statement = _sut.FromParent(new AndroidUiSelector()).Build();
-            Assert.AreEqual(CtorStatement + $".fromParent({CtorStatement})", statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement + $".fromParent({CtorStatement})"));
         }
 
         [Test]
         public void IndexAddsCorrectCallToStatement()
         {
             var statement = _sut.Index(7).Build();
-            Assert.AreEqual(CtorStatement + ".index(7)", statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement + ".index(7)"));
         }
 
         [Test]
         public void InstanceAddsCorrectCallToStatement()
         {
             var statement = _sut.Instance(4).Build();
-            Assert.AreEqual(CtorStatement + ".instance(4)", statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement + ".instance(4)"));
         }
 
         [Test]
         public void LongClickableAddsCorrectCallToStatement()
         {
             var statement = _sut.IsLongClickable(false).Build();
-            Assert.AreEqual(CtorStatement + ".longClickable(false)", statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement + ".longClickable(false)"));
         }
 
         [Test]
         public void PackageNameEqualsAddsCorrectCallToStatement()
         {
             var statement = _sut.PackageNameEquals("com.org.unique").Build();
-            Assert.AreEqual(CtorStatement + ".packageName(\"com.org.unique\")", statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement + ".packageName(\"com.org.unique\")"));
         }
 
         [Test]
         public void PackageNameMatchesAddsCorrectCallToStatement()
         {
             var statement = _sut.PackageNameMatches("regex").Build();
-            Assert.AreEqual(CtorStatement + ".packageNameMatches(\"regex\")", statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement + ".packageNameMatches(\"regex\")"));
         }
 
         [Test]
         public void ResourceIdEqualsAddsCorrectCallToStatement()
         {
             var statement = _sut.ResourceIdEquals("my-id").Build();
-            Assert.AreEqual(CtorStatement + ".resourceId(\"my-id\")", statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement + ".resourceId(\"my-id\")"));
         }
 
         [Test]
         public void ResourceIdMatchesAddsCorrectCallToStatement()
         {
             var statement = _sut.ResourceIdMatches("regex").Build();
-            Assert.AreEqual(CtorStatement + ".resourceIdMatches(\"regex\")", statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement + ".resourceIdMatches(\"regex\")"));
         }
 
         [Test]
         public void IsScrollableAddsCorrectCallToStatement()
         {
             var statement = _sut.IsScrollable(true).Build();
-            Assert.AreEqual(CtorStatement + ".scrollable(true)", statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement + ".scrollable(true)"));
         }
 
         [Test]
         public void IsSelectedAddsCorrectCallToStatement()
         {
             var statement = _sut.IsSelected(false).Build();
-            Assert.AreEqual(CtorStatement + ".selected(false)", statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement + ".selected(false)"));
         }
 
         [Test]
         public void TextEqualsAddsCorrectCallToStatement()
         {
             var statement = _sut.TextEquals("some text").Build();
-            Assert.AreEqual(CtorStatement + ".text(\"some text\")", statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement + ".text(\"some text\")"));
         }
 
         [Test]
         public void TextContainsAddsCorrectCallToStatement()
         {
             var statement = _sut.TextContains("some text").Build();
-            Assert.AreEqual(CtorStatement + ".textContains(\"some text\")", statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement + ".textContains(\"some text\")"));
         }
 
         [Test]
         public void TextMatchesAddsCorrectCallToStatement()
         {
             var statement = _sut.TextMatches("some text").Build();
-            Assert.AreEqual(CtorStatement + ".textMatches(\"some text\")", statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement + ".textMatches(\"some text\")"));
         }
 
         [Test]
         public void TextStartsWithAddsCorrectCallToStatement()
         {
             var statement = _sut.TextStartsWith("some text").Build();
-            Assert.AreEqual(CtorStatement + ".textStartsWith(\"some text\")", statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement + ".textStartsWith(\"some text\")"));
         }
 
         [Test]
         public void AddRawTextAppendsText()
         {
             var statement = _sut.AddRawText("@").Build();
-            Assert.AreEqual(CtorStatement + "@", statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement + "@"));
         }
 
         [Test]
@@ -225,8 +225,7 @@ namespace Appium.Net.Integration.Tests.Android
                 .ClassNameEquals("andoid.widget.TextField")
                 .IsLongClickable(true)
                 .Build();
-            Assert.AreEqual(CtorStatement + ".resourceIdMatches(\".*my_id\").className(\"andoid.widget.TextField\").longClickable(true)", 
-                statement);
+            Assert.That(statement, Is.EqualTo(CtorStatement + ".resourceIdMatches(\".*my_id\").className(\"andoid.widget.TextField\").longClickable(true)"));
         }
     }
 }

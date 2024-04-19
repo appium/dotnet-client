@@ -11,15 +11,18 @@ namespace Appium.Net.Integration.Tests.Windows
     {
         private WindowsDriver _calculatorSession;
         protected static WebElement CalculatorResult;
+        private readonly string _appId = "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App";
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            var appCapabilities = new AppiumOptions();
-            appCapabilities.App = "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App";
-            appCapabilities.DeviceName = "WindowsPC";
-            appCapabilities.PlatformName = "Windows";
-            appCapabilities.AutomationName = "Windows";
+            var appCapabilities = new AppiumOptions
+            {
+                App = _appId,
+                DeviceName = "WindowsPC",
+                PlatformName = "Windows",
+                AutomationName = "Windows"
+            };
 
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
             _calculatorSession = new WindowsDriver(serverUri, appCapabilities,
@@ -31,8 +34,8 @@ namespace Appium.Net.Integration.Tests.Windows
         public void OneTimeTearDown()
         {
             CalculatorResult = null;
-            _calculatorSession.CloseApp();
-            _calculatorSession.Dispose();
+            _calculatorSession?.CloseApp();
+            _calculatorSession?.Dispose();
             _calculatorSession = null;
         }
 
@@ -44,8 +47,11 @@ namespace Appium.Net.Integration.Tests.Windows
 
             var similarityResult = _calculatorSession.GetImagesSimilarity(screenshot.AsBase64EncodedString, screenshot.AsBase64EncodedString, options);
 
-            Assert.Greater(similarityResult.Score, 0);
-            Assert.IsNotNull(similarityResult.Visualization);
+            Assert.Multiple(() =>
+            {
+                Assert.That(similarityResult.Score, Is.GreaterThan(0));
+                Assert.That(similarityResult.Visualization, Is.Not.Null);
+            });
         }
 
         [Test]
@@ -56,15 +62,20 @@ namespace Appium.Net.Integration.Tests.Windows
 
             var occurencesResult = _calculatorSession.FindImageOccurence(screenshot.AsBase64EncodedString, screenshot.AsBase64EncodedString, options);
 
-            Assert.IsNotNull(occurencesResult.Rect);
-            Assert.IsNotNull(occurencesResult.Visualization);
+            Assert.Multiple(() =>
+            {
+                Assert.That(occurencesResult.Rect.IsEmpty, Is.False);
+                Assert.That(occurencesResult.Rect.Bottom, Is.GreaterThan(0));
+                Assert.That(occurencesResult.Visualization, Is.Not.Null);
+            });
         }
 
         [Test]
         public void FeaturesMatching()
         {
             var screenshot = _calculatorSession.GetScreenshot();
-            var options = new FeaturesMatchingOptions {
+            var options = new FeaturesMatchingOptions
+            {
                 Visualize = true,
                 DetectorName = "ORB",
                 MatchFunc = "BruteForce",
@@ -73,12 +84,18 @@ namespace Appium.Net.Integration.Tests.Windows
 
             var occurencesResult = _calculatorSession.MatchImageFeatures(screenshot.AsBase64EncodedString, screenshot.AsBase64EncodedString, options);
 
-            Assert.IsNotNull(occurencesResult.Visualization);
-            Assert.Greater(occurencesResult.TotalCount, 0);
-            Assert.Greater(occurencesResult.Points1.Count, 0);
-            Assert.Greater(occurencesResult.Points2.Count, 0);
-            Assert.IsNotNull(occurencesResult.Rect1);
-            Assert.IsNotNull(occurencesResult.Rect2);
+            Assert.Multiple(() =>
+            {
+                Assert.That(occurencesResult.Visualization, Is.Not.Null);
+                Assert.That(occurencesResult.TotalCount, Is.GreaterThan(0));
+                Assert.That(occurencesResult.Points1, Is.Not.Empty);
+                Assert.That(occurencesResult.Points2, Is.Not.Empty);
+            });
+            Assert.Multiple(() =>
+            {
+                Assert.That(occurencesResult.Rect1.Width, Is.Positive);
+                Assert.That(occurencesResult.Rect2.Height, Is.Positive);
+            });
         }
     }
 }

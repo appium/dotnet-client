@@ -33,7 +33,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
             response.Value = emptyBody;
 
             DirectConnect directConnect = new DirectConnect(response);
-            Assert.IsNull(directConnect.GetUri());
+            Assert.That(directConnect.GetUri(), Is.Null);
         }
 
 
@@ -51,7 +51,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
             response.Value = body;
 
             DirectConnect directConnect = new DirectConnect(response);
-            Assert.AreEqual(directConnect.GetUri(), "https://example.com:9090/path/to/new/direction");
+            Assert.That(directConnect.GetUri().ToString(), Is.EqualTo("https://example.com:9090/path/to/new/direction"));
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
             response.Value = body;
 
             DirectConnect directConnect = new DirectConnect(response);
-            Assert.AreEqual(directConnect.GetUri(), "https://example.com:9090/path/to/new/direction");
+            Assert.That(directConnect.GetUri().ToString(), Is.EqualTo("https://example.com:9090/path/to/new/direction"));
         }
 
         [Test]
@@ -85,7 +85,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
             response.Value = body;
 
             DirectConnect directConnect = new DirectConnect(response);
-            Assert.IsNull(directConnect.GetUri());
+            Assert.That(directConnect.GetUri(), Is.Null);
         }
     }
 }

@@ -33,9 +33,9 @@ namespace Appium.Net.Integration.Tests.Android
         public void LockTest()
         {
             _driver.Lock();
-            Assert.AreEqual(true, _driver.IsLocked());
+            Assert.That(_driver.IsLocked(), Is.EqualTo(true));
             _driver.Unlock();
-            Assert.AreEqual(false, _driver.IsLocked());
+            Assert.That(_driver.IsLocked(), Is.EqualTo(false));
         }
     }
 }

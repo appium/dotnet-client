@@ -35,13 +35,13 @@ namespace Appium.Net.Integration.Tests.iOS
                 setting: "useJSONSource",
                 value: true);
 
-            Assert.IsTrue((bool)_driver.Settings["useJSONSource"]);
+            Assert.That((bool)_driver.Settings["useJSONSource"]);
 
             _driver.SetSetting(
                 setting: "useJSONSource",
                 value: false);
 
-            Assert.IsFalse((bool)_driver.Settings["useJSONSource"]);
+            Assert.That((bool)_driver.Settings["useJSONSource"], Is.False);
         }
     }
 }

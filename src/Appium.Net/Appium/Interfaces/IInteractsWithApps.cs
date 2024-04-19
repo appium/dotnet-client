@@ -26,21 +26,11 @@ namespace OpenQA.Selenium.Appium.Interfaces
         void InstallApp(string appPath);
 
         /// <summary>
-        /// Launches the current app.
-        /// </summary>
-        void LaunchApp();
-
-        /// <summary>
         /// Checks If an App Is Installed.
         /// </summary>
         /// <param name="appPath">a string containing the bundle id.</param>
         /// <return>a boolean indicating if the app is installed.</return>
         bool IsAppInstalled(string bundleId);
-
-        /// <summary>
-        /// Resets the current app.
-        /// </summary>
-        void ResetApp();
 
         /// <summary>
         /// Deactivates app completely (as "Home" button does).  
@@ -79,11 +69,6 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// <param name="timeout">a TimeSpan for how long to wait until the application is terminated.</param>
         /// <return>a boolean indicating if the app was terminated in the given timeout.</return>
         bool TerminateApp(string appId, TimeSpan timeout);
-
-        /// <summary>
-        /// Closes the current app.
-        /// </summary>
-        void CloseApp();
 
         /// <summary>
         /// Gets the State of the app.

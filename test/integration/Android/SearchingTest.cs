@@ -42,24 +42,33 @@ namespace Appium.Net.Integration.Tests.Android
         public void FindByAccessibilityIdTest()
         {
             By byAccessibilityId = new ByAccessibilityId("Graphics");
-            Assert.AreNotEqual(_driver.FindElement(byAccessibilityId).Text, null);
-            Assert.GreaterOrEqual(_driver.FindElements(byAccessibilityId).Count, 1);
+            Assert.Multiple(() =>
+            {
+                Assert.That(_driver.FindElement(byAccessibilityId).Text, Is.EqualTo("Graphics"));
+                Assert.That(_driver.FindElements(byAccessibilityId), Is.Not.Empty);
+            });
         }
 
         [Test]
         public void FindByAndroidUiAutomatorTest()
         {
             By byAndroidUiAutomator = new ByAndroidUIAutomator("new UiSelector().clickable(true)");
-            Assert.IsNotNull(_driver.FindElement(byAndroidUiAutomator).Text);
-            Assert.GreaterOrEqual(_driver.FindElements(byAndroidUiAutomator).Count, 1);
+            Assert.Multiple(() =>
+            {
+                Assert.That(_driver.FindElement(byAndroidUiAutomator).Text, Is.Not.Null);
+                Assert.That(_driver.FindElements(byAndroidUiAutomator), Is.Not.Empty);
+            });
         }
 
         [Test]
         public void FindByXPathTest()
         {
             var byXPath = "//android.widget.TextView[contains(@text, 'Animat')]";
-            Assert.IsNotNull(_driver.FindElement(MobileBy.XPath( byXPath)).Text);
-            Assert.AreEqual(1, _driver.FindElements(MobileBy.XPath(byXPath)).Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(_driver.FindElement(By.XPath(byXPath)).Text, Is.Not.Null);
+                Assert.That(_driver.FindElements(By.XPath(byXPath)), Has.Count.EqualTo(1));
+            });
         }
 
         [Test]
@@ -70,7 +79,7 @@ namespace Appium.Net.Integration.Tests.Android
                 .FindElement(MobileBy.AndroidUIAutomator("new UiScrollable(new UiSelector()"
                                                  + ".resourceId(\"android:id/list\")).scrollIntoView("
                                                  + "new UiSelector().text(\"Radio Group\"));"));
-            Assert.NotNull(radioGroup.Location);
+            Assert.That(radioGroup.Location.X, Is.Not.Negative);
         }
     }
 }

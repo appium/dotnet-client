@@ -190,14 +190,9 @@ namespace OpenQA.Selenium.Appium.Windows
 
         #region App management
 
-        public new void LaunchApp()
+        public void CloseApp()
         {
-            ((IExecuteMethod)this).Execute(AppiumDriverCommand.LaunchApp);
-        }
-
-        public new void CloseApp()
-        {
-            ((IExecuteMethod)this).Execute(AppiumDriverCommand.CloseApp);
+            ((IExecuteMethod)this).Execute(WindowsDriverCommand.CloseApp);
         }
 
         #endregion App management

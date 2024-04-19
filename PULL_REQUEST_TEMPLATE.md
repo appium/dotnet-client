@@ -22,4 +22,4 @@ _Put an `x` in the boxes that apply_
 ## Details
 
 Please provide more details about changes if it is necessary. If there are new features you can provide code samples showing how they work and possible use cases. Also, you can create [gists](https://gist.github.com) with pasted C# code samples or put them here using markdown. 
-About markdown please read [Mastering markdown](https://guides.github.com/features/mastering-markdown/) and [Writing on GitHub](https://help.github.com/categories/writing-on-github/) 
+About markdown please read [Mastering markdown](https://guides.github.com/features/mastering-markdown/) and [Writing on GitHub](https://docs.github.com/en/get-started/writing-on-github) 

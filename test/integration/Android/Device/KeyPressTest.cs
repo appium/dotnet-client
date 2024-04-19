@@ -24,7 +24,9 @@ namespace Appium.Net.Integration.Tests.Android.Device.Keys
         [SetUp]
         public void SetUp()
         {
-            _driver?.ResetApp();
+            string appId = Apps.GetId(Apps.androidApiDemos);
+            _driver.TerminateApp(appId);
+            _driver.ActivateApp(appId);
         }
 
         [OneTimeTearDown]

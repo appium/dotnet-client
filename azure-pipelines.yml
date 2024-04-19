@@ -28,3 +28,15 @@ steps:
     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site" /m'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+    
+- powershell: 
+    npm install -g appium
+  displayName: 'Install Appium'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Run unit tests - $(buildConfiguration)'
+  inputs:
+    command: 'test'
+    arguments: '--no-build --configuration $(buildConfiguration) --filter AppiumLocalServerLaunchingTest|DirectConnectTest'
+    publishTestResults: true
+    projects: '**/*.Tests.csproj'

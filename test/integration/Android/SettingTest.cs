@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
-using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Android.Enums;
 
@@ -10,17 +9,18 @@ namespace Appium.Net.Integration.Tests.Android
     public class SettingTest
     {
         private AndroidDriver _driver;
+        private readonly string _appName = "androidApiDemos";
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
             var capabilities = Env.ServerIsRemote()
-                ? Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"))
-                : Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
+                ? Caps.GetAndroidUIAutomatorCaps(Apps.Get(_appName))
+                : Caps.GetAndroidUIAutomatorCaps(Apps.Get(_appName));
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
             _driver = new AndroidDriver(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
-            _driver.CloseApp();
+            _driver.TerminateApp(Apps.GetId(_appName));
         }
 
         [Test]
@@ -29,10 +29,10 @@ namespace Appium.Net.Integration.Tests.Android
             _driver.IgnoreUnimportantViews(true);
             var ignoreViews =
                 (bool) _driver.Settings[AutomatorSetting.IgnoreUnimportantViews];
-            Assert.True(ignoreViews);
+            Assert.That(ignoreViews, Is.True);
             _driver.IgnoreUnimportantViews(false);
             ignoreViews = (bool) _driver.Settings[AutomatorSetting.IgnoreUnimportantViews];
-            Assert.False(ignoreViews);
+            Assert.That(ignoreViews, Is.False);
         }
 
         [Test]
@@ -45,11 +45,14 @@ namespace Appium.Net.Integration.Tests.Android
             _driver.ConfiguratorSetWaitForSelectorTimeout(1000);
 
             var settings = _driver.Settings;
-            Assert.AreEqual(settings[AutomatorSetting.KeyInjectionDelay], 400);
-            Assert.AreEqual(settings[AutomatorSetting.WaitActionAcknowledgmentTimeout], 500);
-            Assert.AreEqual(settings[AutomatorSetting.WaitForIDLETimeout], 600);
-            Assert.AreEqual(settings[AutomatorSetting.WaitForSelectorTimeout], 1000);
-            Assert.AreEqual(settings[AutomatorSetting.WaitScrollAcknowledgmentTimeout], 300);
+            Assert.Multiple(() =>
+            {
+                Assert.That(settings[AutomatorSetting.KeyInjectionDelay], Is.EqualTo(400));
+                Assert.That(settings[AutomatorSetting.WaitActionAcknowledgmentTimeout], Is.EqualTo(500));
+                Assert.That(settings[AutomatorSetting.WaitForIDLETimeout], Is.EqualTo(600));
+                Assert.That(settings[AutomatorSetting.WaitForSelectorTimeout], Is.EqualTo(1000));
+                Assert.That(settings[AutomatorSetting.WaitScrollAcknowledgmentTimeout], Is.EqualTo(300));
+            });
         }
 
         [Test]
@@ -66,11 +69,14 @@ namespace Appium.Net.Integration.Tests.Android
 
             _driver.Settings = data;
             var settings = _driver.Settings;
-            Assert.AreEqual(settings[AutomatorSetting.KeyInjectionDelay], 1500);
-            Assert.AreEqual(settings[AutomatorSetting.WaitActionAcknowledgmentTimeout], 2500);
-            Assert.AreEqual(settings[AutomatorSetting.WaitForIDLETimeout], 3500);
-            Assert.AreEqual(settings[AutomatorSetting.WaitForSelectorTimeout], 5000);
-            Assert.AreEqual(settings[AutomatorSetting.WaitScrollAcknowledgmentTimeout], 7000);
+            Assert.Multiple(() =>
+            {
+                Assert.That(settings[AutomatorSetting.KeyInjectionDelay], Is.EqualTo(1500));
+                Assert.That(settings[AutomatorSetting.WaitActionAcknowledgmentTimeout], Is.EqualTo(2500));
+                Assert.That(settings[AutomatorSetting.WaitForIDLETimeout], Is.EqualTo(3500));
+                Assert.That(settings[AutomatorSetting.WaitForSelectorTimeout], Is.EqualTo(5000));
+                Assert.That(settings[AutomatorSetting.WaitScrollAcknowledgmentTimeout], Is.EqualTo(7000));
+            });
         }
 
         [OneTimeTearDown]

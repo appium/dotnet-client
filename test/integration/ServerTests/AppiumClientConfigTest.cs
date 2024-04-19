@@ -25,10 +25,10 @@ namespace Appium.Net.Integration.Tests.ServerTests
         public void SetAndGetDirectConnect()
         {
             var clientConfig = AppiumClientConfig.DefaultConfig();
-            Assert.IsFalse(clientConfig.DirectConnect);
+            Assert.That(clientConfig.DirectConnect, Is.False);
 
             clientConfig.DirectConnect = true;
-            Assert.IsTrue(clientConfig.DirectConnect);
+            Assert.That(clientConfig.DirectConnect);
         }
     }
 }

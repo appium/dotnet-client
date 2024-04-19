@@ -34,7 +34,7 @@ namespace Appium.Net.Integration.Tests.IOS
         {
             var rotatable = ((IRotatable) _driver);
             rotatable.Orientation = ScreenOrientation.Landscape;
-            Assert.AreEqual(ScreenOrientation.Landscape, rotatable.Orientation);
+            Assert.That(rotatable.Orientation, Is.EqualTo(ScreenOrientation.Landscape));
         }
     }
 }

@@ -24,15 +24,18 @@ namespace Appium.Net.Integration.Tests.Windows
     {
         private WindowsDriver _calculatorSession;
         protected static WebElement CalculatorResult;
+        private readonly string _appId = "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App";
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            var appCapabilities = new AppiumOptions();
-            appCapabilities.AutomationName = "Windows";
-            appCapabilities.App = "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App";
-            appCapabilities.DeviceName = "WindowsPC";
-            appCapabilities.PlatformName = "Windows";
+            var appCapabilities = new AppiumOptions
+            {
+                AutomationName = "Windows",
+                App = _appId,
+                DeviceName = "WindowsPC",
+                PlatformName = "Windows"
+            };
 
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
             _calculatorSession = new WindowsDriver(serverUri, appCapabilities,
@@ -42,15 +45,15 @@ namespace Appium.Net.Integration.Tests.Windows
             _calculatorSession.FindElement(MobileBy.Name("Clear")).Click();
             _calculatorSession.FindElement(MobileBy.Name("Seven")).Click();
             CalculatorResult = _calculatorSession.FindElement(MobileBy.Name("Display is 7"));
-            Assert.IsNotNull(CalculatorResult);
+            Assert.That(CalculatorResult, Is.Not.Null);
         }
 
         [OneTimeTearDown]
         public void OneTimeTearDown()
         {
             CalculatorResult = null;
-            _calculatorSession.CloseApp();
-            _calculatorSession.Dispose();
+            _calculatorSession?.CloseApp();
+            _calculatorSession?.Dispose();
             _calculatorSession = null;
         }
 
@@ -58,7 +61,7 @@ namespace Appium.Net.Integration.Tests.Windows
         public void SetUp()
         {
             _calculatorSession.FindElement(MobileBy.Name("Clear")).Click();
-            Assert.AreEqual("Display is 0", CalculatorResult.Text);
+            Assert.That(CalculatorResult.Text, Is.EqualTo("Display is 0"));
         }
 
         [Test]
@@ -68,7 +71,7 @@ namespace Appium.Net.Integration.Tests.Windows
             _calculatorSession.FindElement(MobileBy.Name("Plus")).Click();
             _calculatorSession.FindElement(MobileBy.Name("Seven")).Click();
             _calculatorSession.FindElement(MobileBy.Name("Equals")).Click();
-            Assert.AreEqual("Display is 8", CalculatorResult.Text);
+            Assert.That(CalculatorResult.Text, Is.EqualTo("Display is 8"));
         }
 
         [Test]
@@ -78,7 +81,7 @@ namespace Appium.Net.Integration.Tests.Windows
             _calculatorSession.FindElement(MobileBy.AccessibilityId("plusButton")).Click();
             _calculatorSession.FindElement(MobileBy.Name("Calculator")).FindElement(MobileBy.Name("Five")).Click();
             _calculatorSession.FindElement(MobileBy.Name("Equals")).Click();
-            Assert.AreEqual("Display is 6", CalculatorResult.Text);
+            Assert.That(CalculatorResult.Text, Is.EqualTo("Display is 6"));
         }
 
         [Test]
@@ -93,7 +96,7 @@ namespace Appium.Net.Integration.Tests.Windows
             _calculatorSession.FindElement(MobileBy.Name("Divide by")).Click();
             _calculatorSession.FindElement(MobileBy.Name("Eight")).Click();
             _calculatorSession.FindElement(MobileBy.Name("Equals")).Click();
-            Assert.AreEqual("Display is 8", CalculatorResult.Text);
+            Assert.That(CalculatorResult.Text, Is.EqualTo("Display is 8"));
         }
 
         [Test]
@@ -105,7 +108,7 @@ namespace Appium.Net.Integration.Tests.Windows
             _calculatorSession.FindElement(MobileBy.Name("One")).Click();
             _calculatorSession.FindElement(MobileBy.Name("One")).Click();
             _calculatorSession.FindElement(MobileBy.Name("Equals")).Click();
-            Assert.AreEqual("Display is 8", CalculatorResult.Text);
+            Assert.That(CalculatorResult.Text, Is.EqualTo("Display is 8"));
         }
 
         [Test]
@@ -115,7 +118,7 @@ namespace Appium.Net.Integration.Tests.Windows
             _calculatorSession.FindElement(MobileBy.Name("Multiply by")).Click();
             _calculatorSession.FindElement(MobileBy.Name("Nine")).Click();
             _calculatorSession.FindElement(MobileBy.Name("Equals")).Click();
-            Assert.AreEqual("Display is 81", CalculatorResult.Text);
+            Assert.That(CalculatorResult.Text, Is.EqualTo("Display is 81"));
         }
 
         [Test]
@@ -125,7 +128,7 @@ namespace Appium.Net.Integration.Tests.Windows
             _calculatorSession.FindElement(MobileBy.Name("Minus")).Click();
             _calculatorSession.FindElement(MobileBy.Name("One")).Click();
             _calculatorSession.FindElement(MobileBy.Name("Equals")).Click();
-            Assert.AreEqual("Display is 8", CalculatorResult.Text);
+            Assert.That(CalculatorResult.Text, Is.EqualTo("Display is 8"));
         }
     }
 }

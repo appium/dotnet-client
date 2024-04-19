@@ -40,7 +40,7 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
             Assert.Multiple(() =>
             {
                 Assert.That(logs.AvailableLogTypes, Is.Not.Null);
-                Assert.That(availableLogTypes.Count, Is.GreaterThan(0), nameof(availableLogTypes));
+                Assert.That(availableLogTypes, Is.Not.Empty, nameof(availableLogTypes));
             });
             Console.WriteLine(@"Available log types:");
             foreach (var logType in availableLogTypes)
@@ -54,17 +54,20 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
         {
             var availableLogTypes = _driver.Manage().Logs.AvailableLogTypes;
             Assert.That(availableLogTypes, Is.Not.Null);
-            CollectionAssert.Contains(availableLogTypes, LogcatLogType);
+            Assert.That(availableLogTypes, Has.Member(LogcatLogType));
 
             Assert.DoesNotThrow(() => _driver.Manage().Logs.GetLog(LogcatLogType));
         }
 
+        /// <summary>
+        /// For this test to pass, need to run the appium server as follows: `appium --allow-insecure get_server_logs`
+        /// </summary>
         [Test]
         public void CanCaptureServerTest()
         {
             var availableLogTypes = _driver.Manage().Logs.AvailableLogTypes;
             Assert.That(availableLogTypes, Is.Not.Null);
-            CollectionAssert.Contains(availableLogTypes, ServerLogType);
+            Assert.That(availableLogTypes, Has.Member(ServerLogType));
 
             var appiumServerLog = _driver.Manage().Logs.GetLog(LogType.Server);
             Assert.That(appiumServerLog, Is.Not.Null.And.Count.GreaterThan(1));
@@ -81,7 +84,7 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
         {
             var availableLogTypes = _driver.Manage().Logs.AvailableLogTypes;
             Assert.That(availableLogTypes, Is.Not.Null);
-            CollectionAssert.Contains(availableLogTypes, BugReportLogType);
+            Assert.That(availableLogTypes, Has.Member(BugReportLogType));
 
             var bugReportLogEntry = _driver.Manage().Logs.GetLog(BugReportLogType);
             Assert.That(bugReportLogEntry, Is.Not.Null.And.Count.EqualTo(1));

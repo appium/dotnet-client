@@ -33,7 +33,7 @@ namespace Appium.Net.Integration.Tests.Android.Device
         public void GetPerformanceDataTypesTest()
         {
             var androidDriver = _driver as AndroidDriver;
-            Assert.IsNotNull(androidDriver.GetPerformanceDataTypes());
+            Assert.That(androidDriver.GetPerformanceDataTypes(), Is.Not.Null);
         }
 
         [Test]

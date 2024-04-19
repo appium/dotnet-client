@@ -9,8 +9,8 @@ namespace Appium.Net.Integration.Tests.helpers
         {
             var capabilities = new AppiumOptions();
             capabilities.AutomationName = AutomationName.iOSXcuiTest;
-            capabilities.DeviceName = "iPhone X";
-            capabilities.PlatformVersion = "12.0";
+            capabilities.DeviceName = "iPhone 15";
+            capabilities.PlatformVersion = "17.0";
             capabilities.App = app;
             capabilities.AddAdditionalAppiumOption(IOSMobileCapabilityType.LaunchTimeout, Env.InitTimeoutSec.TotalMilliseconds);
 

@@ -178,28 +178,6 @@ namespace OpenQA.Selenium.Appium
 
         #endregion
 
-        #region MJSonMethods
-
-        /// <summary>
-        /// Rotates Device.
-        /// </summary>
-        /// <param name="opts">rotations options like the following:
-        /// new Dictionary<string, int> {{"x", 114}, {"y", 198}, {"duration", 5}, 
-        /// {"radius", 3}, {"rotation", 220}, {"touchCount", 2}}
-        /// </param>
-        public void Rotate(Dictionary<string, int> opts)
-        {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
-            foreach (KeyValuePair<string, int> opt in opts)
-            {
-                parameters.Add(opt.Key, opt.Value);
-            }
-            parameters.Add("element", Id);
-            Execute(AppiumDriverCommand.Rotate, parameters);
-        }
-
-        #endregion
-
         [Obsolete("The SetImmediateValue method is deprecated and will be removed in future versions. Please use 'SendKeys' instead.")]
         public void SetImmediateValue(string value) => Execute(AppiumDriverCommand.SetValue,
             new Dictionary<string, object>() { ["id"] = Id, ["value"] = value });
@@ -220,10 +198,30 @@ namespace OpenQA.Selenium.Appium
 
         IReadOnlyCollection<AppiumElement> IFindsByFluentSelector<AppiumElement>.FindElements(string selector, string value)
         {
-            return ConvertToExtendedWebElementCollection(base.FindElements(selector, value));
+            return ConvertToAppiumElementCollection(base.FindElements(selector, value));
         }
 
-        internal static ReadOnlyCollection<AppiumElement> ConvertToExtendedWebElementCollection(IEnumerable collection)
+        /// <summary>
+        /// Finds the first element that matches the specified <paramref name="by"/> selector and returns it as an <see cref="AppiumElement"/>.
+        /// </summary>
+        /// <param name="by">The <see cref="By"/> selector used to locate the element.</param>
+        /// <returns>The first <see cref="AppiumElement"/> that matches the <paramref name="by"/> selector.</returns>
+        public new AppiumElement FindElement(By by)
+        {
+            return (AppiumElement)base.FindElement(by);
+        }
+
+        /// <summary>
+        /// Finds all elements that match the specified <paramref name="by"/> selector and returns them as a read-only collection of <see cref="AppiumElement"/>.
+        /// </summary>
+        /// <param name="by">The <see cref="By"/> selector used to locate the elements.</param>
+        /// <returns>A read-only collection of <see cref="AppiumElement"/> objects matching the <paramref name="by"/> selector.</returns>
+        public new ReadOnlyCollection<AppiumElement> FindElements(By by)
+        {
+            return ConvertToAppiumElementCollection(base.FindElements(by));
+        }
+
+        internal static ReadOnlyCollection<AppiumElement> ConvertToAppiumElementCollection(IEnumerable collection)
         {
             return collection.Cast<AppiumElement>().ToList().AsReadOnly();
         }

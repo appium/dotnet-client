@@ -32,33 +32,33 @@ namespace Appium.Net.Integration.Tests.IOS
         [Test]
         public void IsLockedTest()
         {
-            Assert.AreEqual(_driver.IsLocked(), false);
+            Assert.That(_driver.IsLocked(), Is.EqualTo(false));
         }
 
         [Test]
         public void LockTest()
         {
-            Assert.AreEqual(_driver.IsLocked(), false);
+            Assert.That(_driver.IsLocked(), Is.EqualTo(false));
             _driver.Lock();
-            Assert.AreEqual(_driver.IsLocked(), true);
+            Assert.That(_driver.IsLocked(), Is.EqualTo(true));
         }
 
         [Test]
         public void LockTestWithSeconds()
         {
-            Assert.AreEqual(_driver.IsLocked(), false);
+            Assert.That(_driver.IsLocked(), Is.EqualTo(false));
             _driver.Lock(5);
-            Assert.AreEqual(_driver.IsLocked(), false);
+            Assert.That(_driver.IsLocked(), Is.EqualTo(false));
         }
 
         [Test]
         public void UnlockTest()
         {
-            Assert.AreEqual(_driver.IsLocked(), false);
+            Assert.That(_driver.IsLocked(), Is.EqualTo(false));
             _driver.Lock();
-            Assert.AreEqual(_driver.IsLocked(), true);
+            Assert.That(_driver.IsLocked(), Is.EqualTo(true));
             _driver.Unlock();
-            Assert.AreEqual(_driver.IsLocked(), false);
+            Assert.That(_driver.IsLocked(), Is.EqualTo(false));
         }
     }
 }

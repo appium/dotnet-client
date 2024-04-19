@@ -34,9 +34,9 @@ namespace Appium.Net.Integration.Tests.IOS
             var sliderCellStaticTextElements1 = _driver
                 .FindElements(
                     new ByIosClassChain("**/XCUIElementTypeCell/XCUIElementTypeStaticText[`name == 'Sliders'`]"));
-            Assert.AreEqual(1, sliderCellStaticTextElements1.Count);
+            Assert.That(sliderCellStaticTextElements1.Count, Is.EqualTo(1));
             var sliderCellStaticTextElements2 = _driver.FindElements(MobileBy.IosClassChain("**/XCUIElementTypeCell"));
-            Assert.AreEqual(18, sliderCellStaticTextElements2.Count);
+            Assert.That(sliderCellStaticTextElements2.Count, Is.EqualTo(18));
         }
     }
 }

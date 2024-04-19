@@ -38,9 +38,9 @@ namespace Appium.Net.Integration.Tests.Android.Session.Geolocation
             {
                 Assert.That(() => _driver.Location, Is.Not.Null);
                 Assert.DoesNotThrow(() => _driver.Location.ToDictionary());
-                Assert.That(_driver.Location.Altitude, Is.Not.Null.Or.Empty);
-                Assert.That(_driver.Location.Longitude, Is.Not.Null.Or.Empty);
-                Assert.That(_driver.Location.Latitude, Is.Not.Null.Or.Empty);
+                Assert.That(_driver.Location.Altitude, Is.Not.Empty);
+                Assert.That(_driver.Location.Longitude, Is.Not.Empty);
+                Assert.That(_driver.Location.Latitude, Is.Not.Empty);
             });
         }
 
@@ -58,9 +58,9 @@ namespace Appium.Net.Integration.Tests.Android.Session.Geolocation
             {
                 Assert.That(() => _driver.Location, Is.Not.Null);
                 Assert.DoesNotThrow(() => _driver.Location.ToDictionary());
-                Assert.That(_driver.Location.Altitude, Is.Not.Null.Or.Empty);
-                Assert.That(_driver.Location.Longitude, Is.Not.Null.Or.Empty);
-                Assert.That(_driver.Location.Latitude, Is.Not.Null.Or.Empty);
+                Assert.That(_driver.Location.Altitude, Is.Not.Empty);
+                Assert.That(_driver.Location.Longitude, Is.Not.Empty);
+                Assert.That(_driver.Location.Latitude, Is.Not.Empty);
             });
         }
     }

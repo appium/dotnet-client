@@ -135,24 +135,6 @@ namespace OpenQA.Selenium.Appium
 
         #region MJsonMethod Members
 
-        /// <summary>
-        /// Rotates Device.
-        /// </summary>
-        /// <param name="opts">rotations options like the following:
-        /// new Dictionary<string, int> {{"x", 114}, {"y", 198}, {"duration", 5}, 
-        /// {"radius", 3}, {"rotation", 220}, {"touchCount", 2}}
-        /// </param>
-        public void Rotate(Dictionary<string, int> opts)
-        {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
-            foreach (KeyValuePair<string, int> opt in opts)
-            {
-                parameters.Add(opt.Key, opt.Value);
-            }
-
-            Execute(AppiumDriverCommand.Rotate, parameters);
-        }
-
         public void InstallApp(string appPath) =>
             Execute(AppiumDriverCommand.InstallApp, AppiumCommandExecutionHelper.PrepareArgument("appPath", appPath));
 
@@ -199,13 +181,6 @@ namespace OpenQA.Selenium.Appium
 
         public void PushFile(string pathOnDevice, FileInfo file) =>
             AppiumCommandExecutionHelper.PushFile(this, pathOnDevice, file);
-
-        [Obsolete("The LaunchApp API is deprecated and will be removed in future versions. Please use ActivateApp instead \r\n See https://github.com/appium/appium/issues/15807")]
-        public void LaunchApp() => ((IExecuteMethod)this).Execute(AppiumDriverCommand.LaunchApp);
-        [Obsolete("The CloseApp API is deprecated and will be removed in future versions. Please use TerminateApp instead \r\n See https://github.com/appium/appium/issues/15807")]
-        public void CloseApp() => ((IExecuteMethod)this).Execute(AppiumDriverCommand.CloseApp);
-        [Obsolete("The ResetApp API is deprecated and will be removed in future versions. Please use TerminateApp & ActivateApp instead \r\n See https://github.com/appium/appium/issues/15807")]
-        public void ResetApp() => ((IExecuteMethod)this).Execute(AppiumDriverCommand.ResetApp);
 
         public void FingerPrint(int fingerprintId) =>
             AppiumCommandExecutionHelper.FingerPrint(this, fingerprintId);

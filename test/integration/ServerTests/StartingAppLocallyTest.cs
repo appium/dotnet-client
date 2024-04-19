@@ -12,6 +12,8 @@ namespace Appium.Net.Integration.Tests.ServerTests
 {
     class StartingAppLocallyTest
     {
+        private const string _androidAppId = "io.appium.android.apis";
+
         [Test]
         public void StartingAndroidAppWithCapabilitiesOnlyTest()
         {
@@ -23,7 +25,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
             try
             {
                 driver = new AndroidDriver(capabilities);
-                driver.CloseApp();
+                driver.TerminateApp(_androidAppId);
             }
             finally
             {
@@ -47,7 +49,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
             try
             {
                 driver = new AndroidDriver(builder, capabilities);
-                driver.CloseApp();
+                driver.TerminateApp(_androidAppId);
             }
             finally
             {
@@ -55,11 +57,9 @@ namespace Appium.Net.Integration.Tests.ServerTests
             }
         }
 
-
         [Test]
         public void StartingAndroidAppWithCapabilitiesOnTheServerSideTest()
         {
-            var app = Apps.Get("androidApiDemos");
 
             var serverCapabilities = Env.ServerIsRemote()
                 ? Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"))
@@ -68,6 +68,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
             var clientCapabilities = new AppiumOptions();
             clientCapabilities.AddAdditionalAppiumOption(AndroidMobileCapabilityType.AppPackage, "io.appium.android.apis");
             clientCapabilities.AddAdditionalAppiumOption(AndroidMobileCapabilityType.AppActivity, ".view.WebView1");
+            clientCapabilities.AutomationName = AutomationName.AndroidUIAutomator2;
 
             var argCollector = new OptionCollector().AddCapabilities(serverCapabilities);
             var builder = new AppiumServiceBuilder().WithArguments(argCollector);
@@ -76,7 +77,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
             try
             {
                 driver = new AndroidDriver(builder, clientCapabilities);
-                driver.CloseApp();
+                driver.TerminateApp(_androidAppId);
             }
             finally
             {
@@ -95,7 +96,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
             try
             {
                 driver = new IOSDriver(capabilities, Env.InitTimeoutSec);
-                driver.CloseApp();
+                driver.TerminateApp(Apps.GetId("iosTestApp"));
             }
             finally
             {
@@ -104,7 +105,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
         }
 
         [Test]
-        public void StartingIosAppWithCapabilitiesAndServiseTest()
+        public void StartingIosAppWithCapabilitiesAndServiceTest()
         {
             var app = Apps.Get("iosTestApp");
             var capabilities =
@@ -118,7 +119,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
             try
             {
                 driver = new IOSDriver(builder, capabilities, Env.InitTimeoutSec);
-                driver.CloseApp();
+                driver.TerminateApp(Apps.GetId("iosTestApp"));
             }
             finally
             {
@@ -127,7 +128,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
         }
 
         [Test]
-        public void CheckThatServiseIsNotRunWhenTheCreatingOfANewSessionIsFailed()
+        public void CheckThatServiceIsNotRunWhenTheCreatingOfANewSessionIsFailed()
         {
             var capabilities = Env.ServerIsRemote()
                 ? //it will be a cause of error
@@ -149,7 +150,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
                 }
                 catch (Exception e)
                 {
-                    Assert.IsTrue(!service.IsRunning);
+                    Assert.That(!service.IsRunning);
                     return;
                 }
                 throw new Exception("Any exception was expected");

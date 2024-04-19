@@ -88,12 +88,13 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/device/press_keycode"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.LongPressKeyCode,
                 "/session/{sessionId}/appium/device/long_press_keycode"),
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.Rotate,
-                "/session/{sessionId}/appium/device/rotate"),
             new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetCurrentActivity,
                 "/session/{sessionId}/appium/device/current_activity"),
             new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetCurrentPackage,
                 "/session/{sessionId}/appium/device/current_package"),
+
+            #region Applications Management
+
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.InstallApp,
                 "/session/{sessionId}/appium/device/install_app"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.RemoveApp,
@@ -104,6 +105,11 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/device/terminate_app"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.IsAppInstalled,
                 "/session/{sessionId}/appium/device/app_installed"),
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GetAppState,
+                "/session/{sessionId}/appium/device/app_state"),
+
+	        #endregion
+
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.PushFile,
                 "/session/{sessionId}/appium/device/push_file"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.PullFile,
@@ -115,16 +121,12 @@ namespace OpenQA.Selenium.Appium
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GetPerformanceDataTypes,
                 "/session/{sessionId}/appium/performanceData/types"),
 
-            #region (Deprecated) legacy app management
+            #region (WinAppDriver) legacy app management
 
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.LaunchApp,
-                "/session/{sessionId}/appium/app/launch"),
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.CloseApp,
+            new AppiumCommand(HttpCommandInfo.PostCommand, WindowsDriverCommand.CloseApp,
                 "/session/{sessionId}/appium/app/close"),
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.ResetApp,
-                "/session/{sessionId}/appium/app/reset"),
 
-            #endregion (Deprecated) legacy app management
+            #endregion (WinAppDriver) legacy app management
 
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.BackgroundApp,
                 "/session/{sessionId}/appium/app/background"),
@@ -132,8 +134,6 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/app/end_test_coverage"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GetAppStrings,
                 "/session/{sessionId}/appium/app/strings"),
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GetAppState,
-                "/session/{sessionId}/appium/device/app_state"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.HideKeyboard,
                 "/session/{sessionId}/appium/device/hide_keyboard"),
             new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.IsKeyboardShown,

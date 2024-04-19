@@ -1,6 +1,7 @@
 ﻿using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 
 namespace Appium.Net.Integration.Tests.Android
@@ -8,7 +9,7 @@ namespace Appium.Net.Integration.Tests.Android
     [TestFixture]
     class OrientationTest
     {
-        private IWebDriver _driver;
+        private AppiumDriver _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
@@ -34,9 +35,16 @@ namespace Appium.Net.Integration.Tests.Android
         [Test]
         public void DeviceOrientationTest()
         {
-            var rotatable = ((IRotatable) _driver);
+            IRotatable rotatable = _driver;
             rotatable.Orientation = ScreenOrientation.Portrait;
-            Assert.AreEqual(ScreenOrientation.Portrait, rotatable.Orientation);
+            Assert.That(rotatable.Orientation, Is.EqualTo(ScreenOrientation.Portrait));
+        }
+
+        [Test]
+        public void RotationTest()
+        {
+            _driver.Orientation = ScreenOrientation.Landscape;
+            Assert.That(_driver.Orientation, Is.EqualTo(ScreenOrientation.Landscape));
         }
     }
 }

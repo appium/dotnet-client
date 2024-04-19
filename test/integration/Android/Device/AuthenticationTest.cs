@@ -8,11 +8,13 @@ namespace Appium.Net.Integration.Tests.Android.Device
     public class AuthenticationTest
     {
         private AndroidDriver _driver;
+        private readonly string appID = Apps.androidApiDemos;
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            var capabilities = Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
+            
+            var capabilities = Caps.GetAndroidUIAutomatorCaps(Apps.Get(appID));
             capabilities.AddAdditionalAppiumOption(MobileCapabilityType.FullReset, true);
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
             _driver = new AndroidDriver(serverUri, capabilities, Env.InitTimeoutSec);
@@ -22,13 +24,14 @@ namespace Appium.Net.Integration.Tests.Android.Device
         [SetUp]
         public void SetUp()
         {
-            _driver?.LaunchApp();
+            _driver?.ActivateApp(Apps.GetId(appID));
         }
 
-        [TearDown]
-        public void TearDown()
+        [OneTimeTearDown]
+        public void OneTimeTearDown()
         {
-            _driver?.CloseApp();
+            _ = (_driver?.TerminateApp(Apps.GetId(appID)));
+            _driver?.Quit();
         }
 
         [Test]

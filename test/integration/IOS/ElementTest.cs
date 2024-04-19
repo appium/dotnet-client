@@ -33,19 +33,22 @@ namespace Appium.Net.Integration.Tests.IOS
         public void FindByAccessibilityIdTest()
         {
             By byAccessibilityId = new ByAccessibilityId("ComputeSumButton");
-            Assert.AreNotEqual(_driver.FindElements(MobileBy.ClassName("UIAWindow"))[1].FindElement(byAccessibilityId).Text,
-                null);
-            Assert.GreaterOrEqual(_driver.FindElements(MobileBy.ClassName("UIAWindow"))[1].FindElements(byAccessibilityId).Count,
-                1);
+            Assert.Multiple(() =>
+            {
+                Assert.That(Is.Not.EqualTo(_driver.FindElements(MobileBy.ClassName("UIAWindow"))[1].FindElement(byAccessibilityId).Text), null);
+                Assert.That(_driver.FindElements(MobileBy.ClassName("UIAWindow"))[1].FindElements(byAccessibilityId), Is.Not.Empty);
+            });
         }
 
         [Test]
         public void FindByByIosUiAutomationTest()
         {
             By byIosUiAutomation = new ByIosUIAutomation(".elements().withName(\"Answer\")");
-            Assert.IsNotNull(_driver.FindElements(MobileBy.ClassName("UIAWindow"))[1].FindElement(byIosUiAutomation).Text);
-            Assert.GreaterOrEqual(_driver.FindElements(MobileBy.ClassName("UIAWindow"))[1].FindElements(byIosUiAutomation).Count,
-                1);
+            Assert.Multiple(() =>
+            {
+                Assert.That(_driver.FindElements(MobileBy.ClassName("UIAWindow"))[1].FindElement(byIosUiAutomation).Text, Is.Not.Null);
+                Assert.That(_driver.FindElements(MobileBy.ClassName("UIAWindow"))[1].FindElements(byIosUiAutomation), Is.Not.Empty);
+            });
         }
 
     }
