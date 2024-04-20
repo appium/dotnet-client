@@ -8,16 +8,18 @@ namespace Appium.Net.Integration.Tests.Mac
 {
     public class FindElementTest
     {
-        private AppiumDriver _driver;
+        private MacDriver _driver;
 
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            var capabilities = new AppiumOptions();
-            capabilities.AddAdditionalAppiumOption(MobileCapabilityType.DeviceName, "Mac"); // Requires until Appium 1.15.1
+            var capabilities = new AppiumOptions
+            {
+                AutomationName = AutomationName.Mac2,
+                PlatformName = MobilePlatform.MacOS
+            };
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
             _driver = new MacDriver(serverUri, capabilities, Env.InitTimeoutSec);
-            _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 
         [OneTimeTearDown]
@@ -31,9 +33,10 @@ namespace Appium.Net.Integration.Tests.Mac
         }
 
         [Test]
-        public void ClickFinderIconOnDoc()
+        public void ClickAboutThisMacTest()
         {
-            _driver.FindElement(MobileBy.XPath("/AXApplication[@AXTitle='Dock']/AXList[0]/AXDockItem[@AXTitle='Finder']")).Click();
+            _driver.FindElement(MobileBy.IosNSPredicate("elementType == 56 AND title = 'Apple'")).Click();
+            _driver.FindElement(MobileBy.AccessibilityId("_aboutThisMacRequested:")).Click();
         }
     }
 }
