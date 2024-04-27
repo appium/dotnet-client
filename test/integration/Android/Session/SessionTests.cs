@@ -4,9 +4,9 @@ using NUnit.Framework;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 
-namespace Appium.Net.Integration.Tests.Android
+namespace Appium.Net.Integration.Tests.Android.Session
 {
-    class SessionTest
+    class SessionTests
     {
         private AppiumDriver _driver;
 
