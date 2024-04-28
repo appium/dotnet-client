@@ -4,9 +4,9 @@ using NUnit.Framework;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 
-namespace Appium.Net.Integration.Tests.Android
+namespace Appium.Net.Integration.Tests.Android.Session
 {
-    class SessionTest
+    class SessionTests
     {
         private AppiumDriver _driver;
 
@@ -16,6 +16,7 @@ namespace Appium.Net.Integration.Tests.Android
             var capabilities = Env.ServerIsRemote()
                 ? Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"))
                 : Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
+            capabilities.AddAdditionalAppiumOption("desired", capabilities.ToCapabilities());
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
             _driver = new AndroidDriver(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
@@ -32,17 +33,17 @@ namespace Appium.Net.Integration.Tests.Android
         }
 
         [Test]
-        public void GetDeviceUdidTest()
+        public void GetSessionDetailTest()
         {
-            var deviceUiid = _driver.SessionDetails["deviceUDID"].ToString();
-            Assert.That(deviceUiid, Is.Not.Null);
+            object deviceName = _driver.GetSessionDetail("deviceName");
+            Assert.That(deviceName, Is.Not.Null);
         }
 
         [Test]
         public void GetDeviceDictionaryData()
         {
-            var dictionary = (Dictionary<string, object>) _driver.SessionDetails["desired"];
-            Assert.That(dictionary.Count, Is.Not.EqualTo(0));
+            var dictionary = (Dictionary<string, object>)_driver.SessionDetails["desired"];
+            Assert.That(dictionary, Is.Not.Empty);
         }
     }
 }
