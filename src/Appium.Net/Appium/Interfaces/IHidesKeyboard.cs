@@ -16,6 +16,9 @@
 
 namespace OpenQA.Selenium.Appium.Interfaces
 {
+    /// <summary>
+    /// Represents an interface for interacting with device keyboards.
+    /// </summary>
     public interface IHidesKeyboard
     {
         /// <summary>
@@ -37,9 +40,9 @@ namespace OpenQA.Selenium.Appium.Interfaces
         void HideKeyboard(string strategy, string key);
 
         /// <summary>
-        /// Whether or not the soft keyboard is shown
+        /// Determines whether the soft keyboard is currently shown.
         /// </summary>
-        /// <returns><see cref="true"/> if keyboard is shown, <see cref="false"/> if not.</returns>
+        /// <returns>True if the keyboard is shown; otherwise, false.</returns>
         bool IsKeyboardShown();
     }
 }
