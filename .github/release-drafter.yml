@@ -36,5 +36,5 @@ version-resolver:
       - 'Dependencies'
   default: patch
   
-prerelease: true
+prerelease: false
 prerelease-identifier: 'rc'
