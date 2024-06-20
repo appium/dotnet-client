@@ -6,7 +6,7 @@ using OpenQA.Selenium.Appium.iOS;
 
 namespace Appium.Net.Integration.Tests.IOS
 {
-    class ElementTest
+    class ElementTests
     {
         private AppiumDriver _driver;
 
@@ -35,20 +35,23 @@ namespace Appium.Net.Integration.Tests.IOS
             By byAccessibilityId = new ByAccessibilityId("ComputeSumButton");
             Assert.Multiple(() =>
             {
-                Assert.That(Is.Not.EqualTo(_driver.FindElements(MobileBy.ClassName("UIAWindow"))[1].FindElement(byAccessibilityId).Text), null);
-                Assert.That(_driver.FindElements(MobileBy.ClassName("UIAWindow"))[1].FindElements(byAccessibilityId), Is.Not.Empty);
+                Assert.That(_driver.FindElement(MobileBy.ClassName("UIAWindow")).FindElement(byAccessibilityId).Text, Is.Not.Null);
+                Assert.That(_driver.FindElement(MobileBy.ClassName("UIAWindow")).FindElements(byAccessibilityId), Is.Not.Empty);
             });
         }
 
         [Test]
-        public void FindByByIosUiAutomationTest()
+        public void FindElementsByClassNameTest()
         {
-            By byIosUiAutomation = new ByIosUIAutomation(".elements().withName(\"Answer\")");
-            Assert.Multiple(() =>
-            {
-                Assert.That(_driver.FindElements(MobileBy.ClassName("UIAWindow"))[1].FindElement(byIosUiAutomation).Text, Is.Not.Null);
-                Assert.That(_driver.FindElements(MobileBy.ClassName("UIAWindow"))[1].FindElements(byIosUiAutomation), Is.Not.Empty);
-            });
+            By byClassName = new ByClassName("XCUIElementTypeTextField");
+            Assert.That(_driver.FindElements(byClassName), Has.Count.EqualTo(2));
+        }
+
+        [Test]
+        public void FindElementMobileByClassNameTest()
+        {
+            var switchElement = _driver.FindElement(MobileBy.ClassName("XCUIElementTypeSwitch"));
+            Assert.That(switchElement, Is.Not.Null);
         }
 
     }
