@@ -35,7 +35,7 @@ namespace Appium.Net.Integration.Tests.IOS
             By byAccessibilityId = new ByAccessibilityId("ComputeSumButton");
             Assert.Multiple(() =>
             {
-                Assert.That(_driver.FindElement(MobileBy.ClassName("UIAWindow")).FindElement(byAccessibilityId).Text, Is.Not.Null);
+                Assert.That(_driver.FindElement(MobileBy.ClassName("UIAWindow")).FindElement(byAccessibilityId).Text, Is.EqualTo("Compute Sum"));
                 Assert.That(_driver.FindElement(MobileBy.ClassName("UIAWindow")).FindElements(byAccessibilityId), Is.Not.Empty);
             });
         }
