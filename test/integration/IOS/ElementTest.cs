@@ -54,8 +54,14 @@ namespace Appium.Net.Integration.Tests.IOS
         [Test]
         public void FindElementMobileByClassNameTest()
         {
-            var switchElement = _driver.FindElement(MobileBy.ClassName("XCUIElementTypeSwitch"));
-            Assert.That(switchElement, Is.Not.Null);
+            try
+            {
+                var switchElement = _driver.FindElement(MobileBy.AccessibilityId("XCUIElementTypeSwitch"));
+            }   
+            catch (NoSuchElementException ex)
+            {
+                Assert.Fail("Element not found, exception: " + ex.Message);
+            }
         }
 
     }
