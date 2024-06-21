@@ -56,7 +56,7 @@ namespace Appium.Net.Integration.Tests.IOS
         {
             try
             {
-                var switchElement = _driver.FindElement(MobileBy.AccessibilityId("XCUIElementTypeSwitch"));
+                var switchElement = _driver.FindElement(MobileBy.ClassName("XCUIElementTypeSwitch"));
             }   
             catch (NoSuchElementException ex)
             {
