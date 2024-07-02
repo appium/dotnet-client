@@ -14,6 +14,7 @@
 
 using OpenQA.Selenium.Remote;
 using System;
+using System.Threading.Tasks;
 
 namespace OpenQA.Selenium.Appium.Service
 {
@@ -55,12 +56,18 @@ namespace OpenQA.Selenium.Appium.Service
 
         public Response Execute(Command commandToExecute)
         {
+            return Task.Run(() => RealExecutor.ExecuteAsync(commandToExecute)).GetAwaiter().GetResult();
+        }
+
+        public async Task<Response> ExecuteAsync(Command commandToExecute)
+        {
             Response result = null;
 
             try
             {
                 bool newSession = HandleNewSessionCommand(commandToExecute);
-                result = RealExecutor.Execute(commandToExecute);
+                result = Task.Run(() => RealExecutor.ExecuteAsync(commandToExecute)).GetAwaiter().GetResult();
+
                 if (newSession)
                 {
                     RealExecutor = UpdateExecutor(result, RealExecutor);
