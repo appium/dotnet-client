@@ -79,6 +79,8 @@ namespace OpenQA.Selenium.Appium.Service
             }
         }
 
+        public Task<Response> ExecuteAsync(Command commandToExecute) => Task.Run(() => this.Execute(commandToExecute));
+
         /// <summary>
         /// Handles a new session command, starts the service, and modifies the HTTP request header if necessary.
         /// </summary>
