@@ -54,14 +54,16 @@ namespace OpenQA.Selenium.Appium.Service
             ClientConfig = clientConfig;
         }
 
-        public Response Execute(Command commandToExecute)
+        public Response Execute(Command commandToExecute) => this.ExecuteAsync(commandToExecute).GetAwaiter().GetResult();
+
+        public async Task<Response> ExecuteAsync(Command commandToExecute)
         {
             Response result = null;
 
             try
             {
                 bool newSession = HandleNewSessionCommand(commandToExecute);
-                result = RealExecutor.Execute(commandToExecute);
+                result = await RealExecutor.ExecuteAsync(commandToExecute);
                 if (newSession)
                 {
                     RealExecutor = UpdateExecutor(result, RealExecutor);
@@ -79,8 +81,6 @@ namespace OpenQA.Selenium.Appium.Service
                 HandleCommandCompletion(commandToExecute, result);
             }
         }
-
-        public Task<Response> ExecuteAsync(Command commandToExecute) => Task.Run(() => this.Execute(commandToExecute));
 
         /// <summary>
         /// Handles a new session command, starts the service, and modifies the HTTP request header if necessary.
