@@ -54,7 +54,7 @@ namespace OpenQA.Selenium.Appium.Service
             ClientConfig = clientConfig;
         }
 
-        public Response Execute(Command commandToExecute) => this.ExecuteAsync(commandToExecute).GetAwaiter().GetResult();
+        public Response Execute(Command commandToExecute) => Task.Run(() => ExecuteAsync(commandToExecute)).GetAwaiter().GetResult();
 
         public async Task<Response> ExecuteAsync(Command commandToExecute)
         {
@@ -63,7 +63,7 @@ namespace OpenQA.Selenium.Appium.Service
             try
             {
                 bool newSession = HandleNewSessionCommand(commandToExecute);
-                result = await RealExecutor.ExecuteAsync(commandToExecute);
+                result = await RealExecutor.ExecuteAsync(commandToExecute).ConfigureAwait(false);
                 if (newSession)
                 {
                     RealExecutor = UpdateExecutor(result, RealExecutor);
