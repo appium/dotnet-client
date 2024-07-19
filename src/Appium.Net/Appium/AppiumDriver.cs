@@ -1,4 +1,4 @@
-//Licensed under the Apache License, Version 2.0 (the "License");
+﻿//Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
 //See the NOTICE file distributed with this work for additional
 //information regarding copyright ownership.
@@ -23,7 +23,6 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using OpenQA.Selenium.Appium.ImageComparison;
 
 namespace OpenQA.Selenium.Appium
@@ -111,14 +110,12 @@ namespace OpenQA.Selenium.Appium
 
         #region Public Methods
 
-        protected override async Task<Response> ExecuteAsync(string driverCommandToExecute, Dictionary<string, object> parameters) =>
-            await base.ExecuteAsync(driverCommandToExecute, parameters);
-
-        protected Response Execute(string driverCommandToExecute, Dictionary<string, object> parameters) =>
-            Task.Run(() => ExecuteAsync(driverCommandToExecute, parameters)).GetAwaiter().GetResult();
+        protected override Response Execute(string driverCommandToExecute, Dictionary<string, object> parameters) =>
+            base.Execute(driverCommandToExecute, parameters);
 
         Response IExecuteMethod.Execute(string commandName, Dictionary<string, object> parameters) =>
-            Execute(commandName, parameters);
+            base.Execute(commandName, parameters);
+
 
         #region Generic FindMethods
 
