@@ -1,4 +1,4 @@
-//Licensed under the Apache License, Version 2.0 (the "License");
+﻿//Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
 //See the NOTICE file distributed with this work for additional
 //information regarding copyright ownership.
@@ -14,7 +14,6 @@
 
 using OpenQA.Selenium.Remote;
 using System;
-using System.Threading.Tasks;
 
 namespace OpenQA.Selenium.Appium.Service
 {
@@ -56,18 +55,12 @@ namespace OpenQA.Selenium.Appium.Service
 
         public Response Execute(Command commandToExecute)
         {
-            return Task.Run(() => RealExecutor.ExecuteAsync(commandToExecute)).GetAwaiter().GetResult();
-        }
-
-        public async Task<Response> ExecuteAsync(Command commandToExecute)
-        {
             Response result = null;
 
             try
             {
                 bool newSession = HandleNewSessionCommand(commandToExecute);
-                result = Task.Run(() => RealExecutor.ExecuteAsync(commandToExecute)).GetAwaiter().GetResult();
-
+                result = RealExecutor.Execute(commandToExecute);
                 if (newSession)
                 {
                     RealExecutor = UpdateExecutor(result, RealExecutor);
@@ -132,7 +125,7 @@ namespace OpenQA.Selenium.Appium.Service
             if (command.Name == DriverCommand.NewSession)
             {
                 Service?.Dispose();
-            }
+            }  
         }
 
         /// <summary>
