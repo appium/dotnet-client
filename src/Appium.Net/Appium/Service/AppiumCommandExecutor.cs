@@ -54,7 +54,10 @@ namespace OpenQA.Selenium.Appium.Service
             ClientConfig = clientConfig;
         }
 
-        public Response Execute(Command commandToExecute) => Task.Run(() => ExecuteAsync(commandToExecute)).GetAwaiter().GetResult();
+        public Response Execute(Command commandToExecute)
+       {
+           return Task.Run(() => ExecuteAsync(commandToExecute)).GetAwaiter().GetResult();
+       }
 
         public async Task<Response> ExecuteAsync(Command commandToExecute)
         {
