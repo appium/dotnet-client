@@ -30,6 +30,8 @@ using PointerInputDevice = OpenQA.Selenium.Appium.Interactions.PointerInputDevic
 
 namespace Appium.Net.Integration.Tests.Android
 {
+    [TestFixture]
+    [Category("Drawing")]
     internal class ActionsChainsTest
     {
         private AndroidDriver _driver;
