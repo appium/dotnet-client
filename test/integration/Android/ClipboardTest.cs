@@ -9,7 +9,9 @@ using System.Text.RegularExpressions;
 
 namespace Appium.Net.Integration.Tests.Android
 {
-    [TestFixture(Category = "Device")]
+    [TestFixture]
+    [Category("Device")]
+    [Category("Drawing")]
     public class ClipboardTest
     {
         private AndroidDriver _driver;
