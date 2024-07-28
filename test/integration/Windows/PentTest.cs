@@ -34,6 +34,9 @@ using Appium.Net.Integration.Tests.helpers;
 
 namespace Appium.Net.Integration.Tests.Windows
 {
+    [TestFixture]
+    [Category("Windows")]
+    [Category("Drawing")]
     public class PenTest : StickyNotesTest
     {
         private WindowsDriver newStickyNoteSession;

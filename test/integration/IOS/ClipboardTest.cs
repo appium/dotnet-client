@@ -3,8 +3,6 @@ using NUnit.Framework;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.iOS;
 using System;
-using System.Drawing;
-using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
