@@ -25,3 +25,8 @@ GitHub:
 WIP:
   title: "^WIP:.*"
   mergeable: false
+
+Breaking Change:
+  title: "^break:.*"
+  mergeable: false
+  
