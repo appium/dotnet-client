@@ -14,7 +14,18 @@
 This driver is an extension of the [Selenium](http://docs.seleniumhq.org/) C# client. It has 
 all the functionalities of the regular driver, but add Appium-specific methods on top of this.
 
-## v5 Release Candidate 
+## Compatibility Matrix
+
+The Appium .NET Client depends on [Selenium .NET binding](https://www.nuget.org/packages/Selenium.WebDriver), thus the Selenium .NET binding update might affect the Appium .NET Client behavior. 
+For example, some changes in the Selenium binding could break the Appium client.
+
+|Appium .NET Client| Selenium Binding	| .NET Version |
+|----|----|----|
+|`5.1.0` |`4.23.0` |.NET 6.0, .NET Framework 4.8 |
+|`5.0.0` |`4.0.0` - `4.22.0` | .NET 6.0, .NET Framework 4.8 |
+|`4.4.5` |`3.141.0` |.NET Standard 2.0, .NET Framework 4.8 |
+
+## v5
  
 ### Appium server compatibility for v5.x
 
@@ -23,7 +34,6 @@ all the functionalities of the regular driver, but add Appium-specific methods o
 > `appium --base-path=/wd/hub`, due to a breaking change on the default server base path. <br/>
 > Regardless, moving to appium 2.x is highly recommended since appium 1.x is no longer maintained. <br/>
 > For more details about how to migrate to 2.x, see the following link : [appium 2.x migrating](https://appium.github.io/appium/docs/en/2.0/guides/migrating-1-to-2/)
-
 
 ### Deprecated Methods
 
