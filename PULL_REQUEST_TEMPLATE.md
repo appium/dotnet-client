@@ -8,8 +8,7 @@ What types of changes are you proposing/introducing to the .NET client?
 _Put an `x` in the boxes that apply_
 
 - [ ] Bugfix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] New feature (non-breaking change which adds value to the project)
+- [ ] New feature (non-breaking change that adds functionality or value)
 - [ ] Breaking change (fix or feature that would cause existing functionality not to work as expected)
 
 ## Documentation
@@ -17,9 +16,9 @@ _Put an `x` in the boxes that apply_
 #### This can be done by navigating to the documentation section on http://appium.io selecting the appropriate command/endpoint and clicking the 'Edit this doc' link to update the C# example
 
 ## Integration tests
-- [ ] Have you provided integration tests to pass against the beta version of appium? (for Bugfix or New feature)
+- [ ]  Have you provided integration tests for your changes? (required for Bugfix or New feature)
 
 ## Details
 
-Please provide more details about changes if it is necessary. If there are new features you can provide code samples showing how they work and possible use cases. Also, you can create [gists](https://gist.github.com) with pasted C# code samples or put them here using markdown. 
+Please provide more details about changes if necessary. You can provide code samples showing how they work and possible use cases if there are new features. Also, you can create [gists](https://gist.github.com) with pasted C# code samples or put them here using markdown. 
 About markdown please read [Mastering markdown](https://guides.github.com/features/mastering-markdown/) and [Writing on GitHub](https://docs.github.com/en/get-started/writing-on-github) 
