@@ -16,7 +16,7 @@ _Put an `x` in the boxes that apply_
 #### This can be done by navigating to the documentation section on http://appium.io selecting the appropriate command/endpoint and clicking the 'Edit this doc' link to update the C# example
 
 ## Integration tests
-- [ ]  Have you provided integration tests for your changes? (required for Bugfix or New feature)
+- [ ] Have you provided integration tests for your changes? (required for Bugfix or New feature)
 
 ## Details
 
