@@ -126,6 +126,9 @@ namespace OpenQA.Selenium.Appium
             new AppiumCommand(HttpCommandInfo.PostCommand, WindowsDriverCommand.CloseApp,
                 "/session/{sessionId}/appium/app/close"),
 
+            new AppiumCommand(HttpCommandInfo.PostCommand, WindowsDriverCommand.LaunchApp,
+                "/session/{sessionId}/appium/app/launch"),
+
             #endregion (WinAppDriver) legacy app management
 
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.BackgroundApp,
