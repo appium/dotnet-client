@@ -14,6 +14,9 @@
 
 namespace OpenQA.Selenium.Appium
 {
+    /// <summary>
+    /// Provides command constants specific to Windows applications.
+    /// </summary>
     public class WindowsDriverCommand
     {
        
@@ -23,6 +26,11 @@ namespace OpenQA.Selenium.Appium
         /// Close App Command.
         /// </summary>
         public const string CloseApp = "closeApp";
+
+        /// <summary>
+        /// Launch App Command.
+        /// </summary>
+        public const string LaunchApp = "launchApp";
 
         #endregion legacy app management
 
