@@ -38,7 +38,7 @@ namespace OpenQA.Selenium.Appium
         /// <summary>
         /// The default command timeout for HTTP requests in a AppiumDriver instance.
         /// </summary>
-        private static new readonly TimeSpan DefaultCommandTimeout = TimeSpan.FromSeconds(600.0);
+        protected static new readonly TimeSpan DefaultCommandTimeout = TimeSpan.FromSeconds(600.0);
 
         #region Constructors
 
