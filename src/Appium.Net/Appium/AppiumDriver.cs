@@ -35,6 +35,11 @@ namespace OpenQA.Selenium.Appium
     {
         private const string NativeApp = "NATIVE_APP";
 
+        /// <summary>
+        /// The default command timeout for HTTP requests in a AppiumDriver instance.
+        /// </summary>
+        protected static new readonly TimeSpan DefaultCommandTimeout = TimeSpan.FromSeconds(600.0);
+
         #region Constructors
 
         public AppiumDriver(ICommandExecutor commandExecutor, ICapabilities appiumOptions)
