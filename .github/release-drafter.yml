@@ -22,6 +22,9 @@ categories:
       - 'Build'
   - title: '🧰 Maintenance'
     label: 'Chore'  
+  - title: '📚 Documentation'
+    labels:
+      - 'Docs'
 
 version-resolver:
   major:
