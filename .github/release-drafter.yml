@@ -24,7 +24,7 @@ categories:
     label: 'Chore'  
   - title: '📚 Documentation'
     labels:
-      - 'Docs'
+      - 'Documentation'
 
 version-resolver:
   major:
