@@ -27,6 +27,6 @@ WIP:
   mergeable: false
 
 Breaking Change:
-  title: "^break:.*"
+  title: "^.*BREAKING CHANGE:.*|.*!.*"
   mergeable: false
   
