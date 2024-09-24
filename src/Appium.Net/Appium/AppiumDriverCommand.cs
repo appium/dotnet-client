@@ -213,22 +213,6 @@ namespace OpenQA.Selenium.Appium
 
         #endregion Appium Specific extensions to JSONWP Commands
 
-        #region (Deprecated) TouchActions
-        // TODO: Remove this region once we deprecate the touch actions
-        // Please use the W3C Actions instead.
-
-        /// <summary>
-        /// Perform touch action
-        /// </summary>
-        public const string PerformTouchAction = "performTouchAction";
-
-        /// <summary>
-        /// Perform multi touch action
-        /// </summary>
-        public const string PerformMultiAction = "performMultiTouch";
-
-        #endregion (Deprecated) MultiTouchActions
-
         #region W3C Actions
 
         /// <summary>
