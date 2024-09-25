@@ -10,7 +10,7 @@ namespace Appium.Net.Integration.Tests.helpers
         public static TimeSpan InitTimeoutSec = TimeSpan.FromSeconds(180);
         public static TimeSpan ImplicitTimeoutSec = TimeSpan.FromSeconds(10);
 
-        private static Dictionary<string, string> _env;
+        private static Dictionary<string, JsonElement> _env;
         private static bool _initialized;
 
         private static void Init()
@@ -23,19 +23,28 @@ namespace Appium.Net.Integration.Tests.helpers
                     var path = AppDomain.CurrentDomain.BaseDirectory;
                     var sr = new StreamReader(path + "env.json");
                     var jsonString = sr.ReadToEnd();
-                    _env = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonString);
+                    _env = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(jsonString, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
                 }
             }
-            catch
+            catch (JsonException jsonEx)
             {
+                Console.WriteLine($"Error parsing JSON: {jsonEx.Message}");
+                _env = [];
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error initializing environment: {ex.Message}");
                 _env = [];
             }
         }
 
-        private static bool IsTrue(string val)
+        private static bool IsTrue(object val)
         {
-            val = val?.ToLower().Trim();
-            return (val == "true") || (val == "1");
+            val = val?.ToString().ToLower().Trim();
+            return val is (object)"true" or (object)"1";
         }
 
         public static bool ServerIsRemote()
@@ -52,9 +61,18 @@ namespace Appium.Net.Integration.Tests.helpers
 
         public static string GetEnvVar(string name)
         {
-            if (_env.ContainsKey(name) && (_env[name] != null))
+            if (_env.ContainsKey(name))
             {
-                return _env[name];
+                JsonElement element = _env[name];
+
+                return element.ValueKind switch
+                {
+                    JsonValueKind.String => element.GetString(),
+                    JsonValueKind.Number => element.GetRawText(),
+                    JsonValueKind.True or JsonValueKind.False => element.GetRawText(),
+                    JsonValueKind.Null => null,
+                    _ => element.GetRawText()
+                };
             }
                 return Environment.GetEnvironmentVariable(name);
         }
