@@ -154,15 +154,6 @@ namespace OpenQA.Selenium.Appium
 
             #endregion Driver Commands
             
-            #region (Deprecated) Touch Commands 
-            // TODO: Remove this region once we deprecate the touch actions
-            // Please use the W3C Actions instead.
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.PerformMultiAction,
-                "/session/{sessionId}/touch/multi/perform"),
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.PerformTouchAction,
-                "/session/{sessionId}/touch/perform"),
-
-            #endregion (Deprecated) Touch Commands
 
             // Enable W3C Actions on AppiumWebDriver
 
