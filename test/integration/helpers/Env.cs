@@ -15,29 +15,33 @@ namespace Appium.Net.Integration.Tests.helpers
 
         private static void Init()
         {
+            _env = new Dictionary<string, JsonElement>
+            {
+                { "DEV", JsonDocument.Parse("true").RootElement }, 
+                { "isRemoteAppiumServer", JsonDocument.Parse("false").RootElement }, 
+                { "remoteAppiumServerUri", JsonDocument.Parse("\"http://localhost:4723\"").RootElement }
+            };
+
+            if (_initialized) return;
+
             try
             {
-                if (!_initialized)
+                _initialized = true;
+                var path = AppDomain.CurrentDomain.BaseDirectory;
+                var sr = new StreamReader(path + "env.json");
+                var jsonString = sr.ReadToEnd();
+                _env = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(jsonString, new JsonSerializerOptions
                 {
-                    _initialized = true;
-                    var path = AppDomain.CurrentDomain.BaseDirectory;
-                    var sr = new StreamReader(path + "env.json");
-                    var jsonString = sr.ReadToEnd();
-                    _env = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(jsonString, new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    });
-                }
+                    PropertyNameCaseInsensitive = true
+                });
             }
             catch (JsonException jsonEx)
             {
                 Console.WriteLine($"Error parsing JSON: {jsonEx.Message}");
-                _env = [];
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error initializing environment: {ex.Message}");
-                _env = [];
             }
         }
 
@@ -56,7 +60,7 @@ namespace Appium.Net.Integration.Tests.helpers
         public static bool ServerIsLocal()
         {
             Init();
-            return _env.ContainsKey("DEV") && IsTrue(_env["DEV"]) || IsTrue(Environment.GetEnvironmentVariable("DEV"));
+            return (_env.ContainsKey("DEV") && IsTrue(_env["DEV"])) || IsTrue(Environment.GetEnvironmentVariable("DEV"));
         }
 
         public static string GetEnvVar(string name)
@@ -74,7 +78,7 @@ namespace Appium.Net.Integration.Tests.helpers
                     _ => element.GetRawText()
                 };
             }
-                return Environment.GetEnvironmentVariable(name);
+            return Environment.GetEnvironmentVariable(name);
         }
     }
 }
