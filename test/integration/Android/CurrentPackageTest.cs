@@ -1,6 +1,8 @@
 ﻿using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium.Appium.Android;
+using OpenQA.Selenium.Support.UI;
+using System;
 
 namespace Appium.Net.Integration.Tests.Android
 {
@@ -8,6 +10,9 @@ namespace Appium.Net.Integration.Tests.Android
     public class CurrentPackageTest
     {
         private AndroidDriver _driver;
+        private WebDriverWait _waitDriver;
+        private readonly TimeSpan _driverTimeOut = TimeSpan.FromSeconds(5);
+
         private const string DemoAppPackage = "io.appium.android.apis";
 
         [OneTimeSetUp]
@@ -37,6 +42,8 @@ namespace Appium.Net.Integration.Tests.Android
         [Test]
         public void ReturnsCorrectNameForCurrentApp()
         {
+            _waitDriver = new WebDriverWait(_driver, _driverTimeOut);
+            _waitDriver.Until(driver => _driver.CurrentPackage == DemoAppPackage);
             Assert.That(_driver.CurrentPackage, Is.EqualTo(DemoAppPackage));
         }
     }
