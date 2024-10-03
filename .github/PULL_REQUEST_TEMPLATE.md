@@ -10,13 +10,14 @@ _Put an `x` in the boxes that apply_
 - [ ] Bugfix (non-breaking change which fixes an issue)
 - [ ] New feature (non-breaking change that adds functionality or value)
 - [ ] Breaking change (fix or feature that would cause existing functionality not to work as expected)
+- [ ] **Test fix** (non-breaking change that improves test stability or correctness)
 
 ## Documentation
-- [ ] Have you proposed a file change/ PR with appium to update documentation? 
+- [ ] Have you proposed a file change/ PR with Appium to update documentation? 
 #### This can be done by navigating to the documentation section on http://appium.io selecting the appropriate command/endpoint and clicking the 'Edit this doc' link to update the C# example
 
 ## Integration tests
-- [ ] Have you provided integration tests for your changes? (required for Bugfix or New feature)
+- [ ] Have you provided integration tests for your changes? (required for Bugfix, New feature, or Test fix)
 
 ## Details
 
