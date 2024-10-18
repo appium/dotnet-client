@@ -1,14 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net48;net6.0</TargetFrameworks>
-    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <RootNamespace>OpenQA.Selenium</RootNamespace>
+    <LangVersion>latest</LangVersion>
     <Company>Appium Commiters</Company>
     <Product>Dotnet-Client</Product>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Copyright>Copyright © 2023</Copyright>
-    <PackageProjectUrl>https://github.com/appium/dotnet-client</PackageProjectUrl>
+    <PackageProjectUrl>https://appium.io</PackageProjectUrl>
     <RepositoryUrl>https://github.com/appium/dotnet-client</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <IncludeSymbols>true</IncludeSymbols>
@@ -19,40 +19,25 @@
     <PackageIcon>appium-icon.png</PackageIcon>
     <Description>Selenium Webdriver extension for Appium.</Description>
     <PackageTags>Appium Webdriver device automation</PackageTags>
-  </PropertyGroup>
-  <PropertyGroup>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-  </PropertyGroup>
-  <PropertyGroup>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-  </PropertyGroup>
-  <PropertyGroup>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
-  <PropertyGroup>
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
+  
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
     <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
+  
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
     <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net48|AnyCPU'">
-    <NoWarn>1701;1702;1591</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net48|AnyCPU'">
-    <NoWarn>1701;1702;1591</NoWarn>
-  </PropertyGroup>
+  
   <ItemGroup>
     <None Include="LICENSE.txt" Pack="true" PackagePath="" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="appium-icon.png" Pack="true" PackagePath="" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="" />
   </ItemGroup>
-  <ItemGroup>
-	<None Include="..\..\README.md" Pack="true" PackagePath="" />
-  </ItemGroup>
+  
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
@@ -60,9 +45,5 @@
     </PackageReference>
     <PackageReference Include="Selenium.WebDriver" Version="4.24.0" />
     <PackageReference Include="System.Drawing.Common" Version="8.0.8" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
-    <Folder Include="Appium\Mac\" />
   </ItemGroup>
 </Project>
