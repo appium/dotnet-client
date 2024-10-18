@@ -73,14 +73,13 @@ App management: Please read [issue #15807](https://github.com/appium/appium/issu
 
 ## NuGet
 
-NuGet Package: [](http://www.nuget.org/packages/Appium.WebDriver/)
+[NuGet Package](http://www.nuget.org/packages/Appium.WebDriver/)
 
 Dependencies:
 
 - [Selenium.WebDriver](http://www.nuget.org/packages/Selenium.WebDriver/)
-- [Newtonsoft.Json](http://www.nuget.org/packages/Newtonsoft.Json/)
-- [Selenium.Support](https://www.nuget.org/packages/Selenium.Support/)
-- [Castle.Core](https://www.nuget.org/packages/Castle.Core/)
+- [System.Text.Json](https://www.nuget.org/packages/System.Text.Json/)
+- [System.Drawing.Common](https://www.nuget.org/packages/System.Drawing.Common/)
 
 Note: we will NOT publish a signed version of this assembly since the dependencies we access through NuGet do not have a signed version - thus breaking the chain and causing us headaches. With that said, you are more than welcome to download the code and build a signed version yourself.
  
@@ -90,8 +89,8 @@ Note: we will NOT publish a signed version of this assembly since the dependenci
 
 - You need to add the following namespace line: `using OpenQA.Selenium.Appium;`.
 - Use the `AppiumDriver` class/subclass to construct the driver. It works the same as the Selenium Webdriver, except that
- the ports are defaulted to Appium values, and the driver does not know how to start the Appium independently.
-- To use the Appium methods on Element, you need to specify the parameter of `AppiumDriver` or its subclasses.
+ the ports default to Appium values, and the driver does not know how to start the Appium independently.
+- To use the Appium methods on Element, specify the parameter of `AppiumDriver` or its subclasses.
 
 [Read Wiki](https://github.com/appium/appium-dotnet-driver/wiki)
 
