@@ -5,6 +5,10 @@ template: |
 
   $CHANGES
 
+  ## 🚀 New Contributors
+  Thanks to the following contributors for their first PR:
+  $CONTRIBUTORS
+  
 categories:
   - title: 'Enhancements'
     label: 'Enhancement'
@@ -13,7 +17,7 @@ categories:
       - 'BugFix'
   - title: 'Refactor'
     label: 'Refactor'
-  - title: 'Dependencies'
+  - title: '📦 Dependencies'
     labels:
       - 'Dependencies'
   - title: 'Pipeline'
@@ -41,3 +45,4 @@ version-resolver:
   
 prerelease: false
 prerelease-identifier: 'rc'
+contribution-template: '- $NAME contributed in $PULL_REQUEST'
