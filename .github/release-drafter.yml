@@ -7,7 +7,7 @@ template: |
 
   ## 🚀 New Contributors
   Thanks to the following contributors for their first PR:
-  $CONTRIBUTORS
+  $NEW_CONTRIBUTORS
   
 categories:
   - title: 'Enhancements'
