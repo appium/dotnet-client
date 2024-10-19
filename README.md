@@ -78,7 +78,6 @@ App management: Please read [issue #15807](https://github.com/appium/appium/issu
 Dependencies:
 
 - [Selenium.WebDriver](http://www.nuget.org/packages/Selenium.WebDriver/)
-- [System.Text.Json](https://www.nuget.org/packages/System.Text.Json/)
 - [System.Drawing.Common](https://www.nuget.org/packages/System.Drawing.Common/)
 
 Note: we will NOT publish a signed version of this assembly since the dependencies we access through NuGet do not have a signed version - thus breaking the chain and causing us headaches. With that said, you are more than welcome to download the code and build a signed version yourself.
