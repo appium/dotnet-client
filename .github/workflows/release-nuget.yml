@@ -18,7 +18,7 @@ jobs:
         dotnet-version: 5.0.x
 
     - name: Install dependencies
-      run: dotnet restore src/Appium.Net.sln
+      run: dotnet restore Appium.Net.sln
       
     - name: Build
       run: |
@@ -27,7 +27,7 @@ jobs:
         }
         else {
             $versionPrefix = $matches[2]
-            $dotnetBuildCmd = "dotnet build src/Appium.Net.sln --configuration Release -p:VersionPrefix=${versionPrefix}"
+            $dotnetBuildCmd = "dotnet build Appium.Net.sln --configuration Release -p:VersionPrefix=${versionPrefix}"
             if ($matches.Count -eq 7) { 
                 $versionSuffix = $matches[6]
                 $dotnetBuildCmd += " --version-suffix ${versionSuffix}"
