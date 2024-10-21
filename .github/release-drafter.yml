@@ -5,22 +5,22 @@ template: |
 
   $CHANGES
 
-  ## 🚀 New Contributors
-  Thanks to the following contributors for their first PR:
-  $NEW_CONTRIBUTORS
+  ## 🚀  Contributors
+  Thanks to the following contributors in this release: 
+  $CONTRIBUTORS
   
 categories:
-  - title: 'Enhancements'
+  - title: '✨ Enhancements'
     label: 'Enhancement'
-  - title: 'Bug Fixes'
+  - title: '🐛 Bug Fixes'
     labels:
       - 'BugFix'
-  - title: 'Refactor'
+  - title: '🔄 Refactor'
     label: 'Refactor'
   - title: '📦 Dependencies'
     labels:
       - 'Dependencies'
-  - title: 'Pipeline'
+  - title: '🛠️ Pipeline'
     labels:
       - 'CI'
       - 'Build'
@@ -41,8 +41,9 @@ version-resolver:
     labels:
       - 'BugFix'
       - 'Dependencies'
+      - 'Hotfixes'
   default: patch
   
 prerelease: false
 prerelease-identifier: 'rc'
-contribution-template: '- $NAME contributed in $PULL_REQUEST'
+contribution-template: '- $NAME contributed via $PULL_REQUEST'
