@@ -4,7 +4,7 @@ using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 using System;
 
-namespace Appium.Net.Integration.Tests.Android.Device.App
+namespace Appium.Net.Integration.Tests.Android.Device
 {
     internal class BrowserTests
     {
