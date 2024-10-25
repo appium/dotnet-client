@@ -1,6 +1,7 @@
 ﻿using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium.Appium.Android;
+using OpenQA.Selenium.Appium.Android.Enums;
 
 namespace Appium.Net.Integration.Tests.Android
 {
@@ -8,7 +9,7 @@ namespace Appium.Net.Integration.Tests.Android
     public class ActivityTest
     {
         private AndroidDriver _driver;
-        private const string ContactsActivity = ".activities.PeopleActivity";
+        private const string ContactsActivity = "com.android.contacts.activities.PeopleActivity";
         private const string AppId = "io.appium.android.apis";
 
         [OneTimeSetUp]
@@ -68,7 +69,7 @@ namespace Appium.Net.Integration.Tests.Android
 
             Assert.That(_driver.CurrentActivity, Is.EqualTo(".ApiDemos"));
 
-            _driver.StartActivity("com.android.contacts", ContactsActivity);
+            _driver.StartActivity("com.google.android.contacts", ContactsActivity);
 
             Assert.That(_driver.CurrentActivity, Is.EqualTo(ContactsActivity));
             _driver.PressKeyCode(AndroidKeyCode.Back);
@@ -82,7 +83,7 @@ namespace Appium.Net.Integration.Tests.Android
 
             Assert.That(_driver.CurrentActivity, Is.EqualTo(".accessibility.AccessibilityNodeProviderActivity"));
 
-            _driver.StartActivity("com.android.contacts", ContactsActivity, "com.android.contacts",
+            _driver.StartActivity("com.google.android.contacts", ContactsActivity, "com.google.android.contacts",
                 ContactsActivity, false);
 
             Assert.That(_driver.CurrentActivity, Is.EqualTo(ContactsActivity));
