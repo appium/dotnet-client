@@ -4,17 +4,13 @@ updates:
     # Files stored in src/Appium.Net directory
     directory: "/src/Appium.Net" 
     schedule:
-      interval: "daily"
-    groups:
-      selenium-dependencies:
-        patterns:
-          - "Selenium.*" 
+      interval: "weekly"
 
   - package-ecosystem: "nuget"
     # Files stored in test/integration directory
     directory: "/test/integration" 
     schedule:
-      interval: "monthly"
+      interval: "weekly"
 
   - package-ecosystem: "github-actions"
     # Workflow files stored in the
@@ -22,7 +18,7 @@ updates:
     directory: "/"
     schedule:
       # Check for updates to GitHub Actions every week
-      interval: "daily"
+      interval: "weekly"
     commit-message:
       # Prefix all commit messages with "[github-actions] "
       prefix: "[github-actions] "
