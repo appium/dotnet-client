@@ -2,13 +2,13 @@ version: 2
 updates:
   - package-ecosystem: "nuget"
     # Files stored in src/Appium.Net directory
-    directory: "src/Appium.Net" 
+    directory: "/src/Appium.Net" 
     schedule:
       interval: "weekly"
 
   - package-ecosystem: "nuget"
     # Files stored in test/integration directory
-    directory: "test/integration" 
+    directory: "/test/integration" 
     schedule:
       interval: "weekly"
 
