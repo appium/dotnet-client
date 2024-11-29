@@ -170,12 +170,6 @@ namespace OpenQA.Selenium.Appium.Android
 
         #endregion
 
-        public static bool IsLocked(IExecuteMethod executeMethod) =>
-            (bool) executeMethod.Execute(AppiumDriverCommand.IsLocked).Value;
-
-        public static void Unlock(IExecuteMethod executeMethod) =>
-            executeMethod.Execute(AppiumDriverCommand.UnlockDevice);
-
         public static Dictionary<string, object> GetSettings(IExecuteMethod executeMethod) =>
             (Dictionary<string, object>) executeMethod.Execute(AppiumDriverCommand.GetSettings).Value;
 
