@@ -287,21 +287,67 @@ namespace OpenQA.Selenium.Appium.Android
 
         #region Device Interactions
 
-        /**
-        * This method locks a device.
-        */
-        public void Lock() => AppiumCommandExecutionHelper.Lock(this, 0);
+        /// <summary>
+        /// Locks the device. Optionally, unlocks it after a specified number of seconds.
+        /// </summary>
+        /// <param name="seconds">
+        /// The number of seconds after which the device will be automatically unlocked. 
+        /// Set to 0 or leave it empty to require manual unlock.
+        /// </param>
+        /// <exception cref="WebDriverException">Thrown if the command execution fails.</exception>
+        public void Lock(int? seconds = null)
+        {
+            var parameters = new Dictionary<string, object>();
+
+            if (seconds.HasValue && seconds.Value > 0)
+            {
+                parameters["seconds"] = seconds.Value;
+            }
+
+            ExecuteScript("mobile: lock", parameters);
+        }
 
         /// <summary>
         /// Check if the device is locked
         /// </summary>
         /// <returns>true if device is locked, false otherwise</returns>
-        public bool IsLocked() => AndroidCommandExecutionHelper.IsLocked(this);
+        public bool IsLocked() => (bool)ExecuteScript("mobile: isLocked");
 
-        /**
-         * This method unlocks a device.
-         */
-        public void Unlock() => AndroidCommandExecutionHelper.Unlock(this);
+        /// <summary>
+        /// Unlocks the device if it is locked. No operation if the device's screen is not locked.
+        /// </summary>
+        /// <param name="key">The unlock key. See the documentation on appium:unlockKey capability for more details.</param>
+        /// <param name="type">The unlock type. See the documentation on appium:unlockType capability for more details.</param>
+        /// <param name="strategy">Optional unlock strategy. See the documentation on appium:unlockStrategy capability for more details.</param>
+        /// <param name="timeoutMs">Optional unlock timeout in milliseconds. See the documentation on appium:unlockSuccessTimeout capability for more details.</param>
+        /// <exception cref="ArgumentException">Thrown when required arguments are null or empty.</exception>
+        /// <exception cref="WebDriverException">Thrown if the command execution fails.</exception>
+        public void Unlock(string key, string type, string? strategy = null, int? timeoutMs = null)
+        {
+            if (string.IsNullOrWhiteSpace(key))
+                throw new ArgumentException("Unlock key is required and cannot be null or whitespace.", nameof(key));
+
+            if (string.IsNullOrWhiteSpace(type))
+                throw new ArgumentException("Unlock type is required and cannot be null or whitespace.", nameof(type));
+
+            var parameters = new Dictionary<string, object>
+            {
+                { "key", key },
+                { "type", type }
+            };
+
+            if (strategy != null && !string.IsNullOrWhiteSpace(strategy))
+            {
+                parameters["strategy"] = strategy;
+            }
+
+            if (timeoutMs.HasValue)
+            {
+                parameters["timeoutMs"] = timeoutMs.Value;
+            }
+
+            ExecuteScript("mobile: unlock", parameters);
+        }
 
         #endregion
 
