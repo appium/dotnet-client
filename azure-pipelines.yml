@@ -30,7 +30,7 @@ steps:
     configuration: '$(buildConfiguration)'
     
 - powershell: 
-    npm install -g appium
+    npm install -g appium@2.6.0
   displayName: 'Install Appium'
 
 - task: DotNetCoreCLI@2
