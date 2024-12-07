@@ -189,6 +189,32 @@ namespace OpenQA.Selenium.Appium.iOS
 
         public void PerformTouchID(bool match) => IOSCommandExecutionHelper.PerformTouchID(this, match);
 
+        /// <summary>
+        /// Check if the device is locked
+        /// </summary>
+        /// <returns>true if device is locked, false otherwise</returns>
+        public bool IsLocked() => (bool)ExecuteScript("mobile: isLocked");
+
+        /// <summary>
+        /// Locks the device. Optionally, unlocks it after a specified number of seconds.
+        /// </summary>
+        /// <param name="seconds">
+        /// The number of seconds after which the device will be automatically unlocked. 
+        /// Set to 0 or leave it empty to require manual unlock.
+        /// </param>
+        /// <exception cref="WebDriverException">Thrown if the command execution fails.</exception>
+        public void Lock(int? seconds = null)
+        {
+            var parameters = new Dictionary<string, object>();
+
+            if (seconds.HasValue && seconds.Value > 0)
+            {
+                parameters["seconds"] = seconds.Value;
+            }
+
+            ExecuteScript("mobile: lock", parameters);
+        }
+
         public void Unlock() => ExecuteScript("mobile: unlock");
 
         /// <summary>
