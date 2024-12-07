@@ -288,32 +288,6 @@ namespace OpenQA.Selenium.Appium.Android
         #region Device Interactions
 
         /// <summary>
-        /// Locks the device. Optionally, unlocks it after a specified number of seconds.
-        /// </summary>
-        /// <param name="seconds">
-        /// The number of seconds after which the device will be automatically unlocked. 
-        /// Set to 0 or leave it empty to require manual unlock.
-        /// </param>
-        /// <exception cref="WebDriverException">Thrown if the command execution fails.</exception>
-        public void Lock(int? seconds = null)
-        {
-            var parameters = new Dictionary<string, object>();
-
-            if (seconds.HasValue && seconds.Value > 0)
-            {
-                parameters["seconds"] = seconds.Value;
-            }
-
-            ExecuteScript("mobile: lock", parameters);
-        }
-
-        /// <summary>
-        /// Check if the device is locked
-        /// </summary>
-        /// <returns>true if device is locked, false otherwise</returns>
-        public bool IsLocked() => (bool)ExecuteScript("mobile: isLocked");
-
-        /// <summary>
         /// Unlocks the device if it is locked. No operation if the device's screen is not locked.
         /// </summary>
         /// <param name="key">The unlock key. See the documentation on appium:unlockKey capability for more details.</param>

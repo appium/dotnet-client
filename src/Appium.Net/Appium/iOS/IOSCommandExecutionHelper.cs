@@ -33,15 +33,6 @@ namespace OpenQA.Selenium.Appium.iOS
             executeMethod.Execute(AppiumDriverCommand.TouchID,
                 new Dictionary<string, object> {["match"] = match});
 
-        public static bool IsLocked(IExecuteMethod executeMethod) =>
-            (bool)executeMethod.Execute(AppiumDriverCommand.IsLocked).Value;
-
-        public static void Unlock(IExecuteMethod executeMethod) =>
-            executeMethod.Execute(AppiumDriverCommand.UnlockDevice);
-
-        public static void Lock(IExecuteMethod executeMethod) =>
-            executeMethod.Execute(AppiumDriverCommand.LockDevice);
-
         public static void SetClipboardUrl(IExecuteMethod executeMethod, string url)
         {
             var urlEncoded = WebUtility.UrlEncode(url);

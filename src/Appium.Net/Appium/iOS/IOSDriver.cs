@@ -187,19 +187,9 @@ namespace OpenQA.Selenium.Appium.iOS
         public void HideKeyboard(string key, string strategy = null) =>
             AppiumCommandExecutionHelper.HideKeyboard(this, strategy, key);
 
-        /// <summary>
-        /// Locks the device.
-        /// </summary>
-        /// <param name="seconds">The number of seconds during which the device need to be locked for.</param>
-        public void Lock(int seconds) => AppiumCommandExecutionHelper.Lock(this, seconds);
-
         public void PerformTouchID(bool match) => IOSCommandExecutionHelper.PerformTouchID(this, match);
 
-        public bool IsLocked() => IOSCommandExecutionHelper.IsLocked(this);
-
-        public void Unlock() => IOSCommandExecutionHelper.Unlock(this);
-
-        public void Lock() => IOSCommandExecutionHelper.Lock(this);
+        public void Unlock() => ExecuteScript("mobile: unlock");
 
         /// <summary>
         /// Sets the content to the clipboard
