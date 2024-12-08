@@ -78,12 +78,6 @@ namespace OpenQA.Selenium.Appium
 
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.ShakeDevice,
                 "/session/{sessionId}/appium/device/shake"),
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.LockDevice,
-                "/session/{sessionId}/appium/device/lock"),
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.IsLocked,
-                "/session/{sessionId}/appium/device/is_locked"),
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.UnlockDevice,
-                "/session/{sessionId}/appium/device/unlock"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.PressKeyCode,
                 "/session/{sessionId}/appium/device/press_keycode"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.LongPressKeyCode,
