@@ -82,11 +82,6 @@ namespace OpenQA.Selenium.Appium
 
         #endregion
 
-        public static void Lock(IExecuteMethod executeMethod, int seconds) =>
-            executeMethod.Execute(AppiumDriverCommand.LockDevice,
-                new Dictionary<string, object>()
-                    {["seconds"] = seconds});
-
         public static void SetClipboard(IExecuteMethod executeMethod, ClipboardContentType clipboardContentType,
             string base64Content)
         {
