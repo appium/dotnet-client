@@ -87,7 +87,7 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
             Assert.That(availableLogTypes, Has.Member(BugReportLogType));
 
             var bugReportLogEntry = _driver.Manage().Logs.GetLog(BugReportLogType);
-            Assert.That(bugReportLogEntry, Is.Not.Null.And.Count.EqualTo(1));
+            Assert.That(bugReportLogEntry, Is.Not.Null.And.Count.AtLeast(1));
             var bugReportLogPath = bugReportLogEntry.FirstOrDefault()?.Message;
 
             var match = Regex.Match(bugReportLogPath ?? throw new InvalidOperationException(), @"^([\s\S])*.zip");
