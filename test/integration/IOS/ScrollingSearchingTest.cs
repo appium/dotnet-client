@@ -1,4 +1,5 @@
-﻿using Appium.Net.Integration.Tests.helpers;
+﻿using System.Collections.Generic;
+using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.iOS;
@@ -29,21 +30,20 @@ namespace Appium.Net.Integration.Tests.IOS
         }
 
         [Test]
-        public void ScrollToTestCase()
+        public void ScrollToToolbarsElementUsingToVisibleTrueTest()
         {
-            var slider = _driver
-                .FindElement(new ByIosUIAutomation(".tableViews()[0]"
-                                                   + ".scrollToElementWithPredicate(\"name CONTAINS 'Slider'\")"));
-            Assert.That(slider.GetAttribute("name"), Is.EqualTo("Sliders"));
+            var Toolbars = _driver.FindElement(new ByIosNSPredicate("name == 'Toolbars'"));
+            _driver.ExecuteScript("mobile: scroll", new Dictionary<string, string> { { "element", Toolbars.Id }, { "toVisible", "true" } });
+            Assert.That(Toolbars.Displayed, Is.True, "The 'Toolbars' element should be visible after scrolling.");
         }
 
         [Test]
-        public void ScrollToExactTestCase()
+        public void ScrollToSwitchesElementUsingDirectionDownTest()
         {
-            var table = _driver.FindElement(new ByIosUIAutomation(".tableViews()[0]"));
-            var slider = table.FindElement(
-                new ByIosUIAutomation(".scrollToElementWithPredicate(\"name CONTAINS 'Slider'\")"));
-            Assert.That(slider.GetAttribute("name"), Is.EqualTo("Sliders"));
+            var table = _driver.FindElement(new ByIosNSPredicate("type == 'XCUIElementTypeTable'"));
+            _driver.ExecuteScript("mobile: scroll", new Dictionary<string, string> { { "direction", "down" }, { "element", table.Id } });
+            var switches = table.FindElement(new ByIosNSPredicate("name CONTAINS 'Switches'"));
+            Assert.That(switches.GetAttribute("visible"), Is.EqualTo("true"));
         }
     }
 }
