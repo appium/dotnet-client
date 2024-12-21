@@ -15,11 +15,11 @@ namespace Appium.Net.Integration.Tests.IOS
         private const string ClipboardTestString = "Hello Clipboard";
         private const string Base64RegexPattern = @"^[a-zA-Z0-9\+/]*={0,2}$";
 
-        [SetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
             var capabilities = Caps.GetIosCaps(Apps.Get("iosUICatalogApp"));
-            capabilities.AddAdditionalAppiumOption(MobileCapabilityType.FullReset, true);
+            capabilities.AddAdditionalAppiumOption(MobileCapabilityType.FullReset, false);
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
 
             _driver = new IOSDriver(serverUri, capabilities, Env.InitTimeoutSec);
@@ -94,7 +94,7 @@ namespace Appium.Net.Integration.Tests.IOS
             Assert.That(() => _driver.GetClipboardText(), Is.Empty);
         }
 
-        [TearDown]
+        [OneTimeTearDown]
         public void TearDown()
         {
             if (_driver.IsLocked())
