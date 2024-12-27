@@ -1,5 +1,76 @@
 # Release Notes
-## *4.0.0.1 (under construction yet)*
+
+## *7.0.0*
+- [Enhancement] Disable `FullReset` in IOS/ClipboardTest.
+- [Enhancement] Update alert text assertion in IOS/AlertTests.
+- [Enhancement] Replace deprecated `ByIosUIAutomation` in ScrollingSearchingTest.
+- [Enhancement] Fix assertion for logs entry.
+- [Enhancement] Fix IOS/SearchingTest.
+- [BREAKING CHANGE] `AndroidDriver` to use modern `mobile:` commands for Lock, IsLocked, and Unlock.
+- [Enhancement] Remove the selenium group.
+- [Enhancement] 'IOSDriver' to use modern `mobile:` commands for Lock, IsLocked, and Unlock.
+- [Updates] Bump Selenium.WebDriver from 4.26.1 to 4.27.0; Bump NUnit from 4.2.2 to 4.3.0; Bump Microsoft.NET.Test.Sdk from 17.11.1 to 17.12.0; Bump NUnit.Analyzers from 4.3.0 to 4.4.0; Bump System.Text.Json from 8.0.5 to 9.0.0.
+- [Pipeline] Split tests into two separate tasks per framework.
+
+## *6.0.1*
+- [Enhancement] Add tests for `HideKeyboard(string strategy, string key)`.
+- [Enhancement] Adjust tests namespaces to match folder structure.
+- [Enhancement] Fix New Contributors var.
+- [Bug Fix] Revert changes for NEW_CONTRIBUTORS.
+- [Updates] Bump Selenium.WebDriver from 4.25.0 to 4.26.1.
+- [Documentation] Add v6.0.0 to Compatibility Matrix.
+
+## *6.0.0*
+- [Enhancement] Include a notification for new contributors.
+- [Enhancement] Update PR template to support test fixes.
+- [Enhancement] Fix the Breaking Change label to match Release Drafter.
+- [Enhancement] Update the Breaking Change title in labeler.yml.
+- [Enhancement] Add a Documentation category in release-drafter.yml.
+- [Enhancement] Fix .sln path for release-nuget.yml.
+- [Enhancement] Add explicit wait for app package to load before assertion.
+- [Enhancement] Move AppTests to the correct folder to match the namespace.
+- [BREAKING CHANGE] Remove obsolete TouchActions, MultiActions methods.
+- [Enhancement] Refactor: Use netstandard2.0 as the target framework to support a wider range of frameworks.
+- [Updates] Bump Selenium.WebDriver from 4.24.0 to 4.25.0; Bump System.Drawing.Common from 8.0.8 to 8.0.10; Bump System.Text.Json from 8.0.4 to 8.0.5.
+- [Enhancement] Remove Selenium.Support package as a dependency.
+- [Enhancement] Migrate from Newtonsoft.Json to System.Text.Json.
+- [Maintenance] Move the solution to the root folder.
+- [Maintenance] Remove unnecessary .nuget binaries from source control.
+- [Documentation] Remove the Deprecated Methods section.
+
+## *5.2.0*
+- [Enhancement] Override selenium default command timeout.
+- [Enhancement] Bring back `LaunchApp` to `WindowsDriver`.
+- [Updates] Bump Microsoft.NET.Test.Sdk from 17.10.0 to 17.11.1; Bump NUnit.Analyzers from 4.2.0 to 4.3.0; Bump NUnit from 4.1.0 to 4.2.2; Bump Selenium.WebDriver from 4.23.0 to 4.24.0; Bump System.Drawing.Common from 8.0.7 to 8.0.8; Bump NUnit3TestAdapter from 4.5.0 to 4.6.0.
+- [Documentation] Update PULL_REQUEST_TEMPLATE.md; Add compatibility matrix for Appium .NET Client.
+
+## *5.1.0*
+- [BREAKING CHANGE] ExecuteAsync() under the hood implementation after bumping to Selenium 4.23.
+- [Enhancement] Add `Breaking Change` labeler.
+- [Enhancement] Set the prerelease flag to `false` in release-drafter.yml.
+- [Enhancement] Add new Drawing Category to related tests.
+- [Enhancement] Fix ios ElementTests.
+- [Updates] Bump System.Drawing.Common from 8.0.6 to 8.0.7; Bump System.Drawing.Common from 4.21.0 to 4.23.0.
+
+## *5.0.0*
+- [Major Updates] Selenium 4 Integration: Refactored to work seamlessly with Selenium 4, incorporating the new element factory for improved element interactions.
+- [Major Updates] .NET 6.0 and .NET Framework 4.8 Support: Upgraded the solution to target .NET 6.0 while reintroducing support for .NET Framework 4.8, ensuring compatibility across different .NET versions.
+- [Major Updates] Appium 2 Migration: Migrated AppiumLocalService to Appium 2, bringing the latest Appium server capabilities.
+- [New Features] Idempotency Header: Added an idempotency header to requests for new sessions, enhancing session management reliability.
+- [New Features] ReplaceValue Method: Introduced the ReplaceValue method to facilitate efficient value updates in elements.
+- [New Features] Direct Connect Feature: Implemented the directConnect feature optimized direct connections to Appium servers.
+- [New Features] Activate App with Timeout: A new feature to activate an app with a specified timeout, providing more control over app interactions.
+- [Bug Fixes] Mobile Bys and Element Finding: Fixed issues with mobile Bys and extended element finding methods to ensure accurate element interactions.
+- [Bug Fixes] FindElementBy Methods: Deprecated and removed the FindElementBy* and FindElementsBy* methods in favor of the new Selenium 4-element locating strategy.
+- [Bug Fixes] Legacy App Management Helpers: Deprecated old app management helpers, including resetApp and closeApp, to encourage updated methods.
+- [Bug Fixes] Touch and MultiAction: Added deprecations for TouchAction and MultiAction methods to streamline touch interactions.
+- [Enhancements] MobileCapabilityType for W3C Protocol: Updated MobileCapabilityType to support the W3C protocol, aligning with the latest WebDriver standards.
+- [Enhancements] Improved AppiumWebElement: Renamed AppiumWebElement to AppiumElement for better clarity and consistency.
+- [Enhancements] Command Timeout Parameter: Enhanced command timeout parameter usage, providing more control over command execution times.
+- [Enhancements] Test and Documentation Improvements: Numerous updates to tests and documentation, including grammar fixes, XML comments updates, and missing tests to ensure comprehensive coverage and clarity.
+- [Maintenance] Dependency Updates: Regular updates to various dependencies, including NUnit, Microsoft.NET.Test.Sdk, Selenium dependencies, and System.Drawing.Common, ensuring the latest features and security patches are included.
+- [Maintenance] Code Cleanup: Removed redundant code, sorted using, and fixed typos to improve code quality and maintainability.
+- [Maintenance] Pipeline Enhancements: Updated CI/CD pipelines, including adding tests to the pipeline and updating GitHub actions for more efficient and reliable builds.
 
 ## *4.0.0.1-beta*
  - [Enhancement] The searching by ios class chain was implemented.
