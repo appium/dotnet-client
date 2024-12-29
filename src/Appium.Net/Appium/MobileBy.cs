@@ -111,15 +111,6 @@ namespace OpenQA.Selenium.Appium
         /// <returns></returns>
         public static By AndroidViewMatcher(string selector) => new ByAndroidViewMatcher(selector);
 
-        /// <summary>
-        /// This method creates a <see cref="By"/> strategy 
-        /// that searches for elements using iOS UI automation.
-        /// <see href="https://developer.apple.com/library/tvos/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/UIAutomation.html"/>
-        /// </summary>
-        /// <param name="selector">The selector to use in finding the element.</param>
-        /// <returns></returns>
-        public static By IosUIAutomation(string selector) => new ByIosUIAutomation(selector);
-
         public static By WindowsAutomation(string selector) => new ByWindowsAutomation(selector);
 
         public static By TizenAutomation(string selector) => new ByTizenAutomation(selector);
@@ -277,38 +268,6 @@ namespace OpenQA.Selenium.Appium
 
         public override string ToString() =>
             $"ByAndroidViewMatcher({selector})";
-    }
-
-    /// <summary>
-    /// Finds element when the Ios UIAutomation selector has the specified value.
-    /// <see href="https://developer.apple.com/library/tvos/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/UIAutomation.html"/>
-    /// </summary>
-    public class ByIosUIAutomation : MobileBy
-    {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ByIosUIAutomation"/> class.
-        /// </summary>
-        /// <param name="selector">The selector to use in finding the element.</param>
-        public ByIosUIAutomation(string selector) : base(selector, MobileSelector.iOSAutomatoion)
-        {
-        }
-
-        public override IWebElement FindElement(ISearchContext context)
-        {
-            if (context is IFindByIosUIAutomation<IWebElement> finder)
-                return finder.FindElementByIosUIAutomation(selector);
-            return base.FindElement(context);
-        }
-
-        public override ReadOnlyCollection<IWebElement> FindElements(ISearchContext context)
-        {
-            if (context is IFindByIosUIAutomation<IWebElement> finder)
-                return finder.FindElementsByIosUIAutomation(selector).ToList().AsReadOnly();
-            return base.FindElements(context);
-        }
-
-        public override string ToString() =>
-            $"ByIosUIAutomation({selector})";
     }
 
     public class ByWindowsAutomation : MobileBy
