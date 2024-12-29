@@ -23,16 +23,21 @@ namespace Appium.Net.Integration.Tests.IOS
         public void AfterAll()
         {
             _driver?.Quit();
-            if (!Env.ServerIsRemote())
-            {
-                AppiumServers.StopLocalService();
-            }
+            if (Env.ServerIsRemote()) return;
+            AppiumServers.StopLocalService();
+        }
+        
+        [TearDown]
+        public void AfterEach()
+        {
+            var rotatable = (IRotatable)_driver;
+            rotatable.Orientation = ScreenOrientation.Portrait;
         }
 
         [Test]
         public void DeviceOrientationTest()
         {
-            var rotatable = ((IRotatable) _driver);
+            var rotatable = (IRotatable) _driver;
             rotatable.Orientation = ScreenOrientation.Landscape;
             Assert.That(rotatable.Orientation, Is.EqualTo(ScreenOrientation.Landscape));
         }
