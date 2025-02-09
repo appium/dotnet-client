@@ -28,7 +28,7 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// Switch the state of data service (Emulator Only)
         /// (For Android) This API does not work for Android API level 21+
         /// because it requires system or carrier privileged permission,
-        /// and Android <= 21 does not support granting permissions.
+        /// and Android &lt;= 21 does not support granting permissions.
         /// </summary>
         void ToggleData();
 
@@ -59,7 +59,6 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// <summary>
         /// Sets GSM signal strength (Emulator only)
         /// </summary>
-        /// <param name=""></param>
         /// <param name="gsmSignalStrength"></param>
         void SetGsmSignalStrength(GsmSignalStrength gsmSignalStrength);
 

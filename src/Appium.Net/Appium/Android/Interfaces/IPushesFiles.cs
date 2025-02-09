@@ -24,7 +24,7 @@ namespace OpenQA.Selenium.Appium.Android.Interfaces
         /// </summary>
         /// <param name="pathOnDevice">Path to file to write data to on remote device</param>
         /// <param name="stringData">A string to write to remote device</param>
-        void PushFile(string pathOnDevice, string base64Data);
+        void PushFile(string pathOnDevice, string stringData);
 
         /// <summary>
         /// Saves base64 encoded data as a file on the remote mobile device.
@@ -37,7 +37,7 @@ namespace OpenQA.Selenium.Appium.Android.Interfaces
         /// Saves given file as a file on the remote mobile device.
         /// </summary>
         /// <param name="pathOnDevice">Path to file to write data to on remote device</param>
-        /// <param name="base64Data">A file to write to remote device</param>
+        /// <param name="file">A file to write to remote device</param>
         void PushFile(string pathOnDevice, FileInfo file);
     }
 }
