@@ -16,8 +16,9 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium;
+using Appium.Net.Integration.Tests.helpers;
 
-namespace Appium.Net.Integration.Tests.helpers
+namespace Appium.Net.Integration.Tests.Android
 {
     [TestFixture]
     public class FiltersTests
