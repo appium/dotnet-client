@@ -28,9 +28,7 @@ namespace Appium.Net.Integration.Tests.Android
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            var capabilities = Env.ServerIsRemote()
-                ? Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"))
-                : Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
+            var capabilities = Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
             _driver = new AndroidDriver(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
