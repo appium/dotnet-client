@@ -34,12 +34,6 @@ namespace Appium.Net.Integration.Tests.Android
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
         }
 
-        [SetUp]
-        public void SetUp()
-        {
-            _driver.StartActivity("io.appium.android.apis", ".ApiDemos");
-        }
-
         [Test]
         public void FirstWithName_ReturnsCorrectElement()
         {
