@@ -47,13 +47,13 @@ namespace Appium.Net.Integration.Tests.Android
         {
             var viewsElement = _driver.FindElement(MobileBy.AccessibilityId("Views"));
 
-            var textElemet = _driver.FindElement(MobileBy.AccessibilityId("Text"));
+            var textElement = _driver.FindElement(MobileBy.AccessibilityId("Text"));
 
-            var elements = new List<AppiumElement> { viewsElement, textElemet };
+            var elements = new List<AppiumElement> { viewsElement, textElement };
 
             var result = Filters.FirstWithName(elements, "Text");
 
-            Assert.That(result, Is.EqualTo(textElemet));
+            Assert.That(result, Is.EqualTo(textElement));
         }
 
         [OneTimeTearDown]
