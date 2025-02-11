@@ -31,7 +31,7 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// Method performs the searching for a list of elements by some selector defined by string
         /// and value of the given selector
         /// </summary>
-        /// <param name="by">is a string selector</param>
+        /// <param name="selector">is a string selector</param>
         /// <param name="value">is a value of the given selector</param>
         /// <returns>a list of elements</returns>
         IReadOnlyCollection<W> FindElements(string selector, string value);

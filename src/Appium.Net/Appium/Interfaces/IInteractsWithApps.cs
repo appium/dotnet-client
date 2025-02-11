@@ -28,7 +28,7 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// <summary>
         /// Checks If an App Is Installed.
         /// </summary>
-        /// <param name="appPath">a string containing the bundle id.</param>
+        /// <param name="bundleId">a string containing the bundle id.</param>
         /// <return>a boolean indicating if the app is installed.</return>
         bool IsAppInstalled(string bundleId);
 
@@ -46,13 +46,13 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// <summary>
         /// Removes an App.
         /// </summary>
-        /// <param name="appPath">a string containing the id of the app.</param>
+        /// <param name="appId">a string containing the id of the app.</param>
         void RemoveApp(string appId);
 
         /// <summary>
         /// Activates the given app by moving to the foreground if it is running in the background or starting it if it is not running yet.
         /// </summary>
-        /// <param name="appPath">a string containing the id of the app.</param>
+        /// <param name="appId">a string containing the id of the app.</param>
         void ActivateApp(string appId);
 
         /// <summary>
