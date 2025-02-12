@@ -15,14 +15,14 @@ namespace Appium.Net.Integration.Tests.helpers
 
         private static void Init()
         {
+            if (_initialized) return;
+
             _env = new Dictionary<string, JsonElement>
             {
                 { "DEV", JsonDocument.Parse("true").RootElement }, 
                 { "isRemoteAppiumServer", JsonDocument.Parse("false").RootElement }, 
                 { "remoteAppiumServerUri", JsonDocument.Parse("\"http://localhost:4723\"").RootElement }
             };
-
-            if (_initialized) return;
 
             try
             {
