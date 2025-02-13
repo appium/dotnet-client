@@ -26,7 +26,6 @@ namespace Appium.Net.Integration.Tests.helpers
 
             try
             {
-                _initialized = true;
                 var path = AppDomain.CurrentDomain.BaseDirectory;
                 var sr = new StreamReader(path + "env.json");
                 var jsonString = sr.ReadToEnd();
@@ -34,6 +33,7 @@ namespace Appium.Net.Integration.Tests.helpers
                 {
                     PropertyNameCaseInsensitive = true
                 });
+                _initialized = true;
             }
             catch (JsonException jsonEx)
             {
