@@ -26,9 +26,13 @@ namespace Appium.Net.Integration.Tests.helpers
 
             try
             {
-                var path = AppDomain.CurrentDomain.BaseDirectory;
-                var sr = new StreamReader(path + "env.json");
-                var jsonString = sr.ReadToEnd();
+                string path = AppDomain.CurrentDomain.BaseDirectory;
+                if (!path.EndsWith(Path.DirectorySeparatorChar.ToString()))
+                {
+                    path += Path.DirectorySeparatorChar;
+                }
+                StreamReader sr = new(path + "env.json");
+                string jsonString = sr.ReadToEnd();
                 _env = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(jsonString, new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true
