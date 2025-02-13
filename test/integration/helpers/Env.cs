@@ -15,6 +15,8 @@ namespace Appium.Net.Integration.Tests.helpers
 
         private static void Init()
         {
+            if (_initialized) return;
+
             _env = new Dictionary<string, JsonElement>
             {
                 { "DEV", JsonDocument.Parse("true").RootElement }, 
@@ -22,18 +24,18 @@ namespace Appium.Net.Integration.Tests.helpers
                 { "remoteAppiumServerUri", JsonDocument.Parse("\"http://localhost:4723\"").RootElement }
             };
 
-            if (_initialized) return;
-
             try
             {
-                _initialized = true;
-                var path = AppDomain.CurrentDomain.BaseDirectory;
-                var sr = new StreamReader(path + "env.json");
-                var jsonString = sr.ReadToEnd();
+                string path = AppDomain.CurrentDomain.BaseDirectory;
+                var filepath = Path.Combine(path, "env.json");
+
+                StreamReader sr = new(filepath);
+                string jsonString = sr.ReadToEnd();
                 _env = JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(jsonString, new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true
                 });
+                _initialized = true;
             }
             catch (JsonException jsonEx)
             {
