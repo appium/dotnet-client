@@ -26,6 +26,9 @@ categories:
       - 'Build'
   - title: '🧰 Maintenance'
     label: 'Chore'  
+  - title: '🧪 Tests'
+    label:
+      - 'Test'
   - title: '📚 Documentation'
     labels:
       - 'Documentation'
