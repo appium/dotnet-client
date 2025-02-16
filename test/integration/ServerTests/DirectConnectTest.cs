@@ -26,13 +26,10 @@ namespace Appium.Net.Integration.Tests.ServerTests
         [Test]
         public void WithAnEmptyBody()
         {
+            var emptyBody = new Dictionary<string, object>();
+            var response = new Response(null, emptyBody, WebDriverResult.Success);
 
-            Response response = new Response();
-            Dictionary<string, object> emptyBody = new Dictionary<string, object>();
-
-            response.Value = emptyBody;
-
-            DirectConnect directConnect = new DirectConnect(response);
+            DirectConnect directConnect = new(response);
             Assert.That(directConnect.GetUri(), Is.Null);
         }
 
@@ -40,52 +37,68 @@ namespace Appium.Net.Integration.Tests.ServerTests
         [Test]
         public void WithAppiumPrefixResponsesWithAppium()
         {
+            var body = new Dictionary<string, object>
+            {
+                ["appium:directConnectProtocol"] = "https",
+                ["appium:directConnectHost"] = "example.com",
+                ["appium:directConnectPort"] = "9090",
+                ["appium:directConnectPath"] = "/path/to/new/direction"
+            };
 
-            Response response = new Response();
-            Dictionary<string, object> body = new Dictionary<string, object>();
-            body["appium:directConnectProtocol"] = "https";
-            body["appium:directConnectHost"] = "example.com";
-            body["appium:directConnectPort"] = "9090";
-            body["appium:directConnectPath"] = "/path/to/new/direction";
+            var response = new Response(null, body, WebDriverResult.Success);
 
-            response.Value = body;
-
-            DirectConnect directConnect = new DirectConnect(response);
+            var directConnect = new DirectConnect(response);
             Assert.That(directConnect.GetUri().ToString(), Is.EqualTo("https://example.com:9090/path/to/new/direction"));
         }
 
         [Test]
         public void WithAppiumPrefixResponsesWithoutAppium()
         {
+            var body = new Dictionary<string, object>
+            {
+                ["directConnectProtocol"] = "https",
+                ["directConnectHost"] = "example.com",
+                ["directConnectPort"] = "9090",
+                ["directConnectPath"] = "/path/to/new/direction"
+            };
 
-            Response response = new Response();
-            Dictionary<string, object> body = new Dictionary<string, object>();
-            body["directConnectProtocol"] = "https";
-            body["directConnectHost"] = "example.com";
-            body["directConnectPort"] = "9090";
-            body["directConnectPath"] = "/path/to/new/direction";
+            var response = new Response(null, body, WebDriverResult.Success);
 
-            response.Value = body;
-
-            DirectConnect directConnect = new DirectConnect(response);
+            var directConnect = new DirectConnect(response);
             Assert.That(directConnect.GetUri().ToString(), Is.EqualTo("https://example.com:9090/path/to/new/direction"));
         }
 
         [Test]
         public void WithAppiumPrefixResponsesInvalidProtocol()
         {
+            var body = new Dictionary<string, object>
+            {
+                ["directConnectProtocol"] = "http",
+                ["directConnectHost"] = "example.com",
+                ["directConnectPort"] = "9090",
+                ["directConnectPath"] = "/path/to/new/direction"
+            };
 
-            Response response = new Response();
-            Dictionary<string, object> body = new Dictionary<string, object>();
-            body["directConnectProtocol"] = "http";
-            body["directConnectHost"] = "example.com";
-            body["directConnectPort"] = "9090";
-            body["directConnectPath"] = "/path/to/new/direction";
+            var response = new Response(null, body, WebDriverResult.InvalidArgument);
 
-            response.Value = body;
-
-            DirectConnect directConnect = new DirectConnect(response);
+            var directConnect = new DirectConnect(response);
             Assert.That(directConnect.GetUri(), Is.Null);
         }
+        [Test]
+        public void WithMissingDirectConnectHost()
+        {
+            var body = new Dictionary<string, object>
+            {
+                ["appium:directConnectProtocol"] = "https",
+                ["appium:directConnectPort"] = "9090",
+                ["appium:directConnectPath"] = "/path/to/new/direction"
+            };
+
+            var response = new Response(null, body, WebDriverResult.Success);
+
+            var directConnect = new DirectConnect(response);
+            Assert.That(directConnect.GetUri(), Is.Null);
+        }
+
     }
 }
