@@ -569,6 +569,12 @@ namespace OpenQA.Selenium.Appium
 
         #region Event logs
 
+        /// <summary>
+        /// Retrieves events information from the current session.
+        /// See https://appium.io/docs/en/latest/guides/event-timing/ also.
+        /// </summary>
+        /// <param name="type">key name to filter with. It can be empty, string or an array of keys. </param>
+        /// <returns>A dictionary of events timing information containing the following entries</returns>
         public Dictionary<string, object> GetEvents(string type)
         {
             return this.GetEvents([type]);
@@ -584,6 +590,12 @@ namespace OpenQA.Selenium.Appium
             return (Dictionary<string, object>)Execute(AppiumDriverCommand.GetEvents, parameters).Value;
         }
 
+        /// <summary>
+        /// Log a custom event on the Appium server.
+        /// See https://appium.io/docs/en/latest/guides/event-timing/ also.
+        /// </summary>
+        /// <param name="vendorName">The vendor to log. </param>
+        /// <param name="eventName">The event to log. </param>
         public void LogEvent(string vendorName, string eventName)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>
