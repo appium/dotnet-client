@@ -148,7 +148,7 @@ namespace OpenQA.Selenium.Appium
 
         public void ActivateApp(string appId) =>
             Execute(AppiumDriverCommand.ActivateApp, AppiumCommandExecutionHelper.PrepareArgument("appId", appId));
-        
+
         public void ActivateApp(string appId, TimeSpan timeout) =>
             Execute(AppiumDriverCommand.ActivateApp,
                     AppiumCommandExecutionHelper.PrepareArguments(new string[] {"appId", "options"},
@@ -508,7 +508,7 @@ namespace OpenQA.Selenium.Appium
         }
 
         /// <summary>
-        /// Performs images matching by template to find possible occurrence of 
+        /// Performs images matching by template to find possible occurrence of
         /// the partial image in the full image with default options. Read
         /// https://docs.opencv.org/2.4/doc/tutorials/imgproc/histograms/template_matching/template_matching.html
         /// for more details on this topic.
@@ -566,6 +566,35 @@ namespace OpenQA.Selenium.Appium
         }
 
         #endregion Compare Images
+
+        #region Event logs
+
+        public Dictionary<string, object> GetEvents(string type)
+        {
+            return this.GetEvents([type]);
+        }
+
+        public Dictionary<string, object> GetEvents(string[] type = null)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            if (type != null)
+            {
+                parameters.Add("type", type);
+            }
+            return (Dictionary<string, object>)Execute(AppiumDriverCommand.GetEvents, parameters).Value;
+        }
+
+        public void LogEvent(string vendorName, string eventName)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                { "vendor", vendorName },
+                { "event", eventName }
+            };
+            Execute(AppiumDriverCommand.LogEvent, parameters);
+        }
+
+        #endregion Event logs
 
         #endregion Public Methods
 

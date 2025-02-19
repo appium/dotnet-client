@@ -215,13 +215,13 @@ namespace OpenQA.Selenium.Appium
 
             new AppiumCommand(HttpCommandInfo.GetCommand, DriverCommand.GetAvailableLogTypes,
                 "session/{sessionId}/log/types"),
-            new AppiumCommand(HttpCommandInfo.PostCommand, DriverCommand.GetLog, "session/{sessionId}/log")
+            new AppiumCommand(HttpCommandInfo.PostCommand, DriverCommand.GetLog, "session/{sessionId}/log"),
 
             #endregion
 
             # region Event logs
 
-            new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetEvents, "session/{sessionId}/appium/events"),
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GetEvents, "session/{sessionId}/appium/events"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.LogEvent, "session/{sessionId}/appium/log_event")
 
             #endregion
