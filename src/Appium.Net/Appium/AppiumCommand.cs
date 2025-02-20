@@ -211,7 +211,7 @@ namespace OpenQA.Selenium.Appium
 
             #endregion
 
-            # region Logs
+            #region Logs
 
             new AppiumCommand(HttpCommandInfo.GetCommand, DriverCommand.GetAvailableLogTypes,
                 "session/{sessionId}/log/types"),
@@ -219,7 +219,7 @@ namespace OpenQA.Selenium.Appium
 
             #endregion
 
-            # region Event logs
+            #region Event logs
 
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GetEvents, "session/{sessionId}/appium/events"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.LogEvent, "session/{sessionId}/appium/log_event")
