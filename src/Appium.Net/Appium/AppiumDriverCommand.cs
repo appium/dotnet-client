@@ -314,15 +314,15 @@ namespace OpenQA.Selenium.Appium
 
         #endregion
 
-        # region Event logs
+        #region Event logs
 
         /// <summary>
-        ///     Represents the GetEvents command
+        /// Represents the GetEvents command
         /// </summary>
         public static readonly string GetEvents = "getEvents";
 
         /// <summary>
-        ///     Represents the LogEvent command
+        /// Represents the LogEvent command
         /// </summary>
         public static readonly string LogEvent = "logEvent";
 
