@@ -184,7 +184,7 @@ namespace OpenQA.Selenium.Appium.iOS
 
         public void ShakeDevice() => IOSCommandExecutionHelper.ShakeDevice(this);
 
-        public void HideKeyboard(string key, string strategy = null) =>
+        public new void HideKeyboard(string key, string strategy = null) =>
             AppiumCommandExecutionHelper.HideKeyboard(this, strategy, key);
 
         public void PerformTouchID(bool match) => IOSCommandExecutionHelper.PerformTouchID(this, match);
