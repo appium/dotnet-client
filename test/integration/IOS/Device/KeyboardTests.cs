@@ -32,7 +32,6 @@ namespace Appium.Net.Integration.Tests.IOS.Device
             // Act
             iosDriver.FindElement(MobileBy.AccessibilityId("IntegerA")).Click();
             iosDriver.HideKeyboard(key, strategy);
-
             // Assert
             var keyboard_shown = iosDriver.IsKeyboardShown();
             Assert.That(keyboard_shown, Is.EqualTo(false));
@@ -46,7 +45,6 @@ namespace Appium.Net.Integration.Tests.IOS.Device
             iosDriver.FindElement(MobileBy.AccessibilityId("IntegerA")).Click();
             // Act
             iosDriver.HideKeyboard(key);
-            iosDriver.HideKeyboard();
             // Assert
             var keyboard_shown = iosDriver.IsKeyboardShown();
             Assert.That(keyboard_shown, Is.EqualTo(false));
