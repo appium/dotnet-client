@@ -28,6 +28,6 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// keyboard you want to press. For example: "Done".
         /// </param>
         /// <param name="strategy">HideKeyboardStrategy</param>
-        void HideKeyboard(string key, string strategy = null);
+        new void HideKeyboard(string key, string strategy = null);
     }
 }
