@@ -33,7 +33,7 @@ namespace Appium.Net.Integration.Tests.Android
         }
 
         [Test]
-        public void SetEventsTestCase()
+        public void LogEventTestCase()
         {
             object value;
 
