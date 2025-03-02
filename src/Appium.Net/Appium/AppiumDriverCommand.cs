@@ -313,5 +313,19 @@ namespace OpenQA.Selenium.Appium
         public const string CompareImages = "compareImages";
 
         #endregion
+
+        #region Event logs
+
+        /// <summary>
+        /// Represents the GetEvents command
+        /// </summary>
+        public static readonly string GetEvents = "getEvents";
+
+        /// <summary>
+        /// Represents the LogEvent command
+        /// </summary>
+        public static readonly string LogEvent = "logEvent";
+
+        #endregion
     }
 }

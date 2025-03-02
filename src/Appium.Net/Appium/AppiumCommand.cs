@@ -147,7 +147,7 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/device/finger_print"),
 
             #endregion Driver Commands
-            
+
 
             // Enable W3C Actions on AppiumWebDriver
 
@@ -211,13 +211,24 @@ namespace OpenQA.Selenium.Appium
 
             #endregion
 
+            #region Logs
+
             new AppiumCommand(HttpCommandInfo.GetCommand, DriverCommand.GetAvailableLogTypes,
                 "session/{sessionId}/log/types"),
-            new AppiumCommand(HttpCommandInfo.PostCommand, DriverCommand.GetLog, "session/{sessionId}/log")
+            new AppiumCommand(HttpCommandInfo.PostCommand, DriverCommand.GetLog, "session/{sessionId}/log"),
+
+            #endregion
+
+            #region Event logs
+
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GetEvents, "session/{sessionId}/appium/events"),
+            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.LogEvent, "session/{sessionId}/appium/log_event")
+
+            #endregion
         };
 
         /// <summary>
-        /// This method adds Appium-specific commands to the given 
+        /// This method adds Appium-specific commands to the given
         /// CommandInfoRepository
         /// </summary>
         /// <param name="repo">is a CommandInfoRepository instance which is used</param>
@@ -234,12 +245,12 @@ namespace OpenQA.Selenium.Appium
         }
 
         /// <summary>
-        /// command type 
+        /// command type
         /// </summary>
         internal readonly string CommandType;
 
         /// <summary>
-        /// Command 
+        /// Command
         /// </summary>
         internal readonly string CommandName;
 

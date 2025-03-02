@@ -148,7 +148,7 @@ namespace OpenQA.Selenium.Appium
 
         public void ActivateApp(string appId) =>
             Execute(AppiumDriverCommand.ActivateApp, AppiumCommandExecutionHelper.PrepareArgument("appId", appId));
-        
+
         public void ActivateApp(string appId, TimeSpan timeout) =>
             Execute(AppiumDriverCommand.ActivateApp,
                     AppiumCommandExecutionHelper.PrepareArguments(new string[] {"appId", "options"},
@@ -508,7 +508,7 @@ namespace OpenQA.Selenium.Appium
         }
 
         /// <summary>
-        /// Performs images matching by template to find possible occurrence of 
+        /// Performs images matching by template to find possible occurrence of
         /// the partial image in the full image with default options. Read
         /// https://docs.opencv.org/2.4/doc/tutorials/imgproc/histograms/template_matching/template_matching.html
         /// for more details on this topic.
@@ -566,6 +566,47 @@ namespace OpenQA.Selenium.Appium
         }
 
         #endregion Compare Images
+
+        #region Event logs
+
+        /// <summary>
+        /// Retrieves events information from the current session.
+        /// See https://appium.io/docs/en/latest/guides/event-timing/ also.
+        /// </summary>
+        /// <param name="type">key name to filter with. It can be empty, string or an array of keys. </param>
+        /// <returns>A dictionary of events timing information containing the following entries</returns>
+        public Dictionary<string, object> GetEvents(string type)
+        {
+            return this.GetEvents([type]);
+        }
+
+        public Dictionary<string, object> GetEvents(string[] type = null)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            if (type != null)
+            {
+                parameters.Add("type", type);
+            }
+            return (Dictionary<string, object>)Execute(AppiumDriverCommand.GetEvents, parameters).Value;
+        }
+
+        /// <summary>
+        /// Log a custom event on the Appium server.
+        /// See https://appium.io/docs/en/latest/guides/event-timing/ also.
+        /// </summary>
+        /// <param name="vendorName">The vendor to log. </param>
+        /// <param name="eventName">The event to log. </param>
+        public void LogEvent(string vendorName, string eventName)
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                { "vendor", vendorName },
+                { "event", eventName }
+            };
+            Execute(AppiumDriverCommand.LogEvent, parameters);
+        }
+
+        #endregion Event logs
 
         #endregion Public Methods
 
