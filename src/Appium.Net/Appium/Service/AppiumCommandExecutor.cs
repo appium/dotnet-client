@@ -12,7 +12,6 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-using OpenQA.Selenium.Remote;
 using System;
 using System.Threading.Tasks;
 
@@ -30,7 +29,7 @@ namespace OpenQA.Selenium.Appium.Service
 
         private static ICommandExecutor CreateRealExecutor(Uri remoteAddress, TimeSpan commandTimeout)
         {
-            return new HttpCommandExecutor(remoteAddress, commandTimeout);
+            return new AppiumHttpCommandExecutor(remoteAddress, commandTimeout);
         }
 
         private AppiumCommandExecutor(ICommandExecutor realExecutor)
@@ -142,8 +141,14 @@ namespace OpenQA.Selenium.Appium.Service
         private ICommandExecutor ModifyNewSessionHttpRequestHeader(ICommandExecutor commandExecutor)
         {
             if (commandExecutor == null) throw new ArgumentNullException(nameof(commandExecutor));
-            var modifiedCommandExecutor = commandExecutor as HttpCommandExecutor;
 
+            var modifiedCommandExecutor = commandExecutor as AppiumHttpCommandExecutor;
+            modifiedCommandExecutor.ModifyHttpClientHandler(ClientConfig);
+            //if (ClientConfig != null && ClientConfig.IsModified())
+            //{
+            //    modifiedCommandExecutor.ModifyHttpClientHandler(ClientConfig);
+            //}
+            
             modifiedCommandExecutor.SendingRemoteHttpRequest += (sender, args) =>
                     args.AddHeader(IdempotencyHeader, Guid.NewGuid().ToString());
 
@@ -183,7 +188,7 @@ namespace OpenQA.Selenium.Appium.Service
             var newUri = new DirectConnect(response).GetUri();
             if (newUri != null)
             {
-                return new HttpCommandExecutor(newUri, CommandTimeout);
+                return new AppiumHttpCommandExecutor(newUri, CommandTimeout);
             }
 
             return null;
