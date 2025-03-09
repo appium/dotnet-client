@@ -37,5 +37,18 @@ namespace OpenQA.Selenium.Appium.Service
         ///
         /// </summary>
         public bool DirectConnect { get; set; }
+
+        public bool RelaxSslValidation { get; set; }
+
+        /// <summary>
+        /// Checks if the current configuration has been modified from the default configuration.
+        /// </summary>
+        /// <returns>True if the configuration has been modified; otherwise, false.</returns>
+        public bool IsModified()
+        {
+            var defaultConfig = DefaultConfig();
+            return DirectConnect != defaultConfig.DirectConnect ||
+                   RelaxSslValidation != defaultConfig.RelaxSslValidation;
+        }
     }
 }
