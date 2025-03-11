@@ -85,10 +85,7 @@ namespace OpenQA.Selenium.Appium
         public static void SetClipboard(IExecuteMethod executeMethod, ClipboardContentType clipboardContentType,
             string base64Content)
         {
-            // driver converts this content type to lower/upper properly on their side,
-            // but some environment might not work expected. Here sends upper case
-            // to cover https://github.com/appium/dotnet-client/issues/916
-            var contentType = clipboardContentType.ToString().ToUpper();
+            var contentType = clipboardContentType.ToString().ToLowerInvariant();
 
             switch (clipboardContentType)
             {
@@ -114,10 +111,7 @@ namespace OpenQA.Selenium.Appium
 
         public static string GetClipboard(IExecuteMethod executeMethod, ClipboardContentType clipboardContentType)
         {
-            // driver converts this content type to lower/upper properly on their side,
-            // but some environment might not work expected. Here sends upper case
-            // to cover https://github.com/appium/dotnet-client/issues/916
-            var contentType = clipboardContentType.ToString().ToUpper();
+            var contentType = clipboardContentType.ToString().ToLowerInvariant();
             switch (clipboardContentType)
             {
                 case ClipboardContentType.Image:
@@ -150,10 +144,7 @@ namespace OpenQA.Selenium.Appium
                     new object[]
                     {
                         Convert.ToBase64String(encodedStringContentBytes),
-                        // driver converts this content type to lower/upper properly on their side,
-                        // but some environment might not work expected. Here sends upper case
-                        // to cover https://github.com/appium/dotnet-client/issues/916
-                        ClipboardContentType.PlainText.ToString().ToUpper(), label
+                        ClipboardContentType.PlainText.ToString().ToLowerInvariant(), label
                     })).Value;
         }
 
