@@ -39,7 +39,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// Adds/merges server-specific capabilities
         /// </summary>
         /// <param name="options">is an instance of OpenQA.Selenium.Remote.AppiumOptions</param>
-        /// <returns>the self-reference</returns>
+        /// <returns>the self-reference</returns>   
         public OptionCollector AddCapabilities(AppiumOptions options)
         {
             if (this.options == null)
