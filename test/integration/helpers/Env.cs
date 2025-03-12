@@ -19,7 +19,7 @@ namespace Appium.Net.Integration.Tests.helpers
 
             _env = new Dictionary<string, JsonElement>
             {
-                { "DEV", JsonDocument.Parse("true").RootElement },
+                { "DEV", JsonDocument.Parse("true").RootElement }, 
                 { "isRemoteAppiumServer", JsonDocument.Parse("false").RootElement }, 
                 { "remoteAppiumServerUri", JsonDocument.Parse("\"http://localhost:4723\"").RootElement }
             };
