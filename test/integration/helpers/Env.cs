@@ -49,7 +49,7 @@ namespace Appium.Net.Integration.Tests.helpers
 
         private static bool IsTrue(object val)
         {
-            val = val?.ToString().ToLower().Trim();
+            val = val?.ToString().ToLowerInvariant().Trim();
             return val.Equals("true") || val.Equals("1");
         }
 

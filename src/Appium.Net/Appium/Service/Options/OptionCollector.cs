@@ -107,7 +107,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
                     {
                         if (typeof(bool).IsAssignableFrom(value.GetType()))
                         {
-                            value = Convert.ToString(value).ToLower();
+                            value = Convert.ToString(value).ToLowerInvariant();
                         }
                     }
 
@@ -153,7 +153,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
                     {
                         if (typeof(bool).IsAssignableFrom(value.GetType()))
                         {
-                            value = Convert.ToString(value).ToLower();
+                            value = Convert.ToString(value).ToLowerInvariant();
                         }
                     }
 
