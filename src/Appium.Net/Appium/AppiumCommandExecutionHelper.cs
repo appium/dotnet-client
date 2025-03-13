@@ -85,6 +85,8 @@ namespace OpenQA.Selenium.Appium
         public static void SetClipboard(IExecuteMethod executeMethod, ClipboardContentType clipboardContentType,
             string base64Content)
         {
+            var contentType = clipboardContentType.ToString().ToLowerInvariant();
+
             switch (clipboardContentType)
             {
                 case ClipboardContentType.Image:
@@ -97,18 +99,19 @@ namespace OpenQA.Selenium.Appium
 
                     executeMethod.Execute(AppiumDriverCommand.SetClipboard,
                         PrepareArguments(new[] {"content", "contentType", "label"},
-                            new object[] {base64Content, clipboardContentType.ToString().ToLower(), null}));
+                            new object[] {base64Content, contentType, null}));
                     break;
                 default:
                     executeMethod.Execute(AppiumDriverCommand.SetClipboard,
                         PrepareArguments(new[] {"content", "contentType", "label"},
-                            new object[] {base64Content, clipboardContentType.ToString().ToLower(), null}));
+                            new object[] {base64Content, contentType, null}));
                     break;
             }
         }
 
         public static string GetClipboard(IExecuteMethod executeMethod, ClipboardContentType clipboardContentType)
         {
+            var contentType = clipboardContentType.ToString().ToLowerInvariant();
             switch (clipboardContentType)
             {
                 case ClipboardContentType.Image:
@@ -118,15 +121,12 @@ namespace OpenQA.Selenium.Appium
                         throw new NotImplementedException(
                             $"Android only supports contentType: {nameof(ClipboardContentType.PlainText)}");
                     }
-
                     return (string) executeMethod.Execute(AppiumDriverCommand.GetClipboard,
-                        PrepareArgument("contentType", clipboardContentType.ToString().ToLower())).Value;
-                case ClipboardContentType.PlainText:
-                    return (string) executeMethod.Execute(AppiumDriverCommand.GetClipboard,
-                        PrepareArgument("contentType", clipboardContentType.ToString().ToLower())).Value;
+                        PrepareArgument("contentType", contentType)).Value;
                 default:
+                    // including ClipboardContentType.PlainText
                     return (string) executeMethod.Execute(AppiumDriverCommand.GetClipboard,
-                        PrepareArgument("contentType", clipboardContentType.ToString().ToLower())).Value;
+                        PrepareArgument("contentType", contentType)).Value;
             }
         }
 
@@ -144,7 +144,7 @@ namespace OpenQA.Selenium.Appium
                     new object[]
                     {
                         Convert.ToBase64String(encodedStringContentBytes),
-                        ClipboardContentType.PlainText.ToString().ToLower(), label
+                        ClipboardContentType.PlainText.ToString().ToLowerInvariant(), label
                     })).Value;
         }
 
