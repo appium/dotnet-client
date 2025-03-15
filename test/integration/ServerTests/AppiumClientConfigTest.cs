@@ -30,5 +30,16 @@ namespace Appium.Net.Integration.Tests.ServerTests
             clientConfig.DirectConnect = true;
             Assert.That(clientConfig.DirectConnect);
         }
+
+        [Test]
+        public void SetAndGetRelaxSSLValidation()
+        {
+            var clientConfig = AppiumClientConfig.DefaultConfig();
+            Assert.That(clientConfig.RelaxSslValidation, Is.False);
+
+            clientConfig.RelaxSslValidation = true;
+            Assert.That(clientConfig.RelaxSslValidation);
+        }
+
     }
 }
