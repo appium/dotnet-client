@@ -22,12 +22,6 @@ namespace OpenQA.Selenium.Appium.Service
     {
         private readonly AppiumClientConfig _clientConfig;
 
-        public AppiumHttpCommandExecutor(Uri addressOfRemoteServer, TimeSpan timeout)
-            : base(addressOfRemoteServer, timeout, enableKeepAlive: true)
-        {
-
-        }
-
         public AppiumHttpCommandExecutor(Uri addressOfRemoteServer, TimeSpan timeout, AppiumClientConfig clientConfig)
             : base(addressOfRemoteServer, timeout, enableKeepAlive: true)
         {

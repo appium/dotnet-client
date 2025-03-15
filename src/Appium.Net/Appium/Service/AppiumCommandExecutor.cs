@@ -183,7 +183,7 @@ namespace OpenQA.Selenium.Appium.Service
             var newUri = new DirectConnect(response).GetUri();
             if (newUri != null)
             {
-                return new AppiumHttpCommandExecutor(newUri, CommandTimeout);
+                return new AppiumHttpCommandExecutor(newUri, CommandTimeout, ClientConfig);
             }
 
             return null;
