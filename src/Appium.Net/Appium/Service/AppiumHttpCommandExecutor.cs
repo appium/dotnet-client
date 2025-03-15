@@ -18,15 +18,9 @@ using System.Net.Http;
 
 namespace OpenQA.Selenium.Appium.Service
 {
-    public class AppiumHttpCommandExecutor : HttpCommandExecutor
+    public class AppiumHttpCommandExecutor(Uri addressOfRemoteServer, TimeSpan timeout, AppiumClientConfig clientConfig) : HttpCommandExecutor(addressOfRemoteServer, timeout, enableKeepAlive: true)
     {
-        private readonly AppiumClientConfig _clientConfig;
-
-        public AppiumHttpCommandExecutor(Uri addressOfRemoteServer, TimeSpan timeout, AppiumClientConfig clientConfig)
-            : base(addressOfRemoteServer, timeout, enableKeepAlive: true)
-        {
-            _clientConfig = clientConfig;
-        }
+        private readonly AppiumClientConfig _clientConfig = clientConfig;
 
         protected override HttpClientHandler CreateHttpClientHandler()
         {
