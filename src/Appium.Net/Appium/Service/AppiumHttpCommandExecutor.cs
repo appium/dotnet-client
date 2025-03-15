@@ -8,33 +8,27 @@ namespace OpenQA.Selenium.Appium.Service
     {
         private readonly AppiumClientConfig _clientConfig;
 
-        public AppiumHttpCommandExecutor(Uri addressOfRemoteServer, TimeSpan timeout, AppiumClientConfig clientConfig)
-          : base(addressOfRemoteServer, timeout, enableKeepAlive: true)
-        {
-            _clientConfig = clientConfig ?? throw new ArgumentNullException(nameof(clientConfig));
-        }
-
         public AppiumHttpCommandExecutor(Uri addressOfRemoteServer, TimeSpan timeout)
             : base(addressOfRemoteServer, timeout, enableKeepAlive: true)
         {
 
         }
 
+        public AppiumHttpCommandExecutor(Uri addressOfRemoteServer, TimeSpan timeout, AppiumClientConfig clientConfig)
+            : base(addressOfRemoteServer, timeout, enableKeepAlive: true)
+        {
+            _clientConfig = clientConfig;
+        }
+
         protected override HttpClientHandler CreateHttpClientHandler()
         {
             var handler = base.CreateHttpClientHandler();
 
-            handler.ServerCertificateCustomValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
-
+            if (_clientConfig != null && _clientConfig.RelaxSslValidation)
+            {
+                handler.ServerCertificateCustomValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+            }
             return handler;
-        }
-
-
-        public HttpClientHandler ModifyHttpClientHandler(AppiumClientConfig clientConfig)
-        {
-
-            return CreateHttpClientHandler();
-
         }
 
     }
