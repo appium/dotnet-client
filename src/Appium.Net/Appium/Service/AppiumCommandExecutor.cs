@@ -23,7 +23,7 @@ namespace OpenQA.Selenium.Appium.Service
         private ICommandExecutor RealExecutor;
         private bool isDisposed;
         private const string IdempotencyHeader = "X-Idempotency-Key";
-        private AppiumClientConfig ClientConfig;
+        private readonly AppiumClientConfig ClientConfig;
 
         private TimeSpan CommandTimeout;
 
