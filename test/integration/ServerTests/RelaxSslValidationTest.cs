@@ -62,8 +62,15 @@ namespace Appium.Net.Integration.Tests.ServerTests
                 var innerExceptionMessage = e.InnerException.InnerException.Message;
                 using (Assert.EnterMultipleScope())
                 {
+
+#if NET48_OR_GREATER
                     Assert.That(innerExceptionMessage, Does.Contain("Could not establish trust relationship for the SSL/TLS secure channel."));
+#endif
+#if NET5_0_OR_GREATER
+                    Assert.That(e.Message, Does.Contain("The SSL connection could not be established, see inner exception."));
+#endif
                     Assert.That(_driver, Is.Null, "Driver initialization failed as it should.");
+
                 }
             }
         }
