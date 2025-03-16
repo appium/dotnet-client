@@ -79,12 +79,8 @@ namespace Appium.Net.Integration.Tests.ServerTests
         public void TearDown()
         {
             _driver?.Dispose();
+            _driver = null;
         }
 
-        [OneTimeTearDown]
-        public void AfterAll()
-        {
-            _driver?.Dispose();
-        }
     }
 }
