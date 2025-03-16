@@ -28,7 +28,7 @@ namespace OpenQA.Selenium.Appium.Service
 
             if (_clientConfig != null && _clientConfig.RelaxSslValidation)
             {
-                handler.ServerCertificateCustomValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+                handler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
             }
             return handler;
         }
