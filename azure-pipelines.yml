@@ -37,7 +37,7 @@ steps:
   displayName: 'Run .NET48 unit tests - $(buildConfiguration)'
   inputs:
     command: 'test'
-    arguments: '--no-build --configuration $(buildConfiguration) --filter AppiumLocalServerLaunchingTest|DirectConnectTest --framework net48'
+    arguments: '--no-build --configuration $(buildConfiguration) --filter AppiumLocalServerLaunchingTest|DirectConnectTest|AppiumClientConfigTest --framework net48'
     publishTestResults: true
     projects: '**/*.Tests.csproj'
 
@@ -45,6 +45,6 @@ steps:
   displayName: 'Run .NET 6 unit tests - $(buildConfiguration)'
   inputs:
     command: 'test'
-    arguments: '--no-build --configuration $(buildConfiguration) --filter AppiumLocalServerLaunchingTest|DirectConnectTest --framework net6.0'
+    arguments: '--no-build --configuration $(buildConfiguration) --filter AppiumLocalServerLaunchingTest|DirectConnectTest|AppiumClientConfigTest --framework net6.0'
     publishTestResults: true
     projects: '**/*.Tests.csproj'
