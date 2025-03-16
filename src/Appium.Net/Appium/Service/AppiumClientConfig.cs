@@ -37,5 +37,8 @@ namespace OpenQA.Selenium.Appium.Service
         ///
         /// </summary>
         public bool DirectConnect { get; set; }
+
+        public bool RelaxSslValidation { get; set; }
+
     }
 }

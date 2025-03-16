@@ -12,7 +12,6 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
-using OpenQA.Selenium.Remote;
 using System;
 using System.Threading.Tasks;
 
@@ -24,13 +23,13 @@ namespace OpenQA.Selenium.Appium.Service
         private ICommandExecutor RealExecutor;
         private bool isDisposed;
         private const string IdempotencyHeader = "X-Idempotency-Key";
-        private AppiumClientConfig ClientConfig;
+        private readonly AppiumClientConfig ClientConfig;
 
         private TimeSpan CommandTimeout;
 
-        private static ICommandExecutor CreateRealExecutor(Uri remoteAddress, TimeSpan commandTimeout)
+        private static ICommandExecutor CreateRealExecutor(Uri remoteAddress, TimeSpan commandTimeout, AppiumClientConfig clientConfig)
         {
-            return new HttpCommandExecutor(remoteAddress, commandTimeout);
+            return new AppiumHttpCommandExecutor(remoteAddress, commandTimeout, clientConfig);
         }
 
         private AppiumCommandExecutor(ICommandExecutor realExecutor)
@@ -39,7 +38,7 @@ namespace OpenQA.Selenium.Appium.Service
         }
 
         internal AppiumCommandExecutor(Uri url, TimeSpan timeForTheServerResponding, AppiumClientConfig clientConfig)
-            : this(CreateRealExecutor(url, timeForTheServerResponding))
+            : this(CreateRealExecutor(url, timeForTheServerResponding, clientConfig))
         {
             CommandTimeout = timeForTheServerResponding;
             Service = null;
@@ -47,7 +46,7 @@ namespace OpenQA.Selenium.Appium.Service
         }
 
         internal AppiumCommandExecutor(AppiumLocalService service, TimeSpan timeForTheServerResponding, AppiumClientConfig clientConfig)
-            : this(CreateRealExecutor(service.ServiceUrl, timeForTheServerResponding))
+            : this(CreateRealExecutor(service.ServiceUrl, timeForTheServerResponding, clientConfig))
         {
             CommandTimeout = timeForTheServerResponding;
             Service = service;
@@ -55,9 +54,9 @@ namespace OpenQA.Selenium.Appium.Service
         }
 
         public Response Execute(Command commandToExecute)
-       {
-           return Task.Run(() => ExecuteAsync(commandToExecute)).GetAwaiter().GetResult();
-       }
+        {
+            return Task.Run(() => ExecuteAsync(commandToExecute)).GetAwaiter().GetResult();
+        }
 
         public async Task<Response> ExecuteAsync(Command commandToExecute)
         {
@@ -131,7 +130,7 @@ namespace OpenQA.Selenium.Appium.Service
             if (command.Name == DriverCommand.NewSession)
             {
                 Service?.Dispose();
-            }  
+            }
         }
 
         /// <summary>
@@ -142,7 +141,8 @@ namespace OpenQA.Selenium.Appium.Service
         private ICommandExecutor ModifyNewSessionHttpRequestHeader(ICommandExecutor commandExecutor)
         {
             if (commandExecutor == null) throw new ArgumentNullException(nameof(commandExecutor));
-            var modifiedCommandExecutor = commandExecutor as HttpCommandExecutor;
+
+            var modifiedCommandExecutor = commandExecutor as AppiumHttpCommandExecutor;
 
             modifiedCommandExecutor.SendingRemoteHttpRequest += (sender, args) =>
                     args.AddHeader(IdempotencyHeader, Guid.NewGuid().ToString());
@@ -183,7 +183,7 @@ namespace OpenQA.Selenium.Appium.Service
             var newUri = new DirectConnect(response).GetUri();
             if (newUri != null)
             {
-                return new HttpCommandExecutor(newUri, CommandTimeout);
+                return new AppiumHttpCommandExecutor(newUri, CommandTimeout, ClientConfig);
             }
 
             return null;
