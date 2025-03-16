@@ -42,9 +42,9 @@ steps:
     projects: '**/*.Tests.csproj'
 
 - task: DotNetCoreCLI@2
-  displayName: 'Run .NET 6 unit tests - $(buildConfiguration)'
+  displayName: 'Run .NET 8 unit tests - $(buildConfiguration)'
   inputs:
     command: 'test'
-    arguments: '--no-build --configuration $(buildConfiguration) --filter AppiumLocalServerLaunchingTest|DirectConnectTest|AppiumClientConfigTest --framework net6.0'
+    arguments: '--no-build --configuration $(buildConfiguration) --filter AppiumLocalServerLaunchingTest|DirectConnectTest|AppiumClientConfigTest --framework net8.0'
     publishTestResults: true
     projects: '**/*.Tests.csproj'
