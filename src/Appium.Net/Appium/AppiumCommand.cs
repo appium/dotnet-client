@@ -35,8 +35,10 @@ namespace OpenQA.Selenium.Appium
 
             #region Clipboard
 
+            // TODO: Use mobile: getClipboard
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GetClipboard,
                 "/session/{sessionId}/appium/device/get_clipboard"),
+            // TODO: Use mobile: setClipboard
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.SetClipboard,
                 "/session/{sessionId}/appium/device/set_clipboard"),
 
@@ -44,20 +46,28 @@ namespace OpenQA.Selenium.Appium
 
             #region Device -> Network Commands
 
+            // TODO: Remove and advise users to use mobile:setConnectivity
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.ToggleAirplaneMode,
                 "/session/{sessionId}/appium/device/toggle_airplane_mode"),
+            // TODO: Remove and advise users to use mobile:setConnectivity
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.ToggleData,
                 "/session/{sessionId}/appium/device/toggle_data"),
+            // TODO: Remove and advise users to use mobile:setConnectivity
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.ToggleWiFi,
                 "/session/{sessionId}/appium/device/toggle_wifi"),
+            // TODO: Use mobile:toggleGps
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.ToggleLocationServices,
                 "/session/{sessionId}/appium/device/toggle_location_services"),
+            // TODO: Use mobile:gsmCall
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GsmCall,
                 "/session/{sessionId}/appium/device/gsm_call"),
+            // TODO: Use mobile:sendSms
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.SendSms,
                 "/session/{sessionId}/appium/device/send_sms"),
+            // TODO: Use mobile:gsmSignal
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.SetGsmSignalStrength,
                 "/session/{sessionId}/appium/device/gsm_signal"),
+            // TODO: Use mobile:gsmVoice
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.SetGsmVoiceState,
                 "/session/{sessionId}/appium/device/gsm_voice"),
 
@@ -65,25 +75,34 @@ namespace OpenQA.Selenium.Appium
 
             #region Device System Commands
 
+            // TODO: Use mobile:openNotifications
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.OpenNotifications,
                 "/session/{sessionId}/appium/device/open_notifications"),
+            // TODO: Use mobile:getDeviceTime
             new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.SystemTime,
                 "/session/{sessionId}/appium/device/system_time"),
+            // TODO: Use mobile:getSystemBars
             new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.SystemBars,
                 "/session/{sessionId}/appium/device/system_bars"),
+            // TODO: Use mobile:getDisplayDensity
             new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetDisplayDensity,
                 "/session/{sessionId}/appium/device/display_density"),
 
             #endregion
 
+            // TODO: Use mobile:shake
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.ShakeDevice,
                 "/session/{sessionId}/appium/device/shake"),
+            // TODO: Use mobile:pressKey
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.PressKeyCode,
                 "/session/{sessionId}/appium/device/press_keycode"),
+            // TODO: Use mobile:pressKey
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.LongPressKeyCode,
                 "/session/{sessionId}/appium/device/long_press_keycode"),
+            // TODO: Use mobile:getCurrentActivity
             new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetCurrentActivity,
                 "/session/{sessionId}/appium/device/current_activity"),
+            // TODO: Use mobile:getCurrentPackage
             new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetCurrentPackage,
                 "/session/{sessionId}/appium/device/current_package"),
 
@@ -99,6 +118,7 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/device/terminate_app"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.IsAppInstalled,
                 "/session/{sessionId}/appium/device/app_installed"),
+            // TODO: Use mobile:queryAppState
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GetAppState,
                 "/session/{sessionId}/appium/device/app_state"),
 
@@ -110,39 +130,50 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/device/pull_file"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.PullFolder,
                 "/session/{sessionId}/appium/device/pull_folder"),
+            // TODO: Use mobile:getPerformanceData
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GetPerformanceData,
                 "/session/{sessionId}/appium/getPerformanceData"),
+            // TODO: Use mobile:getPerformanceDataTypes
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GetPerformanceDataTypes,
                 "/session/{sessionId}/appium/performanceData/types"),
 
             #region (WinAppDriver) legacy app management
 
+            // TODO: Remove
             new AppiumCommand(HttpCommandInfo.PostCommand, WindowsDriverCommand.CloseApp,
                 "/session/{sessionId}/appium/app/close"),
-
+            // TODO: Remove
             new AppiumCommand(HttpCommandInfo.PostCommand, WindowsDriverCommand.LaunchApp,
                 "/session/{sessionId}/appium/app/launch"),
 
             #endregion (WinAppDriver) legacy app management
 
+            // TODO: Use mobile:backgroundApp
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.BackgroundApp,
                 "/session/{sessionId}/appium/app/background"),
+            // TODO: Remove
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.EndTestCoverage,
                 "/session/{sessionId}/appium/app/end_test_coverage"),
+            // TODO: Use mobile:getAppStrings
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GetAppStrings,
                 "/session/{sessionId}/appium/app/strings"),
+            // TODO: Use mobile:hideKeyboard
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.HideKeyboard,
                 "/session/{sessionId}/appium/device/hide_keyboard"),
+            // TODO: Use mobile:isKeyboardShown
             new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.IsKeyboardShown,
                 "/session/{sessionId}/appium/device/is_keyboard_shown"),
+            // TODO: Remove and guide users to use mobile:startActivity as many arguments.
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.StartActivity,
                 "/session/{sessionId}/appium/device/start_activity"),
             new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetSettings,
                 "/session/{sessionId}/appium/settings"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.UpdateSettings,
                 "/session/{sessionId}/appium/settings"),
+            // TODO: Use mobile:sendBiometricMatch
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.TouchID,
                 "/session/{sessionId}/appium/simulator/touch_id"),
+            // TODO: Use mobile:fingerprint
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.FingerPrint,
                 "/session/{sessionId}/appium/device/finger_print"),
 
@@ -164,8 +195,10 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/orientation"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.SetOrientation,
                 "/session/{sessionId}/orientation"),
+            // TODO: Remove. Guide users to use mobile: setConnectivity instead.
             new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetConnectionType,
                 "/session/{sessionId}/network_connection"),
+            // TODO: Remove. Guide users to use mobile: setConnectivity instead.
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.SetConnectionType,
                 "/session/{sessionId}/network_connection"),
             new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetLocation, "/session/{sessionId}/location"),
@@ -213,8 +246,10 @@ namespace OpenQA.Selenium.Appium
 
             #region Logs
 
+            // TODO: Use "session/{sessionId}/se/log/types"
             new AppiumCommand(HttpCommandInfo.GetCommand, DriverCommand.GetAvailableLogTypes,
                 "session/{sessionId}/log/types"),
+            // TODO: Use "session/{sessionId}/se/log"
             new AppiumCommand(HttpCommandInfo.PostCommand, DriverCommand.GetLog, "session/{sessionId}/log"),
 
             #endregion
