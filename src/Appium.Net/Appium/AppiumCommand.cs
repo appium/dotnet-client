@@ -139,10 +139,10 @@ namespace OpenQA.Selenium.Appium
 
             #region (WinAppDriver) legacy app management
 
-            // TODO: Remove
+            // TODO: use windows:closeApp
             new AppiumCommand(HttpCommandInfo.PostCommand, WindowsDriverCommand.CloseApp,
                 "/session/{sessionId}/appium/app/close"),
-            // TODO: Remove
+            // TODO: use windows:launchApp
             new AppiumCommand(HttpCommandInfo.PostCommand, WindowsDriverCommand.LaunchApp,
                 "/session/{sessionId}/appium/app/launch"),
 
