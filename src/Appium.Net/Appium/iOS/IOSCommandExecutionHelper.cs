@@ -26,8 +26,12 @@ namespace OpenQA.Selenium.Appium.iOS
 {
     public sealed class IOSCommandExecutionHelper
     {
-        public static void ShakeDevice(IExecuteMethod executeMethod) =>
-            executeMethod.Execute(AppiumDriverCommand.ShakeDevice);
+        public static void ShakeDevice(IExecuteMethod executeMethod) {
+            executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile: shake",
+                ["args"] = new object[] {}
+            });
+        }
 
         public static void PerformTouchID(IExecuteMethod executeMethod, bool match) =>
             executeMethod.Execute(AppiumDriverCommand.TouchID,
