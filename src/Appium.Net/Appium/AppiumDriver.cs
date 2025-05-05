@@ -190,13 +190,27 @@ namespace OpenQA.Selenium.Appium
         public void FingerPrint(int fingerprintId) =>
             AppiumCommandExecutionHelper.FingerPrint(this, fingerprintId);
 
-        public void BackgroundApp() =>
-            Execute(AppiumDriverCommand.BackgroundApp,
-                AppiumCommandExecutionHelper.PrepareArgument("seconds", -1));
+        public void BackgroundApp() {
+            Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:backgroundApp",
+                ["args"] = new object[] {
+                    new Dictionary<string, object> {
+                        ["seconds"] = -1
+                    }
+                }
+            });
+        }
 
-        public void BackgroundApp(TimeSpan timeSpan) =>
-            Execute(AppiumDriverCommand.BackgroundApp,
-                AppiumCommandExecutionHelper.PrepareArgument("seconds", timeSpan.TotalSeconds));
+        public void BackgroundApp(TimeSpan timeSpan) {
+                        Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:backgroundApp",
+                ["args"] = new object[] {
+                    new Dictionary<string, object> {
+                        ["seconds"] = timeSpan.TotalSeconds
+                    }
+                }
+            });
+        }
 
         public AppState GetAppState(string appId) =>
             (AppState)Convert.ToInt32(Execute(AppiumDriverCommand.GetAppState,

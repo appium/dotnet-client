@@ -90,9 +90,6 @@ namespace OpenQA.Selenium.Appium
 
             #endregion
 
-            // TODO: Use mobile:shake
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.ShakeDevice,
-                "/session/{sessionId}/appium/device/shake"),
             // TODO: Use mobile:pressKey
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.PressKeyCode,
                 "/session/{sessionId}/appium/device/press_keycode"),
@@ -148,9 +145,6 @@ namespace OpenQA.Selenium.Appium
 
             #endregion (WinAppDriver) legacy app management
 
-            // TODO: Use mobile:backgroundApp
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.BackgroundApp,
-                "/session/{sessionId}/appium/app/background"),
             // TODO: Remove
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.EndTestCoverage,
                 "/session/{sessionId}/appium/app/end_test_coverage"),
