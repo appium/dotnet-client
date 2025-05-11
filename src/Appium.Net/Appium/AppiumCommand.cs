@@ -33,17 +33,6 @@ namespace OpenQA.Selenium.Appium
 
             #region Driver Commands
 
-            #region Clipboard
-
-            // TODO: Use mobile: getClipboard
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GetClipboard,
-                "/session/{sessionId}/appium/device/get_clipboard"),
-            // TODO: Use mobile: setClipboard
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.SetClipboard,
-                "/session/{sessionId}/appium/device/set_clipboard"),
-
-            #endregion
-
             #region Device -> Network Commands
 
             // TODO: Remove and advise users to use mobile:setConnectivity

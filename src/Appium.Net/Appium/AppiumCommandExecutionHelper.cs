@@ -96,31 +96,20 @@ namespace OpenQA.Selenium.Appium
                         throw new NotImplementedException(
                             $"Android only supports contentType: {nameof(ClipboardContentType.PlainText)}");
                     }
-
-                    executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
-                        ["script"] = "mobile:setClipboard",
-                        ["args"] = new object[] {
-                            new Dictionary<string, object> {
-                                ["content"] = base64Content,
-                                ["contentType"] = contentType,
-                                ["label"] = null
-                            }
-                        }
-                    });
                     break;
                 default:
-                    executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
-                        ["script"] = "mobile:setClipboard",
-                        ["args"] = new object[] {
-                            new Dictionary<string, object> {
-                                ["content"] = base64Content,
-                                ["contentType"] = contentType,
-                                ["label"] = null
-                            }
-                        }
-                    });
                     break;
             }
+            executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:setClipboard",
+                ["args"] = new object[] {
+                    new Dictionary<string, object> {
+                        ["content"] = base64Content,
+                        ["contentType"] = contentType,
+                        ["label"] = null
+                    }
+                }
+            });
         }
 
         public static string MobileGetClipboard(IExecuteMethod executeMethod, ClipboardContentType clipboardContentType)
@@ -135,25 +124,19 @@ namespace OpenQA.Selenium.Appium
                         throw new NotImplementedException(
                             $"Android only supports contentType: {nameof(ClipboardContentType.PlainText)}");
                     }
-                    return (string) executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
-                        ["script"] = "mobile:getClipboard",
-                        ["args"] = new object[] {
-                            new Dictionary<string, object> {
-                                ["contentType"] = contentType
-                            }
-                        }
-                    }).Value;
+                    break;
                 default:
                     // including ClipboardContentType.PlainText
-                    return (string) executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
-                        ["script"] = "mobile:getClipboard",
-                        ["args"] = new object[] {
-                            new Dictionary<string, object> {
-                                ["contentType"] = contentType
-                            }
-                        }
-                    }).Value;
+                    break;
             }
+            return (string) executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:getClipboard",
+                ["args"] = new object[] {
+                    new Dictionary<string, object> {
+                        ["contentType"] = contentType
+                    }
+                }
+            }).Value;
         }
 
         public static string SetClipboardText(IExecuteMethod executeMethod, string textContent, string label)
@@ -165,13 +148,16 @@ namespace OpenQA.Selenium.Appium
 
             var encodedStringContentBytes = Encoding.UTF8.GetBytes(textContent);
 
-            return (string) executeMethod.Execute(AppiumDriverCommand.SetClipboard,
-                PrepareArguments(new[] {"content", "contentType", "label"},
-                    new object[]
-                    {
-                        Convert.ToBase64String(encodedStringContentBytes),
-                        ClipboardContentType.PlainText.ToString().ToLowerInvariant(), label
-                    })).Value;
+            return (string) executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                    ["script"] = "mobile:setClipboard",
+                    ["args"] = new object[] {
+                        new Dictionary<string, object> {
+                            ["content"] = Convert.ToBase64String(encodedStringContentBytes),
+                            ["contentType"] = ClipboardContentType.PlainText.ToString().ToLowerInvariant(),
+                            ["label"] = label
+                    }
+                }
+            }).Value;;
         }
 
         public static string GetClipboardText(IExecuteMethod executeMethod)
