@@ -46,7 +46,7 @@ namespace Appium.Net.Integration.Tests.Android
         public void WhenSetClipboardContentTypeIsPlainTextGetClipboardShouldReturnEncodedBase64String()
         {
             _driver.SetClipboard(ClipboardContentType.PlainText, ClipboardTestString);
-            Assert.That(() => Regex.IsMatch(_driver.GetClipboard(ClipboardContentType.PlainText), Base64RegexPattern, RegexOptions.Multiline), 
+            Assert.That(() => Regex.IsMatch(_driver.GetClipboard(ClipboardContentType.PlainText), Base64RegexPattern, RegexOptions.Multiline),
                 Is.True);
         }
 

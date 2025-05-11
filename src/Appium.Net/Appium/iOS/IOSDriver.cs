@@ -273,5 +273,21 @@ namespace OpenQA.Selenium.Appium.iOS
         /// </summary>
         /// <returns>The image content of the clipboard as an Image object or null if there is no image on the clipboard</returns>
         public Image GetClipboardImage() => IOSCommandExecutionHelper.GetClipboardImage(this);
+
+
+        /// <summary>
+        /// Gets the State of the app.
+        /// </summary>
+        /// <param name="bundleId">a string containing the id of the app.</param>
+        /// <returns>an enumeration of the app state.</returns>
+         public AppState GetAppState(string bundleId) =>
+            (AppState)Convert.ToInt32(
+                ExecuteScript(
+                    "mobile:queryAppState",
+                    new Dictionary<string, object>{
+                        ["bundleId"] = bundleId
+                    }
+                ).ToString()
+            );
     }
 }

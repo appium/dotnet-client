@@ -33,12 +33,12 @@ namespace OpenQA.Selenium.Appium.Interfaces
         bool IsAppInstalled(string bundleId);
 
         /// <summary>
-        /// Deactivates app completely (as "Home" button does).  
+        /// Deactivates app completely (as "Home" button does).
         /// </summary>
         void BackgroundApp();
 
         /// <summary>
-        /// Backgrounds the current app for the given number of seconds or deactivates app completely if negative number is given. 
+        /// Backgrounds the current app for the given number of seconds or deactivates app completely if negative number is given.
         /// </summary>
         /// <param name="timepSpan">the timespan of running the app in the background.</param>
         void BackgroundApp(TimeSpan timepSpan);
@@ -69,12 +69,5 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// <param name="timeout">a TimeSpan for how long to wait until the application is terminated.</param>
         /// <return>a boolean indicating if the app was terminated in the given timeout.</return>
         bool TerminateApp(string appId, TimeSpan timeout);
-
-        /// <summary>
-        /// Gets the State of the app.
-        /// </summary>
-        /// <param name="appId">a string containing the id of the app.</param>
-        /// <returns>an enumeration of the app state.</returns>
-        AppState GetAppState(string appId);
     }
 }

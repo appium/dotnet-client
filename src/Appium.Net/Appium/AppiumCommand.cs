@@ -104,9 +104,6 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/device/terminate_app"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.IsAppInstalled,
                 "/session/{sessionId}/appium/device/app_installed"),
-            // TODO: Use mobile:queryAppState
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GetAppState,
-                "/session/{sessionId}/appium/device/app_state"),
 
 	        #endregion
 
