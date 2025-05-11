@@ -199,7 +199,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// Locks the device. Optionally, unlocks it after a specified number of seconds.
         /// </summary>
         /// <param name="seconds">
-        /// The number of seconds after which the device will be automatically unlocked. 
+        /// The number of seconds after which the device will be automatically unlocked.
         /// Set to 0 or leave it empty to require manual unlock.
         /// </param>
         /// <exception cref="WebDriverException">Thrown if the command execution fails.</exception>
@@ -223,7 +223,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// <param name="contentType"></param>
         /// <param name="base64Content"></param>
         public void SetClipboard(ClipboardContentType contentType, string base64Content) =>
-            AppiumCommandExecutionHelper.SetClipboard(this, contentType, base64Content);
+            AppiumCommandExecutionHelper.MobileSetClipboard(this, contentType, base64Content);
 
         /// <summary>
         /// Get the content of the clipboard.
@@ -232,7 +232,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// <remarks>Android supports plaintext only</remarks>
         /// <returns>The content of the clipboard as base64-encoded string or an empty string if the clipboard is empty</returns>
         public string GetClipboard(ClipboardContentType contentType) =>
-            AppiumCommandExecutionHelper.GetClipboard(this, contentType);
+            AppiumCommandExecutionHelper.MobileGetClipboard(this, contentType);
 
         /// <summary>
         /// Sets text to the clipboard
