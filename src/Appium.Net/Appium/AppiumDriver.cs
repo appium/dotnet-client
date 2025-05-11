@@ -191,14 +191,7 @@ namespace OpenQA.Selenium.Appium
             AppiumCommandExecutionHelper.FingerPrint(this, fingerprintId);
 
         public void BackgroundApp() {
-            Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
-                ["script"] = "mobile:backgroundApp",
-                ["args"] = new object[] {
-                    new Dictionary<string, object> {
-                        ["seconds"] = -1
-                    }
-                }
-            });
+            BackgroundApp(TimeSpan.FromSeconds(-1));
         }
 
         public void BackgroundApp(TimeSpan timeSpan) {
