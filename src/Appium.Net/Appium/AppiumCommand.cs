@@ -226,11 +226,9 @@ namespace OpenQA.Selenium.Appium
 
             #region Logs
 
-            // TODO: Use "session/{sessionId}/se/log/types"
             new AppiumCommand(HttpCommandInfo.GetCommand, DriverCommand.GetAvailableLogTypes,
-                "session/{sessionId}/log/types"),
-            // TODO: Use "session/{sessionId}/se/log"
-            new AppiumCommand(HttpCommandInfo.PostCommand, DriverCommand.GetLog, "session/{sessionId}/log"),
+                "session/{sessionId}/se/log/types"),
+            new AppiumCommand(HttpCommandInfo.PostCommand, DriverCommand.GetLog, "session/{sessionId}/se/log"),
 
             #endregion
 
