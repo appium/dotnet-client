@@ -117,25 +117,53 @@ namespace OpenQA.Selenium.Appium.Android
         public static void ToggleWifi(IExecuteMethod executeMethod) =>
             executeMethod.Execute(AppiumDriverCommand.ToggleWiFi);
 
-        public static void GsmCall(IExecuteMethod executeMethod, string number, GsmCallActions gsmCallAction) =>
-            executeMethod.Execute(AppiumDriverCommand.GsmCall,
-                PrepareArguments(new[] {"phoneNumber", "action"},
-                    new object[] {number, gsmCallAction.ToString().ToLowerInvariant()}));
+        public static void GsmCall(IExecuteMethod executeMethod, string number, GsmCallActions gsmCallAction) {
+            Dictionary<string, object> dictionary = new Dictionary<string, object>()
+            {
+                ["phoneNumber"] = number,
+                ["action"] = gsmCallAction.ToString().ToLowerInvariant()
+            };
+            executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:gsmCall",
+                ["args"] = dictionary
+            });
+        }
 
-        public static void SendSms(IExecuteMethod executeMethod, string number, string message) =>
-            executeMethod.Execute(AppiumDriverCommand.SendSms,
-                PrepareArguments(new[] { "phoneNumber", "message" },
-                    new object[] { number, message }));
+        public static void SendSms(IExecuteMethod executeMethod, string number, string message) {
+            Dictionary<string, object> dictionary = new Dictionary<string, object>()
+            {
+                ["phoneNumber"] = number,
+                ["message"] = message
+            };
+            executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:sendSms",
+                ["args"] = dictionary
+            });
+        }
 
-        public static void SetGsmStrength(IExecuteMethod executeMethod, GsmSignalStrength gsmSignalStrength) =>
-            executeMethod.Execute(AppiumDriverCommand.SetGsmSignalStrength,
-                PrepareArgument("signalStrength", gsmSignalStrength));
+        public static void SetGsmStrength(IExecuteMethod executeMethod, GsmSignalStrength gsmSignalStrength)
+        {
+            Dictionary<string, object> dictionary = new Dictionary<string, object>()
+            {
+                ["strength"] = gsmSignalStrength,
+            };
+            executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:gsmSignal",
+                ["args"] = dictionary
+            });
+        }
 
-        public static void SetGsmVoice(IExecuteMethod executeMethod, GsmVoiceState gsmVoiceState) =>
-            executeMethod.Execute(AppiumDriverCommand.SetGsmVoiceState,
-                PrepareArgument("state",
-                    gsmVoiceState.ToString()
-                        .ToLowerInvariant()));
+        public static void SetGsmVoice(IExecuteMethod executeMethod, GsmVoiceState gsmVoiceState)
+        {
+            Dictionary<string, object> dictionary = new Dictionary<string, object>()
+            {
+                ["state"] = gsmVoiceState.ToString().ToLowerInvariant(),
+            };
+            executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:gsmVoice",
+                ["args"] = dictionary
+            });
+        }
 
         #endregion
 

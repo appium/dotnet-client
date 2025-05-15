@@ -44,18 +44,6 @@ namespace OpenQA.Selenium.Appium
             // TODO: Remove and advise users to use mobile:setConnectivity
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.ToggleWiFi,
                 "/session/{sessionId}/appium/device/toggle_wifi"),
-            // TODO: Use mobile:gsmCall
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GsmCall,
-                "/session/{sessionId}/appium/device/gsm_call"),
-            // TODO: Use mobile:sendSms
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.SendSms,
-                "/session/{sessionId}/appium/device/send_sms"),
-            // TODO: Use mobile:gsmSignal
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.SetGsmSignalStrength,
-                "/session/{sessionId}/appium/device/gsm_signal"),
-            // TODO: Use mobile:gsmVoice
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.SetGsmVoiceState,
-                "/session/{sessionId}/appium/device/gsm_voice"),
 
             #endregion
 
