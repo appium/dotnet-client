@@ -175,8 +175,14 @@ namespace OpenQA.Selenium.Appium.Android
             }).Value as IDictionary<string, object>;
         }
 
-        public static float GetDisplayDensity(IExecuteMethod executeMethod) => Convert.ToSingle(
-            executeMethod.Execute(AppiumDriverCommand.GetDisplayDensity).Value);
+        public static float GetDisplayDensity(IExecuteMethod executeMethod)
+        {
+            return Convert.ToSingle(
+                executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:getDisplayDensity",
+                ["args"] = new object[] {}
+            }).Value);
+        }
 
         #endregion
 

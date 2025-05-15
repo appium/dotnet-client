@@ -62,14 +62,6 @@ namespace OpenQA.Selenium.Appium
 
             #endregion
 
-            #region Device System Commands
-
-            // TODO: Use mobile:getDisplayDensity
-            new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetDisplayDensity,
-                "/session/{sessionId}/appium/device/display_density"),
-
-            #endregion
-
             // TODO: Use mobile:pressKey
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.PressKeyCode,
                 "/session/{sessionId}/appium/device/press_keycode"),
