@@ -40,8 +40,18 @@ namespace OpenQA.Selenium.Appium
             });
         }
 
-        public static void LongPressKeyCode(IExecuteMethod executeMethod, KeyEvent keyEvent) =>
-            executeMethod.Execute(AppiumDriverCommand.LongPressKeyCode, keyEvent.Build());
+        public static void LongPressKeyCode(IExecuteMethod executeMethod, KeyEvent keyEvent)
+        {
+            executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:pressKey",
+                ["args"] = new object[] {
+                    new Dictionary<string, object> {
+                        ["flags"] = keyEvent.Build(),
+                        ["isLongPress"] = true
+                    }
+                }
+            });
+        }
 
         public static void PressKeyCode(IExecuteMethod executeMethod, int keyCode, int metastate = -1)
         {
@@ -60,13 +70,19 @@ namespace OpenQA.Selenium.Appium
         public static void LongPressKeyCode(IExecuteMethod executeMethod, int keyCode, int metastate = -1)
         {
             var parameters = new Dictionary<string, object>()
-                {["keycode"] = keyCode};
+            {
+                ["keycode"] = keyCode,
+                ["isLongPress"] = true
+            };
             if (metastate > 0)
             {
                 parameters.Add("metastate", metastate);
             }
 
-            executeMethod.Execute(AppiumDriverCommand.LongPressKeyCode, parameters);
+            executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:pressKey",
+                ["args"] = parameters
+            });
         }
 
         public static void HideKeyboard(IExecuteMethod executeMethod, string strategy = null, string key = null)
