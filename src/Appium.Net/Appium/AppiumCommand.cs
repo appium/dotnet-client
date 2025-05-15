@@ -53,12 +53,6 @@ namespace OpenQA.Selenium.Appium
             // TODO: Use mobile:pressKey
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.LongPressKeyCode,
                 "/session/{sessionId}/appium/device/long_press_keycode"),
-            // TODO: Use mobile:getCurrentActivity
-            new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetCurrentActivity,
-                "/session/{sessionId}/appium/device/current_activity"),
-            // TODO: Use mobile:getCurrentPackage
-            new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetCurrentPackage,
-                "/session/{sessionId}/appium/device/current_package"),
 
             #region Applications Management
 

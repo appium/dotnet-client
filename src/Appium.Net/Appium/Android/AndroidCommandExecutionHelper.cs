@@ -64,11 +64,21 @@ namespace OpenQA.Selenium.Appium.Android
             executeMethod.Execute(AppiumDriverCommand.StartActivity, parameters);
         }
 
-        public static string GetCurrentActivity(IExecuteMethod executeMethod) =>
-            executeMethod.Execute(AppiumDriverCommand.GetCurrentActivity).Value as string;
+        public static string GetCurrentActivity(IExecuteMethod executeMethod)
+        {
+            return executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:getCurrentActivity",
+                ["args"] = new object[] {}
+            }).Value.ToString();
+        }
 
-        public static string GetCurrentPackage(IExecuteMethod executeMethod) =>
-            executeMethod.Execute(AppiumDriverCommand.GetCurrentPackage).Value as string;
+        public static string GetCurrentPackage(IExecuteMethod executeMethod)
+        {
+            return executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:getCurrentPackage",
+                ["args"] = new object[] {}
+            }).Value.ToString();
+        }
 
         public static void SetConection(IExecuteMethod executeMethod, ConnectionType connectionType)
         {
