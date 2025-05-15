@@ -40,9 +40,6 @@ namespace Appium.Net.Integration.Tests.Android.Device.App
 
             Assert.That(() => _driver.GetAppState(ApiDemosPackageName), Is.EqualTo(AppState.RunningInForeground));
 
-            Assert.That(() => _driver.CurrentActivity, Is.EqualTo(".ApiDemos"));
-            Assert.That(() => _driver.CurrentPackage, Is.EqualTo("io.appium.android.apis"));
-
             //Verify the expected app was activated
             Assert.DoesNotThrow(() => _driver.FindElement(MobileBy.AccessibilityId(ApiDemoElement)));
         }

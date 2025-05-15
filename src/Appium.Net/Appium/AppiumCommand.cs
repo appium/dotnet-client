@@ -48,9 +48,6 @@ namespace OpenQA.Selenium.Appium
             #endregion
 
             // TODO: Use mobile:pressKey
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.PressKeyCode,
-                "/session/{sessionId}/appium/device/press_keycode"),
-            // TODO: Use mobile:pressKey
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.LongPressKeyCode,
                 "/session/{sessionId}/appium/device/long_press_keycode"),
 

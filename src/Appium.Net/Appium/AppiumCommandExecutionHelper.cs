@@ -28,8 +28,17 @@ namespace OpenQA.Selenium.Appium
 
         #region Device Key Commands
 
-        public static void PressKeyCode(IExecuteMethod executeMethod, KeyEvent keyEvent) =>
-            executeMethod.Execute(AppiumDriverCommand.PressKeyCode, keyEvent.Build());
+        public static void PressKeyCode(IExecuteMethod executeMethod, KeyEvent keyEvent)
+        {
+            executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:pressKey",
+                ["args"] = new object[] {
+                    new Dictionary<string, object> {
+                        ["flags"] = keyEvent.Build()
+                    }
+                }
+            });
+        }
 
         public static void LongPressKeyCode(IExecuteMethod executeMethod, KeyEvent keyEvent) =>
             executeMethod.Execute(AppiumDriverCommand.LongPressKeyCode, keyEvent.Build());
@@ -42,8 +51,10 @@ namespace OpenQA.Selenium.Appium
             {
                 parameters.Add("metastate", metastate);
             }
-
-            executeMethod.Execute(AppiumDriverCommand.PressKeyCode, parameters);
+            executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:pressKey",
+                ["args"] = parameters
+            });
         }
 
         public static void LongPressKeyCode(IExecuteMethod executeMethod, int keyCode, int metastate = -1)
