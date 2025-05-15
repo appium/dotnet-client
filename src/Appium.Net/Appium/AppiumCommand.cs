@@ -64,12 +64,6 @@ namespace OpenQA.Selenium.Appium
 
             #region Device System Commands
 
-            // TODO: Use mobile:openNotifications
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.OpenNotifications,
-                "/session/{sessionId}/appium/device/open_notifications"),
-            // TODO: Use mobile:getDeviceTime
-            new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.SystemTime,
-                "/session/{sessionId}/appium/device/system_time"),
             // TODO: Use mobile:getSystemBars
             new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.SystemBars,
                 "/session/{sessionId}/appium/device/system_bars"),

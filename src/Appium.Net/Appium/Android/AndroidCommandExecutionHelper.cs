@@ -159,8 +159,13 @@ namespace OpenQA.Selenium.Appium.Android
 
         #region Device System
 
-        public static void OpenNotifications(IExecuteMethod executeMethod) =>
-            executeMethod.Execute(AppiumDriverCommand.OpenNotifications);
+        public static void OpenNotifications(IExecuteMethod executeMethod)
+        {
+            executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:openNotifications",
+                ["args"] = new object[] {}
+            });
+        }
 
         public static IDictionary<string, object> GetSystemBars(IExecuteMethod executeMethod) =>
             executeMethod.Execute(AppiumDriverCommand.SystemBars).Value as IDictionary<string, object>;

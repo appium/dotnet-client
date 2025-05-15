@@ -419,7 +419,16 @@ namespace OpenQA.Selenium.Appium
         /// Gets device date and time for both iOS(Supports only real device) and Android devices
         /// </summary>
         /// <returns>A string which consists of date and time</returns>
-        public string DeviceTime => ((IExecuteMethod)this).Execute(AppiumDriverCommand.GetDeviceTime).Value.ToString();
+        public string DeviceTime
+        {
+            get
+            {
+                return Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                    ["script"] = "mobile:getDeviceTime",
+                    ["args"] = new object[] {}
+                }).Value.ToString();
+            }
+        }
 
         #endregion Device Time
 
