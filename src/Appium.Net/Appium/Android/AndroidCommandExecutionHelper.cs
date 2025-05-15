@@ -167,8 +167,13 @@ namespace OpenQA.Selenium.Appium.Android
             });
         }
 
-        public static IDictionary<string, object> GetSystemBars(IExecuteMethod executeMethod) =>
-            executeMethod.Execute(AppiumDriverCommand.SystemBars).Value as IDictionary<string, object>;
+        public static IDictionary<string, object> GetSystemBars(IExecuteMethod executeMethod)
+        {
+            return executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:getSystemBars",
+                ["args"] = new object[] {}
+            }).Value as IDictionary<string, object>;
+        }
 
         public static float GetDisplayDensity(IExecuteMethod executeMethod) => Convert.ToSingle(
             executeMethod.Execute(AppiumDriverCommand.GetDisplayDensity).Value);

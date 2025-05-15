@@ -64,9 +64,6 @@ namespace OpenQA.Selenium.Appium
 
             #region Device System Commands
 
-            // TODO: Use mobile:getSystemBars
-            new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.SystemBars,
-                "/session/{sessionId}/appium/device/system_bars"),
             // TODO: Use mobile:getDisplayDensity
             new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetDisplayDensity,
                 "/session/{sessionId}/appium/device/display_density"),
