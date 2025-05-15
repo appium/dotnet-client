@@ -101,8 +101,12 @@ namespace OpenQA.Selenium.Appium.Android
 
         #region Device Network
 
-        public static void ToggleLocationServices(IExecuteMethod executeMethod) =>
-            executeMethod.Execute(AppiumDriverCommand.ToggleLocationServices);
+        public static void ToggleLocationServices(IExecuteMethod executeMethod) {
+            executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:toggleGps",
+                ["args"] = new object[] {}
+            });
+        }
 
         public static void ToggleAirplaneMode(IExecuteMethod executeMethod) =>
             executeMethod.Execute(AppiumDriverCommand.ToggleAirplaneMode);

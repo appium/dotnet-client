@@ -44,9 +44,6 @@ namespace OpenQA.Selenium.Appium
             // TODO: Remove and advise users to use mobile:setConnectivity
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.ToggleWiFi,
                 "/session/{sessionId}/appium/device/toggle_wifi"),
-            // TODO: Use mobile:toggleGps
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.ToggleLocationServices,
-                "/session/{sessionId}/appium/device/toggle_location_services"),
             // TODO: Use mobile:gsmCall
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GsmCall,
                 "/session/{sessionId}/appium/device/gsm_call"),
