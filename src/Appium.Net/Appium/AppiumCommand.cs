@@ -97,12 +97,6 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/settings"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.UpdateSettings,
                 "/session/{sessionId}/appium/settings"),
-            // TODO: Use mobile:sendBiometricMatch
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.TouchID,
-                "/session/{sessionId}/appium/simulator/touch_id"),
-            // TODO: Use mobile:fingerprint
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.FingerPrint,
-                "/session/{sessionId}/appium/device/finger_print"),
 
             #endregion Driver Commands
 

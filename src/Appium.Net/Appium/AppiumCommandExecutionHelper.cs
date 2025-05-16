@@ -187,7 +187,7 @@ namespace OpenQA.Selenium.Appium
                             ["label"] = label
                     }
                 }
-            }).Value;;
+            }).Value;
         }
 
         public static string GetClipboardText(IExecuteMethod executeMethod)
@@ -201,9 +201,16 @@ namespace OpenQA.Selenium.Appium
             executeMethod.Execute(AppiumDriverCommand.PushFile, new Dictionary<string, object>()
                 {["path"] = pathOnDevice, ["data"] = base64Data});
 
-        public static void FingerPrint(IExecuteMethod executeMethod, int fingerprintId) =>
-            executeMethod.Execute(AppiumDriverCommand.FingerPrint, new Dictionary<string, object>()
-                {["fingerprintId"] = fingerprintId});
+        public static void FingerPrint(IExecuteMethod executeMethod, int fingerprintId) {
+             executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                    ["script"] = "mobile:fingerprint",
+                    ["args"] = new object[] {
+                        new Dictionary<string, object> {
+                            ["fingerprintId"] = fingerprintId
+                    }
+                }
+            });
+        }
 
         public static void PushFile(IExecuteMethod executeMethod, string pathOnDevice, FileInfo file)
         {

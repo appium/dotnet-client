@@ -33,9 +33,16 @@ namespace OpenQA.Selenium.Appium.iOS
             });
         }
 
-        public static void PerformTouchID(IExecuteMethod executeMethod, bool match) =>
-            executeMethod.Execute(AppiumDriverCommand.TouchID,
-                new Dictionary<string, object> {["match"] = match});
+        public static void PerformTouchID(IExecuteMethod executeMethod, bool match)
+        {
+            executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:sendBiometricMatch",
+                ["args"] = new Dictionary<string, object>{
+                    ["type"] = "touchId",
+                    ["match"] = match
+                }
+            });
+        }
 
         public static void SetClipboardUrl(IExecuteMethod executeMethod, string url)
         {
