@@ -195,7 +195,7 @@ namespace OpenQA.Selenium.Appium
         }
 
         public void BackgroundApp(TimeSpan timeSpan) {
-                        Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+            Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
                 ["script"] = "mobile:backgroundApp",
                 ["args"] = new object[] {
                     new Dictionary<string, object> {
@@ -230,7 +230,10 @@ namespace OpenQA.Selenium.Appium
                 parameters = null;
             }
 
-            return (Dictionary<string, object>)Execute(AppiumDriverCommand.GetAppStrings, parameters).Value;
+            return Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:getAppStrings",
+                ["args"] = parameters
+            }).Value as Dictionary<string, object>;
         }
 
         /// <summary>

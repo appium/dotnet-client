@@ -90,15 +90,6 @@ namespace OpenQA.Selenium.Appium
             // TODO: Remove
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.EndTestCoverage,
                 "/session/{sessionId}/appium/app/end_test_coverage"),
-            // TODO: Use mobile:getAppStrings
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GetAppStrings,
-                "/session/{sessionId}/appium/app/strings"),
-            // TODO: Use mobile:hideKeyboard
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.HideKeyboard,
-                "/session/{sessionId}/appium/device/hide_keyboard"),
-            // TODO: Use mobile:isKeyboardShown
-            new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.IsKeyboardShown,
-                "/session/{sessionId}/appium/device/is_keyboard_shown"),
             // TODO: Remove and guide users to use mobile:startActivity as many arguments.
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.StartActivity,
                 "/session/{sessionId}/appium/device/start_activity"),

@@ -87,24 +87,27 @@ namespace OpenQA.Selenium.Appium
 
         public static void HideKeyboard(IExecuteMethod executeMethod, string strategy = null, string key = null)
         {
+            // TODO: should take care
             Dictionary<string, object> parameters = new Dictionary<string, object>();
-            if (strategy != null)
-            {
-                parameters.Add("strategy", strategy);
-            }
-
             if (key != null)
             {
-                parameters.Add("keyName", key);
+                parameters.Add("keys", new List<string>([key]));
             }
 
-            executeMethod.Execute(AppiumDriverCommand.HideKeyboard, parameters);
+            executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:hideKeyboard",
+                ["args"] = parameters
+            });
         }
 
         public static bool IsKeyboardShown(IExecuteMethod executeMethod)
         {
-            var response = executeMethod.Execute(AppiumDriverCommand.IsKeyboardShown);
-            return (bool) response.Value;
+            return Convert.ToBoolean(
+                executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                    ["script"] = "mobile:isKeyboardShown",
+                    ["args"] = new object[] {}
+                }).Value
+            );
         }
 
         #endregion
