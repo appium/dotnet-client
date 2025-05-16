@@ -69,12 +69,6 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/appium/device/pull_file"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.PullFolder,
                 "/session/{sessionId}/appium/device/pull_folder"),
-            // TODO: Use mobile:getPerformanceData
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GetPerformanceData,
-                "/session/{sessionId}/appium/getPerformanceData"),
-            // TODO: Use mobile:getPerformanceDataTypes
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.GetPerformanceDataTypes,
-                "/session/{sessionId}/appium/performanceData/types"),
 
             #region (WinAppDriver) legacy app management
 

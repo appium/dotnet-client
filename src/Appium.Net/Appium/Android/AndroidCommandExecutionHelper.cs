@@ -184,18 +184,31 @@ namespace OpenQA.Selenium.Appium.Android
 
         #region Device Performance
 
-        public static object[] GetPerformanceDataTypes(IExecuteMethod executeMethod) =>
-            executeMethod.Execute(AppiumDriverCommand.GetPerformanceDataTypes).Value as object[];
+        public static object[] GetPerformanceDataTypes(IExecuteMethod executeMethod) {
+            return executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:getPerformanceDataTypes",
+                ["args"] = new object[] {}
+            }).Value as object[];
+        }
+
+        public static object[] GetPerformanceData(IExecuteMethod executeMethod, string packageName, string dataType)
+        {
+            return executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:getPerformanceData",
+                ["args"] = PrepareArguments(new[] {"packageName", "dataType"},
+                new object[] {packageName, dataType})
+            }).Value as object[];
+        }
 
         public static object[] GetPerformanceData(IExecuteMethod executeMethod, string packageName,
-            string dataType) => executeMethod.Execute(AppiumDriverCommand.GetPerformanceData,
-            PrepareArguments(new[] {"packageName", "dataType"},
-                new object[] {packageName, dataType})).Value as object[];
-
-        public static object[] GetPerformanceData(IExecuteMethod executeMethod, string packageName,
-            string dataType, int dataReadTimeout) => executeMethod.Execute(AppiumDriverCommand.GetPerformanceData,
-            PrepareArguments(new[] {"packageName", "dataType", "dataReadTimeout"},
-                new object[] {packageName, dataType, dataReadTimeout})).Value as object[];
+            string dataType, int dataReadTimeout)
+        {
+            return executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:getPerformanceData",
+                ["args"] = PrepareArguments(new[] {"packageName", "dataType", "dataReadTimeout"},
+                new object[] {packageName, dataType, dataReadTimeout})
+            }).Value as object[];
+        }
 
         #endregion
 
