@@ -43,6 +43,7 @@ namespace Appium.Net.Integration.Tests.Android
             _driver.StartActivity(AppId, ".ApiDemos");
 
             Assert.That(_driver.CurrentActivity, Is.EqualTo(".ApiDemos"));
+            Assert.That(_driver.CurrentPackage, Is.EqualTo("io.appium.android.apis"));
 
             _driver.StartActivity(AppId, ".accessibility.AccessibilityNodeProviderActivity");
 

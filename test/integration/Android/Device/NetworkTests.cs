@@ -25,7 +25,7 @@ namespace Appium.Net.Integration.Tests.Android.Device
         [OneTimeTearDown]
         public void TearDown()
         {
-            _driver?.Dispose();            
+            _driver?.Dispose();
         }
 
         [Test]
@@ -61,6 +61,16 @@ namespace Appium.Net.Integration.Tests.Android.Device
             var currentConnectionType = _driver.ConnectionType;
             Assert.That(currentConnectionType, Is.Not.EqualTo(beforeToggleConnectionType));
             _driver.ToggleWifi();
+        }
+
+        [Test]
+        public void CanToggleGPSTest()
+        {
+            var gpsEnabled = _driver.ExecuteScript("mobile:isGpsEnabled");
+            _driver.ToggleLocationServices();
+            var currentGpsEnabled = _driver.ExecuteScript("mobile:isGpsEnabled");
+            Assert.That(currentGpsEnabled, Is.Not.EqualTo(gpsEnabled));
+            _driver.ToggleLocationServices();
         }
 
         [Test]

@@ -3,6 +3,9 @@ using Appium.Net.Integration.Tests.helpers;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.iOS;
 using OpenQA.Selenium.Appium;
+using System;
+using OpenQA.Selenium.Support.UI;
+using System.Runtime.InteropServices;
 
 
 namespace Appium.Net.Integration.Tests.IOS.Device
@@ -40,14 +43,20 @@ namespace Appium.Net.Integration.Tests.IOS.Device
         [Test]
         public void HideKeyboard_WithKeyOnly_ShouldInvokeHelperMethod()
         {
+            TimeSpan _driverTimeOut = TimeSpan.FromSeconds(5);
+            WebDriverWait _waitDriver  = new WebDriverWait(iosDriver, _driverTimeOut);
+
             // Arrange
             var key = "Done";
             iosDriver.FindElement(MobileBy.AccessibilityId("IntegerA")).Click();
             // Act
             iosDriver.HideKeyboard(key);
             // Assert
-            var keyboard_shown = iosDriver.IsKeyboardShown();
-            Assert.That(keyboard_shown, Is.EqualTo(false));
+            _waitDriver.Until(drv =>
+                {
+                    return iosDriver.IsKeyboardShown() == false;
+                }
+            );
         }
 
         [Test]

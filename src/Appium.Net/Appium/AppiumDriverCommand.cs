@@ -16,6 +16,7 @@ namespace OpenQA.Selenium.Appium
 {
     public class AppiumDriverCommand
     {
+        // TODO: remove removed methods
         #region Appium Specific extensions to JSONWP Commands
 
         /// <summary>
@@ -154,19 +155,9 @@ namespace OpenQA.Selenium.Appium
         public const string IsKeyboardShown = "isKeyboardShown";
 
         /// <summary>
-        ///  Open Notifications Command
-        /// </summary>
-        public const string OpenNotifications = "openNotifications";
-
-        /// <summary>
         /// Get System Bars
         /// </summary>
         public const string SystemBars = "system_bars";
-
-        /// <summary>
-        /// Get the time on the device
-        /// </summary>
-        public const string SystemTime = "getDeviceTime";
 
         /// <summary>
         /// Get Display Density
@@ -298,7 +289,6 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string FingerPrint = "fingerPrint";
 
-        public const string GetDeviceTime = "getDeviceTime";
 
         public const string GetSession = "getSession";
 

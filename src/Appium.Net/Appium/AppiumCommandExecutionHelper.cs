@@ -28,11 +28,30 @@ namespace OpenQA.Selenium.Appium
 
         #region Device Key Commands
 
-        public static void PressKeyCode(IExecuteMethod executeMethod, KeyEvent keyEvent) =>
-            executeMethod.Execute(AppiumDriverCommand.PressKeyCode, keyEvent.Build());
+        public static void PressKeyCode(IExecuteMethod executeMethod, KeyEvent keyEvent)
+        {
+            executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:pressKey",
+                ["args"] = new object[] {
+                    new Dictionary<string, object> {
+                        ["flags"] = keyEvent.Build()
+                    }
+                }
+            });
+        }
 
-        public static void LongPressKeyCode(IExecuteMethod executeMethod, KeyEvent keyEvent) =>
-            executeMethod.Execute(AppiumDriverCommand.LongPressKeyCode, keyEvent.Build());
+        public static void LongPressKeyCode(IExecuteMethod executeMethod, KeyEvent keyEvent)
+        {
+            executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:pressKey",
+                ["args"] = new object[] {
+                    new Dictionary<string, object> {
+                        ["flags"] = keyEvent.Build(),
+                        ["isLongPress"] = true
+                    }
+                }
+            });
+        }
 
         public static void PressKeyCode(IExecuteMethod executeMethod, int keyCode, int metastate = -1)
         {
@@ -42,47 +61,58 @@ namespace OpenQA.Selenium.Appium
             {
                 parameters.Add("metastate", metastate);
             }
-
-            executeMethod.Execute(AppiumDriverCommand.PressKeyCode, parameters);
+            executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:pressKey",
+                ["args"] = parameters
+            });
         }
 
         public static void LongPressKeyCode(IExecuteMethod executeMethod, int keyCode, int metastate = -1)
         {
             var parameters = new Dictionary<string, object>()
-                {["keycode"] = keyCode};
+            {
+                ["keycode"] = keyCode,
+                ["isLongPress"] = true
+            };
             if (metastate > 0)
             {
                 parameters.Add("metastate", metastate);
             }
 
-            executeMethod.Execute(AppiumDriverCommand.LongPressKeyCode, parameters);
+            executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:pressKey",
+                ["args"] = parameters
+            });
         }
 
         public static void HideKeyboard(IExecuteMethod executeMethod, string strategy = null, string key = null)
         {
+            // TODO: should take care
             Dictionary<string, object> parameters = new Dictionary<string, object>();
-            if (strategy != null)
-            {
-                parameters.Add("strategy", strategy);
-            }
-
             if (key != null)
             {
-                parameters.Add("keyName", key);
+                parameters.Add("keys", new List<string>([key]));
             }
 
-            executeMethod.Execute(AppiumDriverCommand.HideKeyboard, parameters);
+            executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:hideKeyboard",
+                ["args"] = parameters
+            });
         }
 
         public static bool IsKeyboardShown(IExecuteMethod executeMethod)
         {
-            var response = executeMethod.Execute(AppiumDriverCommand.IsKeyboardShown);
-            return (bool) response.Value;
+            return Convert.ToBoolean(
+                executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                    ["script"] = "mobile:isKeyboardShown",
+                    ["args"] = new object[] {}
+                }).Value
+            );
         }
 
         #endregion
 
-        public static void SetClipboard(IExecuteMethod executeMethod, ClipboardContentType clipboardContentType,
+        public static void MobileSetClipboard(IExecuteMethod executeMethod, ClipboardContentType clipboardContentType,
             string base64Content)
         {
             var contentType = clipboardContentType.ToString().ToLowerInvariant();
@@ -96,20 +126,23 @@ namespace OpenQA.Selenium.Appium
                         throw new NotImplementedException(
                             $"Android only supports contentType: {nameof(ClipboardContentType.PlainText)}");
                     }
-
-                    executeMethod.Execute(AppiumDriverCommand.SetClipboard,
-                        PrepareArguments(new[] {"content", "contentType", "label"},
-                            new object[] {base64Content, contentType, null}));
                     break;
                 default:
-                    executeMethod.Execute(AppiumDriverCommand.SetClipboard,
-                        PrepareArguments(new[] {"content", "contentType", "label"},
-                            new object[] {base64Content, contentType, null}));
                     break;
             }
+            executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:setClipboard",
+                ["args"] = new object[] {
+                    new Dictionary<string, object> {
+                        ["content"] = base64Content,
+                        ["contentType"] = contentType,
+                        ["label"] = null
+                    }
+                }
+            });
         }
 
-        public static string GetClipboard(IExecuteMethod executeMethod, ClipboardContentType clipboardContentType)
+        public static string MobileGetClipboard(IExecuteMethod executeMethod, ClipboardContentType clipboardContentType)
         {
             var contentType = clipboardContentType.ToString().ToLowerInvariant();
             switch (clipboardContentType)
@@ -121,13 +154,19 @@ namespace OpenQA.Selenium.Appium
                         throw new NotImplementedException(
                             $"Android only supports contentType: {nameof(ClipboardContentType.PlainText)}");
                     }
-                    return (string) executeMethod.Execute(AppiumDriverCommand.GetClipboard,
-                        PrepareArgument("contentType", contentType)).Value;
+                    break;
                 default:
                     // including ClipboardContentType.PlainText
-                    return (string) executeMethod.Execute(AppiumDriverCommand.GetClipboard,
-                        PrepareArgument("contentType", contentType)).Value;
+                    break;
             }
+            return (string) executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:getClipboard",
+                ["args"] = new object[] {
+                    new Dictionary<string, object> {
+                        ["contentType"] = contentType
+                    }
+                }
+            }).Value;
         }
 
         public static string SetClipboardText(IExecuteMethod executeMethod, string textContent, string label)
@@ -139,19 +178,22 @@ namespace OpenQA.Selenium.Appium
 
             var encodedStringContentBytes = Encoding.UTF8.GetBytes(textContent);
 
-            return (string) executeMethod.Execute(AppiumDriverCommand.SetClipboard,
-                PrepareArguments(new[] {"content", "contentType", "label"},
-                    new object[]
-                    {
-                        Convert.ToBase64String(encodedStringContentBytes),
-                        ClipboardContentType.PlainText.ToString().ToLowerInvariant(), label
-                    })).Value;
+            return (string) executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                    ["script"] = "mobile:setClipboard",
+                    ["args"] = new object[] {
+                        new Dictionary<string, object> {
+                            ["content"] = Convert.ToBase64String(encodedStringContentBytes),
+                            ["contentType"] = ClipboardContentType.PlainText.ToString().ToLowerInvariant(),
+                            ["label"] = label
+                    }
+                }
+            }).Value;
         }
 
         public static string GetClipboardText(IExecuteMethod executeMethod)
         {
             var encodedContentBytes =
-                Convert.FromBase64String(GetClipboard(executeMethod, ClipboardContentType.PlainText));
+                Convert.FromBase64String(MobileGetClipboard(executeMethod, ClipboardContentType.PlainText));
             return Encoding.UTF8.GetString(encodedContentBytes);
         }
 
@@ -159,9 +201,16 @@ namespace OpenQA.Selenium.Appium
             executeMethod.Execute(AppiumDriverCommand.PushFile, new Dictionary<string, object>()
                 {["path"] = pathOnDevice, ["data"] = base64Data});
 
-        public static void FingerPrint(IExecuteMethod executeMethod, int fingerprintId) =>
-            executeMethod.Execute(AppiumDriverCommand.FingerPrint, new Dictionary<string, object>()
-                {["fingerprintId"] = fingerprintId});
+        public static void FingerPrint(IExecuteMethod executeMethod, int fingerprintId) {
+             executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                    ["script"] = "mobile:fingerprint",
+                    ["args"] = new object[] {
+                        new Dictionary<string, object> {
+                            ["fingerprintId"] = fingerprintId
+                    }
+                }
+            });
+        }
 
         public static void PushFile(IExecuteMethod executeMethod, string pathOnDevice, FileInfo file)
         {
