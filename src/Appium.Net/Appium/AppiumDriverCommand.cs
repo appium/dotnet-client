@@ -215,16 +215,6 @@ namespace OpenQA.Selenium.Appium
         public const string SetOrientation = "setOrientation";
 
         /// <summary>
-        /// Represents the Get Network Connection Command
-        /// </summary>
-        public const string GetConnectionType = "getConnectionType";
-
-        /// <summary>
-        /// Represents the Set Network Connection Command
-        /// </summary>
-        public const string SetConnectionType = "setConnectionType";
-
-        /// <summary>
         /// Represents the Get Available Engines Command
         /// </summary>
         public const string GetAvailableEngines = "getAvailableEngines";

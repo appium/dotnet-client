@@ -80,35 +80,6 @@ namespace OpenQA.Selenium.Appium.Android
             }).Value.ToString();
         }
 
-        public static void SetConection(IExecuteMethod executeMethod, ConnectionType connectionType)
-        {
-            Dictionary<string, object> values = new Dictionary<string, object>()
-            {
-                ["type"] = connectionType
-            };
-
-            Dictionary<string, object> dictionary = new Dictionary<string, object>()
-            {
-                ["name"] = "network_connection",
-                ["parameters"] = values
-            };
-
-            executeMethod.Execute(AppiumDriverCommand.SetConnectionType, dictionary);
-        }
-
-        public static ConnectionType GetConection(IExecuteMethod executeMethod)
-        {
-            var commandResponse = executeMethod.Execute(AppiumDriverCommand.GetConnectionType, null);
-            if (commandResponse.Status == WebDriverResult.Success)
-            {
-                return (ConnectionType) (long) commandResponse.Value;
-            }
-            else
-            {
-                throw new WebDriverException("The request to get the ConnectionType has failed.");
-            }
-        }
-
         #region Device Network
 
         public static void ToggleLocationServices(IExecuteMethod executeMethod) {

@@ -95,12 +95,6 @@ namespace OpenQA.Selenium.Appium
                 "/session/{sessionId}/orientation"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.SetOrientation,
                 "/session/{sessionId}/orientation"),
-            // TODO: Remove. Guide users to use mobile: setConnectivity instead.
-            new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetConnectionType,
-                "/session/{sessionId}/network_connection"),
-            // TODO: Remove. Guide users to use mobile: setConnectivity instead.
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.SetConnectionType,
-                "/session/{sessionId}/network_connection"),
             new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetLocation, "/session/{sessionId}/location"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.SetLocation,
                 "/session/{sessionId}/location"),
