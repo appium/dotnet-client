@@ -33,15 +33,6 @@ namespace OpenQA.Selenium.Appium
 
             #region Driver Commands
 
-            #region Device -> Network Commands
-
-            // TODO: Remove and advise users to use mobile:setConnectivity
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.ToggleWiFi,
-                "/session/{sessionId}/appium/device/toggle_wifi"),
-
-            #endregion
-
-
             #region Applications Management
 
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.InstallApp,

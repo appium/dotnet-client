@@ -219,8 +219,6 @@ namespace OpenQA.Selenium.Appium.Android
 
         #region Device Network
 
-        public void ToggleWifi() => AndroidCommandExecutionHelper.ToggleWifi(this);
-
         public void ToggleLocationServices() => AndroidCommandExecutionHelper.ToggleLocationServices(this);
 
         public void MakeGsmCall(string phoneNumber, GsmCallActions gsmCallAction) =>

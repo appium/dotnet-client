@@ -29,17 +29,6 @@ namespace Appium.Net.Integration.Tests.Android.Device
         }
 
         [Test]
-        public void CanToggleWifiTest()
-        {
-            var beforeToggleConnectionType = _driver.ConnectionType;
-            _driver.ToggleWifi();
-
-            var currentConnectionType = _driver.ConnectionType;
-            Assert.That(currentConnectionType, Is.Not.EqualTo(beforeToggleConnectionType));
-            _driver.ToggleWifi();
-        }
-
-        [Test]
         public void CanToggleGPSTest()
         {
             var gpsEnabled = _driver.ExecuteScript("mobile:isGpsEnabled");

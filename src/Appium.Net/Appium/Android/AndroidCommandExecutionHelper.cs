@@ -118,9 +118,6 @@ namespace OpenQA.Selenium.Appium.Android
             });
         }
 
-        public static void ToggleWifi(IExecuteMethod executeMethod) =>
-            executeMethod.Execute(AppiumDriverCommand.ToggleWiFi);
-
         public static void GsmCall(IExecuteMethod executeMethod, string number, GsmCallActions gsmCallAction) {
             executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
                 ["script"] = "mobile:gsmCall",

@@ -105,11 +105,6 @@ namespace OpenQA.Selenium.Appium
         public const string PullFolder = "pullFolder";
 
         /// <summary>
-        /// Toggle Wifi Command.
-        /// </summary>
-        public const string ToggleWiFi = "toggleWiFi";
-
-        /// <summary>
         /// Toggle Location Services Command.
         /// </summary>
         public const string ToggleLocationServices = "toggleLocationServices";

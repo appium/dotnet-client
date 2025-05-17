@@ -19,11 +19,6 @@ namespace OpenQA.Selenium.Appium.Interfaces
     public interface INetworkActions
     {
         /// <summary>
-        /// Switch the state of the WiFi service
-        /// </summary>
-        void ToggleWifi();
-
-        /// <summary>
         /// Switch the state of the location service
         /// </summary>
         void ToggleLocationServices();
