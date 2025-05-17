@@ -5,6 +5,7 @@ using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Support.UI;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Appium.Net.Integration.Tests.Android
@@ -29,14 +30,21 @@ namespace Appium.Net.Integration.Tests.Android
         [SetUp]
         public void SetUp()
         {
-            _driver.StartActivity(Apps.GetId(_appKey), ".ApiDemos");
+            _driver.ExecuteScript(
+                "mobile:startActivity",
+                new object[] {
+                    new Dictionary<string, string>() {
+                        ["intent"] = "io.appium.android.apis/.ApiDemos",
+                    }
+                }
+            );
             _waitDriver = new WebDriverWait(_driver, _driverTimeOut);
             _waitDriver.IgnoreExceptionTypes(typeof(NoSuchElementException));
         }
 
         [Test]
         public void WebDriverWaitElementNotFoundTestCase()
-        {       
+        {
             try
             {
                 var text = _waitDriver.Until(drv =>
@@ -48,7 +56,7 @@ namespace Appium.Net.Integration.Tests.Android
             {
                 var excpetionType =  wx.GetType();
                 Assert.That(typeof(WebDriverTimeoutException), Is.EqualTo(excpetionType));
-            }    
+            }
         }
 
         [Test]
@@ -58,7 +66,7 @@ namespace Appium.Net.Integration.Tests.Android
             stopWatch.Start();
 
             try
-            {   
+            {
                 var text = _waitDriver.Until(drv =>
                 {
                     return drv.FindElement(MobileBy.Id("Storage"));
@@ -79,7 +87,7 @@ namespace Appium.Net.Integration.Tests.Android
             {
                 _ = _driver.TerminateApp(Apps.GetId(_appKey));
                 _driver?.Quit();
-            }   
+            }
             if (!Env.ServerIsRemote())
             {
                 AppiumServers.StopLocalService();

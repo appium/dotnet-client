@@ -145,11 +145,6 @@ namespace OpenQA.Selenium.Appium
         public const string GetDisplayDensity = "display_density";
 
         /// <summary>
-        /// The Start Activity command
-        /// </summary>
-        public const string StartActivity = "startActivity";
-
-        /// <summary>
         /// Set GPS Location Command.
         /// </summary>
         public const string SetLocation = "setLocation";

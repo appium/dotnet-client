@@ -26,7 +26,7 @@ namespace OpenQA.Selenium.Appium.Android
 {
     public class AndroidDriver : AppiumDriver,
         IStartsActivity,
-        IHasNetworkConnection, INetworkActions, IHasClipboard, IHasPerformanceData,
+        INetworkActions, IHasClipboard, IHasPerformanceData,
         ISendsKeyEvents,
         IPushesFiles, IHasSettings
     {
@@ -174,32 +174,9 @@ namespace OpenQA.Selenium.Appium.Android
         {
         }
 
-
-        public void StartActivity(string appPackage, string appActivity, string appWaitPackage = "",
-            string appWaitActivity = "", bool stopApp = true) =>
-            AndroidCommandExecutionHelper.StartActivity(this, appPackage, appActivity, appWaitPackage, appWaitActivity,
-                stopApp);
-
-        public void StartActivityWithIntent(string appPackage, string appActivity, string intentAction,
-            string appWaitPackage = "", string appWaitActivity = "",
-            string intentCategory = "", string intentFlags = "", string intentOptionalArgs = "", bool stopApp = true) =>
-            AndroidCommandExecutionHelper.StartActivityWithIntent(this, appPackage, appActivity, intentAction,
-                appWaitPackage, appWaitActivity,
-                intentCategory, intentFlags, intentOptionalArgs, stopApp);
-
         public string CurrentActivity => AndroidCommandExecutionHelper.GetCurrentActivity(this);
 
         public string CurrentPackage => AndroidCommandExecutionHelper.GetCurrentPackage(this);
-
-        #region Connection Type
-
-        public ConnectionType ConnectionType
-        {
-            get => AndroidCommandExecutionHelper.GetConection(this);
-            set => AndroidCommandExecutionHelper.SetConection(this, value);
-        }
-
-        #endregion Connection Type
 
         #region Device Kesys
 

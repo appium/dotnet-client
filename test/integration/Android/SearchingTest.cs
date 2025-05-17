@@ -1,4 +1,5 @@
-﻿using Appium.Net.Integration.Tests.helpers;
+﻿using System.Collections.Generic;
+using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
@@ -25,7 +26,14 @@ namespace Appium.Net.Integration.Tests.Android
         [SetUp]
         public void SetUp()
         {
-            _driver.StartActivity("io.appium.android.apis", ".ApiDemos");
+            _driver.ExecuteScript(
+                "mobile:startActivity",
+                new object[] {
+                    new Dictionary<string, string>() {
+                        ["intent"] = "io.appium.android.apis/.ApiDemos",
+                    }
+                }
+            );
         }
 
         [OneTimeTearDown]

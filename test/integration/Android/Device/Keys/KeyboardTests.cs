@@ -1,4 +1,5 @@
-﻿using Appium.Net.Integration.Tests.helpers;
+﻿using System.Collections.Generic;
+using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.Android;
@@ -33,7 +34,7 @@ namespace Appium.Net.Integration.Tests.Android.Device.Keys
         [Test]
         public void HideKeyBoardTestCase()
         {
-            _driver.StartActivity("io.appium.android.apis", ".app.CustomTitle");
+            startCustomTitleActivity();
             var text_edit_btn = By.Id("io.appium.android.apis:id/left_text_edit");
             _driver.FindElement(text_edit_btn).Clear();
             _driver.FindElement(text_edit_btn).Click();
@@ -43,7 +44,7 @@ namespace Appium.Net.Integration.Tests.Android.Device.Keys
         [Test]
         public void IsKeyBoardShownTestCase()
         {
-            _driver.StartActivity("io.appium.android.apis", ".app.CustomTitle");
+            startCustomTitleActivity();
             var text_edit_btn = By.Id("io.appium.android.apis:id/left_text_edit");
             _driver.FindElement(text_edit_btn).Clear();
             _driver.FindElement(text_edit_btn).Click();
@@ -54,7 +55,7 @@ namespace Appium.Net.Integration.Tests.Android.Device.Keys
         [Test]
         public void HideKeyBoardWithKeyTestCase()
         {
-            _driver.StartActivity("io.appium.android.apis", ".app.CustomTitle");
+            startCustomTitleActivity();
             var text_edit_btn = By.Id("io.appium.android.apis:id/left_text_edit");
             _driver.FindElement(text_edit_btn).Clear();
             _driver.FindElement(text_edit_btn).Click();
@@ -70,13 +71,24 @@ namespace Appium.Net.Integration.Tests.Android.Device.Keys
         public void HideKeyboardWithStrategyAndKeyTestCase(string strategy, string key)
         {
 
-            _driver.StartActivity("io.appium.android.apis", ".app.CustomTitle");
+            startCustomTitleActivity();
             var text_edit_btn = By.Id("io.appium.android.apis:id/left_text_edit");
             _driver.FindElement(text_edit_btn).Clear();
             _driver.FindElement(text_edit_btn).Click();
             _driver.HideKeyboard(strategy, key);
             bool is_visible = _driver.IsKeyboardShown();
             Assert.That(!is_visible);
+        }
+
+        private void startCustomTitleActivity() {
+            _driver.ExecuteScript(
+                "mobile:startActivity",
+                new object[] {
+                    new Dictionary<string, string>() {
+                        ["intent"] = "io.appium.android.apis/.app.CustomTitle",
+                    }
+                }
+            );
         }
 
     }

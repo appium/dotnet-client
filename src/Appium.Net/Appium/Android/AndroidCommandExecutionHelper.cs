@@ -22,48 +22,6 @@ namespace OpenQA.Selenium.Appium.Android
 {
     public sealed class AndroidCommandExecutionHelper : AppiumCommandExecutionHelper
     {
-        public static void StartActivity(IExecuteMethod executeMethod, string appPackage, string appActivity,
-            string appWaitPackage = "", string appWaitActivity = "", bool stopApp = true)
-        {
-            Contract.Requires(!string.IsNullOrWhiteSpace(appPackage));
-            Contract.Requires(!string.IsNullOrWhiteSpace(appActivity));
-
-            Dictionary<string, object> parameters = new Dictionary<string, object>()
-            {
-                ["appPackage"] = appPackage,
-                ["appActivity"] = appActivity,
-                ["appWaitPackage"] = appWaitPackage,
-                ["appWaitActivity"] = appWaitActivity,
-                ["dontStopAppOnReset"] = !stopApp
-            };
-
-            executeMethod.Execute(AppiumDriverCommand.StartActivity, parameters);
-        }
-
-        public static void StartActivityWithIntent(IExecuteMethod executeMethod, string appPackage, string appActivity,
-            string intentAction, string appWaitPackage = "", string appWaitActivity = "",
-            string intentCategory = "", string intentFlags = "", string intentOptionalArgs = "", bool stopApp = true)
-        {
-            Contract.Requires(!string.IsNullOrWhiteSpace(appPackage));
-            Contract.Requires(!string.IsNullOrWhiteSpace(appActivity));
-            Contract.Requires(!string.IsNullOrWhiteSpace(intentAction));
-
-            Dictionary<string, object> parameters = new Dictionary<string, object>()
-            {
-                ["appPackage"] = appPackage,
-                ["appActivity"] = appActivity,
-                ["appWaitPackage"] = appWaitPackage,
-                ["appWaitActivity"] = appWaitActivity,
-                ["dontStopAppOnReset"] = !stopApp,
-                ["intentAction"] = intentAction,
-                ["intentCategory"] = intentCategory,
-                ["intentFlags"] = intentFlags,
-                ["optionalIntentArguments"] = intentOptionalArgs
-            };
-
-            executeMethod.Execute(AppiumDriverCommand.StartActivity, parameters);
-        }
-
         public static string GetCurrentActivity(IExecuteMethod executeMethod)
         {
             return executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
