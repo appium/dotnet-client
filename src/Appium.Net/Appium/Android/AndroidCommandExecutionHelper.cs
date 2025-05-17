@@ -68,7 +68,7 @@ namespace OpenQA.Selenium.Appium.Android
         {
             return executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
                 ["script"] = "mobile:getCurrentActivity",
-                ["args"] = new object[] {}
+                ["args"] = Array.Empty<object>()
             }).Value.ToString();
         }
 
@@ -76,7 +76,7 @@ namespace OpenQA.Selenium.Appium.Android
         {
             return executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
                 ["script"] = "mobile:getCurrentPackage",
-                ["args"] = new object[] {}
+                ["args"] = Array.Empty<object>()
             }).Value.ToString();
         }
 
@@ -114,7 +114,7 @@ namespace OpenQA.Selenium.Appium.Android
         public static void ToggleLocationServices(IExecuteMethod executeMethod) {
             executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
                 ["script"] = "mobile:toggleGps",
-                ["args"] = new object[] {}
+                ["args"] = Array.Empty<object>()
             });
         }
 
@@ -187,7 +187,7 @@ namespace OpenQA.Selenium.Appium.Android
         public static object[] GetPerformanceDataTypes(IExecuteMethod executeMethod) {
             return executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
                 ["script"] = "mobile:getPerformanceDataTypes",
-                ["args"] = new object[] {}
+                ["args"] = Array.Empty<object>()
             }).Value as object[];
         }
 
@@ -218,7 +218,7 @@ namespace OpenQA.Selenium.Appium.Android
         {
             executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
                 ["script"] = "mobile:openNotifications",
-                ["args"] = new object[] {}
+                ["args"] = Array.Empty<object>()
             });
         }
 
@@ -226,7 +226,7 @@ namespace OpenQA.Selenium.Appium.Android
         {
             return executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
                 ["script"] = "mobile:getSystemBars",
-                ["args"] = new object[] {}
+                ["args"] = Array.Empty<object>()
             }).Value as IDictionary<string, object>;
         }
 
@@ -235,7 +235,7 @@ namespace OpenQA.Selenium.Appium.Android
             return Convert.ToSingle(
                 executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
                 ["script"] = "mobile:getDisplayDensity",
-                ["args"] = new object[] {}
+                ["args"] = Array.Empty<object>()
             }).Value);
         }
 
