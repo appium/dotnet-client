@@ -37,9 +37,11 @@ namespace OpenQA.Selenium.Appium.iOS
         {
             executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
                 ["script"] = "mobile:sendBiometricMatch",
-                ["args"] = new Dictionary<string, object>{
-                    ["type"] = "touchId",
-                    ["match"] = match
+                ["args"] = new object[] {
+                    new Dictionary<string, object>{
+                        ["type"] = "touchId",
+                        ["match"] = match
+                    }
                 }
             });
         }

@@ -32,24 +32,18 @@ namespace OpenQA.Selenium.Appium
         {
             executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
                 ["script"] = "mobile:pressKey",
-                ["args"] = new object[] {
-                    new Dictionary<string, object> {
-                        ["flags"] = keyEvent.Build()
-                    }
-                }
+                ["args"] = new object[] { keyEvent.Build() }
             });
         }
 
         public static void LongPressKeyCode(IExecuteMethod executeMethod, KeyEvent keyEvent)
         {
+            var parameters = keyEvent.Build();
+            parameters.Add("isLongPress", true);
+
             executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
                 ["script"] = "mobile:pressKey",
-                ["args"] = new object[] {
-                    new Dictionary<string, object> {
-                        ["flags"] = keyEvent.Build(),
-                        ["isLongPress"] = true
-                    }
-                }
+                ["args"] = new object[] {parameters}
             });
         }
 
@@ -63,7 +57,7 @@ namespace OpenQA.Selenium.Appium
             }
             executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
                 ["script"] = "mobile:pressKey",
-                ["args"] = parameters
+                ["args"] = new object[] {parameters}
             });
         }
 
@@ -81,7 +75,7 @@ namespace OpenQA.Selenium.Appium
 
             executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
                 ["script"] = "mobile:pressKey",
-                ["args"] = parameters
+                ["args"] = new object[] {parameters}
             });
         }
 
@@ -96,7 +90,7 @@ namespace OpenQA.Selenium.Appium
 
             executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
                 ["script"] = "mobile:hideKeyboard",
-                ["args"] = parameters
+                ["args"] = new object[] {parameters}
             });
         }
 
@@ -105,7 +99,7 @@ namespace OpenQA.Selenium.Appium
             return Convert.ToBoolean(
                 executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
                     ["script"] = "mobile:isKeyboardShown",
-                    ["args"] = new object[] {}
+                    ["args"] = Array.Empty<object>()
                 }).Value
             );
         }

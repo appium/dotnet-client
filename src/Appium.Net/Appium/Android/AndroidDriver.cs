@@ -459,8 +459,10 @@ namespace OpenQA.Selenium.Appium.Android
             (AppState)Convert.ToInt32(
                 ExecuteScript(
                     "mobile:queryAppState",
-                    new Dictionary<string, object>{
-                        ["appId"] = appId
+                    new object[] {
+                        new Dictionary<string, object>{
+                            ["appId"] = appId
+                        }
                     }
                 ).ToString()
             );

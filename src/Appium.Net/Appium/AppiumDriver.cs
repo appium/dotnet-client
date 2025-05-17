@@ -225,14 +225,9 @@ namespace OpenQA.Selenium.Appium
                 parameters.Add("stringFile", stringFile);
             }
 
-            if (parameters.Count == 0)
-            {
-                parameters = null;
-            }
-
             return Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
                 ["script"] = "mobile:getAppStrings",
-                ["args"] = parameters
+                ["args"] = new object[] {parameters}
             }).Value as Dictionary<string, object>;
         }
 

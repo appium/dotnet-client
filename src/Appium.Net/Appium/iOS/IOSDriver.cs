@@ -284,8 +284,10 @@ namespace OpenQA.Selenium.Appium.iOS
             (AppState)Convert.ToInt32(
                 ExecuteScript(
                     "mobile:queryAppState",
-                    new Dictionary<string, object>{
-                        ["bundleId"] = bundleId
+                    new object[] {
+                        new Dictionary<string, object>{
+                            ["bundleId"] = bundleId
+                        }
                     }
                 ).ToString()
             );
