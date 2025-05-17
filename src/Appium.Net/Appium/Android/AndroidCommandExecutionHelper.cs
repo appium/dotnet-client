@@ -117,8 +117,6 @@ namespace OpenQA.Selenium.Appium.Android
                 ["args"] = Array.Empty<object>()
             });
         }
-        public static void ToggleData(IExecuteMethod executeMethod) =>
-            executeMethod.Execute(AppiumDriverCommand.ToggleData);
 
         public static void ToggleWifi(IExecuteMethod executeMethod) =>
             executeMethod.Execute(AppiumDriverCommand.ToggleWiFi);

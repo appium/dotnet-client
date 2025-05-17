@@ -219,9 +219,6 @@ namespace OpenQA.Selenium.Appium.Android
 
         #region Device Network
 
-        public void ToggleData() =>
-            AndroidCommandExecutionHelper.ToggleData(this);
-
         public void ToggleWifi() => AndroidCommandExecutionHelper.ToggleWifi(this);
 
         public void ToggleLocationServices() => AndroidCommandExecutionHelper.ToggleLocationServices(this);

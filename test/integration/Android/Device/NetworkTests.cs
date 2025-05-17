@@ -29,20 +29,6 @@ namespace Appium.Net.Integration.Tests.Android.Device
         }
 
         [Test]
-        public void CanToggleDataTest()
-        {
-            ConnectionType beforeToggle = _driver.ConnectionType;
-            _driver.ToggleData();
-            // Toggle data connection and get the new connection type
-            ConnectionType afterFirstToggle = _driver.ConnectionType;
-            Assert.That(beforeToggle, Is.Not.EqualTo(afterFirstToggle));
-            _driver.ToggleData();
-            // afterSecondToggle stores the connection type after the second toggle to verify it matches the initial state
-            ConnectionType afterSecondToggle = _driver.ConnectionType;
-            Assert.That(afterSecondToggle, Is.EqualTo(beforeToggle));
-        }
-
-        [Test]
         public void CanToggleWifiTest()
         {
             var beforeToggleConnectionType = _driver.ConnectionType;

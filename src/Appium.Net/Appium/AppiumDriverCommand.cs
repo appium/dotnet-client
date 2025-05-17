@@ -45,11 +45,6 @@ namespace OpenQA.Selenium.Appium
         public static string SetGsmVoiceState = "gsm_voice";
 
         /// <summary>
-        /// Toggle Network Data Command
-        /// </summary>
-        public static string ToggleData = "toggleData";
-
-        /// <summary>
         /// Press key code
         /// </summary>
         public const string PressKeyCode = "pressKeyCode";
