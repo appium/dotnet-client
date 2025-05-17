@@ -344,15 +344,6 @@ namespace OpenQA.Selenium.Appium.Android
 
         #endregion
 
-        /// <summary>
-        /// Get test-coverage data
-        /// </summary>
-        /// <param name="intent">a string containing the intent.</param>
-        /// <param name="path">a string containing the path.</param>
-        /// <return>a base64 string containing the data</return>
-        public string EndTestCoverage(string intent, string path) =>
-            AndroidCommandExecutionHelper.EndTestCoverage(this, intent, path);
-
         public void SetSetting(string setting, object value) =>
             AndroidCommandExecutionHelper.SetSetting(this, setting, value);
 

@@ -115,11 +115,6 @@ namespace OpenQA.Selenium.Appium
         public const string BackgroundApp = "backgroundApp";
 
         /// <summary>
-        ///  End Test Coverage Command.
-        /// </summary>
-        public const string EndTestCoverage = "endTestCoverage";
-
-        /// <summary>
         ///  Get App Strings Command.
         /// </summary>
         public const string GetAppStrings = "getAppStrings";

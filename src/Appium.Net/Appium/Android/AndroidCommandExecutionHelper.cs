@@ -140,11 +140,6 @@ namespace OpenQA.Selenium.Appium.Android
 
         #endregion
 
-        public static string EndTestCoverage(IExecuteMethod executeMethod, string intent, string path) =>
-            executeMethod.Execute(AppiumDriverCommand.EndTestCoverage,
-                new Dictionary<string, object>()
-                    {["intent"] = intent, ["path"] = path}).Value as string;
-
         #region Device Performance
 
         public static object[] GetPerformanceDataTypes(IExecuteMethod executeMethod) {

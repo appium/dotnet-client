@@ -66,9 +66,6 @@ namespace OpenQA.Selenium.Appium
 
             #endregion (WinAppDriver) legacy app management
 
-            // TODO: Remove
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.EndTestCoverage,
-                "/session/{sessionId}/appium/app/end_test_coverage"),
             // TODO: Remove and guide users to use mobile:startActivity as many arguments.
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.StartActivity,
                 "/session/{sessionId}/appium/device/start_activity"),
