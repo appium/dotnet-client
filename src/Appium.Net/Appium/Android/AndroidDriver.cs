@@ -222,8 +222,6 @@ namespace OpenQA.Selenium.Appium.Android
         public void ToggleData() =>
             AndroidCommandExecutionHelper.ToggleData(this);
 
-        public void ToggleAirplaneMode() => AndroidCommandExecutionHelper.ToggleAirplaneMode(this);
-
         public void ToggleWifi() => AndroidCommandExecutionHelper.ToggleWifi(this);
 
         public void ToggleLocationServices() => AndroidCommandExecutionHelper.ToggleLocationServices(this);

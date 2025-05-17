@@ -36,8 +36,6 @@ namespace OpenQA.Selenium.Appium
             #region Device -> Network Commands
 
             // TODO: Remove and advise users to use mobile:setConnectivity
-            new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.ToggleAirplaneMode,
-                "/session/{sessionId}/appium/device/toggle_airplane_mode"),
             // TODO: Remove and advise users to use mobile:setConnectivity
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.ToggleData,
                 "/session/{sessionId}/appium/device/toggle_data"),

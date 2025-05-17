@@ -43,16 +43,6 @@ namespace Appium.Net.Integration.Tests.Android.Device
         }
 
         [Test]
-        public void CanToggleAirplaneModeTest()
-        {
-            _driver.ToggleAirplaneMode();
-
-            var currentConnectionType = _driver.ConnectionType;
-            Assert.That(currentConnectionType, Is.EqualTo(ConnectionType.AirplaneMode));
-            _driver.ToggleAirplaneMode();
-        }
-
-        [Test]
         public void CanToggleWifiTest()
         {
             var beforeToggleConnectionType = _driver.ConnectionType;

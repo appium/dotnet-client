@@ -117,10 +117,6 @@ namespace OpenQA.Selenium.Appium.Android
                 ["args"] = Array.Empty<object>()
             });
         }
-
-        public static void ToggleAirplaneMode(IExecuteMethod executeMethod) =>
-            executeMethod.Execute(AppiumDriverCommand.ToggleAirplaneMode);
-
         public static void ToggleData(IExecuteMethod executeMethod) =>
             executeMethod.Execute(AppiumDriverCommand.ToggleData);
 
