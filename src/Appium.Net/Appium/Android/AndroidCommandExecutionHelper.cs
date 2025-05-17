@@ -128,50 +128,51 @@ namespace OpenQA.Selenium.Appium.Android
             executeMethod.Execute(AppiumDriverCommand.ToggleWiFi);
 
         public static void GsmCall(IExecuteMethod executeMethod, string number, GsmCallActions gsmCallAction) {
-            Dictionary<string, object> dictionary = new Dictionary<string, object>()
-            {
-                ["phoneNumber"] = number,
-                ["action"] = gsmCallAction.ToString().ToLowerInvariant()
-            };
             executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
                 ["script"] = "mobile:gsmCall",
-                ["args"] = dictionary
+                ["args"] = new object[] {
+                    new Dictionary<string, object>() {
+                        ["phoneNumber"] = number,
+                        ["action"] = gsmCallAction.ToString().ToLowerInvariant()
+                    }
+                }
             });
         }
 
         public static void SendSms(IExecuteMethod executeMethod, string number, string message) {
-            Dictionary<string, object> dictionary = new Dictionary<string, object>()
-            {
-                ["phoneNumber"] = number,
-                ["message"] = message
-            };
             executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
                 ["script"] = "mobile:sendSms",
-                ["args"] = dictionary
+                ["args"] = new object[] {
+                    new Dictionary<string, object>() {
+                        ["phoneNumber"] = number,
+                        ["message"] = message
+                    }
+                }
             });
         }
 
         public static void SetGsmStrength(IExecuteMethod executeMethod, GsmSignalStrength gsmSignalStrength)
         {
-            Dictionary<string, object> dictionary = new Dictionary<string, object>()
-            {
-                ["strength"] = gsmSignalStrength,
-            };
             executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
                 ["script"] = "mobile:gsmSignal",
-                ["args"] = dictionary
+                ["args"] = new object[] {
+                    new Dictionary<string, object>() {
+                        ["strength"] = gsmSignalStrength,
+                    }
+                }
             });
         }
 
         public static void SetGsmVoice(IExecuteMethod executeMethod, GsmVoiceState gsmVoiceState)
         {
-            Dictionary<string, object> dictionary = new Dictionary<string, object>()
-            {
-                ["state"] = gsmVoiceState.ToString().ToLowerInvariant(),
-            };
             executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
                 ["script"] = "mobile:gsmVoice",
-                ["args"] = dictionary
+                ["args"] = new object[] {
+                    new Dictionary<string, object>()
+                    {
+                        ["state"] = gsmVoiceState.ToString().ToLowerInvariant(),
+                    }
+                }
             });
         }
 
@@ -195,8 +196,12 @@ namespace OpenQA.Selenium.Appium.Android
         {
             return executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
                 ["script"] = "mobile:getPerformanceData",
-                ["args"] = PrepareArguments(new[] {"packageName", "dataType"},
-                new object[] {packageName, dataType})
+                ["args"] = new object[] {
+                    PrepareArguments(
+                        new[] {"packageName", "dataType"},
+                        new object[] {packageName, dataType}
+                    )
+                }
             }).Value as object[];
         }
 
@@ -205,8 +210,12 @@ namespace OpenQA.Selenium.Appium.Android
         {
             return executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
                 ["script"] = "mobile:getPerformanceData",
-                ["args"] = PrepareArguments(new[] {"packageName", "dataType", "dataReadTimeout"},
-                new object[] {packageName, dataType, dataReadTimeout})
+                ["args"] = new object[] {
+                    PrepareArguments(
+                        new[] {"packageName", "dataType", "dataReadTimeout"},
+                        new object[] {packageName, dataType, dataReadTimeout}
+                    )
+                }
             }).Value as object[];
         }
 

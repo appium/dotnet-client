@@ -29,7 +29,7 @@ namespace OpenQA.Selenium.Appium.iOS
         public static void ShakeDevice(IExecuteMethod executeMethod) {
             executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
                 ["script"] = "mobile: shake",
-                ["args"] = new object[] {}
+                ["args"] = Array.Empty<object>()
             });
         }
 
