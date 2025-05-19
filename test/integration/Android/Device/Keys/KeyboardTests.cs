@@ -34,7 +34,7 @@ namespace Appium.Net.Integration.Tests.Android.Device.Keys
         [Test]
         public void HideKeyBoardTestCase()
         {
-            startCustomTitleActivity();
+            StartCustomTitleActivity();
             var text_edit_btn = By.Id("io.appium.android.apis:id/left_text_edit");
             _driver.FindElement(text_edit_btn).Clear();
             _driver.FindElement(text_edit_btn).Click();
@@ -44,7 +44,7 @@ namespace Appium.Net.Integration.Tests.Android.Device.Keys
         [Test]
         public void IsKeyBoardShownTestCase()
         {
-            startCustomTitleActivity();
+            StartCustomTitleActivity();
             var text_edit_btn = By.Id("io.appium.android.apis:id/left_text_edit");
             _driver.FindElement(text_edit_btn).Clear();
             _driver.FindElement(text_edit_btn).Click();
@@ -55,7 +55,7 @@ namespace Appium.Net.Integration.Tests.Android.Device.Keys
         [Test]
         public void HideKeyBoardWithKeyTestCase()
         {
-            startCustomTitleActivity();
+            StartCustomTitleActivity();
             var text_edit_btn = By.Id("io.appium.android.apis:id/left_text_edit");
             _driver.FindElement(text_edit_btn).Clear();
             _driver.FindElement(text_edit_btn).Click();
@@ -71,7 +71,7 @@ namespace Appium.Net.Integration.Tests.Android.Device.Keys
         public void HideKeyboardWithStrategyAndKeyTestCase(string strategy, string key)
         {
 
-            startCustomTitleActivity();
+            StartCustomTitleActivity();
             var text_edit_btn = By.Id("io.appium.android.apis:id/left_text_edit");
             _driver.FindElement(text_edit_btn).Clear();
             _driver.FindElement(text_edit_btn).Click();
@@ -80,7 +80,7 @@ namespace Appium.Net.Integration.Tests.Android.Device.Keys
             Assert.That(!is_visible);
         }
 
-        private void startCustomTitleActivity() {
+        private void StartCustomTitleActivity() {
             _driver.ExecuteScript(
                 "mobile:startActivity",
                 new object[] {
