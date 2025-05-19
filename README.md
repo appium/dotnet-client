@@ -29,7 +29,7 @@ For example, some changes in the Selenium binding could break the Appium client.
 
 
 ## v8
-To keep compatibility with Appium v3, most of deprecated endpoint method calls have replaced with compatible [extension command](https://appium.io/docs/en/latest/guides/execute-methods/) with [this PR](https://github.com/appium/dotnet-client/pull/939). Old drivers which still haven't implemented extention commands might not have proper implementation. Then, you will need to update Appium driver versions first.
+To keep compatibility with Appium v3, most of deprecated endpoint method calls have replaced with compatible [extension command](https://appium.io/docs/en/latest/guides/execute-methods/) with [this PR](https://github.com/appium/dotnet-client/pull/939). Old drivers which still haven't implemented extension commands might not have proper implementation. Then, you will need to update Appium driver versions first.
 
 Removed methods are:
 - `ToggleAirplaneMode`, `ToggleData`, `ToggleWifi`, `SetConnectionType`
