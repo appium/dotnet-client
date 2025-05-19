@@ -11,12 +11,12 @@
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-lightblue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-This driver is an extension of the [Selenium](http://docs.seleniumhq.org/) C# client. It has 
+This driver is an extension of the [Selenium](http://docs.seleniumhq.org/) C# client. It has
 all the functionalities of the regular driver, but add Appium-specific methods on top of this.
 
 ## Compatibility Matrix
 
-The Appium .NET Client depends on [Selenium .NET binding](https://www.nuget.org/packages/Selenium.WebDriver), thus the Selenium .NET binding update might affect the Appium .NET Client behavior. 
+The Appium .NET Client depends on [Selenium .NET binding](https://www.nuget.org/packages/Selenium.WebDriver), thus the Selenium .NET binding update might affect the Appium .NET Client behavior.
 For example, some changes in the Selenium binding could break the Appium client.
 
 |Appium .NET Client| Selenium Binding	| .NET Version |
@@ -27,8 +27,22 @@ For example, some changes in the Selenium binding could break the Appium client.
 |`5.0.0` |`4.0.0` - `4.22.0` | .NET 6.0, .NET Framework 4.8 |
 |`4.4.5` |`3.141.0` |.NET Standard 2.0, .NET Framework 4.8 |
 
+
+## v8
+To keep compatibility with Appium v3, most of deprecated endpoint method calls have replaced with compatible [extenstion command](https://appium.io/docs/en/latest/guides/execute-methods/) with [this PR](https://github.com/appium/dotnet-client/pull/939). Old drivers which still haven't implemented extention commands might not have proper implementation. Then, you will need to update Appium driver versions first.
+
+Removed methods are:
+- `ToggleAirplaneMode`, `ToggleData`, `ToggleWifi`, `SetConnectionType`
+    - Use `mobile:setConnectivity` to turn on or off the desired connectivity preference
+- `GetConnectionType`
+    - Use `mobile:getConnectivity` to get network connectivity status
+- `EndTestCoverage`
+    - No longer exists in the appium uia2 driver. Please use `mobile:shell` to build shell command by yourself
+- `StartActivityWithIntent`, `StartActivity`
+    - Please use `mobile:startActivity` [*](https://github.com/appium/appium-uiautomator2-driver?tab=readme-ov-file#mobile-startactivity) to build expected arguments to start an activity
+
 ## v5
- 
+
 ### Appium server compatibility for v5.x
 
 > [!IMPORTANT]
@@ -44,24 +58,24 @@ App management: Please read [issue #15807](https://github.com/appium/appium/issu
 ### Migration Guide to W3C actions
 ```csharp
   using OpenQA.Selenium.Interactions;
-  
+
   var touch = new PointerInputDevice(PointerKind.Touch, "finger");
   var sequence = new ActionSequence(touch);
   var move = touch.CreatePointerMove(elementToTouch, elementToTouch.Location.X, elementToTouch.Location.Y,TimeSpan.FromSeconds(1));
   var actionPress = touch.CreatePointerDown(MouseButton.Touch);
   var pause = touch.CreatePause(TimeSpan.FromMilliseconds(250));
   var actionRelease = touch.CreatePointerUp(MouseButton.Touch);
- 
+
   sequence.AddAction(move);
   sequence.AddAction(actionPress);
   sequence.AddAction(pause);
   sequence.AddAction(actionRelease);
-  
+
   var actions_seq = new List<ActionSequence>
   {
       sequence
   };
- 
+
   _driver.PerformActions(actions_seq);
  ```
 
@@ -83,7 +97,7 @@ Dependencies:
 - [System.Drawing.Common](https://www.nuget.org/packages/System.Drawing.Common/)
 
 Note: we will NOT publish a signed version of this assembly since the dependencies we access through NuGet do not have a signed version - thus breaking the chain and causing us headaches. With that said, you are more than welcome to download the code and build a signed version yourself.
- 
+
 ## Usage
 
 ### basics
@@ -98,7 +112,7 @@ Note: we will NOT publish a signed version of this assembly since the dependenci
 [See samples here](https://github.com/appium/sample-code/tree/master/sample-code/examples/dotnet/AppiumDotNetSample)
 
 
-## Dev Build+Test 
+## Dev Build+Test
 
 Xamarin/Mono
 - Open with [Xamarin](http://xamarin.com/)
@@ -117,7 +131,7 @@ Visual Studio
 
 ## Nuget Deployment (for maintainers)
 
-### To Setup Nuget 
+### To Setup Nuget
 - Download [Nuget exe](http://nuget.org/nuget.exe).
 - Setup the Api Key ([see here](http://docs.nuget.org/docs/creating-packages/creating-and-publishing-a-package#api-key)).
 - `alias NuGet='mono <Nuget Path>/NuGet.exe'`
