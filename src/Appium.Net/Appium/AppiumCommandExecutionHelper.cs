@@ -85,7 +85,7 @@ namespace OpenQA.Selenium.Appium
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             if (key != null)
             {
-                parameters.Add("keys", new List<string>([key]));
+                parameters.Add("keys", new List<string> { key });
             }
 
             executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
