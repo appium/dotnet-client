@@ -4,9 +4,9 @@
  * See the NOTICE file distributed with this work for additional
  * information regarding copyright ownership.
  * You may obtain a copy of the License at
- * 
+ *
  *    http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -31,13 +31,6 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// </summary>
         /// <param name="key">The button pressed by the mobile driver to attempt hiding the keyboard.</param>
         void HideKeyboard(string key);
-
-        /// <summary>
-        /// Hides the device keyboard.
-        /// </summary>
-        /// <param name="strategy">Hide keyboard strategy (optional, UIAutomation only). Available strategies - 'press', 'pressKey', 'swipeDown', 'tapOut', 'tapOutside', 'default'.</param>
-        /// <param name="key">The button pressed by the mobile driver to attempt hiding the keyboard.</param>
-        void HideKeyboard(string strategy, string key);
 
         /// <summary>
         /// Determines whether the soft keyboard is currently shown.

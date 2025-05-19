@@ -235,7 +235,7 @@ namespace OpenQA.Selenium.Appium
         /// Hides the device keyboard.
         /// </summary>
         public void HideKeyboard()
-            => AppiumCommandExecutionHelper.HideKeyboard(this, null, null);
+            => AppiumCommandExecutionHelper.HideKeyboard(this, null);
 
         /// <summary>
         /// Hides the device keyboard.
@@ -243,14 +243,6 @@ namespace OpenQA.Selenium.Appium
         /// <param name="key">The button pressed by the mobile driver to attempt hiding the keyboard.</param>
         public void HideKeyboard(string key)
             => AppiumCommandExecutionHelper.HideKeyboard(executeMethod: this, key: key);
-
-        /// <summary>
-        /// Hides the device keyboard.
-        /// </summary>
-        /// <param name="strategy">Hide keyboard strategy (optional, UIAutomation only). Available strategies - 'press', 'pressKey', 'swipeDown', 'tapOut', 'tapOutside', 'default'.</param>
-        /// <param name="key">The button pressed by the mobile driver to attempt hiding the keyboard.</param>
-        public void HideKeyboard(string strategy, string key)
-            => AppiumCommandExecutionHelper.HideKeyboard(executeMethod: this, strategy: strategy, key: key);
 
         /// <summary>
         /// Whether or not the soft keyboard is shown.

@@ -21,13 +21,11 @@ namespace OpenQA.Selenium.Appium.Interfaces
     {
         /// <summary>
         /// Hides the keyboard if it is showing. Hiding the keyboard often
-        /// depends on the way an app is implemented, no single strategy always
-        /// works.
+        /// depends on the way an app is implemented.
         /// </summary>
         /// <param name="key">a String, representing the text displayed on the button of the
         /// keyboard you want to press. For example: "Done".
         /// </param>
-        /// <param name="strategy">HideKeyboardStrategy</param>
-        new void HideKeyboard(string key, string strategy = null);
+        new void HideKeyboard(string key);
     }
 }

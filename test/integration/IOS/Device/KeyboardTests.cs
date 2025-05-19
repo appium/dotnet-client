@@ -27,20 +27,6 @@ namespace Appium.Net.Integration.Tests.IOS.Device
         }
 
         [Test]
-        public void HideKeyboard_WithKeyAndStrategy_ShouldInvokeHelperMethod()
-        {
-            // Arrange
-            var key = "Done";
-            var strategy = "pressKey";
-            // Act
-            iosDriver.FindElement(MobileBy.AccessibilityId("IntegerA")).Click();
-            iosDriver.HideKeyboard(key, strategy);
-            // Assert
-            var keyboard_shown = iosDriver.IsKeyboardShown();
-            Assert.That(keyboard_shown, Is.EqualTo(false));
-        }
-
-        [Test]
         public void HideKeyboard_WithKeyOnly_ShouldInvokeHelperMethod()
         {
             TimeSpan _driverTimeOut = TimeSpan.FromSeconds(5);

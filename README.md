@@ -40,6 +40,8 @@ Removed methods are:
     - No longer exists in the appium uia2 driver. Please use `mobile:shell` to build shell command by yourself
 - `StartActivityWithIntent`, `StartActivity`
     - Please use `mobile:startActivity` [*](https://github.com/appium/appium-uiautomator2-driver?tab=readme-ov-file#mobile-startactivity) to build expected arguments to start an activity
+- `HideKeyboard` with `strategy` argument for deprecated uiautomator driver.
+    -  `HideKeyboardStrategy` Enum as well.
 
 ## v5
 

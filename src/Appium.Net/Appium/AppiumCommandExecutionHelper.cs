@@ -79,9 +79,8 @@ namespace OpenQA.Selenium.Appium
             });
         }
 
-        public static void HideKeyboard(IExecuteMethod executeMethod, string strategy = null, string key = null)
+        public static void HideKeyboard(IExecuteMethod executeMethod, string key = null)
         {
-            // TODO: should take care
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             if (key != null)
             {
