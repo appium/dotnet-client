@@ -16,7 +16,6 @@ namespace OpenQA.Selenium.Appium
 {
     public class AppiumDriverCommand
     {
-        // TODO: remove removed methods
         #region Appium Specific extensions to JSONWP Commands
 
         /// <summary>

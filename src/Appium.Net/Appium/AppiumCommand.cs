@@ -55,17 +55,6 @@ namespace OpenQA.Selenium.Appium
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.PullFolder,
                 "/session/{sessionId}/appium/device/pull_folder"),
 
-            #region (WinAppDriver) legacy app management
-
-            // TODO: use windows:closeApp
-            new AppiumCommand(HttpCommandInfo.PostCommand, WindowsDriverCommand.CloseApp,
-                "/session/{sessionId}/appium/app/close"),
-            // TODO: use windows:launchApp
-            new AppiumCommand(HttpCommandInfo.PostCommand, WindowsDriverCommand.LaunchApp,
-                "/session/{sessionId}/appium/app/launch"),
-
-            #endregion (WinAppDriver) legacy app management
-
             new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetSettings,
                 "/session/{sessionId}/appium/settings"),
             new AppiumCommand(HttpCommandInfo.PostCommand, AppiumDriverCommand.UpdateSettings,

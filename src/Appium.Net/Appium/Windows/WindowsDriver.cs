@@ -195,7 +195,10 @@ namespace OpenQA.Selenium.Appium.Windows
         /// </summary>
         public void CloseApp()
         {
-            ((IExecuteMethod)this).Execute(WindowsDriverCommand.CloseApp);
+            ((IExecuteMethod)this).Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "windows:closeApp",
+                ["args"] = Array.Empty<object>()
+            });
         }
 
         /// <summary>
@@ -204,6 +207,10 @@ namespace OpenQA.Selenium.Appium.Windows
         public void LaunchApp()
         {
             ((IExecuteMethod)this).Execute(WindowsDriverCommand.LaunchApp);
+            ((IExecuteMethod)this).Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "windows:launchApp",
+                ["args"] = Array.Empty<object>()
+            });
         }
 
         #endregion App management
