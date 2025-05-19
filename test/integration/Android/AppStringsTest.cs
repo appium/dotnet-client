@@ -38,7 +38,7 @@ namespace Appium.Net.Integration.Tests.Android
         [Test]
         public void GetAppStringsUsingLang()
         {
-            Assert.That(_driver.GetAppStringDictionary("en"), Is.Not.Empty);
+            Assert.That(_driver.GetAppStringDictionary("ja"), Is.Not.Empty);
         }
     }
 }

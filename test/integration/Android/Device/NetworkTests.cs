@@ -25,42 +25,17 @@ namespace Appium.Net.Integration.Tests.Android.Device
         [OneTimeTearDown]
         public void TearDown()
         {
-            _driver?.Dispose();            
+            _driver?.Dispose();
         }
 
         [Test]
-        public void CanToggleDataTest()
+        public void CanToggleGPSTest()
         {
-            ConnectionType beforeToggle = _driver.ConnectionType;
-            _driver.ToggleData();
-            // Toggle data connection and get the new connection type
-            ConnectionType afterFirstToggle = _driver.ConnectionType;
-            Assert.That(beforeToggle, Is.Not.EqualTo(afterFirstToggle));
-            _driver.ToggleData();
-            // afterSecondToggle stores the connection type after the second toggle to verify it matches the initial state
-            ConnectionType afterSecondToggle = _driver.ConnectionType;
-            Assert.That(afterSecondToggle, Is.EqualTo(beforeToggle));
-        }
-
-        [Test]
-        public void CanToggleAirplaneModeTest()
-        {
-            _driver.ToggleAirplaneMode();
-
-            var currentConnectionType = _driver.ConnectionType;
-            Assert.That(currentConnectionType, Is.EqualTo(ConnectionType.AirplaneMode));
-            _driver.ToggleAirplaneMode();
-        }
-
-        [Test]
-        public void CanToggleWifiTest()
-        {
-            var beforeToggleConnectionType = _driver.ConnectionType;
-            _driver.ToggleWifi();
-
-            var currentConnectionType = _driver.ConnectionType;
-            Assert.That(currentConnectionType, Is.Not.EqualTo(beforeToggleConnectionType));
-            _driver.ToggleWifi();
+            var gpsEnabled = _driver.ExecuteScript("mobile:isGpsEnabled");
+            _driver.ToggleLocationServices();
+            var currentGpsEnabled = _driver.ExecuteScript("mobile:isGpsEnabled");
+            Assert.That(currentGpsEnabled, Is.Not.EqualTo(gpsEnabled));
+            _driver.ToggleLocationServices();
         }
 
         [Test]

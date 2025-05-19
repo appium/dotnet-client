@@ -3,12 +3,13 @@ using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
+using OpenQA.Selenium.Appium.Enums;
 
 namespace Appium.Net.Integration.Tests.Android.Device.App
 {
     internal class AppTests
     {
-        private AppiumDriver _driver;
+        private AndroidDriver _driver;
         private AppiumOptions _androidOptions;
         private const string ApiDemosPackageName = "io.appium.android.apis";
         private const string ApiDemoElement = "Accessibility";
@@ -37,10 +38,12 @@ namespace Appium.Net.Integration.Tests.Android.Device.App
             //Activate an app to foreground
             Assert.DoesNotThrow(() => _driver.ActivateApp(ApiDemosPackageName));
 
+            Assert.That(_driver.GetAppState(ApiDemosPackageName), Is.EqualTo(AppState.RunningInForeground));
+
             //Verify the expected app was activated
             Assert.DoesNotThrow(() => _driver.FindElement(MobileBy.AccessibilityId(ApiDemoElement)));
         }
-        
+
         [Test]
         public void CanActivateAppWithTimeoutTest()
         {

@@ -26,7 +26,7 @@ namespace OpenQA.Selenium.Appium.Android
 {
     public class AndroidDriver : AppiumDriver,
         IStartsActivity,
-        IHasNetworkConnection, INetworkActions, IHasClipboard, IHasPerformanceData,
+        INetworkActions, IHasClipboard, IHasPerformanceData,
         ISendsKeyEvents,
         IPushesFiles, IHasSettings
     {
@@ -174,32 +174,9 @@ namespace OpenQA.Selenium.Appium.Android
         {
         }
 
-
-        public void StartActivity(string appPackage, string appActivity, string appWaitPackage = "",
-            string appWaitActivity = "", bool stopApp = true) =>
-            AndroidCommandExecutionHelper.StartActivity(this, appPackage, appActivity, appWaitPackage, appWaitActivity,
-                stopApp);
-
-        public void StartActivityWithIntent(string appPackage, string appActivity, string intentAction,
-            string appWaitPackage = "", string appWaitActivity = "",
-            string intentCategory = "", string intentFlags = "", string intentOptionalArgs = "", bool stopApp = true) =>
-            AndroidCommandExecutionHelper.StartActivityWithIntent(this, appPackage, appActivity, intentAction,
-                appWaitPackage, appWaitActivity,
-                intentCategory, intentFlags, intentOptionalArgs, stopApp);
-
         public string CurrentActivity => AndroidCommandExecutionHelper.GetCurrentActivity(this);
 
         public string CurrentPackage => AndroidCommandExecutionHelper.GetCurrentPackage(this);
-
-        #region Connection Type
-
-        public ConnectionType ConnectionType
-        {
-            get => AndroidCommandExecutionHelper.GetConection(this);
-            set => AndroidCommandExecutionHelper.SetConection(this, value);
-        }
-
-        #endregion Connection Type
 
         #region Device Kesys
 
@@ -218,13 +195,6 @@ namespace OpenQA.Selenium.Appium.Android
         #endregion
 
         #region Device Network
-
-        public void ToggleData() =>
-            AndroidCommandExecutionHelper.ToggleData(this);
-
-        public void ToggleAirplaneMode() => AndroidCommandExecutionHelper.ToggleAirplaneMode(this);
-
-        public void ToggleWifi() => AndroidCommandExecutionHelper.ToggleWifi(this);
 
         public void ToggleLocationServices() => AndroidCommandExecutionHelper.ToggleLocationServices(this);
 
@@ -245,7 +215,7 @@ namespace OpenQA.Selenium.Appium.Android
         #region Device System
 
         /// <summary>
-        /// Open the notifications 
+        /// Open the notifications
         /// </summary>
         public void OpenNotifications() => AndroidCommandExecutionHelper.OpenNotifications(this);
 
@@ -291,7 +261,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// Locks the device. Optionally, unlocks it after a specified number of seconds.
         /// </summary>
         /// <param name="seconds">
-        /// The number of seconds after which the device will be automatically unlocked. 
+        /// The number of seconds after which the device will be automatically unlocked.
         /// Set to 0 or leave it empty to require manual unlock.
         /// </param>
         /// <exception cref="WebDriverException">Thrown if the command execution fails.</exception>
@@ -351,15 +321,6 @@ namespace OpenQA.Selenium.Appium.Android
 
         #endregion
 
-        /// <summary>
-        /// Get test-coverage data
-        /// </summary>
-        /// <param name="intent">a string containing the intent.</param>
-        /// <param name="path">a string containing the path.</param>
-        /// <return>a base64 string containing the data</return> 
-        public string EndTestCoverage(string intent, string path) =>
-            AndroidCommandExecutionHelper.EndTestCoverage(this, intent, path);
-
         public void SetSetting(string setting, object value) =>
             AndroidCommandExecutionHelper.SetSetting(this, setting, value);
 
@@ -400,7 +361,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// <param name="contentType"></param>
         /// <param name="base64Content"></param>
         public void SetClipboard(ClipboardContentType contentType, string base64Content) =>
-            AppiumCommandExecutionHelper.SetClipboard(this, contentType, base64Content);
+            AppiumCommandExecutionHelper.MobileSetClipboard(this, contentType, base64Content);
 
         /// <summary>
         /// Get the content of the clipboard.
@@ -409,7 +370,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// <remarks>Android supports plaintext only</remarks>
         /// <returns>The content of the clipboard as base64-encoded string or an empty string if the clipboard is empty</returns>
         public string GetClipboard(ClipboardContentType contentType) =>
-            AppiumCommandExecutionHelper.GetClipboard(this, contentType);
+            AppiumCommandExecutionHelper.MobileGetClipboard(this, contentType);
 
         /// <summary>
         /// Sets text to the clipboard
@@ -449,5 +410,22 @@ namespace OpenQA.Selenium.Appium.Android
         /// </summary>
         /// <returns>The image content of the clipboard as base64-encoded string or null if there is no image on the clipboard</returns>
         public Image GetClipboardImage() => throw new NotImplementedException();
+
+        /// <summary>
+        /// Gets the State of the app.
+        /// </summary>
+        /// <param name="appId">a string containing the id of the app.</param>
+        /// <returns>an enumeration of the app state.</returns>
+        public AppState GetAppState(string appId) =>
+            (AppState)Convert.ToInt32(
+                ExecuteScript(
+                    "mobile:queryAppState",
+                    new object[] {
+                        new Dictionary<string, object>{
+                            ["appId"] = appId
+                        }
+                    }
+                ).ToString()
+            );
     }
 }

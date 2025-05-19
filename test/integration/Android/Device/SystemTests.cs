@@ -47,5 +47,14 @@ namespace Appium.Net.Integration.Tests.Android.Device
             var androidDriver = (AndroidDriver)_driver;
             androidDriver.OpenNotifications();
         }
+
+        [Test]
+        public void CanGetSystemTimeTest()
+        {
+            var androidDriver = (AndroidDriver)_driver;
+            var time = androidDriver.DeviceTime;
+            Assert.That(time, Is.Not.Empty);
+            Assert.That(DateTime.Parse(time), Is.Not.EqualTo(DateTime.Now.AddDays(3)));
+        }
     }
 }

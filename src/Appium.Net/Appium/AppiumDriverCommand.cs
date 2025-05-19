@@ -24,11 +24,6 @@ namespace OpenQA.Selenium.Appium
         public const string ShakeDevice = "shakeDevice";
 
         /// <summary>
-        /// Toggle's the Airplane Mode ("Flight Safe Mode") Command
-        /// </summary>
-        public const string ToggleAirplaneMode = "toggleAirplaneMode";
-
-        /// <summary>
         /// Toggle Wifi Command.
         /// </summary>
         public const string GsmCall = "gsm_call";
@@ -47,11 +42,6 @@ namespace OpenQA.Selenium.Appium
         /// Set GSM voice state
         /// </summary>
         public static string SetGsmVoiceState = "gsm_voice";
-
-        /// <summary>
-        /// Toggle Network Data Command
-        /// </summary>
-        public static string ToggleData = "toggleData";
 
         /// <summary>
         /// Press key code
@@ -114,11 +104,6 @@ namespace OpenQA.Selenium.Appium
         public const string PullFolder = "pullFolder";
 
         /// <summary>
-        /// Toggle Wifi Command.
-        /// </summary>
-        public const string ToggleWiFi = "toggleWiFi";
-
-        /// <summary>
         /// Toggle Location Services Command.
         /// </summary>
         public const string ToggleLocationServices = "toggleLocationServices";
@@ -127,11 +112,6 @@ namespace OpenQA.Selenium.Appium
         ///  Background App Command.
         /// </summary>
         public const string BackgroundApp = "backgroundApp";
-
-        /// <summary>
-        ///  End Test Coverage Command.
-        /// </summary>
-        public const string EndTestCoverage = "endTestCoverage";
 
         /// <summary>
         ///  Get App Strings Command.
@@ -154,29 +134,14 @@ namespace OpenQA.Selenium.Appium
         public const string IsKeyboardShown = "isKeyboardShown";
 
         /// <summary>
-        ///  Open Notifications Command
-        /// </summary>
-        public const string OpenNotifications = "openNotifications";
-
-        /// <summary>
         /// Get System Bars
         /// </summary>
         public const string SystemBars = "system_bars";
 
         /// <summary>
-        /// Get the time on the device
-        /// </summary>
-        public const string SystemTime = "getDeviceTime";
-
-        /// <summary>
         /// Get Display Density
         /// </summary>
         public const string GetDisplayDensity = "display_density";
-
-        /// <summary>
-        /// The Start Activity command
-        /// </summary>
-        public const string StartActivity = "startActivity";
 
         /// <summary>
         /// Set GPS Location Command.
@@ -239,16 +204,6 @@ namespace OpenQA.Selenium.Appium
         public const string SetOrientation = "setOrientation";
 
         /// <summary>
-        /// Represents the Get Network Connection Command
-        /// </summary>
-        public const string GetConnectionType = "getConnectionType";
-
-        /// <summary>
-        /// Represents the Set Network Connection Command
-        /// </summary>
-        public const string SetConnectionType = "setConnectionType";
-
-        /// <summary>
         /// Represents the Get Available Engines Command
         /// </summary>
         public const string GetAvailableEngines = "getAvailableEngines";
@@ -298,7 +253,6 @@ namespace OpenQA.Selenium.Appium
         /// </summary>
         public const string FingerPrint = "fingerPrint";
 
-        public const string GetDeviceTime = "getDeviceTime";
 
         public const string GetSession = "getSession";
 

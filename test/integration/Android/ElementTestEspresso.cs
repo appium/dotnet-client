@@ -1,4 +1,5 @@
-﻿using Appium.Net.Integration.Tests.helpers;
+﻿using System.Collections.Generic;
+using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
@@ -17,12 +18,6 @@ namespace Appium.Net.Integration.Tests.Android
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
             _driver = new AndroidDriver(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
-        }
-
-        [SetUp]
-        public void SetUp()
-        {
-            _driver.StartActivity("io.appium.android.apis", ".ApiDemos");
         }
 
         [Test]
