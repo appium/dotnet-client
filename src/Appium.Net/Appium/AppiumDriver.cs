@@ -210,8 +210,8 @@ namespace OpenQA.Selenium.Appium
         /// strings filename
         /// </summary>
         /// <returns>a dictionary with localized strings defined in the app.</returns>
-        /// <param name="language">strings language code</param>
-        /// <param name="stringFile">strings filename</param>
+        /// <param name="language">strings language code (optional)</param>
+        /// <param name="stringFile">strings filename (optional)</param>
         public Dictionary<string, object> GetAppStringDictionary(string language = null, string stringFile = null)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
@@ -225,9 +225,10 @@ namespace OpenQA.Selenium.Appium
                 parameters.Add("stringFile", stringFile);
             }
 
-            return Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+            return Execute(DriverCommand.ExecuteScript, new Dictionary<string, object>
+            {
                 ["script"] = "mobile:getAppStrings",
-                ["args"] = new object[] {parameters}
+                ["args"] = parameters.Count == 0 ? Array.Empty<object>() : new object[] {parameters}
             }).Value as Dictionary<string, object>;
         }
 
