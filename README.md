@@ -29,7 +29,7 @@ For example, some changes in the Selenium binding could break the Appium client.
 
 
 ## v8
-To keep compatibility with Appium v3, most of deprecated endpoint method calls have replaced with compatible [extension command](https://appium.io/docs/en/latest/guides/execute-methods/) with [this PR](https://github.com/appium/dotnet-client/pull/939). Old drivers which still haven't implemented extention commands might not have proper implementation. Then, you will need to update Appium driver versions first.
+To keep compatibility with Appium v3, most deprecated endpoint method calls have been replaced with compatible [extension command](https://appium.io/docs/en/latest/guides/execute-methods/) with [this PR](https://github.com/appium/dotnet-client/pull/939). Old drivers which still haven't implemented extention commands might not have proper implementation. Then, you will need to update Appium driver versions first.
 
 Removed methods are:
 - `ToggleAirplaneMode`, `ToggleData`, `ToggleWifi`, `SetConnectionType`
@@ -37,7 +37,7 @@ Removed methods are:
 - `GetConnectionType`
     - Use `mobile:getConnectivity` to get network connectivity status
 - `EndTestCoverage`
-    - No longer exists in the appium uia2 driver. Please use `mobile:shell` to build shell command by yourself
+    - No longer exists in the appium uia2 driver. Please use `mobile:shell` to build the shell command by yourself
 - `StartActivityWithIntent`, `StartActivity`
     - Please use `mobile:startActivity` [*](https://github.com/appium/appium-uiautomator2-driver?tab=readme-ov-file#mobile-startactivity) to build expected arguments to start an activity
 - `HideKeyboard` with `strategy` argument for the [deprecated uiautomator driver](https://github.com/appium-boneyard/appium-ios-driver).
