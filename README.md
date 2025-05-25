@@ -31,17 +31,16 @@ For example, some changes in the Selenium binding could break the Appium client.
 ## v8
 To keep compatibility with Appium v3, most deprecated endpoint method calls have been replaced with compatible [extension command](https://appium.io/docs/en/latest/guides/execute-methods/) with [this PR](https://github.com/appium/dotnet-client/pull/939). Old drivers which still haven't implemented extention commands might not have proper implementation. Then, you will need to update Appium driver versions first.
 
-Removed methods are:
-- `ToggleAirplaneMode`, `ToggleData`, `ToggleWifi`, `SetConnectionType`
-    - Use `mobile:setConnectivity` to turn on or off the desired connectivity preference
-- `GetConnectionType`
-    - Use `mobile:getConnectivity` to get network connectivity status
-- `EndTestCoverage`
-    - No longer exists in the appium uia2 driver. Please use `mobile:shell` to build the shell command by yourself
-- `StartActivityWithIntent`, `StartActivity`
-    - Please use `mobile:startActivity` [*](https://github.com/appium/appium-uiautomator2-driver?tab=readme-ov-file#mobile-startactivity) to build expected arguments to start an activity
-- `HideKeyboard` with `strategy` argument for the [deprecated uiautomator driver](https://github.com/appium-boneyard/appium-ios-driver).
-    -  `HideKeyboardStrategy` Enum as well.
+| Removed Method or argument | Note |
+|------------|----------------------|-------|
+| `ToggleAirplaneMode()` | Change with `airplaneMode` parameter in [mobile:setConnectivity](https://github.com/appium/appium-uiautomator2-driver#mobile-setconnectivity) |
+| `ToggleData()` | Change with `data` parameter in [mobile:setConnectivity](https://github.com/appium/appium-uiautomator2-driver#mobile-setconnectivity) |
+| `ToggleWifi()` | Change with `wifi` parameter in [mobile:setConnectivity](https://github.com/appium/appium-uiautomator2-driver#mobile-setconnectivity) |
+| `SetConnectionType()` | Change connection type with [mobile:setConnectivity](https://github.com/appium/appium-uiautomator2-driver#mobile-setconnectivity) |
+| `GetConnectionType()` | Get connection state with [mobile:getConnectivity](https://github.com/appium/appium-uiautomator2-driver#mobile-getconnectivity) |
+| `EndTestCoverage()` | Already deprecated. |
+| `StartActivityWithIntent()`, `StartActivity()` | Use [mobile:startActivity](https://github.com/appium/appium-uiautomator2-drive#mobile-startactivity) to start an expected activity |
+| `strategy` argument in `HideKeyboard()` | It worked only deprecated [old ios driver](https://github.com/appium-boneyard/appium-ios-driver) |
 
 ## v5
 
