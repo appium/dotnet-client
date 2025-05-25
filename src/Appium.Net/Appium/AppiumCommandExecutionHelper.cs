@@ -28,6 +28,13 @@ namespace OpenQA.Selenium.Appium
 
         #region Device Key Commands
 
+
+        /// <summary>
+        /// Press a key code on the device.
+        /// Please check <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-presskey">mobile:pressKey</see> for more details.
+        /// </summary>
+        /// <param name="executeMethod">The execute method</param>
+        /// <param name="keyEvent">The key event</param>
         public static void PressKeyCode(IExecuteMethod executeMethod, KeyEvent keyEvent)
         {
             executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
@@ -36,6 +43,13 @@ namespace OpenQA.Selenium.Appium
             });
         }
 
+
+        /// <summary>
+        /// Long press a key code on the device with `isLongPress` parameter in <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-presskey">mobile:pressKey</see>.
+        /// Please check <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-presskey">mobile:pressKey</see> for more details.
+        /// </summary>
+        /// <param name="executeMethod">The execute method</param>
+        /// <param name="keyEvent">The key event</param>
         public static void LongPressKeyCode(IExecuteMethod executeMethod, KeyEvent keyEvent)
         {
             var parameters = keyEvent.Build();
@@ -47,6 +61,13 @@ namespace OpenQA.Selenium.Appium
             });
         }
 
+        /// <summary>
+        /// Press a key code on the device.
+        /// Please check <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-presskey">mobile:pressKey</see> for more details.
+        /// </summary>
+        /// <param name="executeMethod">The execute method</param>
+        /// <param name="keyCode">The key code</param>
+        /// <param name="metastate">A pressed meta key</param>
         public static void PressKeyCode(IExecuteMethod executeMethod, int keyCode, int metastate = -1)
         {
             var parameters = new Dictionary<string, object>()
@@ -61,6 +82,13 @@ namespace OpenQA.Selenium.Appium
             });
         }
 
+        /// <summary>
+        /// Long press a key code on the device with "isLongPress" parameter in <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-presskey">mobile:pressKey</see>.
+        /// Please check <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-presskey">mobile:pressKey</see> for more details.
+        /// </summary>
+        /// <param name="executeMethod">The execute method</param>
+        /// <param name="keyCode">The key code</param>
+        /// <param name="metastate">A pressed meta key</param>
         public static void LongPressKeyCode(IExecuteMethod executeMethod, int keyCode, int metastate = -1)
         {
             var parameters = new Dictionary<string, object>()
@@ -79,6 +107,13 @@ namespace OpenQA.Selenium.Appium
             });
         }
 
+
+        /// <summary>
+        /// Hide keyboard with <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-hidekeyboard">mobile:hideKeyboard</see> for Android
+        /// or <see href="https://appium.github.io/appium-xcuitest-driver/latest/reference/execute-methods/#mobile-hidekeyboard">mobile:hideKeyboard</see> for iOS.
+        /// </summary>
+        /// <param name="executeMethod">The execute method</param>
+        /// <param name="key">One or more keyboard key names used to close/hide it. It works only for Appium XCUITest driver.</param>
         public static void HideKeyboard(IExecuteMethod executeMethod, string key = null)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
@@ -93,6 +128,11 @@ namespace OpenQA.Selenium.Appium
             });
         }
 
+        /// <summary>
+        /// Check the keyboad hidden state with <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-iskeyboardshown">mobile:isKeyboardShown</see> for Android
+        /// or <see href="https://appium.github.io/appium-xcuitest-driver/latest/reference/execute-methods/#mobile-iskeyboardshown">mobile:isKeyboardShown</see> for iOS.
+        /// </summary>
+        /// <param name="executeMethod">The execute method</param>
         public static bool IsKeyboardShown(IExecuteMethod executeMethod)
         {
             return Convert.ToBoolean(
@@ -105,6 +145,13 @@ namespace OpenQA.Selenium.Appium
 
         #endregion
 
+        /// <summary>
+        /// Set clipboard content with <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-setclipboard">mobile:setClipboard</see> for Android
+        /// or <see href="https://appium.github.io/appium-xcuitest-driver/latest/reference/execute-methods/#mobile-setclipboard">mobile:setClipboard</see> for iOS.
+        /// </summary>
+        /// <param name="executeMethod">The execute method</param>
+        /// <param name="clipboardContentType">The content type to set</param>
+        /// <param name="base64Content">The content to set</param>
         public static void MobileSetClipboard(IExecuteMethod executeMethod, ClipboardContentType clipboardContentType,
             string base64Content)
         {
@@ -135,6 +182,12 @@ namespace OpenQA.Selenium.Appium
             });
         }
 
+        /// <summary>
+        /// Get clipboard content with with <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-getclipboard">mobile:getClipboard</see> for Android
+        /// or <see href="https://appium.github.io/appium-xcuitest-driver/latest/reference/execute-methods/#mobile-getclipboard">mobile:getClipboard</see> for iOS.
+        /// </summary>
+        /// <param name="executeMethod">The execute method</param>
+        /// <param name="clipboardContentType">The content type to get</param>
         public static string MobileGetClipboard(IExecuteMethod executeMethod, ClipboardContentType clipboardContentType)
         {
             var contentType = clipboardContentType.ToString().ToLowerInvariant();
@@ -162,6 +215,14 @@ namespace OpenQA.Selenium.Appium
             }).Value;
         }
 
+        /// <summary>
+        /// Set clipboard text content as "contentType" is "plaintext" with
+        /// <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-setclipboard">mobile:setClipboard</see> for Android
+        /// or <see href="https://appium.github.io/appium-xcuitest-driver/latest/reference/execute-methods/#mobile-setclipboard">mobile:setClipboard</see> for iOS.
+        /// </summary>
+        /// <param name="executeMethod">The execute method</param>
+        /// <param name="textContent">The content to set</param>
+        /// <param name="label">The optinal label to identify the current clipboard payload for Android</param>
         public static string SetClipboardText(IExecuteMethod executeMethod, string textContent, string label)
         {
             if (textContent == null)
@@ -183,6 +244,11 @@ namespace OpenQA.Selenium.Appium
             }).Value;
         }
 
+        /// <summary>
+        /// Get clipboard text content with <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-setclipboard">mobile:setClipboard</see> for Android
+        /// or <see href="https://appium.github.io/appium-xcuitest-driver/latest/reference/execute-methods/#mobile-setclipboard">mobile:setClipboard</see> for iOS.
+        /// </summary>
+        /// <param name="executeMethod">The execute method</param>
         public static string GetClipboardText(IExecuteMethod executeMethod)
         {
             var encodedContentBytes =
@@ -205,6 +271,11 @@ namespace OpenQA.Selenium.Appium
             });
         }
 
+        /// <summary>
+        /// Push file with <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-pushfile">mobile:pushFile</see> for Android
+        /// or <see href="https://appium.github.io/appium-xcuitest-driver/latest/reference/execute-methods/#mobile-pushfile">mobile:pushFile</see> for iOS.
+        /// </summary>
+        /// <param name="executeMethod">The execute method</param>
         public static void PushFile(IExecuteMethod executeMethod, string pathOnDevice, FileInfo file)
         {
             if (file == null)
