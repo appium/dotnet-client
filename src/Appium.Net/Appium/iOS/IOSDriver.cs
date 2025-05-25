@@ -182,11 +182,22 @@ namespace OpenQA.Selenium.Appium.iOS
             }
         }
 
+        /// <summary>
+        /// Shakes the device. This works only for Simulator.
+        /// </summary>
         public void ShakeDevice() => IOSCommandExecutionHelper.ShakeDevice(this);
 
+        /// <summary>
+        /// Hides the keyboard with the given key.
+        /// </summary>
+        /// <param name="key">The key to hide the keyboard with.</param>
         public new void HideKeyboard(string key) =>
             AppiumCommandExecutionHelper.HideKeyboard(this, key);
 
+        /// <summary>
+        /// Performs Touch ID authentication.
+        /// </summary>
+        /// <param name="match">Whether to simulate biometric match.</param>
         public void PerformTouchID(bool match) => IOSCommandExecutionHelper.PerformTouchID(this, match);
 
         /// <summary>
