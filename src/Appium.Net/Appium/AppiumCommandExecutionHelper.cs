@@ -28,32 +28,10 @@ namespace OpenQA.Selenium.Appium
 
         #region Device Key Commands
 
-
-        /// <summary>
-        /// Press a key code on the device.
-        /// Please check <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-presskey">mobile:pressKey</see> for more details.
-        /// </summary>
-        /// <param name="executeMethod">The execute method</param>
-        /// <param name="keyEvent">The key event</param>
-        public static void PressKeyCode(IExecuteMethod executeMethod, KeyEvent keyEvent)
-        {
-            executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
-                ["script"] = "mobile:pressKey",
-                ["args"] = new object[] { keyEvent.Build() }
-            });
-        }
-
-
-        /// <summary>
-        /// Long press a key code on the device with `isLongPress` parameter in <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-presskey">mobile:pressKey</see>.
-        /// Please check <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-presskey">mobile:pressKey</see> for more details.
-        /// </summary>
-        /// <param name="executeMethod">The execute method</param>
-        /// <param name="keyEvent">The key event</param>
-        public static void LongPressKeyCode(IExecuteMethod executeMethod, KeyEvent keyEvent)
+        private static void ExecutePressKey(IExecuteMethod executeMethod, KeyEvent keyEvent, bool isLongPress = false)
         {
             var parameters = keyEvent.Build();
-            parameters.Add("isLongPress", true);
+            parameters.Add("isLongPress", isLongPress);
 
             executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
                 ["script"] = "mobile:pressKey",
@@ -61,14 +39,7 @@ namespace OpenQA.Selenium.Appium
             });
         }
 
-        /// <summary>
-        /// Press a key code on the device.
-        /// Please check <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-presskey">mobile:pressKey</see> for more details.
-        /// </summary>
-        /// <param name="executeMethod">The execute method</param>
-        /// <param name="keyCode">The key code</param>
-        /// <param name="metastate">A pressed meta key</param>
-        public static void PressKeyCode(IExecuteMethod executeMethod, int keyCode, int metastate = -1)
+        private static void ExecutePressKeyWithMetastate(IExecuteMethod executeMethod, int keyCode, int metastate = -1, bool isLongPress = false)
         {
             var parameters = new Dictionary<string, object>()
                 {["keycode"] = keyCode};
@@ -83,6 +54,34 @@ namespace OpenQA.Selenium.Appium
         }
 
         /// <summary>
+        /// Press a key code on the device.
+        /// Please check <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-presskey">mobile:pressKey</see> for more details.
+        /// </summary>
+        /// <param name="executeMethod">The execute method</param>
+        /// <param name="keyEvent">The key event</param>
+        public static void PressKeyCode(IExecuteMethod executeMethod, KeyEvent keyEvent)
+            => ExecutePressKey(executeMethod, keyEvent, false);
+
+        /// <summary>
+        /// Long press a key code on the device with `isLongPress` parameter in <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-presskey">mobile:pressKey</see>.
+        /// Please check <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-presskey">mobile:pressKey</see> for more details.
+        /// </summary>
+        /// <param name="executeMethod">The execute method</param>
+        /// <param name="keyEvent">The key event</param>
+        public static void LongPressKeyCode(IExecuteMethod executeMethod, KeyEvent keyEvent)
+            => ExecutePressKey(executeMethod, keyEvent, true);
+
+        /// <summary>
+        /// Press a key code on the device.
+        /// Please check <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-presskey">mobile:pressKey</see> for more details.
+        /// </summary>
+        /// <param name="executeMethod">The execute method</param>
+        /// <param name="keyCode">The key code</param>
+        /// <param name="metastate">A pressed meta key</param>
+        public static void PressKeyCode(IExecuteMethod executeMethod, int keyCode, int metastate = -1)
+            => ExecutePressKeyWithMetastate(executeMethod, keyCode, metastate, false);
+
+        /// <summary>
         /// Long press a key code on the device with "isLongPress" parameter in <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-presskey">mobile:pressKey</see>.
         /// Please check <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-presskey">mobile:pressKey</see> for more details.
         /// </summary>
@@ -90,23 +89,7 @@ namespace OpenQA.Selenium.Appium
         /// <param name="keyCode">The key code</param>
         /// <param name="metastate">A pressed meta key</param>
         public static void LongPressKeyCode(IExecuteMethod executeMethod, int keyCode, int metastate = -1)
-        {
-            var parameters = new Dictionary<string, object>()
-            {
-                ["keycode"] = keyCode,
-                ["isLongPress"] = true
-            };
-            if (metastate > 0)
-            {
-                parameters.Add("metastate", metastate);
-            }
-
-            executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
-                ["script"] = "mobile:pressKey",
-                ["args"] = new object[] {parameters}
-            });
-        }
-
+            => ExecutePressKeyWithMetastate(executeMethod, keyCode, metastate, true);
 
         /// <summary>
         /// Hide keyboard with <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-hidekeyboard">mobile:hideKeyboard</see> for Android
