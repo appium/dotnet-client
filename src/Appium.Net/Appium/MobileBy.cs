@@ -63,7 +63,7 @@ namespace OpenQA.Selenium.Appium
         }
 
         /// <summary>
-        /// This method creates a <see cref="By"/> strategy 
+        /// This method creates a <see cref="By"/> strategy
         /// that searches for elements by accessibility id
         /// About Android accessibility
         /// <see href="https://developer.android.com/intl/ru/training/accessibility/accessible-app.html"/>
@@ -75,7 +75,7 @@ namespace OpenQA.Selenium.Appium
         public static By AccessibilityId(string selector) => new ByAccessibilityId(selector);
 
         /// <summary>
-        /// This method creates a <see cref="By"/> strategy 
+        /// This method creates a <see cref="By"/> strategy
         /// that searches for elements using Android UI automation framework.
         /// <see href="http://developer.android.com/intl/ru/tools/testing-support-library/index.html#uia-apis"/>
         /// </summary>
@@ -84,7 +84,7 @@ namespace OpenQA.Selenium.Appium
         public static By AndroidUIAutomator(string selector) => new ByAndroidUIAutomator(selector);
 
         /// <summary>
-        /// This method creates a <see cref="By"/> strategy 
+        /// This method creates a <see cref="By"/> strategy
         /// that searches for elements using Android UI automation framework.
         /// <see href="http://developer.android.com/intl/ru/tools/testing-support-library/index.html#uia-apis"/>
         /// </summary>
@@ -132,7 +132,7 @@ namespace OpenQA.Selenium.Appium
 
     /// <summary>
     /// Finds element when the Accessibility Id selector has the specified value.
-    /// About Android accessibility 
+    /// About Android accessibility
     /// <see href="https://developer.android.com/intl/ru/training/accessibility/accessible-app.html"/>
     /// About iOS accessibility
     /// <see href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIAccessibilityIdentification_Protocol/index.html"/>

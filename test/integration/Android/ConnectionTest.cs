@@ -28,15 +28,5 @@ namespace Appium.Net.Integration.Tests.Android
                 AppiumServers.StopLocalService();
             }
         }
-
-        [Test]
-        public void NetworkConnectionTest()
-        {
-            ((AndroidDriver) _driver).ConnectionType = ConnectionType.AirplaneMode;
-            Assert.That(((AndroidDriver) _driver).ConnectionType, Is.EqualTo(ConnectionType.AirplaneMode));
-
-            ((AndroidDriver) _driver).ConnectionType = ConnectionType.AllNetworkOn;
-            Assert.That(((AndroidDriver) _driver).ConnectionType, Is.EqualTo(ConnectionType.AllNetworkOn));
-        }
     }
 }

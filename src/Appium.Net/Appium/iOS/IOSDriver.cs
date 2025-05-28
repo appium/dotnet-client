@@ -182,11 +182,22 @@ namespace OpenQA.Selenium.Appium.iOS
             }
         }
 
+        /// <summary>
+        /// Shakes the device. This works only for Simulator.
+        /// </summary>
         public void ShakeDevice() => IOSCommandExecutionHelper.ShakeDevice(this);
 
-        public new void HideKeyboard(string key, string strategy = null) =>
-            AppiumCommandExecutionHelper.HideKeyboard(this, strategy, key);
+        /// <summary>
+        /// Hides the keyboard with the given key.
+        /// </summary>
+        /// <param name="key">The key to hide the keyboard with.</param>
+        public new void HideKeyboard(string key) =>
+            AppiumCommandExecutionHelper.HideKeyboard(this, key);
 
+        /// <summary>
+        /// Performs Touch ID authentication.
+        /// </summary>
+        /// <param name="match">Whether to simulate biometric match.</param>
         public void PerformTouchID(bool match) => IOSCommandExecutionHelper.PerformTouchID(this, match);
 
         /// <summary>
@@ -199,7 +210,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// Locks the device. Optionally, unlocks it after a specified number of seconds.
         /// </summary>
         /// <param name="seconds">
-        /// The number of seconds after which the device will be automatically unlocked. 
+        /// The number of seconds after which the device will be automatically unlocked.
         /// Set to 0 or leave it empty to require manual unlock.
         /// </param>
         /// <exception cref="WebDriverException">Thrown if the command execution fails.</exception>
@@ -223,7 +234,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// <param name="contentType"></param>
         /// <param name="base64Content"></param>
         public void SetClipboard(ClipboardContentType contentType, string base64Content) =>
-            AppiumCommandExecutionHelper.SetClipboard(this, contentType, base64Content);
+            AppiumCommandExecutionHelper.MobileSetClipboard(this, contentType, base64Content);
 
         /// <summary>
         /// Get the content of the clipboard.
@@ -232,7 +243,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// <remarks>Android supports plaintext only</remarks>
         /// <returns>The content of the clipboard as base64-encoded string or an empty string if the clipboard is empty</returns>
         public string GetClipboard(ClipboardContentType contentType) =>
-            AppiumCommandExecutionHelper.GetClipboard(this, contentType);
+            AppiumCommandExecutionHelper.MobileGetClipboard(this, contentType);
 
         /// <summary>
         /// Sets text to the clipboard
@@ -273,5 +284,23 @@ namespace OpenQA.Selenium.Appium.iOS
         /// </summary>
         /// <returns>The image content of the clipboard as an Image object or null if there is no image on the clipboard</returns>
         public Image GetClipboardImage() => IOSCommandExecutionHelper.GetClipboardImage(this);
+
+
+        /// <summary>
+        /// Gets the State of the app.
+        /// </summary>
+        /// <param name="bundleId">a string containing the id of the app.</param>
+        /// <returns>an enumeration of the app state.</returns>
+         public AppState GetAppState(string bundleId) =>
+            (AppState)Convert.ToInt32(
+                ExecuteScript(
+                    "mobile:queryAppState",
+                    new object[] {
+                        new Dictionary<string, object>{
+                            ["bundleId"] = bundleId
+                        }
+                    }
+                ).ToString()
+            );
     }
 }

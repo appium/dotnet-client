@@ -26,23 +26,36 @@ namespace OpenQA.Selenium.Appium.iOS
 {
     public sealed class IOSCommandExecutionHelper
     {
-        public static void ShakeDevice(IExecuteMethod executeMethod) =>
-            executeMethod.Execute(AppiumDriverCommand.ShakeDevice);
+        public static void ShakeDevice(IExecuteMethod executeMethod) {
+            executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:shake",
+                ["args"] = Array.Empty<object>()
+            });
+        }
 
-        public static void PerformTouchID(IExecuteMethod executeMethod, bool match) =>
-            executeMethod.Execute(AppiumDriverCommand.TouchID,
-                new Dictionary<string, object> {["match"] = match});
+        public static void PerformTouchID(IExecuteMethod executeMethod, bool match)
+        {
+            executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:sendBiometricMatch",
+                ["args"] = new object[] {
+                    new Dictionary<string, object>{
+                        ["type"] = "touchId",
+                        ["match"] = match
+                    }
+                }
+            });
+        }
 
         public static void SetClipboardUrl(IExecuteMethod executeMethod, string url)
         {
             var urlEncoded = WebUtility.UrlEncode(url);
             var base64UrlBytes = Encoding.UTF8.GetBytes(urlEncoded);
-            AppiumCommandExecutionHelper.SetClipboard(executeMethod, ClipboardContentType.Url, Convert.ToBase64String(base64UrlBytes));
+            AppiumCommandExecutionHelper.MobileSetClipboard(executeMethod, ClipboardContentType.Url, Convert.ToBase64String(base64UrlBytes));
         }
 
         public static string GetClipboardUrl(IExecuteMethod executeMethod)
         {
-            var content = AppiumCommandExecutionHelper.GetClipboard(executeMethod, ClipboardContentType.Url);
+            var content = AppiumCommandExecutionHelper.MobileGetClipboard(executeMethod, ClipboardContentType.Url);
             var urlEncodedBytes = Convert.FromBase64String(content);
             var urlDecodedBytes = Encoding.UTF8.GetString(urlEncodedBytes);
 
@@ -58,20 +71,20 @@ namespace OpenQA.Selenium.Appium.iOS
                 imageBytes = memoryStream.ToArray();
             }
 
-            AppiumCommandExecutionHelper.SetClipboard(executeMethod,
+            AppiumCommandExecutionHelper.MobileSetClipboard(executeMethod,
                 ClipboardContentType.Image,
                 Convert.ToBase64String(imageBytes));
         }
 
         public static void SetClipboardImage(IExecuteMethod executeMethod, string base64EncodeImage)
         {
-            AppiumCommandExecutionHelper.SetClipboard(executeMethod,ClipboardContentType.Image, base64EncodeImage);
+            AppiumCommandExecutionHelper.MobileSetClipboard(executeMethod,ClipboardContentType.Image, base64EncodeImage);
         }
 
         public static Image GetClipboardImage(IExecuteMethod executeMethod)
         {
             var imageBytes = Convert.FromBase64String(
-                AppiumCommandExecutionHelper.GetClipboard(executeMethod, ClipboardContentType.Image));
+                AppiumCommandExecutionHelper.MobileGetClipboard(executeMethod, ClipboardContentType.Image));
 
             if (imageBytes.Length > 0)
             {

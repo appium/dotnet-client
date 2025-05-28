@@ -26,7 +26,14 @@ namespace Appium.Net.Integration.Tests.Android
         [SetUp]
         public void SetUp()
         {
-            _driver.StartActivity("io.appium.android.apis", ".ApiDemos");
+            _driver.ExecuteScript(
+                "mobile:startActivity",
+                new object[] {
+                    new Dictionary<string, object>() {
+                        ["intent"] = "io.appium.android.apis/.ApiDemos",
+                    }
+                }
+            );
         }
 
         [Test]
@@ -67,7 +74,14 @@ namespace Appium.Net.Integration.Tests.Android
         [Test]
         public void CanFindByDescriptionUsingBuilderWhenNewlineCharacterIncluded()
         {
-            _driver.StartActivity("io.appium.android.apis", ".accessibility.TaskListActivity");
+            _driver.ExecuteScript(
+                "mobile:startActivity",
+                new object[] {
+                    new Dictionary<string, object>() {
+                        ["intent"] = "io.appium.android.apis/.accessibility.TaskListActivity",
+                    }
+                }
+            );
             By byAndroidUiAutomator = new ByAndroidUIAutomator(new AndroidUiSelector().DescriptionEquals(
                 "1. Enable QueryBack (Settings -> Accessibility -> QueryBack). \n\n" +
                 "2. Enable Explore-by-Touch (Settings -> Accessibility -> Explore by Touch). \n\n" +
@@ -83,7 +97,14 @@ namespace Appium.Net.Integration.Tests.Android
         [Test]
         public void CanFindByDescriptionUsingBuilderWhenDoubleQuoteCharacterIncluded()
         {
-            _driver.StartActivity("io.appium.android.apis", ".text.Link");
+            _driver.ExecuteScript(
+                "mobile:startActivity",
+                new object[] {
+                    new Dictionary<string, object>() {
+                        ["intent"] = "io.appium.android.apis/.text.Link",
+                    }
+                }
+            );
             By byAndroidUiAutomator = new ByAndroidUIAutomator(new AndroidUiSelector()
                 .DescriptionContains("Use a \"tel:\" URL"));
 
@@ -100,8 +121,14 @@ namespace Appium.Net.Integration.Tests.Android
             var originalValue = "original value";
             var replacedValue = "replaced value";
 
-            _driver.StartActivity("io.appium.android.apis", ".view.Controls1");
-
+           _driver.ExecuteScript(
+                "mobile:startActivity",
+                new object[] {
+                    new Dictionary<string, object>() {
+                        ["intent"] = "io.appium.android.apis/.view.Controls1",
+                    }
+                }
+            );
             var editElement =
                 _driver.FindElement(MobileBy.AndroidUIAutomator("resourceId(\"io.appium.android.apis:id/edit\")"));
 
