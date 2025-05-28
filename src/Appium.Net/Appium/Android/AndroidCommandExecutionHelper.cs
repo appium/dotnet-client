@@ -107,32 +107,39 @@ namespace OpenQA.Selenium.Appium.Android
             }).Value as object[];
         }
 
-        public static object[] GetPerformanceData(IExecuteMethod executeMethod, string packageName, string dataType)
+        private static Dictionary<string, object> CreatePerformanceDataRequest(params (string Name, object Value)[] args)
         {
-            return executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+            var argDict = new Dictionary<string, object>();
+            foreach (var arg in args)
+            {
+                argDict[arg.Name] = arg.Value;
+            }
+
+            return new Dictionary<string, object>
+            {
                 ["script"] = "mobile:getPerformanceData",
-                ["args"] = new object[] {
-                    PrepareArguments(
-                        new[] {"packageName", "dataType"},
-                        new object[] {packageName, dataType}
-                    )
-                }
-            }).Value as object[];
+                ["args"] = argDict.Count == 0 ? Array.Empty<object>() : new object[] { argDict }
+            };
         }
 
-        public static object[] GetPerformanceData(IExecuteMethod executeMethod, string packageName,
-            string dataType, int dataReadTimeout)
-        {
-            return executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
-                ["script"] = "mobile:getPerformanceData",
-                ["args"] = new object[] {
-                    PrepareArguments(
-                        new[] {"packageName", "dataType", "dataReadTimeout"},
-                        new object[] {packageName, dataType, dataReadTimeout}
-                    )
-                }
-            }).Value as object[];
-        }
+
+        public static object[] GetPerformanceData(IExecuteMethod executeMethod, string packageName, string dataType) =>
+            executeMethod.Execute(DriverCommand.ExecuteScript,
+                CreatePerformanceDataRequest(
+                    (nameof(packageName), packageName),
+                    (nameof(dataType), dataType)
+                )
+            ).Value as object[];
+
+        public static object[] GetPerformanceData(IExecuteMethod executeMethod, string packageName, string dataType, int dataReadTimeout) =>
+            executeMethod.Execute(
+                DriverCommand.ExecuteScript,
+                CreatePerformanceDataRequest(
+                    (nameof(packageName), packageName),
+                    (nameof(dataType), dataType),
+                    (nameof(dataReadTimeout), dataReadTimeout)
+                )
+            ).Value as object[];
 
         #endregion
 
