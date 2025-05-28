@@ -31,7 +31,7 @@ For example, some changes in the Selenium binding could break the Appium client.
 ## v8
 To keep compatibility with Appium v3, most deprecated endpoint method calls have been replaced with compatible [extension command](https://appium.io/docs/en/latest/guides/execute-methods/) with [this PR](https://github.com/appium/dotnet-client/pull/939). Old drivers which still haven't implemented extension commands might not have proper implementation. Then, you will need to update Appium driver versions first.
 
-| Removed Method or argument | Note |
+| Removed Method | Note |
 |---------------------------|------|
 | `ToggleAirplaneMode()`    | Change with `airplaneMode` parameter in [mobile:setConnectivity](https://github.com/appium/appium-uiautomator2-driver#mobile-setconnectivity) |
 | `ToggleData()`            | Change with `data` parameter in [mobile:setConnectivity](https://github.com/appium/appium-uiautomator2-driver#mobile-setconnectivity) |
@@ -40,7 +40,8 @@ To keep compatibility with Appium v3, most deprecated endpoint method calls have
 | `GetConnectionType()`     | Get connection state with [mobile:getConnectivity](https://github.com/appium/appium-uiautomator2-driver#mobile-getconnectivity) |
 | `EndTestCoverage()`       | Already deprecated. |
 | `StartActivityWithIntent()`, `StartActivity()` | Use [mobile:startActivity](https://github.com/appium/appium-uiautomator2-drive#mobile-startactivity) to start an expected activity |
-| `strategy` argument in `HideKeyboard()` | It worked only deprecated [old ios driver](https://github.com/appium-boneyard/appium-ios-driver) |
+
+- Removed `strategy` argument in `HideKeyboard` because the argument was only for outdated [old ios driver](https://github.com/appium-boneyard/appium-ios-driver)
 
 ## v5
 
