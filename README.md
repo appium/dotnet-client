@@ -39,7 +39,7 @@ To keep compatibility with Appium v3, most deprecated endpoint method calls have
 | `SetConnectionType()`     | Change connection type with [mobile:setConnectivity](https://github.com/appium/appium-uiautomator2-driver#mobile-setconnectivity) |
 | `GetConnectionType()`     | Get connection state with [mobile:getConnectivity](https://github.com/appium/appium-uiautomator2-driver#mobile-getconnectivity) |
 | `EndTestCoverage()`       | Already deprecated. |
-| `StartActivityWithIntent()`, `StartActivity()` | Use [mobile:startActivity](https://github.com/appium/appium-uiautomator2-drive#mobile-startactivity) to start an expected activity |
+| `StartActivityWithIntent()`, `StartActivity()` | Use [mobile:startActivity](https://github.com/appium/appium-uiautomator2-driver#mobile-startactivity) to start an expected activity |
 
 - Removed `strategy` argument in `HideKeyboard` because the argument was only for outdated [old ios driver](https://github.com/appium-boneyard/appium-ios-driver)
 

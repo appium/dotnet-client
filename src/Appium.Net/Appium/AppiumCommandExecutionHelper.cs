@@ -112,7 +112,7 @@ namespace OpenQA.Selenium.Appium
         }
 
         /// <summary>
-        /// Check the keyboad hidden state with <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-iskeyboardshown">mobile:isKeyboardShown</see> for Android
+        /// Check the keyboard hidden state with <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-iskeyboardshown">mobile:isKeyboardShown</see> for Android
         /// or <see href="https://appium.github.io/appium-xcuitest-driver/latest/reference/execute-methods/#mobile-iskeyboardshown">mobile:isKeyboardShown</see> for iOS.
         /// </summary>
         /// <param name="executeMethod">The execute method</param>
