@@ -259,6 +259,8 @@ namespace OpenQA.Selenium.Appium
         /// or <see href="https://appium.github.io/appium-xcuitest-driver/latest/reference/execute-methods/#mobile-pushfile">mobile:pushFile</see> for iOS.
         /// </summary>
         /// <param name="executeMethod">The execute method</param>
+        /// <param name="pathOnDevice">Path on mobile device</param>
+        /// <param name="file">Path on computer</param>
         public static void PushFile(IExecuteMethod executeMethod, string pathOnDevice, FileInfo file)
         {
             if (file == null)
