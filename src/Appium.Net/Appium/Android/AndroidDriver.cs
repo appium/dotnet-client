@@ -283,6 +283,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// <returns>true if device is locked, false otherwise</returns>
         public bool IsLocked() => (bool)ExecuteScript("mobile: isLocked");
 
+        #nullable enable
         /// <summary>
         /// Unlocks the device if it is locked. No operation if the device's screen is not locked.
         /// </summary>
@@ -318,7 +319,6 @@ namespace OpenQA.Selenium.Appium.Android
 
             ExecuteScript("mobile: unlock", parameters);
         }
-
         #endregion
 
         public void SetSetting(string setting, object value) =>
