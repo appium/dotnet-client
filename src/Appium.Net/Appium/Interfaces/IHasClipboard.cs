@@ -10,14 +10,14 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// <summary>
         /// Sets the content to the clipboard
         /// </summary>
-        /// <param name="contentType">The content type to set (PlainText,Image or Url)</param>
+        /// <param name="contentType">The content type to set (PlainText, Image or Url)</param>
         /// <param name="base64Content">The base64-encoded content to set</param>
         void SetClipboard(ClipboardContentType contentType, string base64Content);
     
         /// <summary>
         /// Get the content of the clipboard.
         /// </summary>
-        /// <param name="contentType">The content type to set (PlainText,Image or Url)</param>
+        /// <param name="contentType">The content type to set (PlainText, Image or Url)</param>
         /// <remarks>Android supports plaintext only</remarks>
         /// <returns>The content of the clipboard as base64-encoded string or an empty string if the clipboard is empty</returns>
         string GetClipboard(ClipboardContentType contentType);
