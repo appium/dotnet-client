@@ -358,15 +358,15 @@ namespace OpenQA.Selenium.Appium.Android
         /// <summary>
         /// Sets the content to the clipboard
         /// </summary>
-        /// <param name="contentType"></param>
-        /// <param name="base64Content"></param>
+        /// <param name="contentType">An <see cref="ClipboardContentType"/> object to set (PlainText, Image or Url).</param>
+        /// <param name="base64Content">The base64-encoded content to set.</param>
         public void SetClipboard(ClipboardContentType contentType, string base64Content) =>
             AppiumCommandExecutionHelper.MobileSetClipboard(this, contentType, base64Content);
 
         /// <summary>
         /// Get the content of the clipboard.
         /// </summary>
-        /// <param name="contentType"></param>
+        /// <param name="contentType">An <see cref="ClipboardContentType"/> object (PlainText, Image or Url).</param>
         /// <remarks>Android supports plaintext only</remarks>
         /// <returns>The content of the clipboard as base64-encoded string or an empty string if the clipboard is empty</returns>
         public string GetClipboard(ClipboardContentType contentType) =>
@@ -375,7 +375,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// <summary>
         /// Sets text to the clipboard
         /// </summary>
-        /// <param name="textContent"></param>
+        /// <param name="textContent">The text content.</param>
         /// <param name="label">For Android only - A user visible label for the clipboard content.</param>
         public void SetClipboardText(string textContent, string label) =>
             AppiumCommandExecutionHelper.SetClipboardText(this, textContent, label);
@@ -390,7 +390,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// <summary>
         /// Sets the url string to the clipboard
         /// </summary>
-        /// <param name="url"></param>
+        /// <param name="url">The URL string.</param>
         public void SetClipboardUrl(string url) => throw new NotImplementedException();
 
         /// <summary>
@@ -402,7 +402,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// <summary>
         /// Sets the image to the clipboard
         /// </summary>
-        /// <param name="image"></param>
+        /// <param name="image">The image object.</param>
         public void SetClipboardImage(Image image) => throw new NotImplementedException();
 
         /// <summary>
@@ -414,7 +414,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// <summary>
         /// Gets the State of the app.
         /// </summary>
-        /// <param name="appId">a string containing the id of the app.</param>
+        /// <param name="appId">A string containing the id of the app.</param>
         /// <returns>an enumeration of the app state.</returns>
         public AppState GetAppState(string appId) =>
             (AppState)Convert.ToInt32(

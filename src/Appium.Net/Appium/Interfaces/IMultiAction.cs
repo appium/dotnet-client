@@ -21,7 +21,7 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// <summary>
         /// Add touch actions to be performed
         /// </summary>
-        /// <param name="touchAction"></param>
+        /// <param name="touchAction">An <see cref="ITouchAction"/> object that represents a single touch action.</param>
         IMultiAction Add(ITouchAction touchAction);
 
         /// <summary>
