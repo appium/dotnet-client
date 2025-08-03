@@ -50,7 +50,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// The video encoding quality (low, medium, high, photo - defaults to medium).
         /// Only works for real devices.
         /// </summary>
-        /// <param name="videoQuality">One of available video quality <see cref="VideoQuality"/>.</param>
+        /// <param name="videoQuality">One of the available video qualities <see cref="VideoQuality"/>.</param>
         /// <returns></returns>
         public IOSStartScreenRecordingOptions WithVideoQuality(VideoQuality videoQuality)
         {
