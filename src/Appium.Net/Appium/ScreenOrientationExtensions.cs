@@ -32,7 +32,7 @@ namespace OpenQA.Selenium.Appium
         /// <summary>
         /// Converts the string to a screen orientation if possible, else throws ArgumentOutOfRangeException 
         /// </summary>
-        /// <param name="orientation">An <see cref="ScreenOrientation"/> object represents possible screen orientations.</param>
+        /// <param name="orientation">A string that represents possible screen orientations.</param>
         /// <returns>Screen Orientation</returns>
         public static ScreenOrientation ConvertToScreenOrientation(this string orientation)
         {
