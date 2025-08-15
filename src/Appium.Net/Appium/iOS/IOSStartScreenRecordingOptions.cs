@@ -20,7 +20,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// Available formats: "h264", "mp4" or "fmp4". Default is "mp4".
         /// Only works for Simulator.
         /// </summary>
-        /// <param name="videoType">one of available format names.</param>
+        /// <param name="videoType">One of available format names <see cref="VideoType"/>.</param>
         /// <returns>self instance for chaining.</returns>
         public IOSStartScreenRecordingOptions WithVideoType(VideoType videoType)
         {
@@ -33,7 +33,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// Available formats: Execute <code>ffmpeg -codecs</code> in the terminal to see the list of supported video codecs.
         /// ‘mjpeg’ by default. (Since Appium 1.10.0)
         /// </summary>
-        /// <param name="videoType">one of available format names.</param>
+        /// <param name="videoType">One of available format names <see cref="VideoType"/>.</param>
         /// <returns>self instance for chaining.</returns>
         public IOSStartScreenRecordingOptions WithVideoType(string videoType)
         {
@@ -50,7 +50,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// The video encoding quality (low, medium, high, photo - defaults to medium).
         /// Only works for real devices.
         /// </summary>
-        /// <param name="videoQuality"></param>
+        /// <param name="videoQuality">One of the available video qualities <see cref="VideoQuality"/>.</param>
         /// <returns></returns>
         public IOSStartScreenRecordingOptions WithVideoQuality(VideoQuality videoQuality)
         {
@@ -76,7 +76,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// Change this value if the resulting video is too slow or too fast.
         /// Defaults to 10. This can decrease the resulting file size.
         /// </summary>
-        /// <param name="videoFps"></param>
+        /// <param name="videoFps">The string represents video FPS.</param>
         /// <returns>self instance for chaining.</returns>
         public IOSStartScreenRecordingOptions WithVideoFps(string videoFps)
         {
@@ -90,7 +90,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// Example value of 720p scaling is '1280:720'. This can decrease/increase the resulting file size.
         /// No scale is applied by default.
         /// </summary>
-        /// <param name="videoScale"></param>
+        /// <param name="videoScale">The string represents video scale.</param>
         /// <returns>self instance for chaining.</returns>
         public IOSStartScreenRecordingOptions WithVideoScale(string videoScale)
         {
@@ -104,7 +104,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// For QuickTime compatibility, set to “yuv420p” along with videoType: “libx264”.
         /// Supported since Appium 1.12.0)
         /// </summary>
-        /// <param name="pixelFormat"></param>
+        /// <param name="pixelFormat">The string represents pixel format.</param>
         /// <returns></returns>
         public IOSStartScreenRecordingOptions WithPixelFormat(string pixelFormat)
         {
@@ -118,7 +118,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// The format of the property must comply with listed <see href="https://ffmpeg.org/ffmpeg-filters.html">here</see>
         /// Supported since Appium 1.15)
         /// </summary>
-        /// <param name="videoFilters"></param>
+        /// <param name="videoFilters">The string represents video filter.</param>
         /// <returns></returns>
         public IOSStartScreenRecordingOptions WithVideoFilter(string videoFilters)
         {

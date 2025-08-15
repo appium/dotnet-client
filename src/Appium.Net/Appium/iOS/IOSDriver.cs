@@ -59,7 +59,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// <summary>
         /// Initializes a new instance of the IOSDriver class using the AppiumServiceBuilder instance and Appium options
         /// </summary>
-        /// <param name="builder"> object containing settings of the Appium local service which is going to be started</param>
+        /// <param name="builder">The object containing settings of the Appium local service which is going to be started.</param>
         /// <param name="driverOptions">An <see cref="DriverOptions"/> object containing the Appium options.</param>
         public IOSDriver(AppiumServiceBuilder builder, DriverOptions driverOptions)
             : base(builder, SetPlatformToCapabilities(driverOptions, Platform))
@@ -69,7 +69,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// <summary>
         /// Initializes a new instance of the IOSDriver class using the AppiumServiceBuilder instance, Appium options and command timeout
         /// </summary>
-        /// <param name="builder"> object containing settings of the Appium local service which is going to be started</param>
+        /// <param name="builder">The object containing settings of the Appium local service which is going to be started.</param>
         /// <param name="driverOptions">An <see cref="DriverOptions"/> object containing the Appium options.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
         public IOSDriver(AppiumServiceBuilder builder, DriverOptions driverOptions, TimeSpan commandTimeout)
@@ -90,7 +90,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// <summary>
         /// Initializes a new instance of the IOSDriver class using the specified Appium local service and Appium options
         /// </summary>
-        /// <param name="service">the specified Appium local service</param>
+        /// <param name="service">The specified Appium local service.</param>
         /// <param name="driverOptions">An <see cref="DriverOptions"/> object containing the Appium options of the browser.</param>
         public IOSDriver(AppiumLocalService service, DriverOptions driverOptions)
             : base(service, SetPlatformToCapabilities(driverOptions, Platform))
@@ -111,7 +111,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// <summary>
         /// Initializes a new instance of the IOSDriver class using the specified Appium local service, Appium options, and command timeout.
         /// </summary>
-        /// <param name="service">the specified Appium local service</param>
+        /// <param name="service">The specified Appium local service.</param>
         /// <param name="driverOptions">An <see cref="DriverOptions"/> object containing the Appium options.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
         public IOSDriver(AppiumLocalService service, DriverOptions driverOptions, TimeSpan commandTimeout)
@@ -134,7 +134,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// <summary>
         /// Initializes a new instance of the IOSDriver class using the specified Appium local service, Appium options and AppiumClientConfig,
         /// </summary>
-        /// <param name="service">the specified Appium local service</param>
+        /// <param name="service">The specified Appium local service.</param>
         /// <param name="driverOptions">An <see cref="ICapabilities"/> object containing the Appium options.</param>
         /// <param name="clientConfig">An instance of <see cref="AppiumClientConfig"/></param>
         public IOSDriver(AppiumLocalService service, DriverOptions driverOptions, AppiumClientConfig clientConfig)
@@ -157,7 +157,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// <summary>
         /// Initializes a new instance of the IOSDriver class using the specified Appium local service, Appium options, command timeout and AppiumClientConfig,
         /// </summary>
-        /// <param name="service">the specified Appium local service</param>
+        /// <param name="service">The specified Appium local service.</param>
         /// <param name="driverOptions">An <see cref="ICapabilities"/> object containing the Appium options.</param>
         /// <param name="commandTimeout">The maximum amount of time to wait for each command.</param>
         /// <param name="clientConfig">An instance of <see cref="AppiumClientConfig"/></param>
@@ -182,11 +182,22 @@ namespace OpenQA.Selenium.Appium.iOS
             }
         }
 
+        /// <summary>
+        /// Shakes the device. This works only for Simulator.
+        /// </summary>
         public void ShakeDevice() => IOSCommandExecutionHelper.ShakeDevice(this);
 
-        public new void HideKeyboard(string key, string strategy = null) =>
-            AppiumCommandExecutionHelper.HideKeyboard(this, strategy, key);
+        /// <summary>
+        /// Hides the keyboard with the given key.
+        /// </summary>
+        /// <param name="key">The key to hide the keyboard with.</param>
+        public new void HideKeyboard(string key) =>
+            AppiumCommandExecutionHelper.HideKeyboard(this, key);
 
+        /// <summary>
+        /// Performs Touch ID authentication.
+        /// </summary>
+        /// <param name="match">Whether to simulate biometric match.</param>
         public void PerformTouchID(bool match) => IOSCommandExecutionHelper.PerformTouchID(this, match);
 
         /// <summary>
@@ -199,7 +210,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// Locks the device. Optionally, unlocks it after a specified number of seconds.
         /// </summary>
         /// <param name="seconds">
-        /// The number of seconds after which the device will be automatically unlocked. 
+        /// The number of seconds after which the device will be automatically unlocked.
         /// Set to 0 or leave it empty to require manual unlock.
         /// </param>
         /// <exception cref="WebDriverException">Thrown if the command execution fails.</exception>
@@ -220,24 +231,24 @@ namespace OpenQA.Selenium.Appium.iOS
         /// <summary>
         /// Sets the content to the clipboard
         /// </summary>
-        /// <param name="contentType"></param>
-        /// <param name="base64Content"></param>
+        /// <param name="contentType">An <see cref="ClipboardContentType"/> object to set (PlainText, Image or Url).</param>
+        /// <param name="base64Content">The base64-encoded content to set.</param>
         public void SetClipboard(ClipboardContentType contentType, string base64Content) =>
-            AppiumCommandExecutionHelper.SetClipboard(this, contentType, base64Content);
+            AppiumCommandExecutionHelper.MobileSetClipboard(this, contentType, base64Content);
 
         /// <summary>
         /// Get the content of the clipboard.
         /// </summary>
-        /// <param name="contentType"></param>
+        /// <param name="contentType">An <see cref="ClipboardContentType"/> object (PlainText, Image or Url).</param>
         /// <remarks>Android supports plaintext only</remarks>
         /// <returns>The content of the clipboard as base64-encoded string or an empty string if the clipboard is empty</returns>
         public string GetClipboard(ClipboardContentType contentType) =>
-            AppiumCommandExecutionHelper.GetClipboard(this, contentType);
+            AppiumCommandExecutionHelper.MobileGetClipboard(this, contentType);
 
         /// <summary>
         /// Sets text to the clipboard
         /// </summary>
-        /// <param name="textContent"></param>
+        /// <param name="textContent">The text content.</param>
         /// <param name="label">For Android only - A user visible label for the clipboard content.</param>
         public void SetClipboardText(string textContent, string label = null) =>
             AppiumCommandExecutionHelper.SetClipboardText(this, textContent, null);
@@ -253,7 +264,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// <summary>
         /// Sets the url string to the clipboard
         /// </summary>
-        /// <param name="url"></param>
+        /// <param name="url">The URL string.</param>
         public void SetClipboardUrl(string url) => IOSCommandExecutionHelper.SetClipboardUrl(this, url);
 
         /// <summary>
@@ -265,7 +276,7 @@ namespace OpenQA.Selenium.Appium.iOS
         /// <summary>
         /// Sets the image to the clipboard
         /// </summary>
-        /// <param name="image"></param>
+        /// <param name="image">The image object.</param>
         public void SetClipboardImage(Image image) => IOSCommandExecutionHelper.SetClipboardImage(this, image);
 
         /// <summary>
@@ -273,5 +284,23 @@ namespace OpenQA.Selenium.Appium.iOS
         /// </summary>
         /// <returns>The image content of the clipboard as an Image object or null if there is no image on the clipboard</returns>
         public Image GetClipboardImage() => IOSCommandExecutionHelper.GetClipboardImage(this);
+
+
+        /// <summary>
+        /// Gets the State of the app.
+        /// </summary>
+        /// <param name="bundleId">A string containing the id of the app.</param>
+        /// <returns>an enumeration of the app state.</returns>
+         public AppState GetAppState(string bundleId) =>
+            (AppState)Convert.ToInt32(
+                ExecuteScript(
+                    "mobile:queryAppState",
+                    new object[] {
+                        new Dictionary<string, object>{
+                            ["bundleId"] = bundleId
+                        }
+                    }
+                ).ToString()
+            );
     }
 }

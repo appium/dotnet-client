@@ -190,25 +190,28 @@ namespace OpenQA.Selenium.Appium
         public void FingerPrint(int fingerprintId) =>
             AppiumCommandExecutionHelper.FingerPrint(this, fingerprintId);
 
-        public void BackgroundApp() =>
-            Execute(AppiumDriverCommand.BackgroundApp,
-                AppiumCommandExecutionHelper.PrepareArgument("seconds", -1));
+        public void BackgroundApp() {
+            BackgroundApp(TimeSpan.FromSeconds(-1));
+        }
 
-        public void BackgroundApp(TimeSpan timeSpan) =>
-            Execute(AppiumDriverCommand.BackgroundApp,
-                AppiumCommandExecutionHelper.PrepareArgument("seconds", timeSpan.TotalSeconds));
-
-        public AppState GetAppState(string appId) =>
-            (AppState)Convert.ToInt32(Execute(AppiumDriverCommand.GetAppState,
-                AppiumCommandExecutionHelper.PrepareArgument("appId", appId)).Value.ToString());
+        public void BackgroundApp(TimeSpan timeSpan) {
+            Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "mobile:backgroundApp",
+                ["args"] = new object[] {
+                    new Dictionary<string, object> {
+                        ["seconds"] = timeSpan.TotalSeconds
+                    }
+                }
+            });
+        }
 
         /// <summary>
         /// Get all defined Strings from an app for the specified language and
         /// strings filename
         /// </summary>
         /// <returns>a dictionary with localized strings defined in the app.</returns>
-        /// <param name="language">strings language code</param>
-        /// <param name="stringFile">strings filename</param>
+        /// <param name="language">strings language code (optional)</param>
+        /// <param name="stringFile">strings filename (optional)</param>
         public Dictionary<string, object> GetAppStringDictionary(string language = null, string stringFile = null)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
@@ -222,19 +225,18 @@ namespace OpenQA.Selenium.Appium
                 parameters.Add("stringFile", stringFile);
             }
 
-            if (parameters.Count == 0)
+            return Execute(DriverCommand.ExecuteScript, new Dictionary<string, object>
             {
-                parameters = null;
-            }
-
-            return (Dictionary<string, object>)Execute(AppiumDriverCommand.GetAppStrings, parameters).Value;
+                ["script"] = "mobile:getAppStrings",
+                ["args"] = parameters.Count == 0 ? Array.Empty<object>() : new object[] {parameters}
+            }).Value as Dictionary<string, object>;
         }
 
         /// <summary>
         /// Hides the device keyboard.
         /// </summary>
         public void HideKeyboard()
-            => AppiumCommandExecutionHelper.HideKeyboard(this, null, null);
+            => AppiumCommandExecutionHelper.HideKeyboard(this, null);
 
         /// <summary>
         /// Hides the device keyboard.
@@ -242,14 +244,6 @@ namespace OpenQA.Selenium.Appium
         /// <param name="key">The button pressed by the mobile driver to attempt hiding the keyboard.</param>
         public void HideKeyboard(string key)
             => AppiumCommandExecutionHelper.HideKeyboard(executeMethod: this, key: key);
-
-        /// <summary>
-        /// Hides the device keyboard.
-        /// </summary>
-        /// <param name="strategy">Hide keyboard strategy (optional, UIAutomation only). Available strategies - 'press', 'pressKey', 'swipeDown', 'tapOut', 'tapOutside', 'default'.</param>
-        /// <param name="key">The button pressed by the mobile driver to attempt hiding the keyboard.</param>
-        public void HideKeyboard(string strategy, string key)
-            => AppiumCommandExecutionHelper.HideKeyboard(executeMethod: this, strategy: strategy, key: key);
 
         /// <summary>
         /// Whether or not the soft keyboard is shown.
@@ -416,7 +410,16 @@ namespace OpenQA.Selenium.Appium
         /// Gets device date and time for both iOS(Supports only real device) and Android devices
         /// </summary>
         /// <returns>A string which consists of date and time</returns>
-        public string DeviceTime => ((IExecuteMethod)this).Execute(AppiumDriverCommand.GetDeviceTime).Value.ToString();
+        public string DeviceTime
+        {
+            get
+            {
+                return Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                    ["script"] = "mobile:getDeviceTime",
+                    ["args"] = new object[] {}
+                }).Value.ToString();
+            }
+        }
 
         #endregion Device Time
 

@@ -10,14 +10,14 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// <summary>
         /// Sets the content to the clipboard
         /// </summary>
-        /// <param name="contentType"></param>
-        /// <param name="base64Content"></param>
+        /// <param name="contentType">The content type to set (PlainText, Image or Url)</param>
+        /// <param name="base64Content">The base64-encoded content to set</param>
         void SetClipboard(ClipboardContentType contentType, string base64Content);
     
         /// <summary>
         /// Get the content of the clipboard.
         /// </summary>
-        /// <param name="contentType"></param>
+        /// <param name="contentType">The content type to set (PlainText, Image or Url)</param>
         /// <remarks>Android supports plaintext only</remarks>
         /// <returns>The content of the clipboard as base64-encoded string or an empty string if the clipboard is empty</returns>
         string GetClipboard(ClipboardContentType contentType);
@@ -27,7 +27,7 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// <summary>
         /// Sets text to the clipboard
         /// </summary>
-        /// <param name="textContent"></param>
+        /// <param name="textContent">The text content</param>
         /// <param name="label">For Android only - A user visible label for the clipboard content.</param>
         void SetClipboardText(string textContent, string label);
 
@@ -41,7 +41,7 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// <summary>
         /// Sets the url string to the clipboard
         /// </summary>
-        /// <param name="url"></param>
+        /// <param name="url">The URL string</param>
         void SetClipboardUrl(string url);
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace OpenQA.Selenium.Appium.Interfaces
         /// <summary>
         /// Sets the image to the clipboard
         /// </summary>
-        /// <param name="image"></param>
+        /// <param name="image">The image object</param>
         void SetClipboardImage(Image image);
 
         /// <summary>

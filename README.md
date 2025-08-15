@@ -11,12 +11,12 @@
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-lightblue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-This driver is an extension of the [Selenium](http://docs.seleniumhq.org/) C# client. It has 
+This driver is an extension of the [Selenium](http://docs.seleniumhq.org/) C# client. It has
 all the functionalities of the regular driver, but add Appium-specific methods on top of this.
 
 ## Compatibility Matrix
 
-The Appium .NET Client depends on [Selenium .NET binding](https://www.nuget.org/packages/Selenium.WebDriver), thus the Selenium .NET binding update might affect the Appium .NET Client behavior. 
+The Appium .NET Client depends on [Selenium .NET binding](https://www.nuget.org/packages/Selenium.WebDriver), thus the Selenium .NET binding update might affect the Appium .NET Client behavior.
 For example, some changes in the Selenium binding could break the Appium client.
 
 |Appium .NET Client| Selenium Binding	| .NET Version |
@@ -27,8 +27,24 @@ For example, some changes in the Selenium binding could break the Appium client.
 |`5.0.0` |`4.0.0` - `4.22.0` | .NET 6.0, .NET Framework 4.8 |
 |`4.4.5` |`3.141.0` |.NET Standard 2.0, .NET Framework 4.8 |
 
+
+## v8
+To keep compatibility with Appium v3, most deprecated endpoint method calls have been replaced with compatible [extension command](https://appium.io/docs/en/latest/guides/execute-methods/) with [this PR](https://github.com/appium/dotnet-client/pull/939). Old drivers which still haven't implemented extension commands might not have proper implementation. Then, you will need to update Appium driver versions first.
+
+| Removed Method | Note |
+|---------------------------|------|
+| `ToggleAirplaneMode()`    | Change with `airplaneMode` parameter in [mobile:setConnectivity](https://github.com/appium/appium-uiautomator2-driver#mobile-setconnectivity) |
+| `ToggleData()`            | Change with `data` parameter in [mobile:setConnectivity](https://github.com/appium/appium-uiautomator2-driver#mobile-setconnectivity) |
+| `ToggleWifi()`            | Change with `wifi` parameter in [mobile:setConnectivity](https://github.com/appium/appium-uiautomator2-driver#mobile-setconnectivity) |
+| `SetConnectionType()`     | Change connection type with [mobile:setConnectivity](https://github.com/appium/appium-uiautomator2-driver#mobile-setconnectivity) |
+| `GetConnectionType()`     | Get connection state with [mobile:getConnectivity](https://github.com/appium/appium-uiautomator2-driver#mobile-getconnectivity) |
+| `EndTestCoverage()`       | Already deprecated. |
+| `StartActivityWithIntent()`, `StartActivity()` | Use [mobile:startActivity](https://github.com/appium/appium-uiautomator2-driver#mobile-startactivity) to start an expected activity |
+
+- Removed `strategy` argument in `HideKeyboard` because the argument was only for outdated [old ios driver](https://github.com/appium-boneyard/appium-ios-driver)
+
 ## v5
- 
+
 ### Appium server compatibility for v5.x
 
 > [!IMPORTANT]
@@ -44,24 +60,24 @@ App management: Please read [issue #15807](https://github.com/appium/appium/issu
 ### Migration Guide to W3C actions
 ```csharp
   using OpenQA.Selenium.Interactions;
-  
+
   var touch = new PointerInputDevice(PointerKind.Touch, "finger");
   var sequence = new ActionSequence(touch);
   var move = touch.CreatePointerMove(elementToTouch, elementToTouch.Location.X, elementToTouch.Location.Y,TimeSpan.FromSeconds(1));
   var actionPress = touch.CreatePointerDown(MouseButton.Touch);
   var pause = touch.CreatePause(TimeSpan.FromMilliseconds(250));
   var actionRelease = touch.CreatePointerUp(MouseButton.Touch);
- 
+
   sequence.AddAction(move);
   sequence.AddAction(actionPress);
   sequence.AddAction(pause);
   sequence.AddAction(actionRelease);
-  
+
   var actions_seq = new List<ActionSequence>
   {
       sequence
   };
- 
+
   _driver.PerformActions(actions_seq);
  ```
 
@@ -83,7 +99,7 @@ Dependencies:
 - [System.Drawing.Common](https://www.nuget.org/packages/System.Drawing.Common/)
 
 Note: we will NOT publish a signed version of this assembly since the dependencies we access through NuGet do not have a signed version - thus breaking the chain and causing us headaches. With that said, you are more than welcome to download the code and build a signed version yourself.
- 
+
 ## Usage
 
 ### basics
@@ -98,7 +114,7 @@ Note: we will NOT publish a signed version of this assembly since the dependenci
 [See samples here](https://github.com/appium/sample-code/tree/master/sample-code/examples/dotnet/AppiumDotNetSample)
 
 
-## Dev Build+Test 
+## Dev Build+Test
 
 Xamarin/Mono
 - Open with [Xamarin](http://xamarin.com/)
@@ -117,7 +133,7 @@ Visual Studio
 
 ## Nuget Deployment (for maintainers)
 
-### To Setup Nuget 
+### To Setup Nuget
 - Download [Nuget exe](http://nuget.org/nuget.exe).
 - Setup the Api Key ([see here](http://docs.nuget.org/docs/creating-packages/creating-and-publishing-a-package#api-key)).
 - `alias NuGet='mono <Nuget Path>/NuGet.exe'`

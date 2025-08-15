@@ -175,8 +175,8 @@ namespace OpenQA.Selenium.Appium.Windows
 
         #endregion Context
 
-        public void HideKeyboard(string key, string strategy = null) =>
-            AppiumCommandExecutionHelper.HideKeyboard(this, strategy, key);
+        public void HideKeyboard(string key) =>
+            AppiumCommandExecutionHelper.HideKeyboard(this, key);
 
         public void PressKeyCode(KeyEvent keyEvent) => throw new NotImplementedException();
 
@@ -195,7 +195,10 @@ namespace OpenQA.Selenium.Appium.Windows
         /// </summary>
         public void CloseApp()
         {
-            ((IExecuteMethod)this).Execute(WindowsDriverCommand.CloseApp);
+            Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "windows:closeApp",
+                ["args"] = Array.Empty<object>()
+            });
         }
 
         /// <summary>
@@ -203,7 +206,10 @@ namespace OpenQA.Selenium.Appium.Windows
         /// </summary>
         public void LaunchApp()
         {
-            ((IExecuteMethod)this).Execute(WindowsDriverCommand.LaunchApp);
+            Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                ["script"] = "windows:launchApp",
+                ["args"] = Array.Empty<object>()
+            });
         }
 
         #endregion App management

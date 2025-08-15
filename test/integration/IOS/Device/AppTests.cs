@@ -1,6 +1,7 @@
 ﻿using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium.Appium;
+using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.iOS;
 using System;
 using System.Collections.Generic;
@@ -54,13 +55,15 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
             //Verify the expected app was activated
             Assert.DoesNotThrow(() => _driver.FindElement(MobileBy.AccessibilityId(IosTestAppElement)));
         }
-        
+
         [Test]
         public void CanActivateViaScriptAppTest()
         {
             //Activate an app to foreground
             Assert.DoesNotThrow(() => _driver.ExecuteScript("mobile: activateApp",
                 new Dictionary<string, string> {{"bundleId", IosTestAppBundleId}}));
+
+            Assert.That(() => _driver.GetAppState(IosTestAppBundleId), Is.EqualTo(AppState.RunningInForeground));
 
             //Verify the expected app was activated
             Assert.DoesNotThrow(() => _driver.FindElement(MobileBy.AccessibilityId(IosTestAppElement)));
