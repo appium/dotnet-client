@@ -23,15 +23,15 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
-
+  
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
     <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
-
+  
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
     <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
-
+  
   <ItemGroup>
     <None Include="LICENSE.txt" Pack="true" PackagePath="" />
     <None Include="appium-icon.png" Pack="true" PackagePath="" />
@@ -43,7 +43,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Selenium.WebDriver" Version="4.35.0" />
+    <PackageReference Include="Selenium.WebDriver" Version="4.32.0" />
     <PackageReference Include="System.Drawing.Common" Version="8.0.10" />
   </ItemGroup>
 </Project>
