@@ -23,15 +23,10 @@ namespace Appium.Net.Integration.Tests.Android
         }
 
         [Test]
-        public async Task WebDriverWaitElementNotFoundTestCase()
+        public async Task RunBiDiScript()
         {
             _bidi = await _driver.AsBiDiAsync();
             await _bidi.StatusAsync();
-
-            var context = (await _bidi.BrowsingContext.GetTreeAsync())[0].Context;
-
-            TaskCompletionSource<LogEntry> tcs = new();
-            await using var subscription = await context.Log.OnEntryAddedAsync(tcs.SetResult);
 
             System.Threading.Thread.Sleep(1000);
         }
