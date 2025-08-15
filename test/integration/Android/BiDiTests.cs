@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.BiDi;
+using OpenQA.Selenium.BiDi.Log;
 using System.Threading.Tasks;
 
 namespace Appium.Net.Integration.Tests.Android
@@ -26,20 +27,12 @@ namespace Appium.Net.Integration.Tests.Android
         {
             _bidi = await _driver.AsBiDiAsync();
             await _bidi.StatusAsync();
-            // Subscribe to log.entryAdded events
-            // _bidi.Session.Subscribe(new[] { "log.entryAdded" });
 
-            // Listen for log events (example: using an event handler)
-            // _bidi.Log.EntryAdded += (sender, e) =>
-            // {
-            //     Console.WriteLine($"Log: {e.Text}");
-            // };
+            var context = (await _bidi.BrowsingContext.GetTreeAsync())[0].Context;
 
-            // Trigger a log event in the browser (for demonstration)
-            // _driver.Navigate().GoToUrl("https://example.com");
-            // _driver.ExecuteScript("console.log('Hello from BiDi!');");
+            TaskCompletionSource<LogEntry> tcs = new();
+            await using var subscription = await context.Log.OnEntryAddedAsync(tcs.SetResult);
 
-            // Wait for events to be received
             System.Threading.Thread.Sleep(1000);
         }
 
