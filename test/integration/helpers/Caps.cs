@@ -26,6 +26,14 @@ namespace Appium.Net.Integration.Tests.helpers
             return capabilities;
         }
 
+        public static AppiumOptions GetAndroidUIAutomatorCaps()
+        {
+            var capabilities = new AppiumOptions();
+            capabilities.AutomationName = AutomationName.AndroidUIAutomator2;
+            capabilities.DeviceName = "Android Emulator";
+            return capabilities;
+        }
+
         public static AppiumOptions GetAndroidEspressoCaps(string app)
         {
             var capabilities = new AppiumOptions();
