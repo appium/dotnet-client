@@ -28,7 +28,7 @@ namespace Appium.Net.Integration.Tests.Android
             _bidi = await _driver.AsBiDiAsync();
             await _bidi.StatusAsync();
 
-            System.Threading.Thread.Sleep(1000);
+            await Task.Delay(1000);
         }
 
         [OneTimeTearDown]
