@@ -38,10 +38,7 @@ namespace Appium.Net.Integration.Tests.Android
             {
                 await _bidi.DisposeAsync();
             }
-            if (_driver != null)
-                {
-                    _driver?.Quit();
-                }
+            _driver?.Quit();
             if (!Env.ServerIsRemote())
             {
                 AppiumServers.StopLocalService();
