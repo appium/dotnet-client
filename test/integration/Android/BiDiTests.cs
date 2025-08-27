@@ -33,7 +33,11 @@ namespace Appium.Net.Integration.Tests.Android
         {
             if (_bidi != null)
             {
-                await _bidi.DisposeAsync();
+                try
+                {
+                    await _bidi.DisposeAsync();
+                }
+                catch { };
             }
             _driver?.Quit();
             if (!Env.ServerIsRemote())
