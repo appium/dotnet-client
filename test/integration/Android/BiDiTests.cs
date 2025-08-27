@@ -2,7 +2,6 @@
 using NUnit.Framework;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.BiDi;
-using OpenQA.Selenium.BiDi.Log;
 using System.Threading.Tasks;
 
 namespace Appium.Net.Integration.Tests.Android
@@ -27,8 +26,6 @@ namespace Appium.Net.Integration.Tests.Android
         {
             _bidi = await _driver.AsBiDiAsync();
             await _bidi.StatusAsync();
-
-            await Task.Delay(1000);
         }
 
         [OneTimeTearDown]
