@@ -16,6 +16,7 @@ using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Service;
 using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Remote;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace OpenQA.Selenium.Appium
         IHasSessionDetails,
         IHasLocation,
         IHidesKeyboard, IInteractsWithFiles, IFindsByFluentSelector<AppiumElement>,
-        IInteractsWithApps, IRotatable, IContextAware
+        IInteractsWithApps, IRotatable, IContextAware, ICustomDriverCommandExecutor
     {
         private const string NativeApp = "NATIVE_APP";
 
@@ -110,8 +111,7 @@ namespace OpenQA.Selenium.Appium
         {
         }
 
-
-        #endregion Constructors
+        #endregion Constructors        
 
         #region Public Methods
 
@@ -140,20 +140,54 @@ namespace OpenQA.Selenium.Appium
 
         #region MJsonMethod Members
 
+        /// <summary> Install an app on the device. /// </summary>
+        /// <param name="appPath"> Full path to the app (.apk or .ipa) on the local filesystem. </param>
         public void InstallApp(string appPath) =>
             Execute(AppiumDriverCommand.InstallApp, AppiumCommandExecutionHelper.PrepareArgument("appPath", appPath));
 
+        /// <summary> Remove an app from the device. </summary>
+        /// <param name="appId"> The bundle identifier of the app (e.g., com.example.myapp). </param>
         public void RemoveApp(string appId) =>
             Execute(AppiumDriverCommand.RemoveApp, AppiumCommandExecutionHelper.PrepareArgument("appId", appId));
 
+        /// <summary> Launch an app on the device. </summary>
+        /// <param name="appId"> The bundle identifier of the app (e.g., com.example.myapp). </param>
         public void ActivateApp(string appId) =>
             Execute(AppiumDriverCommand.ActivateApp, AppiumCommandExecutionHelper.PrepareArgument("appId", appId));
 
+        /// <summary> Launch an app on the device with a timeout. </summary>
+        /// <param name="appId"> The bundle identifier of the app (e.g., com.example.myapp). </param>
+        /// <param name="timeout"> The timeout to wait for the app to launch. </param>
         public void ActivateApp(string appId, TimeSpan timeout) =>
             Execute(AppiumDriverCommand.ActivateApp,
-                    AppiumCommandExecutionHelper.PrepareArguments(new string[] {"appId", "options"},
+                    AppiumCommandExecutionHelper.PrepareArguments(new string[] { "appId", "options" },
                         new object[]
                             {appId, new Dictionary<string, object>() {{"timeout", (long) timeout.TotalMilliseconds}}}));
+
+        /// <summary> Register a custom command in the command executor. </summary>
+        /// <param name="commandName"> The name of the command to register. </param>
+        /// <param name="method"> The HTTP method of the command to register. </param>
+        /// <param name="resourcePath"> The resource path of the command to register. </param>
+        public void RegisterCustomDriverCommand(string commandName, string method, string resourcePath)
+        {
+            if (this.CommandExecutor is HttpCommandExecutor httpExecutor)
+            {
+                httpExecutor.TryAddCommand(commandName, new HttpCommandInfo(method, resourcePath));
+            }
+            else
+            {
+                throw new NotSupportedException("Custom commands can only be registered with HttpCommandExecutor.");
+            }
+        }
+        
+        /// <summary> Execute a custom command in the command executor. </summary>
+        /// <param name="commandName"> The name of the command to execute. </param>
+        /// <param name="parameters"> The parameters of the command to execute. </param>
+        public new object ExecuteCustomDriverCommand(string commandName, Dictionary<string, object> parameters = null)
+        {
+            var response = Execute(commandName, parameters);
+            return response?.Value;
+        }
 
         public bool TerminateApp(string appId) =>
             Convert.ToBoolean(Execute(AppiumDriverCommand.TerminateApp,
@@ -190,12 +224,15 @@ namespace OpenQA.Selenium.Appium
         public void FingerPrint(int fingerprintId) =>
             AppiumCommandExecutionHelper.FingerPrint(this, fingerprintId);
 
-        public void BackgroundApp() {
+        public void BackgroundApp()
+        {
             BackgroundApp(TimeSpan.FromSeconds(-1));
         }
 
-        public void BackgroundApp(TimeSpan timeSpan) {
-            Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+        public void BackgroundApp(TimeSpan timeSpan)
+        {
+            Execute(DriverCommand.ExecuteScript, new Dictionary<string, object>
+            {
                 ["script"] = "mobile:backgroundApp",
                 ["args"] = new object[] {
                     new Dictionary<string, object> {
@@ -228,7 +265,7 @@ namespace OpenQA.Selenium.Appium
             return Execute(DriverCommand.ExecuteScript, new Dictionary<string, object>
             {
                 ["script"] = "mobile:getAppStrings",
-                ["args"] = parameters.Count == 0 ? Array.Empty<object>() : new object[] {parameters}
+                ["args"] = parameters.Count == 0 ? Array.Empty<object>() : new object[] { parameters }
             }).Value as Dictionary<string, object>;
         }
 
@@ -414,9 +451,10 @@ namespace OpenQA.Selenium.Appium
         {
             get
             {
-                return Execute(DriverCommand.ExecuteScript, new Dictionary<string, object> {
+                return Execute(DriverCommand.ExecuteScript, new Dictionary<string, object>
+                {
                     ["script"] = "mobile:getDeviceTime",
-                    ["args"] = new object[] {}
+                    ["args"] = new object[] { }
                 }).Value.ToString();
             }
         }
@@ -630,5 +668,5 @@ namespace OpenQA.Selenium.Appium
         }
 
         #endregion
-    }
+    }    
 }
