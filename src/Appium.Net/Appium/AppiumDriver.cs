@@ -174,9 +174,13 @@ namespace OpenQA.Selenium.Appium
             {
                 httpExecutor.TryAddCommand(commandName, new HttpCommandInfo(method, resourcePath));
             }
+            else if (this.CommandExecutor is AppiumCommandExecutor appiumExecutor)
+            {
+                appiumExecutor.TryAddCommand(commandName, new HttpCommandInfo(method, resourcePath));
+            }
             else
             {
-                throw new NotSupportedException("Custom commands can only be registered with HttpCommandExecutor.");
+                throw new NotSupportedException("Custom commands can only be registered with HttpCommandExecutor or AppiumCommandExecutor.");
             }
         }
         
