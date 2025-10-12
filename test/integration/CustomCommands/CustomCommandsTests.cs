@@ -138,7 +138,7 @@ namespace Appium.Net.Integration.Tests
             var screenshot = new Screenshot(base64);
 
             var filePath = Path.Combine(TestContext.CurrentContext.WorkDirectory, "fullpage.png");
-            screenshot.SaveAsFile(filePath + "{0}.png");
+            screenshot.SaveAsFile(filePath);
 
             Assert.That(File.Exists(filePath), Is.True);
         }
