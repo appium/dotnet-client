@@ -187,7 +187,7 @@ namespace OpenQA.Selenium.Appium
         /// <summary> Execute a custom command in the command executor. </summary>
         /// <param name="commandName"> The name of the command to execute. </param>
         /// <param name="parameters"> The parameters of the command to execute. </param>
-        public new object ExecuteCustomDriverCommand(string commandName, Dictionary<string, object> parameters = null)
+        public override object ExecuteCustomDriverCommand(string commandName, Dictionary<string, object> parameters = null)
         {
             var response = Execute(commandName, parameters);
             return response?.Value;
