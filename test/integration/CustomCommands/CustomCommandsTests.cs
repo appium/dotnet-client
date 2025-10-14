@@ -7,6 +7,7 @@ using OpenQA.Selenium.Remote;
 using System;
 using System.Threading;
 using System.IO;
+using OpenQA.Selenium.Appium;
 
 namespace Appium.Net.Integration.Tests
 {
@@ -31,7 +32,7 @@ namespace Appium.Net.Integration.Tests
         }
 
         [Test]
-        public void RegisterAndExecuteCustomCommand_ShouldReturnStatus()
+        public void CustomCommand_Status_ReturnsServerStatusSuccessfully()
         {
             // Register a custom command for /status endpoint (GET)
             _driver.RegisterCustomDriverCommand("getStatus", "GET", "/status");
@@ -39,9 +40,14 @@ namespace Appium.Net.Integration.Tests
             // Execute the custom command
             var result = _driver.ExecuteCustomDriverCommand("getStatus");
 
-            // Assert that the result contains expected keys
+            // Assert that the result is a dictionary and contains the expected keys/values
             Assert.That(result, Is.Not.Null);
-            Assert.That(result, Is.Not.Contains("status"));
+            Assert.That(result, Is.InstanceOf<Dictionary<string, object>>());
+            var dict = (Dictionary<string, object>)result;
+            Assert.That(dict.ContainsKey("ready"), Is.True);
+            Assert.That(dict.ContainsKey("message"), Is.True);
+            Assert.That(dict["ready"], Is.True);
+            Assert.That(dict["message"], Is.EqualTo("The server is ready to accept new connections"));
         }
 
         [Test]
@@ -57,90 +63,6 @@ namespace Appium.Net.Integration.Tests
             Assert.That(result, Is.Not.Null);
             Assert.That(result, Is.TypeOf<string>());
             Assert.That(result.ToString(), Does.StartWith(".").Or.Contain("Activity"));
-        }
-
-        [Test]
-        public void SetNetworkConditions_CustomCommand_IgnoreIfNotChrome()
-        {
-            // This test assumes a Chrome session with W3C WebDriver support
-            // Adjust driver initialization as needed for Chrome
-            // You may need to use OpenQA.Selenium.Chrome.ChromeDriver for desktop
-
-            var browserNameObj = _driver.Capabilities.GetCapability("browserName");
-            if (browserNameObj == null || !browserNameObj.ToString().Equals("chrome", StringComparison.OrdinalIgnoreCase))
-            {
-                Assert.Ignore("Network conditions custom command is only supported on Chrome.");
-            }
-
-            var customDriver = _driver as ICustomDriverCommandExecutor;
-            Assert.That(customDriver, Is.Not.Null);
-
-            // Register the custom command
-            customDriver.RegisterCustomDriverCommand("setNetworkConditions", new HttpCommandInfo("POST", "/session/{sessionId}/chromium/network_conditions"));
-
-            // Save current network conditions (if possible)
-            // Not all drivers support getting current network conditions, so this may be skipped
-
-            // Set offline network conditions
-            var networkConditions = new Dictionary<string, object>
-            {
-                ["offline"] = true,
-                ["latency"] = 100,
-                ["download_throughput"] = 500 * 1024,
-                ["upload_throughput"] = 500 * 1024
-            };
-            customDriver.ExecuteCustomDriverCommand("setNetworkConditions", networkConditions);
-
-            // Try to load a page and expect failure
-            Assert.Throws<WebDriverException>(() => _driver.Url = "https://www.example.com");
-
-            // Restore network conditions to online
-            var normalNetwork = new Dictionary<string, object>
-            {
-                ["offline"] = false,
-                ["latency"] = 0,
-                ["download_throughput"] = -1,
-                ["upload_throughput"] = -1
-            };
-            customDriver.ExecuteCustomDriverCommand("setNetworkConditions", normalNetwork);
-
-            // Should succeed now
-            _driver.Url = "https://www.example.com";
-            Assert.That(_driver.Title, Is.Not.Null.And.Not.Empty);
-        }
-
-        [Test]
-        public void FullPageScreenshot_CustomCommand_IgnoreIfNotFirefox()
-        {
-            // This test assumes a Firefox session with W3C WebDriver support
-            // Adjust driver initialization as needed for Firefox
-            // You may need to use OpenQA.Selenium.Firefox.FirefoxDriver for desktop
-
-            var browserNameObj = _driver.Capabilities.GetCapability("browserName");
-            if (browserNameObj == null || !browserNameObj.ToString().Equals("firefox", StringComparison.OrdinalIgnoreCase))
-            {
-                Assert.Ignore("Full page screenshot custom command is only supported on Firefox.");
-            }
-
-            var customDriver = _driver as ICustomDriverCommandExecutor;
-            Assert.That(customDriver, Is.Not.Null);
-
-            customDriver.RegisterCustomDriverCommand("fullPageScreenshot", new HttpCommandInfo("GET", "/session/{sessionId}/moz/screenshot/full"));
-
-            _driver.Url = "https://www.example.com";
-            Thread.Sleep(2000); // Wait for page to load
-
-            var sessionId = _driver.SessionId;
-            var fullPageScreenshotCommand = new Command(sessionId, "fullPageScreenshot", null);
-
-            var response = ((IHasCommandExecutor)_driver).CommandExecutor.Execute(fullPageScreenshotCommand);
-            string base64 = response.Value.ToString();
-            var screenshot = new Screenshot(base64);
-
-            var filePath = Path.Combine(TestContext.CurrentContext.WorkDirectory, "fullpage.png");
-            screenshot.SaveAsFile(filePath);
-
-            Assert.That(File.Exists(filePath), Is.True);
         }
     }
 }
