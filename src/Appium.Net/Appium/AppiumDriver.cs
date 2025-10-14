@@ -458,7 +458,7 @@ namespace OpenQA.Selenium.Appium
                 return Execute(DriverCommand.ExecuteScript, new Dictionary<string, object>
                 {
                     ["script"] = "mobile:getDeviceTime",
-                    ["args"] = new object[] { }
+                    ["args"] = new object[] {}
                 }).Value.ToString();
             }
         }
