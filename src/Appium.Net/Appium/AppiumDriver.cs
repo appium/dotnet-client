@@ -672,5 +672,5 @@ namespace OpenQA.Selenium.Appium
         }
 
         #endregion
-    }    
+    }
 }
