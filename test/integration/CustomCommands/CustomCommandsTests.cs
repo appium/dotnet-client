@@ -35,10 +35,10 @@ namespace Appium.Net.Integration.Tests
         public void CustomCommand_Status_ReturnsServerStatusSuccessfully()
         {
             // Register a custom command for /status endpoint (GET)
-            _driver.RegisterCustomDriverCommand("getStatus", "GET", "/status");
+            _driver.RegisterCustomDriverCommand("getStatusExample", "GET", "/status");
 
             // Execute the custom command
-            var result = _driver.ExecuteCustomDriverCommand("getStatus");
+            var result = _driver.ExecuteCustomDriverCommand("getStatusExample");
 
             // Assert that the result is a dictionary and contains the expected keys/values
             Assert.That(result, Is.Not.Null);
@@ -54,10 +54,10 @@ namespace Appium.Net.Integration.Tests
         public void RegisterAndExecuteCustomCommand_ShouldReturnCurrentActivity()
         {
             // Register a custom command for /appium/device/current_activity endpoint (GET)
-            _driver.RegisterCustomDriverCommand("getCurrentActivity", "GET", "/session/{sessionId}/appium/device/current_activity");
+            _driver.RegisterCustomDriverCommand("getCurrentActivityExample", "GET", "/session/{sessionId}/appium/device/current_activity");
 
             // Execute the custom command
-            var result = _driver.ExecuteCustomDriverCommand("getCurrentActivity");
+            var result = _driver.ExecuteCustomDriverCommand("getCurrentActivityExample");
 
             // Assert that the result is a string (activity name)
             Assert.That(result, Is.Not.Null);
