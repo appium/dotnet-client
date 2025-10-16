@@ -167,7 +167,7 @@ namespace OpenQA.Selenium.Appium
         /// <summary> Register a custom command in the command executor. </summary>
         /// <param name="commandName"> The name of the command to register. </param>
         /// <param name="method"> The HTTP method of the command to register. </param>
-        /// <param name="resourcePath"> The resource path of the command to register. </param>
+        /// <param name="resourcePath">The resource path of the command to register.</param>
         public void RegisterCustomDriverCommand(string commandName, string method, string resourcePath)
         {
             if (this.CommandExecutor is HttpCommandExecutor httpExecutor)
