@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Remote;
 using System;
-using System.Threading;
-using System.IO;
 using OpenQA.Selenium.Appium;
 
 namespace Appium.Net.Integration.Tests
