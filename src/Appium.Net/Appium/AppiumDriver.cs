@@ -157,7 +157,7 @@ namespace OpenQA.Selenium.Appium
 
         /// <summary> Launch an app on the device with a timeout. </summary>
         /// <param name="appId"> The bundle identifier of the app (e.g., com.example.myapp). </param>
-        /// <param name="timeout"> The timeout to wait for the app to launch. </param>
+        /// <param name="timeout">The timeout to wait for the app to launch.</param>
         public void ActivateApp(string appId, TimeSpan timeout) =>
             Execute(AppiumDriverCommand.ActivateApp,
                     AppiumCommandExecutionHelper.PrepareArguments(new string[] { "appId", "options" },
