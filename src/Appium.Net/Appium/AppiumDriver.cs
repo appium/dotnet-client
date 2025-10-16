@@ -141,7 +141,7 @@ namespace OpenQA.Selenium.Appium
         #region MJsonMethod Members
 
         /// <summary>Install an app on the device.</summary>
-        /// <param name="appPath"> Full path to the app (.apk or .ipa) on the local filesystem. </param>
+        /// <param name="appPath">Full path to the app (.apk or .ipa) on the local filesystem.</param>
         public void InstallApp(string appPath) =>
             Execute(AppiumDriverCommand.InstallApp, AppiumCommandExecutionHelper.PrepareArgument("appPath", appPath));
 
