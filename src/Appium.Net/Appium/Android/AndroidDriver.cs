@@ -425,7 +425,7 @@ namespace OpenQA.Selenium.Appium.Android
                             ["appId"] = appId
                         }
                     }
-                ).ToString()
+                )?.ToString() ?? throw new InvalidOperationException("ExecuteScript returned null for mobile:queryAppState")
             );
     }
 }
