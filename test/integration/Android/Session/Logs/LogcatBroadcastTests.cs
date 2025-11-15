@@ -230,9 +230,9 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
                 {
                     _driver.StopLogcatBroadcast();
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // Ignore errors when stopping if it never started
+                    Console.WriteLine($"Exception during StopLogcatBroadcast: {ex}");
                 }
                 _driver.RemoveAllLogcatListeners();
             }
