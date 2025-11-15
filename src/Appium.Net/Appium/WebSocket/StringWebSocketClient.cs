@@ -145,7 +145,7 @@ namespace OpenQA.Selenium.Appium.WebSocket
                 // Start receiving messages
                 _receiveTask = Task.Run(async () => await ReceiveMessagesAsync());
             }
-            catch (Exception ex)
+            catch (WebSocketException ex)
             {
                 // Invoke error handlers
                 foreach (var handler in ErrorHandlers.ToArray())
@@ -153,6 +153,15 @@ namespace OpenQA.Selenium.Appium.WebSocket
                     handler?.Invoke(ex);
                 }
                 throw new WebDriverException("Failed to connect to WebSocket", ex);
+            }
+            catch (TaskCanceledException ex)
+            {
+                // Invoke error handlers
+                foreach (var handler in ErrorHandlers.ToArray())
+                {
+                    handler?.Invoke(ex);
+                }
+                throw new WebDriverException("WebSocket connection was cancelled", ex);
             }
         }
 
