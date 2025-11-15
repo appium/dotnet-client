@@ -25,7 +25,7 @@ namespace OpenQA.Selenium.Appium.WebSocket
     /// WebSocket client for handling string messages.
     /// </summary>
     public class StringWebSocketClient : ICanHandleMessages<string>, ICanHandleErrors, 
-        ICanHandleConnects, ICanHandleDisconnects
+        ICanHandleConnects, ICanHandleDisconnects, IDisposable
     {
         private readonly ClientWebSocket _clientWebSocket;
         private Uri _endpoint;
@@ -249,6 +249,16 @@ namespace OpenQA.Selenium.Appium.WebSocket
                     handler?.Invoke(ex);
                 }
             }
+        }
+        /// <summary>
+        /// Disposes the web socket client and releases resources.
+        /// </summary>
+        public void Dispose()
+        {
+            DisconnectAsync().Wait();
+            _clientWebSocket?.Dispose();
+            _cancellationTokenSource?.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }
