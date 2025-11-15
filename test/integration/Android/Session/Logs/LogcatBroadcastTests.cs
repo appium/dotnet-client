@@ -182,9 +182,8 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
         public void CanHandleErrorsGracefully()
         {
             var errorReceived = false;
-            var errorSemaphore = new SemaphoreSlim(0, 1);
+            using var errorSemaphore = new SemaphoreSlim(0, 1);
             Exception capturedError = null;
-
             _driver.AddLogcatErrorsListener(ex =>
             {
                 Console.WriteLine($"Error handler invoked: {ex.Message}");
@@ -192,17 +191,15 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
                 errorReceived = true;
                 errorSemaphore.Release();
             });
-
             try
             {
                 // Start broadcast - may fail if endpoint is not available
                 try
                 {
                     _driver.StartLogcatBroadcast();
-                    
+
                     // Give it time to connect
                     Thread.Sleep(2000);
-
                     // If we got here without errors during connection, that's good
                     if (!errorReceived)
                     {
@@ -238,8 +235,7 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
                     // Ignore errors when stopping if it never started
                 }
                 _driver.RemoveAllLogcatListeners();
-                errorSemaphore.Dispose();
             }
         }
     }
-}
+}   
