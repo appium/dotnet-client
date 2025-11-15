@@ -137,7 +137,7 @@ namespace OpenQA.Selenium.Appium.WebSocket
                 await _clientWebSocket.ConnectAsync(endpoint, _cancellationTokenSource.Token);
                 
                 // Invoke connection handlers
-                foreach (var handler in ConnectionHandlers)
+                foreach (var handler in ConnectionHandlers.ToArray())
                 {
                     handler?.Invoke();
                 }
@@ -148,7 +148,7 @@ namespace OpenQA.Selenium.Appium.WebSocket
             catch (Exception ex)
             {
                 // Invoke error handlers
-                foreach (var handler in ErrorHandlers)
+                foreach (var handler in ErrorHandlers.ToArray())
                 {
                     handler?.Invoke(ex);
                 }
@@ -175,7 +175,7 @@ namespace OpenQA.Selenium.Appium.WebSocket
                 finally
                 {
                     // Invoke disconnection handlers
-                    foreach (var handler in DisconnectionHandlers)
+                    foreach (var handler in DisconnectionHandlers.ToArray())
                     {
                         handler?.Invoke();
                     }
@@ -230,7 +230,7 @@ namespace OpenQA.Selenium.Appium.WebSocket
                         messageBuilder.Clear();
 
                         // Invoke message handlers
-                        foreach (var handler in MessageHandlers)
+                        foreach (var handler in MessageHandlers.ToArray())
                         {
                             handler?.Invoke(message);
                         }
@@ -244,7 +244,7 @@ namespace OpenQA.Selenium.Appium.WebSocket
             catch (Exception ex)
             {
                 // Invoke error handlers
-                foreach (var handler in ErrorHandlers)
+                foreach (var handler in ErrorHandlers.ToArray())
                 {
                     handler?.Invoke(ex);
                 }
