@@ -32,7 +32,7 @@ namespace OpenQA.Selenium.Appium.Android
         IPushesFiles, IHasSettings, IListensToLogcatMessages
     {
         private static readonly string Platform = MobilePlatform.Android;
-        private static readonly StringWebSocketClient LogcatClient = new StringWebSocketClient();
+        private readonly StringWebSocketClient _logcatClient = new();
         private const int DefaultAppiumPort = 4723;
 
         /// <summary>
@@ -456,7 +456,7 @@ namespace OpenQA.Selenium.Appium.Android
         {
             ExecuteScript("mobile: startLogsBroadcast", new Dictionary<string, object>());
             var endpointUri = new Uri($"ws://{host}:{port}/ws/session/{SessionId}/appium/device/logcat");
-            LogcatClient.ConnectAsync(endpointUri).Wait();
+            _logcatClient.ConnectAsync(endpointUri).Wait();
         }
 
         /// <summary>
@@ -467,7 +467,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// </summary>
         /// <param name="handler">A function, which accepts a single argument, which is the actual log message.</param>
         public void AddLogcatMessagesListener(Action<string> handler) => 
-            LogcatClient.MessageHandlers.Add(handler);
+            _logcatClient.MessageHandlers.Add(handler);
 
         /// <summary>
         /// Adds a new log broadcasting errors handler.
@@ -477,7 +477,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// </summary>
         /// <param name="handler">A function, which accepts a single argument, which is the actual exception instance.</param>
         public void AddLogcatErrorsListener(Action<Exception> handler) => 
-            LogcatClient.ErrorHandlers.Add(handler);
+            _logcatClient.ErrorHandlers.Add(handler);
 
         /// <summary>
         /// Adds a new log broadcasting connection handler.
@@ -487,7 +487,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// </summary>
         /// <param name="handler">A function, which is executed as soon as the client is successfully connected to the web socket.</param>
         public void AddLogcatConnectionListener(Action handler) => 
-            LogcatClient.ConnectionHandlers.Add(handler);
+            _logcatClient.ConnectionHandlers.Add(handler);
 
         /// <summary>
         /// Adds a new log broadcasting disconnection handler.
@@ -497,12 +497,12 @@ namespace OpenQA.Selenium.Appium.Android
         /// </summary>
         /// <param name="handler">A function, which is executed as soon as the client is successfully disconnected from the web socket.</param>
         public void AddLogcatDisconnectionListener(Action handler) => 
-            LogcatClient.DisconnectionHandlers.Add(handler);
+            _logcatClient.DisconnectionHandlers.Add(handler);
 
         /// <summary>
         /// Removes all existing logcat handlers.
         /// </summary>
-        public void RemoveAllLogcatListeners() => LogcatClient.RemoveAllHandlers();
+        public void RemoveAllLogcatListeners() => _logcatClient.RemoveAllHandlers();
 
         /// <summary>
         /// Stops logcat messages broadcast via web socket.
@@ -510,7 +510,7 @@ namespace OpenQA.Selenium.Appium.Android
         public void StopLogcatBroadcast()
         {
             ExecuteScript("mobile: stopLogsBroadcast", new Dictionary<string, object>());
-            LogcatClient.DisconnectAsync().Wait();
+            _logcatClient.DisconnectAsync().Wait();
         }
 
         #endregion
