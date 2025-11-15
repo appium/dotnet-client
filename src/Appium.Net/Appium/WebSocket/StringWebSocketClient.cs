@@ -250,15 +250,28 @@ namespace OpenQA.Selenium.Appium.WebSocket
                 }
             }
         }
+
         /// <summary>
         /// Disposes the web socket client and releases resources.
         /// </summary>
         public void Dispose()
         {
-            DisconnectAsync().Wait();
-            _clientWebSocket?.Dispose();
-            _cancellationTokenSource?.Dispose();
+            Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Releases the unmanaged resources used by the StringWebSocketClient and optionally releases the managed resources.
+        /// </summary>
+        /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                DisconnectAsync().Wait();
+                _clientWebSocket?.Dispose();
+                _cancellationTokenSource?.Dispose();
+            }
         }
     }
 }
