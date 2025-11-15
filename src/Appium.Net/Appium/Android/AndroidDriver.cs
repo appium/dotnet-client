@@ -16,6 +16,7 @@ using OpenQA.Selenium.Appium.Android.Interfaces;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Service;
+using OpenQA.Selenium.Appium.WebSocket;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -28,9 +29,11 @@ namespace OpenQA.Selenium.Appium.Android
         IStartsActivity,
         INetworkActions, IHasClipboard, IHasPerformanceData,
         ISendsKeyEvents,
-        IPushesFiles, IHasSettings
+        IPushesFiles, IHasSettings, IListensToLogcatMessages
     {
         private static readonly string Platform = MobilePlatform.Android;
+        private static readonly StringWebSocketClient LogcatClient = new StringWebSocketClient();
+        private const int DefaultAppiumPort = 4723;
 
         /// <summary>
         /// Initializes a new instance of the AndroidDriver class
@@ -427,5 +430,89 @@ namespace OpenQA.Selenium.Appium.Android
                     }
                 )?.ToString() ?? throw new InvalidOperationException("ExecuteScript returned null for mobile:queryAppState")
             );
+
+        #region Logcat Broadcast
+
+        /// <summary>
+        /// Start logcat messages broadcast via web socket.
+        /// This method assumes that Appium server is running on localhost and
+        /// is assigned to the default port (4723).
+        /// </summary>
+        public void StartLogcatBroadcast() => StartLogcatBroadcast("localhost", DefaultAppiumPort);
+
+        /// <summary>
+        /// Start logcat messages broadcast via web socket.
+        /// This method assumes that Appium server is assigned to the default port (4723).
+        /// </summary>
+        /// <param name="host">The name of the host where Appium server is running.</param>
+        public void StartLogcatBroadcast(string host) => StartLogcatBroadcast(host, DefaultAppiumPort);
+
+        /// <summary>
+        /// Start logcat messages broadcast via web socket.
+        /// </summary>
+        /// <param name="host">The name of the host where Appium server is running.</param>
+        /// <param name="port">The port of the host where Appium server is running.</param>
+        public void StartLogcatBroadcast(string host, int port)
+        {
+            ExecuteScript("mobile: startLogsBroadcast", new Dictionary<string, object>());
+            var endpointUri = new Uri($"ws://{host}:{port}/ws/session/{SessionId}/appium/device/logcat");
+            LogcatClient.ConnectAsync(endpointUri).Wait();
+        }
+
+        /// <summary>
+        /// Adds a new log messages broadcasting handler.
+        /// Several handlers might be assigned to a single server.
+        /// Multiple calls to this method will cause such handler
+        /// to be called multiple times.
+        /// </summary>
+        /// <param name="handler">A function, which accepts a single argument, which is the actual log message.</param>
+        public void AddLogcatMessagesListener(Action<string> handler) => 
+            LogcatClient.MessageHandlers.Add(handler);
+
+        /// <summary>
+        /// Adds a new log broadcasting errors handler.
+        /// Several handlers might be assigned to a single server.
+        /// Multiple calls to this method will cause such handler
+        /// to be called multiple times.
+        /// </summary>
+        /// <param name="handler">A function, which accepts a single argument, which is the actual exception instance.</param>
+        public void AddLogcatErrorsListener(Action<Exception> handler) => 
+            LogcatClient.ErrorHandlers.Add(handler);
+
+        /// <summary>
+        /// Adds a new log broadcasting connection handler.
+        /// Several handlers might be assigned to a single server.
+        /// Multiple calls to this method will cause such handler
+        /// to be called multiple times.
+        /// </summary>
+        /// <param name="handler">A function, which is executed as soon as the client is successfully connected to the web socket.</param>
+        public void AddLogcatConnectionListener(Action handler) => 
+            LogcatClient.ConnectionHandlers.Add(handler);
+
+        /// <summary>
+        /// Adds a new log broadcasting disconnection handler.
+        /// Several handlers might be assigned to a single server.
+        /// Multiple calls to this method will cause such handler
+        /// to be called multiple times.
+        /// </summary>
+        /// <param name="handler">A function, which is executed as soon as the client is successfully disconnected from the web socket.</param>
+        public void AddLogcatDisconnectionListener(Action handler) => 
+            LogcatClient.DisconnectionHandlers.Add(handler);
+
+        /// <summary>
+        /// Removes all existing logcat handlers.
+        /// </summary>
+        public void RemoveAllLogcatListeners() => LogcatClient.RemoveAllHandlers();
+
+        /// <summary>
+        /// Stops logcat messages broadcast via web socket.
+        /// </summary>
+        public void StopLogcatBroadcast()
+        {
+            ExecuteScript("mobile: stopLogsBroadcast", new Dictionary<string, object>());
+            LogcatClient.DisconnectAsync().Wait();
+        }
+
+        #endregion
     }
 }
