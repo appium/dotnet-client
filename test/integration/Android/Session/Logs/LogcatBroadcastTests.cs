@@ -142,8 +142,6 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
                 _driver.AddLogcatMessagesListener(listener1);
                 _driver.AddLogcatMessagesListener(listener2);
 
-                    
-
                 // Trigger activity to generate logs
                 _driver.BackgroundApp(TimeSpan.FromMilliseconds(500));
 
