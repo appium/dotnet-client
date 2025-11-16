@@ -13,6 +13,7 @@
 //limitations under the License.
 
 using System;
+using System.Threading.Tasks;
 
 namespace OpenQA.Selenium.Appium.Android.Interfaces
 {
@@ -26,21 +27,21 @@ namespace OpenQA.Selenium.Appium.Android.Interfaces
         /// This method assumes that Appium server is running on localhost and
         /// is assigned to the default port (4723).
         /// </summary>
-        void StartLogcatBroadcast();
+        Task StartLogcatBroadcast();
 
         /// <summary>
         /// Start logcat messages broadcast via web socket.
         /// This method assumes that Appium server is assigned to the default port (4723).
         /// </summary>
         /// <param name="host">The name of the host where Appium server is running.</param>
-        void StartLogcatBroadcast(string host);
+        Task StartLogcatBroadcast(string host);
 
         /// <summary>
         /// Start logcat messages broadcast via web socket.
         /// </summary>
         /// <param name="host">The name of the host where Appium server is running.</param>
         /// <param name="port">The port of the host where Appium server is running.</param>
-        void StartLogcatBroadcast(string host, int port);
+        Task StartLogcatBroadcast(string host, int port);
 
         /// <summary>
         /// Adds a new log messages broadcasting handler.

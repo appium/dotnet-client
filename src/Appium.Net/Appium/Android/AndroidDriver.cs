@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using OpenQA.Selenium.Appium.Android.Enums;
+using System.Threading.Tasks;
 
 namespace OpenQA.Selenium.Appium.Android
 {
@@ -438,25 +439,25 @@ namespace OpenQA.Selenium.Appium.Android
         /// This method assumes that Appium server is running on localhost and
         /// is assigned to the default port (4723).
         /// </summary>
-        public void StartLogcatBroadcast() => StartLogcatBroadcast("localhost", DefaultAppiumPort);
+        public async Task StartLogcatBroadcast() => await StartLogcatBroadcast("localhost", DefaultAppiumPort);
 
         /// <summary>
         /// Start logcat messages broadcast via web socket.
         /// This method assumes that Appium server is assigned to the default port (4723).
         /// </summary>
         /// <param name="host">The name of the host where Appium server is running.</param>
-        public void StartLogcatBroadcast(string host) => StartLogcatBroadcast(host, DefaultAppiumPort);
+        public async Task StartLogcatBroadcast(string host) => await StartLogcatBroadcast(host, DefaultAppiumPort);
 
         /// <summary>
         /// Start logcat messages broadcast via web socket.
         /// </summary>
         /// <param name="host">The name of the host where Appium server is running.</param>
         /// <param name="port">The port of the host where Appium server is running.</param>
-        public void StartLogcatBroadcast(string host, int port)
+        public async Task StartLogcatBroadcast(string host, int port)
         {
             ExecuteScript("mobile: startLogsBroadcast", new Dictionary<string, object>());
             var endpointUri = new Uri($"ws://{host}:{port}/ws/session/{SessionId}/appium/device/logcat");
-            _logcatClient.ConnectAsync(endpointUri).Wait();
+            await _logcatClient.ConnectAsync(endpointUri);
         }
 
         /// <summary>
