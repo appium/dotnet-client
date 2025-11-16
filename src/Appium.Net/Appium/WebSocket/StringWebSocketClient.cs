@@ -176,6 +176,12 @@ namespace OpenQA.Selenium.Appium.WebSocket
                 {
                     _cancellationTokenSource?.Cancel();
                     await _clientWebSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", CancellationToken.None);
+                    
+                    // Wait for receive task to complete
+                    if (_receiveTask != null)
+                    {
+                        await _receiveTask;
+                    }
                 }
                 catch (Exception ex)
                 {
