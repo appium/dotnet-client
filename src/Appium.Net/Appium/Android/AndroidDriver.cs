@@ -468,7 +468,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// </summary>
         /// <param name="handler">A function, which accepts a single argument, which is the actual log message.</param>
         public void AddLogcatMessagesListener(Action<string> handler) => 
-            _logcatClient.MessageHandlers.Add(handler);
+            _logcatClient.AddMessageHandler(handler);
 
         /// <summary>
         /// Adds a new log broadcasting errors handler.
@@ -478,7 +478,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// </summary>
         /// <param name="handler">A function, which accepts a single argument, which is the actual exception instance.</param>
         public void AddLogcatErrorsListener(Action<Exception> handler) => 
-            _logcatClient.ErrorHandlers.Add(handler);
+            _logcatClient.AddErrorHandler(handler);
 
         /// <summary>
         /// Adds a new log broadcasting connection handler.
@@ -488,7 +488,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// </summary>
         /// <param name="handler">A function, which is executed as soon as the client is successfully connected to the web socket.</param>
         public void AddLogcatConnectionListener(Action handler) => 
-            _logcatClient.ConnectionHandlers.Add(handler);
+            _logcatClient.AddConnectionHandler(handler);
 
         /// <summary>
         /// Adds a new log broadcasting disconnection handler.
@@ -498,7 +498,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// </summary>
         /// <param name="handler">A function, which is executed as soon as the client is successfully disconnected from the web socket.</param>
         public void AddLogcatDisconnectionListener(Action handler) => 
-            _logcatClient.DisconnectionHandlers.Add(handler);
+            _logcatClient.AddDisconnectionHandler(handler);
 
         /// <summary>
         /// Removes all existing logcat handlers.
