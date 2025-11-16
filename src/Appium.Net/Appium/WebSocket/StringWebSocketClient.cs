@@ -143,7 +143,7 @@ namespace OpenQA.Selenium.Appium.WebSocket
                 }
 
                 // Start receiving messages
-                _receiveTask = Task.Run(async () => await ReceiveMessagesAsync());
+                _receiveTask = Task.Run(ReceiveMessagesAsync);
             }
             catch (WebSocketException ex)
             {
@@ -177,9 +177,13 @@ namespace OpenQA.Selenium.Appium.WebSocket
                     _cancellationTokenSource?.Cancel();
                     await _clientWebSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", CancellationToken.None);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    // Ignore errors during close
+                    // Invoke error handlers for errors during close
+                    foreach (var handler in ErrorHandlers)
+                    {
+                        handler?.Invoke(ex);
+                    }
                 }
                 finally
                 {

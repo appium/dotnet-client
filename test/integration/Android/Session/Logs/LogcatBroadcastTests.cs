@@ -84,27 +84,21 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
         }
 
         [Test]
-        public void CanStartAndStopLogcatBroadcast()
+        public async Task CanStartAndStopLogcatBroadcast()
         {
             // Should not throw when starting and stopping
-            Assert.DoesNotThrow(() =>
-            {
-                _driver.StartLogcatBroadcast();
-                _driver.StopLogcatBroadcast();
-            }, "Starting and stopping logcat broadcast should not throw exceptions");
+            await _driver.StartLogcatBroadcast();
+            _driver.StopLogcatBroadcast();
         }
 
         [Test]
-        public void CanStartLogcatBroadcastWithCustomHost()
+        public async Task CanStartLogcatBroadcastWithCustomHost()
         {
             var host = Env.ServerIsLocal() ? "localhost" : "127.0.0.1";
             var port = 4723;    
 
-            Assert.DoesNotThrow(() =>
-            {
-                _driver.StartLogcatBroadcast(host, port);
-                _driver.StopLogcatBroadcast();
-            }, "Starting logcat broadcast with custom host should not throw exceptions");
+            await _driver.StartLogcatBroadcast(host, port);
+            _driver.StopLogcatBroadcast();
         }
 
         [Test]
@@ -158,7 +152,7 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
         }
 
         [Test]
-        public void CanHandleErrorsGracefully()
+        public async Task CanHandleErrorsGracefully()
         {
             var errorReceived = false;
             using var errorSemaphore = new SemaphoreSlim(0, 1);
@@ -175,7 +169,7 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
                 // Start broadcast - may fail if endpoint is not available
                 try
                 {
-                    _driver.StartLogcatBroadcast();
+                    await _driver.StartLogcatBroadcast();
 
                     // Give it time to connect
                     Thread.Sleep(2000);
