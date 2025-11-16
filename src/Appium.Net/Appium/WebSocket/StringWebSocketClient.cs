@@ -27,7 +27,8 @@ namespace OpenQA.Selenium.Appium.WebSocket
     public class StringWebSocketClient : ICanHandleMessages<string>, ICanHandleErrors, 
         ICanHandleConnects, ICanHandleDisconnects, IDisposable
     {
-        private readonly ClientWebSocket _clientWebSocket;
+        private ClientWebSocket _clientWebSocket;
+        private readonly SemaphoreSlim _connectionLock = new SemaphoreSlim(1, 1);
         private Uri _endpoint;
         private CancellationTokenSource _cancellationTokenSource;
         private Task _receiveTask;
@@ -119,49 +120,67 @@ namespace OpenQA.Selenium.Appium.WebSocket
         /// <param name="endpoint">The full address of an endpoint to connect to. Usually starts with 'ws://'.</param>
         public async Task ConnectAsync(Uri endpoint)
         {
-            if (_clientWebSocket.State == WebSocketState.Open)
-            {
-                if (endpoint.Equals(_endpoint))
-                {
-                    return;
-                }
-
-                await DisconnectAsync();
-            }
-
+            await _connectionLock.WaitAsync();
             try
             {
-                _endpoint = endpoint;
-                _cancellationTokenSource = new CancellationTokenSource();
-                
-                await _clientWebSocket.ConnectAsync(endpoint, _cancellationTokenSource.Token);
-                
-                // Invoke connection handlers
-                foreach (var handler in ConnectionHandlers.ToArray())
+                // If websocket is already open and connected to the same endpoint, return
+                if (_clientWebSocket?.State == WebSocketState.Open)
                 {
-                    handler?.Invoke();
+                    if (endpoint.Equals(_endpoint))
+                    {
+                        return;
+                    }
+
+                    await DisconnectInternalAsync();
                 }
 
-                // Start receiving messages
-                _receiveTask = Task.Run(ReceiveMessagesAsync);
-            }
-            catch (WebSocketException ex)
-            {
-                // Invoke error handlers
-                foreach (var handler in ErrorHandlers.ToArray())
+                // Recreate ClientWebSocket if it's disposed or in a non-connectable state
+                if (_clientWebSocket == null || 
+                    _clientWebSocket.State == WebSocketState.Closed || 
+                    _clientWebSocket.State == WebSocketState.Aborted)
                 {
-                    handler?.Invoke(ex);
+                    _clientWebSocket?.Dispose();
+                    _clientWebSocket = new ClientWebSocket();
                 }
-                throw new WebDriverException("Failed to connect to WebSocket", ex);
-            }
-            catch (TaskCanceledException ex)
-            {
-                // Invoke error handlers
-                foreach (var handler in ErrorHandlers.ToArray())
+
+                try
                 {
-                    handler?.Invoke(ex);
+                    _endpoint = endpoint;
+                    _cancellationTokenSource = new CancellationTokenSource();
+                    
+                    await _clientWebSocket.ConnectAsync(endpoint, _cancellationTokenSource.Token);
+                    
+                    // Invoke connection handlers
+                    foreach (var handler in ConnectionHandlers.ToArray())
+                    {
+                        handler?.Invoke();
+                    }
+
+                    // Start receiving messages
+                    _receiveTask = Task.Run(ReceiveMessagesAsync);
                 }
-                throw new WebDriverException("WebSocket connection was cancelled", ex);
+                catch (WebSocketException ex)
+                {
+                    // Invoke error handlers
+                    foreach (var handler in ErrorHandlers.ToArray())
+                    {
+                        handler?.Invoke(ex);
+                    }
+                    throw new WebDriverException("Failed to connect to WebSocket", ex);
+                }
+                catch (TaskCanceledException ex)
+                {
+                    // Invoke error handlers
+                    foreach (var handler in ErrorHandlers.ToArray())
+                    {
+                        handler?.Invoke(ex);
+                    }
+                    throw new WebDriverException("WebSocket connection was cancelled", ex);
+                }
+            }
+            finally
+            {
+                _connectionLock.Release();
             }
         }
 
@@ -169,6 +188,22 @@ namespace OpenQA.Selenium.Appium.WebSocket
         /// Disconnects from the WebSocket endpoint.
         /// </summary>
         public async Task DisconnectAsync()
+        {
+            await _connectionLock.WaitAsync();
+            try
+            {
+                await DisconnectInternalAsync();
+            }
+            finally
+            {
+                _connectionLock.Release();
+            }
+        }
+
+        /// <summary>
+        /// Internal disconnect method without lock (called when already holding the lock).
+        /// </summary>
+        private async Task DisconnectInternalAsync()
         {
             if (_clientWebSocket.State == WebSocketState.Open)
             {
@@ -290,6 +325,7 @@ namespace OpenQA.Selenium.Appium.WebSocket
                 DisconnectAsync().Wait();
                 _clientWebSocket?.Dispose();
                 _cancellationTokenSource?.Dispose();
+                _connectionLock?.Dispose();
             }
         }
     }
