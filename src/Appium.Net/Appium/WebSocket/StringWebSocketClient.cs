@@ -220,7 +220,7 @@ namespace OpenQA.Selenium.Appium.WebSocket
                 catch (Exception ex)
                 {
                     // Invoke error handlers for errors during close
-                    foreach (var handler in ErrorHandlers)
+                    foreach (var handler in ErrorHandlers.ToArray())
                     {
                         handler?.Invoke(ex);
                     }
