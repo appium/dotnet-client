@@ -146,7 +146,7 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
             }
             finally
             {
-                _driver.StopLogcatBroadcast();
+                await _driver.StopLogcatBroadcast();
                 _driver.RemoveAllLogcatListeners();
             }
         }
