@@ -38,7 +38,6 @@ namespace OpenQA.Selenium.Appium.WebSocket
         /// </summary>
         public StringWebSocketClient()
         {
-            _clientWebSocket = new ClientWebSocket();
             MessageHandlers = new List<Action<string>>();
             ErrorHandlers = new List<Action<Exception>>();
             ConnectionHandlers = new List<Action>();
