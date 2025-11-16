@@ -87,6 +87,6 @@ namespace OpenQA.Selenium.Appium.Android.Interfaces
         /// <summary>
         /// Stops logcat messages broadcast via web socket.
         /// </summary>
-        void StopLogcatBroadcast();
+        Task StopLogcatBroadcast();
     }
 }

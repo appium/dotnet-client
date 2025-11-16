@@ -78,7 +78,7 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
             finally
             {
                 // Clean up
-                _driver.StopLogcatBroadcast();
+                await _driver.StopLogcatBroadcast();
                 _driver.RemoveAllLogcatListeners();
             }
         }
@@ -88,7 +88,7 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
         {
             // Should not throw when starting and stopping
             await _driver.StartLogcatBroadcast();
-            _driver.StopLogcatBroadcast();
+            await _driver.StopLogcatBroadcast();
         }
 
         [Test]
@@ -98,7 +98,7 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
             var port = 4723; 
 
             await _driver.StartLogcatBroadcast(host, port);
-            _driver.StopLogcatBroadcast();
+            await _driver.StopLogcatBroadcast();
         }
 
         [Test]
@@ -201,7 +201,7 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
             {
                 try
                 {
-                    _driver.StopLogcatBroadcast();
+                    await _driver.StopLogcatBroadcast();
                 }
                 catch (Exception ex)
                 {

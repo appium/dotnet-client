@@ -508,10 +508,10 @@ namespace OpenQA.Selenium.Appium.Android
         /// <summary>
         /// Stops logcat messages broadcast via web socket.
         /// </summary>
-        public void StopLogcatBroadcast()
+        public async Task StopLogcatBroadcast()
         {
             ExecuteScript("mobile: stopLogsBroadcast", new Dictionary<string, object>());
-            _logcatClient.DisconnectAsync().Wait();
+            await _logcatClient.DisconnectAsync();
         }
 
         #endregion
