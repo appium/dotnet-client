@@ -95,7 +95,7 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
         public async Task CanStartLogcatBroadcastWithCustomHost()
         {
             var host = Env.ServerIsLocal() ? "localhost" : "127.0.0.1";
-            var port = 4723;    
+            var port = 4723; 
 
             await _driver.StartLogcatBroadcast(host, port);
             _driver.StopLogcatBroadcast();
