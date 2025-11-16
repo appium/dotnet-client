@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium.Appium;
@@ -117,7 +118,7 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
         }
 
         [Test]
-        public void CanAddAndRemoveMultipleListeners()
+        public async Task CanAddAndRemoveMultipleListeners()
         {
             var messageCount = 0;
             var messageSemaphore = new SemaphoreSlim(0, 10);
@@ -135,7 +136,8 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
             };
 
             try
-            {
+            {   
+                await _driver.StartLogcatBroadcast();
                 // Add multiple listeners
                 _driver.AddLogcatMessagesListener(listener1);
                 _driver.AddLogcatMessagesListener(listener2);
