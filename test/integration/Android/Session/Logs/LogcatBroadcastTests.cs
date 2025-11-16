@@ -30,14 +30,13 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
         }
 
         [Test]
-        public void VerifyLogcatListenerCanBeAssigned()
+        public async Task VerifyLogcatListenerCanBeAssigned()
         {
-            var messageSemaphore = new SemaphoreSlim(0, 1);
-            var connectionSemaphore = new SemaphoreSlim(0, 1);
+            using var messageSemaphore = new SemaphoreSlim(0, 1);
+            using var connectionSemaphore = new SemaphoreSlim(0, 1);
             var messageReceived = false;
             var connectionEstablished = false;
             var timeout = TimeSpan.FromSeconds(15);
-
             // Add listeners
             _driver.AddLogcatMessagesListener(msg =>
             {
@@ -45,42 +44,35 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
                 messageReceived = true;
                 messageSemaphore.Release();
             });
-
             _driver.AddLogcatConnectionListener(() =>
             {
                 Console.WriteLine("Connected to the logcat web socket");
                 connectionEstablished = true;
                 connectionSemaphore.Release();
             });
-
             _driver.AddLogcatDisconnectionListener(() =>
             {
                 Console.WriteLine("Disconnected from the logcat web socket");
             });
-
             _driver.AddLogcatErrorsListener(ex =>
             {
                 Console.WriteLine($"Logcat error: {ex.Message}");
             });
-
             try
             {
                 // Start logcat broadcast
-                _driver.StartLogcatBroadcast();
-
+                await _driver.StartLogcatBroadcast();
                 // Wait for connection
-                Assert.That(connectionSemaphore.Wait(timeout), Is.True, 
+                Assert.That(connectionSemaphore.Wait(timeout), Is.True,
                     "Failed to establish WebSocket connection within timeout");
-                Assert.That(connectionEstablished, Is.True, 
+                Assert.That(connectionEstablished, Is.True,
                     "Connection listener was not invoked");
-
                 // Trigger some activity to generate log messages
                 _driver.BackgroundApp(TimeSpan.FromSeconds(1));
-
                 // Wait for at least one message
                 Assert.That(messageSemaphore.Wait(timeout), Is.True,
                     $"Didn't receive any log message after {timeout.TotalSeconds} seconds timeout");
-                Assert.That(messageReceived, Is.True, 
+                Assert.That(messageReceived, Is.True,
                     "Message listener was not invoked");
             }
             finally
@@ -88,8 +80,6 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
                 // Clean up
                 _driver.StopLogcatBroadcast();
                 _driver.RemoveAllLogcatListeners();
-                messageSemaphore.Dispose();
-                connectionSemaphore.Dispose();
             }
         }
 
