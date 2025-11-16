@@ -111,22 +111,19 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
         public async Task CanAddAndRemoveMultipleListeners()
         {
             var messageCount = 0;
-            var messageSemaphore = new SemaphoreSlim(0, 10);
-
-            Action<string> listener1 = msg =>
+            using var messageSemaphore = new SemaphoreSlim(0, 10);
+            void listener1(string msg)
             {
                 Interlocked.Increment(ref messageCount);
                 messageSemaphore.Release();
-            };
-
-            Action<string> listener2 = msg =>
+            }
+            void listener2(string msg)
             {
                 Interlocked.Increment(ref messageCount);
                 messageSemaphore.Release();
-            };
-
+            }
             try
-            {   
+            {
                 await _driver.StartLogcatBroadcast();
                 // Add multiple listeners
                 _driver.AddLogcatMessagesListener(listener1);
@@ -134,29 +131,22 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
 
                 // Trigger activity to generate logs
                 _driver.BackgroundApp(TimeSpan.FromMilliseconds(500));
-
                 // Wait a bit for messages (both listeners should be called)
                 var received = messageSemaphore.Wait(TimeSpan.FromSeconds(5));
-
                 if (received)
                 {
                     // If we received messages, both listeners should have been invoked
                     Assert.That(messageCount, Is.GreaterThanOrEqualTo(1),
                         "At least one listener should have been invoked");
                 }
-
                 // Remove all listeners
                 _driver.RemoveAllLogcatListeners();
-
                 // Reset counter
                 messageCount = 0;
-
                 // Trigger more activity
                 _driver.BackgroundApp(TimeSpan.FromMilliseconds(500));
-
                 // Wait a bit - no new messages should be counted after removing listeners
                 Thread.Sleep(2000);
-
                 Assert.That(messageCount, Is.EqualTo(0),
                     "No listeners should be invoked after removing all listeners");
             }
@@ -164,7 +154,6 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
             {
                 _driver.StopLogcatBroadcast();
                 _driver.RemoveAllLogcatListeners();
-                messageSemaphore.Dispose();
             }
         }
 
