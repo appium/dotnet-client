@@ -439,6 +439,11 @@ namespace OpenQA.Selenium.Appium.Android
         /// This method assumes that Appium server is running on localhost and
         /// is assigned to the default port (4723).
         /// </summary>
+        /// <remarks>
+        /// This implementation uses a custom WebSocket endpoint and is temporary.
+        /// In the future, this functionality will be replaced with WebDriver BiDi log events
+        /// when BiDi support for Android device logs becomes available.
+        /// </remarks>
         public async Task StartLogcatBroadcast() => await StartLogcatBroadcast("localhost", DefaultAppiumPort);
 
         /// <summary>
@@ -446,6 +451,11 @@ namespace OpenQA.Selenium.Appium.Android
         /// This method assumes that Appium server is assigned to the default port (4723).
         /// </summary>
         /// <param name="host">The name of the host where Appium server is running.</param>
+        /// <remarks>
+        /// This implementation uses a custom WebSocket endpoint and is temporary.
+        /// In the future, this functionality will be replaced with WebDriver BiDi log events
+        /// when BiDi support for Android device logs becomes available.
+        /// </remarks>
         public async Task StartLogcatBroadcast(string host) => await StartLogcatBroadcast(host, DefaultAppiumPort);
 
         /// <summary>
@@ -453,6 +463,11 @@ namespace OpenQA.Selenium.Appium.Android
         /// </summary>
         /// <param name="host">The name of the host where Appium server is running.</param>
         /// <param name="port">The port of the host where Appium server is running.</param>
+        /// <remarks>
+        /// This implementation uses a custom WebSocket endpoint and is temporary.
+        /// In the future, this functionality will be replaced with WebDriver BiDi log events
+        /// when BiDi support for Android device logs becomes available.
+        /// </remarks>
         public async Task StartLogcatBroadcast(string host, int port)
         {
             ExecuteScript("mobile: startLogsBroadcast", new Dictionary<string, object>());
