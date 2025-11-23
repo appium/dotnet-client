@@ -72,7 +72,10 @@ namespace Appium.Net.Integration.Tests.Android.App
                     _driver.RemoveApp(_packageName);
                 }
             }
-            catch { }
+            catch (Exception ex) 
+            { 
+                Console.Error.WriteLine($"Exception during Dispose: {ex}");
+            }
             _driver?.Quit();
         }
     }
