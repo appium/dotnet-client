@@ -174,7 +174,7 @@ namespace OpenQA.Selenium.Appium.Android
 
         /// <summary>
         /// Install an app on the Android device using mobile: installApp script.
-        /// For documentation, see <see href="https://github.com/appium/appium-uiautomator2-driver/blob/master/docs/android-mobile-gestures.md#mobile-installapp">mobile: installApp</see>.
+        /// For documentation, see <see href="https://github.com/appium/appium-uiautomator2-driver?tab=readme-ov-file#mobile-installapp">mobile: installApp</see>.
         /// </summary>
         /// <param name="executeMethod">The execute method</param>
         /// <param name="appPath">Full path to the .apk on the local filesystem or a remote URL.</param>
