@@ -203,7 +203,7 @@ namespace OpenQA.Selenium.Appium.Android
 
         #endregion
 
-        #region Device Kesys
+        #region Device Keys
 
         public void PressKeyCode(int keyCode, int metastate = -1) =>
             AppiumCommandExecutionHelper.PressKeyCode(this, keyCode, metastate);
