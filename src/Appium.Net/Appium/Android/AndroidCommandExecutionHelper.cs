@@ -172,6 +172,50 @@ namespace OpenQA.Selenium.Appium.Android
 
         #endregion
 
+        /// <summary>
+        /// Install an app on the Android device using mobile: installApp script.
+        /// For documentation, see <see href="https://github.com/appium/appium-uiautomator2-driver/blob/master/docs/android-mobile-gestures.md#mobile-installapp">mobile: installApp</see>.
+        /// </summary>
+        /// <param name="executeMethod">The execute method</param>
+        /// <param name="appPath">Full path to the .apk on the local filesystem or a remote URL.</param>
+        /// <param name="timeout">Optional timeout in milliseconds to wait for the app installation to complete. 60000ms by default.</param>
+        /// <param name="allowTestPackages">Optional flag to allow test packages installation. false by default.</param>
+        /// <param name="useSdcard">Optional flag to install the app on sdcard instead of device memory. false by default.</param>
+        /// <param name="grantPermissions">Optional flag to grant all permissions requested in the app manifest automatically after installation. false by default.</param>
+        /// <param name="replace">Optional flag to upgrade/reinstall if app is already present. true by default.</param>
+        /// <param name="checkVersion">Optional flag to skip installation if device has equal or greater app version. false by default.</param>
+        public static void InstallApp(
+            IExecuteMethod executeMethod, 
+            string appPath, 
+            int? timeout = null, 
+            bool? allowTestPackages = null, 
+            bool? useSdcard = null, 
+            bool? grantPermissions = null, 
+            bool? replace = null, 
+            bool? checkVersion = null)
+        {
+            var args = new Dictionary<string, object> { { "appPath", appPath } };
+            
+            if (timeout.HasValue)
+                args["timeout"] = timeout.Value;
+            if (allowTestPackages.HasValue)
+                args["allowTestPackages"] = allowTestPackages.Value;
+            if (useSdcard.HasValue)
+                args["useSdcard"] = useSdcard.Value;
+            if (grantPermissions.HasValue)
+                args["grantPermissions"] = grantPermissions.Value;
+            if (replace.HasValue)
+                args["replace"] = replace.Value;
+            if (checkVersion.HasValue)
+                args["checkVersion"] = checkVersion.Value;
+
+            executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object>
+            {
+                ["script"] = "mobile: installApp",
+                ["args"] = new object[] { args }
+            });
+        }
+
         public static Dictionary<string, object> GetSettings(IExecuteMethod executeMethod) =>
             (Dictionary<string, object>) executeMethod.Execute(AppiumDriverCommand.GetSettings).Value;
 

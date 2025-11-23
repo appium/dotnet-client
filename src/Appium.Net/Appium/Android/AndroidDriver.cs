@@ -178,6 +178,31 @@ namespace OpenQA.Selenium.Appium.Android
 
         public string CurrentPackage => AndroidCommandExecutionHelper.GetCurrentPackage(this);
 
+        #region App Management
+
+        /// <summary>
+        /// Install an app on the Android device using mobile: installApp script.
+        /// For documentation, see <see href="https://github.com/appium/appium-uiautomator2-driver?tab=readme-ov-file#mobile-installapp">mobile: installApp</see>.
+        /// </summary>
+        /// <param name="appPath">Full path to the .apk on the local filesystem or a remote URL.</param>
+        /// <param name="timeout">Optional timeout in milliseconds to wait for the app installation to complete. 60000ms by default.</param>
+        /// <param name="allowTestPackages">Optional flag to allow test packages installation. false by default.</param>
+        /// <param name="useSdcard">Optional flag to install the app on sdcard instead of device memory. false by default.</param>
+        /// <param name="grantPermissions">Optional flag to grant all permissions requested in the app manifest automatically after installation. false by default.</param>
+        /// <param name="replace">Optional flag to upgrade/reinstall if app is already present. true by default.</param>
+        /// <param name="checkVersion">Optional flag to skip installation if device has equal or greater app version. false by default.</param>
+        public void InstallApp(
+            string appPath, 
+            int? timeout = null, 
+            bool? allowTestPackages = null, 
+            bool? useSdcard = null, 
+            bool? grantPermissions = null, 
+            bool? replace = null, 
+            bool? checkVersion = null) =>
+            AndroidCommandExecutionHelper.InstallApp(this, appPath, timeout, allowTestPackages, useSdcard, grantPermissions, replace, checkVersion);
+
+        #endregion
+
         #region Device Kesys
 
         public void PressKeyCode(int keyCode, int metastate = -1) =>
