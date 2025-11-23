@@ -18,7 +18,6 @@ namespace Appium.Net.Integration.Tests.Android.App
             _apkPath = Apps.Get(Apps.androidApiDemos);
             _packageName = Apps.GetId(Apps.androidApiDemos);
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
-            _ = new AppiumOptions();
             AppiumOptions opts = Caps.GetAndroidUIAutomatorCaps();
             // Do not preinstall the app via capabilities; we test explicit installation.
             _driver = new AndroidDriver(serverUri, opts, TimeSpan.FromMinutes(2));
