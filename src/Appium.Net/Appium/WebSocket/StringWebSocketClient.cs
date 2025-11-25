@@ -165,7 +165,7 @@ namespace OpenQA.Selenium.Appium.WebSocket
                     {
                         handler?.Invoke(ex);
                     }
-                    throw new WebDriverException("Failed to connect to WebSocket", ex);
+                    throw new WebDriverException($"Failed to connect to WebSocket at {DateTime.UtcNow:yyyy-MM-dd HH:mm:ss.fff} UTC", ex);
                 }
                 catch (TaskCanceledException ex)
                 {
