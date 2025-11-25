@@ -16,11 +16,13 @@ using OpenQA.Selenium.Appium.Android.Interfaces;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Service;
+using OpenQA.Selenium.Appium.WebSocket;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using OpenQA.Selenium.Appium.Android.Enums;
+using System.Threading.Tasks;
 
 namespace OpenQA.Selenium.Appium.Android
 {
@@ -28,9 +30,11 @@ namespace OpenQA.Selenium.Appium.Android
         IStartsActivity,
         INetworkActions, IHasClipboard, IHasPerformanceData,
         ISendsKeyEvents,
-        IPushesFiles, IHasSettings
+        IPushesFiles, IHasSettings, IListensToLogcatMessages
     {
         private static readonly string Platform = MobilePlatform.Android;
+        private readonly StringWebSocketClient _logcatClient = new();
+        private const int DefaultAppiumPort = 4723;
 
         /// <summary>
         /// Initializes a new instance of the AndroidDriver class
@@ -427,5 +431,104 @@ namespace OpenQA.Selenium.Appium.Android
                     }
                 )?.ToString() ?? throw new InvalidOperationException("ExecuteScript returned null for mobile:queryAppState")
             );
+
+        #region Logcat Broadcast
+
+        /// <summary>
+        /// Start logcat messages broadcast via web socket.
+        /// This method assumes that Appium server is running on localhost and
+        /// is assigned to the default port (4723).
+        /// </summary>
+        /// <remarks>
+        /// This implementation uses a custom WebSocket endpoint and is temporary.
+        /// In the future, this functionality will be replaced with WebDriver BiDi log events
+        /// when BiDi support for Android device logs becomes available.
+        /// </remarks>
+        public async Task StartLogcatBroadcast() => await StartLogcatBroadcast("127.0.0.1", DefaultAppiumPort);
+
+        /// <summary>
+        /// Start logcat messages broadcast via web socket.
+        /// This method assumes that Appium server is assigned to the default port (4723).
+        /// </summary>
+        /// <param name="host">The name of the host where Appium server is running.</param>
+        /// <remarks>
+        /// This implementation uses a custom WebSocket endpoint and is temporary.
+        /// In the future, this functionality will be replaced with WebDriver BiDi log events
+        /// when BiDi support for Android device logs becomes available.
+        /// </remarks>
+        public async Task StartLogcatBroadcast(string host) => await StartLogcatBroadcast(host, DefaultAppiumPort);
+
+        /// <summary>
+        /// Start logcat messages broadcast via web socket.
+        /// </summary>
+        /// <param name="host">The name of the host where Appium server is running.</param>
+        /// <param name="port">The port of the host where Appium server is running.</param>
+        /// <remarks>
+        /// This implementation uses a custom WebSocket endpoint and is temporary.
+        /// In the future, this functionality will be replaced with WebDriver BiDi log events
+        /// when BiDi support for Android device logs becomes available.
+        /// </remarks>
+        public async Task StartLogcatBroadcast(string host, int port)
+        {
+            ExecuteScript("mobile: startLogsBroadcast", new Dictionary<string, object>());
+            var endpointUri = new Uri($"ws://{host}:{port}/ws/session/{SessionId}/appium/device/logcat");
+            await _logcatClient.ConnectAsync(endpointUri);
+        }
+
+        /// <summary>
+        /// Adds a new log messages broadcasting handler.
+        /// Several handlers might be assigned to a single server.
+        /// Multiple calls to this method will cause such handler
+        /// to be called multiple times.
+        /// </summary>
+        /// <param name="handler">A function, which accepts a single argument, which is the actual log message.</param>
+        public void AddLogcatMessagesListener(Action<string> handler) => 
+            _logcatClient.AddMessageHandler(handler);
+
+        /// <summary>
+        /// Adds a new log broadcasting errors handler.
+        /// Several handlers might be assigned to a single server.
+        /// Multiple calls to this method will cause such handler
+        /// to be called multiple times.
+        /// </summary>
+        /// <param name="handler">A function, which accepts a single argument, which is the actual exception instance.</param>
+        public void AddLogcatErrorsListener(Action<Exception> handler) => 
+            _logcatClient.AddErrorHandler(handler);
+
+        /// <summary>
+        /// Adds a new log broadcasting connection handler.
+        /// Several handlers might be assigned to a single server.
+        /// Multiple calls to this method will cause such handler
+        /// to be called multiple times.
+        /// </summary>
+        /// <param name="handler">A function, which is executed as soon as the client is successfully connected to the web socket.</param>
+        public void AddLogcatConnectionListener(Action handler) => 
+            _logcatClient.AddConnectionHandler(handler);
+
+        /// <summary>
+        /// Adds a new log broadcasting disconnection handler.
+        /// Several handlers might be assigned to a single server.
+        /// Multiple calls to this method will cause such handler
+        /// to be called multiple times.
+        /// </summary>
+        /// <param name="handler">A function, which is executed as soon as the client is successfully disconnected from the web socket.</param>
+        public void AddLogcatDisconnectionListener(Action handler) => 
+            _logcatClient.AddDisconnectionHandler(handler);
+
+        /// <summary>
+        /// Removes all existing logcat handlers.
+        /// </summary>
+        public void RemoveAllLogcatListeners() => _logcatClient.RemoveAllHandlers();
+
+        /// <summary>
+        /// Stops logcat messages broadcast via web socket.
+        /// </summary>
+        public async Task StopLogcatBroadcast()
+        {
+            ExecuteScript("mobile: stopLogsBroadcast", new Dictionary<string, object>());
+            await _logcatClient.DisconnectAsync();
+        }
+
+        #endregion
     }
 }
