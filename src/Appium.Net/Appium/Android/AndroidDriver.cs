@@ -444,7 +444,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// In the future, this functionality will be replaced with WebDriver BiDi log events
         /// when BiDi support for Android device logs becomes available.
         /// </remarks>
-        public async Task StartLogcatBroadcast() => await StartLogcatBroadcast("localhost", DefaultAppiumPort);
+        public async Task StartLogcatBroadcast() => await StartLogcatBroadcast("127.0.0.1", DefaultAppiumPort);
 
         /// <summary>
         /// Start logcat messages broadcast via web socket.
