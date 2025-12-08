@@ -34,7 +34,7 @@ namespace Appium.Net.Integration.Tests.Android
         {
             TaskCompletionSource<bool> tcs = new();
 
-            await _bidi.Log.OnEntryAddedAsync(e => tcs.SetResult(true), new() { Contexts = [new(_bidi, "NATIVE_APP")] });
+            await using var subscription = await _bidi.Log.OnEntryAddedAsync(e => tcs.SetResult(true), new() { Contexts = [new(_bidi, "NATIVE_APP")] });
 
             Assert.That(() => tcs.Task.Wait(TimeSpan.FromSeconds(3)), Throws.Nothing);
         }
