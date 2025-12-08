@@ -36,8 +36,6 @@ namespace Appium.Net.Integration.Tests.Android
 
             await _bidi.Log.OnEntryAddedAsync(e => tcs.SetResult(true), new() { Contexts = [new(_bidi, "NATIVE_APP")] });
 
-            tcs.Task.Wait(TimeSpan.FromSeconds(3));
-
             Assert.That(() => tcs.Task.Wait(TimeSpan.FromSeconds(3)), Throws.Nothing);
         }
 
