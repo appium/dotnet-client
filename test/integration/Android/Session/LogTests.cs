@@ -3,11 +3,9 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
-using OpenQA.Selenium.BiDi;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Appium.Net.Integration.Tests.Android.Session.Logs
 {
@@ -33,20 +31,6 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
         public void TearDown()
         {
             _driver.Dispose();
-        }
-
-        [Test]
-        public async Task AAA()
-        {
-            //OpenQA.Selenium.Internal.Logging.Log.SetLevel(OpenQA.Selenium.Internal.Logging.LogEventLevel.Trace);
-
-            await using var bidi = await _driver.AsBiDiAsync();
-
-            Console.WriteLine(await bidi.StatusAsync());
-
-            await bidi.Log.OnEntryAddedAsync(Console.WriteLine, new() { Contexts = [new(bidi, "NATIVE_APP")] });
-
-            await Task.Delay(5000);
         }
 
         [Test]
