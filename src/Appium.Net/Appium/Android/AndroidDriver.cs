@@ -182,6 +182,48 @@ namespace OpenQA.Selenium.Appium.Android
 
         public string CurrentPackage => AndroidCommandExecutionHelper.GetCurrentPackage(this);
 
+        #region Activity
+
+        /// <summary>
+        /// Start an Android activity by providing its package name and activity name.
+        /// For documentation, see <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-startactivity">mobile:startActivity</see>.
+        /// </summary>
+        /// <param name="intent">The full name of the activity intent to start, e.g. "com.myapp/.MyActivity"</param>
+        /// <param name="user">The user ID for which the activity is started. The current user is used by default.</param>
+        /// <param name="wait">Set to true to block the method call until the Activity Manager's process returns the control to the system. false by default.</param>
+        /// <param name="stop">Set to true to force stop the target app before starting the activity. false by default.</param>
+        /// <param name="windowingMode">The windowing mode to launch the activity into. Check WindowConfiguration.java for possible values (constants starting with WINDOWING_MODE_).</param>
+        /// <param name="activityType">The activity type to launch the activity as. Check WindowConfiguration.java for possible values (constants starting with ACTIVITY_TYPE_).</param>
+        /// <param name="action">Action name. The actual value for the Activity Manager's -a argument.</param>
+        /// <param name="uri">Unified resource identifier. The actual value for the Activity Manager's -d argument.</param>
+        /// <param name="mimeType">Mime type. The actual value for the Activity Manager's -t argument.</param>
+        /// <param name="identifier">Optional identifier. The actual value for the Activity Manager's -i argument.</param>
+        /// <param name="categories">One or more category names. The actual value(s) for the Activity Manager's -c argument.</param>
+        /// <param name="component">Component name. The actual value for the Activity Manager's -n argument.</param>
+        /// <param name="package">Package name. The actual value for the Activity Manager's -p argument.</param>
+        /// <param name="extras">Optional intent arguments. Must be represented as an array of arrays, where each subarray contains two or three string items: value type, key (variable name) and the value itself. Supported value types: s (string), sn (null), z (boolean), i (integer), l (long), f (float), u (uri), cn (component name), ia (Integer[]), ial (List&lt;Integer&gt;), la (Long[]), lal (List&lt;Long&gt;), fa (Float[]), fal (List&lt;Float&gt;), sa (String[]), sal (List&lt;String&gt;).</param>
+        /// <param name="flags">Intent startup-specific flags as a hexadecimal string. Check Intent documentation for available flag values (constants starting with FLAG_ACTIVITY_). Flag values can be merged using logical 'or' operation, e.g. "0x10200000".</param>
+        public void StartActivity(
+            string intent,
+            string user = null,
+            bool? wait = null,
+            bool? stop = null,
+            int? windowingMode = null,
+            int? activityType = null,
+            string action = null,
+            string uri = null,
+            string mimeType = null,
+            string identifier = null,
+            string[] categories = null,
+            string component = null,
+            string package = null,
+            string[][] extras = null,
+            string flags = null) =>
+            AndroidCommandExecutionHelper.StartActivity(
+                this, intent, user, wait, stop, windowingMode, activityType, action, uri, mimeType, identifier, categories, component, package, extras, flags);
+
+        #endregion
+
         #region App Management
 
         /// <summary>
