@@ -189,6 +189,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// For documentation, see <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-startactivity">mobile:startActivity</see>.
         /// </summary>
         /// <param name="intent">The full name of the activity intent to start, e.g. "com.myapp/.MyActivity"</param>
+        /// <param name="arguments">Optional dictionary of additional arguments. Values from this dictionary take priority over other parameters.</param>
         /// <param name="user">The user ID for which the activity is started. The current user is used by default.</param>
         /// <param name="wait">Set to true to block the method call until the Activity Manager's process returns the control to the system. false by default.</param>
         /// <param name="stop">Set to true to force stop the target app before starting the activity. false by default.</param>
@@ -205,6 +206,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// <param name="flags">Intent startup-specific flags as a hexadecimal string. Check Intent documentation for available flag values (constants starting with FLAG_ACTIVITY_). Flag values can be merged using logical 'or' operation, e.g. "0x10200000".</param>
         public void StartActivity(
             string intent,
+            Dictionary<string, object> arguments = null,
             string user = null,
             bool? wait = null,
             bool? stop = null,
@@ -220,7 +222,7 @@ namespace OpenQA.Selenium.Appium.Android
             string[][] extras = null,
             string flags = null) =>
             AndroidCommandExecutionHelper.StartActivity(
-                this, intent, user, wait, stop, windowingMode, activityType, action, uri, mimeType, identifier, categories, component, package, extras, flags);
+                this, intent, arguments, user, wait, stop, windowingMode, activityType, action, uri, mimeType, identifier, categories, component, package, extras, flags);
 
         #endregion
 

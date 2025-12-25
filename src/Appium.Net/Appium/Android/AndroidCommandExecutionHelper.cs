@@ -180,6 +180,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// </summary>
         /// <param name="executeMethod">The execute method</param>
         /// <param name="intent">The full name of the activity intent to start, e.g. "com.myapp/.MyActivity"</param>
+        /// <param name="arguments">Optional dictionary of additional arguments. Values from this dictionary take priority over other parameters.</param>
         /// <param name="user">The user ID for which the activity is started. The current user is used by default.</param>
         /// <param name="wait">Set to true to block the method call until the Activity Manager's process returns the control to the system. false by default.</param>
         /// <param name="stop">Set to true to force stop the target app before starting the activity. false by default.</param>
@@ -197,6 +198,7 @@ namespace OpenQA.Selenium.Appium.Android
         public static void StartActivity(
             IExecuteMethod executeMethod,
             string intent,
+            Dictionary<string, object> arguments = null,
             string user = null,
             bool? wait = null,
             bool? stop = null,
@@ -246,6 +248,15 @@ namespace OpenQA.Selenium.Appium.Android
                 args["extras"] = extras;
             if (!string.IsNullOrEmpty(flags))
                 args["flags"] = flags;
+
+            // Apply arguments dictionary last to give it priority over other parameters
+            if (arguments != null)
+            {
+                foreach (var kvp in arguments)
+                {
+                    args[kvp.Key] = kvp.Value;
+                }
+            }
 
             executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object>
             {
