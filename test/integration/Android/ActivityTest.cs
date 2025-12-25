@@ -49,6 +49,21 @@ namespace Appium.Net.Integration.Tests.Android
             });
         }
 
+        [Test]
+        public void StartActivityWithDictionaryTest()
+        {
+            var arguments = new Dictionary<string, object>
+            {
+                ["wait"] = true,
+                ["stop"] = true
+            };
+            _driver.StartActivity("io.appium.android.apis/.ApiDemos", arguments: arguments);
+            var wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(5));
+            wait.Until(drv => {
+                return ((AndroidDriver) drv).CurrentActivity == ".ApiDemos";
+            });
+        }
+
         [OneTimeTearDown]
         public void AfterAll()
         {
