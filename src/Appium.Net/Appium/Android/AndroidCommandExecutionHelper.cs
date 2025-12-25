@@ -212,6 +212,10 @@ namespace OpenQA.Selenium.Appium.Android
             string[][] extras = null,
             string flags = null)
         {
+            if (string.IsNullOrEmpty(intent))
+            {
+                throw new ArgumentException("Activity intent must be set to a non-empty string", nameof(intent));
+            }
             var args = new Dictionary<string, object> { ["intent"] = intent };
 
             if (!string.IsNullOrEmpty(user))
