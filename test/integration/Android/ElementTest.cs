@@ -28,11 +28,11 @@ namespace Appium.Net.Integration.Tests.Android
         {
             _driver.ExecuteScript(
                 "mobile:startActivity",
-                new object[] {
+                [
                     new Dictionary<string, object>() {
                         ["intent"] = "io.appium.android.apis/.ApiDemos",
                     }
-                }
+                ]
             );
         }
 
