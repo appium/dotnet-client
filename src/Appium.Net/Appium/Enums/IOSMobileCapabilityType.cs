@@ -35,7 +35,7 @@ namespace OpenQA.Selenium.Appium.Enums
         /// <summary>
         /// Amount of time in ms to wait for instruments before assuming it hung and failing the session
         /// </summary>
-        public static readonly string LaunchTimeout = "launchTimeout";
+        public static readonly string LaunchTimeout = "wdaLaunchTimeout";
 
         /// <summary>
         /// (Sim-only) Force location services to be either on or off. Default is to keep current sim setting.
