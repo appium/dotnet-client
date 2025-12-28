@@ -33,7 +33,7 @@ namespace OpenQA.Selenium.Appium.Enums
         public static readonly string BundleId = "bundleId";
 
         /// <summary>
-        /// Amount of time in ms to wait for instruments before assuming it hung and failing the session
+        /// Amount of time in ms to wait for WebDriverAgent to launch before failing the session
         /// </summary>
         public static readonly string LaunchTimeout = "wdaLaunchTimeout";
 
