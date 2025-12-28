@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Threading;
 
 namespace Appium.Net.Integration.Tests.helpers
 {
-    public class Apps
+    public class Apps : IDisposable
     {
         private static bool _isInited;
         private static Dictionary<string, string> _testApps;
@@ -24,7 +25,7 @@ namespace Appium.Net.Integration.Tests.helpers
             {androidApiDemos, "https://github.com/appium/android-apidemos/releases/download/v6.0.2/ApiDemos-debug.apk"},
         };
 
-        private static readonly HttpClient _httpClient = new HttpClient();
+        private static HttpClient _httpClient = new HttpClient();
 
         private static void Init()
         {
@@ -67,6 +68,11 @@ namespace Appium.Net.Integration.Tests.helpers
         public const string iosUICatalogApp = "iosUICatalogApp";
         public const string androidApiDemos = "androidApiDemos";
 
+        public void Dispose()
+        {
+            _httpClient?.Dispose();
+        }
+
         private static string GetFileNameFromUrl(string url)
         {
             var uri = new Uri(url);
@@ -80,8 +86,22 @@ namespace Appium.Net.Integration.Tests.helpers
                 return;
             }
 
-            var data = _httpClient.GetByteArrayAsync(url).GetAwaiter().GetResult();
-            File.WriteAllBytes(destination, data);
+            using (var cts = new CancellationTokenSource(TimeSpan.FromMinutes(5)))
+            {
+                try
+                {
+                    var data = _httpClient.GetByteArrayAsync(url, cts.Token).GetAwaiter().GetResult();
+                    File.WriteAllBytes(destination, data);
+                }
+                catch (Exception ex)
+                {
+                    if (File.Exists(destination))
+                    {
+                        File.Delete(destination);
+                    }
+                    throw new Exception($"Failed to download {url}", ex);
+                }
+            }
         }
     }
 }
