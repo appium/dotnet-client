@@ -86,11 +86,14 @@ namespace Appium.Net.Integration.Tests.helpers
                 return;
             }
 
-            using (var cts = new CancellationTokenSource(TimeSpan.FromMinutes(5)))
+            using (var cts = new CancellationTokenSource(TimeSpan.FromHours(1)))
             {
                 try
                 {
-                    var data = _httpClient.GetByteArrayAsync(url, cts.Token).GetAwaiter().GetResult();
+                    // GetByteArrayAsync with CancelationToken doesn't work with .NET 4.8.
+                    var response = _httpClient.GetAsync(url, HttpCompletionOption.ResponseContentRead, cts.Token).GetAwaiter().GetResult();
+                    response.EnsureSuccessStatusCode();
+                    var data = response.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
                     File.WriteAllBytes(destination, data);
                 }
                 catch (Exception ex)
