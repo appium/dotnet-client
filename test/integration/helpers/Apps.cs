@@ -22,7 +22,6 @@ namespace Appium.Net.Integration.Tests.helpers
             {iosWebviewApp, "https://github.com/appium/dotnet-client/blob/main/test/integration/apps/archives/WebViewApp.app.zip?raw=true"},
             {iosUICatalogApp, "https://github.com/appium/ios-uicatalog/releases/download/v4.0.1/UIKitCatalog-iphonesimulator.zip"},
             {androidApiDemos, "https://github.com/appium/android-apidemos/releases/download/v6.0.2/ApiDemos-debug.apk"},
-            {vodqaApp, "https://github.com/appium/dotnet-client/blob/main/test/integration/apps/archives/vodqa.zip?raw=true"}
         };
 
         private static readonly HttpClient _httpClient = new HttpClient();
@@ -67,7 +66,6 @@ namespace Appium.Net.Integration.Tests.helpers
         public const string iosWebviewApp = "iosWebviewApp";
         public const string iosUICatalogApp = "iosUICatalogApp";
         public const string androidApiDemos = "androidApiDemos";
-        public const string vodqaApp = "vodqaApp";
 
         private static string GetFileNameFromUrl(string url)
         {

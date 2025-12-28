@@ -11,7 +11,7 @@ namespace Appium.Net.Integration.Tests.IOS
         [SetUp]
         public void TestSetup()
         {
-            var capabilities = Caps.GetIosCaps(Apps.Get("iosWebviewApp"));
+            var capabilities = Caps.GetIosCaps(Apps.Get("iosUICatalogApp"));
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
             _driver = new IOSDriver(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
