@@ -91,7 +91,7 @@ jobs:
           --filter "AppiumLocalServerLaunchingTest|DirectConnectTest|AppiumClientConfigTest" `
           --framework net48 `
           --logger "trx;LogFileName=test-results-net48.trx" `
-          **/*.Tests.csproj
+          ./test/integration/Appium.Net.Integration.Tests.csproj
 
     - name: Run .NET 8 unit tests
       run: |
@@ -101,7 +101,7 @@ jobs:
           --filter "AppiumLocalServerLaunchingTest|DirectConnectTest|AppiumClientConfigTest" \
           --framework net8.0 \
           --logger "trx;LogFileName=test-results-net8-${{ matrix.os }}.trx" \
-          **/*.Tests.csproj
+          ./test/integration/Appium.Net.Integration.Tests.csproj.Tests.csproj
       shell: bash
 
     - name: Publish test results
