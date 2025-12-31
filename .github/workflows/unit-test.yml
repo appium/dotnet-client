@@ -27,7 +27,7 @@ jobs:
             framework: 'net8.0'
 
     env:
-      SOLUTION: '**/*.sln'
+      SOLUTION: 'Appium.Net.sln'
       BUILD_PLATFORM: 'Any CPU'
       BUILD_CONFIGURATION: 'Release'
 
