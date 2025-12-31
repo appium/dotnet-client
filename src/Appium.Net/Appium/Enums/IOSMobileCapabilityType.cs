@@ -33,9 +33,9 @@ namespace OpenQA.Selenium.Appium.Enums
         public static readonly string BundleId = "bundleId";
 
         /// <summary>
-        /// Amount of time in ms to wait for instruments before assuming it hung and failing the session
+        /// Amount of time in ms to wait for WebDriverAgent to launch before failing the session
         /// </summary>
-        public static readonly string LaunchTimeout = "launchTimeout";
+        public static readonly string LaunchTimeout = "wdaLaunchTimeout";
 
         /// <summary>
         /// (Sim-only) Force location services to be either on or off. Default is to keep current sim setting.
