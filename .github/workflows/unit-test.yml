@@ -101,7 +101,7 @@ jobs:
           --filter "AppiumLocalServerLaunchingTest|DirectConnectTest|AppiumClientConfigTest" \
           --framework net8.0 \
           --logger "trx;LogFileName=test-results-net8-${{ matrix.os }}.trx" \
-          ./test/integration/Appium.Net.Integration.Tests.csproj.Tests.csproj
+          ./test/integration/Appium.Net.Integration.Tests.csproj
       shell: bash
 
     - name: Publish test results
