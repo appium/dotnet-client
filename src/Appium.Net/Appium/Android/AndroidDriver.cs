@@ -16,11 +16,13 @@ using OpenQA.Selenium.Appium.Android.Interfaces;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
 using OpenQA.Selenium.Appium.Service;
+using OpenQA.Selenium.Appium.WebSocket;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using OpenQA.Selenium.Appium.Android.Enums;
+using System.Threading.Tasks;
 
 namespace OpenQA.Selenium.Appium.Android
 {
@@ -28,9 +30,11 @@ namespace OpenQA.Selenium.Appium.Android
         IStartsActivity,
         INetworkActions, IHasClipboard, IHasPerformanceData,
         ISendsKeyEvents,
-        IPushesFiles, IHasSettings
+        IPushesFiles, IHasSettings, IListensToLogcatMessages
     {
         private static readonly string Platform = MobilePlatform.Android;
+        private readonly StringWebSocketClient _logcatClient = new();
+        private const int DefaultAppiumPort = 4723;
 
         /// <summary>
         /// Initializes a new instance of the AndroidDriver class
@@ -178,7 +182,76 @@ namespace OpenQA.Selenium.Appium.Android
 
         public string CurrentPackage => AndroidCommandExecutionHelper.GetCurrentPackage(this);
 
-        #region Device Kesys
+        #region Activity
+
+        /// <summary>
+        /// Start an Android activity by providing its package name and activity name.
+        /// For documentation, see <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-startactivity">mobile:startActivity</see>.
+        /// </summary>
+        /// <param name="intent">The full name of the activity intent to start, e.g. "com.myapp/.MyActivity"</param>
+        /// <param name="arguments">Optional dictionary of additional arguments. Values from this dictionary take priority over other parameters.</param>
+        /// <param name="user">The user ID for which the activity is started. The current user is used by default.</param>
+        /// <param name="wait">Set to true to block the method call until the Activity Manager's process returns the control to the system. false by default.</param>
+        /// <param name="stop">Set to true to force stop the target app before starting the activity. false by default.</param>
+        /// <param name="windowingMode">The windowing mode to launch the activity into. Check WindowConfiguration.java for possible values (constants starting with WINDOWING_MODE_).</param>
+        /// <param name="activityType">The activity type to launch the activity as. Check WindowConfiguration.java for possible values (constants starting with ACTIVITY_TYPE_).</param>
+        /// <param name="action">Action name. The actual value for the Activity Manager's -a argument.</param>
+        /// <param name="uri">Unified resource identifier. The actual value for the Activity Manager's -d argument.</param>
+        /// <param name="mimeType">Mime type. The actual value for the Activity Manager's -t argument.</param>
+        /// <param name="identifier">Optional identifier. The actual value for the Activity Manager's -i argument.</param>
+        /// <param name="categories">One or more category names. The actual value(s) for the Activity Manager's -c argument.</param>
+        /// <param name="component">Component name. The actual value for the Activity Manager's -n argument.</param>
+        /// <param name="package">Package name. The actual value for the Activity Manager's -p argument.</param>
+        /// <param name="extras">Optional intent arguments. Must be represented as an array of arrays, where each subarray contains two or three string items: value type, key (variable name) and the value itself. Supported value types: s (string), sn (null), z (boolean), i (integer), l (long), f (float), u (uri), cn (component name), ia (Integer[]), ial (List&lt;Integer&gt;), la (Long[]), lal (List&lt;Long&gt;), fa (Float[]), fal (List&lt;Float&gt;), sa (String[]), sal (List&lt;String&gt;).</param>
+        /// <param name="flags">Intent startup-specific flags as a hexadecimal string. Check Intent documentation for available flag values (constants starting with FLAG_ACTIVITY_). Flag values can be merged using logical 'or' operation, e.g. "0x10200000".</param>
+        public void StartActivity(
+            string intent,
+            Dictionary<string, object> arguments = null,
+            string user = null,
+            bool? wait = null,
+            bool? stop = null,
+            int? windowingMode = null,
+            int? activityType = null,
+            string action = null,
+            string uri = null,
+            string mimeType = null,
+            string identifier = null,
+            string[] categories = null,
+            string component = null,
+            string package = null,
+            string[][] extras = null,
+            string flags = null) =>
+            AndroidCommandExecutionHelper.StartActivity(
+                this, intent, arguments, user, wait, stop, windowingMode, activityType, action, uri, mimeType, identifier, categories, component, package, extras, flags);
+
+        #endregion
+
+        #region App Management
+
+        /// <summary>
+        /// Install an app on the Android device using mobile: installApp script.
+        /// For documentation, see <see href="https://github.com/appium/appium-uiautomator2-driver?tab=readme-ov-file#mobile-installapp">mobile: installApp</see>.
+        /// </summary>
+        /// <param name="appPath">Full path to the .apk on the local filesystem or a remote URL.</param>
+        /// <param name="timeout">Optional timeout in milliseconds to wait for the app installation to complete. 60000ms by default.</param>
+        /// <param name="allowTestPackages">Optional flag to allow test packages installation. false by default.</param>
+        /// <param name="useSdcard">Optional flag to install the app on sdcard instead of device memory. false by default.</param>
+        /// <param name="grantPermissions">Optional flag to grant all permissions requested in the app manifest automatically after installation. false by default.</param>
+        /// <param name="replace">Optional flag to upgrade/reinstall if app is already present. true by default.</param>
+        /// <param name="checkVersion">Optional flag to skip installation if device has equal or greater app version. false by default.</param>
+        public void InstallApp(
+            string appPath, 
+            int? timeout = null, 
+            bool? allowTestPackages = null, 
+            bool? useSdcard = null, 
+            bool? grantPermissions = null, 
+            bool? replace = null, 
+            bool? checkVersion = null) =>
+            AndroidCommandExecutionHelper.InstallApp(this, appPath, timeout, allowTestPackages, useSdcard, grantPermissions, replace, checkVersion);
+
+        #endregion
+
+        #region Device Keys
 
         public void PressKeyCode(int keyCode, int metastate = -1) =>
             AppiumCommandExecutionHelper.PressKeyCode(this, keyCode, metastate);
@@ -427,5 +500,104 @@ namespace OpenQA.Selenium.Appium.Android
                     }
                 )?.ToString() ?? throw new InvalidOperationException("ExecuteScript returned null for mobile:queryAppState")
             );
+
+        #region Logcat Broadcast
+
+        /// <summary>
+        /// Start logcat messages broadcast via web socket.
+        /// This method assumes that Appium server is running on localhost and
+        /// is assigned to the default port (4723).
+        /// </summary>
+        /// <remarks>
+        /// This implementation uses a custom WebSocket endpoint and is temporary.
+        /// In the future, this functionality will be replaced with WebDriver BiDi log events
+        /// when BiDi support for Android device logs becomes available.
+        /// </remarks>
+        public async Task StartLogcatBroadcast() => await StartLogcatBroadcast("127.0.0.1", DefaultAppiumPort);
+
+        /// <summary>
+        /// Start logcat messages broadcast via web socket.
+        /// This method assumes that Appium server is assigned to the default port (4723).
+        /// </summary>
+        /// <param name="host">The name of the host where Appium server is running.</param>
+        /// <remarks>
+        /// This implementation uses a custom WebSocket endpoint and is temporary.
+        /// In the future, this functionality will be replaced with WebDriver BiDi log events
+        /// when BiDi support for Android device logs becomes available.
+        /// </remarks>
+        public async Task StartLogcatBroadcast(string host) => await StartLogcatBroadcast(host, DefaultAppiumPort);
+
+        /// <summary>
+        /// Start logcat messages broadcast via web socket.
+        /// </summary>
+        /// <param name="host">The name of the host where Appium server is running.</param>
+        /// <param name="port">The port of the host where Appium server is running.</param>
+        /// <remarks>
+        /// This implementation uses a custom WebSocket endpoint and is temporary.
+        /// In the future, this functionality will be replaced with WebDriver BiDi log events
+        /// when BiDi support for Android device logs becomes available.
+        /// </remarks>
+        public async Task StartLogcatBroadcast(string host, int port)
+        {
+            ExecuteScript("mobile: startLogsBroadcast", new Dictionary<string, object>());
+            var endpointUri = new Uri($"ws://{host}:{port}/ws/session/{SessionId}/appium/device/logcat");
+            await _logcatClient.ConnectAsync(endpointUri);
+        }
+
+        /// <summary>
+        /// Adds a new log messages broadcasting handler.
+        /// Several handlers might be assigned to a single server.
+        /// Multiple calls to this method will cause such handler
+        /// to be called multiple times.
+        /// </summary>
+        /// <param name="handler">A function, which accepts a single argument, which is the actual log message.</param>
+        public void AddLogcatMessagesListener(Action<string> handler) => 
+            _logcatClient.AddMessageHandler(handler);
+
+        /// <summary>
+        /// Adds a new log broadcasting errors handler.
+        /// Several handlers might be assigned to a single server.
+        /// Multiple calls to this method will cause such handler
+        /// to be called multiple times.
+        /// </summary>
+        /// <param name="handler">A function, which accepts a single argument, which is the actual exception instance.</param>
+        public void AddLogcatErrorsListener(Action<Exception> handler) => 
+            _logcatClient.AddErrorHandler(handler);
+
+        /// <summary>
+        /// Adds a new log broadcasting connection handler.
+        /// Several handlers might be assigned to a single server.
+        /// Multiple calls to this method will cause such handler
+        /// to be called multiple times.
+        /// </summary>
+        /// <param name="handler">A function, which is executed as soon as the client is successfully connected to the web socket.</param>
+        public void AddLogcatConnectionListener(Action handler) => 
+            _logcatClient.AddConnectionHandler(handler);
+
+        /// <summary>
+        /// Adds a new log broadcasting disconnection handler.
+        /// Several handlers might be assigned to a single server.
+        /// Multiple calls to this method will cause such handler
+        /// to be called multiple times.
+        /// </summary>
+        /// <param name="handler">A function, which is executed as soon as the client is successfully disconnected from the web socket.</param>
+        public void AddLogcatDisconnectionListener(Action handler) => 
+            _logcatClient.AddDisconnectionHandler(handler);
+
+        /// <summary>
+        /// Removes all existing logcat handlers.
+        /// </summary>
+        public void RemoveAllLogcatListeners() => _logcatClient.RemoveAllHandlers();
+
+        /// <summary>
+        /// Stops logcat messages broadcast via web socket.
+        /// </summary>
+        public async Task StopLogcatBroadcast()
+        {
+            ExecuteScript("mobile: stopLogsBroadcast", new Dictionary<string, object>());
+            await _logcatClient.DisconnectAsync();
+        }
+
+        #endregion
     }
 }
