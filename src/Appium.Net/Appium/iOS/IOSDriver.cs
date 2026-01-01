@@ -200,6 +200,19 @@ namespace OpenQA.Selenium.Appium.iOS
         /// <param name="match">Whether to simulate biometric match.</param>
         public void PerformTouchID(bool match) => IOSCommandExecutionHelper.PerformTouchID(this, match);
 
+        #region App Management
+
+        /// <summary>
+        /// Install an app on the iOS device using mobile: installApp script.
+        /// For documentation, see <see href="https://appium.github.io/appium-xcuitest-driver/latest/reference/execute-methods/#mobile-installapp">mobile: installApp</see>.
+        /// </summary>
+        /// <param name="appPath">Full path to the .ipa on the local filesystem or a remote URL.</param>
+        /// <param name="timeoutMs">Optional timeout in milliseconds to wait for the app installation to complete.</param>
+        public void InstallApp(string appPath, int? timeoutMs = null) =>
+            IOSCommandExecutionHelper.InstallApp(this, appPath, timeoutMs);
+
+        #endregion
+
         /// <summary>
         /// Check if the device is locked
         /// </summary>
