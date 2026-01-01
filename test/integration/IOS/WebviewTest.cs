@@ -1,7 +1,6 @@
-﻿using System.Threading;
+﻿using System.Linq;
 using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
-using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.iOS;
 
@@ -15,7 +14,7 @@ namespace Appium.Net.Integration.Tests.IOS
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            var capabilities = Caps.GetIosCaps(Apps.Get("iosWebviewApp"));
+            var capabilities = Caps.GetIosCaps(Apps.Get("iosUICatalogApp"));
             if (Env.ServerIsRemote())
             {
                 capabilities.AddAdditionalAppiumOption("username", Env.GetEnvVar("SAUCE_USERNAME"));
@@ -41,18 +40,13 @@ namespace Appium.Net.Integration.Tests.IOS
         [Test]
         public void GetPageTestCase()
         {
-            _driver.FindElement(MobileBy.XPath("//UIATextField[@value='Enter URL']"))
-                .SendKeys("www.google.com");
-            _driver.FindElement(MobileBy.ClassName("UIAButton")).Click();
-            _driver.FindElement(MobileBy.ClassName("UIAWebView")).Click(); // dismissing keyboard
-            Thread.Sleep(10000);
-            _driver.Context = "WEBVIEW";
-            Thread.Sleep(3000);
-            var el = _driver.FindElement(MobileBy.ClassName("gsfi"));
-            el.SendKeys("Appium");
-            el.SendKeys(Keys.Return);
-            Thread.Sleep(1000);
-            Assert.That(_driver.Title.Contains("Appium"));
+            _driver.FindElement(MobileBy.AccessibilityId("Web View")).Click();
+            var contexts = _driver.Contexts;
+            var webviewContext = contexts.FirstOrDefault(c => c.Contains("WEBVIEW"));
+            _driver.Context = webviewContext;
+            Assert.That(_driver.Title.Contains("WKWebView"));
+            var pageSource = _driver.PageSource;
+            Assert.That(pageSource.Contains("<title>WKWebView</title>"));
         }
     }
 }
