@@ -97,13 +97,14 @@ jobs:
         disable-animations: true
         script: |
           adb devices
-          dotnet test test/integration/Appium.Net.Integration.Tests.csproj \
+          dotnet test \
             --configuration ${{ env.BUILD_CONFIGURATION }} \
             --no-build \
             --framework net8.0 \
             --filter "FullyQualifiedName~Android" \
             --logger "trx;LogFileName=android-test-results.trx" \
-            --logger "console;verbosity=detailed"
+            --logger "console;verbosity=detailed" \
+            ./test/integration/Appium.Net.Integration.Tests.csproj
 
     - name: Publish test results
       uses: dorny/test-reporter@v1
