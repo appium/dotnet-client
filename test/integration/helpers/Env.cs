@@ -19,8 +19,8 @@ namespace Appium.Net.Integration.Tests.helpers
 
             _env = new Dictionary<string, JsonElement>
             {
-                { "DEV", JsonDocument.Parse("true").RootElement }, 
-                { "isRemoteAppiumServer", JsonDocument.Parse("false").RootElement }, 
+                { "DEV", JsonDocument.Parse("true").RootElement },
+                { "isRemoteAppiumServer", JsonDocument.Parse("false").RootElement },
                 { "remoteAppiumServerUri", JsonDocument.Parse("\"http://localhost:4723\"").RootElement }
             };
 
@@ -63,6 +63,12 @@ namespace Appium.Net.Integration.Tests.helpers
         {
             Init();
             return (_env.ContainsKey("DEV") && IsTrue(_env["DEV"])) || IsTrue(Environment.GetEnvironmentVariable("DEV"));
+        }
+
+        public static bool IsCiEnvironment()
+        {
+            // Check common CI environment variables
+            return !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("CI"));
         }
 
         public static string GetEnvVar(string name)
