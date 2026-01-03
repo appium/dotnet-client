@@ -111,7 +111,7 @@ namespace Appium.Net.Integration.Tests.Android
             Assert.That(editElement.Text, Is.EqualTo(originalValue));
 
             _driver.ExecuteScript("mobile: replaceElementValue",
-                new Dictionary<string, string> { { "elementId", editElement.Id } , { "text", replacedValue } });
+                new Dictionary<string, string> { { "elementId", editElement.Id }, { "text", replacedValue } });
 
             Assert.That(editElement.Text, Is.EqualTo(replacedValue));
         }
@@ -176,7 +176,8 @@ namespace Appium.Net.Integration.Tests.Android
         private AppiumElement WaitForElement(AndroidDriver driver, By mobileBy)
         {
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
-            return wait.Until(d => {
+            return wait.Until(d =>
+            {
                 try
                 {
                     return d.FindElement(mobileBy) as AppiumElement;
