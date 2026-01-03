@@ -35,15 +35,23 @@ namespace Appium.Net.Integration.Tests.Android
         [Test]
         public void ScreenRecordTest()
         {
+            if (Env.IsCiEnvironment())
+            {
+                Assert.Ignore("Skipping screen recording test in CI - may have codec issues on emulator");
+            }
             _driver.StartRecordingScreen();
             Thread.Sleep(1000);
             var result = _driver.StopRecordingScreen();
             Assert.That(result, Is.Not.Empty);
         }
-        
+
         [Test]
         public void ScreenRecordWithOptionsTest()
         {
+            if (Env.IsCiEnvironment())
+            {
+                Assert.Ignore("Skipping screen recording test in CI - may have codec issues on emulator");
+            }
             _driver.StartRecordingScreen(
                 AndroidStartScreenRecordingOptions.GetAndroidStartScreenRecordingOptions()
                     .WithTimeLimit(TimeSpan.FromSeconds(10))

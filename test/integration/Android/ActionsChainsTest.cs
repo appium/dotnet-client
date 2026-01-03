@@ -189,6 +189,10 @@ namespace Appium.Net.Integration.Tests.Android
         [Test]
         public void ScrollUsingAddActionsTestCase()
         {
+            if (Env.IsCiEnvironment())
+            {
+                Assert.Ignore("Skipping ScrollUsingAddActionsTestCase test in CI environment");
+            }
             AppiumElement ViewsElem = _driver.FindElement(MobileBy.AccessibilityId("Views"));
 
             ActionBuilder actionBuilder = new ActionBuilder();

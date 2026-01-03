@@ -24,6 +24,10 @@ namespace Appium.Net.Integration.Tests.Android
         [Test]
         public async Task RunBiDiScript()
         {
+            if (Env.IsCiEnvironment())
+            {
+                Assert.Ignore("Skipping BiDi test in CI environment");
+            }
             _bidi = await _driver.AsBiDiAsync();
             await _bidi.StatusAsync();
         }

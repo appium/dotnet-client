@@ -40,6 +40,7 @@ namespace Appium.Net.Integration.Tests.helpers
             capabilities.AutomationName = AutomationName.AndroidEspresso;
             capabilities.DeviceName = "Android Emulator";
             capabilities.App = app;
+            capabilities.AddAdditionalAppiumOption("enforceAppInstall", true);
             return capabilities;
         }
     }

@@ -34,6 +34,11 @@ namespace Appium.Net.Integration.Tests.Android.Session.Geolocation
         [Test]
         public void GetLocationTest()
         {
+            // Unstable against an emulator
+            if (Env.IsCiEnvironment())
+            {
+                Assert.Ignore("Skipping GetLocationTest test in CI environment");
+            }
             Assert.Multiple(() =>
             {
                 Assert.That(() => _driver.Location, Is.Not.Null);

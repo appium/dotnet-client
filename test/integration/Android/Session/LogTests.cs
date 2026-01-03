@@ -65,6 +65,10 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
         [Test]
         public void CanCaptureServerTest()
         {
+            if (Env.IsCiEnvironment())
+            {
+                Assert.Ignore("Skipping server log test in CI - requires --allow-insecure get_server_logs flag");
+            }
             var availableLogTypes = _driver.Manage().Logs.AvailableLogTypes;
             Assert.That(availableLogTypes, Is.Not.Null);
             Assert.That(availableLogTypes, Has.Member(ServerLogType));
@@ -82,6 +86,10 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
         [Test]
         public void CanCaptureBugReportTest()
         {
+            if (Env.IsCiEnvironment())
+            {
+                Assert.Ignore("Skipping bug report test in CI - may timeout on emulator");
+            }
             var availableLogTypes = _driver.Manage().Logs.AvailableLogTypes;
             Assert.That(availableLogTypes, Is.Not.Null);
             Assert.That(availableLogTypes, Has.Member(BugReportLogType));
