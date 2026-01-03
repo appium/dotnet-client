@@ -128,4 +128,4 @@ jobs:
       with:
         name: appium-${{ matrix.api-level }}.log
         path: |
-          appium.log
+          appium*.log
