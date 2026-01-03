@@ -18,11 +18,11 @@ namespace Appium.Net.Integration.Tests.helpers
                 if (_localService == null)
                 {
                     var args = new OptionCollector().AddArguments(new KeyValuePair<string, string>("--relaxed-security", string.Empty));
+                    var logPath  = Env.GetEnvVar("APPIUM_LOG_PATH") ?? Path.GetTempPath() + "Log.txt";
                     var builder =
                         new AppiumServiceBuilder()
                             .WithArguments(args)
-                            .WithLogFile(new FileInfo(Path.GetTempPath() + "Log.txt"));
-
+                            .WithLogFile(new FileInfo(logPath));
                     _localService = builder.Build();
                 }
 
