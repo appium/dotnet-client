@@ -24,7 +24,7 @@ jobs:
     env:
       BUILD_CONFIGURATION: 'Release'
       CI: true
-      APPIUM_LOG_PATH: '${{ github.workspace }}/appium-${{ matrix.api-level }}.log'
+      APPIUM_LOG_PATH: '${{ github.workspace }}/appium.log'
 
     steps:
     - name: Checkout code
