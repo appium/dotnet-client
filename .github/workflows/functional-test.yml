@@ -81,6 +81,9 @@ jobs:
     - name: Install UiAutomator2 driver
       run: appium driver install uiautomator2
 
+    - name: Install Espresso driver
+      run: appium driver install espresso
+
     - name: Restore dependencies
       run: dotnet restore Appium.Net.sln
 

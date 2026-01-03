@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using OpenQA.Selenium.Appium.Service;
+using OpenQA.Selenium.Appium.Service.Options;
 
 namespace Appium.Net.Integration.Tests.helpers
 {
@@ -15,10 +17,12 @@ namespace Appium.Net.Integration.Tests.helpers
             {
                 if (_localService == null)
                 {
+                    var args = new OptionCollector().AddArguments(new KeyValuePair<string, string>("--relaxed-security", string.Empty));
                     var builder =
                         new AppiumServiceBuilder()
+                            .WithArguments(args)
                             .WithLogFile(new FileInfo(Path.GetTempPath() + "Log.txt"));
-                   
+
                     _localService = builder.Build();
                 }
 
