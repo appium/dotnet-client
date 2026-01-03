@@ -87,6 +87,16 @@ jobs:
     - name: Build solution
       run: dotnet build Appium.Net.sln --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore
 
+    - name: Create test environment file
+      run: |
+        cat > ./test/integration/env.json << 'EOF'
+        {
+          "DEV": "false",
+          "isRemoteAppiumServer": "false",
+          "remoteAppiumServerUri": "http://localhost:4723"
+        }
+        EOF
+
     - name: Run Android functional tests
       uses: reactivecircus/android-emulator-runner@v2
       with:
