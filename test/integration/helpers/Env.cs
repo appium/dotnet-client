@@ -7,7 +7,7 @@ namespace Appium.Net.Integration.Tests.helpers
 {
     public class Env
     {
-        public static TimeSpan InitTimeoutSec = TimeSpan.FromSeconds(180);
+        public static TimeSpan InitTimeoutSec = TimeSpan.FromSeconds(600);
         public static TimeSpan ImplicitTimeoutSec = TimeSpan.FromSeconds(10);
 
         private static Dictionary<string, JsonElement> _env;

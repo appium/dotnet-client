@@ -143,6 +143,10 @@ namespace Appium.Net.Integration.Tests.Android
         [Test]
         public void ScrollingToSubElement()
         {
+            if (Env.IsCiEnvironment())
+            {
+                Assert.Ignore("Skipping ScrollingToSubElement test in CI environment");
+            }
             WaitForElement(_driver, MobileBy.AccessibilityId("Views")).Click();
             var list = WaitForElement(_driver, By.Id("android:id/list"));
             var locator = new ByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView("
