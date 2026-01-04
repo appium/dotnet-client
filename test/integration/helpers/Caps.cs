@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium.Appium;
+﻿using System;
+using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Enums;
 
 namespace Appium.Net.Integration.Tests.helpers
@@ -9,8 +10,8 @@ namespace Appium.Net.Integration.Tests.helpers
         {
             var capabilities = new AppiumOptions();
             capabilities.AutomationName = AutomationName.iOSXcuiTest;
-            capabilities.DeviceName = "iPhone 17";
-            capabilities.PlatformVersion = "26.0";
+            capabilities.DeviceName = Environment.GetEnvironmentVariable("IOS_DEVICE_NAME") ?? "iPhone 17";
+            capabilities.PlatformVersion =  Environment.GetEnvironmentVariable("IOS_VERSION") ?? "26.0";
             capabilities.App = app;
             capabilities.AddAdditionalAppiumOption(IOSMobileCapabilityType.LaunchTimeout, Env.InitTimeoutSec.TotalMilliseconds);
 

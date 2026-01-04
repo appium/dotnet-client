@@ -50,9 +50,11 @@ jobs:
 
     - uses: futureware-tech/simulator-action@v4
       with:
-        # https://github.com/actions/runner-images/blob/main/images/macos/macos-14-arm64-Readme.md
+        # https://github.com/actions/runner-images/blob/main/images/macos/macos-15-arm64-Readme.md
         model: ${{ env.IOS_DEVICE_NAME }}
         os_version: ${{ env.IOS_VERSION }}
+        wait_for_boot: true
+        shutdown_after_job: false
 
     - name: Restore dependencies
       run: dotnet restore Appium.Net.sln
