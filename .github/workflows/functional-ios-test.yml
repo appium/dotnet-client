@@ -1,0 +1,94 @@
+name: Functional Tests (iOS)
+
+on:
+  push:
+    branches:
+      - main
+      - 'release/**'
+  pull_request:
+    branches:
+      - main
+      - 'release/**'
+  workflow_dispatch:
+
+jobs:
+  ios-tests:
+    runs-on: macos-15
+
+    env:
+      BUILD_CONFIGURATION: 'Release'
+      CI: true
+      APPIUM_LOG_PATH: '${{ github.workspace }}/appium-ios.log'
+      IOS_DEVICE_NAME: 'iPhone 17'
+      IOS_VERSION: 'iOS 26.0'
+      XCODE_VERSION: 16.4
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Select Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: ${{ env.XCODE_VERSION }}
+    - run: defaults write com.apple.iphonesimulator PasteboardAutomaticSync -bool false
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Install Appium and xcuitest driver
+      run: |
+        npm install -g appium
+        appium driver install xcuitest
+
+    - uses: futureware-tech/simulator-action@v4
+      with:
+        # https://github.com/actions/runner-images/blob/main/images/macos/macos-14-arm64-Readme.md
+        model: ${{ env.IOS_DEVICE_NAME }}
+        os_version: ${{ env.IOS_VERSION }}
+
+    - name: Restore dependencies
+      run: dotnet restore Appium.Net.sln
+
+    - name: Build solution
+      run: dotnet build Appium.Net.sln --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore
+
+    - name: Create test environment file
+      run: |
+        cat > ./test/integration/env.json << 'EOF'
+        {
+          "DEV": "false",
+          "isRemoteAppiumServer": "false",
+          "remoteAppiumServerUri": "http://127.0.0.1:4723"
+        }
+        EOF
+
+    - name: Run iOS functional tests
+      env:
+        IOS_SIM_UDID: ${{ env.IOS_SIM_UDID }}
+      run: |
+        dotnet test ./test/integration/Appium.Net.Integration.Tests.csproj --configuration ${{ env.BUILD_CONFIGURATION }} --no-build --framework net8.0 --filter "FullyQualifiedName~IOS" --logger "trx;LogFileName=ios-test-results.trx" --logger "console;verbosity=detailed"
+
+    - name: Publish test results
+      uses: dorny/test-reporter@v1
+      if: always()
+      with:
+        name: iOS Test Results
+        path: '**/ios-test-results.trx'
+        reporter: dotnet-trx
+
+    - name: Save server output
+      if: ${{ always() }}
+      uses: actions/upload-artifact@master
+      with:
+        name: appium-ios.log
+        path: |
+          appium*.log
+          *.log
