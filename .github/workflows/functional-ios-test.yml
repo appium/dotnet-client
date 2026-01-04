@@ -43,10 +43,18 @@ jobs:
       with:
         node-version: '20'
 
+    - name: Preparing other environment
+      run: |
+        brew install ffmpeg
+
     - name: Install Appium and xcuitest driver
       run: |
         npm install -g appium
         appium driver install xcuitest
+
+    - run: |
+        npx appium driver run xcuitest download-wda-sim --platform=ios --outdir=${{ github.workspace }}/wda
+      name: Downloading prebuilt WDA
 
     - uses: futureware-tech/simulator-action@v4
       with:
@@ -74,7 +82,7 @@ jobs:
 
     - name: Run iOS functional tests
       env:
-        IOS_SIM_UDID: ${{ env.IOS_SIM_UDID }}
+        LOCAL_PREBUILT_WDA: ${{ github.workspace }}/wda/WebDriverAgentRunner-Runner.app
       run: |
         dotnet test ./test/integration/Appium.Net.Integration.Tests.csproj --configuration ${{ env.BUILD_CONFIGURATION }} --no-build --framework net8.0 --filter "FullyQualifiedName~IOS" --logger "trx;LogFileName=ios-test-results.trx" --logger "console;verbosity=detailed"
 
