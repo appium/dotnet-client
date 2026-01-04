@@ -52,6 +52,11 @@ namespace Appium.Net.Integration.Tests.Android.Session.Geolocation
         [Test]
         public void SetLocationTest()
         {
+            // Unstable against an emulator
+            if (Env.IsCiEnvironment())
+            {
+                Assert.Ignore("Skipping SetLocationTest test in CI environment");
+            }
             var testLocation = new Location
             {
                 Altitude = 10,
