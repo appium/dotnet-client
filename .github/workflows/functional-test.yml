@@ -139,8 +139,8 @@ jobs:
 
     env:
       APPIUM_LOG_PATH: '${{ github.workspace }}/appium-ios.log'
-      IOS_DEVICE_NAME: 'iPhone 17'
-      IOS_VERSION: '26.0'
+      IOS_DEVICE_NAME: 'iPhone 16'
+      IOS_VERSION: '18.5'
       XCODE_VERSION: '16.4'
 
     steps:
