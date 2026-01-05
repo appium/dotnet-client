@@ -1,0 +1,227 @@
+name: Functional Tests
+
+on:
+  push:
+    branches:
+      - main
+      - 'release/**'
+  pull_request:
+    branches:
+      - main
+      - 'release/**'
+  workflow_dispatch:
+
+env:
+  BUILD_CONFIGURATION: 'Release'
+  CI: true
+  DOTNET_VERSION: '8.0.x'
+  NODE_VERSION: 'lts/*'
+
+jobs:
+  android-tests:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        api-level: [32]
+        target: [google_apis]
+
+    env:
+      APPIUM_LOG_PATH: '${{ github.workspace }}/appium.log'
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Enable KVM
+      run: |
+        echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+        sudo udevadm control --reload-rules
+        sudo udevadm trigger --name-match=kvm
+
+    - name: Setup Java
+      uses: actions/setup-java@v5
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+
+    - name: AVD cache
+      uses: actions/cache@v4
+      id: avd-cache
+      with:
+        path: |
+          ~/.android/avd/*
+          ~/.android/adb*
+        key: avd-${{ matrix.api-level }}
+
+    - name: Create AVD and generate snapshot for caching
+      if: steps.avd-cache.outputs.cache-hit != 'true'
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: ${{ matrix.api-level }}
+        target: ${{ matrix.target }}
+        arch: x86_64
+        force-avd-creation: false
+        emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+        disable-animations: false
+        script: echo "Generated AVD snapshot for caching."
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+
+    - name: Install Appium
+      run: npm install -g appium
+
+    - name: Install Android drivers
+      run: |
+        appium driver install uiautomator2
+        appium driver install espresso
+
+    - name: Restore dependencies
+      run: dotnet restore Appium.Net.sln
+
+    - name: Build solution
+      run: dotnet build Appium.Net.sln --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore
+
+    - name: Create test environment file
+      run: |
+        cat > ./test/integration/env.json << 'EOF'
+        {
+          "DEV": "false",
+          "isRemoteAppiumServer": "false",
+          "remoteAppiumServerUri": "http://localhost:4723"
+        }
+        EOF
+
+    - name: Run Android functional tests
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: ${{ matrix.api-level }}
+        target: ${{ matrix.target }}
+        arch: x86_64
+        force-avd-creation: false
+        emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+        disable-animations: true
+        script: |
+          adb devices
+          dotnet test --configuration ${{ env.BUILD_CONFIGURATION }} --no-build --framework net8.0 --filter "FullyQualifiedName~Android" --logger "trx;LogFileName=android-test-results.trx" --logger "console;verbosity=detailed" ./test/integration/Appium.Net.Integration.Tests.csproj
+
+    # Common: Publish results
+    - name: Publish test results
+      uses: dorny/test-reporter@v1
+      if: always()
+      with:
+        name: Android Test Results (API ${{ matrix.api-level }})
+        path: '**/android-test-results.trx'
+        reporter: dotnet-trx
+
+    - name: Save server output
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: appium-android-${{ matrix.api-level }}.log
+        path: appium*.log
+        if-no-files-found: ignore
+
+  ios-tests:
+    runs-on: macos-15
+
+    env:
+      APPIUM_LOG_PATH: '${{ github.workspace }}/appium-ios.log'
+      IOS_DEVICE_NAME: 'iPhone 16'
+      IOS_VERSION: '18.5'
+      XCODE_VERSION: '16.4'
+
+    steps:
+    # Common: Checkout and setup
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Select Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: ${{ env.XCODE_VERSION }}
+
+    - name: Disable pasteboard sync
+      run: defaults write com.apple.iphonesimulator PasteboardAutomaticSync -bool false
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+
+    - name: Install Appium
+      run: npm install -g appium
+
+    - name: Install ffmpeg
+      run: brew install ffmpeg
+
+    - name: Install XCUITest driver
+      run: appium driver install xcuitest
+
+    - name: Download prebuilt WDA
+      run: npx appium driver run xcuitest download-wda-sim --platform=ios --outdir=${{ github.workspace }}/wda
+
+    - name: Setup iOS Simulator
+      uses: futureware-tech/simulator-action@v4
+      with:
+        model: ${{ env.IOS_DEVICE_NAME }}
+        os_version: ${{ env.IOS_VERSION }}
+        wait_for_boot: true
+        shutdown_after_job: false
+
+    - name: Restore dependencies
+      run: dotnet restore Appium.Net.sln
+
+    - name: Build solution
+      run: dotnet build Appium.Net.sln --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore
+
+    - name: Create test environment file
+      run: |
+        cat > ./test/integration/env.json << 'EOF'
+        {
+          "DEV": "false",
+          "isRemoteAppiumServer": "false",
+          "remoteAppiumServerUri": "http://127.0.0.1:4723"
+        }
+        EOF
+
+    - name: Run iOS functional tests
+      env:
+        LOCAL_PREBUILT_WDA: ${{ github.workspace }}/wda/WebDriverAgentRunner-Runner.app
+      run: |
+        dotnet test ./test/integration/Appium.Net.Integration.Tests.csproj --configuration ${{ env.BUILD_CONFIGURATION }} --no-build --framework net8.0 --filter "FullyQualifiedName~IOS" --logger "trx;LogFileName=ios-test-results.trx" --logger "console;verbosity=detailed"
+
+    - name: Publish test results
+      uses: dorny/test-reporter@v1
+      if: always()
+      with:
+        name: iOS Test Results
+        path: '**/ios-test-results.trx'
+        reporter: dotnet-trx
+
+    - name: Save server output
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: appium-ios.log
+        path: |
+          appium*.log
+          *.log
+        if-no-files-found: ignore

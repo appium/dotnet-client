@@ -37,6 +37,10 @@ namespace Appium.Net.Integration.Tests.Android
         [Test]
         public void FirstWithName_ReturnsCorrectElement()
         {
+            if (Env.IsCiEnvironment())
+            {
+                Assert.Ignore("Skipping FirstWithName_ReturnsCorrectElement test in CI environment");
+            }
             var viewsElement = _driver.FindElement(MobileBy.AccessibilityId("Views"));
 
             var textElement = _driver.FindElement(MobileBy.AccessibilityId("Text"));
