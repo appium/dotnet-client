@@ -80,6 +80,11 @@ namespace OpenQA.Selenium.Appium.Service
         public event DataReceivedEventHandler OutputDataReceived;
 
         /// <summary>
+        /// Event that can be used to capture the error output of the service
+        /// </summary>
+        public event DataReceivedEventHandler ErrorDataReceived;
+
+        /// <summary>
         /// Starts the defined Appium server.
         /// <remarks>
         /// <para>
@@ -115,7 +120,9 @@ namespace OpenQA.Selenium.Appium.Service
             }
 
             Service.StartInfo.RedirectStandardOutput = true;
+            Service.StartInfo.RedirectStandardError = true;
             Service.OutputDataReceived += (sender, e) => OutputDataReceived?.Invoke(this, e);
+            Service.ErrorDataReceived += (sender, e) => ErrorDataReceived?.Invoke(this, e);
 
             bool isLaunched = false;
             string msgTxt =
@@ -127,6 +134,7 @@ namespace OpenQA.Selenium.Appium.Service
                 Service.Start();
 
                 Service.BeginOutputReadLine();
+                Service.BeginErrorReadLine();
             }
             catch (Exception e)
             {

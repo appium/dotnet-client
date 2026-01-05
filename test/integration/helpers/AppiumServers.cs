@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using OpenQA.Selenium.Appium.Service;
+using OpenQA.Selenium.Appium.Service.Options;
 
 namespace Appium.Net.Integration.Tests.helpers
 {
@@ -15,10 +17,23 @@ namespace Appium.Net.Integration.Tests.helpers
             {
                 if (_localService == null)
                 {
+                    var args = new OptionCollector().AddArguments(new KeyValuePair<string, string>("--relaxed-security", string.Empty));
+                    var logPath = Env.GetEnvVar("APPIUM_LOG_PATH") ?? Path.GetTempPath() + "Log.txt";
+
+                    // If log file exists, rename it with timestamp
+                    if (File.Exists(logPath))
+                    {
+                        var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+                        var directory = Path.GetDirectoryName(logPath);
+                        var fileNameWithoutExt = Path.GetFileNameWithoutExtension(logPath);
+                        var newLogPath = Path.Combine(directory, $"{fileNameWithoutExt}_{timestamp}.log");
+                        File.Move(logPath, newLogPath);
+                    }
+
                     var builder =
                         new AppiumServiceBuilder()
-                            .WithLogFile(new FileInfo(Path.GetTempPath() + "Log.txt"));
-                   
+                            .WithArguments(args)
+                            .WithLogFile(new FileInfo(logPath));
                     _localService = builder.Build();
                 }
 
