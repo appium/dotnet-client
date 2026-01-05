@@ -114,13 +114,7 @@ jobs:
         emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
         disable-animations: true
         script: |
-          dotnet test --configuration ${{ env.BUILD_CONFIGURATION }} \
-            --no-build \
-            --framework net8.0  \
-            --filter "FullyQualifiedName~Android|FullyQualifiedName~CustomCommand" \
-            --logger "trx;LogFileName=android-test-results.trx" \
-            --logger "console;verbosity=detailed" \
-            ./test/integration/Appium.Net.Integration.Tests.csproj
+          dotnet test --configuration ${{ env.BUILD_CONFIGURATION }} --no-build --framework net8.0 --filter "FullyQualifiedName~Android|FullyQualifiedName~CustomCommand" --logger "trx;LogFileName=android-test-results.trx" --logger "console;verbosity=detailed" ./test/integration/Appium.Net.Integration.Tests.csproj
 
     # Common: Publish results
     - name: Publish test results
