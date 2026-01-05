@@ -32,6 +32,10 @@ namespace Appium.Net.Integration.Tests.Android.Device
         [Test]
         public void GetPerformanceDataTypesTest()
         {
+            if (Env.IsCiEnvironment())
+            {
+                Assert.Ignore("Skipping performance data test in CI - may not be supported on emulator");
+            }
             var androidDriver = _driver as AndroidDriver;
             Assert.That(androidDriver.GetPerformanceDataTypes(), Is.Not.Null);
         }
@@ -39,6 +43,10 @@ namespace Appium.Net.Integration.Tests.Android.Device
         [Test]
         public void GetPerformanceDataTest()
         {
+            if (Env.IsCiEnvironment())
+            {
+                Assert.Ignore("Skipping performance data test in CI - may not be supported on emulator");
+            }
             var androidDriver = _driver as AndroidDriver;
             var packageName = androidDriver?.CurrentPackage;
 
