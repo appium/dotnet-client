@@ -13,7 +13,7 @@ namespace Appium.Net.Integration.Tests.Android.Device
         [OneTimeSetUp]
         public void BeforeAll()
         {
-            
+
             var capabilities = Caps.GetAndroidUIAutomatorCaps(Apps.Get(appID));
             capabilities.AddAdditionalAppiumOption(MobileCapabilityType.FullReset, true);
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
@@ -37,6 +37,10 @@ namespace Appium.Net.Integration.Tests.Android.Device
         [Test]
         public void TestSendFingerprint()
         {
+            if (Env.IsCiEnvironment())
+            {
+                Assert.Ignore("Skipping fingerprint test in CI - biometric may not be available on emulator");
+            }
             // There's no way to verify sending fingerprint had an effect,
             // so just test that it's successfully called without an exception
             _driver.FingerPrint(1);
