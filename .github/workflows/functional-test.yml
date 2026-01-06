@@ -32,7 +32,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v5
@@ -145,7 +145,7 @@ jobs:
     steps:
     # Common: Checkout and setup
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v5
