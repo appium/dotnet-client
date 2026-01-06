@@ -114,8 +114,7 @@ jobs:
         emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
         disable-animations: true
         script: |
-          adb devices
-          dotnet test --configuration ${{ env.BUILD_CONFIGURATION }} --no-build --framework net8.0 --filter "FullyQualifiedName~Android" --logger "trx;LogFileName=android-test-results.trx" --logger "console;verbosity=detailed" ./test/integration/Appium.Net.Integration.Tests.csproj
+          dotnet test --configuration ${{ env.BUILD_CONFIGURATION }} --no-build --framework net8.0 --filter "FullyQualifiedName~Android|FullyQualifiedName~CustomCommand" --logger "trx;LogFileName=android-test-results.trx" --logger "console;verbosity=detailed" ./test/integration/Appium.Net.Integration.Tests.csproj
 
     # Common: Publish results
     - name: Publish test results
@@ -206,7 +205,13 @@ jobs:
       env:
         LOCAL_PREBUILT_WDA: ${{ github.workspace }}/wda/WebDriverAgentRunner-Runner.app
       run: |
-        dotnet test ./test/integration/Appium.Net.Integration.Tests.csproj --configuration ${{ env.BUILD_CONFIGURATION }} --no-build --framework net8.0 --filter "FullyQualifiedName~IOS" --logger "trx;LogFileName=ios-test-results.trx" --logger "console;verbosity=detailed"
+        dotnet test --configuration ${{ env.BUILD_CONFIGURATION }} \
+          --no-build \
+          --framework net8.0 \
+          --filter "FullyQualifiedName~IOS" \
+          --logger "trx;LogFileName=ios-test-results.trx" \
+          --logger "console;verbosity=detailed" \
+          ./test/integration/Appium.Net.Integration.Tests.csproj
 
     - name: Publish test results
       uses: dorny/test-reporter@v1
