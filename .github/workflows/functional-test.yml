@@ -32,7 +32,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v5
@@ -118,7 +118,7 @@ jobs:
 
     # Common: Publish results
     - name: Publish test results
-      uses: dorny/test-reporter@v1
+      uses: dorny/test-reporter@v2
       if: always()
       with:
         name: Android Test Results (API ${{ matrix.api-level }})
@@ -145,7 +145,7 @@ jobs:
     steps:
     # Common: Checkout and setup
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v5
@@ -214,7 +214,7 @@ jobs:
           ./test/integration/Appium.Net.Integration.Tests.csproj
 
     - name: Publish test results
-      uses: dorny/test-reporter@v1
+      uses: dorny/test-reporter@v2
       if: always()
       with:
         name: iOS Test Results
