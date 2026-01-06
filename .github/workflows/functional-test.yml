@@ -118,7 +118,7 @@ jobs:
 
     # Common: Publish results
     - name: Publish test results
-      uses: dorny/test-reporter@v1
+      uses: dorny/test-reporter@v2
       if: always()
       with:
         name: Android Test Results (API ${{ matrix.api-level }})
@@ -214,7 +214,7 @@ jobs:
           ./test/integration/Appium.Net.Integration.Tests.csproj
 
     - name: Publish test results
-      uses: dorny/test-reporter@v1
+      uses: dorny/test-reporter@v2
       if: always()
       with:
         name: iOS Test Results
