@@ -32,10 +32,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v5
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -55,7 +55,7 @@ jobs:
       uses: android-actions/setup-android@v3
 
     - name: AVD cache
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       id: avd-cache
       with:
         path: |
@@ -76,7 +76,7 @@ jobs:
         script: echo "Generated AVD snapshot for caching."
 
     - name: Setup Node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
         node-version: ${{ env.NODE_VERSION }}
 
@@ -114,12 +114,11 @@ jobs:
         emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
         disable-animations: true
         script: |
-          adb devices
-          dotnet test --configuration ${{ env.BUILD_CONFIGURATION }} --no-build --framework net8.0 --filter "FullyQualifiedName~Android" --logger "trx;LogFileName=android-test-results.trx" --logger "console;verbosity=detailed" ./test/integration/Appium.Net.Integration.Tests.csproj
+          dotnet test --configuration ${{ env.BUILD_CONFIGURATION }} --no-build --framework net8.0 --filter "FullyQualifiedName~Android|FullyQualifiedName~CustomCommand" --logger "trx;LogFileName=android-test-results.trx" --logger "console;verbosity=detailed" ./test/integration/Appium.Net.Integration.Tests.csproj
 
     # Common: Publish results
     - name: Publish test results
-      uses: dorny/test-reporter@v1
+      uses: dorny/test-reporter@v2
       if: always()
       with:
         name: Android Test Results (API ${{ matrix.api-level }})
@@ -128,7 +127,7 @@ jobs:
 
     - name: Save server output
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: appium-android-${{ matrix.api-level }}.log
         path: appium*.log
@@ -146,10 +145,10 @@ jobs:
     steps:
     # Common: Checkout and setup
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v5
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -162,7 +161,7 @@ jobs:
       run: defaults write com.apple.iphonesimulator PasteboardAutomaticSync -bool false
 
     - name: Setup Node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
         node-version: ${{ env.NODE_VERSION }}
 
@@ -206,10 +205,16 @@ jobs:
       env:
         LOCAL_PREBUILT_WDA: ${{ github.workspace }}/wda/WebDriverAgentRunner-Runner.app
       run: |
-        dotnet test ./test/integration/Appium.Net.Integration.Tests.csproj --configuration ${{ env.BUILD_CONFIGURATION }} --no-build --framework net8.0 --filter "FullyQualifiedName~IOS" --logger "trx;LogFileName=ios-test-results.trx" --logger "console;verbosity=detailed"
+        dotnet test --configuration ${{ env.BUILD_CONFIGURATION }} \
+          --no-build \
+          --framework net8.0 \
+          --filter "FullyQualifiedName~IOS" \
+          --logger "trx;LogFileName=ios-test-results.trx" \
+          --logger "console;verbosity=detailed" \
+          ./test/integration/Appium.Net.Integration.Tests.csproj
 
     - name: Publish test results
-      uses: dorny/test-reporter@v1
+      uses: dorny/test-reporter@v2
       if: always()
       with:
         name: iOS Test Results
@@ -218,7 +223,7 @@ jobs:
 
     - name: Save server output
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: appium-ios.log
         path: |
