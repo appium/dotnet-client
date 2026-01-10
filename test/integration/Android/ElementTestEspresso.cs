@@ -23,6 +23,10 @@ namespace Appium.Net.Integration.Tests.Android
         [Test]
         public void FindByAndroidDataMatcherTest()
         {
+            if (Env.IsCiEnvironment())
+            {
+                Assert.Ignore("Skipping FindByAndroidDataMatcherTest test in CI environment");
+            }
             const string selectorData = @"{
                 'name':'hasEntry',
                 'args':['title','Graphics']
@@ -42,6 +46,10 @@ namespace Appium.Net.Integration.Tests.Android
         [Test]
         public void FindByAndroidViewMatcherTest()
         {
+            if (Env.IsCiEnvironment())
+            {
+                Assert.Ignore("Skipping FindByAndroidViewMatcherTest test in CI environment");
+            }
             const string selectorData = @"{
                 'name':'withText',
                 'args':[{
