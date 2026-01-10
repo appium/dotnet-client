@@ -20,7 +20,6 @@ namespace Appium.Net.Integration.Tests.helpers
         private static readonly Dictionary<string, string> _appSources = new Dictionary<string, string>
         {
             {iosTestApp, "https://github.com/appium/dotnet-client/blob/main/test/integration/apps/archives/TestApp.app.zip?raw=true"},
-            {iosWebviewApp, "https://github.com/appium/dotnet-client/blob/main/test/integration/apps/archives/WebViewApp.app.zip?raw=true"},
             {iosUICatalogApp, "https://github.com/appium/ios-uicatalog/releases/download/v4.0.1/UIKitCatalog-iphonesimulator.zip"},
             {androidApiDemos, "https://github.com/appium/android-apidemos/releases/download/v6.0.2/ApiDemos-debug.apk"},
         };
@@ -64,7 +63,6 @@ namespace Appium.Net.Integration.Tests.helpers
         }
 
         public const string iosTestApp = "iosTestApp";
-        public const string iosWebviewApp = "iosWebviewApp";
         public const string iosUICatalogApp = "iosUICatalogApp";
         public const string androidApiDemos = "androidApiDemos";
 

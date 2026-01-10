@@ -1,0 +1,113 @@
+name: Unit Tests
+
+on:
+  push:
+    branches:
+      - main
+      - 'release/**'
+  pull_request:
+    branches:
+      - main
+      - 'release/**'
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+        include:
+          - os: windows-latest
+            framework: 'net48|net8.0'
+          - os: ubuntu-latest
+            framework: 'net8.0'
+          - os: macos-latest
+            framework: 'net8.0'
+
+    env:
+      SOLUTION: 'Appium.Net.sln'
+      BUILD_PLATFORM: 'Any CPU'
+      BUILD_CONFIGURATION: 'Release'
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v6
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Setup NuGet (Windows)
+      if: runner.os == 'Windows'
+      uses: NuGet/setup-nuget@v2
+
+    - name: Restore NuGet packages (Windows)
+      if: runner.os == 'Windows'
+      run: nuget restore ${{ env.SOLUTION }}
+
+    - name: Restore NuGet packages (Linux/macOS)
+      if: runner.os != 'Windows'
+      run: dotnet restore ${{ env.SOLUTION }}
+
+    - name: Setup MSBuild (Windows)
+      if: runner.os == 'Windows'
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Build solution (Windows)
+      if: runner.os == 'Windows'
+      run: |
+        msbuild ${{ env.SOLUTION }} `
+          /p:DeployOnBuild=true `
+          /p:WebPublishMethod=Package `
+          /p:PackageAsSingleFile=true `
+          /p:SkipInvalidConfigurations=true `
+          /p:DesktopBuildPackageLocation="${{ runner.temp }}\WebApp.zip" `
+          /p:DeployIisAppPath="Default Web Site" `
+          /p:Configuration=${{ env.BUILD_CONFIGURATION }} `
+          /p:Platform="${{ env.BUILD_PLATFORM }}" `
+          /m
+
+    - name: Build solution (Linux/macOS)
+      if: runner.os != 'Windows'
+      run: dotnet build ${{ env.SOLUTION }} --configuration ${{ env.BUILD_CONFIGURATION }}
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version: 'lts/*'
+
+    - name: Install Appium
+      run: npm install -g appium
+
+    - name: Run .NET Framework 4.8 unit tests
+      if: runner.os == 'Windows'
+      run: |
+        dotnet test `
+          --no-build `
+          --configuration ${{ env.BUILD_CONFIGURATION }} `
+          --filter "AppiumLocalServerLaunchingTest|DirectConnectTest|AppiumClientConfigTest" `
+          --framework net48 `
+          --logger "trx;LogFileName=test-results-net48.trx" `
+          ./test/integration/Appium.Net.Integration.Tests.csproj
+
+    - name: Run .NET 8 unit tests
+      run: |
+        dotnet test \
+          --no-build \
+          --configuration ${{ env.BUILD_CONFIGURATION }} \
+          --filter "AppiumLocalServerLaunchingTest|DirectConnectTest|AppiumClientConfigTest" \
+          --framework net8.0 \
+          --logger "trx;LogFileName=test-results-net8-${{ matrix.os }}.trx" \
+          ./test/integration/Appium.Net.Integration.Tests.csproj
+      shell: bash
+
+    - name: Publish test results
+      uses: dorny/test-reporter@v2
+      if: always()
+      with:
+        name: Test Results (${{ matrix.os }})
+        path: '**/test-results-*.trx'
+        reporter: dotnet-trx

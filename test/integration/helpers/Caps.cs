@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium.Appium;
+﻿using System;
+using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Enums;
 
 namespace Appium.Net.Integration.Tests.helpers
@@ -9,10 +10,16 @@ namespace Appium.Net.Integration.Tests.helpers
         {
             var capabilities = new AppiumOptions();
             capabilities.AutomationName = AutomationName.iOSXcuiTest;
-            capabilities.DeviceName = "iPhone 17";
-            capabilities.PlatformVersion = "26.0";
+            capabilities.DeviceName = Environment.GetEnvironmentVariable("IOS_DEVICE_NAME") ?? "iPhone 17";
+            capabilities.PlatformVersion =  Environment.GetEnvironmentVariable("IOS_VERSION") ?? "26.0";
             capabilities.App = app;
             capabilities.AddAdditionalAppiumOption(IOSMobileCapabilityType.LaunchTimeout, Env.InitTimeoutSec.TotalMilliseconds);
+
+            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("LOCAL_PREBUILT_WDA")))
+            {
+                capabilities.AddAdditionalAppiumOption("usePreinstalledWDA", true);
+                capabilities.AddAdditionalAppiumOption("prebuiltWDAPath", Environment.GetEnvironmentVariable("LOCAL_PREBUILT_WDA"));
+            }
 
             return capabilities;
         }
@@ -40,6 +47,7 @@ namespace Appium.Net.Integration.Tests.helpers
             capabilities.AutomationName = AutomationName.AndroidEspresso;
             capabilities.DeviceName = "Android Emulator";
             capabilities.App = app;
+            capabilities.AddAdditionalAppiumOption("enforceAppInstall", true);
             return capabilities;
         }
     }
