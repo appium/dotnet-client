@@ -5,12 +5,18 @@ updates:
     directory: "/src/Appium.Net" 
     schedule:
       interval: "weekly"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
 
   - package-ecosystem: "nuget"
     # Files stored in test/integration directory
     directory: "/test/integration" 
     schedule:
       interval: "weekly"
+    commit-message:
+      prefix: "test"
+      include: "scope"
 
   - package-ecosystem: "github-actions"
     directory: "/"
