@@ -28,6 +28,10 @@ For example, some changes in the Selenium binding could break the Appium client.
 |`5.0.0` |`4.0.0` - `4.22.0` | .NET 6.0, .NET Framework 4.8 |
 |`4.4.5` |`3.141.0` |.NET Standard 2.0, .NET Framework 4.8 |
 
+> [!Note]
+> We only raise the minimum required Selenium.WebDriver version when a newer Selenium release introduces changes that require updates in the Appium .NET Client.
+> If you need deterministic builds, we recommend pinning the Selenium.WebDriver version in your own project.
+
 
 ## v8
 To keep compatibility with Appium v3, most deprecated endpoint method calls have been replaced with compatible [extension command](https://appium.io/docs/en/latest/guides/execute-methods/) with [this PR](https://github.com/appium/dotnet-client/pull/939). Old drivers which still haven't implemented extension commands might not have proper implementation. Then, you will need to update Appium driver versions first.
