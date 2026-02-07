@@ -16,14 +16,12 @@ using OpenQA.Selenium.Appium.Service.Exceptions;
 using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace OpenQA.Selenium.Appium.Service
@@ -33,23 +31,6 @@ namespace OpenQA.Selenium.Appium.Service
     /// </summary>
     public class AppiumLocalService : ICommandServer
     {
-        // P/Invoke declarations for Windows graceful shutdown
-        private const int CTRL_C_EVENT = 0;
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        private static extern bool AttachConsole(uint dwProcessId);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        private static extern bool FreeConsole();
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        private static extern bool SetConsoleCtrlHandler(ConsoleCtrlDelegate HandlerRoutine, bool Add);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        private static extern bool GenerateConsoleCtrlEvent(uint dwCtrlEvent, uint dwProcessGroupId);
-
-        private delegate bool ConsoleCtrlDelegate(uint CtrlType);
-
         private readonly FileInfo NodeJS;
         private readonly string Arguments;
         private readonly IPAddress IP;
@@ -163,37 +144,16 @@ namespace OpenQA.Selenium.Appium.Service
             }
         }
 
-        /// <summary>
-        /// Attempts to gracefully shutdown the process on Windows by sending CTRL+C signal.
-        /// </summary>
-        /// <param name="process">The process to shutdown</param>
-        /// <param name="timeoutMs">Timeout in milliseconds to wait for graceful shutdown</param>
-        /// <returns>True if process exited gracefully, false otherwise</returns>
         private bool TryGracefulShutdownOnWindows(Process process, int timeoutMs = 5000)
         {
+            if (process == null)
+                return true;
+
+            // Safely check HasExited, handling disposed process
+            bool hasExited;
             try
             {
-                if (process == null)
-                {
-                    return true;
-                }
-
-                // Safely check HasExited, handling disposed process
-                bool hasExited;
-                try
-                {
-                    hasExited = process.HasExited;
-                }
-                catch (InvalidOperationException)
-                {
-                    // Process is disposed, treat as exited
-                    return true;
-                }
-
-                if (hasExited)
-                {
-                    return true;
-                }
+                hasExited = process.HasExited;
             }
             catch (InvalidOperationException)
             {
@@ -201,40 +161,19 @@ namespace OpenQA.Selenium.Appium.Service
                 return true;
             }
 
-            // Only attempt graceful shutdown on Windows
-            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                return false;
-            }
+            if (hasExited)
+                return true;
 
-            bool attached = false;
+            // Attempt graceful shutdown using managed code only
             try
             {
-                SetConsoleCtrlHandler(null, true);
-
-                attached = AttachConsole((uint)process.Id);
-                if (!attached)
-                {
-                    return false;
-                }
-
-                if (!GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0))
-                {
-                    return false;
-                }
-
+                process.CloseMainWindow();
                 if (process.WaitForExit(timeoutMs))
-                {
                     return true;
-                }
             }
-            finally
+            catch
             {
-                if (attached)
-                {
-                    FreeConsole();
-                }
-                SetConsoleCtrlHandler(null, false);
+                // Ignore exceptions, fallback to Kill
             }
 
             return false;
@@ -243,16 +182,14 @@ namespace OpenQA.Selenium.Appium.Service
         private void DestroyProcess()
         {
             if (Service == null)
-            {
                 return;
-            }
 
             try
             {
-                // First, attempt graceful shutdown on Windows
+                // First, attempt graceful shutdown using managed code
                 if (!TryGracefulShutdownOnWindows(Service))
                 {
-                    // If graceful shutdown fails or is not supported, use Kill
+                    // If graceful shutdown fails, use Kill
                     Service.Kill();
                 }
             }
