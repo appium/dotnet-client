@@ -207,46 +207,34 @@ namespace OpenQA.Selenium.Appium.Service
                 return false;
             }
 
+            bool attached = false;
             try
             {
                 SetConsoleCtrlHandler(null, true);
 
-                if (!AttachConsole((uint)process.Id))
+                attached = AttachConsole((uint)process.Id);
+                if (!attached)
                 {
                     return false;
                 }
 
                 if (!GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0))
                 {
-                    FreeConsole();
                     return false;
                 }
-
-                FreeConsole();
-                SetConsoleCtrlHandler(null, false);
 
                 if (process.WaitForExit(timeoutMs))
                 {
                     return true;
                 }
             }
-            catch (Win32Exception)
+            finally
             {
-                try
+                if (attached)
                 {
                     FreeConsole();
-                    SetConsoleCtrlHandler(null, false);
                 }
-                catch (Win32Exception) { }
-            }
-            catch (InvalidOperationException)
-            {
-                try
-                {
-                    FreeConsole();
-                    SetConsoleCtrlHandler(null, false);
-                }
-                catch (Win32Exception) { }
+                SetConsoleCtrlHandler(null, false);
             }
 
             return false;
