@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 using OpenQA.Selenium.Appium.Service;
 using OpenQA.Selenium.Appium.Service.Options;
 
-namespace Appium.Net.Unit.Tests.Appium.Service
+namespace Appium.Net.Integration.Tests.ServerTests
 {
     [TestFixture]
     public class AppiumLocalServiceTests
@@ -19,9 +19,52 @@ namespace Appium.Net.Unit.Tests.Appium.Service
         {
             // OptionCollector can be customized as needed
             var optionCollector = new OptionCollector();
-            var appiumPath = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-                ? @"C:\Users\Dor-B\AppData\Roaming\npm\node_modules\appium\build\lib\main.js"
-                : "/usr/local/lib/node_modules/appium/build/lib/main.js";
+
+            // Try to get Appium path from environment variable or npm root -g
+            string appiumPath = Environment.GetEnvironmentVariable(AppiumServiceConstants.AppiumBinaryPath);
+
+            if (string.IsNullOrEmpty(appiumPath))
+            {
+                try
+                {
+                    bool isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+
+                    var startInfo = new ProcessStartInfo
+                    {
+                        // On Windows, using 'cmd /c' is often more reliable for resolving PATHs
+                        FileName = isWindows ? "cmd.exe" : "npm",
+                        Arguments = isWindows ? "/c npm root -g" : "root -g",
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true, // Capture errors too!
+                        UseShellExecute = false,
+                        CreateNoWindow = true
+                    };
+
+                    using var process = Process.Start(startInfo);
+                    string output = process.StandardOutput.ReadToEnd()?.Trim();
+                    string error = process.StandardError.ReadToEnd()?.Trim();
+                    process.WaitForExit();
+
+                    if (!string.IsNullOrEmpty(output))
+                    {
+                        appiumPath = Path.Combine(output, "appium", "build", "lib", "main.js");
+                    }
+                    else if (!string.IsNullOrEmpty(error))
+                    {
+                        Console.WriteLine($"NPM Error: {error}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Process failed: {ex.Message}");
+                }
+            }
+
+            if (string.IsNullOrEmpty(appiumPath) || !File.Exists(appiumPath))
+            {
+                Assert.Ignore("Appium is not installed or not found on this machine. Skipping AppiumLocalServiceTests.");
+            }
+
             appiumServer = new AppiumServiceBuilder()
                 .WithAppiumJS(new FileInfo(appiumPath))
                 .WithIPAddress("127.0.0.1")
