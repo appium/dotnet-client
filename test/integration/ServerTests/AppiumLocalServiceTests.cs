@@ -80,7 +80,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
         [OneTimeTearDown]
         public void GlobalTeardown()
         {
-            appiumServer.Dispose();
+            appiumServer?.Dispose();
         }
 
         private AppiumLocalService CreateService()
