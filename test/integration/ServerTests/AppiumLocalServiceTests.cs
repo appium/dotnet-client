@@ -111,12 +111,10 @@ namespace Appium.Net.Unit.Tests.Appium.Service
             var service = CreateService();
             var method = GetTryGracefulShutdownOnWindows();
 
-            // Use a running process (self)
-            using (var proc = Process.GetCurrentProcess())
-            {
-                var result = (bool)method.Invoke(service, new object[] { proc, 5000 });
-                Assert.That(result, Is.False);
-            }
+            // Use a running process (self) without disposing it
+            var proc = Process.GetCurrentProcess();
+            var result = (bool)method.Invoke(service, new object[] { proc, 5000 });
+            Assert.That(result, Is.False);
         }
 
         [Test]
