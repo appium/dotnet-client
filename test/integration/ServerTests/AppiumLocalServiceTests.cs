@@ -116,6 +116,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
         {
             var service = CreateService();
             var method = GetTryGracefulShutdownOnWindows();
+            Assert.That(method, Is.Not.Null, "TryGracefulShutdownOnWindows method not found. Check for signature or name changes.");
             var result = (bool)method.Invoke(service, new object[] { null, 5000 });
             Assert.That(result, Is.True);
         }
@@ -125,12 +126,11 @@ namespace Appium.Net.Integration.Tests.ServerTests
         {
             var service = CreateService();
             var method = GetTryGracefulShutdownOnWindows();
+            Assert.That(method, Is.Not.Null, "TryGracefulShutdownOnWindows method not found. Check for signature or name changes.");
 
             var proc = new Process();
-            // Simulate HasExited = true by disposing process (not perfect, but for test)
             proc.Dispose();
 
-            // Use try-catch because accessing HasExited on disposed process throws
             bool result;
             try
             {
@@ -138,7 +138,6 @@ namespace Appium.Net.Integration.Tests.ServerTests
             }
             catch (TargetInvocationException ex) when (ex.InnerException is InvalidOperationException)
             {
-                // If exception, treat as HasExited = true
                 result = true;
             }
             Assert.That(result, Is.True);
@@ -153,8 +152,8 @@ namespace Appium.Net.Integration.Tests.ServerTests
             }
             var service = CreateService();
             var method = GetTryGracefulShutdownOnWindows();
+            Assert.That(method, Is.Not.Null, "TryGracefulShutdownOnWindows method not found. Check for signature or name changes.");
 
-            // Use a running process (self) without disposing it
             var proc = Process.GetCurrentProcess();
             var result = (bool)method.Invoke(service, new object[] { proc, 5000 });
             Assert.That(result, Is.False);
@@ -165,14 +164,13 @@ namespace Appium.Net.Integration.Tests.ServerTests
         {
             var method = typeof(AppiumLocalService)
                 .GetMethod("TryGracefulShutdownOnWindows", BindingFlags.Instance | BindingFlags.NonPublic);
+            Assert.That(method, Is.Not.Null, "TryGracefulShutdownOnWindows method not found. Check for signature or name changes.");
 
-            // This test will only run on Windows
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 Assert.Ignore("Test only valid on Windows platforms.");
             }
 
-            // Use reflection to call the private method on the real Appium process
             var result = (bool)method.Invoke(appiumServer, new object[] { GetAppiumProcess(appiumServer), 5000 });
             Assert.That(result, Is.True.Or.False, "Method should not throw and should return a bool.");
         }
