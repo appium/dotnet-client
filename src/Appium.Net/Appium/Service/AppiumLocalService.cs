@@ -24,7 +24,6 @@ using System.Net;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace OpenQA.Selenium.Appium.Service
@@ -172,8 +171,33 @@ namespace OpenQA.Selenium.Appium.Service
         /// <returns>True if process exited gracefully, false otherwise</returns>
         private bool TryGracefulShutdownOnWindows(Process process, int timeoutMs = 5000)
         {
-            if (process == null || process.HasExited)
+            try
             {
+                if (process == null)
+                {
+                    return true;
+                }
+
+                // Safely check HasExited, handling disposed process
+                bool hasExited;
+                try
+                {
+                    hasExited = process.HasExited;
+                }
+                catch (InvalidOperationException)
+                {
+                    // Process is disposed, treat as exited
+                    return true;
+                }
+
+                if (hasExited)
+                {
+                    return true;
+                }
+            }
+            catch (InvalidOperationException)
+            {
+                // Process is disposed, treat as exited
                 return true;
             }
 
@@ -185,30 +209,22 @@ namespace OpenQA.Selenium.Appium.Service
 
             try
             {
-                // Disable Ctrl-C handling for our own process to prevent it from being terminated
-                // when we send CTRL+C to the target process
                 SetConsoleCtrlHandler(null, true);
 
-                // Attach to the target process console
                 if (!AttachConsole((uint)process.Id))
                 {
                     return false;
                 }
 
-                // Send CTRL+C event
                 if (!GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0))
                 {
                     FreeConsole();
                     return false;
                 }
 
-                // Detach from the process console
                 FreeConsole();
-
-                // Re-enable Ctrl-C handling for our own process
                 SetConsoleCtrlHandler(null, false);
 
-                // Wait for the process to exit gracefully
                 if (process.WaitForExit(timeoutMs))
                 {
                     return true;
@@ -216,29 +232,21 @@ namespace OpenQA.Selenium.Appium.Service
             }
             catch (Win32Exception)
             {
-                // Windows API call failed, return false to fallback to Kill()
                 try
                 {
                     FreeConsole();
                     SetConsoleCtrlHandler(null, false);
                 }
-                catch (Win32Exception)
-                {
-                    // Ignore cleanup errors - we're already in error handling
-                }
+                catch (Win32Exception) { }
             }
             catch (InvalidOperationException)
             {
-                // Process has already exited, return false to fallback to Kill()
                 try
                 {
                     FreeConsole();
                     SetConsoleCtrlHandler(null, false);
                 }
-                catch (Win32Exception)
-                {
-                    // Ignore cleanup errors - we're already in error handling
-                }
+                catch (Win32Exception) { }
             }
 
             return false;
