@@ -22,6 +22,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace OpenQA.Selenium.Appium.Service
@@ -186,15 +187,23 @@ namespace OpenQA.Selenium.Appium.Service
 
             try
             {
-                // First, attempt graceful shutdown using managed code
-                if (!TryGracefulShutdownOnWindows(Service))
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
-                    // If graceful shutdown fails, use Kill
+                    // Attempt graceful shutdown on Windows
+                    if (!TryGracefulShutdownOnWindows(Service))
+                    {
+                        Service.Kill();
+                    }
+                }
+                else
+                {
+                    // On non-Windows, just kill the process
                     Service.Kill();
                 }
             }
             catch
             {
+                // Optionally log or handle exceptions
             }
             finally
             {
