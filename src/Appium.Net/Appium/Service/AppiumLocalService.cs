@@ -180,6 +180,25 @@ namespace OpenQA.Selenium.Appium.Service
             return false;
         }
 
+        private int GetShutdownTimeoutWithBuffer()
+        {
+            // Default Appium shutdown timeout in ms
+            int shutdownTimeout = 5000;
+            const int bufferMs = 1000;
+
+            if (ArgsList == null)
+                GenerateArgsList();
+
+            int idx = ArgsList.IndexOf("--shutdown-timeout");
+            if (idx >= 0 && idx + 1 < ArgsList.Count)
+            {
+                if (int.TryParse(ArgsList[idx + 1], out int parsed))
+                    shutdownTimeout = parsed;
+            }
+
+            return shutdownTimeout + bufferMs;
+        }
+
         private void DestroyProcess()
         {
             if (Service == null)
@@ -187,10 +206,12 @@ namespace OpenQA.Selenium.Appium.Service
 
             try
             {
+                int shutdownTimeout = GetShutdownTimeoutWithBuffer();
+
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
                     // Attempt graceful shutdown on Windows
-                    if (!TryGracefulShutdownOnWindows(Service))
+                    if (!TryGracefulShutdownOnWindows(Service, shutdownTimeout))
                     {
                         Service.Kill();
                     }
