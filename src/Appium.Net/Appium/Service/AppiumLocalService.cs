@@ -22,6 +22,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace OpenQA.Selenium.Appium.Service
@@ -152,19 +153,86 @@ namespace OpenQA.Selenium.Appium.Service
             }
         }
 
-        private void DestroyProcess()
+        private bool TryGracefulShutdownOnWindows(Process process, int timeoutMs = 5000)
         {
-            if (Service == null)
-            {
-                return;
-            }
+            if (process == null)
+                return true;
 
+            // Safely check HasExited, handling disposed process
+            bool hasExited;
             try
             {
-                Service.Kill();
+                hasExited = process.HasExited;
+            }
+            catch (InvalidOperationException)
+            {
+                // Process is disposed, treat as exited
+                return true;
+            }
+
+            if (hasExited)
+                return true;
+
+            // Attempt graceful shutdown using managed code only
+            try
+            {
+                process.CloseMainWindow();
+                if (process.WaitForExit(timeoutMs))
+                    return true;
             }
             catch
             {
+                // Ignore exceptions, fallback to Kill
+            }
+
+            return false;
+        }
+
+        private int GetShutdownTimeoutWithBuffer()
+        {
+            // Default Appium shutdown timeout in ms
+            int shutdownTimeout = 5000;
+            const int bufferMs = 1000;
+
+            if (ArgsList == null)
+                GenerateArgsList();
+
+            int idx = ArgsList.IndexOf("--shutdown-timeout");
+            if (idx >= 0 && idx + 1 < ArgsList.Count)
+            {
+                if (int.TryParse(ArgsList[idx + 1], out int parsed))
+                    shutdownTimeout = parsed;
+            }
+
+            return shutdownTimeout + bufferMs;
+        }
+
+        private void DestroyProcess()
+        {
+            if (Service == null)
+                return;
+
+            try
+            {
+                int shutdownTimeout = GetShutdownTimeoutWithBuffer();
+
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    // Attempt graceful shutdown on Windows
+                    if (!TryGracefulShutdownOnWindows(Service, shutdownTimeout))
+                    {
+                        Service.Kill();
+                    }
+                }
+                else
+                {
+                    // On non-Windows, just kill the process
+                    Service.Kill();
+                }
+            }
+            catch
+            {
+                // Optionally log or handle exceptions
             }
             finally
             {
