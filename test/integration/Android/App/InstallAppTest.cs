@@ -21,6 +21,11 @@ namespace Appium.Net.Integration.Tests.Android.App
             AppiumOptions opts = Caps.GetAndroidUIAutomatorCaps();
             // Do not preinstall the app via capabilities; we test explicit installation.
             _driver = new AndroidDriver(serverUri, opts, TimeSpan.FromMinutes(2));
+            // to ensure the app is not on the device.
+            if (!string.IsNullOrWhiteSpace(_packageName) && _driver.IsAppInstalled(_packageName))
+            {
+                _driver.RemoveApp(_packageName);
+            }
         }
 
         [Test]
@@ -71,8 +76,8 @@ namespace Appium.Net.Integration.Tests.Android.App
                     _driver.RemoveApp(_packageName);
                 }
             }
-            catch (Exception ex) 
-            { 
+            catch (Exception ex)
+            {
                 Console.Error.WriteLine($"Exception during Dispose: {ex}");
             }
             _driver?.Quit();
