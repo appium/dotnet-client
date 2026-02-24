@@ -7,20 +7,43 @@ using NUnit.Framework;
 
 namespace Appium.Net.Integration.Tests.Android.App
 {
-    public class InstallAppTest : IDisposable
+    public class InstallAppTest
     {
-        private readonly AndroidDriver _driver;
-        private readonly string _apkPath;
-        private readonly string _packageName;
+        private AndroidDriver _driver;
+        private readonly string _apkPath = Apps.Get(Apps.androidApiDemos);
+        private string _packageName;
 
-        public InstallAppTest()
+        private void RemoveApp()
         {
-            _apkPath = Apps.Get(Apps.androidApiDemos);
+            if (!string.IsNullOrWhiteSpace(_packageName) && _driver.IsAppInstalled(_packageName))
+            {
+                _driver.RemoveApp(_packageName);
+            }
+        }
+
+        [OneTimeSetUp]
+        public void BeforeAll()
+        {
             _packageName = Apps.GetId(Apps.androidApiDemos);
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
             AppiumOptions opts = Caps.GetAndroidUIAutomatorCaps();
             // Do not preinstall the app via capabilities; we test explicit installation.
             _driver = new AndroidDriver(serverUri, opts, TimeSpan.FromMinutes(2));
+            RemoveApp();
+        }
+
+        [OneTimeTearDown]
+        public void OneTimeTearDown()
+        {
+            try
+            {
+                RemoveApp();
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"Exception during Dispose: {ex}");
+            }
+            _driver?.Quit();
         }
 
         [Test]
@@ -59,23 +82,6 @@ namespace Appium.Net.Integration.Tests.Android.App
         {
             _driver.InstallApp(_apkPath, checkVersion: true);
             Assert.That(_driver.IsAppInstalled(_packageName), Is.True);
-        }
-
-        public void Dispose()
-        {
-            GC.SuppressFinalize(this);
-            try
-            {
-                if (!string.IsNullOrWhiteSpace(_packageName) && _driver.IsAppInstalled(_packageName))
-                {
-                    _driver.RemoveApp(_packageName);
-                }
-            }
-            catch (Exception ex) 
-            { 
-                Console.Error.WriteLine($"Exception during Dispose: {ex}");
-            }
-            _driver?.Quit();
         }
     }
 }
