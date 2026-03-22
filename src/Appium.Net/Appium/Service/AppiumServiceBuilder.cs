@@ -467,13 +467,7 @@ namespace OpenQA.Selenium.Appium.Service
                     argList.AddRange(ServerOptions.Arguments);
                 }
 
-                string result = string.Empty;
-
-                foreach (var value in argList)
-                {
-                    result = result + value + " ";
-                }
-                return result.Trim();
+                return string.Join(" ", argList);
             }
         }
 
