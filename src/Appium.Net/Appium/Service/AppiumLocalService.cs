@@ -352,7 +352,7 @@ namespace OpenQA.Selenium.Appium.Service
             status = CreateStatusUrl();
 
             DateTime endTime = DateTime.Now.Add(span);
-            while (!pinged & DateTime.Now < endTime)
+            while (!pinged && DateTime.Now < endTime)
             {
                 try
                 {
@@ -367,6 +367,7 @@ namespace OpenQA.Selenium.Appium.Service
                 {
                     pinged = false;
                 }
+                await Task.Delay(250).ConfigureAwait(false);
             }
             return pinged;
         }
