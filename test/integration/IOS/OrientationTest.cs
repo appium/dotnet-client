@@ -7,7 +7,6 @@ namespace Appium.Net.Integration.Tests.IOS
 {
     [TestFixture]
     [Category("iOS")]
-
     public class OrientationTest
     {
         private IWebDriver _driver;
