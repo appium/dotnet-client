@@ -142,7 +142,7 @@ namespace OpenQA.Selenium.Appium.iOS
 
             executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object>
             {
-                ["script"] = "mobile:launchApp",
+                ["script"] = "mobile: launchApp",
                 ["args"] = new object[] { args }
             });
         }
