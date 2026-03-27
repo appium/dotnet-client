@@ -8,6 +8,8 @@ using System.Collections.Generic;
 
 namespace Appium.Net.Integration.Tests.IOS.Device.App
 {
+    [TestFixture]
+    [Category("iOS")]
     internal class AppTests
     {
         private IOSDriver _driver;

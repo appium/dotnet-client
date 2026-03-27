@@ -9,6 +9,8 @@ using System.Text.RegularExpressions;
 namespace Appium.Net.Integration.Tests.IOS
 {
     [TestFixture(Category = "Device")]
+    [Category("iOS")]
+
     public class ClipboardTest
     {
         private IOSDriver _driver;
