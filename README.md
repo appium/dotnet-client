@@ -4,7 +4,14 @@
 [![Build and deploy NuGet package](https://github.com/appium/dotnet-client/actions/workflows/release-nuget.yml/badge.svg)](https://github.com/appium/dotnet-client/actions/workflows/release-nuget.yml)
 [![NuGet Downloads](https://img.shields.io/nuget/dt/Appium.Webdriver.svg)](https://www.nuget.org/packages/Appium.Webdriver)
 
-[![Build Status](https://dev.azure.com/AppiumCI/dotnet-client/_apis/build/status/appium.dotnet-client?branchName=main)](https://dev.azure.com/AppiumCI/dotnet-client/_build/latest?definitionId=68&branchName=main)
+----
+
+[![Functional Tests](https://github.com/appium/dotnet-client/actions/workflows/functional-test.yml/badge.svg)](https://github.com/appium/dotnet-client/actions/workflows/functional-test.yml)
+[![Functional Tests (Android)](https://github.com/appium/dotnet-client/actions/workflows/functional-android-test.yml/badge.svg)](https://github.com/appium/dotnet-client/actions/workflows/functional-android-test.yml)
+[![Functional Tests (iOS)](https://github.com/appium/dotnet-client/actions/workflows/functional-ios-test.yml/badge.svg)](https://github.com/appium/dotnet-client/actions/workflows/functional-ios-test.yml)
+[![Unit Tests](https://github.com/appium/dotnet-client/actions/workflows/unit-test.yml/badge.svg)](https://github.com/appium/dotnet-client/actions/workflows/unit-test.yml)
+
+----
 
 [![Help Wanted](https://img.shields.io/github/issues-raw/appium/dotnet-client/HelpWanted?style=plastic&logo=github&logoColor=blue&label=Help%20Wanted%20issues&color=red
 )](https://github.com/appium/dotnet-client/issues?q=is%3Aopen+is%3Aissue+label%3AHelpWanted)
