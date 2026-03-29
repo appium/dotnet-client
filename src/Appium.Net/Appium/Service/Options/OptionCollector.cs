@@ -130,7 +130,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         {
             get
             {
-                List<string> result = new List<string>();
+                List<string> result = [];
                 var keys = CollectedArgs.Keys;
                 foreach (var key in keys)
                 {
