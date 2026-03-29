@@ -8,6 +8,8 @@ using System.Collections.Generic;
 
 namespace Appium.Net.Integration.Tests.IOS.Device.App
 {
+    [TestFixture]
+    [Category("iOS")]
     internal class AppTests
     {
         private IOSDriver _driver;
@@ -82,6 +84,34 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
             Assert.DoesNotThrow(() => _driver.ActivateApp(UiCatalogAppTestAppBundleId));
 
             //Verify the expected app was activated
+            Assert.DoesNotThrow(() => _driver.FindElement(MobileBy.AccessibilityId(UiCatalogTestAppElement)));
+        }
+
+        #endregion
+
+        #region Launch App With Arguments
+
+        [Test]
+        public void CanLaunchAppWithArguments()
+        {
+            _driver.TerminateApp(UiCatalogAppTestAppBundleId);
+
+            var processArguments = new List<string>
+            {
+                "-AppleLanguages",
+                "(en)",
+                "-AppleLocale",
+                "en_US"
+            };
+            var environmentVariables = new Dictionary<string, string>
+            {
+                ["UITEST_LAUNCH"] = "1"
+            };
+
+            Assert.DoesNotThrow(() =>
+                _driver.LaunchAppWithArguments(UiCatalogAppTestAppBundleId, processArguments, environmentVariables));
+
+            Assert.That(() => _driver.GetAppState(UiCatalogAppTestAppBundleId), Is.EqualTo(AppState.RunningInForeground));
             Assert.DoesNotThrow(() => _driver.FindElement(MobileBy.AccessibilityId(UiCatalogTestAppElement)));
         }
 

@@ -105,7 +105,7 @@ jobs:
       shell: bash
 
     - name: Publish test results
-      uses: dorny/test-reporter@v2
+      uses: dorny/test-reporter@v3
       if: always()
       with:
         name: Test Results (${{ matrix.os }})

@@ -118,6 +118,35 @@ namespace OpenQA.Selenium.Appium.iOS
             });
         }
 
+        /// <summary>
+        /// Launch an app on the iOS device using mobile: launchApp script.
+        /// For documentation, see <see href="https://appium.github.io/appium-xcuitest-driver/latest/reference/execute-methods/#mobile-launchapp">mobile: launchApp</see>.
+        /// </summary>
+        /// <param name="executeMethod">The execute method</param>
+        /// <param name="bundleId">The bundle identifier of the application.</param>
+        /// <param name="processArguments">Optional command line arguments for the app.</param>
+        /// <param name="environmentVariables">Optional environment variables for the app.</param>
+        public static void LaunchAppWithArguments(
+            IExecuteMethod executeMethod,
+            string bundleId,
+            IReadOnlyCollection<string> processArguments = null,
+            IDictionary<string, string> environmentVariables = null)
+        {
+            var args = new Dictionary<string, object> { { "bundleId", bundleId } };
+
+            if (processArguments != null && processArguments.Count > 0)
+                args["arguments"] = processArguments;
+
+            if (environmentVariables != null && environmentVariables.Count > 0)
+                args["environment"] = environmentVariables;
+
+            executeMethod.Execute(DriverCommand.ExecuteScript, new Dictionary<string, object>
+            {
+                ["script"] = "mobile: launchApp",
+                ["args"] = new object[] { args }
+            });
+        }
+
         public static Dictionary<string, object> GetSettings(IExecuteMethod executeMethod) =>
             (Dictionary<string, object>)executeMethod.Execute(AppiumDriverCommand.GetSettings).Value;
 

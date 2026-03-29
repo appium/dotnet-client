@@ -211,6 +211,19 @@ namespace OpenQA.Selenium.Appium.iOS
         public void InstallApp(string appPath, int? timeoutMs = null) =>
             IOSCommandExecutionHelper.InstallApp(this, appPath, timeoutMs);
 
+        /// <summary>
+        /// Launch an app on the iOS device using mobile: launchApp script.
+        /// For documentation, see <see href="https://appium.github.io/appium-xcuitest-driver/latest/reference/execute-methods/#mobile-launchapp">mobile: launchApp</see>.
+        /// </summary>
+        /// <param name="bundleId">The bundle identifier of the application.</param>
+        /// <param name="processArguments">Optional command line arguments for the app.</param>
+        /// <param name="environmentVariables">Optional environment variables for the app.</param>
+        public void LaunchAppWithArguments(
+            string bundleId,
+            IReadOnlyCollection<string> processArguments = null,
+            IDictionary<string, string> environmentVariables = null) =>
+            IOSCommandExecutionHelper.LaunchAppWithArguments(this, bundleId, processArguments, environmentVariables);
+
         #endregion
 
         /// <summary>
