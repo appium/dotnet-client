@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using Appium.Net.Integration.Tests.Helpers;
@@ -209,6 +210,37 @@ namespace Appium.Net.Integration.Tests.ServerTests
             {
                 service?.Dispose();
             }
+        }
+
+        [Test]
+        public void AddCapabilities_MergesCapabilitiesWhenCalledMultipleTimes()
+        {
+            var firstCapabilities = new AppiumOptions();
+            firstCapabilities.AddAdditionalAppiumOption(MobileCapabilityType.PlatformName, "Android");
+
+            var secondCapabilities = new AppiumOptions();
+            secondCapabilities.AddAdditionalAppiumOption(AndroidMobileCapabilityType.AppPackage, "io.appium.android.apis");
+
+            var collector = new OptionCollector()
+                .AddCapabilities(firstCapabilities)
+                .AddCapabilities(secondCapabilities);
+
+            var argumentsProperty = typeof(OptionCollector).GetProperty("Arguments", BindingFlags.Instance | BindingFlags.NonPublic);
+            Assert.That(argumentsProperty, Is.Not.Null, "Arguments property not found.");
+
+            var arguments = argumentsProperty.GetValue(collector) as IList<string>;
+            Assert.That(arguments, Is.Not.Null, "Arguments should not be null.");
+
+            var capabilitiesIndex = arguments.IndexOf("--default-capabilities");
+            Assert.That(capabilitiesIndex, Is.GreaterThanOrEqualTo(0), "Capabilities flag not found.");
+            Assert.That(arguments.Count, Is.GreaterThan(capabilitiesIndex + 1), "Capabilities value missing.");
+
+            var capabilitiesArgument = arguments[capabilitiesIndex + 1];
+            Assert.Multiple(() =>
+            {
+                Assert.That(capabilitiesArgument, Does.Contain("platformName"));
+                Assert.That(capabilitiesArgument, Does.Contain("appPackage"));
+            });
         }
 
         [Test]

@@ -49,25 +49,9 @@ namespace OpenQA.Selenium.Appium.Service.Options
             }
             else
             {
-                IDictionary<string, object> originalDictionary = this.options.ToDictionary();
                 IDictionary<string, object> givenDictionary = options.ToDictionary();
-                IDictionary<string, object> result = new Dictionary<string, object>(originalDictionary);
 
                 foreach (var item in givenDictionary)
-                {
-                    if (originalDictionary.ContainsKey(item.Key))
-                    {
-                        result[item.Key] = item.Value;
-                    }
-                    else
-                    {
-                        result.Add(item.Key, item.Value);
-                    }
-                }
-
-                this.options = new AppiumOptions();
-
-                foreach (var item in result)
                 {
                     this.options.AddAdditionalAppiumOption(item.Key, item.Value);
                 }
@@ -76,14 +60,12 @@ namespace OpenQA.Selenium.Appium.Service.Options
             return this;
         }
 
-        private string ParseCapabilitiesIfWindows()
+        private string ParseCapabilitiesIfWindows(IDictionary<string, object> capabilitiesDictionary)
         {
             string result = string.Empty;
 
-            if (options != null)
+            if (capabilitiesDictionary != null)
             {
-                IDictionary<string, object> capabilitiesDictionary = options.ToDictionary();
-
                 foreach (var item in capabilitiesDictionary)
                 {
                     object value = item.Value;
@@ -127,15 +109,15 @@ namespace OpenQA.Selenium.Appium.Service.Options
             return "\"{" + result + "}\"";
         }
 
-        private string ParseCapabilitiesIfUNIX()
+        private string ParseCapabilitiesIfUNIX(IDictionary<string, object> capabilitiesDictionary)
         {
-            if (options == null)
+            if (capabilitiesDictionary == null)
             {
                 return string.Empty;
             }
 
             // Serialize to JSON and escape double quotes so they survive argument parsing
-            var json = JsonSerializer.Serialize(options.ToDictionary());
+            var json = JsonSerializer.Serialize(capabilitiesDictionary);
             // Escape double quotes with backslash for shell argument
             var escaped = json.Replace("\"", "\\\"");
             return $"\"{escaped}\"";
@@ -148,7 +130,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         {
             get
             {
-                List<string> result = new List<string>();
+                List<string> result = [];
                 var keys = CollectedArgs.Keys;
                 foreach (var key in keys)
                 {
@@ -164,16 +146,18 @@ namespace OpenQA.Selenium.Appium.Service.Options
                     }
                 }
 
-                if (options != null && options.ToDictionary().Count > 0)
+                var optionsDictionary = options?.ToDictionary();
+
+                if (optionsDictionary != null && optionsDictionary.Count > 0)
                 {
                     result.Add(CapabilitiesFlag);
                     if (Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows))
                     {
-                        result.Add(ParseCapabilitiesIfWindows());
+                        result.Add(ParseCapabilitiesIfWindows(optionsDictionary));
                     }
                     else
                     {
-                        result.Add(ParseCapabilitiesIfUNIX());
+                        result.Add(ParseCapabilitiesIfUNIX(optionsDictionary));
                     }
                 }
 
