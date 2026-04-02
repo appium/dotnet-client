@@ -42,7 +42,7 @@ jobs:
 
     - name: Setup NuGet (Windows)
       if: runner.os == 'Windows'
-      uses: NuGet/setup-nuget@v2
+      uses: NuGet/setup-nuget@v3
 
     - name: Restore NuGet packages (Windows)
       if: runner.os == 'Windows'
