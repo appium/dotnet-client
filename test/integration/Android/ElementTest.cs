@@ -202,6 +202,18 @@ namespace Appium.Net.Integration.Tests.Android
             Assert.That(myDerivedElements, Is.Not.Empty);
         }
 
+        [Test]
+        public void GetPropertyTest()
+        {
+            if (Env.IsCiEnvironment())
+            {
+                Assert.Ignore("Skipping GetPropertyTest test in CI environment");
+            }
+            var myElement = WaitForElement(_driver, MobileBy.Id("android:id/content"));
+            string className = myElement.GetProperty("className");
+            Assert.That(className, Is.Not.Null);
+        }
+
         [OneTimeTearDown]
         public void AfterAll()
         {
