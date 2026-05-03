@@ -33,36 +33,49 @@ namespace OpenQA.Selenium.Appium.WebSocket
         private CancellationTokenSource _cancellationTokenSource;
         private Task _receiveTask;
 
+        private event Action<string> _messageReceived;
+        private event Action<Exception> _errorOccurred;
+        private event Action _connected;
+        private event Action _disconnected;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="StringWebSocketClient"/> class.
         /// </summary>
         public StringWebSocketClient()
         {
-            MessageHandlers = [];
-            ErrorHandlers = [];
-            ConnectionHandlers = [];
-            DisconnectionHandlers = [];
         }
 
         /// <summary>
         /// Gets the list of all registered web socket message handlers.
         /// </summary>
-        public List<Action<string>> MessageHandlers { get; }
+        public List<Action<string>> MessageHandlers => GetInvocationList<Action<string>>(_messageReceived);
 
         /// <summary>
         /// Gets the list of all registered web socket error handlers.
         /// </summary>
-        public List<Action<Exception>> ErrorHandlers { get; }
+        public List<Action<Exception>> ErrorHandlers => GetInvocationList<Action<Exception>>(_errorOccurred);
 
         /// <summary>
         /// Gets the list of all registered web socket connection handlers.
         /// </summary>
-        public List<Action> ConnectionHandlers { get; }
+        public List<Action> ConnectionHandlers => GetInvocationList<Action>(_connected);
 
         /// <summary>
         /// Gets the list of all registered web socket disconnection handlers.
         /// </summary>
-        public List<Action> DisconnectionHandlers { get; }
+        public List<Action> DisconnectionHandlers => GetInvocationList<Action>(_disconnected);
+
+        private static List<T> GetInvocationList<T>(Delegate handler) where T : Delegate
+        {
+            var invocationList = handler?.GetInvocationList();
+            if (invocationList == null) return new List<T>();
+            var list = new List<T>(invocationList.Length);
+            for (int i = 0; i < invocationList.Length; i++)
+            {
+                list.Add((T)invocationList[i]);
+            }
+            return list;
+        }
 
         /// <summary>
         /// Gets the endpoint URI.
@@ -73,45 +86,69 @@ namespace OpenQA.Selenium.Appium.WebSocket
         /// Register a new message handler.
         /// </summary>
         /// <param name="handler">A callback function, which accepts the received message as a parameter.</param>
-        public void AddMessageHandler(Action<string> handler) => MessageHandlers.Add(handler);
+        public void AddMessageHandler(Action<string> handler) => _messageReceived += handler;
+
+        /// <summary>
+        /// Removes specific message handler.
+        /// </summary>
+        /// <param name="handler">A callback function to remove.</param>
+        public void RemoveMessageHandler(Action<string> handler) => _messageReceived -= handler;
 
         /// <summary>
         /// Removes existing message handlers.
         /// </summary>
-        public void RemoveMessageHandlers() => MessageHandlers.Clear();
+        public void RemoveMessageHandlers() => _messageReceived = null;
 
         /// <summary>
         /// Register a new error handler.
         /// </summary>
         /// <param name="handler">A callback function, which accepts the received exception instance as a parameter.</param>
-        public void AddErrorHandler(Action<Exception> handler) => ErrorHandlers.Add(handler);
+        public void AddErrorHandler(Action<Exception> handler) => _errorOccurred += handler;
+
+        /// <summary>
+        /// Removes specific error handler.
+        /// </summary>
+        /// <param name="handler">A callback function to remove.</param>
+        public void RemoveErrorHandler(Action<Exception> handler) => _errorOccurred -= handler;
 
         /// <summary>
         /// Removes existing error handlers.
         /// </summary>
-        public void RemoveErrorHandlers() => ErrorHandlers.Clear();
+        public void RemoveErrorHandlers() => _errorOccurred = null;
 
         /// <summary>
         /// Register a new connection handler.
         /// </summary>
         /// <param name="handler">A callback function, which is going to be executed when web socket connection event arrives.</param>
-        public void AddConnectionHandler(Action handler) => ConnectionHandlers.Add(handler);
+        public void AddConnectionHandler(Action handler) => _connected += handler;
+
+        /// <summary>
+        /// Removes specific connection handler.
+        /// </summary>
+        /// <param name="handler">A callback function to remove.</param>
+        public void RemoveConnectionHandler(Action handler) => _connected -= handler;
 
         /// <summary>
         /// Removes existing web socket connection handlers.
         /// </summary>
-        public void RemoveConnectionHandlers() => ConnectionHandlers.Clear();
+        public void RemoveConnectionHandlers() => _connected = null;
 
         /// <summary>
         /// Register a new web socket disconnect handler.
         /// </summary>
         /// <param name="handler">A callback function, which is going to be executed when web socket disconnect event arrives.</param>
-        public void AddDisconnectionHandler(Action handler) => DisconnectionHandlers.Add(handler);
+        public void AddDisconnectionHandler(Action handler) => _disconnected += handler;
+
+        /// <summary>
+        /// Removes specific disconnection handler.
+        /// </summary>
+        /// <param name="handler">A callback function to remove.</param>
+        public void RemoveDisconnectionHandler(Action handler) => _disconnected -= handler;
 
         /// <summary>
         /// Removes existing disconnection handlers.
         /// </summary>
-        public void RemoveDisconnectionHandlers() => DisconnectionHandlers.Clear();
+        public void RemoveDisconnectionHandlers() => _disconnected = null;
 
         /// <summary>
         /// Connects to a WebSocket endpoint.
@@ -150,10 +187,7 @@ namespace OpenQA.Selenium.Appium.WebSocket
                     await _clientWebSocket.ConnectAsync(endpoint, _cancellationTokenSource.Token);
                     
                     // Invoke connection handlers
-                    foreach (var handler in ConnectionHandlers.ToArray())
-                    {
-                        handler?.Invoke();
-                    }
+                    _connected?.Invoke();
 
                     // Start receiving messages
                     _receiveTask = Task.Run(ReceiveMessagesAsync);
@@ -161,19 +195,13 @@ namespace OpenQA.Selenium.Appium.WebSocket
                 catch (WebSocketException ex)
                 {
                     // Invoke error handlers
-                    foreach (var handler in ErrorHandlers.ToArray())
-                    {
-                        handler?.Invoke(ex);
-                    }
+                    _errorOccurred?.Invoke(ex);
                     throw new WebDriverException($"Failed to connect to WebSocket at {DateTime.UtcNow:yyyy-MM-dd HH:mm:ss.fff} UTC", ex);
                 }
                 catch (TaskCanceledException ex)
                 {
                     // Invoke error handlers
-                    foreach (var handler in ErrorHandlers.ToArray())
-                    {
-                        handler?.Invoke(ex);
-                    }
+                    _errorOccurred?.Invoke(ex);
                     throw new WebDriverException("WebSocket connection was cancelled", ex);
                 }
             }
@@ -220,18 +248,12 @@ namespace OpenQA.Selenium.Appium.WebSocket
                 catch (Exception ex)
                 {
                     // Invoke error handlers for errors during close
-                    foreach (var handler in ErrorHandlers.ToArray())
-                    {
-                        handler?.Invoke(ex);
-                    }
+                    _errorOccurred?.Invoke(ex);
                 }
                 finally
                 {
                     // Invoke disconnection handlers
-                    foreach (var handler in DisconnectionHandlers.ToArray())
-                    {
-                        handler?.Invoke();
-                    }
+                    _disconnected?.Invoke();
                 }
             }
 
@@ -244,10 +266,10 @@ namespace OpenQA.Selenium.Appium.WebSocket
         /// </summary>
         public void RemoveAllHandlers()
         {
-            MessageHandlers.Clear();
-            ErrorHandlers.Clear();
-            ConnectionHandlers.Clear();
-            DisconnectionHandlers.Clear();
+            _messageReceived = null;
+            _errorOccurred = null;
+            _connected = null;
+            _disconnected = null;
         }
 
         private async Task ReceiveMessagesAsync()
@@ -283,10 +305,7 @@ namespace OpenQA.Selenium.Appium.WebSocket
                         messageBuilder.Clear();
 
                         // Invoke message handlers
-                        foreach (var handler in MessageHandlers.ToArray())
-                        {
-                            handler?.Invoke(message);
-                        }
+                        _messageReceived?.Invoke(message);
                     }
                 }
             }
@@ -297,10 +316,7 @@ namespace OpenQA.Selenium.Appium.WebSocket
             catch (Exception ex)
             {
                 // Invoke error handlers
-                foreach (var handler in ErrorHandlers.ToArray())
-                {
-                    handler?.Invoke(ex);
-                }
+                _errorOccurred?.Invoke(ex);
             }
         }
 
