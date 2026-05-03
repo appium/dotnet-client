@@ -32,6 +32,18 @@ namespace Appium.Net.Integration.Tests.Android
         }
 
         [Test]
+        public void GetPropertyTest()
+        {
+            if (Env.IsCiEnvironment())
+            {
+                Assert.Ignore("Skipping GetPropertyTest test in CI environment");
+            }
+            var myElement = WaitForElement(_driver, MobileBy.Id("android:id/content"));
+            var propertyValue = myElement.GetProperty("className");
+            Assert.That(propertyValue, Is.Not.Null);
+        }
+
+        [Test]
         public void FindByAccessibilityIdTest()
         {
             if (Env.IsCiEnvironment())
