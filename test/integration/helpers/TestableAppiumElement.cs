@@ -100,6 +100,10 @@ namespace Appium.Net.Integration.Tests.helpers
             "attribute/" + attributeName,
             () => SimulateServerCall("server-attribute-value"))?.ToString();
 
+        public string GetProperty(string propertyName) => CacheValue(
+            "property/" + propertyName,
+            () => SimulateServerCall("server-property-value"))?.ToString();
+
         #endregion
 
         #region IWebElement Implementation (not used for cache testing)
