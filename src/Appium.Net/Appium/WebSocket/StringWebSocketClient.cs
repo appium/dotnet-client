@@ -266,10 +266,10 @@ namespace OpenQA.Selenium.Appium.WebSocket
         /// </summary>
         public void RemoveAllHandlers()
         {
-            _messageReceived = null;
-            _errorOccurred = null;
-            _connected = null;
-            _disconnected = null;
+            Interlocked.Exchange(ref _messageReceived, null);
+            Interlocked.Exchange(ref _errorOccurred, null);
+            Interlocked.Exchange(ref _connected, null);
+            Interlocked.Exchange(ref _disconnected, null);
         }
 
         private async Task ReceiveMessagesAsync()
