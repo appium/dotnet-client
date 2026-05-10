@@ -54,14 +54,14 @@ namespace Appium.Net.Integration.Tests.Android
         public void WhenClipboardContentTypeIsPlainTextWithLabelGetClipboardTextShouldReturnActualText()
         {
             _driver.SetClipboardText(ClipboardTestString, label:"testing");
-            Assert.That(() => _driver.GetClipboardText(), Does.Match(ClipboardTestString));
+            Assert.That(_driver.GetClipboardText(), Does.Match(ClipboardTestString));
         }
 
         [Test]
         public void WhenClipboardContentTypeIsPlainTextWithOutLabelGetClipboardTextShouldReturnActualText()
         {
             _driver.SetClipboardText(ClipboardTestString, null);
-            Assert.That(() => _driver.GetClipboardText(), Does.Match(ClipboardTestString));
+            Assert.That(_driver.GetClipboardText(), Does.Match(ClipboardTestString));
         }
 
         [Test]

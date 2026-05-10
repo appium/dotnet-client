@@ -65,7 +65,7 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
             Assert.DoesNotThrow(() => _driver.ExecuteScript("mobile: activateApp",
                 new Dictionary<string, string> {{"bundleId", IosTestAppBundleId}}));
 
-            Assert.That(() => _driver.GetAppState(IosTestAppBundleId), Is.EqualTo(AppState.RunningInForeground));
+            Assert.That(_driver.GetAppState(IosTestAppBundleId), Is.EqualTo(AppState.RunningInForeground));
 
             //Verify the expected app was activated
             Assert.DoesNotThrow(() => _driver.FindElement(MobileBy.AccessibilityId(IosTestAppElement)));
@@ -111,7 +111,7 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
             Assert.DoesNotThrow(() =>
                 _driver.LaunchAppWithArguments(UiCatalogAppTestAppBundleId, processArguments, environmentVariables));
 
-            Assert.That(() => _driver.GetAppState(UiCatalogAppTestAppBundleId), Is.EqualTo(AppState.RunningInForeground));
+            Assert.That(_driver.GetAppState(UiCatalogAppTestAppBundleId), Is.EqualTo(AppState.RunningInForeground));
             Assert.DoesNotThrow(() => _driver.FindElement(MobileBy.AccessibilityId(UiCatalogTestAppElement)));
         }
 

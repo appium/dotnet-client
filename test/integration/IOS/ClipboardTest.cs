@@ -40,7 +40,7 @@ namespace Appium.Net.Integration.Tests.IOS
         public void WhenClipboardContentTypeIsPlainText_GetClipboardTextShouldReturnActualText()
         {
             _driver.SetClipboardText(ClipboardTestString);
-            Assert.That(() => _driver.GetClipboardText(), Does.Match(ClipboardTestString));
+            Assert.That(_driver.GetClipboardText(), Does.Match(ClipboardTestString));
         }
 
         [Test]
@@ -60,7 +60,7 @@ namespace Appium.Net.Integration.Tests.IOS
             const string urlString = "https://github.com/appium/dotnet-client";
             _driver.SetClipboardUrl(urlString);
 
-            Assert.That(() => _driver.GetClipboardUrl(), Does.Match(urlString));
+            Assert.That(_driver.GetClipboardUrl(), Does.Match(urlString));
         }
 
         [Test]
