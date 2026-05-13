@@ -148,7 +148,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
                 {
                     driver = new IOSDriver(service, capabilities);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     Assert.That(!service.IsRunning);
                     return;

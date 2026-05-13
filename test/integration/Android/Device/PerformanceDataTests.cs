@@ -50,28 +50,28 @@ namespace Appium.Net.Integration.Tests.Android.Device
             var androidDriver = _driver as AndroidDriver;
             var packageName = androidDriver?.CurrentPackage;
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(androidDriver?.GetPerformanceData("logd", PerformanceDataType.CpuInfo),
-                            Is.Not.Null.Or.Empty,
+Is.Not.Null.And.Not.Empty,
                             "CPU Info data should not be null or empty");
 
                 Assert.That(androidDriver?.GetPerformanceData("logd", PerformanceDataType.CpuInfo, 15),
-                            Is.Not.Null.Or.Empty,
+Is.Not.Null.And.Not.Empty,
                             "CPU Info data should not be null or empty after 15 read attempts");
 
                 Assert.That(androidDriver?.GetPerformanceData(packageName, PerformanceDataType.MemoryInfo, 5),
-                            Is.Not.Null.Or.Empty,
+Is.Not.Null.And.Not.Empty,
                             "Memory Info data should not be null or empty");
 
                 Assert.That(androidDriver?.GetPerformanceData(packageName, PerformanceDataType.BatteryInfo, 5),
-                            Is.Not.Null.Or.Empty,
+Is.Not.Null.And.Not.Empty,
                             "Battery Info data should not be null or empty");
 
                 Assert.That(androidDriver?.GetPerformanceData(packageName, PerformanceDataType.NetworkInfo, 5),
-                            Is.Not.Null.Or.Empty,
+Is.Not.Null.And.Not.Empty,
                             "Network Info data should not be null or empty");
-            });
+            }
         }
     }
 }
