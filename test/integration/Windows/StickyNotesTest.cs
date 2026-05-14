@@ -71,6 +71,7 @@ namespace Appium.Net.Integration.Tests.Windows
                         DeviceName = "WindowsPC",
                         AutomationName = "Windows"
                     };
+                    appCapabilities.AddAdditionalAppiumOption("appTopLevelWindow", StickyNotesTopLevelWindowHandle);
                     session = new WindowsDriver(serverUri, appCapabilities);
                 }
                 Assert.That(session, Is.Not.Null);
