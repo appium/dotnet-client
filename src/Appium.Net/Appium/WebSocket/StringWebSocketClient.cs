@@ -28,7 +28,7 @@ namespace OpenQA.Selenium.Appium.WebSocket
         ICanHandleConnects, ICanHandleDisconnects, IDisposable
     {
         private ClientWebSocket _clientWebSocket;
-        private readonly SemaphoreSlim _connectionLock = new SemaphoreSlim(1, 1);
+        private readonly SemaphoreSlim _connectionLock = new(1, 1);
         private Uri _endpoint;
         private CancellationTokenSource _cancellationTokenSource;
         private Task _receiveTask;
@@ -38,10 +38,10 @@ namespace OpenQA.Selenium.Appium.WebSocket
         /// </summary>
         public StringWebSocketClient()
         {
-            MessageHandlers = new List<Action<string>>();
-            ErrorHandlers = new List<Action<Exception>>();
-            ConnectionHandlers = new List<Action>();
-            DisconnectionHandlers = new List<Action>();
+            MessageHandlers = [];
+            ErrorHandlers = [];
+            ConnectionHandlers = [];
+            DisconnectionHandlers = [];
         }
 
         /// <summary>

@@ -29,7 +29,7 @@ namespace OpenQA.Selenium.Appium.Service
     /// <summary>
     /// Represents a local Appium server service that can be started and stopped programmatically.
     /// </summary>
-    public class AppiumLocalService
+    public class AppiumLocalService : IDisposable
     {
         private readonly FileInfo NodeJS;
         private readonly string Arguments;

@@ -63,7 +63,7 @@ namespace Appium.Net.Integration.Tests.Windows
 
                     var StickyNotesTopLevelWindow = desktopSession.FindElement(MobileBy.ClassName("Modern_Sticky_Top_Window"));
                     var StickyNotesTopLevelWindowHandle = StickyNotesTopLevelWindow.GetAttribute("NativeWindowHandle");
-                    StickyNotesTopLevelWindowHandle = (int.Parse(StickyNotesTopLevelWindowHandle)).ToString("x"); // Convert to Hex
+                    StickyNotesTopLevelWindowHandle = int.Parse(StickyNotesTopLevelWindowHandle).ToString("x"); // Convert to Hex
 
                     AppiumOptions appCapabilities = new()
                     {

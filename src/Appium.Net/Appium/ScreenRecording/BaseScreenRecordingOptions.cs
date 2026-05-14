@@ -9,7 +9,7 @@ namespace OpenQA.Selenium.Appium.ScreenRecording
 
         protected BaseScreenRecordingOptions()
         {
-            Parameters = new Dictionary<string, object>();
+            Parameters = [];
         }
 
         /// <summary>
