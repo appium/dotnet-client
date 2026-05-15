@@ -59,7 +59,7 @@ namespace Appium.Net.Integration.Tests.Windows
                         DeviceName = "WindowsPC",
                         AutomationName = "Windows"
                     };
-                    var desktopSession = new WindowsDriver(serverUri, desktopCapabilities);
+                    using var desktopSession = new WindowsDriver(serverUri, desktopCapabilities);
 
                     var StickyNotesTopLevelWindow = desktopSession.FindElement(MobileBy.ClassName("Modern_Sticky_Top_Window"));
                     var StickyNotesTopLevelWindowHandle = StickyNotesTopLevelWindow.GetAttribute("NativeWindowHandle");
