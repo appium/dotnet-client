@@ -31,13 +31,14 @@ namespace Appium.Net.Integration.Tests.Android
             _driver.StartActivity("io.appium.android.apis/.ApiDemos");
         }
 
-        //[Test]
-        //public void GetPropertyTest()
-        //{
-        //    var myElement = WaitForElement(_driver, MobileBy.Id("android:id/content"));
-        //    var propertyValue = myElement.GetProperty("className");
-        //    Assert.That(propertyValue, Is.Not.Null);
-        //}
+        [Test]
+        [Ignore("Temporarily disabled until GetProperty(\"className\") behavior is verified for this test")]
+        public void GetPropertyTest()
+        {
+            var myElement = WaitForElement(_driver, MobileBy.Id("android:id/content"));
+            var propertyValue = myElement.GetProperty("className");
+            Assert.That(propertyValue, Is.Not.Null);
+        }
 
         [Test]
         public void FindByAccessibilityIdTest()
