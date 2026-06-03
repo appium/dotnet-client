@@ -24,9 +24,9 @@ namespace OpenQA.Selenium.Appium.WebSocket
     public interface ICanHandleMessages<T>
     {
         /// <summary>
-        /// Gets the list of web socket message handlers.
+        /// Gets a read-only snapshot of all registered web socket message handlers.
         /// </summary>
-        List<Action<T>> MessageHandlers { get; }
+        IReadOnlyList<Action<T>> MessageHandlers { get; }
 
         /// <summary>
         /// Register a new message handler.

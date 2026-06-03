@@ -23,9 +23,9 @@ namespace OpenQA.Selenium.Appium.WebSocket
     public interface ICanHandleDisconnects
     {
         /// <summary>
-        /// Gets the list of web socket disconnection handlers.
+        /// Gets a read-only snapshot of all registered web socket disconnection handlers.
         /// </summary>
-        List<Action> DisconnectionHandlers { get; }
+        IReadOnlyList<Action> DisconnectionHandlers { get; }
 
         /// <summary>
         /// Register a new web socket disconnect handler.

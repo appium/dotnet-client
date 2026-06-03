@@ -23,9 +23,9 @@ namespace OpenQA.Selenium.Appium.WebSocket
     public interface ICanHandleErrors
     {
         /// <summary>
-        /// Gets the list of web socket error handlers.
+        /// Gets a read-only snapshot of all registered web socket error handlers.
         /// </summary>
-        List<Action<Exception>> ErrorHandlers { get; }
+        IReadOnlyList<Action<Exception>> ErrorHandlers { get; }
 
         /// <summary>
         /// Register a new error handler.

@@ -23,9 +23,9 @@ namespace OpenQA.Selenium.Appium.WebSocket
     public interface ICanHandleConnects
     {
         /// <summary>
-        /// Gets the list of web socket connection handlers.
+        /// Gets a read-only snapshot of all registered web socket connection handlers.
         /// </summary>
-        List<Action> ConnectionHandlers { get; }
+        IReadOnlyList<Action> ConnectionHandlers { get; }
 
         /// <summary>
         /// Register a new connection handler.
