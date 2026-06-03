@@ -7,7 +7,7 @@
     <Product>Dotnet-Client</Product>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Copyright>Copyright © 2026</Copyright>
+    <Copyright>Copyright © 2014-2026</Copyright>
     <PackageProjectUrl>https://appium.io</PackageProjectUrl>
     <RepositoryUrl>https://github.com/appium/dotnet-client</RepositoryUrl>
     <RepositoryType>git</RepositoryType>

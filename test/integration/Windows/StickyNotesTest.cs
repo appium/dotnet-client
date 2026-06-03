@@ -65,11 +65,9 @@ namespace Appium.Net.Integration.Tests.Windows
                     var StickyNotesTopLevelWindowHandle = StickyNotesTopLevelWindow.GetAttribute("NativeWindowHandle");
                     StickyNotesTopLevelWindowHandle = int.Parse(StickyNotesTopLevelWindowHandle).ToString("x"); // Convert to Hex
 
-                    AppiumOptions appCapabilities = new()
+                    var appCapabilities = new AppiumOptions
                     {
-                        App = StickyNotesAppId,
-                        DeviceName = "WindowsPC",
-                        AutomationName = "Windows"
+                        DeviceName = "WindowsPC"
                     };
                     appCapabilities.AddAdditionalAppiumOption("appTopLevelWindow", StickyNotesTopLevelWindowHandle);
                     session = new WindowsDriver(serverUri, appCapabilities);

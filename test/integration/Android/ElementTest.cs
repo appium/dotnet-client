@@ -165,7 +165,7 @@ namespace Appium.Net.Integration.Tests.Android
             {
                 Assert.That(radioGroup.Location.X, Is.GreaterThanOrEqualTo(0));
                 Assert.That(radioGroup.Location.Y, Is.GreaterThanOrEqualTo(0));
-            };
+            }
         }
 
         [Test]
