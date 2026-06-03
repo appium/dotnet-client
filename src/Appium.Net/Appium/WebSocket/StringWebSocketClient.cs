@@ -146,6 +146,7 @@ namespace OpenQA.Selenium.Appium.WebSocket
 
         private static void InterlockedAdd<T>(ref T field, T handler) where T : Delegate
         {
+            if (handler == null) return;
             T current, updated;
             do
             {
@@ -156,6 +157,7 @@ namespace OpenQA.Selenium.Appium.WebSocket
 
         private static void InterlockedRemove<T>(ref T field, T handler) where T : Delegate
         {
+            if (handler == null) return;
             T current, updated;
             do
             {
