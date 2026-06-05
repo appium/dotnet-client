@@ -25,7 +25,7 @@ jobs:
       fail-fast: false
       matrix:
         api-level: [32]
-        target: [google_apis_playstore]
+        target: [google_apis]
 
     env:
       APPIUM_LOG_PATH: '${{ github.workspace }}/appium.log'
