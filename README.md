@@ -111,7 +111,6 @@ Dependencies:
 - [Selenium.WebDriver](http://www.nuget.org/packages/Selenium.WebDriver/)
 - [System.Drawing.Common](https://www.nuget.org/packages/System.Drawing.Common/)
 
-Note: Starting with v8.3.0, the assembly is strong-signed, aligning with Selenium 4.44.0 which introduced strong-signing for `Selenium.WebDriver.dll`.
 
 ## Usage
 
