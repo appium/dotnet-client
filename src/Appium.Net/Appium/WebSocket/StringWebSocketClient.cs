@@ -33,10 +33,10 @@ namespace OpenQA.Selenium.Appium.WebSocket
         private CancellationTokenSource _cancellationTokenSource;
         private Task _receiveTask;
 
-        private event Action<string> _messageReceived;
-        private event Action<Exception> _errorOccurred;
-        private event Action _connected;
-        private event Action _disconnected;
+        private Action<string> _messageReceived;
+        private Action<Exception> _errorOccurred;
+        private Action _connected;
+        private Action _disconnected;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StringWebSocketClient"/> class.
@@ -86,69 +86,109 @@ namespace OpenQA.Selenium.Appium.WebSocket
         /// Register a new message handler.
         /// </summary>
         /// <param name="handler">A callback function, which accepts the received message as a parameter.</param>
-        public void AddMessageHandler(Action<string> handler) => _messageReceived += handler;
+        public void AddMessageHandler(Action<string> handler)
+        {
+            Action<string> existing, updated;
+            do { existing = _messageReceived; updated = existing + handler; }
+            while (Interlocked.CompareExchange(ref _messageReceived, updated, existing) != existing);
+        }
 
         /// <summary>
         /// Removes specific message handler.
         /// </summary>
         /// <param name="handler">A callback function to remove.</param>
-        public void RemoveMessageHandler(Action<string> handler) => _messageReceived -= handler;
+        public void RemoveMessageHandler(Action<string> handler)
+        {
+            Action<string> existing, updated;
+            do { existing = _messageReceived; updated = (Action<string>)Delegate.Remove(existing, handler); }
+            while (Interlocked.CompareExchange(ref _messageReceived, updated, existing) != existing);
+        }
 
         /// <summary>
         /// Removes existing message handlers.
         /// </summary>
-        public void RemoveMessageHandlers() => _messageReceived = null;
+        public void RemoveMessageHandlers() => Interlocked.Exchange(ref _messageReceived, null);
 
         /// <summary>
         /// Register a new error handler.
         /// </summary>
         /// <param name="handler">A callback function, which accepts the received exception instance as a parameter.</param>
-        public void AddErrorHandler(Action<Exception> handler) => _errorOccurred += handler;
+        public void AddErrorHandler(Action<Exception> handler)
+        {
+            Action<Exception> existing, updated;
+            do { existing = _errorOccurred; updated = existing + handler; }
+            while (Interlocked.CompareExchange(ref _errorOccurred, updated, existing) != existing);
+        }
 
         /// <summary>
         /// Removes specific error handler.
         /// </summary>
         /// <param name="handler">A callback function to remove.</param>
-        public void RemoveErrorHandler(Action<Exception> handler) => _errorOccurred -= handler;
+        public void RemoveErrorHandler(Action<Exception> handler)
+        {
+            Action<Exception> existing, updated;
+            do { existing = _errorOccurred; updated = (Action<Exception>)Delegate.Remove(existing, handler); }
+            while (Interlocked.CompareExchange(ref _errorOccurred, updated, existing) != existing);
+        }
 
         /// <summary>
         /// Removes existing error handlers.
         /// </summary>
-        public void RemoveErrorHandlers() => _errorOccurred = null;
+        public void RemoveErrorHandlers() => Interlocked.Exchange(ref _errorOccurred, null);
 
         /// <summary>
         /// Register a new connection handler.
         /// </summary>
         /// <param name="handler">A callback function, which is going to be executed when web socket connection event arrives.</param>
-        public void AddConnectionHandler(Action handler) => _connected += handler;
+        public void AddConnectionHandler(Action handler)
+        {
+            Action existing, updated;
+            do { existing = _connected; updated = existing + handler; }
+            while (Interlocked.CompareExchange(ref _connected, updated, existing) != existing);
+        }
 
         /// <summary>
         /// Removes specific connection handler.
         /// </summary>
         /// <param name="handler">A callback function to remove.</param>
-        public void RemoveConnectionHandler(Action handler) => _connected -= handler;
+        public void RemoveConnectionHandler(Action handler)
+        {
+            Action existing, updated;
+            do { existing = _connected; updated = (Action)Delegate.Remove(existing, handler); }
+            while (Interlocked.CompareExchange(ref _connected, updated, existing) != existing);
+        }
 
         /// <summary>
         /// Removes existing web socket connection handlers.
         /// </summary>
-        public void RemoveConnectionHandlers() => _connected = null;
+        public void RemoveConnectionHandlers() => Interlocked.Exchange(ref _connected, null);
 
         /// <summary>
         /// Register a new web socket disconnect handler.
         /// </summary>
         /// <param name="handler">A callback function, which is going to be executed when web socket disconnect event arrives.</param>
-        public void AddDisconnectionHandler(Action handler) => _disconnected += handler;
+        public void AddDisconnectionHandler(Action handler)
+        {
+            Action existing, updated;
+            do { existing = _disconnected; updated = existing + handler; }
+            while (Interlocked.CompareExchange(ref _disconnected, updated, existing) != existing);
+        }
 
         /// <summary>
         /// Removes specific disconnection handler.
         /// </summary>
         /// <param name="handler">A callback function to remove.</param>
-        public void RemoveDisconnectionHandler(Action handler) => _disconnected -= handler;
+        public void RemoveDisconnectionHandler(Action handler)
+        {
+            Action existing, updated;
+            do { existing = _disconnected; updated = (Action)Delegate.Remove(existing, handler); }
+            while (Interlocked.CompareExchange(ref _disconnected, updated, existing) != existing);
+        }
 
         /// <summary>
         /// Removes existing disconnection handlers.
         /// </summary>
-        public void RemoveDisconnectionHandlers() => _disconnected = null;
+        public void RemoveDisconnectionHandlers() => Interlocked.Exchange(ref _disconnected, null);
 
         /// <summary>
         /// Connects to a WebSocket endpoint.
