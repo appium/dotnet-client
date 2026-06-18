@@ -28,7 +28,7 @@ For example, some changes in the Selenium binding could break the Appium client.
 
 |Appium .NET Client| Selenium Binding	| .NET Version |
 |----|----|----|
-|`8.2.1` |`4.44.0` |.NET Standard 2.0 |
+|`8.3.0` |`4.44.0` |.NET Standard 2.0 |
 |`8.0.1` |`4.36.0` |.NET Standard 2.0 |
 |`7.0.0` |`4.27.0` |.NET Standard 2.0 |
 |`6.0.0` |`4.25.0` |.NET Standard 2.0 |
@@ -111,7 +111,7 @@ Dependencies:
 - [Selenium.WebDriver](http://www.nuget.org/packages/Selenium.WebDriver/)
 - [System.Drawing.Common](https://www.nuget.org/packages/System.Drawing.Common/)
 
-Note: we will NOT publish a signed version of this assembly since the dependencies we access through NuGet do not have a signed version - thus breaking the chain and causing us headaches. With that said, you are more than welcome to download the code and build a signed version yourself.
+Note: Starting with v8.3.0, the assembly is strong-signed, aligning with Selenium 4.44.0 which introduced strong-signing for `Selenium.WebDriver.dll`.
 
 ## Usage
 
