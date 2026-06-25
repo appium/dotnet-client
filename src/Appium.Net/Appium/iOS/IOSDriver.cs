@@ -206,10 +206,10 @@ namespace OpenQA.Selenium.Appium.iOS
         /// Install an app on the iOS device using mobile: installApp script.
         /// For documentation, see <see href="https://appium.github.io/appium-xcuitest-driver/latest/reference/execute-methods/#mobile-installapp">mobile: installApp</see>.
         /// </summary>
-        /// <param name="appPath">Full path to the .ipa on the local filesystem or a remote URL.</param>
+        /// <param name="app">Full path to the .ipa on the local filesystem or a remote URL.</param>
         /// <param name="timeoutMs">Optional timeout in milliseconds to wait for the app installation to complete.</param>
-        public void InstallApp(string appPath, int? timeoutMs = null) =>
-            IOSCommandExecutionHelper.InstallApp(this, appPath, timeoutMs);
+        public void InstallApp(string app, int? timeoutMs = null) =>
+            IOSCommandExecutionHelper.InstallApp(this, app, timeoutMs);
 
         /// <summary>
         /// Launch an app on the iOS device using mobile: launchApp script.

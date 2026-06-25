@@ -99,14 +99,14 @@ namespace OpenQA.Selenium.Appium.iOS
         /// For documentation, see <see href="https://appium.github.io/appium-xcuitest-driver/latest/reference/execute-methods/#mobile-installapp">mobile: installApp</see>.
         /// </summary>
         /// <param name="executeMethod">The execute method</param>
-        /// <param name="appPath">Full path to the .ipa on the local filesystem or a remote URL.</param>
+        /// <param name="app">Full path to the .ipa on the local filesystem or a remote URL.</param>
         /// <param name="timeoutMs">Optional timeout in milliseconds to wait for the app installation to complete.</param>
         public static void InstallApp(
             IExecuteMethod executeMethod, 
-            string appPath, 
+            string app, 
             int? timeoutMs = null)
         {
-            var args = new Dictionary<string, object> { { "appPath", appPath } };
+            var args = new Dictionary<string, object> { { "app", app } };
             
             if (timeoutMs.HasValue)
                 args["timeoutMs"] = timeoutMs.Value;
