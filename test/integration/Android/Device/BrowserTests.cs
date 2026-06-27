@@ -1,4 +1,4 @@
-﻿using Appium.Net.Integration.Tests.helpers;
+using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
@@ -6,6 +6,7 @@ using System;
 
 namespace Appium.Net.Integration.Tests.Android.Device
 {
+    [Ignore("Chrome is not pre-installed on the google_apis emulator image used in CI")]
     internal class BrowserTests
     {
         private AppiumDriver _driver;
