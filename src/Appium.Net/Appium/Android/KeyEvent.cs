@@ -47,7 +47,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// <returns></returns>
         public KeyEvent WithMetaKeyModifier(int keyEventMetaModifier)
         {
-            if (_metaState is null) _metaState = 0;
+            _metaState ??= 0;
             _metaState |= keyEventMetaModifier;
             return this;
         }
@@ -61,7 +61,7 @@ namespace OpenQA.Selenium.Appium.Android
         /// <returns></returns>
         public KeyEvent WithFlag(int flag)
         {
-            if (_flags is null) _flags = 0;
+            _flags ??= 0;
             _flags |= flag;
             return this;
         }
@@ -71,8 +71,8 @@ namespace OpenQA.Selenium.Appium.Android
             var builder = new Dictionary<string, object>();
             if (_keyCode is null) throw new InvalidOperationException("The key code must be set");
             builder.Add("keycode", _keyCode);
-            if (!(_metaState is null)) builder.Add("metastate", _metaState);
-            if (!(_flags is null)) builder.Add("flags", _flags);
+            if (_metaState is not null) builder.Add("metastate", _metaState);
+            if (_flags is not null) builder.Add("flags", _flags);
 
             return builder;
         }

@@ -32,11 +32,11 @@ namespace Appium.Net.Integration.Tests.Android
         {
             _driver.ExecuteScript(
                 "mobile:startActivity",
-                new object[] {
+                [
                     new Dictionary<string, string>() {
                         ["intent"] = "io.appium.android.apis/.ApiDemos",
                     }
-                }
+                ]
             );
             _waitDriver = new WebDriverWait(_driver, _driverTimeOut);
             _waitDriver.IgnoreExceptionTypes(typeof(NoSuchElementException));
@@ -54,8 +54,8 @@ namespace Appium.Net.Integration.Tests.Android
             }
             catch (Exception wx)
             {
-                var excpetionType =  wx.GetType();
-                Assert.That(typeof(WebDriverTimeoutException), Is.EqualTo(excpetionType));
+                var exceptionType = wx.GetType();
+                Assert.That(exceptionType, Is.EqualTo(typeof(WebDriverTimeoutException)));
             }
         }
 

@@ -6,6 +6,7 @@ using OpenQA.Selenium.Appium.iOS;
 
 namespace Appium.Net.Integration.Tests.IOS
 {
+    [Category("iOS")]
     class SearchingTest
     {
         private IOSDriver _driver;

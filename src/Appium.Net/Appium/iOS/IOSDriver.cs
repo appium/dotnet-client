@@ -206,10 +206,23 @@ namespace OpenQA.Selenium.Appium.iOS
         /// Install an app on the iOS device using mobile: installApp script.
         /// For documentation, see <see href="https://appium.github.io/appium-xcuitest-driver/latest/reference/execute-methods/#mobile-installapp">mobile: installApp</see>.
         /// </summary>
-        /// <param name="appPath">Full path to the .ipa on the local filesystem or a remote URL.</param>
+        /// <param name="app">Full path to the .ipa on the local filesystem or a remote URL.</param>
         /// <param name="timeoutMs">Optional timeout in milliseconds to wait for the app installation to complete.</param>
-        public void InstallApp(string appPath, int? timeoutMs = null) =>
-            IOSCommandExecutionHelper.InstallApp(this, appPath, timeoutMs);
+        public void InstallApp(string app, int? timeoutMs = null) =>
+            IOSCommandExecutionHelper.InstallApp(this, app, timeoutMs);
+
+        /// <summary>
+        /// Launch an app on the iOS device using mobile: launchApp script.
+        /// For documentation, see <see href="https://appium.github.io/appium-xcuitest-driver/latest/reference/execute-methods/#mobile-launchapp">mobile: launchApp</see>.
+        /// </summary>
+        /// <param name="bundleId">The bundle identifier of the application.</param>
+        /// <param name="processArguments">Optional command line arguments for the app.</param>
+        /// <param name="environmentVariables">Optional environment variables for the app.</param>
+        public void LaunchAppWithArguments(
+            string bundleId,
+            IReadOnlyCollection<string> processArguments = null,
+            IDictionary<string, string> environmentVariables = null) =>
+            IOSCommandExecutionHelper.LaunchAppWithArguments(this, bundleId, processArguments, environmentVariables);
 
         #endregion
 
@@ -308,11 +321,11 @@ namespace OpenQA.Selenium.Appium.iOS
             (AppState)Convert.ToInt32(
                 ExecuteScript(
                     "mobile:queryAppState",
-                    new object[] {
+                    [
                         new Dictionary<string, object>{
                             ["bundleId"] = bundleId
                         }
-                    }
+                    ]
                 ).ToString()
             );
     }

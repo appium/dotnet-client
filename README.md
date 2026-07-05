@@ -4,7 +4,14 @@
 [![Build and deploy NuGet package](https://github.com/appium/dotnet-client/actions/workflows/release-nuget.yml/badge.svg)](https://github.com/appium/dotnet-client/actions/workflows/release-nuget.yml)
 [![NuGet Downloads](https://img.shields.io/nuget/dt/Appium.Webdriver.svg)](https://www.nuget.org/packages/Appium.Webdriver)
 
-[![Build Status](https://dev.azure.com/AppiumCI/dotnet-client/_apis/build/status/appium.dotnet-client?branchName=main)](https://dev.azure.com/AppiumCI/dotnet-client/_build/latest?definitionId=68&branchName=main)
+----
+
+[![Functional Tests](https://github.com/appium/dotnet-client/actions/workflows/functional-test.yml/badge.svg)](https://github.com/appium/dotnet-client/actions/workflows/functional-test.yml)
+[![Functional Tests (Android)](https://github.com/appium/dotnet-client/actions/workflows/functional-android-test.yml/badge.svg)](https://github.com/appium/dotnet-client/actions/workflows/functional-android-test.yml)
+[![Functional Tests (iOS)](https://github.com/appium/dotnet-client/actions/workflows/functional-ios-test.yml/badge.svg)](https://github.com/appium/dotnet-client/actions/workflows/functional-ios-test.yml)
+[![Unit Tests](https://github.com/appium/dotnet-client/actions/workflows/unit-test.yml/badge.svg)](https://github.com/appium/dotnet-client/actions/workflows/unit-test.yml)
+
+----
 
 [![Help Wanted](https://img.shields.io/github/issues-raw/appium/dotnet-client/HelpWanted?style=plastic&logo=github&logoColor=blue&label=Help%20Wanted%20issues&color=red
 )](https://github.com/appium/dotnet-client/issues?q=is%3Aopen+is%3Aissue+label%3AHelpWanted)
@@ -21,12 +28,16 @@ For example, some changes in the Selenium binding could break the Appium client.
 
 |Appium .NET Client| Selenium Binding	| .NET Version |
 |----|----|----|
-|`8.0.1` |`4.36.0` |.NET Standard 2.0 |
+|`8.3.0` |`4.44.0` |.NET Standard 2.0 |
+|`8.2.0` |`4.36.0` |.NET Standard 2.0 |
+|`7.2.0` |`4.29.0` |.NET Standard 2.0 |
+|`7.1.0` |`4.28.0` |.NET Standard 2.0 |
 |`7.0.0` |`4.27.0` |.NET Standard 2.0 |
+|`6.0.1` |`4.26.1` |.NET Standard 2.0 |
 |`6.0.0` |`4.25.0` |.NET Standard 2.0 |
+|`5.2.0` |`4.24.0` |.NET 6.0, .NET Framework 4.8 |
 |`5.1.0` |`4.23.0` |.NET 6.0, .NET Framework 4.8 |
 |`5.0.0` |`4.0.0` - `4.22.0` | .NET 6.0, .NET Framework 4.8 |
-|`4.4.5` |`3.141.0` |.NET Standard 2.0, .NET Framework 4.8 |
 
 > [!Note]
 > We only raise the minimum required Selenium.WebDriver version when a newer Selenium release introduces changes that require updates in the Appium .NET Client.
@@ -103,7 +114,6 @@ Dependencies:
 - [Selenium.WebDriver](http://www.nuget.org/packages/Selenium.WebDriver/)
 - [System.Drawing.Common](https://www.nuget.org/packages/System.Drawing.Common/)
 
-Note: we will NOT publish a signed version of this assembly since the dependencies we access through NuGet do not have a signed version - thus breaking the chain and causing us headaches. With that said, you are more than welcome to download the code and build a signed version yourself.
 
 ## Usage
 

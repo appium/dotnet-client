@@ -2,12 +2,12 @@
 using System.Threading;
 using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
-using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.iOS;
 
 namespace Appium.Net.Integration.Tests.IOS
 {
     [TestFixture]
+    [Category("iOS")]
     class ScreenRecordingTest
     {
         private IOSDriver _driver;

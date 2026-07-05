@@ -5,12 +5,12 @@ using OpenQA.Selenium.Appium.iOS;
 using OpenQA.Selenium.Appium;
 using System;
 using OpenQA.Selenium.Support.UI;
-using System.Runtime.InteropServices;
 
 
 namespace Appium.Net.Integration.Tests.IOS.Device
 {
     [TestFixture]
+    [Category("iOS")]
     public class IOSKeyboardTests
     {
         private IOSDriver iosDriver;

@@ -23,7 +23,7 @@ namespace OpenQA.Selenium.Appium.Tizen
 
         public static void SetAttribute(IExecuteMethod executeMethod, string elementId, string name, string value)
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            Dictionary<string, object> parameters = [];
             string setAttributeScript = "this.setAttribute('" + name + "','" + value + "'," + elementId + " );";
             parameters.Add("script", setAttributeScript);
             parameters.Add("args", elementId);
