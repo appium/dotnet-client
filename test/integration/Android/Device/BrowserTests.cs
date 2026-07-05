@@ -6,7 +6,6 @@ using System;
 
 namespace Appium.Net.Integration.Tests.Android.Device
 {
-    [Ignore("Chrome is not pre-installed on the google_apis emulator image used in CI")]
     internal class BrowserTests
     {
         private AppiumDriver _driver;
@@ -15,6 +14,11 @@ namespace Appium.Net.Integration.Tests.Android.Device
         [OneTimeSetUp]
         public void SetUp()
         {
+            if (Env.IsCiEnvironment())
+            {
+                Assert.Ignore("Chrome is not pre-installed on the google_apis emulator image used in CI");
+            }
+
             _androidOptions = new AppiumOptions();
             _androidOptions.BrowserName = "Chrome";
             _androidOptions.AutomationName = "UiAutomator2";
