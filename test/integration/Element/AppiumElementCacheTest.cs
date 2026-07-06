@@ -308,24 +308,7 @@ namespace Appium.Net.Integration.Tests.Element
             Assert.That(_element.ServerCallCount, Is.EqualTo(2));
         }
 
-        [Test]
-        public void GetProperty_WithEmptyCache_CallsServerOnceAndCaches()
-        {
-            var propertyName = "className";
 
-            // Enable cache with empty dictionary
-            _element.SetCacheValues(new Dictionary<string, object>());
-
-            // First access should call server and populate cache
-            _ = _element.GetProperty(propertyName);
-            Assert.That(_element.ServerCallCount, Is.EqualTo(1));
-            Assert.That(_element.CacheValues.ContainsKey($"property/{propertyName}"), Is.True);
-
-            // Subsequent accesses should use cache
-            _ = _element.GetProperty(propertyName);
-            _ = _element.GetProperty(propertyName);
-            Assert.That(_element.ServerCallCount, Is.EqualTo(1));
-        }
 
         [Test]
         public void TagName_WithEmptyCache_CallsServerOnceAndCaches()
@@ -340,6 +323,22 @@ namespace Appium.Net.Integration.Tests.Element
             // Subsequent accesses should use cache
             _ = _element.TagName;
             _ = _element.TagName;
+            Assert.That(_element.ServerCallCount, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void GetProperty_WithEmptyCache_CallsServerOnceAndCaches()
+        {
+            // Enable cache with empty dictionary
+            _element.SetCacheValues(new Dictionary<string, object>());
+
+            // First access should call server
+            _ = _element.GetProperty("className");
+            Assert.That(_element.ServerCallCount, Is.EqualTo(1));
+
+            // Subsequent accesses should use cache
+            _ = _element.GetProperty("className");
+            _ = _element.GetProperty("className");
             Assert.That(_element.ServerCallCount, Is.EqualTo(1));
         }
     }

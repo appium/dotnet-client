@@ -32,7 +32,7 @@ namespace Appium.Net.Integration.Tests.IOS
         {
             var base64ClipboardTestString = Convert.ToBase64String(Encoding.UTF8.GetBytes(ClipboardTestString));
             _driver.SetClipboard(ClipboardContentType.PlainText, base64ClipboardTestString);
-            Assert.That(() => Regex.IsMatch(_driver.GetClipboard(ClipboardContentType.PlainText), Base64RegexPattern), 
+            Assert.That(Regex.IsMatch(_driver.GetClipboard(ClipboardContentType.PlainText), Base64RegexPattern), 
                 Is.True);
         }
 
@@ -40,7 +40,7 @@ namespace Appium.Net.Integration.Tests.IOS
         public void WhenClipboardContentTypeIsPlainText_GetClipboardTextShouldReturnActualText()
         {
             _driver.SetClipboardText(ClipboardTestString);
-            Assert.That(() => _driver.GetClipboardText(), Does.Match(ClipboardTestString));
+            Assert.That(_driver.GetClipboardText, Does.Match(ClipboardTestString));
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace Appium.Net.Integration.Tests.IOS
             var base64String = Convert.ToBase64String(Encoding.UTF8.GetBytes(urlString));
             _driver.SetClipboard(ClipboardContentType.Url, base64String);
 
-            Assert.That(() => Regex.IsMatch(_driver.GetClipboard(ClipboardContentType.Url), Base64RegexPattern, RegexOptions.Multiline), 
+            Assert.That(Regex.IsMatch(_driver.GetClipboard(ClipboardContentType.Url), Base64RegexPattern, RegexOptions.Multiline), 
                 Is.True);
         }
 
@@ -60,7 +60,7 @@ namespace Appium.Net.Integration.Tests.IOS
             const string urlString = "https://github.com/appium/dotnet-client";
             _driver.SetClipboardUrl(urlString);
 
-            Assert.That(() => _driver.GetClipboardUrl(), Does.Match(urlString));
+            Assert.That(_driver.GetClipboardUrl, Does.Match(urlString));
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace Appium.Net.Integration.Tests.IOS
             var base64Image = Convert.ToBase64String(testImageBytes);
             _driver.SetClipboard(ClipboardContentType.Image, base64Image);
 
-            Assert.That(() => Regex.IsMatch(_driver.GetClipboard(ClipboardContentType.Image), Base64RegexPattern, RegexOptions.Multiline),
+            Assert.That(Regex.IsMatch(_driver.GetClipboard(ClipboardContentType.Image), Base64RegexPattern, RegexOptions.Multiline),
                 Is.True);
         }
 
@@ -78,21 +78,21 @@ namespace Appium.Net.Integration.Tests.IOS
         public void WhenClipboardHasNoImage_GetClipboardImageShouldReturnNull()
         {
             _driver.SetClipboardText(ClipboardTestString);
-            Assert.That(() => _driver.GetClipboardImage(), Is.Null);
+            Assert.That(_driver.GetClipboardImage, Is.Null);
         }
 
         [Test]
         public void WhenClipboardIsEmpty_GetClipboardShouldReturnEmptyString()
         {
             _driver.SetClipboardText(string.Empty);
-            Assert.That(() => _driver.GetClipboard(ClipboardContentType.PlainText), Is.Empty);
+            Assert.That(_driver.GetClipboard(ClipboardContentType.PlainText), Is.Empty);
         }
 
         [Test]
         public void WhenClipboardIsEmpty_GetClipboardTextShouldReturnEmptyString()
         {
             _driver.SetClipboardText(string.Empty, null);
-            Assert.That(() => _driver.GetClipboardText(), Is.Empty);
+            Assert.That(_driver.GetClipboardText, Is.Empty);
         }
 
         [OneTimeTearDown]

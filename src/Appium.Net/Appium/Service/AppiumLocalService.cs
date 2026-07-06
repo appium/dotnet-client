@@ -13,7 +13,6 @@
 //limitations under the License.
 
 using OpenQA.Selenium.Appium.Service.Exceptions;
-using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -30,7 +29,7 @@ namespace OpenQA.Selenium.Appium.Service
     /// <summary>
     /// Represents a local Appium server service that can be started and stopped programmatically.
     /// </summary>
-    public class AppiumLocalService : ICommandServer
+    public class AppiumLocalService : IDisposable
     {
         private readonly FileInfo NodeJS;
         private readonly string Arguments;
@@ -73,7 +72,7 @@ namespace OpenQA.Selenium.Appium.Service
         /// <summary>
         /// The base URL for the managed appium server.
         /// </summary>
-        public Uri ServiceUrl => new Uri($"http://{IP}:{Convert.ToString(Port)}");
+        public Uri ServiceUrl => new($"http://{IP}:{Convert.ToString(Port)}");
 
         /// <summary>
         /// Event that can be used to capture the output of the service
