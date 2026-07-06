@@ -211,7 +211,7 @@ namespace Appium.Net.Integration.Tests.Android
             }
             var myElement = WaitForElement(_driver, MobileBy.Id("android:id/content"));
             string className = myElement.GetProperty("className");
-            Assert.That(className, Is.Not.Null);
+            Assert.That(className, Is.Not.Null.And.Not.Empty);
         }
 
         [OneTimeTearDown]
