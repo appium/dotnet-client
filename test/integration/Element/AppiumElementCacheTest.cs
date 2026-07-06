@@ -32,6 +32,7 @@ namespace Appium.Net.Integration.Tests.Element
             var propertyValue = _element.GetProperty(propertyName);
 
             Assert.That(propertyValue, Is.EqualTo(expectedValue));
+            Assert.That(_element.ServerCallCount, Is.EqualTo(0));
         }
 
         [Test]
@@ -296,7 +297,7 @@ namespace Appium.Net.Integration.Tests.Element
         }
 
         [Test]
-        public void GetProperty_WithCacheDisabled_CallsServer()
+        public void GetProperty_WithCacheDisabled_CallsServerEveryTime()
         {
             var propertyName = "className";
 

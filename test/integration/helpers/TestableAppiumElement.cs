@@ -106,7 +106,7 @@ namespace Appium.Net.Integration.Tests.helpers
 
         #endregion
 
-        #region IWebElement Implementation (not used for cache testing)
+        #region IWebElement Implementation (GetDomProperty used for cache testing)
 
         public System.Drawing.Point Location => throw new NotImplementedException("Not needed for cache testing");
 
