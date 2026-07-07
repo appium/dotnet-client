@@ -8,6 +8,9 @@ namespace OpenQA.Selenium.Appium.ImageComparison
 {
     public abstract class ComparisonResult
     {
+        private static readonly System.Reflection.PropertyInfo LinkTargetProperty = 
+            typeof(FileSystemInfo).GetProperty("LinkTarget");
+
         /// <summary>
         /// The visualization of the matching result represented as base64-encoded PNG image.
         /// </summary>
@@ -47,7 +50,7 @@ namespace OpenQA.Selenium.Appium.ImageComparison
 
             string fullPath = Path.GetFullPath(Path.Combine(currentDirectory, fileName));
 
-            var comparison = (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            var comparison = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
                 ? StringComparison.OrdinalIgnoreCase
                 : StringComparison.Ordinal;
 
@@ -81,33 +84,81 @@ namespace OpenQA.Selenium.Appium.ImageComparison
             {
                 currentPath = Path.Combine(currentPath, part);
 
-                if (Directory.Exists(currentPath) || File.Exists(currentPath))
+                if (IsSymbolicLink(currentPath))
                 {
-                    FileAttributes attributes;
-                    try
-                    {
-                        attributes = File.GetAttributes(currentPath);
-                    }
-                    catch (IOException)
-                    {
-                        // If attributes cannot be read, treat the path as unsafe.
-                        return true;
-                    }
-                    catch (UnauthorizedAccessException)
-                    {
-                        // If attributes cannot be read due to permissions, treat the path as unsafe.
-                        return true;
-                    }
-
-                    if ((attributes & FileAttributes.ReparsePoint) != 0)
-                    {
-                        // A reparse point (including symlinks/junctions) is present along the path.
-                        return true;
-                    }
+                    return true;
                 }
             }
 
             return false;
+        }
+
+        private static bool IsSymbolicLink(string path)
+        {
+            if (LinkTargetProperty != null)
+            {
+                try
+                {
+                    FileSystemInfo info = Directory.Exists(path) 
+                        ? (FileSystemInfo)new DirectoryInfo(path) 
+                        : new FileInfo(path);
+                    var target = LinkTargetProperty.GetValue(info) as string;
+                    if (target != null)
+                    {
+                        return true;
+                    }
+                }
+                catch
+                {
+                    // Fall through
+                }
+            }
+
+            try
+            {
+                if (FileSystemEntryExists(path))
+                {
+                    var attributes = File.GetAttributes(path);
+                    if ((attributes & FileAttributes.ReparsePoint) != 0)
+                    {
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+                if (FileSystemEntryExists(path))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static bool FileSystemEntryExists(string path)
+        {
+            try
+            {
+                string parent = Path.GetDirectoryName(path);
+                if (string.IsNullOrEmpty(parent))
+                {
+                    return false;
+                }
+
+                if (!Directory.Exists(parent))
+                {
+                    return false;
+                }
+
+                string name = Path.GetFileName(path);
+                string[] entries = Directory.GetFileSystemEntries(parent, name);
+                return entries != null && entries.Length > 0;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         protected Rectangle ConvertToRect(object value)

@@ -178,5 +178,37 @@ namespace Appium.Net.Integration.Tests.ImageComparison
                 }
             }
         }
+
+        [Test]
+        public void SaveVisualizationAsFile_BrokenFileSymlinkTraversal_ThrowsIOException()
+        {
+#if NET6_0_OR_GREATER
+            // Create a target file path that does not exist
+            string externalFile = Path.Combine(Path.GetTempPath(), "nonexistent_external_target_" + Guid.NewGuid().ToString("N") + ".png");
+
+            // Create a file symlink pointing to the non-existent external file
+            string symlinkPath = Path.Combine(_testDir, "broken_file_link.png");
+
+            try
+            {
+                File.CreateSymbolicLink(symlinkPath, externalFile);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                Assert.Ignore("Skipping symlink test: No permissions to create symbolic links on this OS/user.");
+                return;
+            }
+            catch (IOException)
+            {
+                Assert.Ignore("Skipping symlink test: Failed to create symbolic link (not supported or permissions issue).");
+                return;
+            }
+
+            var ex = Assert.Throws<IOException>(() => _comparisonResult.SaveVisualizationAsFile("broken_file_link.png"));
+            Assert.That(ex.Message, Does.Contain("symbolic link or reparse point"));
+#else
+            Assert.Ignore("Skipping symlink test: Symbolic links are not supported on this target framework.");
+#endif
+        }
     }
 }
