@@ -40,6 +40,23 @@ namespace OpenQA.Selenium.Appium.ImageComparison
                 throw new ArgumentException("The file name contains invalid characters.", nameof(fileName));
             }
 
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                int colonIndex = fileName.IndexOf(':');
+                if (colonIndex >= 0)
+                {
+                    bool isValidDriveSpecifier = fileName.Length >= 2 && 
+                                                 char.IsLetter(fileName[0]) && 
+                                                 colonIndex == 1 && 
+                                                 fileName.IndexOf(':', 2) == -1;
+
+                    if (!isValidDriveSpecifier)
+                    {
+                        throw new ArgumentException("The file name contains invalid characters or alternate data streams.", nameof(fileName));
+                    }
+                }
+            }
+
             string currentDirectory = Directory.GetCurrentDirectory();
             string allowedDirectory = Path.GetFullPath(currentDirectory);
             if (!allowedDirectory.EndsWith(Path.DirectorySeparatorChar.ToString()) &&

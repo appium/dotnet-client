@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using NUnit.Framework;
 using OpenQA.Selenium.Appium.ImageComparison;
 
@@ -16,6 +17,7 @@ namespace Appium.Net.Integration.Tests.ImageComparison
     [TestFixture]
     public class ComparisonResultTests
     {
+        private string _originalCwd;
         private string _testDir;
         private TestComparisonResult _comparisonResult;
         private const string DummyBase64 = "c29tZSB2aXN1YWxpemF0aW9uIGRhdGE="; // "some visualization data"
@@ -24,7 +26,8 @@ namespace Appium.Net.Integration.Tests.ImageComparison
         [SetUp]
         public void SetUp()
         {
-            _testDir = Path.Combine(Directory.GetCurrentDirectory(), "test_output_" + Guid.NewGuid().ToString("N"));
+            _originalCwd = Directory.GetCurrentDirectory();
+            _testDir = Path.Combine(_originalCwd, "test_output_" + Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(_testDir);
             Directory.SetCurrentDirectory(_testDir);
 
@@ -39,9 +42,10 @@ namespace Appium.Net.Integration.Tests.ImageComparison
         [TearDown]
         public void TearDown()
         {
-            // Restore current directory before deleting
-            string originalDir = Path.GetFullPath(Path.Combine(_testDir, ".."));
-            Directory.SetCurrentDirectory(originalDir);
+            if (!string.IsNullOrEmpty(_originalCwd))
+            {
+                Directory.SetCurrentDirectory(_originalCwd);
+            }
 
             try
             {
@@ -208,6 +212,21 @@ namespace Appium.Net.Integration.Tests.ImageComparison
 #else
             Assert.Ignore("Skipping symlink test: Symbolic links are not supported on this target framework.");
 #endif
+        }
+
+        [Test]
+        public void SaveVisualizationAsFile_AlternateDataStreamsOnWindows_ThrowsArgumentException()
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                string invalidFileName = "file.png:stream";
+                var ex = Assert.Throws<ArgumentException>(() => _comparisonResult.SaveVisualizationAsFile(invalidFileName));
+                Assert.That(ex.Message, Does.Contain("alternate data streams"));
+            }
+            else
+            {
+                Assert.Pass("Skipping alternate data streams test: Only runs on Windows.");
+            }
         }
     }
 }
