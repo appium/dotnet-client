@@ -66,7 +66,7 @@ namespace Appium.Net.Integration.Tests.Android.App
         public void MobileInstallApp_InvalidPath_Throws()
         {
             var badPath = "/nonexistent/path/app.apk";
-            var ex = Assert.Throws<UnknownErrorException>(() => _driver.InstallApp(badPath));
+            var ex = Assert.Throws<UnknownErrorException>((System.Action)(() => _driver.InstallApp(badPath)));
             Assert.That(ex.Message, Does.Contain("does not exist").IgnoreCase);
         }
 

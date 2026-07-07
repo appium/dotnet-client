@@ -34,13 +34,13 @@ namespace Appium.Net.Integration.Tests.Android
 
             By byAndroidDataMatcher = new ByAndroidDataMatcher(selectorData);
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(
                             Is.Not.EqualTo(_driver.FindElement(MobileBy.Id("android:id/list")).FindElement(byAndroidDataMatcher).Text), null);
                 Assert.That(
                     _driver.FindElement(MobileBy.Id("android:id/list")).FindElements(byAndroidDataMatcher), Is.Not.Empty);
-            });
+            }
         }
 
         [Test]
@@ -60,13 +60,13 @@ namespace Appium.Net.Integration.Tests.Android
 
             By byAndroidViewMatcher = new ByAndroidViewMatcher(selectorData);
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(
                             Is.Not.EqualTo(_driver.FindElement(MobileBy.Id("android:id/list")).FindElement(byAndroidViewMatcher).Text), null);
                 Assert.That(
                     _driver.FindElement(MobileBy.Id("android:id/list")).FindElements(byAndroidViewMatcher), Is.Not.Empty);
-            });
+            }
         }
 
         [OneTimeTearDown]

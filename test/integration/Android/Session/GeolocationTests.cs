@@ -1,4 +1,4 @@
-﻿using Appium.Net.Integration.Tests.helpers;
+using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
@@ -39,14 +39,14 @@ namespace Appium.Net.Integration.Tests.Android.Session.Geolocation
             {
                 Assert.Ignore("Skipping GetLocationTest test in CI environment");
             }
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
-                Assert.That(() => _driver.Location, Is.Not.Null);
-                Assert.DoesNotThrow(() => _driver.Location.ToDictionary());
+                Assert.That(_driver.Location, Is.Not.Null);
+                Assert.DoesNotThrow((System.Action)(() => _driver.Location.ToDictionary()));
                 Assert.That(_driver.Location.Altitude, Is.Not.EqualTo(0));
                 Assert.That(_driver.Location.Longitude, Is.Not.EqualTo(0));
                 Assert.That(_driver.Location.Latitude, Is.Not.EqualTo(0));
-            });
+            }
         }
 
         [Test]
@@ -64,14 +64,14 @@ namespace Appium.Net.Integration.Tests.Android.Session.Geolocation
                 Latitude = 10,
             };
             _driver.Location = testLocation;
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
-                Assert.That(() => _driver.Location, Is.Not.Null);
-                Assert.DoesNotThrow(() => _driver.Location.ToDictionary());
+                Assert.That(_driver.Location, Is.Not.Null);
+                Assert.DoesNotThrow((System.Action)(() => _driver.Location.ToDictionary()));
                 Assert.That(_driver.Location.Altitude, Is.Not.EqualTo(0));
                 Assert.That(_driver.Location.Longitude, Is.Not.EqualTo(0));
                 Assert.That(_driver.Location.Latitude, Is.Not.EqualTo(0));
-            });
+            }
         }
     }
 }
