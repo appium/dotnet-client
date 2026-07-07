@@ -152,16 +152,15 @@ namespace Appium.Net.Integration.Tests.ImageComparison
                     Assert.Ignore("Skipping symlink test: Failed to create symbolic link (not supported or permissions issue).");
                     return;
                 }
-#else
-                Assert.Ignore("Skipping symlink test: Symbolic links are not supported on this target framework.");
-                return;
-#endif
 
                 // Attempt to write a file via the symlink
                 string fileName = Path.Combine("local_sub", "symlink_dir", "image.png");
 
                 var ex = Assert.Throws<IOException>(() => _comparisonResult.SaveVisualizationAsFile(fileName));
                 Assert.That(ex.Message, Does.Contain("symbolic link or reparse point"));
+#else
+                Assert.Ignore("Skipping symlink test: Symbolic links are not supported on this target framework.");
+#endif
             }
             finally
             {
