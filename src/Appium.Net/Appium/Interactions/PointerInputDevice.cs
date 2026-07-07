@@ -200,9 +200,9 @@ namespace OpenQA.Selenium.Appium.Interactions
                 Dictionary<string, object> toReturn = wrappedInteraction.ToDictionary();
 
                 // Append the original payload with the given pointer input extra attributes
-                foreach (var x in pointerInputExtraAttributes)
+                foreach (var kvp in pointerInputExtraAttributes)
                 {
-                    toReturn[x.Key] = x.Value;
+                    toReturn[kvp.Key] = kvp.Value;
                 }
 
                 return toReturn;
