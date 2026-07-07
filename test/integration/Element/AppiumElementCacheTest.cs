@@ -32,6 +32,7 @@ namespace Appium.Net.Integration.Tests.Element
             var propertyValue = _element.GetProperty(propertyName);
 
             Assert.That(propertyValue, Is.EqualTo(expectedValue));
+            Assert.That(_element.ServerCallCount, Is.EqualTo(0));
         }
 
         [Test]
@@ -294,6 +295,21 @@ namespace Appium.Net.Integration.Tests.Element
             // Should have made 3 server calls
             Assert.That(_element.ServerCallCount, Is.EqualTo(3));
         }
+
+        [Test]
+        public void GetProperty_WithCacheDisabled_CallsServerEveryTime()
+        {
+            var propertyName = "className";
+
+            // Access multiple times without cache
+            _ = _element.GetProperty(propertyName);
+            _ = _element.GetProperty(propertyName);
+
+            // Should have made 2 server calls
+            Assert.That(_element.ServerCallCount, Is.EqualTo(2));
+        }
+
+
 
         [Test]
         public void TagName_WithEmptyCache_CallsServerOnceAndCaches()
