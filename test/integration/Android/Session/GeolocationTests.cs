@@ -39,13 +39,14 @@ namespace Appium.Net.Integration.Tests.Android.Session.Geolocation
             {
                 Assert.Ignore("Skipping GetLocationTest test in CI environment");
             }
+            var location = _driver.Location;
             using (Assert.EnterMultipleScope())
             {
-                Assert.That(_driver.Location, Is.Not.Null);
-                Assert.DoesNotThrow((System.Action)(() => _driver.Location.ToDictionary()));
-                Assert.That(_driver.Location.Altitude, Is.Not.EqualTo(0));
-                Assert.That(_driver.Location.Longitude, Is.Not.EqualTo(0));
-                Assert.That(_driver.Location.Latitude, Is.Not.EqualTo(0));
+                Assert.That(location, Is.Not.Null);
+                Assert.DoesNotThrow((System.Action)(() => location.ToDictionary()));
+                Assert.That(location.Altitude, Is.Not.EqualTo(0));
+                Assert.That(location.Longitude, Is.Not.EqualTo(0));
+                Assert.That(location.Latitude, Is.Not.EqualTo(0));
             }
         }
 
@@ -64,13 +65,14 @@ namespace Appium.Net.Integration.Tests.Android.Session.Geolocation
                 Latitude = 10,
             };
             _driver.Location = testLocation;
+            var location = _driver.Location;
             using (Assert.EnterMultipleScope())
             {
-                Assert.That(_driver.Location, Is.Not.Null);
-                Assert.DoesNotThrow((System.Action)(() => _driver.Location.ToDictionary()));
-                Assert.That(_driver.Location.Altitude, Is.Not.EqualTo(0));
-                Assert.That(_driver.Location.Longitude, Is.Not.EqualTo(0));
-                Assert.That(_driver.Location.Latitude, Is.Not.EqualTo(0));
+                Assert.That(location, Is.Not.Null);
+                Assert.DoesNotThrow((System.Action)(() => location.ToDictionary()));
+                Assert.That(location.Altitude, Is.Not.EqualTo(0));
+                Assert.That(location.Longitude, Is.Not.EqualTo(0));
+                Assert.That(location.Latitude, Is.Not.EqualTo(0));
             }
         }
     }
