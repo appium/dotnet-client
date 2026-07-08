@@ -42,8 +42,7 @@ namespace Appium.Net.Integration.Tests.Android.Session.Geolocation
             var location = _driver.Location;
             using (Assert.EnterMultipleScope())
             {
-                Assert.That(location, Is.Not.Null);
-                Assert.DoesNotThrow((System.Action)(() => location.ToDictionary()));
+                Assert.That(location.ToDictionary(), Is.Not.Null);
                 Assert.That(location.Altitude, Is.Not.EqualTo(0));
                 Assert.That(location.Longitude, Is.Not.EqualTo(0));
                 Assert.That(location.Latitude, Is.Not.EqualTo(0));
@@ -68,8 +67,7 @@ namespace Appium.Net.Integration.Tests.Android.Session.Geolocation
             var location = _driver.Location;
             using (Assert.EnterMultipleScope())
             {
-                Assert.That(location, Is.Not.Null);
-                Assert.DoesNotThrow((System.Action)(() => location.ToDictionary()));
+                Assert.That(location.ToDictionary(), Is.Not.Null);
                 Assert.That(location.Altitude, Is.Not.EqualTo(0));
                 Assert.That(location.Longitude, Is.Not.EqualTo(0));
                 Assert.That(location.Latitude, Is.Not.EqualTo(0));
