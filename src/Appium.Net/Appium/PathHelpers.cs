@@ -157,8 +157,17 @@ namespace OpenQA.Selenium.Appium
                 }
 
                 string name = Path.GetFileName(path);
-                string[] entries = Directory.GetFileSystemEntries(parent, name);
-                return entries != null && entries.Length > 0;
+                var comparison = IsWindows ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
+                string[] entries = Directory.GetFileSystemEntries(parent);
+                foreach (string entry in entries)
+                {
+                    if (Path.GetFileName(entry).Equals(name, comparison))
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
             }
             catch
             {
