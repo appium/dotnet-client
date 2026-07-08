@@ -76,13 +76,15 @@ namespace Appium.Net.Integration.Tests.ImageComparison
         [Test]
         public void SaveVisualizationAsFile_InvalidCharacters_ThrowsArgumentException()
         {
-            char[] invalidChars = Path.GetInvalidPathChars();
-            if (invalidChars.Length > 0)
+            char[] invalidChars = Path.GetInvalidFileNameChars();
+            if (invalidChars.Length == 0)
             {
-                string invalidFileName = "test" + invalidChars[0] + ".png";
-                var ex = Assert.Throws<ArgumentException>(() => _comparisonResult.SaveVisualizationAsFile(invalidFileName));
-                Assert.That(ex.Message, Does.Contain("The file name contains invalid characters."));
+                Assert.Ignore("No invalid characters defined on this platform.");
             }
+
+            string invalidFileName = "test" + invalidChars[0] + ".png";
+            var ex = Assert.Throws<ArgumentException>(() => _comparisonResult.SaveVisualizationAsFile(invalidFileName));
+            Assert.That(ex.Message, Does.Contain("The file name contains invalid characters"));
         }
 
         [Test]
