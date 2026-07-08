@@ -227,7 +227,7 @@ namespace Appium.Net.Integration.Tests.ImageComparison
             }
             else
             {
-                Assert.Pass("Skipping alternate data streams test: Only runs on Windows.");
+                Assert.Ignore("Skipping alternate data streams test: Only runs on Windows.");
             }
         }
     }
