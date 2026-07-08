@@ -28,18 +28,21 @@ namespace OpenQA.Selenium.Appium
                 throw new ArgumentException("The file name contains invalid characters.", nameof(fileName));
             }
 
-            if (IsWindows)
-            {
-                int colonIndex = fileName.IndexOf(':');
-                if (colonIndex >= 0)
-                {
-                    bool isValidDriveSpecifier = fileName.Length >= 2 && 
-                                                 char.IsLetter(fileName[0]) && 
-                                                 colonIndex == 1 && 
-                                                 fileName.IndexOf(':', 2) == -1;
+            var invalidFileNameChars = Path.GetInvalidFileNameChars();
+            var separators = new[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar };
+            string[] parts = fileName.Split(separators, StringSplitOptions.RemoveEmptyEntries);
 
-                    if (!isValidDriveSpecifier)
+            for (int i = 0; i < parts.Length; i++)
+            {
+                string part = parts[i];
+                foreach (char c in part)
+                {
+                    if (Array.IndexOf(invalidFileNameChars, c) >= 0)
                     {
+                        if (IsWindows && c == ':' && i == 0 && part.Length == 2 && char.IsLetter(part[0]) && part[1] == ':')
+                        {
+                            continue;
+                        }
                         throw new ArgumentException("The file name contains invalid characters or alternate data streams.", nameof(fileName));
                     }
                 }
@@ -158,8 +161,7 @@ namespace OpenQA.Selenium.Appium
 
                 string name = Path.GetFileName(path);
                 var comparison = IsWindows ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
-                string[] entries = Directory.GetFileSystemEntries(parent);
-                foreach (string entry in entries)
+                foreach (string entry in Directory.EnumerateFileSystemEntries(parent))
                 {
                     if (Path.GetFileName(entry).Equals(name, comparison))
                     {
