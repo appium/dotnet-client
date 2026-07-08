@@ -24,7 +24,7 @@ namespace Appium.Net.Integration.Tests.Android
         {
             var capabilities = Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
             capabilities.AddAdditionalAppiumOption(MobileCapabilityType.FullReset, true);
-            capabilities.AddAdditionalAppiumOption("appium:adbExecTimeout", 60000);
+            capabilities.AddAdditionalAppiumOption("adbExecTimeout", 60000);
             var serverUri = Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri;
             _driver = new AndroidDriver(serverUri, capabilities, Env.InitTimeoutSec);
             _driver.Manage().Timeouts().ImplicitWait = Env.ImplicitTimeoutSec;
