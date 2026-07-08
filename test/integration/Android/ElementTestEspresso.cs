@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -37,7 +37,7 @@ namespace Appium.Net.Integration.Tests.Android
             using (Assert.EnterMultipleScope())
             {
                 Assert.That(
-                            Is.Not.EqualTo(_driver.FindElement(MobileBy.Id("android:id/list")).FindElement(byAndroidDataMatcher).Text), null);
+                    _driver.FindElement(MobileBy.Id("android:id/list")).FindElement(byAndroidDataMatcher).Text, Is.Not.Null);
                 Assert.That(
                     _driver.FindElement(MobileBy.Id("android:id/list")).FindElements(byAndroidDataMatcher), Is.Not.Empty);
             }
@@ -63,7 +63,7 @@ namespace Appium.Net.Integration.Tests.Android
             using (Assert.EnterMultipleScope())
             {
                 Assert.That(
-                            Is.Not.EqualTo(_driver.FindElement(MobileBy.Id("android:id/list")).FindElement(byAndroidViewMatcher).Text), null);
+                    _driver.FindElement(MobileBy.Id("android:id/list")).FindElement(byAndroidViewMatcher).Text, Is.Not.Null);
                 Assert.That(
                     _driver.FindElement(MobileBy.Id("android:id/list")).FindElements(byAndroidViewMatcher), Is.Not.Empty);
             }
