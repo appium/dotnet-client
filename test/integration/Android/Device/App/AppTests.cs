@@ -36,7 +36,7 @@ namespace Appium.Net.Integration.Tests.Android.Device.App
         public void CanActivateAppTest()
         {
             //Activate an app to foreground
-            Assert.DoesNotThrow((Action)(() => _driver.ActivateApp(ApiDemosPackageName)));
+            Assert.DoesNotThrow((System.Action)(() => _driver.ActivateApp(ApiDemosPackageName)));
 
             Assert.That(_driver.GetAppState(ApiDemosPackageName), Is.EqualTo(AppState.RunningInForeground));
 
@@ -68,7 +68,6 @@ namespace Appium.Net.Integration.Tests.Android.Device.App
             Assert.DoesNotThrow((System.Action)(() => _driver.ActivateApp(ApiDemosPackageName)));
 
             //Verify the expected app was activated
-            Assert.DoesNotThrow((System.Action)(() => _driver.FindElement(MobileBy.AccessibilityId(ApiDemoElement))));
             Assert.DoesNotThrow((System.Action)(() => _driver.FindElement(MobileBy.AccessibilityId(ApiDemoElement))));
         }
 

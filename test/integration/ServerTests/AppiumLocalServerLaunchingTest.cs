@@ -362,7 +362,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
         {
             var serviceBuilder = new AppiumServiceBuilder();
             string[] nullArray = null;
-            Assert.Throws<ArgumentNullException>((Action)(() => serviceBuilder.WithNodeArguments(nullArray)));
+            Assert.Throws<ArgumentNullException>((System.Action)(() => serviceBuilder.WithNodeArguments(nullArray)));
         }
 
         [TestCase(null)]

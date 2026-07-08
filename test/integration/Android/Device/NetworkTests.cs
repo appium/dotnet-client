@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium.Appium;
@@ -68,19 +68,19 @@ namespace Appium.Net.Integration.Tests.Android.Device
         {
             using (Assert.EnterMultipleScope())
             {
-                    Assert.DoesNotThrow((System.Action)(() =>
-                        _driver.SetGsmVoice(GsmVoiceState.Unregistered)));
-                    Assert.DoesNotThrow((System.Action)(() =>
-                        _driver.SetGsmVoice(GsmVoiceState.Home)));
-                    Assert.DoesNotThrow((System.Action)(() =>
-                        _driver.SetGsmVoice(GsmVoiceState.Roaming)));
-                    Assert.DoesNotThrow((System.Action)(() =>
-                        _driver.SetGsmVoice(GsmVoiceState.Denied)));
-                    Assert.DoesNotThrow((System.Action)(() =>
-                        _driver.SetGsmVoice(GsmVoiceState.Off)));
-                    Assert.DoesNotThrow((System.Action)(() =>
-                        _driver.SetGsmVoice(GsmVoiceState.On)));
-                }
+                Assert.DoesNotThrow((System.Action)(() =>
+                    _driver.SetGsmVoice(GsmVoiceState.Unregistered)));
+                Assert.DoesNotThrow((System.Action)(() =>
+                    _driver.SetGsmVoice(GsmVoiceState.Home)));
+                Assert.DoesNotThrow((System.Action)(() =>
+                    _driver.SetGsmVoice(GsmVoiceState.Roaming)));
+                Assert.DoesNotThrow((System.Action)(() =>
+                    _driver.SetGsmVoice(GsmVoiceState.Denied)));
+                Assert.DoesNotThrow((System.Action)(() =>
+                    _driver.SetGsmVoice(GsmVoiceState.Off)));
+                Assert.DoesNotThrow((System.Action)(() =>
+                    _driver.SetGsmVoice(GsmVoiceState.On)));
+            }
         }
 
         [Test]
