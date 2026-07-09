@@ -76,10 +76,13 @@ namespace Appium.Net.Integration.Tests.ImageComparison
         [Test]
         public void SaveVisualizationAsFile_InvalidCharacters_ThrowsArgumentException()
         {
-            char[] invalidChars = Path.GetInvalidFileNameChars();
-            if (invalidChars.Length == 0)
+            var invalidChars = new List<char>(Path.GetInvalidFileNameChars());
+            invalidChars.Remove(Path.DirectorySeparatorChar);
+            invalidChars.Remove(Path.AltDirectorySeparatorChar);
+
+            if (invalidChars.Count == 0)
             {
-                Assert.Ignore("No invalid characters defined on this platform.");
+                Assert.Ignore("No non-separator invalid characters defined on this platform.");
             }
 
             string invalidFileName = "test" + invalidChars[0] + ".png";
