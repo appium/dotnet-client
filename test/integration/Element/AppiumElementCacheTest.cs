@@ -47,11 +47,11 @@ namespace Appium.Net.Integration.Tests.Element
             _element.SetCacheValues(cacheValues);
 
             // Verify cached values are returned (no server call needed)
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(_element.TagName, Is.EqualTo("android.widget.TextView"));
                 Assert.That(_element.Text, Is.EqualTo("Sample Text"));
-            });
+            }
         }
 
         [Test]
@@ -141,13 +141,13 @@ namespace Appium.Net.Integration.Tests.Element
 
             var rect = _element.Rect;
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(rect.X, Is.EqualTo(10));
                 Assert.That(rect.Y, Is.EqualTo(20));
                 Assert.That(rect.Width, Is.EqualTo(100));
                 Assert.That(rect.Height, Is.EqualTo(50));
-            });
+            }
         }
 
         [Test]
@@ -243,28 +243,28 @@ namespace Appium.Net.Integration.Tests.Element
                 { "selected", false }
             });
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(_element.TagName, Is.EqualTo("android.widget.EditText"));
                 Assert.That(_element.Text, Is.EqualTo("Enter text here"));
                 Assert.That(_element.Displayed, Is.True);
                 Assert.That(_element.Enabled, Is.True);
                 Assert.That(_element.Selected, Is.False);
-            });
+            }
         }
 
         [Test]
         public void ClearCache_WhenCacheIsNull_DoesNotThrow()
         {
             // Element starts with null cache, clearing should not throw
-            Assert.DoesNotThrow(() => _element.ClearCache());
+            Assert.DoesNotThrow((System.Action)(() => _element.ClearCache()));
         }
 
         [Test]
         public void DisableCache_WhenCacheIsNull_DoesNotThrow()
         {
             // Element starts with null cache, disabling should not throw
-            Assert.DoesNotThrow(() => _element.DisableCache());
+            Assert.DoesNotThrow((System.Action)(() => _element.DisableCache()));
         }
 
         [Test]

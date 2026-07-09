@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -236,11 +236,11 @@ namespace Appium.Net.Integration.Tests.ServerTests
             Assert.That(arguments.Count, Is.GreaterThan(capabilitiesIndex + 1), "Capabilities value missing.");
 
             var capabilitiesArgument = arguments[capabilitiesIndex + 1];
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(capabilitiesArgument, Does.Contain("platformName"));
                 Assert.That(capabilitiesArgument, Does.Contain("appPackage"));
-            });
+            }
         }
 
         [Test]
@@ -296,13 +296,13 @@ namespace Appium.Net.Integration.Tests.ServerTests
             service3.Dispose();
             Thread.Sleep(1000);
             service4.Dispose();
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(!service1.IsRunning);
                 Assert.That(!service2.IsRunning);
                 Assert.That(!service3.IsRunning);
                 Assert.That(!service4.IsRunning);
-            });
+            }
         }
 
 
@@ -314,11 +314,11 @@ namespace Appium.Net.Integration.Tests.ServerTests
             try
             {
                 service.Start();
-                Assert.Multiple(() =>
+                using (Assert.EnterMultipleScope())
                 {
                     Assert.That(log.Exists, Is.True);
                     Assert.That(log.Length, Is.GreaterThan(0)); //There should be Appium greeting messages
-                });
+                }
             }
             finally
             {
@@ -362,7 +362,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
         {
             var serviceBuilder = new AppiumServiceBuilder();
             string[] nullArray = null;
-            Assert.Throws<ArgumentNullException>(() => serviceBuilder.WithNodeArguments(nullArray));
+            Assert.Throws<ArgumentNullException>((System.Action)(() => serviceBuilder.WithNodeArguments(nullArray)));
         }
 
         [TestCase(null)]
@@ -373,7 +373,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
         public void AddingInvalidNodeArgumentThrowsException(string argument)
         {
             var serviceBuilder = new AppiumServiceBuilder();
-            Assert.Throws<ArgumentException>(() => serviceBuilder.WithNodeArguments(argument));
+            Assert.Throws<ArgumentException>((System.Action)(() => serviceBuilder.WithNodeArguments(argument)));
         }
     }
 }
