@@ -38,11 +38,11 @@ namespace Appium.Net.Integration.Tests.IOS
         public void FindByAccessibilityIdTest()
         {
             By byAccessibilityId = new ByAccessibilityId("ComputeSumButton");
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(_driver.FindElement(MobileBy.ClassName("UIAWindow")).FindElement(byAccessibilityId).Text, Is.EqualTo("Compute Sum"));
                 Assert.That(_driver.FindElement(MobileBy.ClassName("UIAWindow")).FindElements(byAccessibilityId), Is.Not.Empty);
-            });
+            }
         }
 
         [Test]

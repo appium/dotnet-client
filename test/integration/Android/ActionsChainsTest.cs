@@ -1,4 +1,4 @@
-﻿//Licensed under the Apache License, Version 2.0 (the "License");
+//Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
 //See the NOTICE file distributed with this work for additional
 //information regarding copyright ownership.
@@ -182,11 +182,11 @@ namespace Appium.Net.Integration.Tests.Android
 
             _driver.PerformActions(sequenceActions);
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(origin.Location.Y, Is.Not.EqualTo(loc1.Y));
                 Assert.That(target.Location.Y, Is.Not.EqualTo(loc2.Y));
-            });
+            }
 
         }
 
@@ -243,11 +243,11 @@ namespace Appium.Net.Integration.Tests.Android
             var sequenceActions = actionBuilder.ToActionSequenceList();
             _driver.PerformActions(sequenceActions);
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(origin.Location.Y, Is.Not.EqualTo(loc1.Y));
                 Assert.That(target.Location.Y, Is.Not.EqualTo(loc2.Y));
-            });
+            }
 
         }
     }

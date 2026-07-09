@@ -1,4 +1,4 @@
-﻿using Appium.Net.Integration.Tests.helpers;
+using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
@@ -29,15 +29,6 @@ namespace Appium.Net.Integration.Tests.Android
         public void SetUp()
         {
             _driver.StartActivity("io.appium.android.apis/.ApiDemos");
-        }
-
-        [Test]
-        [Ignore("Temporarily disabled until GetProperty(\"className\") behavior is verified for this test")]
-        public void GetPropertyTest()
-        {
-            var myElement = WaitForElement(_driver, MobileBy.Id("android:id/content"));
-            var propertyValue = myElement.GetProperty("className");
-            Assert.That(propertyValue, Is.Not.Null);
         }
 
         [Test]
@@ -209,6 +200,18 @@ namespace Appium.Net.Integration.Tests.Android
             var myElement = WaitForElement(_driver, MobileBy.Id("android:id/content"));
             IList<AppiumElement> myDerivedElements = myElement.FindElements(By.Id("android:id/text1"));
             Assert.That(myDerivedElements, Is.Not.Empty);
+        }
+
+        [Test]
+        public void GetPropertyTest()
+        {
+            if (Env.IsCiEnvironment())
+            {
+                Assert.Ignore("Skipping GetPropertyTest test in CI environment");
+            }
+            var myElement = WaitForElement(_driver, MobileBy.Id("android:id/content"));
+            string className = myElement.GetProperty("className");
+            Assert.That(className, Is.Not.Null.And.Not.Empty);
         }
 
         [OneTimeTearDown]
