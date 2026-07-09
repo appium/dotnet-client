@@ -37,11 +37,11 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
         {
             var logs = _driver.Manage().Logs;
             var availableLogTypes = _driver.Manage().Logs.AvailableLogTypes;
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(logs.AvailableLogTypes, Is.Not.Null);
                 Assert.That(availableLogTypes, Is.Not.Empty, nameof(availableLogTypes));
-            });
+            }
             Console.WriteLine(@"Available log types:");
             foreach (var logType in availableLogTypes)
             {
@@ -56,7 +56,7 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
             Assert.That(availableLogTypes, Is.Not.Null);
             Assert.That(availableLogTypes, Has.Member(LogcatLogType));
 
-            Assert.DoesNotThrow(() => _driver.Manage().Logs.GetLog(LogcatLogType));
+            Assert.DoesNotThrow((System.Action)(() => _driver.Manage().Logs.GetLog(LogcatLogType)));
         }
 
         /// <summary>
