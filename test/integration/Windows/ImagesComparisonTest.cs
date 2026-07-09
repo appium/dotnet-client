@@ -47,11 +47,11 @@ namespace Appium.Net.Integration.Tests.Windows
 
             var similarityResult = _calculatorSession.GetImagesSimilarity(screenshot.AsBase64EncodedString, screenshot.AsBase64EncodedString, options);
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(similarityResult.Score, Is.GreaterThan(0));
                 Assert.That(similarityResult.Visualization, Is.Not.Null);
-            });
+            }
         }
 
         [Test]
@@ -62,12 +62,12 @@ namespace Appium.Net.Integration.Tests.Windows
 
             var occurencesResult = _calculatorSession.FindImageOccurence(screenshot.AsBase64EncodedString, screenshot.AsBase64EncodedString, options);
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(occurencesResult.Rect.IsEmpty, Is.False);
                 Assert.That(occurencesResult.Rect.Bottom, Is.GreaterThan(0));
                 Assert.That(occurencesResult.Visualization, Is.Not.Null);
-            });
+            }
         }
 
         [Test]
@@ -84,18 +84,18 @@ namespace Appium.Net.Integration.Tests.Windows
 
             var occurencesResult = _calculatorSession.MatchImageFeatures(screenshot.AsBase64EncodedString, screenshot.AsBase64EncodedString, options);
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(occurencesResult.Visualization, Is.Not.Null);
                 Assert.That(occurencesResult.TotalCount, Is.GreaterThan(0));
                 Assert.That(occurencesResult.Points1, Is.Not.Empty);
                 Assert.That(occurencesResult.Points2, Is.Not.Empty);
-            });
-            Assert.Multiple(() =>
+            }
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(occurencesResult.Rect1.Width, Is.Positive);
                 Assert.That(occurencesResult.Rect2.Height, Is.Positive);
-            });
+            }
         }
     }
 }
