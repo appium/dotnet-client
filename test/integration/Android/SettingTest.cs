@@ -45,14 +45,14 @@ namespace Appium.Net.Integration.Tests.Android
             _driver.ConfiguratorSetWaitForSelectorTimeout(1000);
 
             var settings = _driver.Settings;
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(settings[AutomatorSetting.KeyInjectionDelay], Is.EqualTo(400));
                 Assert.That(settings[AutomatorSetting.WaitActionAcknowledgmentTimeout], Is.EqualTo(500));
                 Assert.That(settings[AutomatorSetting.WaitForIDLETimeout], Is.EqualTo(600));
                 Assert.That(settings[AutomatorSetting.WaitForSelectorTimeout], Is.EqualTo(1000));
                 Assert.That(settings[AutomatorSetting.WaitScrollAcknowledgmentTimeout], Is.EqualTo(300));
-            });
+            }
         }
 
         [Test]
@@ -69,14 +69,14 @@ namespace Appium.Net.Integration.Tests.Android
 
             _driver.Settings = data;
             var settings = _driver.Settings;
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(settings[AutomatorSetting.KeyInjectionDelay], Is.EqualTo(1500));
                 Assert.That(settings[AutomatorSetting.WaitActionAcknowledgmentTimeout], Is.EqualTo(2500));
                 Assert.That(settings[AutomatorSetting.WaitForIDLETimeout], Is.EqualTo(3500));
                 Assert.That(settings[AutomatorSetting.WaitForSelectorTimeout], Is.EqualTo(5000));
                 Assert.That(settings[AutomatorSetting.WaitScrollAcknowledgmentTimeout], Is.EqualTo(7000));
-            });
+            }
         }
 
         [OneTimeTearDown]

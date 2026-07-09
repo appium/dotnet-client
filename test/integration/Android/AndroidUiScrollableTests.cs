@@ -161,8 +161,8 @@ namespace Appium.Net.Integration.Tests.Android
         [TestCase(-1)]
         public void SetSwipeDeadZonePercentageThrowsExceptionIfOutOfRange(double invalidValue)
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => 
-                _sut.SetSwipeDeadZonePercentage(invalidValue));
+            Assert.Throws<ArgumentOutOfRangeException>((System.Action)(() => 
+                _sut.SetSwipeDeadZonePercentage(invalidValue)));
         }
 
         [Test]
