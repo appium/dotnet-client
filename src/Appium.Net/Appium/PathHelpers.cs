@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 
@@ -32,9 +33,26 @@ namespace OpenQA.Selenium.Appium
             var separators = new[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar };
             string[] parts = fileName.Split(separators, StringSplitOptions.RemoveEmptyEntries);
 
+            var reservedDeviceNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+            {
+                "CON", "PRN", "AUX", "NUL",
+                "COM0", "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9",
+                "LPT0", "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9"
+            };
+
             for (int i = 0; i < parts.Length; i++)
             {
                 string part = parts[i];
+
+                if (IsWindows)
+                {
+                    string baseName = Path.GetFileNameWithoutExtension(part);
+                    if (reservedDeviceNames.Contains(baseName))
+                    {
+                        throw new ArgumentException("The file name contains a reserved device name.", nameof(fileName));
+                    }
+                }
+
                 foreach (char c in part)
                 {
                     if (Array.IndexOf(invalidFileNameChars, c) >= 0)

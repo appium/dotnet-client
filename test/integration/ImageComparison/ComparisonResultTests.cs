@@ -91,6 +91,18 @@ namespace Appium.Net.Integration.Tests.ImageComparison
         }
 
         [Test]
+        public void SaveVisualizationAsFile_ReservedDeviceName_ThrowsArgumentException()
+        {
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                Assert.Ignore("Reserved device names are only validated on Windows.");
+            }
+
+            var ex = Assert.Throws<ArgumentException>(() => _comparisonResult.SaveVisualizationAsFile("CON.png"));
+            Assert.That(ex.Message, Does.Contain("reserved device name"));
+        }
+
+        [Test]
         public void SaveVisualizationAsFile_ValidFileName_SavesFile()
         {
             string fileName = "valid_image.png";
