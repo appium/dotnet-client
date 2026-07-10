@@ -98,8 +98,12 @@ namespace Appium.Net.Integration.Tests.ImageComparison
                 Assert.Ignore("Reserved device names are only validated on Windows.");
             }
 
-            var ex = Assert.Throws<ArgumentException>(() => _comparisonResult.SaveVisualizationAsFile("CON.png"));
-            Assert.That(ex.Message, Does.Contain("reserved device name"));
+            var invalidNames = new[] { "CON.png", "CON .png", "NUL.", "PRN  " };
+            foreach (var name in invalidNames)
+            {
+                var ex = Assert.Throws<ArgumentException>(() => _comparisonResult.SaveVisualizationAsFile(name));
+                Assert.That(ex.Message, Does.Contain("reserved device name"));
+            }
         }
 
         [Test]

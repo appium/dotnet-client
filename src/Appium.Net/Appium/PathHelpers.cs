@@ -46,7 +46,7 @@ namespace OpenQA.Selenium.Appium
 
                 if (IsWindows)
                 {
-                    string baseName = Path.GetFileNameWithoutExtension(part);
+                    string baseName = Path.GetFileNameWithoutExtension(part).TrimEnd(' ', '.');
                     if (reservedDeviceNames.Contains(baseName))
                     {
                         throw new ArgumentException("The file name contains a reserved device name.", nameof(fileName));
