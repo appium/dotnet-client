@@ -1,4 +1,4 @@
-﻿//Licensed under the Apache License, Version 2.0 (the "License");
+//Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
 //See the NOTICE file distributed with this work for additional
 //information regarding copyright ownership.
@@ -50,7 +50,8 @@ namespace OpenQA.Selenium.Appium.Service
             this.Host != null &&
             this.Port != null &&
             this.Path != null &&
-            this.Protocol == "https";
+            this.Protocol.Equals("https", StringComparison.OrdinalIgnoreCase) &&
+            int.TryParse(this.Port, out _);
 
         /// <summary>
         ///  Returns a URL instance built with members in the DirectConnect instance.
@@ -63,7 +64,15 @@ namespace OpenQA.Selenium.Appium.Service
                 return null;
             }
 
-            return new Uri($"{this.Protocol}://{this.Host}:{this.Port}{this.Path}");
+            try
+            {
+                var builder = new UriBuilder(this.Protocol, this.Host, int.Parse(this.Port), this.Path);
+                return builder.Uri;
+            }
+            catch (UriFormatException)
+            {
+                return null;
+            }
         }
 
         /// <summary>
