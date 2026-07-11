@@ -43,20 +43,27 @@ namespace OpenQA.Selenium.Appium.Service
         }
 
         /// <summary>
+        /// Gets a value indicating whether this instance has all required members and is valid.
+        /// </summary>
+        private bool IsValid =>
+            this.Protocol != null &&
+            this.Host != null &&
+            this.Port != null &&
+            this.Path != null &&
+            this.Protocol == "https";
+
+        /// <summary>
         ///  Returns a URL instance built with members in the DirectConnect instance.
         /// </summary>
         /// <returns>A Uri instance</returns>
-        public Uri GetUri() {
-            if (this.Protocol == null || this.Host == null || this.Port == null || this.Path == null) {
-                return null;
-            }
-
-            if (this.Protocol != "https")
+        public Uri GetUri()
+        {
+            if (!this.IsValid)
             {
                 return null;
             }
 
-            return new Uri(this.Protocol + "://" + this.Host + ":" + this.Port + this.Path);
+            return new Uri($"{this.Protocol}://{this.Host}:{this.Port}{this.Path}");
         }
 
         /// <summary>
