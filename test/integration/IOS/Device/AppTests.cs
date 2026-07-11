@@ -1,10 +1,11 @@
-﻿using Appium.Net.Integration.Tests.helpers;
+using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.iOS;
 using System;
 using System.Collections.Generic;
+using OpenQA.Selenium.Support.UI;
 
 namespace Appium.Net.Integration.Tests.IOS.Device.App
 {
@@ -77,14 +78,16 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
             //Activate an app to foreground
             _driver.ActivateApp(IosTestAppBundleId);
 
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
+
             //Verify the expected app was activated
-            Assert.DoesNotThrow((System.Action)(() => _driver.FindElement(MobileBy.AccessibilityId(IosTestAppElement))));
+            Assert.DoesNotThrow((System.Action)(() => wait.Until(d => d.FindElement(MobileBy.AccessibilityId(IosTestAppElement)))));
 
             //Activates Test App to foreground from background
             Assert.DoesNotThrow((System.Action)(() => _driver.ActivateApp(UiCatalogAppTestAppBundleId)));
 
             //Verify the expected app was activated
-            Assert.DoesNotThrow((System.Action)(() => _driver.FindElement(MobileBy.AccessibilityId(UiCatalogTestAppElement))));
+            Assert.DoesNotThrow((System.Action)(() => wait.Until(d => d.FindElement(MobileBy.AccessibilityId(UiCatalogTestAppElement)))));
         }
 
         #endregion
