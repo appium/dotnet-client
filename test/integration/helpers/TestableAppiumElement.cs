@@ -100,9 +100,13 @@ namespace Appium.Net.Integration.Tests.helpers
             "attribute/" + attributeName,
             () => SimulateServerCall("server-attribute-value"))?.ToString();
 
+        public string GetProperty(string propertyName) => CacheValue(
+            "property/" + propertyName,
+            () => GetDomProperty(propertyName))?.ToString();
+
         #endregion
 
-        #region IWebElement Implementation (not used for cache testing)
+        #region IWebElement Implementation (GetDomProperty used for cache testing)
 
         public System.Drawing.Point Location => throw new NotImplementedException("Not needed for cache testing");
 
@@ -120,7 +124,7 @@ namespace Appium.Net.Integration.Tests.helpers
 
         public string GetDomAttribute(string attributeName) => throw new NotImplementedException("Not needed for cache testing");
 
-        public string GetDomProperty(string propertyName) => throw new NotImplementedException("Not needed for cache testing");
+        public string GetDomProperty(string propertyName) => SimulateServerCall("server-property-value")?.ToString();
 
         public OpenQA.Selenium.ISearchContext GetShadowRoot() => throw new NotImplementedException("Not needed for cache testing");
 

@@ -36,13 +36,13 @@ namespace Appium.Net.Integration.Tests.Android
         public void DeviceTimeTest()
         {
             var time = _driver.DeviceTime;
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(time, Is.Not.Null);
                 Assert.That(time, Is.Not.EqualTo(Empty));
                 Console.WriteLine(time);
                 Assert.That(DateTime.Parse(time), Is.Not.EqualTo(DateTime.Now.AddDays(3)));
-            });
+            }
         }
     }
 }

@@ -493,11 +493,11 @@ namespace OpenQA.Selenium.Appium.Android
             (AppState)Convert.ToInt32(
                 ExecuteScript(
                     "mobile:queryAppState",
-                    new object[] {
+                    [
                         new Dictionary<string, object>{
                             ["appId"] = appId
                         }
-                    }
+                    ]
                 )?.ToString() ?? throw new InvalidOperationException("ExecuteScript returned null for mobile:queryAppState")
             );
 

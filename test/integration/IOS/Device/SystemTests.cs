@@ -5,6 +5,7 @@ using OpenQA.Selenium.Appium.iOS;
 
 namespace Appium.Net.Integration.Tests.IOS.Device
 {
+    [Category("iOS")]
     internal class SystemTests
     {
         private IOSDriver iosDriver;

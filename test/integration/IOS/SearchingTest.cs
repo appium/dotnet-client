@@ -6,6 +6,7 @@ using OpenQA.Selenium.Appium.iOS;
 
 namespace Appium.Net.Integration.Tests.IOS
 {
+    [Category("iOS")]
     class SearchingTest
     {
         private IOSDriver _driver;
@@ -40,11 +41,11 @@ namespace Appium.Net.Integration.Tests.IOS
         public void FindByAccessibilityIdTest()
         {
             By byAccessibilityId = new ByAccessibilityId("ComputeSumButton");
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(string.IsNullOrEmpty(_driver.FindElement(byAccessibilityId).Text), Is.False);
                 Assert.That(_driver.FindElements(byAccessibilityId), Is.Not.Empty);
-            });
+            }
         }
     }
 }

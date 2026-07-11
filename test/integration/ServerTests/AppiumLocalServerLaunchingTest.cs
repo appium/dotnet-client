@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using Appium.Net.Integration.Tests.Helpers;
@@ -212,6 +213,37 @@ namespace Appium.Net.Integration.Tests.ServerTests
         }
 
         [Test]
+        public void AddCapabilities_MergesCapabilitiesWhenCalledMultipleTimes()
+        {
+            var firstCapabilities = new AppiumOptions();
+            firstCapabilities.AddAdditionalAppiumOption(MobileCapabilityType.PlatformName, "Android");
+
+            var secondCapabilities = new AppiumOptions();
+            secondCapabilities.AddAdditionalAppiumOption(AndroidMobileCapabilityType.AppPackage, "io.appium.android.apis");
+
+            var collector = new OptionCollector()
+                .AddCapabilities(firstCapabilities)
+                .AddCapabilities(secondCapabilities);
+
+            var argumentsProperty = typeof(OptionCollector).GetProperty("Arguments", BindingFlags.Instance | BindingFlags.NonPublic);
+            Assert.That(argumentsProperty, Is.Not.Null, "Arguments property not found.");
+
+            var arguments = argumentsProperty.GetValue(collector) as IList<string>;
+            Assert.That(arguments, Is.Not.Null, "Arguments should not be null.");
+
+            var capabilitiesIndex = arguments.IndexOf("--default-capabilities");
+            Assert.That(capabilitiesIndex, Is.GreaterThanOrEqualTo(0), "Capabilities flag not found.");
+            Assert.That(arguments.Count, Is.GreaterThan(capabilitiesIndex + 1), "Capabilities value missing.");
+
+            var capabilitiesArgument = arguments[capabilitiesIndex + 1];
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(capabilitiesArgument, Does.Contain("platformName"));
+                Assert.That(capabilitiesArgument, Does.Contain("appPackage"));
+            }
+        }
+
+        [Test]
         public void CheckAbilityToStartServiceUsingCapabilitiesAndFlags()
         {
             var capabilities = new AppiumOptions();
@@ -264,13 +296,13 @@ namespace Appium.Net.Integration.Tests.ServerTests
             service3.Dispose();
             Thread.Sleep(1000);
             service4.Dispose();
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(!service1.IsRunning);
                 Assert.That(!service2.IsRunning);
                 Assert.That(!service3.IsRunning);
                 Assert.That(!service4.IsRunning);
-            });
+            }
         }
 
 
@@ -282,11 +314,11 @@ namespace Appium.Net.Integration.Tests.ServerTests
             try
             {
                 service.Start();
-                Assert.Multiple(() =>
+                using (Assert.EnterMultipleScope())
                 {
                     Assert.That(log.Exists, Is.True);
                     Assert.That(log.Length, Is.GreaterThan(0)); //There should be Appium greeting messages
-                });
+                }
             }
             finally
             {
@@ -330,7 +362,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
         {
             var serviceBuilder = new AppiumServiceBuilder();
             string[] nullArray = null;
-            Assert.Throws<ArgumentNullException>(() => serviceBuilder.WithNodeArguments(nullArray));
+            Assert.Throws<ArgumentNullException>((System.Action)(() => serviceBuilder.WithNodeArguments(nullArray)));
         }
 
         [TestCase(null)]
@@ -341,7 +373,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
         public void AddingInvalidNodeArgumentThrowsException(string argument)
         {
             var serviceBuilder = new AppiumServiceBuilder();
-            Assert.Throws<ArgumentException>(() => serviceBuilder.WithNodeArguments(argument));
+            Assert.Throws<ArgumentException>((System.Action)(() => serviceBuilder.WithNodeArguments(argument)));
         }
     }
 }

@@ -15,7 +15,6 @@
 using OpenQA.Selenium.Interactions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace OpenQA.Selenium.Appium.Interactions
 {
@@ -180,23 +179,18 @@ namespace OpenQA.Selenium.Appium.Interactions
         // in OpenQA.Selenium.Interaction namespace are enhanced to support these additional attributes.
         private class ExtendedPointerInteraction : Interaction
         {
-            private Interaction wrappedInteraction;
-            private Dictionary<string, object> pointerInputExtraAttributes;
+            private readonly Interaction wrappedInteraction;
+            private readonly Dictionary<string, object> pointerInputExtraAttributes;
 
             public ExtendedPointerInteraction(Interaction pointerInteraction, IInteractionInfo pointerAttributes)
                 : base(pointerInteraction.SourceDevice)
             {
-                if (pointerInteraction == null)
-                {
-                    throw new ArgumentException("Pointer interaction provided is invalid");
-                }
-
                 if (pointerAttributes == null)
                 {
                     throw new ArgumentException("Pointer attributes provided is invalid");
                 }
 
-                wrappedInteraction = pointerInteraction;
+                wrappedInteraction = pointerInteraction ?? throw new ArgumentException("Pointer interaction provided is invalid");
                 pointerInputExtraAttributes = pointerAttributes.ToDictionary();
             }
 
@@ -206,7 +200,10 @@ namespace OpenQA.Selenium.Appium.Interactions
                 Dictionary<string, object> toReturn = wrappedInteraction.ToDictionary();
 
                 // Append the original payload with the given pointer input extra attributes
-                pointerInputExtraAttributes.ToList().ForEach(x => toReturn[x.Key] = x.Value);
+                foreach (var kvp in pointerInputExtraAttributes)
+                {
+                    toReturn[kvp.Key] = kvp.Value;
+                }
 
                 return toReturn;
             }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium.Appium;
@@ -36,22 +36,22 @@ namespace Appium.Net.Integration.Tests.Android.Device.App
         public void CanActivateAppTest()
         {
             //Activate an app to foreground
-            Assert.DoesNotThrow(() => _driver.ActivateApp(ApiDemosPackageName));
+            Assert.DoesNotThrow((System.Action)(() => _driver.ActivateApp(ApiDemosPackageName)));
 
             Assert.That(_driver.GetAppState(ApiDemosPackageName), Is.EqualTo(AppState.RunningInForeground));
 
             //Verify the expected app was activated
-            Assert.DoesNotThrow(() => _driver.FindElement(MobileBy.AccessibilityId(ApiDemoElement)));
+            Assert.DoesNotThrow((System.Action)(() => _driver.FindElement(MobileBy.AccessibilityId(ApiDemoElement))));
         }
 
         [Test]
         public void CanActivateAppWithTimeoutTest()
         {
             //Activate an app to foreground
-            Assert.DoesNotThrow(() => _driver.ActivateApp(ApiDemosPackageName, TimeSpan.FromSeconds(20)));
+            Assert.DoesNotThrow((System.Action)(() => _driver.ActivateApp(ApiDemosPackageName, TimeSpan.FromSeconds(20))));
 
             //Verify the expected app was activated
-            Assert.DoesNotThrow(() => _driver.FindElement(MobileBy.AccessibilityId(ApiDemoElement)));
+            Assert.DoesNotThrow((System.Action)(() => _driver.FindElement(MobileBy.AccessibilityId(ApiDemoElement))));
         }
         [Test]
         public void CanActivateAppFromBackgroundTest()
@@ -60,16 +60,15 @@ namespace Appium.Net.Integration.Tests.Android.Device.App
             _driver.ActivateApp(ApiDemosPackageName);
 
             //Verify the expected app was activated
-            Assert.DoesNotThrow(() => _driver.FindElement(MobileBy.AccessibilityId(ApiDemoElement)));
+            Assert.DoesNotThrow((System.Action)(() => _driver.FindElement(MobileBy.AccessibilityId(ApiDemoElement))));
 
-            Assert.DoesNotThrow(() => _driver.BackgroundApp());
+            Assert.DoesNotThrow((System.Action)(() => _driver.BackgroundApp()));
 
             //Activates Test App to foreground from background
-            Assert.DoesNotThrow(() => _driver.ActivateApp(ApiDemosPackageName));
+            Assert.DoesNotThrow((System.Action)(() => _driver.ActivateApp(ApiDemosPackageName)));
 
             //Verify the expected app was activated
-            Assert.DoesNotThrow(() => _driver.FindElement(MobileBy.AccessibilityId(ApiDemoElement)));
-            Assert.DoesNotThrow(() => _driver.FindElement(MobileBy.AccessibilityId(ApiDemoElement)));
+            Assert.DoesNotThrow((System.Action)(() => _driver.FindElement(MobileBy.AccessibilityId(ApiDemoElement))));
         }
 
         #endregion
@@ -79,22 +78,19 @@ namespace Appium.Net.Integration.Tests.Android.Device.App
         [Test]
         public void CanBackgroundApp()
         {
-            Assert.DoesNotThrow(
-                () => _driver.BackgroundApp());
+            Assert.DoesNotThrow((System.Action)(() => _driver.BackgroundApp()));
         }
 
         [Test]
         public void CanBackgroundAppForSeconds()
         {
-            Assert.DoesNotThrow(
-                () => _driver.BackgroundApp(TimeSpan.FromSeconds(5)));
+            Assert.DoesNotThrow((System.Action)(() => _driver.BackgroundApp(TimeSpan.FromSeconds(5))));
         }
 
         [Test]
         public void CanBackgroundAppToDeactivationUsingNegativeSecond()
         {
-            Assert.DoesNotThrow(
-                () => _driver.BackgroundApp(-TimeSpan.FromSeconds(-1)));
+            Assert.DoesNotThrow((System.Action)(() => _driver.BackgroundApp(TimeSpan.FromSeconds(-1))));
         }
 
         #endregion
