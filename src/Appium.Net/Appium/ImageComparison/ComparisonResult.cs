@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using OpenQA.Selenium.Appium;
 
 namespace OpenQA.Selenium.Appium.ImageComparison
 {
@@ -21,7 +22,8 @@ namespace OpenQA.Selenium.Appium.ImageComparison
 
         public void SaveVisualizationAsFile(string fileName)
         {
-            File.WriteAllBytes(fileName, Convert.FromBase64String(Visualization));
+            string fullPath = PathHelpers.ValidateAndGetFullPath(fileName);
+            File.WriteAllBytes(fullPath, Convert.FromBase64String(Visualization));
         }
 
         protected Rectangle ConvertToRect(object value)
