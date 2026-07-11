@@ -48,5 +48,4 @@ version-resolver:
   default: patch
   
 prerelease: false
-prerelease-identifier: 'rc'
 contribution-template: '- $NAME contributed via $PULL_REQUEST'
