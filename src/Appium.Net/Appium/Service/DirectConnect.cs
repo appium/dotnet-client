@@ -43,7 +43,7 @@ namespace OpenQA.Selenium.Appium.Service
         }
 
         /// <summary>
-        /// Gets a value indicating whether this instance has all required members and is valid.
+        /// Gets a value indicating whether this instance has the required members for attempting URI construction.
         /// </summary>
         private bool IsValid =>
             this.Protocol != null &&
@@ -51,7 +51,7 @@ namespace OpenQA.Selenium.Appium.Service
             this.Port != null &&
             this.Path != null &&
             this.Protocol.Equals("https", StringComparison.OrdinalIgnoreCase) &&
-            int.TryParse(this.Port, out _);
+            int.TryParse(this.Port, out int port) && port >= 0 && port <= 65535;
 
         /// <summary>
         ///  Returns a URL instance built with members in the DirectConnect instance.
