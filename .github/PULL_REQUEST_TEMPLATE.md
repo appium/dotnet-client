@@ -11,6 +11,7 @@ _Put an `x` in the boxes that apply_
 - [ ] New feature (non-breaking change that adds functionality or value)
 - [ ] Breaking change (fix or feature that would cause existing functionality not to work as expected)
 - [ ] **Test fix** (non-breaking change that improves test stability or correctness)
+- [ ] Chore/Maintenance (updates to build scripts, dependencies, or GitHub Actions)
 
 ## Documentation
 - [ ] Have you proposed a file change/ PR with Appium to update documentation? 
