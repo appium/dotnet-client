@@ -1,4 +1,4 @@
-﻿//Licensed under the Apache License, Version 2.0 (the "License");
+//Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
 //See the NOTICE file distributed with this work for additional
 //information regarding copyright ownership.
@@ -43,20 +43,36 @@ namespace OpenQA.Selenium.Appium.Service
         }
 
         /// <summary>
+        /// Gets a value indicating whether this instance has the required members for attempting URI construction.
+        /// </summary>
+        private bool IsValid =>
+            this.Protocol != null &&
+            this.Host != null &&
+            this.Port != null &&
+            this.Path != null &&
+            this.Protocol.Equals("https", StringComparison.OrdinalIgnoreCase) &&
+            int.TryParse(this.Port, out int port) && port >= 0 && port <= 65535;
+
+        /// <summary>
         ///  Returns a URL instance built with members in the DirectConnect instance.
         /// </summary>
         /// <returns>A Uri instance</returns>
-        public Uri GetUri() {
-            if (this.Protocol == null || this.Host == null || this.Port == null || this.Path == null) {
-                return null;
-            }
-
-            if (this.Protocol != "https")
+        public Uri GetUri()
+        {
+            if (!this.IsValid)
             {
                 return null;
             }
 
-            return new Uri(this.Protocol + "://" + this.Host + ":" + this.Port + this.Path);
+            try
+            {
+                var builder = new UriBuilder(this.Protocol, this.Host, int.Parse(this.Port), this.Path);
+                return builder.Uri;
+            }
+            catch (UriFormatException)
+            {
+                return null;
+            }
         }
 
         /// <summary>
