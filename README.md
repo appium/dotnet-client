@@ -7,8 +7,6 @@
 ----
 
 [![Functional Tests](https://github.com/appium/dotnet-client/actions/workflows/functional-test.yml/badge.svg)](https://github.com/appium/dotnet-client/actions/workflows/functional-test.yml)
-[![Functional Tests (Android)](https://github.com/appium/dotnet-client/actions/workflows/functional-android-test.yml/badge.svg)](https://github.com/appium/dotnet-client/actions/workflows/functional-android-test.yml)
-[![Functional Tests (iOS)](https://github.com/appium/dotnet-client/actions/workflows/functional-ios-test.yml/badge.svg)](https://github.com/appium/dotnet-client/actions/workflows/functional-ios-test.yml)
 [![Unit Tests](https://github.com/appium/dotnet-client/actions/workflows/unit-test.yml/badge.svg)](https://github.com/appium/dotnet-client/actions/workflows/unit-test.yml)
 
 ----

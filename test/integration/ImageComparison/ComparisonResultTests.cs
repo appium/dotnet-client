@@ -63,13 +63,13 @@ namespace Appium.Net.Integration.Tests.ImageComparison
         [Test]
         public void SaveVisualizationAsFile_NullFileName_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => _comparisonResult.SaveVisualizationAsFile(null));
+            Assert.Throws<ArgumentNullException>((Action)(() => _comparisonResult.SaveVisualizationAsFile(null)));
         }
 
         [Test]
         public void SaveVisualizationAsFile_EmptyFileName_ThrowsArgumentException()
         {
-            var ex = Assert.Throws<ArgumentException>(() => _comparisonResult.SaveVisualizationAsFile(""));
+            var ex = Assert.Throws<ArgumentException>((Action)(() => _comparisonResult.SaveVisualizationAsFile("")));
             Assert.That(ex.Message, Does.Contain("The file name must not be an empty string."));
         }
 
@@ -86,7 +86,7 @@ namespace Appium.Net.Integration.Tests.ImageComparison
             }
 
             string invalidFileName = "test" + invalidChars[0] + ".png";
-            var ex = Assert.Throws<ArgumentException>(() => _comparisonResult.SaveVisualizationAsFile(invalidFileName));
+            var ex = Assert.Throws<ArgumentException>((Action)(() => _comparisonResult.SaveVisualizationAsFile(invalidFileName)));
             Assert.That(ex.Message, Does.Contain("The file name contains invalid characters"));
         }
 
@@ -101,7 +101,7 @@ namespace Appium.Net.Integration.Tests.ImageComparison
             var invalidNames = new[] { "CON.png", "CON .png", "NUL.", "PRN  " };
             foreach (var name in invalidNames)
             {
-                var ex = Assert.Throws<ArgumentException>(() => _comparisonResult.SaveVisualizationAsFile(name));
+                var ex = Assert.Throws<ArgumentException>((Action)(() => _comparisonResult.SaveVisualizationAsFile(name)));
                 Assert.That(ex.Message, Does.Contain("reserved device name"));
             }
         }
@@ -135,14 +135,14 @@ namespace Appium.Net.Integration.Tests.ImageComparison
         public void SaveVisualizationAsFile_PathTraversalParentDirectory_ThrowsIOException()
         {
             string fileName = "../traversal_image.png";
-            Assert.Throws<IOException>(() => _comparisonResult.SaveVisualizationAsFile(fileName));
+            Assert.Throws<IOException>((Action)(() => _comparisonResult.SaveVisualizationAsFile(fileName)));
         }
 
         [Test]
         public void SaveVisualizationAsFile_AbsolutePathOutsideAllowed_ThrowsIOException()
         {
             string absolutePath = Path.Combine(Path.GetTempPath(), "absolute_image.png");
-            Assert.Throws<IOException>(() => _comparisonResult.SaveVisualizationAsFile(absolutePath));
+            Assert.Throws<IOException>((Action)(() => _comparisonResult.SaveVisualizationAsFile(absolutePath)));
         }
 
         [Test]
@@ -181,7 +181,7 @@ namespace Appium.Net.Integration.Tests.ImageComparison
                 // Attempt to write a file via the symlink
                 string fileName = Path.Combine("local_sub", "symlink_dir", "image.png");
 
-                var ex = Assert.Throws<IOException>(() => _comparisonResult.SaveVisualizationAsFile(fileName));
+                var ex = Assert.Throws<IOException>((Action)(() => _comparisonResult.SaveVisualizationAsFile(fileName)));
                 Assert.That(ex.Message, Does.Contain("symbolic link or reparse point"));
 #else
                 Assert.Ignore("Skipping symlink test: Symbolic links are not supported on this target framework.");
@@ -228,7 +228,7 @@ namespace Appium.Net.Integration.Tests.ImageComparison
                 return;
             }
 
-            var ex = Assert.Throws<IOException>(() => _comparisonResult.SaveVisualizationAsFile("broken_file_link.png"));
+            var ex = Assert.Throws<IOException>((Action)(() => _comparisonResult.SaveVisualizationAsFile("broken_file_link.png")));
             Assert.That(ex.Message, Does.Contain("symbolic link or reparse point"));
 #else
             Assert.Ignore("Skipping symlink test: Symbolic links are not supported on this target framework.");
@@ -241,7 +241,7 @@ namespace Appium.Net.Integration.Tests.ImageComparison
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 string invalidFileName = "file.png:stream";
-                var ex = Assert.Throws<ArgumentException>(() => _comparisonResult.SaveVisualizationAsFile(invalidFileName));
+                var ex = Assert.Throws<ArgumentException>((Action)(() => _comparisonResult.SaveVisualizationAsFile(invalidFileName)));
                 Assert.That(ex.Message, Does.Contain("alternate data streams"));
             }
             else
