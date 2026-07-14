@@ -25,7 +25,7 @@ jobs:
       fail-fast: false
       matrix:
         api-level: [32]
-        target: [google_atd]
+        target: [google_apis]
 
     env:
       APPIUM_LOG_PATH: '${{ github.workspace }}/appium.log'
@@ -61,7 +61,7 @@ jobs:
         path: |
           ~/.android/avd/*
           ~/.android/adb*
-        key: avd-${{ matrix.api-level }}-${{ matrix.target }}
+        key: avd-${{ matrix.api-level }}-${{ matrix.target }}-v1-ram4g
 
     - name: Create AVD and generate snapshot for caching
       if: steps.avd-cache.outputs.cache-hit != 'true'
