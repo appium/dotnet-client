@@ -34,7 +34,7 @@ categories:
         - 'Build'
   - title: '🧰 Maintenance'
     when:
-      label: 'Chore'  
+      label: 'Chore'
   - title: '🧪 Tests'
     when:
       labels:
