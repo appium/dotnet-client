@@ -8,9 +8,10 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
     steps:
-      - uses: actions/checkout@v4
-
       - name: Validate Configuration
         uses: release-drafter/release-drafter@v7
         with:
