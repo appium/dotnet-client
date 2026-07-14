@@ -27,7 +27,7 @@ categories:
   - title: '🧰 Maintenance'
     label: 'Chore'  
   - title: '🧪 Tests'
-    label:
+    labels:
       - 'Test'
   - title: '📚 Documentation'
     labels:

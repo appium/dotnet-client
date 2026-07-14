@@ -1,0 +1,20 @@
+name: Validate Release Drafter Config
+
+on:
+  pull_request:
+    paths:
+      - '.github/release-drafter.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate Configuration
+        uses: release-drafter/release-drafter@v7
+        with:
+          config-name: release-drafter.yml
+          disable-autolabeler: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
