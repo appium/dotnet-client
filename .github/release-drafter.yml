@@ -11,40 +11,50 @@ template: |
   
 categories:
   - title: '✨ Enhancements'
-    label: 'Enhancement'
+    semver-increment: 'minor'
+    when:
+      label: 'Enhancement'
   - title: '🐛 Bug Fixes'
-    labels:
-      - 'BugFix'
+    semver-increment: 'patch'
+    when:
+      labels:
+        - 'BugFix'
   - title: '🔄 Refactor'
-    label: 'Refactor'
+    when:
+      label: 'Refactor'
   - title: '📦 Dependencies'
-    labels:
-      - 'Dependencies'
+    semver-increment: 'patch'
+    when:
+      labels:
+        - 'Dependencies'
   - title: '🛠️ Pipeline'
-    labels:
-      - 'CI'
-      - 'Build'
+    when:
+      labels:
+        - 'CI'
+        - 'Build'
   - title: '🧰 Maintenance'
-    label: 'Chore'  
+    when:
+      label: 'Chore'  
   - title: '🧪 Tests'
-    labels:
-      - 'Test'
+    when:
+      labels:
+        - 'Test'
   - title: '📚 Documentation'
-    labels:
-      - 'Documentation'
+    when:
+      labels:
+        - 'Documentation'
+  - type: 'version-resolver'
+    semver-increment: 'major'
+    when:
+      labels:
+        - 'BreakingChange'
+  - type: 'version-resolver'
+    semver-increment: 'patch'
+    when:
+      labels:
+        - 'Hotfixes'
 
 version-resolver:
-  major:
-    labels:
-      - 'BreakingChange'
-  minor:
-    labels:
-      - 'Enhancement'
-  patch:
-    labels:
-      - 'BugFix'
-      - 'Dependencies'
-      - 'Hotfixes'
   default: patch
   
 prerelease: false
