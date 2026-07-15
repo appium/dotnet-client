@@ -43,7 +43,7 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.Zero;
             try
             {
-                WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+                WebDriverWait wait = new WebDriverWait(_driver, previousImplicitWait.TotalSeconds > 0 ? previousImplicitWait : TimeSpan.FromSeconds(10));
                 wait.Until(d => d.FindElement(MobileBy.AccessibilityId(accessibilityId)));
             }
             finally
