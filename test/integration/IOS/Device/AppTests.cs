@@ -39,15 +39,16 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
 
         private void WaitForElement(string accessibilityId)
         {
+            var previousImplicitWait = _driver.Manage().Timeouts().ImplicitWait;
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.Zero;
             try
             {
                 WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-                Assert.DoesNotThrow((System.Action)(() => wait.Until(d => d.FindElement(MobileBy.AccessibilityId(accessibilityId)))));
+                wait.Until(d => d.FindElement(MobileBy.AccessibilityId(accessibilityId)));
             }
             finally
             {
-                _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                _driver.Manage().Timeouts().ImplicitWait = previousImplicitWait;
             }
         }
 
