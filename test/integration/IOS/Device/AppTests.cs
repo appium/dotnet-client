@@ -145,9 +145,16 @@ namespace Appium.Net.Integration.Tests.IOS.Device.App
         public void CanBackgroundAppToDeactivationUsingNegativeSecond()
         {
             Assert.DoesNotThrow((System.Action)(() => _driver.BackgroundApp(TimeSpan.FromSeconds(-1))));
-            
-            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-            Assert.DoesNotThrow((System.Action)(() => wait.Until(d => d.FindElement(MobileBy.AccessibilityId(IosDockElement)))));
+            _driver.Manage().Timeouts().ImplicitWait = TimeSpan.Zero;
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+                Assert.DoesNotThrow((System.Action)(() => wait.Until(d => d.FindElement(MobileBy.AccessibilityId(IosDockElement)))));
+            }
+            finally
+            {
+                _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            }
         }
 
         #endregion
