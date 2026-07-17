@@ -373,7 +373,24 @@ namespace OpenQA.Selenium.Appium.iOS
         {
             ExecuteScript("mobile: startLogsBroadcast", new Dictionary<string, object>());
             var endpointUri = new Uri($"ws://{host}:{port}/ws/session/{SessionId}/appium/device/syslog");
-            await _syslogClient.ConnectAsync(endpointUri);
+            try
+            {
+                await _syslogClient.ConnectAsync(endpointUri);
+            }
+            catch
+            {
+                // The server-side broadcast was already started above; stop it so a failed
+                // WebSocket connection does not leave an orphaned broadcast on the Appium server.
+                try
+                {
+                    ExecuteScript("mobile: stopLogsBroadcast", new Dictionary<string, object>());
+                }
+                catch
+                {
+                    // Best-effort cleanup; surface the original connection failure below.
+                }
+                throw;
+            }
         }
 
         /// <summary>
@@ -426,8 +443,16 @@ namespace OpenQA.Selenium.Appium.iOS
         /// </summary>
         public async Task StopSyslogBroadcast()
         {
-            ExecuteScript("mobile: stopLogsBroadcast", new Dictionary<string, object>());
-            await _syslogClient.DisconnectAsync();
+            try
+            {
+                ExecuteScript("mobile: stopLogsBroadcast", new Dictionary<string, object>());
+            }
+            finally
+            {
+                // Always disconnect the client so a failure stopping the server-side
+                // broadcast does not leave the WebSocket receive loop running.
+                await _syslogClient.DisconnectAsync();
+            }
         }
 
         #endregion

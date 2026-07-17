@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.iOS;
 
@@ -64,14 +65,14 @@ namespace Appium.Net.Integration.Tests.IOS.Session.Logs
                 // Start syslog broadcast
                 await _driver.StartSyslogBroadcast();
                 // Wait for connection
-                Assert.That(connectionSemaphore.Wait(timeout), Is.True,
+                Assert.That(await connectionSemaphore.WaitAsync(timeout), Is.True,
                     "Failed to establish WebSocket connection within timeout");
                 Assert.That(connectionEstablished, Is.True,
                     "Connection listener was not invoked");
                 // Trigger some activity to generate log messages
                 _driver.BackgroundApp(TimeSpan.FromSeconds(1));
                 // Wait for at least one message
-                Assert.That(messageSemaphore.Wait(timeout), Is.True,
+                Assert.That(await messageSemaphore.WaitAsync(timeout), Is.True,
                     $"Didn't receive any log message after {timeout.TotalSeconds} seconds timeout");
                 Assert.That(messageReceived, Is.True,
                     "Message listener was not invoked");
@@ -127,7 +128,7 @@ namespace Appium.Net.Integration.Tests.IOS.Session.Logs
                 // Trigger activity to generate logs
                 _driver.BackgroundApp(TimeSpan.FromMilliseconds(500));
                 // Wait a bit for messages (both listeners should be called)
-                var received = messageSemaphore.Wait(TimeSpan.FromSeconds(5));
+                var received = await messageSemaphore.WaitAsync(TimeSpan.FromSeconds(5));
                 if (received)
                 {
                     // If we received messages, at least one listener should have been invoked
@@ -141,7 +142,7 @@ namespace Appium.Net.Integration.Tests.IOS.Session.Logs
                 // Trigger more activity
                 _driver.BackgroundApp(TimeSpan.FromMilliseconds(500));
                 // Wait a bit - no new messages should be counted after removing listeners
-                Thread.Sleep(2000);
+                await Task.Delay(2000);
                 Assert.That(messageCount, Is.EqualTo(0),
                     "No listeners should be invoked after removing all listeners");
             }
@@ -173,7 +174,7 @@ namespace Appium.Net.Integration.Tests.IOS.Session.Logs
                     await _driver.StartSyslogBroadcast();
 
                     // Give it time to connect
-                    Thread.Sleep(2000);
+                    await Task.Delay(2000);
                     // If we got here without errors during connection, that's good
                     if (!errorReceived)
                     {
@@ -188,9 +189,11 @@ namespace Appium.Net.Integration.Tests.IOS.Session.Logs
                             "Error should be captured by the error handler");
                     }
                 }
-                catch (AggregateException)
+                catch (WebDriverException)
                 {
-                    // Connection failure is expected in some environments
+                    // Connection failure is expected in some environments. Awaited calls surface
+                    // the underlying WebDriverException directly (not wrapped in AggregateException),
+                    // since StringWebSocketClient.ConnectAsync rethrows connection errors as such.
                     // Verify that error handler was invoked
                     Assert.That(errorReceived, Is.True,
                         "Error handler should be invoked when WebSocket connection fails");
