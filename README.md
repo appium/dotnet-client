@@ -26,6 +26,7 @@ For example, some changes in the Selenium binding could break the Appium client.
 
 |Appium .NET Client| Selenium Binding	| .NET Version |
 |----|----|----|
+|`Unreleased` |`4.46.0` |.NET Standard 2.0 |
 |`8.3.0` |`4.44.0` |.NET Standard 2.0 |
 |`8.2.0` |`4.36.0` |.NET Standard 2.0 |
 |`7.2.0` |`4.29.0` |.NET Standard 2.0 |
