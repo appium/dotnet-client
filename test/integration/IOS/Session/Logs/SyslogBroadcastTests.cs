@@ -157,14 +157,12 @@ namespace Appium.Net.Integration.Tests.IOS.Session.Logs
         public async Task CanHandleErrorsGracefully()
         {
             var errorReceived = false;
-            using var errorSemaphore = new SemaphoreSlim(0, 1);
             Exception capturedError = null;
             _driver.AddSyslogErrorsListener(ex =>
             {
                 Console.WriteLine($"Error handler invoked: {ex.Message}");
                 capturedError = ex;
                 errorReceived = true;
-                errorSemaphore.Release();
             });
             try
             {
