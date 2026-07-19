@@ -34,7 +34,9 @@ namespace Appium.Net.Integration.Tests.IOS.Session.Logs
         [Test]
         public async Task VerifySyslogListenerCanBeAssigned()
         {
-            using var messageSemaphore = new SemaphoreSlim(0, 1);
+            // Unbounded max so a burst of syslog messages (handler calls Release per message)
+            // can't overflow the semaphore and throw SemaphoreFullException.
+            using var messageSemaphore = new SemaphoreSlim(0, int.MaxValue);
             using var connectionSemaphore = new SemaphoreSlim(0, 1);
             var messageReceived = false;
             var connectionEstablished = false;
@@ -107,7 +109,8 @@ namespace Appium.Net.Integration.Tests.IOS.Session.Logs
         public async Task CanAddAndRemoveMultipleListeners()
         {
             var messageCount = 0;
-            using var messageSemaphore = new SemaphoreSlim(0, 10);
+            // Unbounded max so multiple listeners releasing per message can't overflow it.
+            using var messageSemaphore = new SemaphoreSlim(0, int.MaxValue);
             void listener1(string msg)
             {
                 Interlocked.Increment(ref messageCount);
