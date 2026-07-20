@@ -130,7 +130,9 @@ namespace Appium.Net.Integration.Tests.IOS.Session.Logs
 
                 // Trigger activity to generate logs
                 _driver.BackgroundApp(TimeSpan.FromMilliseconds(500));
-                // Wait a bit for messages (both listeners should be called)
+                // Wait until at least one listener invocation is signalled. The semaphore wakes
+                // on the first listener to fire, so we only assert that a listener was invoked
+                // (not that both have run by this point) to keep the test deterministic.
                 var received = await messageSemaphore.WaitAsync(TimeSpan.FromSeconds(5));
                 if (received)
                 {

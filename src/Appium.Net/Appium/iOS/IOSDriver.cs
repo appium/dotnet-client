@@ -372,7 +372,15 @@ namespace OpenQA.Selenium.Appium.iOS
         public async Task StartSyslogBroadcast(string host, int port)
         {
             ExecuteScript("mobile: startLogsBroadcast", new Dictionary<string, object>());
-            var endpointUri = new Uri($"ws://{host}:{port}/ws/session/{SessionId}/appium/device/syslog");
+            // Use UriBuilder so IPv6 literal hosts (e.g. "::1") are bracketed correctly;
+            // string interpolation would produce an invalid authority and throw UriFormatException.
+            var endpointUri = new UriBuilder
+            {
+                Scheme = "ws",
+                Host = host,
+                Port = port,
+                Path = $"/ws/session/{SessionId}/appium/device/syslog"
+            }.Uri;
             try
             {
                 await _syslogClient.ConnectAsync(endpointUri);
