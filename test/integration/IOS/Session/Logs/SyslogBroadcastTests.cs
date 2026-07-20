@@ -142,6 +142,11 @@ namespace Appium.Net.Integration.Tests.IOS.Session.Logs
                 }
                 // Remove all listeners
                 _driver.RemoveAllSyslogListeners();
+                // Drain any in-flight dispatch: a message already read from the socket before
+                // removal can still invoke the previously captured delegate. Wait for those to
+                // settle before resetting the counter so the post-removal assertion only reflects
+                // callbacks triggered after removal.
+                await Task.Delay(1000);
                 // Reset counter
                 messageCount = 0;
                 // Trigger more activity
