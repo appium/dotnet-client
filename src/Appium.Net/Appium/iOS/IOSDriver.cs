@@ -18,14 +18,18 @@ using OpenQA.Selenium.Appium.Service;
 using System;
 using System.Drawing;
 using OpenQA.Selenium.Appium.iOS.Interfaces;
+using OpenQA.Selenium.Appium.WebSocket;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace OpenQA.Selenium.Appium.iOS
 {
     public class IOSDriver : AppiumDriver, IHidesKeyboardWithKeyName, IHasClipboard,
-        IShakesDevice, IPerformsTouchID, IHasSettings
+        IShakesDevice, IPerformsTouchID, IHasSettings, IListensToSyslogMessages
     {
         private static readonly string Platform = MobilePlatform.IOS;
+        private readonly StringWebSocketClient _syslogClient = new();
+        private const int DefaultAppiumPort = 4723;
 
         /// <summary>
         /// Initializes a new instance of the IOSDriver class
@@ -328,5 +332,137 @@ namespace OpenQA.Selenium.Appium.iOS
                     ]
                 ).ToString()
             );
+
+        #region Syslog Broadcast
+
+        /// <summary>
+        /// Start syslog messages broadcast via web socket.
+        /// This method assumes that Appium server is running on localhost and
+        /// is assigned to the default port (4723).
+        /// </summary>
+        /// <remarks>
+        /// This implementation uses a custom WebSocket endpoint and is temporary.
+        /// In the future, this functionality will be replaced with WebDriver BiDi log events
+        /// when BiDi support for iOS device logs becomes available.
+        /// </remarks>
+        public async Task StartSyslogBroadcast() => await StartSyslogBroadcast("127.0.0.1", DefaultAppiumPort);
+
+        /// <summary>
+        /// Start syslog messages broadcast via web socket.
+        /// This method assumes that Appium server is assigned to the default port (4723).
+        /// </summary>
+        /// <param name="host">The name of the host where Appium server is running.</param>
+        /// <remarks>
+        /// This implementation uses a custom WebSocket endpoint and is temporary.
+        /// In the future, this functionality will be replaced with WebDriver BiDi log events
+        /// when BiDi support for iOS device logs becomes available.
+        /// </remarks>
+        public async Task StartSyslogBroadcast(string host) => await StartSyslogBroadcast(host, DefaultAppiumPort);
+
+        /// <summary>
+        /// Start syslog messages broadcast via web socket.
+        /// </summary>
+        /// <param name="host">The name of the host where Appium server is running.</param>
+        /// <param name="port">The port of the host where Appium server is running.</param>
+        /// <remarks>
+        /// This implementation uses a custom WebSocket endpoint and is temporary.
+        /// In the future, this functionality will be replaced with WebDriver BiDi log events
+        /// when BiDi support for iOS device logs becomes available.
+        /// </remarks>
+        public async Task StartSyslogBroadcast(string host, int port)
+        {
+            ExecuteScript("mobile: startLogsBroadcast", new Dictionary<string, object>());
+            // Use UriBuilder so IPv6 literal hosts (e.g. "::1") are bracketed correctly;
+            // string interpolation would produce an invalid authority and throw UriFormatException.
+            var endpointUri = new UriBuilder
+            {
+                Scheme = "ws",
+                Host = host,
+                Port = port,
+                Path = $"/ws/session/{SessionId}/appium/device/syslog"
+            }.Uri;
+            try
+            {
+                await _syslogClient.ConnectAsync(endpointUri);
+            }
+            catch
+            {
+                // The server-side broadcast was already started above; stop it so a failed
+                // WebSocket connection does not leave an orphaned broadcast on the Appium server.
+                try
+                {
+                    ExecuteScript("mobile: stopLogsBroadcast", new Dictionary<string, object>());
+                }
+                catch
+                {
+                    // Best-effort cleanup; surface the original connection failure below.
+                }
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Adds a new log messages broadcasting handler.
+        /// Several handlers might be assigned to a single server.
+        /// Multiple calls to this method will cause such handler
+        /// to be called multiple times.
+        /// </summary>
+        /// <param name="handler">A function, which accepts a single argument, which is the actual log message.</param>
+        public void AddSyslogMessagesListener(Action<string> handler) =>
+            _syslogClient.AddMessageHandler(handler);
+
+        /// <summary>
+        /// Adds a new log broadcasting errors handler.
+        /// Several handlers might be assigned to a single server.
+        /// Multiple calls to this method will cause such handler
+        /// to be called multiple times.
+        /// </summary>
+        /// <param name="handler">A function, which accepts a single argument, which is the actual exception instance.</param>
+        public void AddSyslogErrorsListener(Action<Exception> handler) =>
+            _syslogClient.AddErrorHandler(handler);
+
+        /// <summary>
+        /// Adds a new log broadcasting connection handler.
+        /// Several handlers might be assigned to a single server.
+        /// Multiple calls to this method will cause such handler
+        /// to be called multiple times.
+        /// </summary>
+        /// <param name="handler">A function, which is executed as soon as the client is successfully connected to the web socket.</param>
+        public void AddSyslogConnectionListener(Action handler) =>
+            _syslogClient.AddConnectionHandler(handler);
+
+        /// <summary>
+        /// Adds a new log broadcasting disconnection handler.
+        /// Several handlers might be assigned to a single server.
+        /// Multiple calls to this method will cause such handler
+        /// to be called multiple times.
+        /// </summary>
+        /// <param name="handler">A function, which is executed as soon as the client is successfully disconnected from the web socket.</param>
+        public void AddSyslogDisconnectionListener(Action handler) =>
+            _syslogClient.AddDisconnectionHandler(handler);
+
+        /// <summary>
+        /// Removes all existing syslog handlers.
+        /// </summary>
+        public void RemoveAllSyslogListeners() => _syslogClient.RemoveAllHandlers();
+
+        /// <summary>
+        /// Stops syslog messages broadcast via web socket.
+        /// </summary>
+        public async Task StopSyslogBroadcast()
+        {
+            try
+            {
+                ExecuteScript("mobile: stopLogsBroadcast", new Dictionary<string, object>());
+            }
+            finally
+            {
+                // Always disconnect the client so a failure stopping the server-side
+                // broadcast does not leave the WebSocket receive loop running.
+                await _syslogClient.DisconnectAsync();
+            }
+        }
+
+        #endregion
     }
 }
