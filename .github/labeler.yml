@@ -27,6 +27,6 @@ WIP:
   mergeable: false
 
 BreakingChange:
-  title: "^.*BREAKING CHANGE:.*|.*!.*"
+  title: '^[a-z]+(\([^)]+\))?!:.*|^.*BREAKING CHANGE:.*'
   mergeable: false
   
