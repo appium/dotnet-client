@@ -69,7 +69,7 @@ namespace Appium.Net.Integration.Tests.Android
                 WebDriverWait wait = new WebDriverWait(_driver, previousImplicitWait.TotalSeconds > 0 ? previousImplicitWait : TimeSpan.FromSeconds(10));
                 return wait.Until(d =>
                 {
-                    var els = _driver.FindElements(MobileBy.ClassName("android.widget.TextView"));
+                    var els = ((AndroidDriver)d).FindElements(MobileBy.ClassName("android.widget.TextView"));
                     return els.Count >= minimumCount ? els : null;
                 });
             }
@@ -124,7 +124,7 @@ namespace Appium.Net.Integration.Tests.Android
                 WebDriverWait wait = new WebDriverWait(_driver, previousImplicitWait.TotalSeconds > 0 ? previousImplicitWait : TimeSpan.FromSeconds(10));
                 els = wait.Until(d =>
                 {
-                    var currentEls = _driver.FindElements(MobileBy.ClassName("android.widget.TextView"));
+                    var currentEls = ((AndroidDriver)d).FindElements(MobileBy.ClassName("android.widget.TextView"));
                     return currentEls.Count != number1 ? currentEls : null;
                 });
             }
