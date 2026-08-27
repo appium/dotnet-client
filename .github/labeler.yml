@@ -1,32 +1,32 @@
 Enhancement:
-  title: "^feat:.*"
+  title: '^feat(\([^)]+\))?!?:.*'
 
 BugFix:
-  title: "^fix:.*"
+  title: '^fix(\([^)]+\))?!?:.*'
 
 Documentation:
-  title: "^docs:.*"
+  title: '^docs(\([^)]+\))?!?:.*'
 
 Build:
-  title: "^build:.*"
+  title: '^build(\([^)]+\))?!?:.*'
 
 CI:
-  title: "^ci:.*"
+  title: '^ci(\([^)]+\))?!?:.*'
 
 Test:
-  title: "^test:.*"
+  title: '^test(\([^)]+\))?!?:.*'
 
 Chore:
-  title: "^chore:.*"
+  title: '^chore(\([^)]+\))?!?:.*'
 
 GitHub:
-  title: "^github:.*"
+  title: '^github(\([^)]+\))?!?:.*'
 
 WIP:
   title: "^WIP:.*"
   mergeable: false
 
 BreakingChange:
-  title: "^.*BREAKING CHANGE:.*|.*!.*"
+  title: '^[a-z]+(\([^)]+\))?!:.*|^.*BREAKING CHANGE:.*'
   mergeable: false
   
