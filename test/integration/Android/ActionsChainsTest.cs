@@ -122,12 +122,11 @@ namespace Appium.Net.Integration.Tests.Android
             try
             {
                 WebDriverWait wait = new WebDriverWait(_driver, previousImplicitWait.TotalSeconds > 0 ? previousImplicitWait : TimeSpan.FromSeconds(10));
-                var countChanged = wait.Until(d =>
+                wait.Until(d =>
                 {
                     var currentEls = d.FindElements(MobileBy.ClassName("android.widget.TextView"));
                     return currentEls.Count != number1;
                 });
-                Assert.That(countChanged, Is.True);
             }
             finally
             {
