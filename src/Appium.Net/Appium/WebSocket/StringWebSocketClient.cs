@@ -272,7 +272,7 @@ namespace OpenQA.Selenium.Appium.WebSocket
         /// </summary>
         private async Task DisconnectInternalAsync()
         {
-            if (_clientWebSocket.State == WebSocketState.Open)
+            if (_clientWebSocket?.State == WebSocketState.Open)
             {
                 try
                 {

@@ -13,6 +13,7 @@
 //limitations under the License.
 
 using System;
+using System.Threading.Tasks;
 
 namespace OpenQA.Selenium.Appium.iOS.Interfaces
 {
@@ -26,21 +27,21 @@ namespace OpenQA.Selenium.Appium.iOS.Interfaces
         /// This method assumes that Appium server is running on localhost and
         /// is assigned to the default port (4723).
         /// </summary>
-        void StartSyslogBroadcast();
+        Task StartSyslogBroadcast();
 
         /// <summary>
         /// Start syslog messages broadcast via web socket.
         /// This method assumes that Appium server is assigned to the default port (4723).
         /// </summary>
         /// <param name="host">The name of the host where Appium server is running.</param>
-        void StartSyslogBroadcast(string host);
+        Task StartSyslogBroadcast(string host);
 
         /// <summary>
         /// Start syslog messages broadcast via web socket.
         /// </summary>
         /// <param name="host">The name of the host where Appium server is running.</param>
         /// <param name="port">The port of the host where Appium server is running.</param>
-        void StartSyslogBroadcast(string host, int port);
+        Task StartSyslogBroadcast(string host, int port);
 
         /// <summary>
         /// Adds a new log messages broadcasting handler.
@@ -86,6 +87,6 @@ namespace OpenQA.Selenium.Appium.iOS.Interfaces
         /// <summary>
         /// Stops syslog messages broadcast via web socket.
         /// </summary>
-        void StopSyslogBroadcast();
+        Task StopSyslogBroadcast();
     }
 }

@@ -16,6 +16,7 @@ using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium;
+using OpenQA.Selenium.Support.UI;
 using System.Collections.Generic;
 using OpenQA.Selenium.Interactions;
 using System;
@@ -59,6 +60,25 @@ namespace Appium.Net.Integration.Tests.Android
             _ = _driver?.TerminateApp(Apps.GetId(Apps.androidApiDemos));
         }
 
+        private IList<AppiumElement> WaitForTextViewElements(int minimumCount)
+        {
+            var previousImplicitWait = _driver.Manage().Timeouts().ImplicitWait;
+            _driver.Manage().Timeouts().ImplicitWait = TimeSpan.Zero;
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(_driver, previousImplicitWait.TotalSeconds > 0 ? previousImplicitWait : TimeSpan.FromSeconds(10));
+                return wait.Until(d =>
+                {
+                    var els = _driver.FindElements(MobileBy.ClassName("android.widget.TextView"));
+                    return els.Count >= minimumCount ? els : null;
+                });
+            }
+            finally
+            {
+                _driver.Manage().Timeouts().ImplicitWait = previousImplicitWait;
+            }
+        }
+
         [OneTimeTearDown]
         public void AfterAll()
         {
@@ -72,7 +92,7 @@ namespace Appium.Net.Integration.Tests.Android
         [Test]
         public void SimpleTouchActionTestCase()
         {
-            IList<AppiumElement> els = _driver.FindElements(MobileBy.ClassName("android.widget.TextView"));
+            IList<AppiumElement> els = WaitForTextViewElements(3);
 
             var number1 = els.Count;
             var elementToTouch = els[2];
@@ -105,7 +125,7 @@ namespace Appium.Net.Integration.Tests.Android
         [Test]
         public void TouchByCoordinatesTestCase()
         {
-            IList<AppiumElement> els = _driver.FindElements(MobileBy.ClassName("android.widget.TextView"));
+            IList<AppiumElement> els = WaitForTextViewElements(3);
             var number1 = els.Count;
             var elementToTouch = els[2];
 
@@ -164,7 +184,7 @@ namespace Appium.Net.Integration.Tests.Android
 
             _driver.PerformActions(sequence);
 
-            IList<AppiumElement> els = _driver.FindElements(MobileBy.ClassName("android.widget.TextView"));
+            IList<AppiumElement> els = WaitForTextViewElements(8);
             var origin = els[7];
             var loc1 = origin.Location;
             var target = els[1];
@@ -221,7 +241,7 @@ namespace Appium.Net.Integration.Tests.Android
             var sequence = actionBuilder.ToActionSequenceList();
             _driver.PerformActions(sequence);
 
-            IList<AppiumElement> els = _driver.FindElements(MobileBy.ClassName("android.widget.TextView"));
+            IList<AppiumElement> els = WaitForTextViewElements(8);
             var origin = els[7];
             var loc1 = origin.Location;
             var target = els[1];

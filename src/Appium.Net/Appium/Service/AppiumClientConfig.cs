@@ -29,7 +29,7 @@ namespace OpenQA.Selenium.Appium.Service
         /// <summary>
         /// Gets or sets the directConnect feature availability.
         /// If this flag is true and the target server supports
-        /// https://appiumpro.com/editions/86-connecting-directly-to-appium-hosts-in-distributed-environments,
+        /// https://www.headspin.io/blog/connecting-directly-to-appium-hosts-in-distributed-environments,
         /// the AppiumCommandExecutor will follow the response directConnect direction.
         ///
         ///   AppiumClientConfig clientConfig = AppiumClientConfig.DefaultConfig();

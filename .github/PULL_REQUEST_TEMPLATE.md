@@ -1,3 +1,13 @@
+## PR title
+
+The title is what gets labelled: `.github/labeler.yml` matches the title and applies a label, and Release Drafter turns that label into a release-notes category and the version bump. Please prefix the title with the matching type:
+`feat:` (new feature) · `fix:` (bugfix) · `test:` · `docs:` · `build:` · `ci:` · `chore:` · `github:`
+A scope is optional, e.g. `feat(ios):`. Breaking changes use `type!:` (`feat!:`, `feat(ios)!:`) or carry `BREAKING CHANGE:` in the title.
+
+## Related issue
+
+Closes # <!-- issue number, or "n/a" -->
+
 ## List of changes
 
 Please provide a briefly described change list that you are going to propose. 
@@ -10,15 +20,26 @@ _Put an `x` in the boxes that apply_
 - [ ] Bugfix (non-breaking change which fixes an issue)
 - [ ] New feature (non-breaking change that adds functionality or value)
 - [ ] Breaking change (fix or feature that would cause existing functionality not to work as expected)
-- [ ] **Test fix** (non-breaking change that improves test stability or correctness)
+- [ ] **New test coverage** (non-breaking change that adds tests for existing, previously untested functionality)
+- [ ] Test fix (non-breaking change that improves test stability or correctness)
 - [ ] Chore/Maintenance (updates to build scripts, dependencies, or GitHub Actions)
 
-## Documentation
-- [ ] Have you proposed a file change/ PR with Appium to update documentation? 
-#### This can be done by navigating to the documentation section on http://appium.io selecting the appropriate command/endpoint and clicking the 'Edit this doc' link to update the C# example
+## Tests
 
-## Integration tests
-- [ ] Have you provided integration tests for your changes? (required for Bugfix, New feature, or Test fix)
+_Put an `x` in the boxes that apply_
+
+- [ ] Unit tests
+- [ ] Integration tests
+- [ ] No automated tests (explain why below)
+
+**How they run:** _e.g. picked up by the existing `FullyQualifiedName~Android` filter, no CI changes needed_
+
+Bugfixes, new features and new test coverage are expected to ship with tests. If the behaviour cannot be covered automatically (real device or cloud only, hardware dependent, inherently flaky), please say so here instead.
+
+## Documentation
+- [ ] Have you proposed a file change/PR with Appium to update documentation?
+- [ ] Not applicable (no user-facing behaviour change, e.g. tests, CI or maintenance only)
+#### This can be done by navigating to the documentation section on http://appium.io, selecting the appropriate command/endpoint and clicking the 'Edit this doc' link to update the C# example
 
 ## Details
 
