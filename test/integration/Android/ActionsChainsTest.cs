@@ -100,7 +100,7 @@ namespace Appium.Net.Integration.Tests.Android
             var touch = new PointerInputDevice(PointerKind.Touch, "finger");
             var sequence = new ActionSequence(touch);
 
-            var move = touch.CreatePointerMove(elementToTouch, elementToTouch.Location.X, elementToTouch.Location.Y,TimeSpan.FromSeconds(1));
+            var move = touch.CreatePointerMove(elementToTouch, 0, 0, TimeSpan.FromSeconds(1));
             var actionPress = touch.CreatePointerDown(PointerButton.TouchContact);
             var pause = touch.CreatePause(TimeSpan.FromMilliseconds(250));
             var actionRelease = touch.CreatePointerUp(PointerButton.TouchContact);
@@ -117,9 +117,22 @@ namespace Appium.Net.Integration.Tests.Android
 
             _driver.PerformActions(actions_seq);
 
-            els = _driver.FindElements(MobileBy.ClassName("android.widget.TextView"));
-
-            Assert.That(els, Has.Count.Not.EqualTo(number1));
+            var previousImplicitWait = _driver.Manage().Timeouts().ImplicitWait;
+            _driver.Manage().Timeouts().ImplicitWait = TimeSpan.Zero;
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(_driver, previousImplicitWait.TotalSeconds > 0 ? previousImplicitWait : TimeSpan.FromSeconds(10));
+                var countChanged = wait.Until(d =>
+                {
+                    var currentEls = d.FindElements(MobileBy.ClassName("android.widget.TextView"));
+                    return currentEls.Count != number1;
+                });
+                Assert.That(countChanged, Is.True);
+            }
+            finally
+            {
+                _driver.Manage().Timeouts().ImplicitWait = previousImplicitWait;
+            }
         }
 
         [Test]
