@@ -1,7 +1,7 @@
 ## PR title
 
 The title is what gets labelled: `.github/labeler.yml` matches the title and applies a label, and Release Drafter turns that label into a release-notes category and the version bump. Please prefix the title with the matching type:
-`feat:` (new feature) · `fix:` (bugfix) · `test:` · `docs:` · `build:` · `ci:` · `chore:` · `github:`
+`feat:` (new feature) · `fix:` (bugfix) · `refactor:` · `test:` · `docs:` · `build:` · `ci:` · `chore:` · `github:`
 A scope is optional, e.g. `feat(ios):`. Breaking changes use `type!:` (`feat!:`, `feat(ios)!:`) or carry `BREAKING CHANGE:` in the title.
 
 ## Related issue
@@ -19,6 +19,7 @@ _Put an `x` in the boxes that apply_
 
 - [ ] Bugfix (non-breaking change which fixes an issue)
 - [ ] New feature (non-breaking change that adds functionality or value)
+- [ ] Refactoring (non-breaking change that improves code without altering functionality)
 - [ ] Breaking change (fix or feature that would cause existing functionality not to work as expected)
 - [ ] **New test coverage** (non-breaking change that adds tests for existing, previously untested functionality)
 - [ ] Test fix (non-breaking change that improves test stability or correctness)

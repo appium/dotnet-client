@@ -20,6 +20,7 @@ categories:
       labels:
         - 'BugFix'
   - title: '🔄 Refactor'
+    semver-increment: 'patch'
     when:
       label: 'Refactor'
   - title: '📦 Dependencies'
