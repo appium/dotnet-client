@@ -36,7 +36,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
         {
             var publicKeyToken = typeof(AppiumClientConfig).Assembly.GetName().GetPublicKeyToken();
 
-            Assert.That(publicKeyToken, Is.Not.Null.And.Not.Empty);
+            Assert.That(publicKeyToken, Is.EqualTo(new byte[] { 0x8b, 0x74, 0x75, 0xdc, 0xfe, 0x67, 0x34, 0xd4 }));
         }
 
         [Test]
