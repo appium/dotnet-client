@@ -15,6 +15,16 @@ namespace Appium.Net.Integration.Tests.helpers
             capabilities.App = app;
             capabilities.AddAdditionalAppiumOption(IOSMobileCapabilityType.LaunchTimeout, Env.InitTimeoutSec.TotalMilliseconds);
 
+            // Allow slow WDA responses on CI while staying below the client command timeout.
+            capabilities.AddAdditionalAppiumOption("wdaConnectionTimeout", TimeSpan.FromMinutes(5).TotalMilliseconds);
+
+            // Use the simulator that CI has already booted and waited for.
+            var udid = Environment.GetEnvironmentVariable("IOS_UDID");
+            if (!string.IsNullOrEmpty(udid))
+            {
+                capabilities.AddAdditionalAppiumOption(MobileCapabilityType.Udid, udid);
+            }
+
             if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("LOCAL_PREBUILT_WDA")))
             {
                 capabilities.AddAdditionalAppiumOption("usePreinstalledWDA", true);

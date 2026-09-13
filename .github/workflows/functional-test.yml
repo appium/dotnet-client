@@ -184,6 +184,7 @@ jobs:
       run: npx appium driver run xcuitest download-wda-sim --platform=ios --outdir=${{ github.workspace }}/wda
 
     - name: Setup iOS Simulator
+      id: ios-simulator
       uses: futureware-tech/simulator-action@v5
       with:
         model: ${{ env.IOS_DEVICE_NAME }}
@@ -209,6 +210,7 @@ jobs:
 
     - name: Run iOS functional tests
       env:
+        IOS_UDID: ${{ steps.ios-simulator.outputs.udid }}
         LOCAL_PREBUILT_WDA: ${{ github.workspace }}/wda/WebDriverAgentRunner-Runner.app
       run: |
         dotnet test --configuration ${{ env.BUILD_CONFIGURATION }} \
