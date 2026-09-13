@@ -113,6 +113,8 @@ Dependencies:
 - [Selenium.WebDriver](http://www.nuget.org/packages/Selenium.WebDriver/)
 - [System.Drawing.Common](https://www.nuget.org/packages/System.Drawing.Common/)
 
+The `Appium.WebDriver` assembly is strong-name signed so it can be referenced by strongly-signed .NET assemblies.
+
 
 ## Usage
 

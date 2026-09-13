@@ -32,6 +32,14 @@ namespace Appium.Net.Integration.Tests.ServerTests
         }
 
         [Test]
+        public void AppiumAssemblyIsStrongNamed()
+        {
+            var publicKeyToken = typeof(AppiumClientConfig).Assembly.GetName().GetPublicKeyToken();
+
+            Assert.That(publicKeyToken, Is.Not.Null.And.Not.Empty);
+        }
+
+        [Test]
         public void SetAndGetRelaxSSLValidation()
         {
             var clientConfig = AppiumClientConfig.DefaultConfig();
