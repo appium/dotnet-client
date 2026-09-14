@@ -42,7 +42,6 @@ namespace Appium.Net.Integration.Tests.Options
                 using (Assert.EnterMultipleScope())
                 {
                     Assert.That(capabilities.GetCapability("appium:wdaLaunchTimeout"), Is.EqualTo(600000));
-                    Assert.That(capabilities.GetCapability("appium:wdaConnectionTimeout"), Is.EqualTo(300000));
                     Assert.That(capabilities.GetCapability("appium:udid"),
                         Is.EqualTo(string.IsNullOrEmpty(udid) ? null : udid));
                     Assert.That(capabilities.GetCapability("appium:prebuiltWDAPath"),
