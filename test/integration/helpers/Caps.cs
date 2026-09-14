@@ -15,6 +15,12 @@ namespace Appium.Net.Integration.Tests.helpers
             capabilities.App = app;
             capabilities.AddAdditionalAppiumOption(IOSMobileCapabilityType.LaunchTimeout, Env.InitTimeoutSec.TotalMilliseconds);
 
+            var simulatorUdid = Environment.GetEnvironmentVariable("IOS_SIMULATOR_UDID");
+            if (!string.IsNullOrEmpty(simulatorUdid))
+            {
+                capabilities.AddAdditionalAppiumOption("udid", simulatorUdid);
+            }
+
             if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("LOCAL_PREBUILT_WDA")))
             {
                 capabilities.AddAdditionalAppiumOption("usePreinstalledWDA", true);
