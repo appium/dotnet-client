@@ -228,7 +228,6 @@ jobs:
 
     - name: Run iOS functional tests
       env:
-        IOS_SIMULATOR_UDID: ${{ steps.simulator.outputs.udid }}
         LOCAL_PREBUILT_WDA: ${{ github.workspace }}/wda/WebDriverAgentRunner-Runner.app
       run: |
         dotnet test --configuration ${{ env.BUILD_CONFIGURATION }} \
