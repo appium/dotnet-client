@@ -192,6 +192,10 @@ jobs:
         wait_for_boot: true
         shutdown_after_job: false
 
+    - name: Wait for iOS Simulator to finish booting
+      env:
+        IOS_UDID: ${{ steps.ios-simulator.outputs.udid }}
+      run: xcrun simctl bootstatus "$IOS_UDID" -b
     - name: Restore dependencies
       run: dotnet restore Appium.Net.sln
 
