@@ -20,6 +20,7 @@ categories:
       labels:
         - 'BugFix'
   - title: '🔄 Refactor'
+    semver-increment: 'patch'
     when:
       label: 'Refactor'
   - title: '📦 Dependencies'
@@ -59,3 +60,9 @@ version-resolver:
   
 prerelease: false
 contribution-template: '- $NAME contributed via $PULL_REQUEST'
+exclude-contributors:
+  - 'dependabot[bot]'
+  - 'dependabot'
+  - 'github-actions[bot]'
+  - 'copilot-swe-agent[bot]'
+  - 'claude'
