@@ -122,7 +122,7 @@ Dependencies:
 - [System.Drawing.Common](https://www.nuget.org/packages/System.Drawing.Common/)
 
 > [!NOTE]
-> Starting with `9.0.0`, this assembly is strong-name signed — see [v9](#v9) below.
+> Starting with `9.0.0`, this assembly is strong-name signed — see [v9](#v9) above.
 
 ## Usage
 
