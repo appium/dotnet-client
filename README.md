@@ -113,6 +113,11 @@ Dependencies:
 - [Selenium.WebDriver](http://www.nuget.org/packages/Selenium.WebDriver/)
 - [System.Drawing.Common](https://www.nuget.org/packages/System.Drawing.Common/)
 
+The `Appium.Net` assembly shipped by the `Appium.WebDriver` package is strong-name signed with public key token `8b7475dcfe6734d4`, so it can be referenced by strongly-signed .NET assemblies.
+
+> [!IMPORTANT]
+> Strong naming changes the assembly identity from the previously unsigned `Appium.Net` assembly. Consumers compiled against an unsigned release, especially .NET Framework applications, should rebuild after upgrading to the first strong-named release.
+
 
 ## Usage
 
