@@ -4,6 +4,9 @@ Enhancement:
 BugFix:
   title: '^fix(\([^)]+\))?!?:.*'
 
+Refactor:
+  title: '^refactor(\([^)]+\))?!?:.*'
+
 Documentation:
   title: '^docs(\([^)]+\))?!?:.*'
 
