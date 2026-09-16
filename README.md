@@ -96,13 +96,16 @@ App management: Please read [issue #15807](https://github.com/appium/appium/issu
   _driver.PerformActions(actions_seq);
  ```
 
-### WinAppDriver Notice!
+## Windows Application Testing
 
 > [!WARNING]
-> Because [WinAppDriver](https://github.com/microsoft/WinAppDriver) has been abandoned by MS, running Appium dotnet-client 5.x with WAD will not work since it has not been updated to support the W3C protocol. <br/>
-> To run appium on Windows Applications, you will need to use [appium-windows-driver](https://github.com/appium/appium-windows-driver) which will act as a proxy to WAD.
-> Examples of running Windows Applications with dotnet-client can be found here: [windows Integration test 5.0.0](https://github.com/appium/dotnet-client/tree/release/5.0.0/test/integration/Windows) <br/>
-> Regardless, feel free to open an issue on the [WAD](https://github.com/microsoft/WinAppDriver/issues) repository that will help get MS to open-source that project.
+> The original [WinAppDriver](https://github.com/microsoft/WinAppDriver) server has not been maintained by Microsoft for years and does not support the W3C WebDriver protocol. Direct communication between modern Appium .NET Client versions and standalone WinAppDriver is not supported.
+> 
+> To automate Windows applications:
+> - Use [appium-windows-driver](https://github.com/appium/appium-windows-driver) (`appium driver install windows`), which acts as a W3C-compliant proxy to WinAppDriver.
+> - Consider trying [NovaWindows Driver](https://github.com/AutomateThePlanet/appium-novawindows-driver) by [Automate The Planet](https://www.automatetheplanet.com/) as a modern drop-in replacement that operates directly via FlaUI / UI Automation without WinAppDriver.
+> 
+> Examples of running Windows applications with the .NET client can be found in the [Windows Integration Tests](test/integration/Windows).
 
 ## NuGet
 
