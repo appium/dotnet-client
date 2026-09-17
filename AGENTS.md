@@ -40,7 +40,7 @@ dotnet test ./test/integration/Appium.Net.Integration.Tests.csproj \
 These need an Appium server and an Android emulator or iOS simulator. CI uses these filters:
 
 ```bash
-# Android (CustomCommandsTests lives in the root namespace, so it is matched separately)
+# Android (CustomCommandTests lives in the root namespace, so it is matched separately)
 dotnet test ./test/integration/Appium.Net.Integration.Tests.csproj --configuration Release --framework net8.0 \
   --filter "FullyQualifiedName~Android|FullyQualifiedName~CustomCommand"
 
@@ -49,7 +49,12 @@ dotnet test ./test/integration/Appium.Net.Integration.Tests.csproj --configurati
   --filter "FullyQualifiedName~IOS"
 ```
 
-Configure `test/integration/env.json` first (`cp env.json.sample env.json`; never commit `env.json`).
+Configure `env.json` first (never commit it):
+
+```bash
+cp test/integration/env.json.sample test/integration/env.json
+```
+
 The sample's defaults do not work as-is:
 
 - Local Appium server: set `"DEV": true` (or the `DEV` environment variable).
@@ -98,6 +103,7 @@ it passed.
 
 1. Read every unresolved review thread before changing code.
 2. Make the requested change, add or update tests for it, and build all target frameworks.
-3. Run the relevant tests, e.g. `dotnet test --filter "FullyQualifiedName~<TestClassName>"`.
+3. Run the relevant tests, e.g.
+   `dotnet test ./test/integration/Appium.Net.Integration.Tests.csproj --filter "FullyQualifiedName~<TestClassName>"`.
 4. Stage only the files you changed, commit, and push to the PR branch.
 5. Reply to each thread (what changed, or why not) and resolve the ones you addressed.
