@@ -17,20 +17,49 @@ dotnet restore Appium.Net.sln
 dotnet build Appium.Net.sln --configuration Release
 ```
 
-Tests that run without a device (the set CI runs on every PR):
+### Tests without a device (`unit-test.yml`, every PR)
+
+Prerequisite: Node.js and Appium installed globally (`npm install -g appium`);
+`AppiumLocalServerLaunchingTest` starts a local Appium server.
+
+CI runs the same filter for `net8.0` on Windows, Linux and macOS, and additionally for `net48` on Windows:
 
 ```bash
 dotnet test ./test/integration/Appium.Net.Integration.Tests.csproj \
   --configuration Release --framework net8.0 \
   --filter "AppiumLocalServerLaunchingTest|DirectConnectTest|AppiumClientConfigTest"
+
+# Windows only
+dotnet test ./test/integration/Appium.Net.Integration.Tests.csproj \
+  --configuration Release --framework net48 \
+  --filter "AppiumLocalServerLaunchingTest|DirectConnectTest|AppiumClientConfigTest"
 ```
 
-Functional tests are selected by namespace, e.g. `--filter "FullyQualifiedName~Android"` or
-`"FullyQualifiedName~IOS"`. They need a running Appium server and a configured `test/integration/env.json`
-(copy from `env.json.sample`; never commit `env.json`).
+### Functional tests (`functional-test.yml`)
 
-`net48` tests only run on Windows. If you cannot run a target framework or a functional suite locally,
-say so in the PR rather than claiming it passed.
+These need an Appium server and an Android emulator or iOS simulator. CI uses these filters:
+
+```bash
+# Android (CustomCommandsTests lives in the root namespace, so it is matched separately)
+dotnet test ./test/integration/Appium.Net.Integration.Tests.csproj --configuration Release --framework net8.0 \
+  --filter "FullyQualifiedName~Android|FullyQualifiedName~CustomCommand"
+
+# iOS
+dotnet test ./test/integration/Appium.Net.Integration.Tests.csproj --configuration Release --framework net8.0 \
+  --filter "FullyQualifiedName~IOS"
+```
+
+Configure `test/integration/env.json` first (`cp env.json.sample env.json`; never commit `env.json`).
+The sample's defaults do not work as-is:
+
+- Local Appium server: set `"DEV": true` (or the `DEV` environment variable).
+- Remote Appium server: set `"isRemoteAppiumServer": true` and replace the `remoteAppiumServerUri`
+  placeholder with the real URL.
+
+See [`test/integration/README.md`](test/integration/README.md) for details.
+
+If you cannot run a target framework or a functional suite locally, say so in the PR rather than claiming
+it passed.
 
 ## Coding guidelines
 
