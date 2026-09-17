@@ -94,12 +94,6 @@ jobs:
         appium driver install uiautomator2
         appium driver install espresso
 
-    - name: Restore dependencies
-      run: dotnet restore Appium.Net.sln
-
-    - name: Build solution
-      run: dotnet build Appium.Net.sln --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore
-
     - name: Create test environment file
       run: |
         cat > ./test/integration/env.json << 'EOF'
@@ -109,6 +103,12 @@ jobs:
           "remoteAppiumServerUri": "http://localhost:4723"
         }
         EOF
+
+    - name: Restore dependencies
+      run: dotnet restore Appium.Net.sln
+
+    - name: Build solution
+      run: dotnet build Appium.Net.sln --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore
 
     - name: Run Android functional tests
       uses: reactivecircus/android-emulator-runner@v2
@@ -194,12 +194,6 @@ jobs:
         wait_for_boot: true
         shutdown_after_job: false
 
-    - name: Restore dependencies
-      run: dotnet restore Appium.Net.sln
-
-    - name: Build solution
-      run: dotnet build Appium.Net.sln --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore
-
     - name: Create test environment file
       run: |
         cat > ./test/integration/env.json << 'EOF'
@@ -209,6 +203,12 @@ jobs:
           "remoteAppiumServerUri": "http://127.0.0.1:4723"
         }
         EOF
+
+    - name: Restore dependencies
+      run: dotnet restore Appium.Net.sln
+
+    - name: Build solution
+      run: dotnet build Appium.Net.sln --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore
 
     - name: Run iOS functional tests
       env:
