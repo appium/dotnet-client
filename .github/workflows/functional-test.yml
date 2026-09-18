@@ -186,7 +186,19 @@ jobs:
     - name: Download prebuilt WDA
       run: npx appium driver run xcuitest download-wda-sim --platform=ios --outdir=${{ github.workspace }}/wda
 
+    - name: Test simulator idle helper
+      run: node --test .github/scripts/wait-for-simulator-idle.test.mjs
+
+    - name: List available simulators and runtimes
+      run: |
+        xcrun simctl list devices available
+        xcrun simctl list runtimes
+
+    - name: Start Simulator UI
+      run: open -Fn "$(xcode-select --print-path)/Applications/Simulator.app"
+
     - name: Setup iOS Simulator
+      id: simulator
       uses: futureware-tech/simulator-action@v5
       with:
         model: ${{ env.IOS_DEVICE_NAME }}
@@ -209,6 +221,13 @@ jobs:
           "remoteAppiumServerUri": "http://127.0.0.1:4723"
         }
         EOF
+
+    # Boot completion does not mean the simulator's background services are idle.
+    - name: Finalize simulator boot
+      timeout-minutes: 3
+      env:
+        SIMULATOR_UDID: ${{ steps.simulator.outputs.udid }}
+      run: node .github/scripts/wait-for-simulator-idle.mjs "$SIMULATOR_UDID"
 
     - name: Run iOS functional tests
       env:
