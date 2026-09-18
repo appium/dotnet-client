@@ -37,7 +37,18 @@ dotnet test ./test/integration/Appium.Net.Integration.Tests.csproj \
 
 ### Functional tests (`functional-test.yml`)
 
-These need an Appium server and an Android emulator or iOS simulator. CI uses these filters:
+These need an Appium server and an Android emulator or iOS simulator. Prerequisites, matching CI:
+
+```bash
+npm install -g appium
+appium driver install uiautomator2   # Android (CI also installs espresso)
+appium driver install xcuitest       # iOS (macOS only)
+```
+
+With the local settings below the tests start Appium themselves via `AppiumLocalService`, so the `appium`
+CLI and the platform driver must be installed. Against a remote server, that host provides them instead.
+
+CI uses these filters:
 
 ```bash
 # Android (CustomCommandTests lives in the root namespace, so it is matched separately)
