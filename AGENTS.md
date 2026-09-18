@@ -41,8 +41,14 @@ These need an Appium server and an Android emulator or iOS simulator. Prerequisi
 
 ```bash
 npm install -g appium
-appium driver install uiautomator2   # Android (CI also installs espresso)
-appium driver install xcuitest       # iOS (macOS only)
+
+# Android
+appium driver install uiautomator2
+appium driver install espresso        # ElementTestEspresso requests the Espresso driver
+
+# iOS (macOS only)
+appium driver install xcuitest
+brew install ffmpeg                   # ScreenRecordingTest calls StartRecordingScreen
 ```
 
 With the local settings below the tests start Appium themselves via `AppiumLocalService`, so the `appium`
