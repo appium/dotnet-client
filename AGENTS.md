@@ -29,10 +29,8 @@ dotnet test ./test/integration/Appium.Net.Integration.Tests.csproj \
   --configuration Release --framework net8.0 \
   --filter "AppiumLocalServerLaunchingTest|DirectConnectTest|AppiumClientConfigTest"
 
-# Windows only
-dotnet test ./test/integration/Appium.Net.Integration.Tests.csproj \
-  --configuration Release --framework net48 \
-  --filter "AppiumLocalServerLaunchingTest|DirectConnectTest|AppiumClientConfigTest"
+# Windows only (single line so it also works in PowerShell)
+dotnet test ./test/integration/Appium.Net.Integration.Tests.csproj --configuration Release --framework net48 --filter "AppiumLocalServerLaunchingTest|DirectConnectTest|AppiumClientConfigTest"
 ```
 
 ### Functional tests (`functional-test.yml`)
