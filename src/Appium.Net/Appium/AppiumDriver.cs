@@ -334,7 +334,7 @@ namespace OpenQA.Selenium.Appium
             {
                 return Convert.ToDouble(value, CultureInfo.InvariantCulture);
             }
-            catch
+            catch (Exception e) when (e is FormatException || e is InvalidCastException || e is OverflowException)
             {
                 return 0.0;
             }
