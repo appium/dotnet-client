@@ -22,7 +22,7 @@ namespace Appium.Net.Integration.Tests.Android.Session.Logs
         {
             _androidOptions = Caps.GetAndroidUIAutomatorCaps(Apps.Get("androidApiDemos"));
             _driver = new AndroidDriver(
-                Env.ServerIsLocal() ? AppiumServers.LocalServiceUri : AppiumServers.RemoteServerUri,
+                Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri,
                 _androidOptions);
         }
 
