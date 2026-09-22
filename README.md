@@ -43,6 +43,14 @@ For example, some changes in the Selenium binding could break the Appium client.
 > If you need deterministic builds, we recommend pinning the Selenium.WebDriver version in your own project.
 
 
+## v9
+
+Starting with `9.0.0`, the `Appium.Net` assembly shipped by the `Appium.WebDriver` package is strong-name signed with public key token `8b7475dcfe6734d4`, so it can be referenced by strongly-signed .NET assemblies. This aligns with [Selenium 4.44.0](https://github.com/SeleniumHQ/selenium/releases/tag/selenium-4.44.0), which introduced the same change to its own .NET client. See [#1066](https://github.com/appium/dotnet-client/issues/1066) and [#1118](https://github.com/appium/dotnet-client/pull/1118) for background.
+
+> [!IMPORTANT]
+> Strong naming changes the assembly identity from the previously unsigned `Appium.Net` assembly. Consumers compiled against an unsigned release, especially .NET Framework applications, should rebuild after upgrading to `9.0.0`.
+> The signing key is intentionally public — it provides a stable assembly identity, not a trust or tamper-evidence guarantee.
+
 ## v8
 To keep compatibility with Appium v3, most deprecated endpoint method calls have been replaced with compatible [extension command](https://appium.io/docs/en/latest/guides/execute-methods/) with [this PR](https://github.com/appium/dotnet-client/pull/939). Old drivers which still haven't implemented extension commands might not have proper implementation. Then, you will need to update Appium driver versions first.
 
@@ -96,13 +104,16 @@ App management: Please read [issue #15807](https://github.com/appium/appium/issu
   _driver.PerformActions(actions_seq);
  ```
 
-### WinAppDriver Notice!
+## Windows Application Testing
 
 > [!WARNING]
-> Because [WinAppDriver](https://github.com/microsoft/WinAppDriver) has been abandoned by MS, running Appium dotnet-client 5.x with WAD will not work since it has not been updated to support the W3C protocol. <br/>
-> To run appium on Windows Applications, you will need to use [appium-windows-driver](https://github.com/appium/appium-windows-driver) which will act as a proxy to WAD.
-> Examples of running Windows Applications with dotnet-client can be found here: [windows Integration test 5.0.0](https://github.com/appium/dotnet-client/tree/release/5.0.0/test/integration/Windows) <br/>
-> Regardless, feel free to open an issue on the [WAD](https://github.com/microsoft/WinAppDriver/issues) repository that will help get MS to open-source that project.
+> The original [WinAppDriver](https://github.com/microsoft/WinAppDriver) server has not been maintained by Microsoft for years and does not support the W3C WebDriver protocol. Direct communication between modern Appium .NET Client versions and standalone WinAppDriver is not supported.
+> 
+> To automate Windows applications:
+> - Use [appium-windows-driver](https://github.com/appium/appium-windows-driver) (`appium driver install windows`), which acts as a W3C-compliant proxy to WinAppDriver.
+> - Consider trying [NovaWindows Driver](https://github.com/AutomateThePlanet/appium-novawindows-driver) by [Automate The Planet](https://www.automatetheplanet.com/) as a modern drop-in replacement that operates directly via FlaUI / UI Automation without WinAppDriver.
+> 
+> Examples of running Windows applications with the .NET client can be found in the [Windows Integration Tests](test/integration/Windows).
 
 ## NuGet
 
@@ -113,11 +124,8 @@ Dependencies:
 - [Selenium.WebDriver](http://www.nuget.org/packages/Selenium.WebDriver/)
 - [System.Drawing.Common](https://www.nuget.org/packages/System.Drawing.Common/)
 
-The `Appium.Net` assembly shipped by the `Appium.WebDriver` package is strong-name signed with public key token `8b7475dcfe6734d4`, so it can be referenced by strongly-signed .NET assemblies.
-
-> [!IMPORTANT]
-> Strong naming changes the assembly identity from the previously unsigned `Appium.Net` assembly. Consumers compiled against an unsigned release, especially .NET Framework applications, should rebuild after upgrading to the first strong-named release.
-
+> [!NOTE]
+> Starting with `9.0.0`, this assembly is strong-name signed — see [v9](#v9) above.
 
 ## Usage
 
