@@ -24,7 +24,7 @@ namespace Appium.Net.Integration.Tests.Android.Device
             _androidOptions.AutomationName = "UiAutomator2";
 
             _driver = new AndroidDriver(
-                Env.ServerIsLocal() ? AppiumServers.LocalServiceUri : AppiumServers.RemoteServerUri,
+                Env.ServerIsRemote() ? AppiumServers.RemoteServerUri : AppiumServers.LocalServiceUri,
                 _androidOptions);
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
         }
