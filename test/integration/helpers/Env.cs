@@ -49,8 +49,8 @@ namespace Appium.Net.Integration.Tests.helpers
 
         private static bool IsTrue(object val)
         {
-            val = val?.ToString().ToLowerInvariant().Trim();
-            return val.Equals("true") || val.Equals("1");
+            var str = val?.ToString()?.ToLowerInvariant().Trim();
+            return str == "true" || str == "1";
         }
 
         public static bool ServerIsRemote()
