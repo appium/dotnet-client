@@ -84,6 +84,32 @@ namespace Appium.Net.Integration.Tests.Common
         }
 
         [Test]
+        public void WindowsAutomationDelegatesToMatchingFinder()
+        {
+            var element = new FakeWebElement();
+            var finder = new FakeFinder(elementToReturn: element);
+
+            var found = MobileBy.WindowsAutomation("//Button").FindElement(finder);
+
+            Assert.That(found, Is.SameAs(element));
+            Assert.That(finder.LastCalledMethod, Is.EqualTo(nameof(IFindByWindowsUIAutomation<IWebElement>.FindElementByWindowsUIAutomation)));
+            Assert.That(finder.LastSelector, Is.EqualTo("//Button"));
+        }
+
+        [Test]
+        public void TizenAutomationDelegatesToMatchingFinder()
+        {
+            var elements = new ReadOnlyCollection<IWebElement>(new List<IWebElement> { new FakeWebElement() });
+            var finder = new FakeFinder(elementsToReturn: elements);
+
+            var found = MobileBy.TizenAutomation("selector").FindElements(finder);
+
+            Assert.That(found, Is.SameAs(elements));
+            Assert.That(finder.LastCalledMethod, Is.EqualTo(nameof(IFindByTizenUIAutomation<IWebElement>.FindElementsByTizenUIAutomation)));
+            Assert.That(finder.LastSelector, Is.EqualTo("selector"));
+        }
+
+        [Test]
         public void FindElementThrowsWhenContextDoesNotSupportSelector()
         {
             var by = MobileBy.AndroidDataMatcher("selector");
