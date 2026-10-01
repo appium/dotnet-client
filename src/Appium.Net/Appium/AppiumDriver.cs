@@ -21,6 +21,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -301,18 +302,41 @@ namespace OpenQA.Selenium.Appium
             get
             {
                 var commandResponse = ((IExecuteMethod)this).Execute(AppiumDriverCommand.GetLocation);
-                var locationValues = commandResponse.Value as Dictionary<string, object>;
-                return new Location
+                var location = new Location();
+                if (commandResponse.Value is Dictionary<string, object> locationValues)
                 {
-                    Altitude = Convert.ToDouble(locationValues["altitude"]),
-                    Latitude = Convert.ToDouble(locationValues["latitude"]),
-                    Longitude = Convert.ToDouble(locationValues["longitude"])
-                };
+                    if (locationValues.TryGetValue("altitude", out var altitude))
+                    {
+                        location.Altitude = TryConvertToDouble(altitude);
+                    }
+                    if (locationValues.TryGetValue("latitude", out var latitude))
+                    {
+                        location.Latitude = TryConvertToDouble(latitude);
+                    }
+                    if (locationValues.TryGetValue("longitude", out var longitude))
+                    {
+                        location.Longitude = TryConvertToDouble(longitude);
+                    }
+                }
+                return location;
             }
             set
             {
                 var location = value ?? new Location();
                 Execute(AppiumDriverCommand.SetLocation, location.ToDictionary());
+            }
+        }
+
+        private static double TryConvertToDouble(object value)
+        {
+            if (value == null) return 0.0;
+            try
+            {
+                return Convert.ToDouble(value, CultureInfo.InvariantCulture);
+            }
+            catch (Exception e) when (e is FormatException || e is InvalidCastException || e is OverflowException)
+            {
+                return 0.0;
             }
         }
 
