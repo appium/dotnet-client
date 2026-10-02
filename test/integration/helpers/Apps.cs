@@ -8,8 +8,10 @@ namespace Appium.Net.Integration.Tests.helpers
 {
     public class Apps : IDisposable
     {
-        private static bool _isInited;
-        private static Dictionary<string, string> _testApps;
+        private const int MaxDownloadAttempts = 4;
+
+        private static readonly object _lock = new object();
+        private static readonly Dictionary<string, string> _testApps = new Dictionary<string, string>();
         private static readonly Dictionary<string, string> _testAppsIds = new Dictionary<string, string>
         {
             {androidApiDemos, "io.appium.android.apis"},
@@ -24,37 +26,26 @@ namespace Appium.Net.Integration.Tests.helpers
             {androidApiDemos, "https://github.com/appium/android-apidemos/releases/download/v6.0.2/ApiDemos-debug.apk"},
         };
 
-        private static HttpClient _httpClient = new HttpClient();
-
-        private static void Init()
+        // Apps checked into this repository. A local Appium server uses these copies (from the build output)
+        // instead of downloading them from github.com, which can fail on CI runners with 503 responses.
+        private static readonly Dictionary<string, string> _localAppArchives = new Dictionary<string, string>
         {
-            if (!_isInited)
-            {
-                if (Env.ServerIsRemote())
-                {
-                    _testApps = new Dictionary<string, string>(_appSources);
-                }
-                else
-                {
-                    var tempFolder = Path.GetTempPath();
+            {iosTestApp, Path.Combine("apps", "archives", "TestApp.app.zip")},
+        };
 
-                    _testApps = new Dictionary<string, string>();
-
-                    foreach (var app in _appSources)
-                    {
-                        var destination = Path.Combine(tempFolder, GetFileNameFromUrl(app.Value));
-                        DownloadIfMissing(app.Value, destination);
-                        _testApps[app.Key] = new FileInfo(destination).FullName;
-                    }
-                }
-                _isInited = true;
-            }
-        }
+        private static HttpClient _httpClient = new HttpClient();
 
         public static string Get(string appKey)
         {
-            Init();
-            return _testApps[appKey];
+            lock (_lock)
+            {
+                if (!_testApps.TryGetValue(appKey, out var app))
+                {
+                    app = Resolve(appKey);
+                    _testApps[appKey] = app;
+                }
+                return app;
+            }
         }
 
         public static string GetId(string appKey)
@@ -71,6 +62,28 @@ namespace Appium.Net.Integration.Tests.helpers
             _httpClient?.Dispose();
         }
 
+        private static string Resolve(string appKey)
+        {
+            var url = _appSources[appKey];
+            if (Env.ServerIsRemote())
+            {
+                return url;
+            }
+
+            if (_localAppArchives.TryGetValue(appKey, out var relativePath))
+            {
+                var localPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
+                if (File.Exists(localPath))
+                {
+                    return new FileInfo(localPath).FullName;
+                }
+            }
+
+            var destination = Path.Combine(Path.GetTempPath(), GetFileNameFromUrl(url));
+            DownloadIfMissing(url, destination);
+            return new FileInfo(destination).FullName;
+        }
+
         private static string GetFileNameFromUrl(string url)
         {
             var uri = new Uri(url);
@@ -84,15 +97,12 @@ namespace Appium.Net.Integration.Tests.helpers
                 return;
             }
 
-            using (var cts = new CancellationTokenSource(TimeSpan.FromHours(1)))
+            for (var attempt = 1; ; attempt++)
             {
                 try
                 {
-                    // GetByteArrayAsync with CancelationToken doesn't work with .NET 4.8.
-                    var response = _httpClient.GetAsync(url, HttpCompletionOption.ResponseContentRead, cts.Token).GetAwaiter().GetResult();
-                    response.EnsureSuccessStatusCode();
-                    var data = response.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
-                    File.WriteAllBytes(destination, data);
+                    Download(url, destination);
+                    return;
                 }
                 catch (Exception ex)
                 {
@@ -100,8 +110,24 @@ namespace Appium.Net.Integration.Tests.helpers
                     {
                         File.Delete(destination);
                     }
-                    throw new Exception($"Failed to download {url}", ex);
+                    if (attempt >= MaxDownloadAttempts)
+                    {
+                        throw new Exception($"Failed to download {url} after {attempt} attempts", ex);
+                    }
+                    Thread.Sleep(TimeSpan.FromSeconds(Math.Pow(2, attempt)));
                 }
+            }
+        }
+
+        private static void Download(string url, string destination)
+        {
+            using (var cts = new CancellationTokenSource(TimeSpan.FromHours(1)))
+            {
+                // GetByteArrayAsync with CancelationToken doesn't work with .NET 4.8.
+                var response = _httpClient.GetAsync(url, HttpCompletionOption.ResponseContentRead, cts.Token).GetAwaiter().GetResult();
+                response.EnsureSuccessStatusCode();
+                var data = response.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
+                File.WriteAllBytes(destination, data);
             }
         }
     }
