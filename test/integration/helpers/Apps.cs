@@ -91,12 +91,16 @@ namespace Appium.Net.Integration.Tests.helpers
             return Path.GetFileName(uri.AbsolutePath);
         }
 
-        private static void DownloadIfMissing(string url, string destination)
+        // httpClient and sleep can be replaced in tests; by default the shared client and Thread.Sleep are used.
+        internal static void DownloadIfMissing(string url, string destination, HttpClient httpClient = null, Action<TimeSpan> sleep = null)
         {
             if (File.Exists(destination))
             {
                 return;
             }
+
+            httpClient = httpClient ?? _httpClient;
+            sleep = sleep ?? Thread.Sleep;
 
             for (var attempt = 1; ; attempt++)
             {
@@ -105,7 +109,7 @@ namespace Appium.Net.Integration.Tests.helpers
                     try
                     {
                         // GetByteArrayAsync with CancelationToken doesn't work with .NET 4.8.
-                        var response = _httpClient.GetAsync(url, HttpCompletionOption.ResponseContentRead, cts.Token).GetAwaiter().GetResult();
+                        var response = httpClient.GetAsync(url, HttpCompletionOption.ResponseContentRead, cts.Token).GetAwaiter().GetResult();
                         response.EnsureSuccessStatusCode();
                         var data = response.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
                         File.WriteAllBytes(destination, data);
@@ -124,7 +128,7 @@ namespace Appium.Net.Integration.Tests.helpers
                     }
                 }
                 // Back off on transient failures such as a 503 from GitHub: 5s, then 10s.
-                Thread.Sleep(TimeSpan.FromSeconds(5 * attempt));
+                sleep(TimeSpan.FromSeconds(5 * attempt));
             }
         }
     }
