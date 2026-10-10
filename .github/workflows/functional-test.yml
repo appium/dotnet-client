@@ -186,13 +186,27 @@ jobs:
     - name: Download prebuilt WDA
       run: npx appium driver run xcuitest download-wda-sim --platform=ios --outdir=${{ github.workspace }}/wda
 
+    - name: List available simulators and runtimes
+      run: |
+        xcrun simctl list devices available
+        xcrun simctl list runtimes
+
     - name: Setup iOS Simulator
+      id: simulator
       uses: futureware-tech/simulator-action@v6
       with:
         model: ${{ env.IOS_DEVICE_NAME }}
         os_version: ${{ env.IOS_VERSION }}
         wait_for_boot: true
         shutdown_after_job: false
+        # Avoid an uncalibrated CPU threshold adding a fixed delay on hosted runners.
+        settle_timeout_seconds: 0
+
+    # Select and boot the device before opening the UI so it targets the same simulator.
+    - name: Start Simulator UI
+      env:
+        SIMULATOR_UDID: ${{ steps.simulator.outputs.udid }}
+      run: open -a "$(xcode-select --print-path)/Applications/Simulator.app" --args -CurrentDeviceUDID "$SIMULATOR_UDID"
 
     - name: Create test environment file
       run: |
