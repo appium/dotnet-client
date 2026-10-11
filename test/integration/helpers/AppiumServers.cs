@@ -18,6 +18,15 @@ namespace Appium.Net.Integration.Tests.helpers
                 if (_localService == null)
                 {
                     var args = new OptionCollector().AddArguments(new KeyValuePair<string, string>("--relaxed-security", string.Empty));
+
+                    // The image comparison tests need Appium's images plugin, which only serves the
+                    // compare_images endpoint when it is activated at server start. Opt-in, because
+                    // Appium exits with an error when asked to use a plugin that is not installed.
+                    if (Env.UseImagesPlugin())
+                    {
+                        args.AddArguments(new KeyValuePair<string, string>("--use-plugins", "images"));
+                    }
+
                     var logPath = Env.GetEnvVar("APPIUM_LOG_PATH") ?? Path.GetTempPath() + "Log.txt";
 
                     // If log file exists, rename it with timestamp

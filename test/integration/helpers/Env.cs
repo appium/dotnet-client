@@ -65,6 +65,13 @@ namespace Appium.Net.Integration.Tests.helpers
             return (_env.ContainsKey("DEV") && IsTrue(_env["DEV"])) || IsTrue(Environment.GetEnvironmentVariable("DEV"));
         }
 
+        public static bool UseImagesPlugin()
+        {
+            Init();
+            return (_env.ContainsKey("useImagesPlugin") && IsTrue(_env["useImagesPlugin"])) ||
+                   IsTrue(Environment.GetEnvironmentVariable("APPIUM_USE_IMAGES_PLUGIN"));
+        }
+
         public static bool IsCiEnvironment()
         {
             // Check common CI environment variables

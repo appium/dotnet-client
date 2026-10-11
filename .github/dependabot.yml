@@ -17,6 +17,10 @@ updates:
     commit-message:
       prefix: "test"
       include: "scope"
+    ignore:
+      # Owned by src/Appium.Net (reached via ProjectReference); bumped by the entry above
+      - dependency-name: "Selenium.WebDriver"
+      - dependency-name: "System.Drawing.Common"
 
   - package-ecosystem: "github-actions"
     directory: "/"
