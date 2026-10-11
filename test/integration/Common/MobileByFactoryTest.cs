@@ -81,6 +81,7 @@ namespace Appium.Net.Integration.Tests.Common
 
             Assert.That(found, Is.SameAs(elements));
             Assert.That(finder.LastCalledMethod, Is.EqualTo(nameof(IFindByAndroidViewMatcher<IWebElement>.FindElementsByAndroidViewMatcher)));
+            Assert.That(finder.LastSelector, Is.EqualTo("{'name':'withText'}"));
         }
 
         [Test]
