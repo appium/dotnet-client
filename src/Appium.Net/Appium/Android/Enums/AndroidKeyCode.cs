@@ -11,6 +11,8 @@
 //WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //See the License for the specific language governing permissions and
 //limitations under the License.
+using System;
+
 namespace OpenQA.Selenium.Appium.Android.Enums
 {
     /// <summary>
@@ -112,6 +114,7 @@ namespace OpenQA.Selenium.Appium.Android.Enums
         /// This mask is set if the device woke because of this key event.
         /// (0x00000001)
         /// </summary>
+        [Obsolete("This constant was deprecated in API level 20.")]
         public static readonly int FlagWokeHere = 1;
 
         /// <summary>
@@ -1678,6 +1681,7 @@ namespace OpenQA.Selenium.Appium.Android.Enums
         /// There are now more than MAX_KEYCODE keycodes. Use getMaxKeyCode() instead.
         /// (0x00000054)
         /// </summary>
+        [Obsolete("This constant was deprecated in API level 3. There are now more than MAX_KEYCODE keycodes. Use getMaxKeyCode() instead.")]
         public static readonly int Keycode_MAX = 84;
 
         /// <summary>
