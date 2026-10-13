@@ -1678,10 +1678,10 @@ namespace OpenQA.Selenium.Appium.Android.Enums
 
         /// <summary>
         /// This constant was deprecated in API level 3.
-        /// There are now more than MAX_KEYCODE keycodes. Use getMaxKeyCode() instead.
+        /// There are now more than MAX_KEYCODE keycodes.
         /// (0x00000054)
         /// </summary>
-        [Obsolete("This constant was deprecated in API level 3. There are now more than MAX_KEYCODE keycodes. Use getMaxKeyCode() instead.")]
+        [Obsolete("This constant was deprecated in API level 3. There are now more than MAX_KEYCODE keycodes.")]
         public static readonly int Keycode_MAX = 84;
 
         /// <summary>

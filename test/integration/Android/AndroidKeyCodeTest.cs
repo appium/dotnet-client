@@ -8,7 +8,7 @@ namespace Appium.Net.Integration.Tests.Android
     {
 #pragma warning disable CS0618 // Type or member is obsolete
         [TestCase(nameof(AndroidKeyCode.Keycode_MAX),
-            "This constant was deprecated in API level 3. There are now more than MAX_KEYCODE keycodes. Use getMaxKeyCode() instead.")]
+            "This constant was deprecated in API level 3. There are now more than MAX_KEYCODE keycodes.")]
         [TestCase(nameof(AndroidKeyCode.FlagWokeHere), "This constant was deprecated in API level 20.")]
 #pragma warning restore CS0618
         public void DeprecatedConstant_IsMarkedAsObsolete(string fieldName, string expectedMessage)
