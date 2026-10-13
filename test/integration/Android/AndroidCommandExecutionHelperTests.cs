@@ -12,39 +12,16 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.Android;
-using OpenQA.Selenium.Appium.Interfaces;
-using OpenQA.Selenium.Remote;
-using System.Collections.Generic;
 
 namespace Appium.Net.Integration.Tests.Android
 {
     [TestFixture]
     public class AndroidCommandExecutionHelperTests
     {
-        private class FakeExecuteMethod : IExecuteMethod
-        {
-            public string ExecutedCommandName { get; private set; }
-            public Dictionary<string, object> ExecutedParameters { get; private set; }
-            public int ExecutionCount { get; private set; }
-            public Response ResponseToReturn { get; set; } = new Response(null, null, WebDriverResult.Success);
-
-            public Response Execute(string commandName, Dictionary<string, object> parameters)
-            {
-                ExecutedCommandName = commandName;
-                ExecutedParameters = parameters;
-                ExecutionCount++;
-                return ResponseToReturn;
-            }
-
-            public Response Execute(string driverCommand)
-            {
-                return Execute(driverCommand, null);
-            }
-        }
-
         [Test]
         public void OpenNotifications_CallsExecuteScriptWithCorrectScriptAndArgs()
         {
@@ -52,12 +29,13 @@ namespace Appium.Net.Integration.Tests.Android
 
             AndroidCommandExecutionHelper.OpenNotifications(fakeExecuteMethod);
 
-            Assert.That(fakeExecuteMethod.ExecutionCount, Is.EqualTo(1));
-            Assert.That(fakeExecuteMethod.ExecutedCommandName, Is.EqualTo(DriverCommand.ExecuteScript));
-            Assert.That(fakeExecuteMethod.ExecutedParameters, Is.Not.Null);
-            Assert.That(fakeExecuteMethod.ExecutedParameters.TryGetValue("script", out var scriptValue), Is.True);
+            Assert.That(fakeExecuteMethod.Calls, Has.Count.EqualTo(1));
+            var call = fakeExecuteMethod.Calls[0];
+            Assert.That(call.CommandName, Is.EqualTo(DriverCommand.ExecuteScript));
+            Assert.That(call.Parameters, Is.Not.Null);
+            Assert.That(call.Parameters.TryGetValue("script", out var scriptValue), Is.True);
             Assert.That(scriptValue, Is.EqualTo("mobile:openNotifications"));
-            Assert.That(fakeExecuteMethod.ExecutedParameters.TryGetValue("args", out var argsValue), Is.True);
+            Assert.That(call.Parameters.TryGetValue("args", out var argsValue), Is.True);
             Assert.That(argsValue, Is.InstanceOf<object[]>());
             Assert.That((object[])argsValue, Is.Empty);
         }
