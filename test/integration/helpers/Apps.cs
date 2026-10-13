@@ -109,10 +109,12 @@ namespace Appium.Net.Integration.Tests.helpers
                     try
                     {
                         // GetByteArrayAsync with CancelationToken doesn't work with .NET 4.8.
-                        var response = httpClient.GetAsync(url, HttpCompletionOption.ResponseContentRead, cts.Token).GetAwaiter().GetResult();
-                        response.EnsureSuccessStatusCode();
-                        var data = response.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
-                        File.WriteAllBytes(destination, data);
+                        using (var response = httpClient.GetAsync(url, HttpCompletionOption.ResponseContentRead, cts.Token).GetAwaiter().GetResult())
+                        {
+                            response.EnsureSuccessStatusCode();
+                            var data = response.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
+                            File.WriteAllBytes(destination, data);
+                        }
                         return;
                     }
                     catch (Exception ex)
