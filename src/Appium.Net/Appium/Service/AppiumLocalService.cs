@@ -69,8 +69,9 @@ namespace OpenQA.Selenium.Appium.Service
         {
             NodeJS = nodeJS;
             IP = ip;
-            NodeArgsList = nodeArgsList ?? Array.Empty<string>();
-            ArgsList = argsList ?? Array.Empty<string>();
+            // Snapshot the arguments so later changes to the caller's arrays don't alter the built service.
+            NodeArgsList = nodeArgsList?.ToArray() ?? Array.Empty<string>();
+            ArgsList = argsList?.ToArray() ?? Array.Empty<string>();
             Port = port;
             InitializationTimeout = initializationTimeout;
             EnvironmentForProcess = environmentForProcess;

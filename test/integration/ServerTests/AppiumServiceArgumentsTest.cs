@@ -20,6 +20,7 @@ using System.IO;
 using System.Reflection;
 using System.Text.Json;
 using NUnit.Framework;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Service;
 using OpenQA.Selenium.Appium.Service.Options;
@@ -204,6 +205,28 @@ namespace Appium.Net.Integration.Tests.ServerTests
 
             using var caps = JsonDocument.Parse(args[capsIndex + 1]);
             Assert.That(caps.RootElement.GetProperty("appium:platformName").GetString(), Is.EqualTo("Android"));
+
+            // On Windows, file path capabilities are normalized to forward slashes.
+            var expectedApp = Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows)
+                ? "C:/test/app.apk"
+                : "C:\test\app.apk";
+            Assert.That(caps.RootElement.GetProperty("appium:app").GetString(), Is.EqualTo(expectedApp));
+        }
+
+        [Test]
+        public void Build_IsNotAffectedByLaterChangesToNodeArguments()
+        {
+            var nodeArguments = new[] { "--max-old-space-size=4096" };
+            var service = new AppiumServiceBuilder()
+                .WithNodeArguments(nodeArguments)
+                .WithAppiumJS(_dummyAppiumJs)
+                .WithIPAddress("127.0.0.1")
+                .UsingPort(4723)
+                .Build();
+
+            nodeArguments[0] = "--injected";
+
+            Assert.That(GetCommandLine(service), Does.StartWith("--max-old-space-size=4096 "));
         }
     }
 }
