@@ -93,7 +93,8 @@ namespace Appium.Net.Integration.Tests.ServerTests
                 new object[]
                 {
                     new System.IO.FileInfo("node"),
-                    "",
+                    Array.Empty<string>(),
+                    Array.Empty<string>(),
                     System.Net.IPAddress.Loopback,
                     4723,
                     TimeSpan.FromSeconds(5),
