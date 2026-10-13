@@ -136,6 +136,29 @@ Dependencies:
  the ports default to Appium values, and the driver does not know how to start the Appium independently.
 - To use the Appium methods on Element, specify the parameter of `AppiumDriver` or its subclasses.
 
+### Driver options
+
+`UiAutomator2Options` (Android) and `XCUITestOptions` (iOS) set the platform and automation name for you and expose
+common driver capabilities as typed properties. Unset properties are not sent. Use `AddAdditionalAppiumOption` for
+anything that has no typed property yet.
+
+```csharp
+using OpenQA.Selenium.Appium.Android;
+
+var options = new UiAutomator2Options
+{
+    DeviceName = "Android Emulator",
+    App = "/path/to/app.apk",
+    NoReset = true,
+    NewCommandTimeout = TimeSpan.FromMinutes(2),
+};
+options.AddAdditionalAppiumOption("uiautomator2ServerLaunchTimeout", 60000);
+
+using var driver = new AndroidDriver(new Uri("http://127.0.0.1:4723"), options);
+```
+
+`AppiumOptions` remains available for other drivers and for fully custom capability sets.
+
 [Read Wiki](https://github.com/appium/appium-dotnet-driver/wiki)
 
 [See samples here](https://github.com/appium/sample-code/tree/master/sample-code/examples/dotnet/AppiumDotNetSample)
