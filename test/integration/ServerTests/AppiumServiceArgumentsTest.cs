@@ -209,7 +209,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
             // On Windows, file path capabilities are normalized to forward slashes.
             var expectedApp = Platform.CurrentPlatform.IsPlatformType(PlatformType.Windows)
                 ? "C:/test/app.apk"
-                : "C:\test\app.apk";
+                : "C:\\test\\app.apk";
             Assert.That(caps.RootElement.GetProperty("appium:app").GetString(), Is.EqualTo(expectedApp));
         }
 
