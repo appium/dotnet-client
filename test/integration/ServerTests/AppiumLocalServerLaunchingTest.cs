@@ -375,5 +375,31 @@ namespace Appium.Net.Integration.Tests.ServerTests
             var serviceBuilder = new AppiumServiceBuilder();
             Assert.Throws<ArgumentException>((System.Action)(() => serviceBuilder.WithNodeArguments(argument)));
         }
+
+        [TestCase(0)]
+        [TestCase(-1)]
+        [TestCase(-100)]
+        public void WithStartUpTimeOut_ZeroOrNegativeTimeSpan_ThrowsArgumentOutOfRangeException(long milliseconds)
+        {
+            var serviceBuilder = new AppiumServiceBuilder();
+            var timeout = TimeSpan.FromMilliseconds(milliseconds);
+            Assert.Throws<ArgumentOutOfRangeException>(() => serviceBuilder.WithStartUpTimeOut(timeout));
+        }
+
+        [Test]
+        public void WithStartUpTimeOut_PositiveTimeSpan_SetsTimeoutAndReturnsBuilder()
+        {
+            var serviceBuilder = new AppiumServiceBuilder();
+            var expectedTimeout = TimeSpan.FromSeconds(30);
+
+            var result = serviceBuilder.WithStartUpTimeOut(expectedTimeout);
+
+            Assert.That(result, Is.SameAs(serviceBuilder));
+
+            var field = typeof(AppiumServiceBuilder).GetField("StartUpTimeout", BindingFlags.Instance | BindingFlags.NonPublic);
+            Assert.That(field, Is.Not.Null);
+            var actualTimeout = (TimeSpan)field.GetValue(serviceBuilder);
+            Assert.That(actualTimeout, Is.EqualTo(expectedTimeout));
+        }
     }
 }
