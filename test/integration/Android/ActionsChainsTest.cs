@@ -21,7 +21,7 @@ using System.Collections.Generic;
 using OpenQA.Selenium.Interactions;
 using System;
 using System.Drawing;
-using System.Threading;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.Interactions;
 // Define an alias to OpenQA.Selenium.Appium.Interactions.PointerInputDevice to hide
 // inherited OpenQA.Selenium.Interactions.PointerInputDevice that causes ambiguity.
@@ -79,6 +79,44 @@ namespace Appium.Net.Integration.Tests.Android
             }
         }
 
+        // ActivateApp can return while the ApiDemos list is still being redrawn, so elements found right
+        // after it may go stale before the actions run. Find them again and retry when that happens.
+        private int PerformOnTextViews(int minimumCount, Func<IList<AppiumElement>, IList<ActionSequence>> buildActions)
+        {
+            const int maxAttempts = 3;
+            for (var attempt = 1; ; attempt++)
+            {
+                var els = WaitForTextViewElements(minimumCount);
+                try
+                {
+                    _driver.PerformActions(buildActions(els));
+                    return els.Count;
+                }
+                catch (StaleElementReferenceException) when (attempt < maxAttempts)
+                {
+                }
+            }
+        }
+
+        private IList<AppiumElement> WaitForTextViewCountToChange(int previousCount)
+        {
+            var previousImplicitWait = _driver.Manage().Timeouts().ImplicitWait;
+            _driver.Manage().Timeouts().ImplicitWait = TimeSpan.Zero;
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(_driver, previousImplicitWait.TotalSeconds > 0 ? previousImplicitWait : TimeSpan.FromSeconds(10));
+                return wait.Until(d =>
+                {
+                    var currentEls = ((AndroidDriver)d).FindElements(MobileBy.ClassName("android.widget.TextView"));
+                    return currentEls.Count != previousCount ? currentEls : null;
+                });
+            }
+            finally
+            {
+                _driver.Manage().Timeouts().ImplicitWait = previousImplicitWait;
+            }
+        }
+
         [OneTimeTearDown]
         public void AfterAll()
         {
@@ -92,46 +130,30 @@ namespace Appium.Net.Integration.Tests.Android
         [Test]
         public void SimpleTouchActionTestCase()
         {
-            IList<AppiumElement> els = WaitForTextViewElements(3);
-
-            var number1 = els.Count;
-            var elementToTouch = els[2];
-
-            var touch = new PointerInputDevice(PointerKind.Touch, "finger");
-            var sequence = new ActionSequence(touch);
-
-            var move = touch.CreatePointerMove(elementToTouch, 0, 0, TimeSpan.FromSeconds(1));
-            var actionPress = touch.CreatePointerDown(PointerButton.TouchContact);
-            var pause = touch.CreatePause(TimeSpan.FromMilliseconds(250));
-            var actionRelease = touch.CreatePointerUp(PointerButton.TouchContact);
-
-            sequence.AddAction(move);
-            sequence.AddAction(actionPress);
-            sequence.AddAction(pause);
-            sequence.AddAction(actionRelease);
-
-            var actions_seq = new List<ActionSequence>
+            var number1 = PerformOnTextViews(3, els =>
             {
-                sequence
-            };
+                var elementToTouch = els[2];
 
-            _driver.PerformActions(actions_seq);
+                var touch = new PointerInputDevice(PointerKind.Touch, "finger");
+                var sequence = new ActionSequence(touch);
 
-            var previousImplicitWait = _driver.Manage().Timeouts().ImplicitWait;
-            _driver.Manage().Timeouts().ImplicitWait = TimeSpan.Zero;
-            try
-            {
-                WebDriverWait wait = new WebDriverWait(_driver, previousImplicitWait.TotalSeconds > 0 ? previousImplicitWait : TimeSpan.FromSeconds(10));
-                els = wait.Until(d =>
+                var move = touch.CreatePointerMove(elementToTouch, 0, 0, TimeSpan.FromSeconds(1));
+                var actionPress = touch.CreatePointerDown(PointerButton.TouchContact);
+                var pause = touch.CreatePause(TimeSpan.FromMilliseconds(250));
+                var actionRelease = touch.CreatePointerUp(PointerButton.TouchContact);
+
+                sequence.AddAction(move);
+                sequence.AddAction(actionPress);
+                sequence.AddAction(pause);
+                sequence.AddAction(actionRelease);
+
+                return new List<ActionSequence>
                 {
-                    var currentEls = ((AndroidDriver)d).FindElements(MobileBy.ClassName("android.widget.TextView"));
-                    return currentEls.Count != number1 ? currentEls : null;
-                });
-            }
-            finally
-            {
-                _driver.Manage().Timeouts().ImplicitWait = previousImplicitWait;
-            }
+                    sequence
+                };
+            });
+
+            var els = WaitForTextViewCountToChange(number1);
 
             Assert.That(els, Has.Count.Not.EqualTo(number1));
         }
@@ -139,35 +161,34 @@ namespace Appium.Net.Integration.Tests.Android
         [Test]
         public void TouchByCoordinatesTestCase()
         {
-            IList<AppiumElement> els = WaitForTextViewElements(3);
-            var number1 = els.Count;
-            var elementToTouch = els[2];
-
-            var touch = new PointerInputDevice(PointerKind.Touch, "finger");
-            var sequence = new ActionSequence(touch);
-
-            Point point = new()
+            var number1 = PerformOnTextViews(3, els =>
             {
-                X = (elementToTouch.Rect.X+elementToTouch.Rect.Width)/2,
-                Y = elementToTouch.Rect.Y
-            };
+                var elementToTouch = els[2];
 
-            Interaction move = touch.CreatePointerMove(CoordinateOrigin.Viewport, point.X, point.Y, TimeSpan.Zero);
-            Interaction actionPress = touch.CreatePointerDown(PointerButton.TouchContact);
-            Interaction actionRelease = touch.CreatePointerUp(PointerButton.TouchContact);
+                var touch = new PointerInputDevice(PointerKind.Touch, "finger");
+                var sequence = new ActionSequence(touch);
 
-            sequence.AddAction(move);
-            sequence.AddAction(actionPress);
-            sequence.AddAction(actionRelease);
+                Point point = new()
+                {
+                    X = (elementToTouch.Rect.X+elementToTouch.Rect.Width)/2,
+                    Y = elementToTouch.Rect.Y
+                };
 
-            var actions_seq = new List<ActionSequence>
-            {
-                sequence
-            };
+                Interaction move = touch.CreatePointerMove(CoordinateOrigin.Viewport, point.X, point.Y, TimeSpan.Zero);
+                Interaction actionPress = touch.CreatePointerDown(PointerButton.TouchContact);
+                Interaction actionRelease = touch.CreatePointerUp(PointerButton.TouchContact);
 
-            _driver.PerformActions(actions_seq);
-            Thread.Sleep(1000);
-            els = _driver.FindElements(MobileBy.ClassName("android.widget.TextView"));
+                sequence.AddAction(move);
+                sequence.AddAction(actionPress);
+                sequence.AddAction(actionRelease);
+
+                return new List<ActionSequence>
+                {
+                    sequence
+                };
+            });
+
+            var els = WaitForTextViewCountToChange(number1);
 
             Assert.That(els, Has.Count.Not.EqualTo(number1));
         }
