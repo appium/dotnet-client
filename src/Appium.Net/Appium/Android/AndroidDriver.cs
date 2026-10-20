@@ -186,7 +186,7 @@ namespace OpenQA.Selenium.Appium.Android
 
         /// <summary>
         /// Start an Android activity by providing its package name and activity name.
-        /// For documentation, see <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-startactivity">mobile:startActivity</see>.
+        /// For documentation, see <see href="https://appium.github.io/appium-uiautomator2-driver/latest/reference/execute-methods/#mobile-startactivity">mobile:startActivity</see>.
         /// </summary>
         /// <param name="intent">The full name of the activity intent to start, e.g. "com.myapp/.MyActivity"</param>
         /// <param name="arguments">Optional dictionary of additional arguments. Values from this dictionary take priority over other parameters.</param>
@@ -230,7 +230,7 @@ namespace OpenQA.Selenium.Appium.Android
 
         /// <summary>
         /// Install an app on the Android device using mobile: installApp script.
-        /// For documentation, see <see href="https://github.com/appium/appium-uiautomator2-driver?tab=readme-ov-file#mobile-installapp">mobile: installApp</see>.
+        /// For documentation, see <see href="https://appium.github.io/appium-uiautomator2-driver/latest/reference/execute-methods/#mobile-installapp">mobile: installApp</see>.
         /// </summary>
         /// <param name="appPath">Full path to the .apk on the local filesystem or a remote URL.</param>
         /// <param name="timeout">Optional timeout in milliseconds to wait for the app installation to complete. 60000ms by default.</param>

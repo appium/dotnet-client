@@ -16,7 +16,7 @@ namespace OpenQA.Selenium.Appium.Enums
 {
     /// <summary>
     /// The list of iOS-specific capabilities
-    /// Read: https://github.com/appium/appium-xcuitest-driver/blob/master/docs/capabilities.md
+    /// Read: https://appium.github.io/appium-xcuitest-driver/latest/reference/capabilities/
     /// </summary>
     public sealed class IOSMobileCapabilityType
     {

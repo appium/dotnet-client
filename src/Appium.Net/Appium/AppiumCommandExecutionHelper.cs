@@ -55,7 +55,7 @@ namespace OpenQA.Selenium.Appium
 
         /// <summary>
         /// Press a key code on the device.
-        /// Please check <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-presskey">mobile:pressKey</see> for more details.
+        /// Please check <see href="https://appium.github.io/appium-uiautomator2-driver/latest/reference/execute-methods/#mobile-presskey">mobile:pressKey</see> for more details.
         /// </summary>
         /// <param name="executeMethod">The execute method</param>
         /// <param name="keyEvent">The key event</param>
@@ -63,8 +63,8 @@ namespace OpenQA.Selenium.Appium
             => ExecutePressKey(executeMethod, keyEvent, false);
 
         /// <summary>
-        /// Long press a key code on the device with `isLongPress` parameter in <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-presskey">mobile:pressKey</see>.
-        /// Please check <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-presskey">mobile:pressKey</see> for more details.
+        /// Long press a key code on the device with `isLongPress` parameter in <see href="https://appium.github.io/appium-uiautomator2-driver/latest/reference/execute-methods/#mobile-presskey">mobile:pressKey</see>.
+        /// Please check <see href="https://appium.github.io/appium-uiautomator2-driver/latest/reference/execute-methods/#mobile-presskey">mobile:pressKey</see> for more details.
         /// </summary>
         /// <param name="executeMethod">The execute method</param>
         /// <param name="keyEvent">The key event</param>
@@ -73,7 +73,7 @@ namespace OpenQA.Selenium.Appium
 
         /// <summary>
         /// Press a key code on the device.
-        /// Please check <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-presskey">mobile:pressKey</see> for more details.
+        /// Please check <see href="https://appium.github.io/appium-uiautomator2-driver/latest/reference/execute-methods/#mobile-presskey">mobile:pressKey</see> for more details.
         /// </summary>
         /// <param name="executeMethod">The execute method</param>
         /// <param name="keyCode">The key code</param>
@@ -82,8 +82,8 @@ namespace OpenQA.Selenium.Appium
             => ExecutePressKeyWithMetastate(executeMethod, keyCode, metastate, false);
 
         /// <summary>
-        /// Long press a key code on the device with "isLongPress" parameter in <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-presskey">mobile:pressKey</see>.
-        /// Please check <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-presskey">mobile:pressKey</see> for more details.
+        /// Long press a key code on the device with "isLongPress" parameter in <see href="https://appium.github.io/appium-uiautomator2-driver/latest/reference/execute-methods/#mobile-presskey">mobile:pressKey</see>.
+        /// Please check <see href="https://appium.github.io/appium-uiautomator2-driver/latest/reference/execute-methods/#mobile-presskey">mobile:pressKey</see> for more details.
         /// </summary>
         /// <param name="executeMethod">The execute method</param>
         /// <param name="keyCode">The key code</param>
@@ -92,7 +92,7 @@ namespace OpenQA.Selenium.Appium
             => ExecutePressKeyWithMetastate(executeMethod, keyCode, metastate, true);
 
         /// <summary>
-        /// Hide keyboard with <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-hidekeyboard">mobile:hideKeyboard</see> for Android
+        /// Hide keyboard with <see href="https://appium.github.io/appium-uiautomator2-driver/latest/reference/execute-methods/#mobile-hidekeyboard">mobile:hideKeyboard</see> for Android
         /// or <see href="https://appium.github.io/appium-xcuitest-driver/latest/reference/execute-methods/#mobile-hidekeyboard">mobile:hideKeyboard</see> for iOS.
         /// </summary>
         /// <param name="executeMethod">The execute method</param>
@@ -112,7 +112,7 @@ namespace OpenQA.Selenium.Appium
         }
 
         /// <summary>
-        /// Check the keyboard hidden state with <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-iskeyboardshown">mobile:isKeyboardShown</see> for Android
+        /// Check the keyboard hidden state with <see href="https://appium.github.io/appium-uiautomator2-driver/latest/reference/execute-methods/#mobile-iskeyboardshown">mobile:isKeyboardShown</see> for Android
         /// or <see href="https://appium.github.io/appium-xcuitest-driver/latest/reference/execute-methods/#mobile-iskeyboardshown">mobile:isKeyboardShown</see> for iOS.
         /// </summary>
         /// <param name="executeMethod">The execute method</param>
@@ -129,7 +129,7 @@ namespace OpenQA.Selenium.Appium
         #endregion
 
         /// <summary>
-        /// Set clipboard content with <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-setclipboard">mobile:setClipboard</see> for Android
+        /// Set clipboard content with <see href="https://appium.github.io/appium-uiautomator2-driver/latest/reference/execute-methods/#mobile-setclipboard">mobile:setClipboard</see> for Android
         /// or <see href="https://appium.github.io/appium-xcuitest-driver/latest/reference/execute-methods/#mobile-setclipboard">mobile:setClipboard</see> for iOS.
         /// </summary>
         /// <param name="executeMethod">The execute method</param>
@@ -166,7 +166,7 @@ namespace OpenQA.Selenium.Appium
         }
 
         /// <summary>
-        /// Get clipboard content with with <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-getclipboard">mobile:getClipboard</see> for Android
+        /// Get clipboard content with with <see href="https://appium.github.io/appium-uiautomator2-driver/latest/reference/execute-methods/#mobile-getclipboard">mobile:getClipboard</see> for Android
         /// or <see href="https://appium.github.io/appium-xcuitest-driver/latest/reference/execute-methods/#mobile-getclipboard">mobile:getClipboard</see> for iOS.
         /// </summary>
         /// <param name="executeMethod">The execute method</param>
@@ -200,7 +200,7 @@ namespace OpenQA.Selenium.Appium
 
         /// <summary>
         /// Set clipboard text content as "contentType" is "plaintext" with
-        /// <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-setclipboard">mobile:setClipboard</see> for Android
+        /// <see href="https://appium.github.io/appium-uiautomator2-driver/latest/reference/execute-methods/#mobile-setclipboard">mobile:setClipboard</see> for Android
         /// or <see href="https://appium.github.io/appium-xcuitest-driver/latest/reference/execute-methods/#mobile-setclipboard">mobile:setClipboard</see> for iOS.
         /// </summary>
         /// <param name="executeMethod">The execute method</param>
@@ -228,7 +228,7 @@ namespace OpenQA.Selenium.Appium
         }
 
         /// <summary>
-        /// Get clipboard text content with <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-setclipboard">mobile:setClipboard</see> for Android
+        /// Get clipboard text content with <see href="https://appium.github.io/appium-uiautomator2-driver/latest/reference/execute-methods/#mobile-setclipboard">mobile:setClipboard</see> for Android
         /// or <see href="https://appium.github.io/appium-xcuitest-driver/latest/reference/execute-methods/#mobile-setclipboard">mobile:setClipboard</see> for iOS.
         /// </summary>
         /// <param name="executeMethod">The execute method</param>
@@ -255,7 +255,7 @@ namespace OpenQA.Selenium.Appium
         }
 
         /// <summary>
-        /// Push file with <see href="https://github.com/appium/appium-uiautomator2-driver#mobile-pushfile">mobile:pushFile</see> for Android
+        /// Push file with <see href="https://appium.github.io/appium-uiautomator2-driver/latest/reference/execute-methods/#mobile-pushfile">mobile:pushFile</see> for Android
         /// or <see href="https://appium.github.io/appium-xcuitest-driver/latest/reference/execute-methods/#mobile-pushfile">mobile:pushFile</see> for iOS.
         /// </summary>
         /// <param name="executeMethod">The execute method</param>

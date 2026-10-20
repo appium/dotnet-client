@@ -56,13 +56,13 @@ To keep compatibility with Appium v3, most deprecated endpoint method calls have
 
 | Removed Method | Note |
 |---------------------------|------|
-| `ToggleAirplaneMode()`    | Change with `airplaneMode` parameter in [mobile:setConnectivity](https://github.com/appium/appium-uiautomator2-driver#mobile-setconnectivity) |
-| `ToggleData()`            | Change with `data` parameter in [mobile:setConnectivity](https://github.com/appium/appium-uiautomator2-driver#mobile-setconnectivity) |
-| `ToggleWifi()`            | Change with `wifi` parameter in [mobile:setConnectivity](https://github.com/appium/appium-uiautomator2-driver#mobile-setconnectivity) |
-| `SetConnectionType()`     | Change connection type with [mobile:setConnectivity](https://github.com/appium/appium-uiautomator2-driver#mobile-setconnectivity) |
-| `GetConnectionType()`     | Get connection state with [mobile:getConnectivity](https://github.com/appium/appium-uiautomator2-driver#mobile-getconnectivity) |
+| `ToggleAirplaneMode()`    | Change with `airplaneMode` parameter in [mobile:setConnectivity](https://appium.github.io/appium-uiautomator2-driver/latest/reference/execute-methods/#mobile-setconnectivity) |
+| `ToggleData()`            | Change with `data` parameter in [mobile:setConnectivity](https://appium.github.io/appium-uiautomator2-driver/latest/reference/execute-methods/#mobile-setconnectivity) |
+| `ToggleWifi()`            | Change with `wifi` parameter in [mobile:setConnectivity](https://appium.github.io/appium-uiautomator2-driver/latest/reference/execute-methods/#mobile-setconnectivity) |
+| `SetConnectionType()`     | Change connection type with [mobile:setConnectivity](https://appium.github.io/appium-uiautomator2-driver/latest/reference/execute-methods/#mobile-setconnectivity) |
+| `GetConnectionType()`     | Get connection state with [mobile:getConnectivity](https://appium.github.io/appium-uiautomator2-driver/latest/reference/execute-methods/#mobile-getconnectivity) |
 | `EndTestCoverage()`       | Already deprecated. |
-| `StartActivityWithIntent()`, `StartActivity()` | Use [mobile:startActivity](https://github.com/appium/appium-uiautomator2-driver#mobile-startactivity) to start an expected activity |
+| `StartActivityWithIntent()`, `StartActivity()` | Use [mobile:startActivity](https://appium.github.io/appium-uiautomator2-driver/latest/reference/execute-methods/#mobile-startactivity) to start an expected activity |
 
 - Removed `strategy` argument in `HideKeyboard` because the argument was only for outdated [old ios driver](https://github.com/appium-boneyard/appium-ios-driver)
 
