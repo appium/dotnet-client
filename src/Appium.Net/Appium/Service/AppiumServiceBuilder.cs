@@ -440,35 +440,30 @@ namespace OpenQA.Selenium.Appium.Service
             return this;
         }
 
-        private string Args
+        internal IReadOnlyList<string> BuildArguments()
         {
-            get
+            List<string> argList = new List<string>();
+            CheckAppiumJS();
+
+            argList.Add(AppiumJS.FullName);
+            argList.Add("--port");
+            argList.Add(Port.ToString());
+
+            argList.Add("--address");
+            argList.Add(IpAddress);
+
+            if (PathToLogFile != null)
             {
-                List<string> argList = new List<string>();
-                CheckAppiumJS();
-
-                argList.AddRange(NodeOptions);
-
-                argList.Add($"\"{AppiumJS.FullName}\"");
-                argList.Add("--port");
-                argList.Add($"\"{Port}\"");
-
-                argList.Add("--address");
-                argList.Add($"\"{IpAddress}\"");
-
-                if (PathToLogFile != null)
-                {
-                    argList.Add("--log");
-                    argList.Add($"\"{PathToLogFile}\"");
-                }
-
-                if (ServerOptions != null)
-                {
-                    argList.AddRange(ServerOptions.Arguments);
-                }
-
-                return string.Join(" ", argList);
+                argList.Add("--log");
+                argList.Add(PathToLogFile);
             }
+
+            if (ServerOptions != null)
+            {
+                argList.AddRange(ServerOptions.Arguments);
+            }
+
+            return argList.AsReadOnly();
         }
 
         /// <summary>
@@ -478,7 +473,8 @@ namespace OpenQA.Selenium.Appium.Service
         public AppiumLocalService Build()
         {
             NodeJS ??= DefaultExecutable;
-            return new AppiumLocalService(NodeJS, Args, IPAddress.Parse(IpAddress), Port, StartUpTimeout, EnvironmentForAProcess);
+            // Node options stay raw: WithNodeArguments documents that callers escape them.
+            return new AppiumLocalService(NodeJS, NodeOptions, BuildArguments(), IPAddress.Parse(IpAddress), Port, StartUpTimeout, EnvironmentForAProcess);
         }
     }
 }
