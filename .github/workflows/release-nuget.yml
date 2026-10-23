@@ -4,6 +4,10 @@ on:
   release:
     types: [published]
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   
   build:
@@ -19,22 +23,86 @@ jobs:
 
     - name: Install dependencies
       run: dotnet restore Appium.Net.sln
-      
-    - name: Build
+
+    - name: Parse version and update compatibility matrix
+      id: version
+      env:
+        GITHUB_REF_NAME_FULL: ${{ github.ref }}
+        IS_PRERELEASE: ${{ github.event.release.prerelease }}
       run: |
-        if ("${{github.ref}}".trim() -notmatch '^refs\/tags\/v(((0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*))(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)$') {
-          Write-Host "Failed to find a tag with a value compatible with Sementic Versioning.\nEnsure the Sementic Versioning regex above matches the tag created for the release!"; exit 1
+        $ErrorActionPreference = "Stop"
+        if ($env:GITHUB_REF_NAME_FULL.Trim() -notmatch '^refs\/tags\/v(((0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*))(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)$') {
+          Write-Host "Failed to find a tag with a value compatible with Sementic Versioning.`nEnsure the Sementic Versioning regex above matches the tag created for the release!"; exit 1
         }
-        else {
-            $versionPrefix = $matches[2]
-            $dotnetBuildCmd = "dotnet build Appium.Net.sln --configuration Release -p:VersionPrefix=${versionPrefix}"
-            if ($matches.Count -eq 7) { 
-                $versionSuffix = $matches[6]
-                $dotnetBuildCmd += " --version-suffix ${versionSuffix}"
-                }
-            }
-        Write-Host $dotnetBuildCmd
-        Invoke-Expression $dotnetBuildCmd
+
+        $versionPrefix = $matches[2]
+        $versionSuffix = if ($matches.Count -ge 7 -and $matches[6]) { $matches[6] } else { "" }
+        "version_prefix=$versionPrefix" >> $env:GITHUB_OUTPUT
+        "version_suffix=$versionSuffix" >> $env:GITHUB_OUTPUT
+
+        $isStable = [string]::IsNullOrEmpty($versionSuffix) -and ($env:IS_PRERELEASE -ne 'true')
+        "is_stable=$(if ($isStable) { 'true' } else { 'false' })" >> $env:GITHUB_OUTPUT
+
+        if ($isStable) {
+          [xml]$csproj = Get-Content -Path "src/Appium.Net/Appium.Net.csproj" -Encoding UTF8
+          $seleniumVersion = ($csproj.Project.ItemGroup.PackageReference |
+            Where-Object { $_.Include -eq 'Selenium.WebDriver' }).Version
+
+          if ([string]::IsNullOrWhiteSpace($seleniumVersion)) {
+            throw "Could not find Selenium.WebDriver version in src/Appium.Net/Appium.Net.csproj"
+          }
+          "selenium_version=$seleniumVersion" >> $env:GITHUB_OUTPUT
+
+          & ./.github/scripts/Update-CompatibilityMatrix.ps1 `
+            -VersionPrefix $versionPrefix `
+            -SeleniumVersion $seleniumVersion | Out-Null
+        }
+
+    - name: Build
+      env:
+        VERSION_PREFIX: ${{ steps.version.outputs.version_prefix }}
+        VERSION_SUFFIX: ${{ steps.version.outputs.version_suffix }}
+      run: |
+        $dotnetBuildArgs = @("build", "Appium.Net.sln", "--configuration", "Release", "-p:VersionPrefix=$env:VERSION_PREFIX")
+        if (-not [string]::IsNullOrEmpty($env:VERSION_SUFFIX)) {
+          $dotnetBuildArgs += @("--version-suffix", $env:VERSION_SUFFIX)
+        }
+        Write-Host "dotnet $($dotnetBuildArgs -join ' ')"
+        & dotnet @dotnetBuildArgs
+        if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
         
     - name: Deploy to nuget
       run: dotnet nuget push **/*.nupkg --api-key ${{ secrets.NUGET_DEPLOY_KEY }} --source https://api.nuget.org/v3/index.json
+
+    - name: Update compatibility matrix on main
+      if: steps.version.outputs.is_stable == 'true'
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        VERSION_PREFIX: ${{ steps.version.outputs.version_prefix }}
+        SELENIUM_VERSION: ${{ steps.version.outputs.selenium_version }}
+      run: |
+        $ErrorActionPreference = "Stop"
+        git checkout -- README.md
+        git fetch origin main
+        git checkout -B main origin/main
+
+        $updated = & ./.github/scripts/Update-CompatibilityMatrix.ps1 `
+          -VersionPrefix $env:VERSION_PREFIX `
+          -SeleniumVersion $env:SELENIUM_VERSION
+
+        if ($updated) {
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "docs: update compatibility matrix for v$env:VERSION_PREFIX"
+          $ErrorActionPreference = "Continue"
+          git push origin HEAD:main
+          if ($LASTEXITCODE -ne 0) {
+            $ErrorActionPreference = "Stop"
+            $branch = "docs/compatibility-matrix-v$env:VERSION_PREFIX"
+            git push origin "HEAD:refs/heads/$branch" --force
+            gh pr create --base main --head $branch `
+              --title "docs: update compatibility matrix for v$env:VERSION_PREFIX" `
+              --body "Automated update of the README compatibility matrix for release v$env:VERSION_PREFIX (Selenium.WebDriver $env:SELENIUM_VERSION)."
+          }
+        }
