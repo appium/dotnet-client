@@ -27,10 +27,10 @@ CI runs the same filter for `net8.0` on Windows, Linux and macOS, and additional
 ```bash
 dotnet test ./test/integration/Appium.Net.Integration.Tests.csproj \
   --configuration Release --framework net8.0 \
-  --filter "AppiumLocalServerLaunchingTest|DirectConnectTest|AppiumClientConfigTest|Tests.Driver|AppsTest|AppiumServiceArgumentsTest"
+  --filter "AppiumLocalServerLaunchingTest|DirectConnectTest|AppiumClientConfigTest|Tests.Common|Tests.Driver|AppsTest|AppiumServiceArgumentsTest"
 
 # Windows only (single line so it also works in PowerShell)
-dotnet test ./test/integration/Appium.Net.Integration.Tests.csproj --configuration Release --framework net48 --filter "AppiumLocalServerLaunchingTest|DirectConnectTest|AppiumClientConfigTest|Tests.Driver|AppsTest|AppiumServiceArgumentsTest"
+dotnet test ./test/integration/Appium.Net.Integration.Tests.csproj --configuration Release --framework net48 --filter "AppiumLocalServerLaunchingTest|DirectConnectTest|AppiumClientConfigTest|Tests.Common|Tests.Driver|AppsTest|AppiumServiceArgumentsTest"
 ```
 
 ### Functional tests (`functional-test.yml`)
