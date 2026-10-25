@@ -98,6 +98,20 @@ namespace Appium.Net.Integration.Tests.Driver
         }
 
         [Test]
+        public void Constructor_PreservesExplicitPlatformNameWhenSet()
+        {
+            var options = new AppiumOptions { PlatformName = "CustomWindowsPlatform" };
+            using var executor = new MockCommandExecutor();
+            using var driver = new WincoreDriver(executor, options);
+
+            Assert.That(options.PlatformName, Is.EqualTo("CustomWindowsPlatform"));
+            Assert.That(options.AutomationName, Is.EqualTo(AutomationName.Wincore));
+
+            var capabilities = options.ToDictionary();
+            Assert.That(capabilities["platformName"], Is.EqualTo("CustomWindowsPlatform"));
+        }
+
+        [Test]
         public void LaunchApp_ExecutesWindowsLaunchAppScript()
         {
             _driver.LaunchApp();
@@ -177,7 +191,13 @@ namespace Appium.Net.Integration.Tests.Driver
         {
             _executor.ResponseToReturn = new Response("test-session", "YmFzZTY0dmlkZW8=", WebDriverResult.Success);
 
-            var stopOptions = WincoreStopScreenRecordingOptions.StopScreenRecordingOptions();
+            var uploadOptions = new ScreenRecordingUploadOptions()
+                .WithRemotePath("https://example.com/upload")
+                .WithAuthCredentials("user", "secret")
+                .WithHttpMethod(ScreenRecordingUploadOptions.RequestMethod.POST);
+
+            var stopOptions = WincoreStopScreenRecordingOptions.StopScreenRecordingOptions()
+                .WithUploadOptions(uploadOptions);
 
             var result = _driver.StopRecordingScreen(stopOptions);
 
@@ -185,7 +205,10 @@ namespace Appium.Net.Integration.Tests.Driver
             Assert.That(_executor.LastCommand.Name, Is.EqualTo(AppiumDriverCommand.StopRecordingScreen));
             var options = _executor.LastCommand.Parameters["options"] as IDictionary<string, object>;
             Assert.That(options, Is.Not.Null);
-            Assert.That(options, Is.Empty);
+            Assert.That(options["remotePath"], Is.EqualTo("https://example.com/upload"));
+            Assert.That(options["user"], Is.EqualTo("user"));
+            Assert.That(options["pass"], Is.EqualTo("secret"));
+            Assert.That(options["method"], Is.EqualTo("POST"));
         }
 
         [Test]
