@@ -110,8 +110,8 @@ App management: Please read [issue #15807](https://github.com/appium/appium/issu
 > The original [WinAppDriver](https://github.com/microsoft/WinAppDriver) server has not been maintained by Microsoft for years and does not support the W3C WebDriver protocol. Direct communication between modern Appium .NET Client versions and standalone WinAppDriver is not supported.
 > 
 > To automate Windows applications:
-> - Use [appium-windows-driver](https://github.com/appium/appium-windows-driver) (`appium driver install windows`), which acts as a W3C-compliant proxy to WinAppDriver.
-> - Consider trying [NovaWindows Driver](https://github.com/AutomateThePlanet/appium-novawindows-driver) by [Automate The Planet](https://www.automatetheplanet.com/) as a modern drop-in replacement that operates directly via FlaUI / UI Automation without WinAppDriver.
+> - Use `WincoreDriver` with [appium-wincore-driver](https://github.com/appium/appium-wincore-driver) (`appium driver install wincore`), which operates directly via UI Automation without WinAppDriver.
+> - Legacy `WindowsDriver` with [appium-windows-driver](https://github.com/appium/appium-windows-driver) (`appium driver install windows`) is deprecated and not supported since Appium 4.
 > 
 > Examples of running Windows applications with the .NET client can be found in the [Windows Integration Tests](test/integration/Windows).
 

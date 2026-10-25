@@ -1,4 +1,4 @@
-﻿//Licensed under the Apache License, Version 2.0 (the "License");
+//Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
 //See the NOTICE file distributed with this work for additional
 //information regarding copyright ownership.
@@ -22,6 +22,11 @@ using OpenQA.Selenium.Appium.Service;
 
 namespace OpenQA.Selenium.Appium.Windows
 {
+    /// <summary>
+    /// WindowsDriver is an Appium driver created to automate Windows apps.
+    /// Read https://github.com/appium/appium-windows-driver for more details.
+    /// </summary>
+    [Obsolete("The Windows driver is deprecated and not supported since Appium 4. Use WincoreDriver instead.")]
     public class WindowsDriver : AppiumDriver, ISendsKeyEvents, IHidesKeyboardWithKeyName
     {
         private static readonly string Platform = MobilePlatform.Windows;
