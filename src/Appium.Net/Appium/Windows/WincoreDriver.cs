@@ -26,7 +26,7 @@ namespace OpenQA.Selenium.Appium.Windows
     /// WincoreDriver is an Appium driver created to automate Windows apps.
     /// Read https://github.com/appium/appium-wincore-driver for more details.
     /// </summary>
-    public class WincoreDriver : AppiumDriver, ISendsKeyEvents, IHidesKeyboardWithKeyName, IPushesFiles
+    public class WincoreDriver : AppiumDriver, IPushesFiles
     {
         private static readonly string Platform = MobilePlatform.Windows;
 
@@ -190,19 +190,6 @@ namespace OpenQA.Selenium.Appium.Windows
         public override byte[] PullFolder(string remotePath) =>
             throw new NotSupportedException("The Wincore driver cannot pull folders");
 
-        public new void HideKeyboard(string key) =>
-            AppiumCommandExecutionHelper.HideKeyboard(this, key);
-
-        public void PressKeyCode(KeyEvent keyEvent) => throw new NotImplementedException();
-
-        public void LongPressKeyCode(KeyEvent keyEvent) => throw new NotImplementedException();
-
-        public void PressKeyCode(int keyCode, int metastate = -1) =>
-            AppiumCommandExecutionHelper.PressKeyCode(this, keyCode, metastate);
-
-        public void LongPressKeyCode(int keyCode, int metastate = -1) =>
-            AppiumCommandExecutionHelper.LongPressKeyCode(this, keyCode, metastate);
-
         #region App management
 
         /// <summary>
@@ -233,12 +220,17 @@ namespace OpenQA.Selenium.Appium.Windows
 
         private static ICapabilities SetPlatformAndAutomationToCapabilities(DriverOptions driverOptions)
         {
+            if (string.IsNullOrEmpty(driverOptions.PlatformName))
+            {
+                driverOptions.PlatformName = Platform;
+            }
+
             if (driverOptions is AppiumOptions appiumOptions && string.IsNullOrEmpty(appiumOptions.AutomationName))
             {
                 appiumOptions.AutomationName = OpenQA.Selenium.Appium.Enums.AutomationName.Wincore;
             }
 
-            return SetPlatformToCapabilities(driverOptions, Platform);
+            return driverOptions.ToCapabilities();
         }
     }
 }
