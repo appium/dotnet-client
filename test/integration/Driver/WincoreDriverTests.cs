@@ -150,6 +150,11 @@ namespace Appium.Net.Integration.Tests.Driver
         {
             _executor.ResponseToReturn = new Response("test-session", "dGVzdA==", WebDriverResult.Success);
 
+            var uploadOptions = new ScreenRecordingUploadOptions()
+                .WithRemotePath("https://example.com/start-upload")
+                .WithAuthCredentials("start-user", "start-secret")
+                .WithHttpMethod(ScreenRecordingUploadOptions.RequestMethod.PUT);
+
             var recordingOptions = WincoreStartScreenRecordingOptions.StartScreenRecordingOptions()
                 .WithVideoFps(30)
                 .EnableCursorCapture()
@@ -158,7 +163,8 @@ namespace Appium.Net.Integration.Tests.Driver
                 .WithVideoFilter("scale=1024:-2")
                 .WithPreset("fast")
                 .WithTimeLimit(TimeSpan.FromMinutes(5))
-                .EnableForcedRestart();
+                .EnableForcedRestart()
+                .WithUploadOptions(uploadOptions);
 
             var result = _driver.StartRecordingScreen(recordingOptions);
 
@@ -174,6 +180,10 @@ namespace Appium.Net.Integration.Tests.Driver
             Assert.That(options["preset"], Is.EqualTo("fast"));
             Assert.That(options["timeLimit"], Is.EqualTo(300));
             Assert.That(options["forceRestart"], Is.EqualTo(true));
+            Assert.That(options["remotePath"], Is.EqualTo("https://example.com/start-upload"));
+            Assert.That(options["user"], Is.EqualTo("start-user"));
+            Assert.That(options["pass"], Is.EqualTo("start-secret"));
+            Assert.That(options["method"], Is.EqualTo("PUT"));
         }
 
         [Test]
