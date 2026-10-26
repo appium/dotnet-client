@@ -53,6 +53,40 @@ namespace Appium.Net.Integration.Tests.Driver
             _mockServer?.Dispose();
         }
 
+        private static Dictionary<string, string> ExtractW3CCapabilities(JsonElement root)
+        {
+            var merged = new Dictionary<string, string>(StringComparer.Ordinal);
+            Assert.That(root.TryGetProperty("capabilities", out JsonElement capabilities), Is.True);
+
+            if (capabilities.TryGetProperty("alwaysMatch", out JsonElement alwaysMatch) &&
+                alwaysMatch.ValueKind == JsonValueKind.Object)
+            {
+                foreach (JsonProperty prop in alwaysMatch.EnumerateObject())
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.String)
+                    {
+                        merged[prop.Name] = prop.Value.GetString();
+                    }
+                }
+            }
+
+            if (capabilities.TryGetProperty("firstMatch", out JsonElement firstMatch) &&
+                firstMatch.ValueKind == JsonValueKind.Array &&
+                firstMatch.GetArrayLength() > 0 &&
+                firstMatch[0].ValueKind == JsonValueKind.Object)
+            {
+                foreach (JsonProperty prop in firstMatch[0].EnumerateObject())
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.String)
+                    {
+                        merged[prop.Name] = prop.Value.GetString();
+                    }
+                }
+            }
+
+            return merged;
+        }
+
         [Test]
         public void NewSession_SendsIdempotencyHeaderAndCapabilitiesOverHttp()
         {
@@ -62,7 +96,15 @@ namespace Appium.Net.Integration.Tests.Driver
             Assert.That(newSessionRequest, Is.Not.Null);
             Assert.That(newSessionRequest.Headers.TryGetValue("X-Idempotency-Key", out string idempotencyKey), Is.True);
             Assert.That(Guid.TryParse(idempotencyKey, out _), Is.True);
-            Assert.That(newSessionRequest.Body, Does.Contain("UiAutomator2"));
+
+            using var doc = JsonDocument.Parse(newSessionRequest.Body);
+            Dictionary<string, string> capabilities = ExtractW3CCapabilities(doc.RootElement);
+            Assert.That(capabilities.ContainsKey("platformName"), Is.True);
+            Assert.That(capabilities["platformName"], Is.EqualTo("Android"));
+            Assert.That(capabilities.ContainsKey("appium:automationName"), Is.True);
+            Assert.That(capabilities["appium:automationName"], Is.EqualTo("UiAutomator2"));
+            Assert.That(capabilities.ContainsKey("appium:deviceName"), Is.True);
+            Assert.That(capabilities["appium:deviceName"], Is.EqualTo("Android Emulator"));
             Assert.That(_driver.SessionId.ToString(), Is.EqualTo(_mockServer.SessionId));
         }
 
@@ -84,7 +126,9 @@ namespace Appium.Net.Integration.Tests.Driver
 
             element.Click();
 
-            var findRequest = _mockServer.Requests.Last(r => r.Path.EndsWith("/element", StringComparison.Ordinal));
+            var findRequest = _mockServer.Requests.Last(r =>
+                r.HttpMethod == "POST" &&
+                r.Path == $"/session/{_mockServer.SessionId}/element");
             using var doc = JsonDocument.Parse(findRequest.Body);
             Assert.That(doc.RootElement.GetProperty("using").GetString(), Is.EqualTo("accessibility id"));
             Assert.That(doc.RootElement.GetProperty("value").GetString(), Is.EqualTo("login-button"));
@@ -103,9 +147,18 @@ namespace Appium.Net.Integration.Tests.Driver
             _mockServer.OnRequest("GET", $"/session/{_mockServer.SessionId}/contexts", new[] { "NATIVE_APP", "WEBVIEW_chrome" });
 
             Assert.That(_driver.CurrentActivity, Is.EqualTo(".MainActivity"));
+            var activityReq = _mockServer.Requests.Last(r =>
+                r.HttpMethod == "POST" &&
+                r.Path == $"/session/{_mockServer.SessionId}/execute/sync");
+            using (var activityDoc = JsonDocument.Parse(activityReq.Body))
+            {
+                Assert.That(activityDoc.RootElement.GetProperty("script").GetString(), Is.EqualTo("mobile:getCurrentActivity"));
+            }
 
             _driver.ActivateApp("io.appium.android.apis");
-            var activateReq = _mockServer.Requests.Last(r => r.Path.EndsWith("/appium/device/activate_app", StringComparison.Ordinal));
+            var activateReq = _mockServer.Requests.Last(r =>
+                r.HttpMethod == "POST" &&
+                r.Path == $"/session/{_mockServer.SessionId}/appium/device/activate_app");
             using (var doc = JsonDocument.Parse(activateReq.Body))
             {
                 Assert.That(doc.RootElement.GetProperty("appId").GetString(), Is.EqualTo("io.appium.android.apis"));
@@ -127,7 +180,8 @@ namespace Appium.Net.Integration.Tests.Driver
 
             _driver.SetClipboardText("Hello Appium", "note");
             var setReq = _mockServer.Requests.Last(r =>
-                r.Path.EndsWith("/execute/sync", StringComparison.Ordinal) &&
+                r.HttpMethod == "POST" &&
+                r.Path == $"/session/{_mockServer.SessionId}/execute/sync" &&
                 r.Body.Contains("mobile:setClipboard"));
             using (var doc = JsonDocument.Parse(setReq.Body))
             {

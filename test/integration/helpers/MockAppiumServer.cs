@@ -227,7 +227,8 @@ namespace Appium.Net.Integration.Tests.helpers
                 {
                     mockResponse = handler(recorded);
                 }
-                else if (path.EndsWith("/execute/sync", StringComparison.OrdinalIgnoreCase) &&
+                else if (req.HttpMethod.Equals("POST", StringComparison.OrdinalIgnoreCase) &&
+                         path.Equals($"/session/{SessionId}/execute/sync", StringComparison.OrdinalIgnoreCase) &&
                          TryExtractScriptName(body, out string scriptName) &&
                          _scriptRoutes.TryGetValue(scriptName, out var scriptHandler) &&
                          scriptHandler != null)
@@ -235,7 +236,7 @@ namespace Appium.Net.Integration.Tests.helpers
                     mockResponse = scriptHandler(recorded);
                 }
                 else if (req.HttpMethod.Equals("DELETE", StringComparison.OrdinalIgnoreCase) &&
-                         path.StartsWith("/session/", StringComparison.OrdinalIgnoreCase))
+                         path.Equals($"/session/{SessionId}", StringComparison.OrdinalIgnoreCase))
                 {
                     mockResponse = MockHttpResponse.FromValue(null);
                 }
