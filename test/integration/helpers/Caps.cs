@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Enums;
 
@@ -14,6 +14,12 @@ namespace Appium.Net.Integration.Tests.helpers
             capabilities.PlatformVersion =  Environment.GetEnvironmentVariable("IOS_VERSION") ?? "26.0";
             capabilities.App = app;
             capabilities.AddAdditionalAppiumOption(IOSMobileCapabilityType.LaunchTimeout, Env.InitTimeoutSec.TotalMilliseconds);
+
+            var udid = Environment.GetEnvironmentVariable("IOS_UDID");
+            if (!string.IsNullOrEmpty(udid))
+            {
+                capabilities.AddAdditionalAppiumOption(MobileCapabilityType.Udid, udid);
+            }
 
             if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("LOCAL_PREBUILT_WDA")))
             {
