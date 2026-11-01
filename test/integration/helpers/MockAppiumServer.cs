@@ -67,6 +67,8 @@ namespace Appium.Net.Integration.Tests.helpers
             new(StringComparer.OrdinalIgnoreCase);
         private readonly ConcurrentDictionary<string, Func<RecordedHttpRequest, MockHttpResponse>> _scriptRoutes =
             new(StringComparer.OrdinalIgnoreCase);
+        private readonly ConcurrentDictionary<TcpClient, byte> _activeClients = new();
+        private readonly ConcurrentBag<Task> _clientTasks = new();
         private readonly Task _listenLoopTask;
         private bool _disposed;
 
@@ -151,7 +153,18 @@ namespace Appium.Net.Integration.Tests.helpers
                     break;
                 }
 
-                _ = Task.Run(() => HandleClientAsync(client));
+                _activeClients[client] = 0;
+                _clientTasks.Add(Task.Run(async () =>
+                {
+                    try
+                    {
+                        await HandleClientAsync(client).ConfigureAwait(false);
+                    }
+                    finally
+                    {
+                        _activeClients.TryRemove(client, out _);
+                    }
+                }));
             }
         }
 
@@ -378,6 +391,10 @@ namespace Appium.Net.Integration.Tests.helpers
                 {
                     // Ignore if listener is closing
                 }
+                catch (SocketException) when (_cts.IsCancellationRequested)
+                {
+                    // Ignore if listener is closing
+                }
                 catch (Exception ex)
                 {
                     try
@@ -414,9 +431,28 @@ namespace Appium.Net.Integration.Tests.helpers
             {
                 // Ignore shutdown exceptions
             }
+            foreach (var kvp in _activeClients)
+            {
+                try
+                {
+                    kvp.Key.Close();
+                }
+                catch
+                {
+                    // Ignore shutdown exceptions
+                }
+            }
             try
             {
                 _listenLoopTask.Wait(TimeSpan.FromSeconds(1));
+            }
+            catch
+            {
+                // Ignore shutdown exceptions
+            }
+            try
+            {
+                Task.WaitAll(_clientTasks.ToArray(), TimeSpan.FromSeconds(1));
             }
             catch
             {

@@ -56,6 +56,7 @@ namespace Appium.Net.Integration.Tests.Driver
         private static Dictionary<string, string> ExtractW3CCapabilities(JsonElement root)
         {
             var merged = new Dictionary<string, string>(StringComparer.Ordinal);
+            var alwaysMatchKeys = new HashSet<string>(StringComparer.Ordinal);
             Assert.That(root.TryGetProperty("capabilities", out JsonElement capabilities), Is.True);
 
             if (capabilities.TryGetProperty("alwaysMatch", out JsonElement alwaysMatch) &&
@@ -63,6 +64,7 @@ namespace Appium.Net.Integration.Tests.Driver
             {
                 foreach (JsonProperty prop in alwaysMatch.EnumerateObject())
                 {
+                    alwaysMatchKeys.Add(prop.Name);
                     if (prop.Value.ValueKind == JsonValueKind.String)
                     {
                         merged[prop.Name] = prop.Value.GetString();
@@ -77,6 +79,8 @@ namespace Appium.Net.Integration.Tests.Driver
             {
                 foreach (JsonProperty prop in firstMatch[0].EnumerateObject())
                 {
+                    Assert.That(alwaysMatchKeys.Contains(prop.Name), Is.False,
+                        $"Capability '{prop.Name}' must not appear in both alwaysMatch and firstMatch[0].");
                     if (prop.Value.ValueKind == JsonValueKind.String)
                     {
                         merged[prop.Name] = prop.Value.GetString();
