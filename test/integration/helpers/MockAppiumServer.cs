@@ -13,16 +13,12 @@
 //limitations under the License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
+using System.Linq;
 using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using WireMock.RequestBuilders;
+using WireMock.ResponseBuilders;
+using WireMock.Server;
 
 namespace Appium.Net.Integration.Tests.helpers
 {
@@ -34,91 +30,91 @@ namespace Appium.Net.Integration.Tests.helpers
         public string Body { get; set; }
     }
 
-    public sealed class MockHttpResponse
-    {
-        public int StatusCode { get; set; } = 200;
-        public string Body { get; set; } = "{\"value\":null}";
-
-        public static MockHttpResponse FromValue(object value, int statusCode = 200)
-        {
-            var payload = new Dictionary<string, object>
-            {
-                ["value"] = value
-            };
-            return new MockHttpResponse
-            {
-                StatusCode = statusCode,
-                Body = JsonSerializer.Serialize(payload)
-            };
-        }
-    }
-
     /// <summary>
-    /// Lightweight local HTTP mock server backed by a loopback <see cref="TcpListener"/>
+    /// Lightweight local HTTP mock server backed by <see cref="WireMockServer"/>
     /// for testing client-side WebDriver/Appium HTTP requests and responses without
-    /// requiring administrator privileges, URL ACL reservations, or a real Appium server.
+    /// requiring a real Appium server or device/emulator.
     /// </summary>
     public sealed class MockAppiumServer : IDisposable
     {
-        private readonly TcpListener _listener;
-        private readonly CancellationTokenSource _cts = new();
-        private readonly ConcurrentQueue<RecordedHttpRequest> _requests = new();
-        private readonly ConcurrentDictionary<string, Func<RecordedHttpRequest, MockHttpResponse>> _routes =
-            new(StringComparer.OrdinalIgnoreCase);
-        private readonly ConcurrentDictionary<string, Func<RecordedHttpRequest, MockHttpResponse>> _scriptRoutes =
-            new(StringComparer.OrdinalIgnoreCase);
-        private readonly ConcurrentDictionary<TcpClient, byte> _activeClients = new();
-        private readonly ConcurrentBag<Task> _clientTasks = new();
-        private readonly Task _listenLoopTask;
+        private readonly WireMockServer _server;
         private bool _disposed;
 
         public string SessionId { get; set; } = "mock-session-id";
         public Uri ServerUri { get; }
 
-        public IReadOnlyCollection<RecordedHttpRequest> Requests => _requests.ToArray();
+        public IReadOnlyCollection<RecordedHttpRequest> Requests
+        {
+            get
+            {
+                return _server.LogEntries
+                    .Where(entry => entry.RequestMessage != null)
+                    .Select(entry =>
+                    {
+                        var req = entry.RequestMessage;
+                        var headers = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+                        if (req.Headers != null)
+                        {
+                            foreach (var kvp in req.Headers)
+                            {
+                                headers[kvp.Key] = kvp.Value != null ? string.Join(",", kvp.Value) : string.Empty;
+                            }
+                        }
+
+                        return new RecordedHttpRequest
+                        {
+                            HttpMethod = req.Method,
+                            Path = req.Path,
+                            Headers = headers,
+                            Body = req.Body ?? string.Empty
+                        };
+                    })
+                    .ToArray();
+            }
+        }
 
         public MockAppiumServer()
         {
-            _listener = new TcpListener(IPAddress.Loopback, 0);
-            _listener.Start();
-
-            int port = ((IPEndPoint)_listener.LocalEndpoint).Port;
-            ServerUri = new Uri($"http://127.0.0.1:{port}/");
+            _server = WireMockServer.Start();
+            string baseUrl = _server.Url ?? $"http://127.0.0.1:{_server.Port}";
+            ServerUri = new Uri(baseUrl.EndsWith("/", StringComparison.Ordinal) ? baseUrl : baseUrl + "/");
 
             RegisterDefaultRoutes();
-            _listenLoopTask = Task.Run(ListenLoopAsync);
-        }
-
-        public void OnRequestHandler(string httpMethod, string path, Func<RecordedHttpRequest, MockHttpResponse> handler)
-        {
-            _routes[$"{httpMethod.ToUpperInvariant()} {path}"] = handler ?? (_ => MockHttpResponse.FromValue(null));
         }
 
         public void OnRequest(string httpMethod, string path, object responseValue, int statusCode = 200)
         {
-            OnRequestHandler(httpMethod, path, _ => MockHttpResponse.FromValue(responseValue, statusCode));
-        }
-
-        public void OnExecuteScriptHandler(string scriptName, Func<RecordedHttpRequest, MockHttpResponse> handler)
-        {
-            _scriptRoutes[scriptName] = handler ?? (_ => MockHttpResponse.FromValue(null));
+            _server
+                .Given(Request.Create()
+                    .WithPath(path)
+                    .UsingMethod(httpMethod.ToUpperInvariant()))
+                .RespondWith(Response.Create()
+                    .WithStatusCode(statusCode)
+                    .WithHeader("Content-Type", "application/json; charset=utf-8")
+                    .WithBody(SerializeValueEnvelope(responseValue)));
         }
 
         public void OnExecuteScript(string scriptName, object responseValue, int statusCode = 200)
         {
-            OnExecuteScriptHandler(scriptName, _ => MockHttpResponse.FromValue(responseValue, statusCode));
+            _server
+                .Given(Request.Create()
+                    .WithPath($"/session/{SessionId}/execute/sync")
+                    .UsingPost()
+                    .WithBody((string body) => MatchesScriptName(body, scriptName)))
+                .RespondWith(Response.Create()
+                    .WithStatusCode(statusCode)
+                    .WithHeader("Content-Type", "application/json; charset=utf-8")
+                    .WithBody(SerializeValueEnvelope(responseValue)));
         }
 
         public void ClearRecordedRequests()
         {
-            while (_requests.TryDequeue(out _))
-            {
-            }
+            _server.ResetLogEntries();
         }
 
         private void RegisterDefaultRoutes()
         {
-            OnRequestHandler("POST", "/session", _ => MockHttpResponse.FromValue(new Dictionary<string, object>
+            OnRequest("POST", "/session", new Dictionary<string, object>
             {
                 ["sessionId"] = SessionId,
                 ["capabilities"] = new Dictionary<string, object>
@@ -126,292 +122,38 @@ namespace Appium.Net.Integration.Tests.helpers
                     ["platformName"] = "Android",
                     ["appium:automationName"] = "UiAutomator2"
                 }
-            }));
+            });
 
-            OnRequestHandler("DELETE", $"/session/{SessionId}", _ => MockHttpResponse.FromValue(null));
+            OnRequest("DELETE", $"/session/{SessionId}", null);
         }
 
-        private async Task ListenLoopAsync()
+        private static string SerializeValueEnvelope(object value)
         {
-            while (!_cts.IsCancellationRequested)
+            var payload = new Dictionary<string, object>
             {
-                TcpClient client;
-                try
-                {
-                    client = await _listener.AcceptTcpClientAsync().ConfigureAwait(false);
-                }
-                catch (SocketException) when (_cts.IsCancellationRequested)
-                {
-                    break;
-                }
-                catch (ObjectDisposedException)
-                {
-                    break;
-                }
-                catch (InvalidOperationException) when (_cts.IsCancellationRequested)
-                {
-                    break;
-                }
-
-                _activeClients[client] = 0;
-                _clientTasks.Add(Task.Run(async () =>
-                {
-                    try
-                    {
-                        await HandleClientAsync(client).ConfigureAwait(false);
-                    }
-                    finally
-                    {
-                        _activeClients.TryRemove(client, out _);
-                    }
-                }));
-            }
+                ["value"] = value
+            };
+            return JsonSerializer.Serialize(payload);
         }
 
-        private static bool TryExtractScriptName(string body, out string scriptName)
+        private static bool MatchesScriptName(string body, string expectedScriptName)
         {
-            scriptName = null;
-            if (string.IsNullOrWhiteSpace(body))
+            if (string.IsNullOrWhiteSpace(body) || string.IsNullOrEmpty(expectedScriptName))
             {
                 return false;
             }
+
             try
             {
                 using var doc = JsonDocument.Parse(body);
-                if (doc.RootElement.ValueKind == JsonValueKind.Object &&
-                    doc.RootElement.TryGetProperty("script", out var scriptElement) &&
-                    scriptElement.ValueKind == JsonValueKind.String)
-                {
-                    scriptName = scriptElement.GetString();
-                    return !string.IsNullOrEmpty(scriptName);
-                }
+                return doc.RootElement.ValueKind == JsonValueKind.Object &&
+                       doc.RootElement.TryGetProperty("script", out var scriptElement) &&
+                       scriptElement.ValueKind == JsonValueKind.String &&
+                       string.Equals(scriptElement.GetString(), expectedScriptName, StringComparison.OrdinalIgnoreCase);
             }
             catch (JsonException)
             {
-                // Ignore malformed JSON body
-            }
-            return false;
-        }
-
-        private static async Task<string> ReadAsciiLineAsync(Stream stream, CancellationToken token)
-        {
-            var sb = new StringBuilder();
-            var singleByte = new byte[1];
-            while (true)
-            {
-                int read = await stream.ReadAsync(singleByte, 0, 1, token).ConfigureAwait(false);
-                if (read == 0)
-                {
-                    return sb.Length == 0 ? null : sb.ToString();
-                }
-
-                char ch = (char)singleByte[0];
-                if (ch == '\n')
-                {
-                    if (sb.Length > 0 && sb[sb.Length - 1] == '\r')
-                    {
-                        sb.Length -= 1;
-                    }
-                    return sb.ToString();
-                }
-
-                sb.Append(ch);
-            }
-        }
-
-        private static async Task<byte[]> ReadExactBytesAsync(Stream stream, int count, CancellationToken token)
-        {
-            byte[] buffer = new byte[count];
-            int offset = 0;
-            while (offset < count)
-            {
-                int read = await stream.ReadAsync(buffer, offset, count - offset, token).ConfigureAwait(false);
-                if (read == 0)
-                {
-                    break;
-                }
-                offset += read;
-            }
-
-            if (offset == count)
-            {
-                return buffer;
-            }
-
-            byte[] partial = new byte[offset];
-            Buffer.BlockCopy(buffer, 0, partial, 0, offset);
-            return partial;
-        }
-
-        private static string GetReasonPhrase(int statusCode)
-        {
-            return statusCode switch
-            {
-                200 => "OK",
-                400 => "Bad Request",
-                404 => "Not Found",
-                500 => "Internal Server Error",
-                _ => "OK"
-            };
-        }
-
-        private static async Task WriteHttpResponseAsync(Stream stream, MockHttpResponse response, CancellationToken token)
-        {
-            byte[] bodyBytes = Encoding.UTF8.GetBytes(response.Body ?? string.Empty);
-            string reasonPhrase = GetReasonPhrase(response.StatusCode);
-            string headerText =
-                $"HTTP/1.1 {response.StatusCode} {reasonPhrase}\r\n" +
-                "Content-Type: application/json; charset=utf-8\r\n" +
-                $"Content-Length: {bodyBytes.Length}\r\n" +
-                "Connection: close\r\n\r\n";
-            byte[] headerBytes = Encoding.ASCII.GetBytes(headerText);
-
-            await stream.WriteAsync(headerBytes, 0, headerBytes.Length, token).ConfigureAwait(false);
-            if (bodyBytes.Length > 0)
-            {
-                await stream.WriteAsync(bodyBytes, 0, bodyBytes.Length, token).ConfigureAwait(false);
-            }
-            await stream.FlushAsync(token).ConfigureAwait(false);
-        }
-
-        private async Task HandleClientAsync(TcpClient client)
-        {
-            using (client)
-            using (NetworkStream stream = client.GetStream())
-            {
-                try
-                {
-                    string requestLine = await ReadAsciiLineAsync(stream, _cts.Token).ConfigureAwait(false);
-                    if (string.IsNullOrEmpty(requestLine))
-                    {
-                        return;
-                    }
-
-                    string[] parts = requestLine.Split(' ');
-                    string httpMethod = parts.Length > 0 ? parts[0] : "GET";
-                    string rawTarget = parts.Length > 1 ? parts[1] : "/";
-                    string path = rawTarget;
-                    if (Uri.TryCreate(rawTarget, UriKind.Absolute, out Uri absoluteUri))
-                    {
-                        path = absoluteUri.AbsolutePath;
-                    }
-                    else
-                    {
-                        int queryIndex = rawTarget.IndexOf('?');
-                        if (queryIndex >= 0)
-                        {
-                            path = rawTarget.Substring(0, queryIndex);
-                        }
-                    }
-
-                    var headers = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-                    while (true)
-                    {
-                        string headerLine = await ReadAsciiLineAsync(stream, _cts.Token).ConfigureAwait(false);
-                        if (string.IsNullOrEmpty(headerLine))
-                        {
-                            break;
-                        }
-
-                        int colonIndex = headerLine.IndexOf(':');
-                        if (colonIndex > 0)
-                        {
-                            string key = headerLine.Substring(0, colonIndex).Trim();
-                            string val = headerLine.Substring(colonIndex + 1).Trim();
-                            headers[key] = val;
-                        }
-                    }
-
-                    if (headers.TryGetValue("Expect", out string expectValue) &&
-                        expectValue.IndexOf("100-continue", StringComparison.OrdinalIgnoreCase) >= 0)
-                    {
-                        byte[] continueBytes = Encoding.ASCII.GetBytes("HTTP/1.1 100 Continue\r\n\r\n");
-                        await stream.WriteAsync(continueBytes, 0, continueBytes.Length, _cts.Token).ConfigureAwait(false);
-                        await stream.FlushAsync(_cts.Token).ConfigureAwait(false);
-                    }
-
-                    string body = string.Empty;
-                    if (headers.TryGetValue("Content-Length", out string contentLengthStr) &&
-                        int.TryParse(contentLengthStr, NumberStyles.Integer, CultureInfo.InvariantCulture, out int contentLength) &&
-                        contentLength > 0)
-                    {
-                        byte[] bodyBytes = await ReadExactBytesAsync(stream, contentLength, _cts.Token).ConfigureAwait(false);
-                        body = Encoding.UTF8.GetString(bodyBytes);
-                    }
-
-                    var recorded = new RecordedHttpRequest
-                    {
-                        HttpMethod = httpMethod,
-                        Path = path,
-                        Headers = headers,
-                        Body = body
-                    };
-                    _requests.Enqueue(recorded);
-
-                    string routeKey = $"{httpMethod.ToUpperInvariant()} {path}";
-                    MockHttpResponse mockResponse;
-                    if (_routes.TryGetValue(routeKey, out var handler) && handler != null)
-                    {
-                        mockResponse = handler(recorded);
-                    }
-                    else if (httpMethod.Equals("POST", StringComparison.OrdinalIgnoreCase) &&
-                             path.Equals($"/session/{SessionId}/execute/sync", StringComparison.OrdinalIgnoreCase) &&
-                             TryExtractScriptName(body, out string scriptName) &&
-                             _scriptRoutes.TryGetValue(scriptName, out var scriptHandler) &&
-                             scriptHandler != null)
-                    {
-                        mockResponse = scriptHandler(recorded);
-                    }
-                    else if (httpMethod.Equals("DELETE", StringComparison.OrdinalIgnoreCase) &&
-                             path.Equals($"/session/{SessionId}", StringComparison.OrdinalIgnoreCase))
-                    {
-                        mockResponse = MockHttpResponse.FromValue(null);
-                    }
-                    else
-                    {
-                        mockResponse = MockHttpResponse.FromValue(new Dictionary<string, object>
-                        {
-                            ["error"] = "unknown command",
-                            ["message"] = $"No mock route registered for {routeKey}",
-                            ["stacktrace"] = string.Empty
-                        }, statusCode: 404);
-                    }
-
-                    await WriteHttpResponseAsync(stream, mockResponse, _cts.Token).ConfigureAwait(false);
-                }
-                catch (OperationCanceledException)
-                {
-                    // Ignore if listener is closing
-                }
-                catch (ObjectDisposedException)
-                {
-                    // Ignore if listener is closing
-                }
-                catch (IOException) when (_cts.IsCancellationRequested)
-                {
-                    // Ignore if listener is closing
-                }
-                catch (SocketException) when (_cts.IsCancellationRequested)
-                {
-                    // Ignore if listener is closing
-                }
-                catch (Exception ex)
-                {
-                    try
-                    {
-                        var err = MockHttpResponse.FromValue(new Dictionary<string, object>
-                        {
-                            ["error"] = "unknown error",
-                            ["message"] = ex.Message,
-                            ["stacktrace"] = ex.StackTrace ?? string.Empty
-                        }, statusCode: 500);
-                        await WriteHttpResponseAsync(stream, err, CancellationToken.None).ConfigureAwait(false);
-                    }
-                    catch
-                    {
-                        // Ignore secondary errors while closing response
-                    }
-                }
+                return false;
             }
         }
 
@@ -422,43 +164,8 @@ namespace Appium.Net.Integration.Tests.helpers
                 return;
             }
             _disposed = true;
-            _cts.Cancel();
-            try
-            {
-                _listener.Stop();
-            }
-            catch
-            {
-                // Ignore shutdown exceptions
-            }
-            foreach (var kvp in _activeClients)
-            {
-                try
-                {
-                    kvp.Key.Close();
-                }
-                catch
-                {
-                    // Ignore shutdown exceptions
-                }
-            }
-            try
-            {
-                _listenLoopTask.Wait(TimeSpan.FromSeconds(1));
-            }
-            catch
-            {
-                // Ignore shutdown exceptions
-            }
-            try
-            {
-                Task.WaitAll(_clientTasks.ToArray(), TimeSpan.FromSeconds(1));
-            }
-            catch
-            {
-                // Ignore shutdown exceptions
-            }
-            _cts.Dispose();
+            _server.Stop();
+            _server.Dispose();
         }
     }
 }

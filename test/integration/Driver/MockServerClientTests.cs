@@ -37,20 +37,35 @@ namespace Appium.Net.Integration.Tests.Driver
         public void SetUp()
         {
             _mockServer = new MockAppiumServer();
-            var options = new AppiumOptions
+            try
             {
-                PlatformName = "Android",
-                AutomationName = "UiAutomator2",
-                DeviceName = "Android Emulator"
-            };
-            _driver = new AndroidDriver(_mockServer.ServerUri, options, TimeSpan.FromSeconds(10));
+                var options = new AppiumOptions
+                {
+                    PlatformName = "Android",
+                    AutomationName = "UiAutomator2",
+                    DeviceName = "Android Emulator"
+                };
+                _driver = new AndroidDriver(_mockServer.ServerUri, options, TimeSpan.FromSeconds(10));
+            }
+            catch
+            {
+                _mockServer.Dispose();
+                _mockServer = null;
+                throw;
+            }
         }
 
         [TearDown]
         public void TearDown()
         {
-            _driver?.Dispose();
-            _mockServer?.Dispose();
+            try
+            {
+                _driver?.Dispose();
+            }
+            finally
+            {
+                _mockServer?.Dispose();
+            }
         }
 
         private static Dictionary<string, string> ExtractW3CCapabilities(JsonElement root)
