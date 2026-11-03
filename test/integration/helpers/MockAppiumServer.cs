@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using WireMock.Matchers;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
 using WireMock.Server;
@@ -96,20 +97,20 @@ namespace Appium.Net.Integration.Tests.helpers
 
         public void OnExecuteScript(string scriptName, object responseValue, int statusCode = 200)
         {
+            string expectedJson = JsonSerializer.Serialize(new Dictionary<string, string>
+            {
+                ["script"] = scriptName
+            });
+
             _server
                 .Given(Request.Create()
                     .WithPath($"/session/{SessionId}/execute/sync")
                     .UsingPost()
-                    .WithBody((string body) => MatchesScriptName(body, scriptName)))
+                    .WithBody(new JsonPartialMatcher(expectedJson)))
                 .RespondWith(Response.Create()
                     .WithStatusCode(statusCode)
                     .WithHeader("Content-Type", "application/json; charset=utf-8")
                     .WithBody(SerializeValueEnvelope(responseValue)));
-        }
-
-        public void ClearRecordedRequests()
-        {
-            _server.ResetLogEntries();
         }
 
         private void RegisterDefaultRoutes()
@@ -134,27 +135,6 @@ namespace Appium.Net.Integration.Tests.helpers
                 ["value"] = value
             };
             return JsonSerializer.Serialize(payload);
-        }
-
-        private static bool MatchesScriptName(string body, string expectedScriptName)
-        {
-            if (string.IsNullOrWhiteSpace(body) || string.IsNullOrEmpty(expectedScriptName))
-            {
-                return false;
-            }
-
-            try
-            {
-                using var doc = JsonDocument.Parse(body);
-                return doc.RootElement.ValueKind == JsonValueKind.Object &&
-                       doc.RootElement.TryGetProperty("script", out var scriptElement) &&
-                       scriptElement.ValueKind == JsonValueKind.String &&
-                       string.Equals(scriptElement.GetString(), expectedScriptName, StringComparison.OrdinalIgnoreCase);
-            }
-            catch (JsonException)
-            {
-                return false;
-            }
         }
 
         public void Dispose()
