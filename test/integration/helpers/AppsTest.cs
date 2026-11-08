@@ -1,4 +1,4 @@
-﻿//Licensed under the Apache License, Version 2.0 (the "License");
+//Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.
 //See the NOTICE file distributed with this work for additional
 //information regarding copyright ownership.
@@ -20,11 +20,48 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using OpenQA.Selenium.Appium.Enums;
 
 namespace Appium.Net.Integration.Tests.helpers
 {
     public class AppsTest
     {
+        [Test]
+        public void GetIosCapsIncludesUdidWhenIosUdidEnvironmentVariableIsSet()
+        {
+            var previousUdid = Environment.GetEnvironmentVariable("IOS_UDID");
+            try
+            {
+                Environment.SetEnvironmentVariable("IOS_UDID", "00008110-0011223344556677");
+
+                var caps = Caps.GetIosCaps("TestApp.app.zip").ToDictionary();
+
+                Assert.That(caps[MobileCapabilityType.Udid], Is.EqualTo("00008110-0011223344556677"));
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("IOS_UDID", previousUdid);
+            }
+        }
+
+        [Test]
+        public void GetIosCapsOmitsUdidWhenIosUdidEnvironmentVariableIsUnset()
+        {
+            var previousUdid = Environment.GetEnvironmentVariable("IOS_UDID");
+            try
+            {
+                Environment.SetEnvironmentVariable("IOS_UDID", null);
+
+                var caps = Caps.GetIosCaps("TestApp.app.zip").ToDictionary();
+
+                Assert.That(caps.ContainsKey(MobileCapabilityType.Udid), Is.False);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("IOS_UDID", previousUdid);
+            }
+        }
+
         [Test]
         public void LocalServerUsesBundledIosTestAppWithoutDownloading()
         {

@@ -206,7 +206,10 @@ jobs:
     - name: Start Simulator UI
       env:
         SIMULATOR_UDID: ${{ steps.simulator.outputs.udid }}
-      run: open -a "$(xcode-select --print-path)/Applications/Simulator.app" --args -CurrentDeviceUDID "$SIMULATOR_UDID"
+      run: |
+        xcrun --sdk iphonesimulator --show-sdk-version
+        xcrun simctl install "$SIMULATOR_UDID" "${{ github.workspace }}/wda/WebDriverAgentRunner-Runner.app"
+        open -a "$(xcode-select --print-path)/Applications/Simulator.app" --args -CurrentDeviceUDID "$SIMULATOR_UDID"
 
     - name: Create test environment file
       run: |
@@ -226,6 +229,7 @@ jobs:
 
     - name: Run iOS functional tests
       env:
+        IOS_UDID: ${{ steps.simulator.outputs.udid }}
         LOCAL_PREBUILT_WDA: ${{ github.workspace }}/wda/WebDriverAgentRunner-Runner.app
       run: |
         dotnet test --configuration ${{ env.BUILD_CONFIGURATION }} \
