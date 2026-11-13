@@ -86,7 +86,7 @@ namespace OpenQA.Selenium.Appium.Android
         public bool? NoReset { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to uninstall the application and clear its data before and after the session.
+        /// Gets or sets whether to uninstall the application (clearing its data) before a new session is started.
         /// </summary>
         public bool? FullReset { get; set; }
 

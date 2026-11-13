@@ -88,7 +88,7 @@ namespace OpenQA.Selenium.Appium.iOS
         public bool? NoReset { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to uninstall the application and reset the simulator before and after the session.
+        /// Gets or sets whether to uninstall the application before a new session is started.
         /// </summary>
         public bool? FullReset { get; set; }
 
