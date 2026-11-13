@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Appium.Net.Integration.Tests.helpers;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.Android;
+using OpenQA.Selenium.Support.UI;
 
 namespace Appium.Net.Integration.Tests.Android.Device.Keys
 {
@@ -34,20 +36,15 @@ namespace Appium.Net.Integration.Tests.Android.Device.Keys
         [Test]
         public void HideKeyBoardTestCase()
         {
-            StartCustomTitleActivity();
-            var text_edit_btn = By.Id("io.appium.android.apis:id/left_text_edit");
-            _driver.FindElement(text_edit_btn).Clear();
-            _driver.FindElement(text_edit_btn).Click();
+            FocusCustomTitleInputAndWaitForKeyboard();
             _driver.HideKeyboard();
+            Assert.That(_driver.IsKeyboardShown(), Is.False);
         }
 
         [Test]
         public void IsKeyBoardShownTestCase()
         {
-            StartCustomTitleActivity();
-            var text_edit_btn = By.Id("io.appium.android.apis:id/left_text_edit");
-            _driver.FindElement(text_edit_btn).Clear();
-            _driver.FindElement(text_edit_btn).Click();
+            FocusCustomTitleInputAndWaitForKeyboard();
             bool is_visible = _driver.IsKeyboardShown();
             Assert.That(is_visible);
         }
@@ -55,13 +52,21 @@ namespace Appium.Net.Integration.Tests.Android.Device.Keys
         [Test]
         public void HideKeyBoardWithKeyTestCase()
         {
+            FocusCustomTitleInputAndWaitForKeyboard();
+            _driver.HideKeyboard("Enter");
+            bool is_visible = _driver.IsKeyboardShown();
+            Assert.That(!is_visible);
+        }
+
+        private void FocusCustomTitleInputAndWaitForKeyboard()
+        {
             StartCustomTitleActivity();
             var text_edit_btn = By.Id("io.appium.android.apis:id/left_text_edit");
             _driver.FindElement(text_edit_btn).Clear();
             _driver.FindElement(text_edit_btn).Click();
-            _driver.HideKeyboard("Enter");
-            bool is_visible = _driver.IsKeyboardShown();
-            Assert.That(!is_visible);
+
+            var wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            wait.Until(d => ((AndroidDriver)d).IsKeyboardShown());
         }
 
         private void StartCustomTitleActivity() {
