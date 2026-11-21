@@ -100,6 +100,8 @@ namespace OpenQA.Selenium.Appium
             #region SeassionData
 
             new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetSession, "/session/{sessionId}/"),
+            new AppiumCommand(HttpCommandInfo.GetCommand, AppiumDriverCommand.GetAppiumSessionCapabilities,
+                "/session/{sessionId}/appium/capabilities"),
 
             #endregion SeassionData
 

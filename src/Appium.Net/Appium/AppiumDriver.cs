@@ -496,13 +496,18 @@ namespace OpenQA.Selenium.Appium
 
         #region Session Data
 
+        private const string AppiumCapabilityPrefix = "appium:";
+
+        /// <summary>
+        /// Gets the capabilities of the current session as reported by the server.
+        /// Uses <c>GET /session/:sessionId/appium/capabilities</c> and falls back to the legacy
+        /// <c>GET /session/:sessionId</c> endpoint on servers that do not support it.
+        /// </summary>
         public IDictionary<string, object> SessionDetails
         {
             get
             {
-                var session =
-                    (IDictionary<string, object>)((IExecuteMethod)this).Execute(AppiumDriverCommand.GetSession)
-                    .Value;
+                var session = GetServerSessionCapabilities() ?? new Dictionary<string, object>();
                 return new ReadOnlyDictionary<string, object>(session.Where(entry =>
                 {
                     var key = entry.Key;
@@ -519,13 +524,61 @@ namespace OpenQA.Selenium.Appium
             return details.ContainsKey(detail) ? details[detail] : null;
         }
 
-        public string PlatformName => GetSessionDetail(MobileCapabilityType.PlatformName) as string
-                                      ?? GetSessionDetail(CapabilityType.Platform) as string;
+        public string PlatformName => GetSessionCapability(MobileCapabilityType.PlatformName)
+                                      ?? GetSessionCapability(CapabilityType.Platform);
 
-        public string AutomationName => GetSessionDetail(MobileCapabilityType.AutomationName) as string;
+        public string AutomationName => GetSessionCapability(MobileCapabilityType.AutomationName);
 
-        public bool IsBrowser => GetSessionDetail(MobileCapabilityType.BrowserName) != null
+        public bool IsBrowser => GetSessionCapability(MobileCapabilityType.BrowserName) != null
                                  && Context.IndexOf(NativeApp, StringComparison.OrdinalIgnoreCase) < 0;
+
+        private IDictionary<string, object> GetServerSessionCapabilities()
+        {
+            try
+            {
+                var response = ((IExecuteMethod)this).Execute(AppiumDriverCommand.GetAppiumSessionCapabilities).Value
+                    as IDictionary<string, object>;
+                return response != null && response.TryGetValue("capabilities", out var capabilities)
+                    ? capabilities as IDictionary<string, object>
+                    : null;
+            }
+            catch (Exception e) when (e is NotImplementedException || e is UnknownMethodException)
+            {
+                // Appium servers older than 2.16 do not expose /appium/capabilities.
+                // Selenium maps the W3C "unknown command" error to NotImplementedException.
+                return ((IExecuteMethod)this).Execute(AppiumDriverCommand.GetSession).Value
+                    as IDictionary<string, object>;
+            }
+        }
+
+        /// <summary>
+        /// Reads a capability returned by the server when the session was created.
+        /// Appium may report vendor capabilities with or without the "appium:" prefix,
+        /// so both forms are checked.
+        /// </summary>
+        private string GetSessionCapability(string name)
+        {
+            var capabilities = Capabilities;
+            if (capabilities == null)
+            {
+                return null;
+            }
+
+            var bareName = name.StartsWith(AppiumCapabilityPrefix, StringComparison.Ordinal)
+                ? name.Substring(AppiumCapabilityPrefix.Length)
+                : name;
+
+            foreach (var key in new[] { bareName, AppiumCapabilityPrefix + bareName })
+            {
+                var value = Convert.ToString(capabilities.GetCapability(key), CultureInfo.InvariantCulture);
+                if (!string.IsNullOrEmpty(value))
+                {
+                    return value;
+                }
+            }
+
+            return null;
+        }
 
         #endregion Session Data
 

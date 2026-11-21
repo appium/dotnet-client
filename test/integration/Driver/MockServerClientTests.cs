@@ -23,6 +23,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Enums;
+using OpenQA.Selenium.Appium.iOS;
 
 namespace Appium.Net.Integration.Tests.Driver
 {
@@ -213,6 +214,87 @@ namespace Appium.Net.Integration.Tests.Driver
 
             string clipboardText = _driver.GetClipboardText();
             Assert.That(clipboardText, Is.EqualTo("Hello Appium"));
+        }
+
+        [Test]
+        public void SessionProperties_ReadFromNewSessionCapabilitiesWithoutServerRequests()
+        {
+            int requestCountBefore = _mockServer.Requests.Count;
+
+            Assert.That(_driver.PlatformName, Is.EqualTo("Android"));
+            Assert.That(_driver.AutomationName, Is.EqualTo("UiAutomator2"));
+            Assert.That(_driver.IsBrowser, Is.False);
+
+            Assert.That(_mockServer.Requests.Count, Is.EqualTo(requestCountBefore),
+                "PlatformName, AutomationName and IsBrowser must not call the removed GET /session/:sessionId endpoint.");
+        }
+
+        [Test]
+        public void AutomationName_ReadsCapabilityReturnedWithoutVendorPrefix()
+        {
+            using var server = new MockAppiumServer(new Dictionary<string, object>
+            {
+                ["platformName"] = "iOS",
+                ["automationName"] = "XCUITest"
+            });
+            var options = new AppiumOptions
+            {
+                PlatformName = "iOS",
+                AutomationName = "XCUITest"
+            };
+            using var driver = new IOSDriver(server.ServerUri, options, TimeSpan.FromSeconds(10));
+
+            Assert.That(driver.PlatformName, Is.EqualTo("iOS"));
+            Assert.That(driver.AutomationName, Is.EqualTo("XCUITest"));
+        }
+
+        [Test]
+        public void SessionDetails_UseAppiumCapabilitiesEndpoint()
+        {
+            _mockServer.OnRequest("GET", $"/session/{_mockServer.SessionId}/appium/capabilities",
+                new Dictionary<string, object>
+                {
+                    ["capabilities"] = new Dictionary<string, object>
+                    {
+                        ["platformName"] = "Android",
+                        ["deviceName"] = "emulator-5554",
+                        ["browserName"] = ""
+                    }
+                });
+
+            IDictionary<string, object> details = _driver.SessionDetails;
+
+            Assert.That(details["platformName"], Is.EqualTo("Android"));
+            Assert.That(details["deviceName"], Is.EqualTo("emulator-5554"));
+            Assert.That(details.ContainsKey("browserName"), Is.False, "Empty values are filtered out.");
+            Assert.That(details.ContainsKey("capabilities"), Is.False, "The response envelope is unwrapped.");
+            Assert.That(_driver.GetSessionDetail("deviceName"), Is.EqualTo("emulator-5554"));
+            Assert.That(_driver.GetSessionDetail("missing"), Is.Null);
+            Assert.That(_mockServer.Requests.Any(r =>
+                r.HttpMethod == "GET" && r.Path.TrimEnd('/') == $"/session/{_mockServer.SessionId}"), Is.False,
+                "The legacy GET /session/:sessionId endpoint must not be called when the new one is available.");
+        }
+
+        [TestCase("unknown command", 404)]
+        [TestCase("unknown method", 405)]
+        public void SessionDetails_FallBackToLegacyEndpointOnOlderServers(string error, int statusCode)
+        {
+            _mockServer.OnRequest("GET", $"/session/{_mockServer.SessionId}/appium/capabilities",
+                new Dictionary<string, object>
+                {
+                    ["error"] = error,
+                    ["message"] = "The requested resource could not be found"
+                }, statusCode);
+            _mockServer.OnRequest("GET", $"/session/{_mockServer.SessionId}", new Dictionary<string, object>
+            {
+                ["platformName"] = "Android",
+                ["deviceName"] = "emulator-5554"
+            });
+
+            IDictionary<string, object> details = _driver.SessionDetails;
+
+            Assert.That(details["platformName"], Is.EqualTo("Android"));
+            Assert.That(details["deviceName"], Is.EqualTo("emulator-5554"));
         }
 
         [Test]
