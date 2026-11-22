@@ -273,6 +273,47 @@ namespace Appium.Net.Integration.Tests.Driver
             Assert.That(_mockServer.Requests.Any(r =>
                 r.HttpMethod == "GET" && r.Path.TrimEnd('/') == $"/session/{_mockServer.SessionId}"), Is.False,
                 "The legacy GET /session/:sessionId endpoint must not be called when the new one is available.");
+            Assert.That(_mockServer.Requests.Any(r =>
+                r.Path == $"/session/{_mockServer.SessionId}/appium/events"), Is.False,
+                "Events must only be requested when eventTimings is enabled.");
+        }
+
+        [TestCase(true)]
+        [TestCase("true")]
+        public void SessionDetails_IncludeEventsWhenEventTimingsIsEnabled(object eventTimings)
+        {
+            _mockServer.OnRequest("GET", $"/session/{_mockServer.SessionId}/appium/capabilities",
+                new Dictionary<string, object>
+                {
+                    ["capabilities"] = new Dictionary<string, object>
+                    {
+                        ["platformName"] = "Android",
+                        ["eventTimings"] = eventTimings
+                    }
+                });
+            _mockServer.OnRequest("POST", $"/session/{_mockServer.SessionId}/appium/events",
+                new Dictionary<string, object>
+                {
+                    ["commands"] = new object[]
+                    {
+                        new Dictionary<string, object>
+                        {
+                            ["cmd"] = "getAppiumSessionCapabilities",
+                            ["startTime"] = 1700000000000,
+                            ["endTime"] = 1700000000005
+                        }
+                    },
+                    ["newSessionStarted"] = new object[] { 1700000000000 }
+                });
+
+            IDictionary<string, object> details = _driver.SessionDetails;
+
+            Assert.That(details["platformName"], Is.EqualTo("Android"));
+            var events = details["events"] as IDictionary<string, object>;
+            Assert.That(events, Is.Not.Null, "The event history must be available as the \"events\" session detail.");
+            Assert.That(events.ContainsKey("commands"), Is.True);
+            Assert.That(events.ContainsKey("newSessionStarted"), Is.True);
+            Assert.That(_driver.GetSessionDetail("events"), Is.Not.Null);
         }
 
         [TestCase("unknown command", 404)]

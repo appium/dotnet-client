@@ -497,6 +497,8 @@ namespace OpenQA.Selenium.Appium
         #region Session Data
 
         private const string AppiumCapabilityPrefix = "appium:";
+        private const string EventTimingsCapability = "eventTimings";
+        private const string EventsSessionDetail = "events";
 
         /// <summary>
         /// Gets the capabilities of the current session as reported by the server.
@@ -538,9 +540,20 @@ namespace OpenQA.Selenium.Appium
             {
                 var response = ((IExecuteMethod)this).Execute(AppiumDriverCommand.GetAppiumSessionCapabilities).Value
                     as IDictionary<string, object>;
-                return response != null && response.TryGetValue("capabilities", out var capabilities)
-                    ? capabilities as IDictionary<string, object>
+                var capabilities = response != null && response.TryGetValue("capabilities", out var value)
+                    ? value as IDictionary<string, object>
                     : null;
+                if (capabilities == null || !IsEventTimingsEnabled(capabilities))
+                {
+                    return capabilities;
+                }
+
+                // The legacy endpoint also returned the event history when eventTimings was enabled.
+                // /appium/capabilities does not, so add it from /appium/events to keep "events" available.
+                return new Dictionary<string, object>(capabilities)
+                {
+                    [EventsSessionDetail] = GetEvents()
+                };
             }
             catch (Exception e) when (e is NotImplementedException || e is UnknownMethodException)
             {
@@ -549,6 +562,20 @@ namespace OpenQA.Selenium.Appium
                 return ((IExecuteMethod)this).Execute(AppiumDriverCommand.GetSession).Value
                     as IDictionary<string, object>;
             }
+        }
+
+        private static bool IsEventTimingsEnabled(IDictionary<string, object> capabilities)
+        {
+            foreach (var key in new[] { EventTimingsCapability, AppiumCapabilityPrefix + EventTimingsCapability })
+            {
+                if (capabilities.TryGetValue(key, out var value) && value != null &&
+                    bool.TryParse(Convert.ToString(value, CultureInfo.InvariantCulture), out var enabled) && enabled)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
