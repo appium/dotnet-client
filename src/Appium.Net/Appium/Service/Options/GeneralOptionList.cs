@@ -12,6 +12,7 @@
 //See the License for the specific language governing permissions and
 //limitations under the License.
 
+using System;
 using System.Collections.Generic;
 
 
@@ -27,6 +28,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// <summary>
         /// Enter REPL mode
         /// </summary>
+        [Obsolete("Appium 4 removed the --shell server argument.")]
         public static KeyValuePair<string, string> Shell(string value) =>
             GetKeyValuePair("--shell", value);
 
@@ -45,6 +47,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// Sample <br/>
         /// --callback-address 127.0.0.1
         ///</summary>
+        [Obsolete("Appium 4 removed the --callback-address server argument.")]
         public static KeyValuePair<string, string> CallbackAddress(string value) =>
             new KeyValuePair<string, string>("--callback-address", value);
 
@@ -53,6 +56,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// Sample <br/>
         /// --callback-port 4723
         ///</summary>
+        [Obsolete("Appium 4 removed the --callback-port server argument.")]
         public static KeyValuePair<string, string> CallbackPort(string value) =>
             new KeyValuePair<string, string>("--callback-port", value);
 
@@ -65,6 +69,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         ///<summary>
         /// Pre-launch the application before allowing the first session (Requires –app and, for Android, –app-pkg and –app-activity) <br/>
         ///</summary>
+        [Obsolete("Appium 3 and later do not support the --pre-launch server argument.")]
         public static KeyValuePair<string, string> PreLaunch() =>
             new KeyValuePair<string, string>("--pre-launch", string.Empty);
 
@@ -107,6 +112,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// Sample:<br/>
         /// --nodeconfig /abs/path/to/nodeconfig.json
         ///</summary>
+        [Obsolete("Appium 4 removed the --nodeconfig server argument.")]
         public static KeyValuePair<string, string> NodeConfig(string value) =>
             GetKeyValuePair("--nodeconfig", value);
 
@@ -116,6 +122,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// Sample:<br/>
         /// --robot-address 0.0.0.0
         ///</summary>
+        [Obsolete("Appium 3 and later do not support the --robot-address server argument.")]
         public static KeyValuePair<string, string> RobotAddress(string value) =>
             GetKeyValuePairUsingDefaultValue("--robot-address", value, "0.0.0.0");
 
@@ -124,6 +131,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// Sample: <br/>
         /// --robot-port 4242
         ///</summary>
+        [Obsolete("Appium 3 and later do not support the --robot-port server argument.")]
         public static KeyValuePair<string, string> RobotPort(string value) =>
             GetKeyValuePairUsingDefaultValue("--robot-port", value, "-1");
 
@@ -143,6 +151,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// Cause sessions to fail if desired caps are sent in that Appium does not
         /// recognize as valid for the selected device<br/>
         ///</summary>
+        [Obsolete("Appium 4 removed the --strict-caps server argument.")]
         public static KeyValuePair<string, string> StrictCaps() =>
             new KeyValuePair<string, string>("--strict-caps", string.Empty);
 
@@ -157,12 +166,14 @@ namespace OpenQA.Selenium.Appium.Service.Options
         ///<summary>
         /// Add exaggerated spacing in logs to help with visual inspection<br/>
         ///</summary>
+        [Obsolete("Appium 4 removed the --debug-log-spacing server argument.")]
         public static KeyValuePair<string, string> DebugLogSpacing() =>
             new KeyValuePair<string, string>("--debug-log-spacing", string.Empty);
 
         /// <summary>
         /// Add long stack traces to log entries. Recommended for debugging only.
         /// </summary>
+        [Obsolete("Appium 3 and later do not support the --async-trace server argument.")]
         public static KeyValuePair<string, string> AsyncTrace() =>
             new KeyValuePair<string, string>("--async-trace", string.Empty);
     }

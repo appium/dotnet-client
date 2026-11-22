@@ -42,7 +42,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
 
 
             var argCollector = new OptionCollector()
-                .AddArguments(GeneralOptionList.OverrideSession()).AddArguments(GeneralOptionList.StrictCaps());
+                .AddArguments(GeneralOptionList.OverrideSession()).AddArguments(GeneralOptionList.LogTimeStamp());
             var builder = new AppiumServiceBuilder().WithArguments(argCollector);
 
             AndroidDriver driver = null;
@@ -112,7 +112,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
                 Caps.GetIosCaps(app);
 
             var argCollector = new OptionCollector()
-                .AddArguments(GeneralOptionList.OverrideSession()).AddArguments(GeneralOptionList.StrictCaps());
+                .AddArguments(GeneralOptionList.OverrideSession()).AddArguments(GeneralOptionList.LogTimeStamp());
 
             var builder = new AppiumServiceBuilder().WithArguments(argCollector);
             IOSDriver driver = null;
