@@ -249,18 +249,47 @@ namespace Appium.Net.Integration.Tests.Driver
         }
 
         [Test]
-        public void SessionDetails_UseAppiumCapabilitiesEndpoint()
+        public void SessionDetails_PreferLegacyEndpointWhenServerStillHasIt()
         {
-            _mockServer.OnRequest("GET", $"/session/{_mockServer.SessionId}/appium/capabilities",
-                new Dictionary<string, object>
+            // Appium 3 has both routes. UiAutomator2 adds live device data such as lastScrollData
+            // only to the legacy response, so the client must keep using it there.
+            RegisterAppiumCapabilitiesRoute(new Dictionary<string, object>
+            {
+                ["platformName"] = "Android",
+                ["deviceName"] = "emulator-5554"
+            });
+            _mockServer.OnRequest("GET", $"/session/{_mockServer.SessionId}", new Dictionary<string, object>
+            {
+                ["platformName"] = "Android",
+                ["deviceName"] = "emulator-5554",
+                ["lastScrollData"] = new Dictionary<string, object>
                 {
-                    ["capabilities"] = new Dictionary<string, object>
-                    {
-                        ["platformName"] = "Android",
-                        ["deviceName"] = "emulator-5554",
-                        ["browserName"] = ""
-                    }
-                });
+                    ["scrollX"] = 0,
+                    ["scrollY"] = 120
+                }
+            });
+
+            IDictionary<string, object> details = _driver.SessionDetails;
+
+            Assert.That(details["platformName"], Is.EqualTo("Android"));
+            Assert.That(_driver.GetSessionDetail("lastScrollData"), Is.Not.Null,
+                "Driver-specific data from the legacy response must be kept.");
+            Assert.That(_mockServer.Requests.Any(r =>
+                r.Path == $"/session/{_mockServer.SessionId}/appium/capabilities"), Is.False,
+                "/appium/capabilities must only be used when the legacy endpoint is gone.");
+        }
+
+        [TestCase("unknown method", 405)]
+        [TestCase("unknown command", 404)]
+        public void SessionDetails_UseAppiumCapabilitiesEndpointWhenLegacyEndpointIsRemoved(string error, int statusCode)
+        {
+            RegisterRemovedLegacySessionRoute(error, statusCode);
+            RegisterAppiumCapabilitiesRoute(new Dictionary<string, object>
+            {
+                ["platformName"] = "Android",
+                ["deviceName"] = "emulator-5554",
+                ["browserName"] = ""
+            });
 
             IDictionary<string, object> details = _driver.SessionDetails;
 
@@ -270,9 +299,9 @@ namespace Appium.Net.Integration.Tests.Driver
             Assert.That(details.ContainsKey("capabilities"), Is.False, "The response envelope is unwrapped.");
             Assert.That(_driver.GetSessionDetail("deviceName"), Is.EqualTo("emulator-5554"));
             Assert.That(_driver.GetSessionDetail("missing"), Is.Null);
-            Assert.That(_mockServer.Requests.Any(r =>
-                r.HttpMethod == "GET" && r.Path.TrimEnd('/') == $"/session/{_mockServer.SessionId}"), Is.False,
-                "The legacy GET /session/:sessionId endpoint must not be called when the new one is available.");
+            Assert.That(_mockServer.Requests.Count(r =>
+                r.HttpMethod == "GET" && r.Path.TrimEnd('/') == $"/session/{_mockServer.SessionId}"), Is.EqualTo(1),
+                "Once the legacy endpoint is known to be gone, it must not be requested again.");
             Assert.That(_mockServer.Requests.Any(r =>
                 r.Path == $"/session/{_mockServer.SessionId}/appium/events"), Is.False,
                 "Events must only be requested when eventTimings is enabled.");
@@ -282,15 +311,12 @@ namespace Appium.Net.Integration.Tests.Driver
         [TestCase("true")]
         public void SessionDetails_IncludeEventsWhenEventTimingsIsEnabled(object eventTimings)
         {
-            _mockServer.OnRequest("GET", $"/session/{_mockServer.SessionId}/appium/capabilities",
-                new Dictionary<string, object>
-                {
-                    ["capabilities"] = new Dictionary<string, object>
-                    {
-                        ["platformName"] = "Android",
-                        ["eventTimings"] = eventTimings
-                    }
-                });
+            RegisterRemovedLegacySessionRoute("unknown method", 405);
+            RegisterAppiumCapabilitiesRoute(new Dictionary<string, object>
+            {
+                ["platformName"] = "Android",
+                ["eventTimings"] = eventTimings
+            });
             _mockServer.OnRequest("POST", $"/session/{_mockServer.SessionId}/appium/events",
                 new Dictionary<string, object>
                 {
@@ -316,26 +342,19 @@ namespace Appium.Net.Integration.Tests.Driver
             Assert.That(_driver.GetSessionDetail("events"), Is.Not.Null);
         }
 
-        [TestCase("unknown command", 404)]
-        [TestCase("unknown method", 405)]
-        public void SessionDetails_FallBackToLegacyEndpointOnOlderServers(string error, int statusCode)
+        private void RegisterRemovedLegacySessionRoute(string error, int statusCode)
         {
-            _mockServer.OnRequest("GET", $"/session/{_mockServer.SessionId}/appium/capabilities",
-                new Dictionary<string, object>
-                {
-                    ["error"] = error,
-                    ["message"] = "The requested resource could not be found"
-                }, statusCode);
             _mockServer.OnRequest("GET", $"/session/{_mockServer.SessionId}", new Dictionary<string, object>
             {
-                ["platformName"] = "Android",
-                ["deviceName"] = "emulator-5554"
-            });
+                ["error"] = error,
+                ["message"] = "The requested resource could not be found"
+            }, statusCode);
+        }
 
-            IDictionary<string, object> details = _driver.SessionDetails;
-
-            Assert.That(details["platformName"], Is.EqualTo("Android"));
-            Assert.That(details["deviceName"], Is.EqualTo("emulator-5554"));
+        private void RegisterAppiumCapabilitiesRoute(IDictionary<string, object> capabilities)
+        {
+            _mockServer.OnRequest("GET", $"/session/{_mockServer.SessionId}/appium/capabilities",
+                new Dictionary<string, object> { ["capabilities"] = capabilities });
         }
 
         [Test]

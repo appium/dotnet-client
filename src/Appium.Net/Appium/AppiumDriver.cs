@@ -500,10 +500,13 @@ namespace OpenQA.Selenium.Appium
         private const string EventTimingsCapability = "eventTimings";
         private const string EventsSessionDetail = "events";
 
+        private bool _legacySessionEndpointUnsupported;
+
         /// <summary>
-        /// Gets the capabilities of the current session as reported by the server.
-        /// Uses <c>GET /session/:sessionId/appium/capabilities</c> and falls back to the legacy
-        /// <c>GET /session/:sessionId</c> endpoint on servers that do not support it.
+        /// Gets the details of the current session as reported by the server.
+        /// Uses the legacy <c>GET /session/:sessionId</c> endpoint where the server still has it, because drivers
+        /// such as UiAutomator2 add live device data to that response (for example <c>lastScrollData</c>).
+        /// Falls back to <c>GET /session/:sessionId/appium/capabilities</c> on servers that removed it (Appium 4).
         /// </summary>
         public IDictionary<string, object> SessionDetails
         {
@@ -536,32 +539,39 @@ namespace OpenQA.Selenium.Appium
 
         private IDictionary<string, object> GetServerSessionCapabilities()
         {
-            try
+            if (!_legacySessionEndpointUnsupported)
             {
-                var response = ((IExecuteMethod)this).Execute(AppiumDriverCommand.GetAppiumSessionCapabilities).Value
-                    as IDictionary<string, object>;
-                var capabilities = response != null && response.TryGetValue("capabilities", out var value)
-                    ? value as IDictionary<string, object>
-                    : null;
-                if (capabilities == null || !IsEventTimingsEnabled(capabilities))
+                try
                 {
-                    return capabilities;
+                    return ((IExecuteMethod)this).Execute(AppiumDriverCommand.GetSession).Value
+                        as IDictionary<string, object>;
                 }
-
-                // The legacy endpoint also returned the event history when eventTimings was enabled.
-                // /appium/capabilities does not, so add it from /appium/events to keep "events" available.
-                return new Dictionary<string, object>(capabilities)
+                catch (Exception e) when (e is NotImplementedException || e is UnknownMethodException)
                 {
-                    [EventsSessionDetail] = GetEvents()
-                };
+                    // Appium 4 removed GET /session/:sessionId. The server answers with "unknown method"
+                    // (the URL still matches DELETE), which Selenium maps to UnknownMethodException;
+                    // "unknown command" maps to NotImplementedException. Remember it so later calls
+                    // go straight to /appium/capabilities.
+                    _legacySessionEndpointUnsupported = true;
+                }
             }
-            catch (Exception e) when (e is NotImplementedException || e is UnknownMethodException)
+
+            var response = ((IExecuteMethod)this).Execute(AppiumDriverCommand.GetAppiumSessionCapabilities).Value
+                as IDictionary<string, object>;
+            var capabilities = response != null && response.TryGetValue("capabilities", out var value)
+                ? value as IDictionary<string, object>
+                : null;
+            if (capabilities == null || !IsEventTimingsEnabled(capabilities))
             {
-                // Appium servers older than 2.16 do not expose /appium/capabilities.
-                // Selenium maps the W3C "unknown command" error to NotImplementedException.
-                return ((IExecuteMethod)this).Execute(AppiumDriverCommand.GetSession).Value
-                    as IDictionary<string, object>;
+                return capabilities;
             }
+
+            // The legacy endpoint also returned the event history when eventTimings was enabled.
+            // /appium/capabilities does not, so add it from /appium/events to keep "events" available.
+            return new Dictionary<string, object>(capabilities)
+            {
+                [EventsSessionDetail] = GetEvents()
+            };
         }
 
         private static bool IsEventTimingsEnabled(IDictionary<string, object> capabilities)
