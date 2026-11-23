@@ -171,6 +171,24 @@ namespace Appium.Net.Integration.Tests.ServerTests
         }
 
         [Test]
+        public void CheckAbilityToStartServiceWithUnknownArgumentWhenAllowed()
+        {
+            var args = new OptionCollector()
+                .AddArguments(GeneralOptionList.AllowUnknownArgs())
+                .AddArguments(new KeyValuePair<string, string>("--dotnet-client-test-unknown-argument", string.Empty));
+
+            using (var service = new AppiumServiceBuilder()
+                .WithIPAddress(IPAddress.Loopback.ToString())
+                .UsingAnyFreePort()
+                .WithArguments(args)
+                .Build())
+            {
+                service.Start();
+                Assert.That(service.IsRunning);
+            }
+        }
+
+        [Test]
         public void CheckAbilityToStartServiceUsingBasePathFlag()
         {
             AppiumLocalService service = null;

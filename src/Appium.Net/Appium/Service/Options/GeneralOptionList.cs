@@ -35,6 +35,9 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// <summary>
         /// Ignore unrecognized server arguments when starting Appium 3.6 or later.
         /// </summary>
+        /// <remarks>
+        /// Appium versions before 3.6 reject this option, which prevents the server from starting.
+        /// </remarks>
         public static KeyValuePair<string, string> AllowUnknownArgs() =>
             new KeyValuePair<string, string>("--allow-unknown-args", string.Empty);
 
