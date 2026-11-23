@@ -156,7 +156,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
         public void CheckAbilityToStartServiceUsingFlags()
         {
             AppiumLocalService service = null;
-            var args = new OptionCollector().AddArguments(GeneralOptionList.CallbackAddress(_testIp))
+            var args = new OptionCollector().AddArguments(GeneralOptionList.LogTimeStamp())
                 .AddArguments(GeneralOptionList.OverrideSession());
             try
             {
@@ -254,7 +254,7 @@ namespace Appium.Net.Integration.Tests.ServerTests
             capabilities.AddAdditionalAppiumOption(AndroidMobileCapabilityType.AppActivity, ".view.WebView1");
 
             var args = new OptionCollector().AddCapabilities(capabilities)
-                .AddArguments(GeneralOptionList.CallbackAddress(_testIp))
+                .AddArguments(GeneralOptionList.LogTimeStamp())
                 .AddArguments(GeneralOptionList.OverrideSession());
             AppiumLocalService service = null;
             try
