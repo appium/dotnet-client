@@ -254,7 +254,16 @@ namespace OpenQA.Selenium.Appium
         public const string FingerPrint = "fingerPrint";
 
 
+        /// <summary>
+        /// Represents the legacy Get Session command (<c>GET /session/:sessionId</c>).
+        /// Removed in Appium 4; use <see cref="GetAppiumSessionCapabilities"/> instead.
+        /// </summary>
         public const string GetSession = "getSession";
+
+        /// <summary>
+        /// Represents the Get Appium Session Capabilities command (<c>GET /session/:sessionId/appium/capabilities</c>).
+        /// </summary>
+        public const string GetAppiumSessionCapabilities = "getAppiumSessionCapabilities";
 
         public const string StartRecordingScreen = "startRecordingScreen";
 
