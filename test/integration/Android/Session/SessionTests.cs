@@ -40,6 +40,14 @@ namespace Appium.Net.Integration.Tests.Android.Session
         }
 
         [Test]
+        public void SessionPropertiesTest()
+        {
+            Assert.That(_driver.PlatformName, Is.EqualTo("Android").IgnoreCase);
+            Assert.That(_driver.AutomationName, Is.EqualTo("UiAutomator2").IgnoreCase);
+            Assert.That(_driver.IsBrowser, Is.False);
+        }
+
+        [Test]
         public void GetDeviceDictionaryData()
         {
             var dictionary = (Dictionary<string, object>)_driver.SessionDetails["desired"];

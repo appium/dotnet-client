@@ -74,13 +74,16 @@ namespace Appium.Net.Integration.Tests.helpers
             }
         }
 
-        public MockAppiumServer()
+        /// <param name="sessionCapabilities">
+        /// Capabilities returned by the mocked new session command. Defaults to an Android UiAutomator2 session.
+        /// </param>
+        public MockAppiumServer(IDictionary<string, object> sessionCapabilities = null)
         {
             _server = WireMockServer.Start();
             string baseUrl = _server.Url ?? $"http://127.0.0.1:{_server.Port}";
             ServerUri = new Uri(baseUrl.EndsWith("/", StringComparison.Ordinal) ? baseUrl : baseUrl + "/");
 
-            RegisterDefaultRoutes();
+            RegisterDefaultRoutes(sessionCapabilities);
         }
 
         public void OnRequest(string httpMethod, string path, object responseValue, int statusCode = 200)
@@ -113,12 +116,12 @@ namespace Appium.Net.Integration.Tests.helpers
                     .WithBody(SerializeValueEnvelope(responseValue)));
         }
 
-        private void RegisterDefaultRoutes()
+        private void RegisterDefaultRoutes(IDictionary<string, object> sessionCapabilities)
         {
             OnRequest("POST", "/session", new Dictionary<string, object>
             {
                 ["sessionId"] = SessionId,
-                ["capabilities"] = new Dictionary<string, object>
+                ["capabilities"] = sessionCapabilities ?? new Dictionary<string, object>
                 {
                     ["platformName"] = "Android",
                     ["appium:automationName"] = "UiAutomator2"

@@ -496,13 +496,23 @@ namespace OpenQA.Selenium.Appium
 
         #region Session Data
 
+        private const string AppiumCapabilityPrefix = "appium:";
+        private const string EventTimingsCapability = "eventTimings";
+        private const string EventsSessionDetail = "events";
+
+        private bool _legacySessionEndpointUnsupported;
+
+        /// <summary>
+        /// Gets the details of the current session as reported by the server.
+        /// Uses the legacy <c>GET /session/:sessionId</c> endpoint where the server still has it, because drivers
+        /// such as UiAutomator2 add live device data to that response (for example <c>lastScrollData</c>).
+        /// Falls back to <c>GET /session/:sessionId/appium/capabilities</c> on servers that removed it (Appium 4).
+        /// </summary>
         public IDictionary<string, object> SessionDetails
         {
             get
             {
-                var session =
-                    (IDictionary<string, object>)((IExecuteMethod)this).Execute(AppiumDriverCommand.GetSession)
-                    .Value;
+                var session = GetServerSessionCapabilities() ?? new Dictionary<string, object>();
                 return new ReadOnlyDictionary<string, object>(session.Where(entry =>
                 {
                     var key = entry.Key;
@@ -519,13 +529,93 @@ namespace OpenQA.Selenium.Appium
             return details.ContainsKey(detail) ? details[detail] : null;
         }
 
-        public string PlatformName => GetSessionDetail(MobileCapabilityType.PlatformName) as string
-                                      ?? GetSessionDetail(CapabilityType.Platform) as string;
+        public string PlatformName => GetSessionCapability(MobileCapabilityType.PlatformName)
+                                      ?? GetSessionCapability(CapabilityType.Platform);
 
-        public string AutomationName => GetSessionDetail(MobileCapabilityType.AutomationName) as string;
+        public string AutomationName => GetSessionCapability(MobileCapabilityType.AutomationName);
 
-        public bool IsBrowser => GetSessionDetail(MobileCapabilityType.BrowserName) != null
+        public bool IsBrowser => GetSessionCapability(MobileCapabilityType.BrowserName) != null
                                  && Context.IndexOf(NativeApp, StringComparison.OrdinalIgnoreCase) < 0;
+
+        private IDictionary<string, object> GetServerSessionCapabilities()
+        {
+            if (!_legacySessionEndpointUnsupported)
+            {
+                try
+                {
+                    return ((IExecuteMethod)this).Execute(AppiumDriverCommand.GetSession).Value
+                        as IDictionary<string, object>;
+                }
+                catch (Exception e) when (e is NotImplementedException || e is UnknownMethodException)
+                {
+                    // Appium 4 removed GET /session/:sessionId. The server answers with "unknown method"
+                    // (the URL still matches DELETE), which Selenium maps to UnknownMethodException;
+                    // "unknown command" maps to NotImplementedException. Remember it so later calls
+                    // go straight to /appium/capabilities.
+                    _legacySessionEndpointUnsupported = true;
+                }
+            }
+
+            var response = ((IExecuteMethod)this).Execute(AppiumDriverCommand.GetAppiumSessionCapabilities).Value
+                as IDictionary<string, object>;
+            var capabilities = response != null && response.TryGetValue("capabilities", out var value)
+                ? value as IDictionary<string, object>
+                : null;
+            if (capabilities == null || !IsEventTimingsEnabled(capabilities))
+            {
+                return capabilities;
+            }
+
+            // The legacy endpoint also returned the event history when eventTimings was enabled.
+            // /appium/capabilities does not, so add it from /appium/events to keep "events" available.
+            return new Dictionary<string, object>(capabilities)
+            {
+                [EventsSessionDetail] = GetEvents()
+            };
+        }
+
+        private static bool IsEventTimingsEnabled(IDictionary<string, object> capabilities)
+        {
+            foreach (var key in new[] { EventTimingsCapability, AppiumCapabilityPrefix + EventTimingsCapability })
+            {
+                if (capabilities.TryGetValue(key, out var value) && value != null &&
+                    bool.TryParse(Convert.ToString(value, CultureInfo.InvariantCulture), out var enabled) && enabled)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Reads a capability returned by the server when the session was created.
+        /// Appium may report vendor capabilities with or without the "appium:" prefix,
+        /// so both forms are checked.
+        /// </summary>
+        private string GetSessionCapability(string name)
+        {
+            var capabilities = Capabilities;
+            if (capabilities == null)
+            {
+                return null;
+            }
+
+            var bareName = name.StartsWith(AppiumCapabilityPrefix, StringComparison.Ordinal)
+                ? name.Substring(AppiumCapabilityPrefix.Length)
+                : name;
+
+            foreach (var key in new[] { bareName, AppiumCapabilityPrefix + bareName })
+            {
+                var value = Convert.ToString(capabilities.GetCapability(key), CultureInfo.InvariantCulture);
+                if (!string.IsNullOrEmpty(value))
+                {
+                    return value;
+                }
+            }
+
+            return null;
+        }
 
         #endregion Session Data
 
