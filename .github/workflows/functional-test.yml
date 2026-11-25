@@ -14,7 +14,9 @@ on:
 env:
   BUILD_CONFIGURATION: 'Release'
   CI: true
-  DOTNET_VERSION: '8.0.x'
+  # 10.0.x is the SDK that builds (see global.json); 8.0.x is the runtime the net8.0 tests run on
+  DOTNET_SDK_VERSION: '10.0.x'
+  DOTNET_TEST_RUNTIME_VERSION: '8.0.x'
   NODE_VERSION: 'lts/*'
 
 jobs:
@@ -37,7 +39,9 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v6
       with:
-        dotnet-version: ${{ env.DOTNET_VERSION }}
+        dotnet-version: |
+          ${{ env.DOTNET_TEST_RUNTIME_VERSION }}
+          ${{ env.DOTNET_SDK_VERSION }}
 
     - name: Enable KVM
       run: |
@@ -159,7 +163,9 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v6
       with:
-        dotnet-version: ${{ env.DOTNET_VERSION }}
+        dotnet-version: |
+          ${{ env.DOTNET_TEST_RUNTIME_VERSION }}
+          ${{ env.DOTNET_SDK_VERSION }}
 
     - name: Select Xcode
       uses: maxim-lobanov/setup-xcode@v1

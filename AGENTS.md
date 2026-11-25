@@ -12,6 +12,9 @@ See also [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Build and test
 
+Requires the .NET 10 SDK or newer, pinned by [`global.json`](global.json) (the SourceLink build tasks need it).
+Running the `net8.0` tests also needs the .NET 8 runtime.
+
 ```bash
 dotnet restore Appium.Net.sln
 dotnet build Appium.Net.sln --configuration Release
