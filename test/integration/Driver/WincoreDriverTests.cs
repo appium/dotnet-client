@@ -135,15 +135,18 @@ namespace Appium.Net.Integration.Tests.Driver
         }
 
         [Test]
-        public void StartRecordingScreen_DefaultOptions_SendsStartRecordingCommandAndHandlesNullResponse()
+        public void StartRecordingScreen_DefaultOptions_SendsExecuteScriptAndHandlesNullResponse()
         {
             _executor.ResponseToReturn = new Response("test-session", null, WebDriverResult.Success);
 
             var result = _driver.StartRecordingScreen();
 
             Assert.That(result, Is.Null);
-            Assert.That(_executor.LastCommand.Name, Is.EqualTo(AppiumDriverCommand.StartRecordingScreen));
-            var options = _executor.LastCommand.Parameters["options"] as IDictionary<string, object>;
+            Assert.That(_executor.LastCommand.Name, Is.EqualTo(DriverCommand.ExecuteScript));
+            Assert.That(_executor.LastCommand.Parameters["script"], Is.EqualTo("windows: startRecordingScreen"));
+            var args = _executor.LastCommand.Parameters["args"] as object[];
+            Assert.That(args, Is.Not.Null.And.Length.EqualTo(1));
+            var options = args[0] as IDictionary<string, object>;
             Assert.That(options, Is.Not.Null);
             Assert.That(options, Is.Empty);
         }
@@ -153,12 +156,8 @@ namespace Appium.Net.Integration.Tests.Driver
         {
             _executor.ResponseToReturn = new Response("test-session", "dGVzdA==", WebDriverResult.Success);
 
-            var uploadOptions = new ScreenRecordingUploadOptions()
-                .WithRemotePath("https://example.com/start-upload")
-                .WithAuthCredentials("start-user", "start-secret")
-                .WithHttpMethod(ScreenRecordingUploadOptions.RequestMethod.PUT);
-
-            var recordingOptions = WincoreStartScreenRecordingOptions.StartScreenRecordingOptions()
+            var recordingOptions = WincoreStartScreenRecordingOptions.GetWincoreStartScreenRecordingOptions()
+                .WithOutputPath(@"C:\videos")
                 .WithVideoFps(30)
                 .EnableCursorCapture()
                 .EnableClicksCapture()
@@ -166,15 +165,18 @@ namespace Appium.Net.Integration.Tests.Driver
                 .WithVideoFilter("scale=1024:-2")
                 .WithPreset("fast")
                 .WithTimeLimit(TimeSpan.FromMinutes(5))
-                .EnableForcedRestart()
-                .WithUploadOptions(uploadOptions);
+                .DisableForcedRestart();
 
             var result = _driver.StartRecordingScreen(recordingOptions);
 
             Assert.That(result, Is.EqualTo("dGVzdA=="));
-            Assert.That(_executor.LastCommand.Name, Is.EqualTo(AppiumDriverCommand.StartRecordingScreen));
-            var options = _executor.LastCommand.Parameters["options"] as IDictionary<string, object>;
+            Assert.That(_executor.LastCommand.Name, Is.EqualTo(DriverCommand.ExecuteScript));
+            Assert.That(_executor.LastCommand.Parameters["script"], Is.EqualTo("windows: startRecordingScreen"));
+            var args = _executor.LastCommand.Parameters["args"] as object[];
+            Assert.That(args, Is.Not.Null.And.Length.EqualTo(1));
+            var options = args[0] as IDictionary<string, object>;
             Assert.That(options, Is.Not.Null);
+            Assert.That(options["outputPath"], Is.EqualTo(@"C:\videos"));
             Assert.That(options["videoFps"], Is.EqualTo(30));
             Assert.That(options["captureCursor"], Is.EqualTo(true));
             Assert.That(options["captureClicks"], Is.EqualTo(true));
@@ -182,21 +184,7 @@ namespace Appium.Net.Integration.Tests.Driver
             Assert.That(options["videoFilter"], Is.EqualTo("scale=1024:-2"));
             Assert.That(options["preset"], Is.EqualTo("fast"));
             Assert.That(options["timeLimit"], Is.EqualTo(300));
-            Assert.That(options["forceRestart"], Is.EqualTo(true));
-            Assert.That(options["remotePath"], Is.EqualTo("https://example.com/start-upload"));
-            Assert.That(options["user"], Is.EqualTo("start-user"));
-            Assert.That(options["pass"], Is.EqualTo("start-secret"));
-            Assert.That(options["method"], Is.EqualTo("PUT"));
-        }
-
-        [Test]
-        public void StartRecordingScreen_WithFpsAlias_SetsVideoFpsParameter()
-        {
-            var recordingOptions = WincoreStartScreenRecordingOptions.GetWincoreStartScreenRecordingOptions()
-                .WithFps(60);
-
-            var parameters = recordingOptions.GetParameters();
-            Assert.That(parameters["videoFps"], Is.EqualTo(60));
+            Assert.That(options["forceRestart"], Is.EqualTo(false));
         }
 
         [Test]
@@ -215,8 +203,11 @@ namespace Appium.Net.Integration.Tests.Driver
             var result = _driver.StopRecordingScreen(stopOptions);
 
             Assert.That(result, Is.EqualTo("YmFzZTY0dmlkZW8="));
-            Assert.That(_executor.LastCommand.Name, Is.EqualTo(AppiumDriverCommand.StopRecordingScreen));
-            var options = _executor.LastCommand.Parameters["options"] as IDictionary<string, object>;
+            Assert.That(_executor.LastCommand.Name, Is.EqualTo(DriverCommand.ExecuteScript));
+            Assert.That(_executor.LastCommand.Parameters["script"], Is.EqualTo("windows: stopRecordingScreen"));
+            var args = _executor.LastCommand.Parameters["args"] as object[];
+            Assert.That(args, Is.Not.Null.And.Length.EqualTo(1));
+            var options = args[0] as IDictionary<string, object>;
             Assert.That(options, Is.Not.Null);
             Assert.That(options["remotePath"], Is.EqualTo("https://example.com/upload"));
             Assert.That(options["user"], Is.EqualTo("user"));
@@ -277,43 +268,24 @@ namespace Appium.Net.Integration.Tests.Driver
         }
 
         [Test]
-        public void Settings_GetAndSet_ExecuteExpectedCommands()
-        {
-            _driver.SetSetting("waitForIdleTimeout", 100);
-            Assert.That(_executor.LastCommand.Name, Is.EqualTo(AppiumDriverCommand.UpdateSettings));
-            var settingsParam = _executor.LastCommand.Parameters["settings"] as IDictionary<string, object>;
-            Assert.That(settingsParam, Is.Not.Null);
-            Assert.That(settingsParam["waitForIdleTimeout"], Is.EqualTo(100));
-
-            var expectedSettings = new Dictionary<string, object> { { "waitForIdleTimeout", 100 } };
-            _executor.ResponseToReturn = new Response("test-session", expectedSettings, WebDriverResult.Success);
-            var currentSettings = _driver.Settings;
-            Assert.That(currentSettings["waitForIdleTimeout"], Is.EqualTo(100));
-            Assert.That(_executor.LastCommand.Name, Is.EqualTo(AppiumDriverCommand.GetSettings));
-        }
-
-        [Test]
         public void WincoreDriver_ExecutesCommandsOverMockAppiumServerHttp()
         {
             using var mockServer = new MockAppiumServer();
             mockServer.OnExecuteScript("windows: launchApp", null);
             mockServer.OnExecuteScript("windows: closeApp", null);
-            mockServer.OnRequest("POST", $"/session/{mockServer.SessionId}/appium/start_recording_screen", "dGVzdA==");
-            mockServer.OnRequest("POST", $"/session/{mockServer.SessionId}/appium/stop_recording_screen", "YmFzZTY0dmlkZW8=");
+            mockServer.OnExecuteScript("windows: startRecordingScreen", "dGVzdA==");
+            mockServer.OnExecuteScript("windows: stopRecordingScreen", "YmFzZTY0dmlkZW8=");
 
             using var httpDriver = new WincoreDriver(mockServer.ServerUri, new AppiumOptions(), TimeSpan.FromSeconds(10));
 
             httpDriver.LaunchApp();
             httpDriver.CloseApp();
 
-            var startUpload = new ScreenRecordingUploadOptions()
-                .WithRemotePath("https://example.com/start-upload")
-                .WithAuthCredentials("start-user", "start-secret")
-                .WithHttpMethod(ScreenRecordingUploadOptions.RequestMethod.PUT);
-            var startOptions = WincoreStartScreenRecordingOptions.StartScreenRecordingOptions()
+            var startOptions = WincoreStartScreenRecordingOptions.GetWincoreStartScreenRecordingOptions()
+                .WithOutputPath(@"C:\videos")
                 .WithVideoFps(30)
                 .EnableCursorCapture()
-                .WithUploadOptions(startUpload);
+                .DisableForcedRestart();
             Assert.That(httpDriver.StartRecordingScreen(startOptions), Is.EqualTo("dGVzdA=="));
 
             var stopUpload = new ScreenRecordingUploadOptions()
@@ -324,21 +296,28 @@ namespace Appium.Net.Integration.Tests.Driver
                 .WithUploadOptions(stopUpload);
             Assert.That(httpDriver.StopRecordingScreen(stopOptions), Is.EqualTo("YmFzZTY0dmlkZW8="));
 
-            var startReq = mockServer.Requests.Last(r =>
-                r.HttpMethod == "POST" &&
-                r.Path == $"/session/{mockServer.SessionId}/appium/start_recording_screen");
+            var executeRequests = mockServer.Requests
+                .Where(r => r.HttpMethod == "POST" && r.Path == $"/session/{mockServer.SessionId}/execute/sync")
+                .ToList();
+            var startReq = executeRequests.Last(r =>
+            {
+                using var doc = JsonDocument.Parse(r.Body);
+                return doc.RootElement.GetProperty("script").GetString() == "windows: startRecordingScreen";
+            });
             using var startDoc = JsonDocument.Parse(startReq.Body);
-            var startOptsJson = startDoc.RootElement.GetProperty("options");
+            var startOptsJson = startDoc.RootElement.GetProperty("args")[0];
+            Assert.That(startOptsJson.GetProperty("outputPath").GetString(), Is.EqualTo(@"C:\videos"));
             Assert.That(startOptsJson.GetProperty("videoFps").GetInt32(), Is.EqualTo(30));
             Assert.That(startOptsJson.GetProperty("captureCursor").GetBoolean(), Is.True);
-            Assert.That(startOptsJson.GetProperty("remotePath").GetString(), Is.EqualTo("https://example.com/start-upload"));
-            Assert.That(startOptsJson.GetProperty("method").GetString(), Is.EqualTo("PUT"));
+            Assert.That(startOptsJson.GetProperty("forceRestart").GetBoolean(), Is.False);
 
-            var stopReq = mockServer.Requests.Last(r =>
-                r.HttpMethod == "POST" &&
-                r.Path == $"/session/{mockServer.SessionId}/appium/stop_recording_screen");
+            var stopReq = executeRequests.Last(r =>
+            {
+                using var doc = JsonDocument.Parse(r.Body);
+                return doc.RootElement.GetProperty("script").GetString() == "windows: stopRecordingScreen";
+            });
             using var stopDoc = JsonDocument.Parse(stopReq.Body);
-            var stopOptsJson = stopDoc.RootElement.GetProperty("options");
+            var stopOptsJson = stopDoc.RootElement.GetProperty("args")[0];
             Assert.That(stopOptsJson.GetProperty("remotePath").GetString(), Is.EqualTo("https://example.com/stop-upload"));
             Assert.That(stopOptsJson.GetProperty("method").GetString(), Is.EqualTo("POST"));
         }

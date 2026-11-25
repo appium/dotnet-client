@@ -24,9 +24,26 @@ namespace OpenQA.Selenium.Appium.Windows
             return new WincoreStartScreenRecordingOptions();
         }
 
-        public static WincoreStartScreenRecordingOptions StartScreenRecordingOptions()
+        /// <summary>
+        /// Path to the folder where the resulting video file should be stored on the host machine.
+        /// </summary>
+        /// <param name="outputPath">Directory path for the recorded video.</param>
+        /// <returns>self instance for chaining.</returns>
+        public WincoreStartScreenRecordingOptions WithOutputPath(string outputPath)
         {
-            return new WincoreStartScreenRecordingOptions();
+            Parameters["outputPath"] = outputPath;
+            return this;
+        }
+
+        /// <summary>
+        /// Keep an active screen recording session running instead of stopping it before starting a new one.
+        /// Wincore enables forced restart by default.
+        /// </summary>
+        /// <returns>self instance for chaining.</returns>
+        public WincoreStartScreenRecordingOptions DisableForcedRestart()
+        {
+            Parameters["forceRestart"] = false;
+            return this;
         }
 
         /// <summary>
@@ -39,17 +56,6 @@ namespace OpenQA.Selenium.Appium.Windows
         {
             Parameters["videoFps"] = videoFps;
             return this;
-        }
-
-        /// <summary>
-        /// The rate of frames per second in the recorded video.
-        /// Defaults to 15.
-        /// </summary>
-        /// <param name="fps">Frames per second rate.</param>
-        /// <returns>self instance for chaining.</returns>
-        public WincoreStartScreenRecordingOptions WithFps(int fps)
-        {
-            return WithVideoFps(fps);
         }
 
         /// <summary>
@@ -125,17 +131,6 @@ namespace OpenQA.Selenium.Appium.Windows
         {
             Parameters["preset"] = preset;
             return this;
-        }
-
-        /// <summary>
-        /// The maximum recording time. The default value is 600 seconds (10 minutes).
-        /// The minimum time resolution unit is one second.
-        /// </summary>
-        /// <param name="timeLimit">The actual time limit of the recorded video.</param>
-        /// <returns>self instance for chaining.</returns>
-        public new WincoreStartScreenRecordingOptions WithTimeLimit(TimeSpan timeLimit)
-        {
-            return base.WithTimeLimit(timeLimit);
         }
     }
 }

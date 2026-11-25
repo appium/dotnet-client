@@ -13,8 +13,6 @@
 //limitations under the License.
 
 using System;
-using System.Collections.Generic;
-using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Android.Interfaces;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.Interfaces;
@@ -168,24 +166,17 @@ namespace OpenQA.Selenium.Appium.Windows
         {
         }
 
-        public void SetSetting(string setting, object value) =>
-            AndroidCommandExecutionHelper.SetSetting(this, setting, value);
-
-        public Dictionary<string, object> Settings
-        {
-            get => AndroidCommandExecutionHelper.GetSettings(this);
-
-            set
-            {
-                foreach (var entry in value)
-                {
-                    SetSetting(entry.Key, entry.Value);
-                }
-            }
-        }
-
         public override string StartRecordingScreen() =>
             StartRecordingScreen(new WincoreStartScreenRecordingOptions());
+
+        public override string StartRecordingScreen(IScreenRecordingOptions options) =>
+            ExecuteScript("windows: startRecordingScreen", options.GetParameters())?.ToString();
+
+        public override string StopRecordingScreen() =>
+            StopRecordingScreen(new WincoreStopScreenRecordingOptions());
+
+        public override string StopRecordingScreen(IScreenRecordingOptions options) =>
+            ExecuteScript("windows: stopRecordingScreen", options.GetParameters())?.ToString();
 
         public override byte[] PullFolder(string remotePath) =>
             throw new NotSupportedException("The Wincore driver cannot pull folders");
@@ -195,26 +186,12 @@ namespace OpenQA.Selenium.Appium.Windows
         /// <summary>
         /// Closes the Windows application.
         /// </summary>
-        public void CloseApp()
-        {
-            Execute(DriverCommand.ExecuteScript, new Dictionary<string, object>
-            {
-                ["script"] = "windows: closeApp",
-                ["args"] = Array.Empty<object>()
-            });
-        }
+        public void CloseApp() => ExecuteScript("windows: closeApp");
 
         /// <summary>
         /// Launches the Windows application.
         /// </summary>
-        public void LaunchApp()
-        {
-            Execute(DriverCommand.ExecuteScript, new Dictionary<string, object>
-            {
-                ["script"] = "windows: launchApp",
-                ["args"] = Array.Empty<object>()
-            });
-        }
+        public void LaunchApp() => ExecuteScript("windows: launchApp");
 
         #endregion App management
 
