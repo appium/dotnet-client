@@ -33,6 +33,15 @@ namespace OpenQA.Selenium.Appium.Service.Options
             GetKeyValuePair("--shell", value);
 
         /// <summary>
+        /// Ignore unrecognized server arguments when starting Appium 3.6 or later.
+        /// </summary>
+        /// <remarks>
+        /// Appium versions before 3.6 reject this option, which prevents the server from starting.
+        /// </remarks>
+        public static KeyValuePair<string, string> AllowUnknownArgs() =>
+            new KeyValuePair<string, string>("--allow-unknown-args", string.Empty);
+
+        /// <summary>
         /// Initial path segment where the Appium/WebDriver API will be hosted. Every endpoint will be behind this segment. <br/>
         /// Default: for Appium 2.0: / ; for Appium 1: /wd/hub <br/>
         /// Example: --base-path /my/path/prefix
