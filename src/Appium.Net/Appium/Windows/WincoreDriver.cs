@@ -202,12 +202,28 @@ namespace OpenQA.Selenium.Appium.Windows
                 driverOptions.PlatformName = Platform;
             }
 
-            if (driverOptions is AppiumOptions appiumOptions && string.IsNullOrEmpty(appiumOptions.AutomationName))
+            if (driverOptions is AppiumOptions appiumOptions)
             {
-                appiumOptions.AutomationName = OpenQA.Selenium.Appium.Enums.AutomationName.Wincore;
+                if (string.IsNullOrEmpty(appiumOptions.AutomationName))
+                {
+                    appiumOptions.AutomationName = OpenQA.Selenium.Appium.Enums.AutomationName.Wincore;
+                }
+
+                return appiumOptions.ToCapabilities();
             }
 
-            return driverOptions.ToCapabilities();
+            var capabilities = driverOptions.ToCapabilities();
+            var existingAutomationName = capabilities.GetCapability(MobileCapabilityType.AutomationName)
+                ?? capabilities.GetCapability("automationName");
+            if (string.IsNullOrEmpty(existingAutomationName?.ToString()))
+            {
+                driverOptions.AddAdditionalOption(
+                    MobileCapabilityType.AutomationName,
+                    OpenQA.Selenium.Appium.Enums.AutomationName.Wincore);
+                capabilities = driverOptions.ToCapabilities();
+            }
+
+            return capabilities;
         }
     }
 }

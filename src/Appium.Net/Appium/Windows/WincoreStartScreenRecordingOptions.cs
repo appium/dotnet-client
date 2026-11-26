@@ -13,25 +13,60 @@
 //limitations under the License.
 
 using System;
-using OpenQA.Selenium.Appium.ScreenRecording;
+using System.Collections.Generic;
+using OpenQA.Selenium.Appium.Interfaces;
 
 namespace OpenQA.Selenium.Appium.Windows
 {
-    public class WincoreStartScreenRecordingOptions : BaseStartScreenRecordingOptions<WincoreStartScreenRecordingOptions>
+    public class WincoreStartScreenRecordingOptions : IScreenRecordingOptions
     {
+        private readonly Dictionary<string, object> _parameters = [];
+
         public static WincoreStartScreenRecordingOptions GetWincoreStartScreenRecordingOptions()
         {
             return new WincoreStartScreenRecordingOptions();
         }
 
         /// <summary>
-        /// Path to the folder where the resulting video file should be stored on the host machine.
+        /// Gets all configured parameters for starting screen recording.
         /// </summary>
-        /// <param name="outputPath">Directory path for the recorded video.</param>
+        /// <returns>Dictionary of start screen recording parameters.</returns>
+        public Dictionary<string, object> GetParameters()
+        {
+            return _parameters;
+        }
+
+        /// <summary>
+        /// The maximum recording time.
+        /// </summary>
+        /// <param name="timeLimit">The actual time limit of the recorded video.</param>
+        /// <returns>self instance for chaining.</returns>
+        public WincoreStartScreenRecordingOptions WithTimeLimit(TimeSpan timeLimit)
+        {
+            _parameters["timeLimit"] = (int)timeLimit.TotalSeconds;
+            return this;
+        }
+
+        /// <summary>
+        /// Force restarting any active screen recording session when starting a new recording.
+        /// Wincore enables forced restart by default.
+        /// </summary>
+        /// <returns>self instance for chaining.</returns>
+        public WincoreStartScreenRecordingOptions EnableForcedRestart()
+        {
+            _parameters["forceRestart"] = true;
+            return this;
+        }
+
+        /// <summary>
+        /// Full path to the .mp4 file where the resulting video should be stored on the host machine,
+        /// for example <c>C:\videos\capture.mp4</c>.
+        /// </summary>
+        /// <param name="outputPath">Full .mp4 file path for the recorded video.</param>
         /// <returns>self instance for chaining.</returns>
         public WincoreStartScreenRecordingOptions WithOutputPath(string outputPath)
         {
-            Parameters["outputPath"] = outputPath;
+            _parameters["outputPath"] = outputPath;
             return this;
         }
 
@@ -42,7 +77,7 @@ namespace OpenQA.Selenium.Appium.Windows
         /// <returns>self instance for chaining.</returns>
         public WincoreStartScreenRecordingOptions DisableForcedRestart()
         {
-            Parameters["forceRestart"] = false;
+            _parameters["forceRestart"] = false;
             return this;
         }
 
@@ -54,7 +89,7 @@ namespace OpenQA.Selenium.Appium.Windows
         /// <returns>self instance for chaining.</returns>
         public WincoreStartScreenRecordingOptions WithVideoFps(int videoFps)
         {
-            Parameters["videoFps"] = videoFps;
+            _parameters["videoFps"] = videoFps;
             return this;
         }
 
@@ -65,7 +100,7 @@ namespace OpenQA.Selenium.Appium.Windows
         /// <returns>self instance for chaining.</returns>
         public WincoreStartScreenRecordingOptions EnableCursorCapture()
         {
-            Parameters["captureCursor"] = true;
+            _parameters["captureCursor"] = true;
             return this;
         }
 
@@ -76,7 +111,7 @@ namespace OpenQA.Selenium.Appium.Windows
         /// <returns>self instance for chaining.</returns>
         public WincoreStartScreenRecordingOptions EnableClicksCapture()
         {
-            Parameters["captureClicks"] = true;
+            _parameters["captureClicks"] = true;
             return this;
         }
 
@@ -89,7 +124,7 @@ namespace OpenQA.Selenium.Appium.Windows
         /// <returns>self instance for chaining.</returns>
         public WincoreStartScreenRecordingOptions WithAudioInput(string audioInput)
         {
-            Parameters["audioInput"] = audioInput;
+            _parameters["audioInput"] = audioInput;
             return this;
         }
 
@@ -104,7 +139,7 @@ namespace OpenQA.Selenium.Appium.Windows
         /// <returns>self instance for chaining.</returns>
         public WincoreStartScreenRecordingOptions WithVideoFilter(string videoFilter)
         {
-            Parameters["videoFilter"] = videoFilter;
+            _parameters["videoFilter"] = videoFilter;
             return this;
         }
 
@@ -129,7 +164,7 @@ namespace OpenQA.Selenium.Appium.Windows
         /// <returns>self instance for chaining.</returns>
         public WincoreStartScreenRecordingOptions WithPreset(string preset)
         {
-            Parameters["preset"] = preset;
+            _parameters["preset"] = preset;
             return this;
         }
     }

@@ -11,6 +11,7 @@ using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Enums;
 using OpenQA.Selenium.Appium.ScreenRecording;
 using OpenQA.Selenium.Appium.Windows;
+using OpenQA.Selenium.Edge;
 
 namespace Appium.Net.Integration.Tests.Driver
 {
@@ -115,6 +116,30 @@ namespace Appium.Net.Integration.Tests.Driver
         }
 
         [Test]
+        public void Constructor_NonAppiumDriverOptions_DefaultsAndPreservesAutomationName()
+        {
+            var edgeOptions = new EdgeOptions();
+            using var defaultExecutor = new MockCommandExecutor();
+            using var defaultDriver = new WincoreDriver(defaultExecutor, edgeOptions);
+
+            var defaultCaps = edgeOptions.ToCapabilities();
+            Assert.That(defaultCaps.GetCapability("platformName"), Is.EqualTo(MobilePlatform.Windows));
+            Assert.That(defaultCaps.GetCapability(MobileCapabilityType.AutomationName), Is.EqualTo(AutomationName.Wincore));
+            var defaultSessionJson = JsonSerializer.Serialize(
+                defaultExecutor.ExecutedCommands.First(c => c.Name == DriverCommand.NewSession).Parameters);
+            Assert.That(defaultSessionJson, Does.Contain("\"appium:automationName\":\"Wincore\""));
+
+            var customEdgeOptions = new EdgeOptions();
+            customEdgeOptions.AddAdditionalOption(MobileCapabilityType.AutomationName, "CustomAutomation");
+            using var customExecutor = new MockCommandExecutor();
+            using var customDriver = new WincoreDriver(customExecutor, customEdgeOptions);
+
+            Assert.That(
+                customEdgeOptions.ToCapabilities().GetCapability(MobileCapabilityType.AutomationName),
+                Is.EqualTo("CustomAutomation"));
+        }
+
+        [Test]
         public void LaunchApp_ExecutesWindowsLaunchAppScript()
         {
             _driver.LaunchApp();
@@ -157,7 +182,7 @@ namespace Appium.Net.Integration.Tests.Driver
             _executor.ResponseToReturn = new Response("test-session", "dGVzdA==", WebDriverResult.Success);
 
             var recordingOptions = WincoreStartScreenRecordingOptions.GetWincoreStartScreenRecordingOptions()
-                .WithOutputPath(@"C:\videos")
+                .WithOutputPath(@"C:\videos\capture.mp4")
                 .WithVideoFps(30)
                 .EnableCursorCapture()
                 .EnableClicksCapture()
@@ -169,6 +194,7 @@ namespace Appium.Net.Integration.Tests.Driver
 
             var result = _driver.StartRecordingScreen(recordingOptions);
 
+            Assert.That(typeof(WincoreStartScreenRecordingOptions).GetMethod("WithUploadOptions"), Is.Null);
             Assert.That(result, Is.EqualTo("dGVzdA=="));
             Assert.That(_executor.LastCommand.Name, Is.EqualTo(DriverCommand.ExecuteScript));
             Assert.That(_executor.LastCommand.Parameters["script"], Is.EqualTo("windows: startRecordingScreen"));
@@ -176,7 +202,7 @@ namespace Appium.Net.Integration.Tests.Driver
             Assert.That(args, Is.Not.Null.And.Length.EqualTo(1));
             var options = args[0] as IDictionary<string, object>;
             Assert.That(options, Is.Not.Null);
-            Assert.That(options["outputPath"], Is.EqualTo(@"C:\videos"));
+            Assert.That(options["outputPath"], Is.EqualTo(@"C:\videos\capture.mp4"));
             Assert.That(options["videoFps"], Is.EqualTo(30));
             Assert.That(options["captureCursor"], Is.EqualTo(true));
             Assert.That(options["captureClicks"], Is.EqualTo(true));
@@ -282,7 +308,7 @@ namespace Appium.Net.Integration.Tests.Driver
             httpDriver.CloseApp();
 
             var startOptions = WincoreStartScreenRecordingOptions.GetWincoreStartScreenRecordingOptions()
-                .WithOutputPath(@"C:\videos")
+                .WithOutputPath(@"C:\videos\capture.mp4")
                 .WithVideoFps(30)
                 .EnableCursorCapture()
                 .DisableForcedRestart();
@@ -306,7 +332,7 @@ namespace Appium.Net.Integration.Tests.Driver
             });
             using var startDoc = JsonDocument.Parse(startReq.Body);
             var startOptsJson = startDoc.RootElement.GetProperty("args")[0];
-            Assert.That(startOptsJson.GetProperty("outputPath").GetString(), Is.EqualTo(@"C:\videos"));
+            Assert.That(startOptsJson.GetProperty("outputPath").GetString(), Is.EqualTo(@"C:\videos\capture.mp4"));
             Assert.That(startOptsJson.GetProperty("videoFps").GetInt32(), Is.EqualTo(30));
             Assert.That(startOptsJson.GetProperty("captureCursor").GetBoolean(), Is.True);
             Assert.That(startOptsJson.GetProperty("forceRestart").GetBoolean(), Is.False);
