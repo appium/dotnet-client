@@ -22,6 +22,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
 
+#pragma warning disable CS0618
 namespace Appium.Net.Integration.Tests.Windows
 {
     public class MultiSelectControlTest

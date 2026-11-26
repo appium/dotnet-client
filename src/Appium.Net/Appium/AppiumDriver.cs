@@ -213,7 +213,7 @@ namespace OpenQA.Selenium.Appium
             Convert.FromBase64String(Execute(AppiumDriverCommand.PullFile,
                 AppiumCommandExecutionHelper.PrepareArgument("path", pathOnDevice)).Value.ToString());
 
-        public byte[] PullFolder(string remotePath) =>
+        public virtual byte[] PullFolder(string remotePath) =>
             Convert.FromBase64String(Execute(AppiumDriverCommand.PullFolder,
                 AppiumCommandExecutionHelper.PrepareArgument("path", remotePath)).Value.ToString());
 
@@ -621,22 +621,22 @@ namespace OpenQA.Selenium.Appium
 
         #region Recording Screen
 
-        public string StartRecordingScreen() =>
-            ((IExecuteMethod)this).Execute(AppiumDriverCommand.StartRecordingScreen).Value.ToString();
+        public virtual string StartRecordingScreen() =>
+            ((IExecuteMethod)this).Execute(AppiumDriverCommand.StartRecordingScreen).Value?.ToString();
 
-        public string StartRecordingScreen(IScreenRecordingOptions options)
+        public virtual string StartRecordingScreen(IScreenRecordingOptions options)
         {
             var parameters = AppiumCommandExecutionHelper.PrepareArgument("options", options.GetParameters());
-            return Execute(AppiumDriverCommand.StartRecordingScreen, parameters).Value.ToString();
+            return Execute(AppiumDriverCommand.StartRecordingScreen, parameters).Value?.ToString();
         }
 
-        public string StopRecordingScreen() =>
-            ((IExecuteMethod)this).Execute(AppiumDriverCommand.StopRecordingScreen).Value.ToString();
+        public virtual string StopRecordingScreen() =>
+            ((IExecuteMethod)this).Execute(AppiumDriverCommand.StopRecordingScreen).Value?.ToString();
 
-        public string StopRecordingScreen(IScreenRecordingOptions options)
+        public virtual string StopRecordingScreen(IScreenRecordingOptions options)
         {
             var parameters = AppiumCommandExecutionHelper.PrepareArgument("options", options.GetParameters());
-            return Execute(AppiumDriverCommand.StopRecordingScreen, parameters).Value.ToString();
+            return Execute(AppiumDriverCommand.StopRecordingScreen, parameters).Value?.ToString();
         }
 
         #endregion Recording Screen

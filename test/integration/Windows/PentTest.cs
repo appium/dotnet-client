@@ -32,6 +32,7 @@ using NUnit.Framework;
 using OpenQA.Selenium.Appium;
 using Appium.Net.Integration.Tests.helpers;
 
+#pragma warning disable CS0618
 namespace Appium.Net.Integration.Tests.Windows
 {
     [TestFixture]

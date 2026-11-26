@@ -22,5 +22,6 @@ namespace OpenQA.Selenium.Appium.Enums
         public static readonly string AndroidEspresso = "Espresso";
         public static readonly string YouiEngine = "youiengine";
         public static readonly string Mac2 = "mac2";
+        public static readonly string Wincore = "Wincore";
     }
 }

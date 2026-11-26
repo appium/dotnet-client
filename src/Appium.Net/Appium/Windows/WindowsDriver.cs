@@ -22,6 +22,11 @@ using OpenQA.Selenium.Appium.Service;
 
 namespace OpenQA.Selenium.Appium.Windows
 {
+    /// <summary>
+    /// WindowsDriver is an Appium driver created to automate Windows apps.
+    /// Read https://github.com/appium/appium-windows-driver for more details.
+    /// </summary>
+    [Obsolete("The Windows driver is deprecated and not supported since Appium 4. Use WincoreDriver instead.")]
     public class WindowsDriver : AppiumDriver, ISendsKeyEvents, IHidesKeyboardWithKeyName
     {
         private static readonly string Platform = MobilePlatform.Windows;

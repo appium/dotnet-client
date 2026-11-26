@@ -4,7 +4,7 @@ namespace OpenQA.Selenium.Appium.ScreenRecording
 {
     public class ScreenRecordingUploadOptions
     {
-        protected Dictionary<string, object> Parameters;
+        protected Dictionary<string, object> Parameters = [];
 
         /// <summary>
         /// The path to the remote location, where the resulting video should be uploaded.

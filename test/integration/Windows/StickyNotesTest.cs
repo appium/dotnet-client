@@ -20,6 +20,7 @@ using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
 using System;
 
+#pragma warning disable CS0618
 namespace Appium.Net.Integration.Tests.Windows
 {
     public abstract class StickyNotesTest
