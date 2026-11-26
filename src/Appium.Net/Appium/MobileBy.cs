@@ -110,6 +110,18 @@ namespace OpenQA.Selenium.Appium
         /// <returns></returns>
         public static By AndroidViewMatcher(string selector) => new ByAndroidViewMatcher(selector);
 
+        /// <summary>Finds elements by predicate string with UiAutomator2 10.2.0 or later.</summary>
+        public static By AndroidPredicateString(string selector) => new ByAndroidPredicateString(selector);
+
+        /// <summary>Finds elements by class chain with UiAutomator2 10.1.0 or later.</summary>
+        public static By AndroidClassChain(string selector) => new ByAndroidClassChain(selector);
+
+        /// <summary>Finds elements by text with Espresso.</summary>
+        public static By AndroidText(string selector) => new ByAndroidText(selector);
+
+        /// <summary>Finds elements by view tag with Espresso.</summary>
+        public static By AndroidViewTag(string selector) => new ByAndroidViewTag(selector);
+
         public static By WindowsAutomation(string selector) => new ByWindowsAutomation(selector);
 
         public static By TizenAutomation(string selector) => new ByTizenAutomation(selector);
@@ -407,6 +419,46 @@ namespace OpenQA.Selenium.Appium
 
         public override string ToString() =>
             $"ByImage({selector})";
+    }
+
+    /// <summary>Finds elements by predicate string with UiAutomator2 10.2.0 or later.</summary>
+    public class ByAndroidPredicateString : MobileBy
+    {
+        public ByAndroidPredicateString(string selector) : base(selector, MobileSelector.AndroidPredicateString)
+        {
+        }
+
+        public override string ToString() => $"ByAndroidPredicateString({selector})";
+    }
+
+    /// <summary>Finds elements by class chain with UiAutomator2 10.1.0 or later.</summary>
+    public class ByAndroidClassChain : MobileBy
+    {
+        public ByAndroidClassChain(string selector) : base(selector, MobileSelector.AndroidClassChain)
+        {
+        }
+
+        public override string ToString() => $"ByAndroidClassChain({selector})";
+    }
+
+    /// <summary>Finds elements by text with Espresso.</summary>
+    public class ByAndroidText : MobileBy
+    {
+        public ByAndroidText(string selector) : base(selector, MobileSelector.AndroidText)
+        {
+        }
+
+        public override string ToString() => $"ByAndroidText({selector})";
+    }
+
+    /// <summary>Finds elements by view tag with Espresso.</summary>
+    public class ByAndroidViewTag : MobileBy
+    {
+        public ByAndroidViewTag(string selector) : base(selector, MobileSelector.AndroidViewTag)
+        {
+        }
+
+        public override string ToString() => $"ByAndroidViewTag({selector})";
     }
 
     public class ByName : MobileBy
