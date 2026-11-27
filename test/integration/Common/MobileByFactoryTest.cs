@@ -42,6 +42,31 @@ namespace Appium.Net.Integration.Tests.Common
             Assert.That(by.ToString(), Is.EqualTo(expectedToString));
         }
 
+        private static IEnumerable<TestCaseData> AndroidLocators()
+        {
+            yield return new TestCaseData(MobileBy.AndroidPredicateString("text == 'Settings'"), "-android predicate string", "text == 'Settings'");
+            yield return new TestCaseData(MobileBy.AndroidClassChain("**/android.widget.Button"), "-android class chain", "**/android.widget.Button");
+            yield return new TestCaseData(MobileBy.AndroidText("Settings"), "text", "Settings");
+            yield return new TestCaseData(MobileBy.AndroidViewTag("settings_button"), "-android viewtag", "settings_button");
+        }
+
+        [TestCaseSource(nameof(AndroidLocators))]
+        public void AndroidLocatorForwardsStrategyAndValue(By locator, string strategy, string value)
+        {
+            var element = new FakeWebElement();
+            var elements = new ReadOnlyCollection<IWebElement>(new List<IWebElement> { element });
+            var singleFinder = new FakeFinder(elementToReturn: element);
+            var multipleFinder = new FakeFinder(elementsToReturn: elements);
+
+            Assert.That(locator.FindElement(singleFinder), Is.SameAs(element));
+            Assert.That(singleFinder.LastStrategy, Is.EqualTo(strategy));
+            Assert.That(singleFinder.LastSelector, Is.EqualTo(value));
+
+            Assert.That(locator.FindElements(multipleFinder), Is.SameAs(elements));
+            Assert.That(multipleFinder.LastStrategy, Is.EqualTo(strategy));
+            Assert.That(multipleFinder.LastSelector, Is.EqualTo(value));
+        }
+
         [Test]
         public void WindowsAutomationFactoryMethodBuildsExpectedSelector()
         {
@@ -135,6 +160,7 @@ namespace Appium.Net.Integration.Tests.Common
             private readonly IReadOnlyCollection<IWebElement> _elementsToReturn;
 
             public string LastCalledMethod { get; private set; }
+            public string LastStrategy { get; private set; }
             public string LastSelector { get; private set; }
 
             public FakeFinder(IWebElement elementToReturn = null, IReadOnlyCollection<IWebElement> elementsToReturn = null)
@@ -146,8 +172,19 @@ namespace Appium.Net.Integration.Tests.Common
             public IWebElement FindElement(By by) => throw new NotSupportedException();
             public ReadOnlyCollection<IWebElement> FindElements(By by) => throw new NotSupportedException();
 
-            public IWebElement FindElement(string by, string value) => throw new NotSupportedException();
-            public IReadOnlyCollection<IWebElement> FindElements(string selector, string value) => throw new NotSupportedException();
+            public IWebElement FindElement(string by, string value)
+            {
+                LastStrategy = by;
+                LastSelector = value;
+                return _elementToReturn;
+            }
+
+            public IReadOnlyCollection<IWebElement> FindElements(string by, string value)
+            {
+                LastStrategy = by;
+                LastSelector = value;
+                return _elementsToReturn;
+            }
 
             public IWebElement FindElementByAndroidDataMatcher(string selector)
             {
