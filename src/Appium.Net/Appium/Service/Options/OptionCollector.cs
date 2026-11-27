@@ -21,7 +21,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
     public sealed class OptionCollector
     {
         private readonly IDictionary<string, string> CollectedArgs = new Dictionary<string, string>();
-        private AppiumOptions options;
+        private readonly Dictionary<string, object> capabilities = new Dictionary<string, object>();
         private static readonly string CapabilitiesFlag = "--default-capabilities";
 
         /// <summary>
@@ -43,18 +43,16 @@ namespace OpenQA.Selenium.Appium.Service.Options
         /// <returns>the self-reference</returns>
         public OptionCollector AddCapabilities(AppiumOptions options)
         {
-            if (this.options == null)
+            if (options == null)
             {
-                this.options = options;
+                return this;
             }
-            else
-            {
-                IDictionary<string, object> givenDictionary = options.ToDictionary();
 
-                foreach (var item in givenDictionary)
-                {
-                    this.options.AddAdditionalAppiumOption(item.Key, item.Value);
-                }
+            // Copy the entries as they are now: the caller's options stay untouched, and the
+            // keys are kept exactly as ToDictionary returns them (no extra "appium:" prefix).
+            foreach (var item in options.ToDictionary())
+            {
+                capabilities[item.Key] = item.Value;
             }
 
             return this;
@@ -146,7 +144,7 @@ namespace OpenQA.Selenium.Appium.Service.Options
                     }
                 }
 
-                var optionsDictionary = options?.ToDictionary();
+                var optionsDictionary = capabilities;
 
                 if (optionsDictionary != null && optionsDictionary.Count > 0)
                 {
