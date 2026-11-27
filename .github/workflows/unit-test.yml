@@ -91,7 +91,7 @@ jobs:
         dotnet test `
           --no-build `
           --configuration ${{ env.BUILD_CONFIGURATION }} `
-          --filter "AppiumLocalServerLaunchingTest|DirectConnectTest|AppiumClientConfigTest|Tests.Common|Tests.Driver|AppsTest" `
+          --filter "AppiumLocalServerLaunchingTest|DirectConnectTest|AppiumClientConfigTest|Tests.Common|Tests.Driver|AppsTest|AppiumServiceArgumentsTest" `
           --framework net48 `
           --logger "trx;LogFileName=test-results-net48.trx" `
           ./test/integration/Appium.Net.Integration.Tests.csproj
@@ -101,7 +101,7 @@ jobs:
         dotnet test \
           --no-build \
           --configuration ${{ env.BUILD_CONFIGURATION }} \
-          --filter "AppiumLocalServerLaunchingTest|DirectConnectTest|AppiumClientConfigTest|Tests.Common|Tests.Driver|AppsTest" \
+          --filter "AppiumLocalServerLaunchingTest|DirectConnectTest|AppiumClientConfigTest|Tests.Common|Tests.Driver|AppsTest|AppiumServiceArgumentsTest" \
           --framework net8.0 \
           --logger "trx;LogFileName=test-results-net8-${{ matrix.os }}.trx" \
           ./test/integration/Appium.Net.Integration.Tests.csproj
